@@ -1,0 +1,40 @@
+{
+  "artifact_code": "EV_LICENSE_PROVISIONED_V0",
+  "artifact_type": "EV",
+  "content": "# EV_LICENSE_PROVISIONED_V0\n\n## 1. Fact\n\nA license has been successfully provisioned to an employee.\n\n---\n\n## 2. Rationale\n\nLicense provisioning is a protocol-governed transition:\n- Only occurs when all prerequisites satisfied\n- Records assignment for audit trail\n- Increments assigned count toward cap\n\n---\n\n## 3. Emitted By\n\n| Workflow | Capability Contract |\n|----------|---------------------|\n| WF_PROVISION_AI_LICENSING_V0 | CC_PROVISION_LICENSE_V0 |\n\n---\n\n## 4. Schema\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| employee_id | string | true | Employee who received license |\n| license_id | string | true | Unique license identifier |\n| timestamp | string (date-time) | true | When provisioning occurred |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::EV_LICENSE_PROVISIONED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: License Provisioned\n  description: Emitted when a license is successfully provisioned\n\n  schema:\n    employee_id:\n      type: string\n      required: true\n    license_id:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n```\n",
+  "content_hash": "c7c806063364f4cc24733670d60adbae564bbfd9de84870c631ade106a0ec273",
+  "fqdn_id": "ai_governance::EV_LICENSE_PROVISIONED_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "description": "Emitted when a license is successfully provisioned",
+      "schema": {
+        "employee_id": {
+          "required": true,
+          "type": "string"
+        },
+        "license_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "summary": "License Provisioned"
+    },
+    "fqdn": "ai_governance::EV_LICENSE_PROVISIONED_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

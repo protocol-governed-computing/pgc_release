@@ -1,0 +1,214 @@
+{
+  "wf_id": "WF_AUTO_RECLAIM_V0",
+  "entry": "IN_RECLAIM_LICENSE_V0",
+  "nodes": [
+    {
+      "id": "CC_APPEND_AUDIT_EVENT_RECLAIMED",
+      "type": "CC",
+      "cc_code": "CC_APPEND_AUDIT_EVENT_V0",
+      "capability": "capability_side_effects::CS_CLOCK_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_CLOCK_V0",
+            "id": "CS_CLOCK_V0",
+            "kind": "CS",
+            "ops": [
+              "NOW"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "data": {
+            "days_inactive": "$.payload.context.days_inactive",
+            "license_id": "$.payload.license_id"
+          },
+          "decision": "RECLAIMED",
+          "employee_id": "IN.context.employee_id",
+          "event_type": "EV_LICENSE_REVOKED_V0",
+          "reason_code": "INACTIVITY"
+        }
+      }
+    },
+    {
+      "id": "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "type": "CC",
+      "cc_code": "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "capability": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "evaluation_date": "in.evaluation_date",
+              "last_active_date": "in.last_active_date",
+              "threshold_days": "in.threshold_days"
+            },
+            "fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
+            "id": "CT_PURE_EVALUATE_INACTIVITY_V0",
+            "inputs": [
+              "last_active_date",
+              "evaluation_date",
+              "threshold_days"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "is_inactive",
+              "days_inactive"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "employee_id": "IN.context.employee_id",
+          "evaluation_date": "IN.context.evaluation_date",
+          "last_active_date": "IN.context.last_active_date",
+          "license_id": "IN.license_id",
+          "threshold_days": "IN.threshold_days"
+        }
+      }
+    },
+    {
+      "id": "EXIT_ACTIVE",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_ERROR",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_RECLAIMED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_RECLAIM_LICENSE_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_APPEND_AUDIT_EVENT_RECLAIMED",
+      "to": "EXIT_ERROR",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_APPEND_AUDIT_EVENT_RECLAIMED",
+      "to": "EXIT_RECLAIMED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_APPEND_AUDIT_EVENT_RECLAIMED",
+      "to": "EXIT_ERROR",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "to": "EXIT_ERROR",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "to": "EXIT_ERROR",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "to": "CC_APPEND_AUDIT_EVENT_RECLAIMED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "to": "EXIT_ACTIVE",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_RECLAIM_LICENSE_V0",
+      "to": "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_RECLAIM_LICENSE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_RECLAIM_LICENSE_V0",
+      "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "EXIT_ERROR"
+    ],
+    [
+      "IN_RECLAIM_LICENSE_V0",
+      "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "EXIT_ERROR"
+    ],
+    [
+      "IN_RECLAIM_LICENSE_V0",
+      "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "CC_APPEND_AUDIT_EVENT_RECLAIMED",
+      "EXIT_ERROR"
+    ],
+    [
+      "IN_RECLAIM_LICENSE_V0",
+      "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "CC_APPEND_AUDIT_EVENT_RECLAIMED",
+      "EXIT_RECLAIMED"
+    ],
+    [
+      "IN_RECLAIM_LICENSE_V0",
+      "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "CC_APPEND_AUDIT_EVENT_RECLAIMED",
+      "EXIT_ERROR"
+    ],
+    [
+      "IN_RECLAIM_LICENSE_V0",
+      "CC_RECLAIM_UNUSED_LICENSE_V0",
+      "EXIT_ACTIVE"
+    ],
+    [
+      "IN_RECLAIM_LICENSE_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

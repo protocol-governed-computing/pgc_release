@@ -1,0 +1,592 @@
+{
+  "artifact_code": "STRUCTURE_FQDN_TREE_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_FQDN_TREE_V0\n\n## 1. Purpose\n\nDeclare the authoritative logical package tree and the folder \u2192 namespace correspondence for the\nPGC governance surface.\n\nThis document records:\n- Source packages that participate in a build, and their physical roots\n- The correspondence between registry folders and declared namespaces\n- File patterns by which artifacts are discovered\n\n---\n\n## 2. Global Rules\n\n- Physical directory layout is mapped, not inferred.\n- Dependencies must be acyclic and forward-only.\n- Runtime bindings, where declared, MUST be domain-scoped and SHALL NOT appear in shared registries.\n\n### 2.1 Identity is declared, not derived\n\nNamespace identity is **declared per artifact** in the `fqdn:` key of its `## Machine` block. It is\nnot computed from the folder an artifact sits in. The `namespace_mappings` below are therefore\n**descriptive** \u2014 they record where artifacts of each namespace live, so that discovery and human\nnavigation agree. Moving a file does not change what an artifact *is*.\n\nThe registry is organized **one directory per namespace**, so the mapping is currently one-to-one:\n`registry/<namespace>/<kind>/`. That correspondence is a convenience, not the source of identity \u2014\na future layout may group or split directories without any FQDN changing. `registry/schema/` is the\nsole exception: JSON schemas are a declaration substrate and carry no namespace at all.\n\n---\n\n## 3. Package Roles\n\n| Role | Description |\n|------|-------------|\n| `governance_surface` | Normative protocol artifacts \u2014 the governance surface itself |\n| `capability_pack` | Reusable capability declarations (CT / CS) |\n| `workload` | Workloads that prove conformance |\n\n### 3.1 Domain Isolation Invariant\n\nDomain artifacts SHALL NOT appear in governance-surface packages. The platform namespace set is\nreserved for protocol substrate only.\n\n- `governance_surface` packages may contain only normative platform artifacts.\n- `capability_pack` packages may contain only reusable CT/CS declarations.\n- `workload` packages may contain workload artifacts and workload-scoped CT/CS.\n\n---\n\n## 4. Authority Levels\n\n| Authority | Description |\n|-----------|-------------|\n| `sovereign` | Root authority, defines protocol semantics |\n| `delegated` | Authority derived from sovereign, must comply with core |\n\n---\n\n## 5. Build Contract\n\nBuilder MUST:\n- Resolve physical paths explicitly\n- Respect `artifact_patterns` for file discovery\n- Load only declared registries\n\nBuilder MUST NOT:\n- Infer namespace from folder names\n- Include undeclared artifacts\n\n---\n\n## 6. Determinism & Trace Binding\n\n- This document is hashed as part of the build manifest.\n- Any change to this file constitutes a governance-visible change.\n\n---\n\n## 7. Versioning\n\n- Changes require a new version. Backward compatibility is not assumed.\n\n---\n\n## Machine\n\n```yaml\nfqdn: structure::STRUCTURE_FQDN_TREE_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: structure\ncore:\n  summary: Logical package tree and folder-to-namespace correspondence\n  description: 'Declares source packages and their physical roots, and records which namespaces are\n    declared by artifacts in each registry folder. Namespace identity is declared per artifact; the\n    folder mapping is descriptive.\n\n    '\npackages:\n- package: software_governance\n  role: governance_surface\n  authority: sovereign\n  build_order: 0\n  physical_root: .\n  module_root: registry\n  contains:\n  - registry\n  - capability_transforms\n  - capability_side_effects\n  registries:\n  - path: registry/actor\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace actor\n  - path: registry/artifact\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace artifact\n  - path: registry/authority\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace authority\n  - path: registry/capability_contracts\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace capability_contracts\n  - path: registry/capability_side_effects\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace capability_side_effects\n  - path: registry/capability_transforms\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace capability_transforms\n  - path: registry/compiler\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace compiler\n  - path: registry/conformance\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace conformance\n  - path: registry/cryptographic_trust\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace cryptographic_trust\n  - path: registry/event\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace event\n  - path: registry/execution\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace execution\n  - path: registry/execution_placement\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace execution_placement\n  - path: registry/execution_scheduling\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace execution_scheduling\n  - path: registry/execution_topology\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace execution_topology\n  - path: registry/federation\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace federation\n  - path: registry/governance\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace governance\n  - path: registry/intent\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace intent\n  - path: registry/lifecycle\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace lifecycle\n  - path: registry/runtime_binding\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace runtime_binding\n  - path: registry/security_domain\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace security_domain\n  - path: registry/structure\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace structure\n  - path: registry/surface_contract\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace surface_contract\n  - path: registry/trace\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace trace\n  - path: registry/transport\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace transport\n  - path: registry/vocabulary\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace vocabulary\n  - path: registry/workflow\n    artifact_types:\n    - constitutions\n    - invariants\n    - structures\n    - surface_contracts\n    - vocabulary\n    notes: Namespace workflow\n  - path: registry/schema\n    artifact_types:\n    - schemas\n    notes: Declaration substrate \u2014 JSON schemas, not an fb.* namespace\n  depends_on: []\n- package: capability_transforms\n  role: capability_pack\n  authority: delegated\n  build_order: 1\n  physical_root: ./capability_transforms\n  module_root: capability_transforms\n  contains:\n  - registry\n  registries:\n  - path: registry/capability_transforms\n    artifact_types:\n    - capability_transforms\n  depends_on:\n  - software_governance\n- package: capability_side_effects\n  role: capability_pack\n  authority: delegated\n  build_order: 2\n  physical_root: ./capability_side_effects\n  module_root: capability_side_effects\n  contains:\n  - registry\n  - implementation\n  registries:\n  - path: registry/capability_side_effects\n    artifact_types:\n    - capability_side_effects\n  depends_on:\n  - software_governance\nnamespace_mappings:\n  registry/actor:\n  - actor\n  registry/artifact:\n  - artifact\n  registry/authority:\n  - authority\n  registry/capability_contracts:\n  - capability_contracts\n  registry/capability_side_effects:\n  - capability_side_effects\n  registry/capability_transforms:\n  - capability_transforms\n  registry/compiler:\n  - compiler\n  registry/conformance:\n  - conformance\n  registry/cryptographic_trust:\n  - cryptographic_trust\n  registry/event:\n  - event\n  registry/execution:\n  - execution\n  registry/execution_placement:\n  - execution_placement\n  registry/execution_scheduling:\n  - execution_scheduling\n  registry/execution_topology:\n  - execution_topology\n  registry/federation:\n  - federation\n  registry/governance:\n  - governance\n  registry/intent:\n  - intent\n  registry/lifecycle:\n  - lifecycle\n  registry/runtime_binding:\n  - runtime_binding\n  registry/security_domain:\n  - security_domain\n  registry/structure:\n  - structure\n  registry/surface_contract:\n  - surface_contract\n  registry/trace:\n  - trace\n  registry/transport:\n  - transport\n  registry/vocabulary:\n  - vocabulary\n  registry/workflow:\n  - workflow\n  capability_transforms/registry/capability_transforms:\n  - capability_transforms\n  capability_side_effects/registry/capability_side_effects:\n  - capability_side_effects\nrole_artifact_rules:\n  governance_surface:\n  - constitutions\n  - invariants\n  - structures\n  - schemas\n  - vocabulary\n  - surface_contracts\n  capability_pack:\n  - capability_transforms\n  - capability_side_effects\n  workload:\n  - capability_contracts\n  - capability_transforms\n  - capability_side_effects\n  - intents\n  - workflows\n  - events\n  - actors\n  - runtime_bindings\n  - transport_intents\n  - transport_egress\nartifact_patterns:\n  constitutions:\n    file_pattern: CONSTITUTION_*.md\n    code_key: artifact_code\n  invariants:\n    file_pattern: INVARIANT_*.md\n    code_key: artifact_code\n  structures:\n    file_pattern: STRUCTURE_*.md\n    code_key: artifact_code\n  vocabulary:\n    file_pattern: VOCAB_*.md\n    code_key: artifact_code\n  surface_contracts:\n    file_pattern: SURFACE_CONTRACT_*.md\n    code_key: artifact_code\n  schemas:\n    file_pattern: SCHEMA_*.json\n    code_key: $id\n  capability_transforms:\n    file_pattern: CT_*.md\n    code_key: artifact_code\n    exclude_patterns:\n    - CONSTITUTION_*.md\n  capability_side_effects:\n    file_pattern: CS_*.md\n    code_key: artifact_code\n    exclude_patterns:\n    - CONSTITUTION_*.md\n  capability_contracts:\n    file_pattern: CC_*.md\n    code_key: artifact_code\n    exclude_patterns:\n    - CONSTITUTION_*.md\n  intents:\n    file_pattern: IN_*.md\n    code_key: artifact_code\n    exclude_patterns:\n    - CONSTITUTION_*.md\n  workflows:\n    file_pattern: WF_*.md\n    code_key: artifact_code\n    exclude_patterns:\n    - CONSTITUTION_*.md\n  events:\n    file_pattern: EV_*.md\n    code_key: artifact_code\n    exclude_patterns:\n    - CONSTITUTION_*.md\n  actors:\n    file_pattern: AC_*.md\n    code_key: artifact_code\n    exclude_patterns:\n    - CONSTITUTION_*.md\n  runtime_bindings:\n    file_pattern: RB_*.md\n    code_key: artifact_code\n    exclude_patterns:\n    - CONSTITUTION_*.md\n  transport_intents:\n    file_pattern: TI_*.md\n    code_key: artifact_code\n    exclude_patterns:\n    - CONSTITUTION_*.md\n  transport_egress:\n    file_pattern: TE_*.md\n    code_key: artifact_code\n    exclude_patterns:\n    - CONSTITUTION_*.md\noutput_configuration:\n  _type: metadata\n```\n",
+  "content_hash": "f6b86e33d2d79cc13731ab2840efd2d39a2bf9e67f1936b20b3ecfb120a38cf6",
+  "fqdn_id": "structure::STRUCTURE_FQDN_TREE_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "artifact_patterns": {
+      "actors": {
+        "code_key": "artifact_code",
+        "exclude_patterns": [
+          "CONSTITUTION_*.md"
+        ],
+        "file_pattern": "AC_*.md"
+      },
+      "capability_contracts": {
+        "code_key": "artifact_code",
+        "exclude_patterns": [
+          "CONSTITUTION_*.md"
+        ],
+        "file_pattern": "CC_*.md"
+      },
+      "capability_side_effects": {
+        "code_key": "artifact_code",
+        "exclude_patterns": [
+          "CONSTITUTION_*.md"
+        ],
+        "file_pattern": "CS_*.md"
+      },
+      "capability_transforms": {
+        "code_key": "artifact_code",
+        "exclude_patterns": [
+          "CONSTITUTION_*.md"
+        ],
+        "file_pattern": "CT_*.md"
+      },
+      "constitutions": {
+        "code_key": "artifact_code",
+        "file_pattern": "CONSTITUTION_*.md"
+      },
+      "events": {
+        "code_key": "artifact_code",
+        "exclude_patterns": [
+          "CONSTITUTION_*.md"
+        ],
+        "file_pattern": "EV_*.md"
+      },
+      "intents": {
+        "code_key": "artifact_code",
+        "exclude_patterns": [
+          "CONSTITUTION_*.md"
+        ],
+        "file_pattern": "IN_*.md"
+      },
+      "invariants": {
+        "code_key": "artifact_code",
+        "file_pattern": "INVARIANT_*.md"
+      },
+      "runtime_bindings": {
+        "code_key": "artifact_code",
+        "exclude_patterns": [
+          "CONSTITUTION_*.md"
+        ],
+        "file_pattern": "RB_*.md"
+      },
+      "schemas": {
+        "code_key": "$id",
+        "file_pattern": "SCHEMA_*.json"
+      },
+      "structures": {
+        "code_key": "artifact_code",
+        "file_pattern": "STRUCTURE_*.md"
+      },
+      "surface_contracts": {
+        "code_key": "artifact_code",
+        "file_pattern": "SURFACE_CONTRACT_*.md"
+      },
+      "transport_egress": {
+        "code_key": "artifact_code",
+        "exclude_patterns": [
+          "CONSTITUTION_*.md"
+        ],
+        "file_pattern": "TE_*.md"
+      },
+      "transport_intents": {
+        "code_key": "artifact_code",
+        "exclude_patterns": [
+          "CONSTITUTION_*.md"
+        ],
+        "file_pattern": "TI_*.md"
+      },
+      "vocabulary": {
+        "code_key": "artifact_code",
+        "file_pattern": "VOCAB_*.md"
+      },
+      "workflows": {
+        "code_key": "artifact_code",
+        "exclude_patterns": [
+          "CONSTITUTION_*.md"
+        ],
+        "file_pattern": "WF_*.md"
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "structure",
+    "core": {
+      "description": "Declares source packages and their physical roots, and records which namespaces are declared by artifacts in each registry folder. Namespace identity is declared per artifact; the folder mapping is descriptive.\n",
+      "summary": "Logical package tree and folder-to-namespace correspondence"
+    },
+    "fqdn": "structure::STRUCTURE_FQDN_TREE_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "namespace_mappings": {
+      "capability_side_effects/registry/capability_side_effects": [
+        "capability_side_effects"
+      ],
+      "capability_transforms/registry/capability_transforms": [
+        "capability_transforms"
+      ],
+      "registry/actor": [
+        "actor"
+      ],
+      "registry/artifact": [
+        "artifact"
+      ],
+      "registry/authority": [
+        "authority"
+      ],
+      "registry/capability_contracts": [
+        "capability_contracts"
+      ],
+      "registry/capability_side_effects": [
+        "capability_side_effects"
+      ],
+      "registry/capability_transforms": [
+        "capability_transforms"
+      ],
+      "registry/compiler": [
+        "compiler"
+      ],
+      "registry/conformance": [
+        "conformance"
+      ],
+      "registry/cryptographic_trust": [
+        "cryptographic_trust"
+      ],
+      "registry/event": [
+        "event"
+      ],
+      "registry/execution": [
+        "execution"
+      ],
+      "registry/execution_placement": [
+        "execution_placement"
+      ],
+      "registry/execution_scheduling": [
+        "execution_scheduling"
+      ],
+      "registry/execution_topology": [
+        "execution_topology"
+      ],
+      "registry/federation": [
+        "federation"
+      ],
+      "registry/governance": [
+        "governance"
+      ],
+      "registry/intent": [
+        "intent"
+      ],
+      "registry/lifecycle": [
+        "lifecycle"
+      ],
+      "registry/runtime_binding": [
+        "runtime_binding"
+      ],
+      "registry/security_domain": [
+        "security_domain"
+      ],
+      "registry/structure": [
+        "structure"
+      ],
+      "registry/surface_contract": [
+        "surface_contract"
+      ],
+      "registry/trace": [
+        "trace"
+      ],
+      "registry/transport": [
+        "transport"
+      ],
+      "registry/vocabulary": [
+        "vocabulary"
+      ],
+      "registry/workflow": [
+        "workflow"
+      ]
+    },
+    "output_configuration": {
+      "_type": "metadata"
+    },
+    "packages": [
+      {
+        "authority": "sovereign",
+        "build_order": 0,
+        "contains": [
+          "registry",
+          "capability_transforms",
+          "capability_side_effects"
+        ],
+        "depends_on": [],
+        "module_root": "registry",
+        "package": "software_governance",
+        "physical_root": ".",
+        "registries": [
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace actor",
+            "path": "registry/actor"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace artifact",
+            "path": "registry/artifact"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace authority",
+            "path": "registry/authority"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace capability_contracts",
+            "path": "registry/capability_contracts"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace capability_side_effects",
+            "path": "registry/capability_side_effects"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace capability_transforms",
+            "path": "registry/capability_transforms"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace compiler",
+            "path": "registry/compiler"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace conformance",
+            "path": "registry/conformance"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace cryptographic_trust",
+            "path": "registry/cryptographic_trust"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace event",
+            "path": "registry/event"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace execution",
+            "path": "registry/execution"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace execution_placement",
+            "path": "registry/execution_placement"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace execution_scheduling",
+            "path": "registry/execution_scheduling"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace execution_topology",
+            "path": "registry/execution_topology"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace federation",
+            "path": "registry/federation"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace governance",
+            "path": "registry/governance"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace intent",
+            "path": "registry/intent"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace lifecycle",
+            "path": "registry/lifecycle"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace runtime_binding",
+            "path": "registry/runtime_binding"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace security_domain",
+            "path": "registry/security_domain"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace structure",
+            "path": "registry/structure"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace surface_contract",
+            "path": "registry/surface_contract"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace trace",
+            "path": "registry/trace"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace transport",
+            "path": "registry/transport"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace vocabulary",
+            "path": "registry/vocabulary"
+          },
+          {
+            "artifact_types": [
+              "constitutions",
+              "invariants",
+              "structures",
+              "surface_contracts",
+              "vocabulary"
+            ],
+            "notes": "Namespace workflow",
+            "path": "registry/workflow"
+          },
+          {
+            "artifact_types": [
+              "schemas"
+            ],
+            "notes": "Declaration substrate \u2014 JSON schemas, not an fb.* namespace",
+            "path": "registry/schema"
+          }
+        ],
+        "role": "governance_surface"
+      },
+      {
+        "authority": "delegated",
+        "build_order": 1,
+        "contains": [
+          "registry"
+        ],
+        "depends_on": [
+          "software_governance"
+        ],
+        "module_root": "capability_transforms",
+        "package": "capability_transforms",
+        "physical_root": "./capability_transforms",
+        "registries": [
+          {
+            "artifact_types": [
+              "capability_transforms"
+            ],
+            "path": "registry/capability_transforms"
+          }
+        ],
+        "role": "capability_pack"
+      },
+      {
+        "authority": "delegated",
+        "build_order": 2,
+        "contains": [
+          "registry",
+          "implementation"
+        ],
+        "depends_on": [
+          "software_governance"
+        ],
+        "module_root": "capability_side_effects",
+        "package": "capability_side_effects",
+        "physical_root": "./capability_side_effects",
+        "registries": [
+          {
+            "artifact_types": [
+              "capability_side_effects"
+            ],
+            "path": "registry/capability_side_effects"
+          }
+        ],
+        "role": "capability_pack"
+      }
+    ],
+    "role_artifact_rules": {
+      "capability_pack": [
+        "capability_transforms",
+        "capability_side_effects"
+      ],
+      "governance_surface": [
+        "constitutions",
+        "invariants",
+        "structures",
+        "schemas",
+        "vocabulary",
+        "surface_contracts"
+      ],
+      "workload": [
+        "capability_contracts",
+        "capability_transforms",
+        "capability_side_effects",
+        "intents",
+        "workflows",
+        "events",
+        "actors",
+        "runtime_bindings",
+        "transport_intents",
+        "transport_egress"
+      ]
+    },
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

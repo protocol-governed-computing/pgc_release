@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_RB_NO_LOGIC_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_RB_NO_LOGIC_V0\n\n## Machine\n\n```yaml\nfqdn: runtime_binding::INVARIANT_RB_NO_LOGIC_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: runtime_binding\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - RB\n```\n\n---\n\n## Purpose\n\nKeep runtime bindings as pure mapping declarations with no embedded programs.\n\n---\n\n## How it is checked\n### Rule: No Conditional Logic\n\nBinding config strings must not contain conditional expressions.\n\n**Violation**:\n```yaml\nconfig:\n  path: \"{{env == 'prod' ? '/prod' : '/dev'}}/data\"  # WRONG\n```\n\n**Correct**:\n```yaml\nconfig:\n  path: \"{{data_root}}/name_registry.json\"  # Template substitution OK\n```\n\n### Rule: No Callable References\n\nBinding config must not reference callables or function syntax.\n\n**Violation**:\n```yaml\nconfig:\n  resolver: \"module.get_path()\"  # WRONG\n```\n\n---\n\n## Scope\n\n**Applies to**: All RB artifacts\n\n**Does NOT restrict**: Template variable substitution ({{var}} patterns)\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'RB artifacts must contain no execution logic. Binding configuration values must be static\n    declarations \u2014 strings, numbers, booleans, lists, or maps. Template variable substitution ({{var}})\n    is permitted. Conditional expressions, callable references, and dynamic evaluation are forbidden.\n\n    '\n  anti_patterns:\n  - conditional_expression: Binding value contains if/else or ternary logic\n  - callable_reference: Binding value contains function call syntax\n  - dynamic_evaluation: Binding value uses eval-style expression beyond {{var}} substitution\n  clarification:\n    template_variables_ok: '{{var}} style parameter substitution is permitted and expected. It is static\n      substitution, not logic evaluation.\n\n      '\n    logic_belongs_in_ct_cs: Any computation required to derive a configuration value must be performed\n      in a CT artifact, not inlined into an RB declaration.\n```\n",
+  "content_hash": "520aaff2f86f69224bc81d17671456e58a6362afaab4a79e1c0a20d48dd28a9d",
+  "fqdn_id": "runtime_binding::INVARIANT_RB_NO_LOGIC_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "RB"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "runtime_binding",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "runtime_binding::INVARIANT_RB_NO_LOGIC_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "runtime_binding",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

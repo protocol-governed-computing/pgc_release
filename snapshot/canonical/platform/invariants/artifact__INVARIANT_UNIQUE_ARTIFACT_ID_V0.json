@@ -1,0 +1,47 @@
+{
+  "artifact_code": "INVARIANT_UNIQUE_ARTIFACT_ID_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_UNIQUE_ARTIFACT_ID_V0\n\n## Machine\n\n```yaml\nfqdn: artifact::INVARIANT_UNIQUE_ARTIFACT_ID_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: artifact\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - AC\n  - CC\n  - CONSTITUTION\n  - CS\n  - CT\n  - EV\n  - IN\n  - INVARIANT\n  - RB\n  - SCHEMA\n  - STRUCTURE\n  - SURFACE\n  - TE\n  - TI\n  - VOCAB\n  - WF\n```\n\n---\n\n## Purpose\n\nEnsures that every artifact in the compilation graph has a globally unique identity (FQDN).\nPrevents silent overwrites where multiple physical files claim the same logical identity.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Each fqdn_id must be unique across compilation graph\n  anti_patterns:\n  - duplicate_fqdn: Multiple artifacts share same fqdn_id\n```\n",
+  "content_hash": "50763d1ae2f38021740d2883b7b7a11dc327b68f517e4f61080c5621060831ff",
+  "fqdn_id": "artifact::INVARIANT_UNIQUE_ARTIFACT_ID_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "AC",
+        "CC",
+        "CONSTITUTION",
+        "CS",
+        "CT",
+        "EV",
+        "IN",
+        "INVARIANT",
+        "RB",
+        "SCHEMA",
+        "STRUCTURE",
+        "SURFACE",
+        "TE",
+        "TI",
+        "VOCAB",
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "artifact",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "artifact::INVARIANT_UNIQUE_ARTIFACT_ID_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "artifact",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

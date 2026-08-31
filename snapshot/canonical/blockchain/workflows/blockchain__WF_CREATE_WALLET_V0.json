@@ -1,0 +1,145 @@
+{
+  "artifact_code": "WF_CREATE_WALLET_V0",
+  "artifact_type": "WF",
+  "content": "# WF_CREATE_WALLET_V0\n\n## 1. Intent\n\nThe governed sequence that gives an accepted person a wallet and records that it did\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::WF_CREATE_WALLET_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: wallet\nruntime_binding: blockchain::RB_WALLET_BINDINGS_V0\nconsults:\n- blockchain::RB_IDENTITY_BINDINGS_V0\nsubdomain: wallet\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: The governed sequence that gives an accepted person a wallet and records that it did\n  actor_context: blockchain::AC_PARTICIPANT_V0\n  start_node: IN_WALLET_CREATION_V0\n  nodes:\n    IN_WALLET_CREATION_V0:\n      type: IN\n      code: IN_WALLET_CREATION_V0\n      next:\n        ACK: CC_RESOLVE_ACTOR_V0\n        NACK: EXIT_REJECTED\n    CC_RESOLVE_ACTOR_V0:\n      type: CC\n      code: CC_RESOLVE_ACTOR_V0\n      inputs:\n        contact_address: $.payload.contact_address\n      next:\n        SUCCESS: CC_REQUIRE_ACCEPTED_HOLDER_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n    CC_REQUIRE_ACCEPTED_HOLDER_V0:\n      type: CC\n      code: CC_REQUIRE_ACCEPTED_HOLDER_V0\n      inputs:\n        holder_state: $.results.CC_RESOLVE_ACTOR_V0.value.state\n        states_admitting_a_wallet:\n        - ACCEPTED\n      next:\n        SUCCESS: CC_DETERMINE_WALLET_IDENTITY_V0\n        VIOLATION: EXIT_REJECTED\n    CC_DETERMINE_WALLET_IDENTITY_V0:\n      type: CC\n      code: CC_DETERMINE_WALLET_IDENTITY_V0\n      inputs:\n        holder: $.results.CC_RESOLVE_ACTOR_V0.value.contact_address\n        wallet_id_prefix: $.payload.wallet_id_prefix\n      next:\n        SUCCESS: CC_CLAIM_WALLET_IDENTITY_V0\n        VIOLATION: EXIT_REJECTED\n    CC_CLAIM_WALLET_IDENTITY_V0:\n      type: CC\n      code: CC_CLAIM_WALLET_IDENTITY_V0\n      inputs:\n        wallet_id: $.results.CC_DETERMINE_WALLET_IDENTITY_V0.id\n      next:\n        SUCCESS: CC_ESTABLISH_WALLET_ADDRESS_V0\n        ALREADY_EXISTS: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n    CC_ESTABLISH_WALLET_ADDRESS_V0:\n      type: CC\n      code: CC_ESTABLISH_WALLET_ADDRESS_V0\n      inputs:\n        key_material: $.payload.key_material\n      next:\n        SUCCESS: CC_CREATE_WALLET_RECORD_V0\n        VIOLATION: EXIT_REJECTED\n    CC_CREATE_WALLET_RECORD_V0:\n      type: CC\n      code: CC_CREATE_WALLET_RECORD_V0\n      inputs:\n        wallet_id: $.results.CC_DETERMINE_WALLET_IDENTITY_V0.id\n        wallet_fields: $.payload.wallet_fields\n      next:\n        SUCCESS: CC_APPEND_WALLET_OCCURRENCE_V0\n        VIOLATION: EXIT_REJECTED\n    CC_APPEND_WALLET_OCCURRENCE_V0:\n      type: CC\n      code: CC_APPEND_WALLET_OCCURRENCE_V0\n      inputs:\n        stream_id: $.results.CC_DETERMINE_WALLET_IDENTITY_V0.id\n        occurrence_fields: $.payload.occurrence_fields\n      next:\n        SUCCESS: EXIT_SUCCESS\n        VIOLATION: EXIT_REJECTED\n    EXIT_SUCCESS:\n      type: EXIT\n      emit: blockchain::EV_WALLET_CREATED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n",
+  "content_hash": "d3bc197fc89db7e6e355e3d9373398317103855d1416a4b684fbc1c6b084df41",
+  "fqdn_id": "blockchain::WF_CREATE_WALLET_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "consults": [
+      "blockchain::RB_IDENTITY_BINDINGS_V0"
+    ],
+    "core": {
+      "actor_context": "blockchain::AC_PARTICIPANT_V0",
+      "nodes": {
+        "CC_APPEND_WALLET_OCCURRENCE_V0": {
+          "code": "CC_APPEND_WALLET_OCCURRENCE_V0",
+          "fqdn_id": "blockchain::CC_APPEND_WALLET_OCCURRENCE_V0",
+          "inputs": {
+            "occurrence_fields": "$.payload.occurrence_fields",
+            "stream_id": "$.results.CC_DETERMINE_WALLET_IDENTITY_V0.id"
+          },
+          "next": {
+            "SUCCESS": "EXIT_SUCCESS",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CLAIM_WALLET_IDENTITY_V0": {
+          "code": "CC_CLAIM_WALLET_IDENTITY_V0",
+          "fqdn_id": "blockchain::CC_CLAIM_WALLET_IDENTITY_V0",
+          "inputs": {
+            "wallet_id": "$.results.CC_DETERMINE_WALLET_IDENTITY_V0.id"
+          },
+          "next": {
+            "ALREADY_EXISTS": "EXIT_REJECTED",
+            "SUCCESS": "CC_ESTABLISH_WALLET_ADDRESS_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CREATE_WALLET_RECORD_V0": {
+          "code": "CC_CREATE_WALLET_RECORD_V0",
+          "fqdn_id": "blockchain::CC_CREATE_WALLET_RECORD_V0",
+          "inputs": {
+            "wallet_fields": "$.payload.wallet_fields",
+            "wallet_id": "$.results.CC_DETERMINE_WALLET_IDENTITY_V0.id"
+          },
+          "next": {
+            "SUCCESS": "CC_APPEND_WALLET_OCCURRENCE_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_DETERMINE_WALLET_IDENTITY_V0": {
+          "code": "CC_DETERMINE_WALLET_IDENTITY_V0",
+          "fqdn_id": "blockchain::CC_DETERMINE_WALLET_IDENTITY_V0",
+          "inputs": {
+            "holder": "$.results.CC_RESOLVE_ACTOR_V0.value.contact_address",
+            "wallet_id_prefix": "$.payload.wallet_id_prefix"
+          },
+          "next": {
+            "SUCCESS": "CC_CLAIM_WALLET_IDENTITY_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_ESTABLISH_WALLET_ADDRESS_V0": {
+          "code": "CC_ESTABLISH_WALLET_ADDRESS_V0",
+          "fqdn_id": "blockchain::CC_ESTABLISH_WALLET_ADDRESS_V0",
+          "inputs": {
+            "key_material": "$.payload.key_material"
+          },
+          "next": {
+            "SUCCESS": "CC_CREATE_WALLET_RECORD_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_REQUIRE_ACCEPTED_HOLDER_V0": {
+          "code": "CC_REQUIRE_ACCEPTED_HOLDER_V0",
+          "fqdn_id": "blockchain::CC_REQUIRE_ACCEPTED_HOLDER_V0",
+          "inputs": {
+            "holder_state": "$.results.CC_RESOLVE_ACTOR_V0.value.state",
+            "states_admitting_a_wallet": [
+              "ACCEPTED"
+            ]
+          },
+          "next": {
+            "SUCCESS": "CC_DETERMINE_WALLET_IDENTITY_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RESOLVE_ACTOR_V0": {
+          "code": "CC_RESOLVE_ACTOR_V0",
+          "fqdn_id": "blockchain::CC_RESOLVE_ACTOR_V0",
+          "inputs": {
+            "contact_address": "$.payload.contact_address"
+          },
+          "next": {
+            "NOT_FOUND": "EXIT_REJECTED",
+            "SUCCESS": "CC_REQUIRE_ACCEPTED_HOLDER_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "EXIT_SUCCESS": {
+          "emit": "blockchain::EV_WALLET_CREATED_V0",
+          "type": "EXIT"
+        },
+        "IN_WALLET_CREATION_V0": {
+          "code": "IN_WALLET_CREATION_V0",
+          "fqdn_id": "blockchain::IN_WALLET_CREATION_V0",
+          "next": {
+            "ACK": "CC_RESOLVE_ACTOR_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_WALLET_CREATION_V0",
+      "summary": "The governed sequence that gives an accepted person a wallet and records that it did"
+    },
+    "fqdn": "blockchain::WF_CREATE_WALLET_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "blockchain::RB_WALLET_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "wallet",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "blockchain::RB_IDENTITY_BINDINGS_V0",
+    "blockchain::RB_WALLET_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,120 @@
+{
+  "artifact_code": "STRUCTURE_DISCOVERY_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_DISCOVERY_V0\n\n**Artifact Type**: STRUCTURE\n**Version**: V0\n**Status**: CANONICAL\n**Authority**: CONSTITUTIONAL\n\n---\n\n## Purpose\n\nSingle source of truth for artifact discovery. Defines which layers are searched, how layer codes map to physical registry modules, and the rules governing artifact scanning.\n\n---\n\n## Machine\n\n```yaml\nfqdn: structure::STRUCTURE_DISCOVERY_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: structure\ncore:\n  summary: Consolidated artifact discovery configuration\n  description: 'Single source of truth for artifact discovery, replacing fragmented registry location\n    and layer authority discovery definitions.\n\n    '\ndiscovery:\n  layers:\n    GOVERNANCE:\n      registry_module: software_governance.registry\n      layer_category: platform\n    REUSABLE_TRANSFORMS:\n      registry_module: capability_transforms.registry\n      implementation_namespace: transforms.atoms\n      layer_category: platform\n    REUSABLE_SIDE_EFFECTS:\n      registry_module: capability_side_effects.registry\n      layer_category: platform\n    CAPABILITIES:\n      registry_module: business_domains.registry\n      layer_category: platform\n    COMPILER:\n      registry_module: protocol_compiler.registry\n      layer_category: platform\n    STRUCTURE:\n      registry_module: protocol_compiler.structure\n      layer_category: platform\n    INGRESS:\n      registry_module: protocol_transport.registry\n      layer_category: platform\n    EXECUTION:\n      registry_module: protocol_runtime\n      layer_category: platform\n    BLOCKCHAIN:\n      registry_module: business_domains.blockchain.registry\n      module_path_pattern: '{registry_module}.{subdomain}'\n      implementation_namespace: capability_transforms.atoms\n      layer_category: domain\n      allowed_subdomains:\n      - identity\n      - transaction\n      - wallet\n    AI_GOVERNANCE:\n      registry_module: business_domains.ai_governance.registry\n      module_path_pattern: '{registry_module}.{domain}'\n      implementation_namespace: capability_transforms.atoms\n      layer_category: domain\n      allowed_domains:\n      - ai_licensing\n      - agent_governance\n      - agent_admission\n    TEST_DATA:\n      registry_module: conformance_workloads.testbed.ct_test_data\n      layer_category: platform\n  rules:\n    filename_pattern: ^(?P<type>TEST_DATA|[A-Z]+)_(?P<name>[A-Z0-9_]+)_V(?P<version>\\d+)\\.md$\n    excluded_directories:\n    - .git\n    - __pycache__\n    - node_modules\n    - .venv\n    - metadata\n    format_precedence:\n    - json\n    - markdown\n    format_extensions:\n      json: .json\n      markdown: .md\n    resolution:\n      method: importlib\n      fallback: forbidden\n    scope:\n      type: platform_only\n    validation:\n      require_registry: true\n      on_missing_registry: FAIL\n    ordering:\n      deterministic: true\n```\n",
+  "content_hash": "7236a7897c77de65d2599433d1c075f7abdb4d0d3bd0a92f38381b70ef5e2b34",
+  "fqdn_id": "structure::STRUCTURE_DISCOVERY_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "structure",
+    "core": {
+      "description": "Single source of truth for artifact discovery, replacing fragmented registry location and layer authority discovery definitions.\n",
+      "summary": "Consolidated artifact discovery configuration"
+    },
+    "discovery": {
+      "layers": {
+        "AI_GOVERNANCE": {
+          "allowed_domains": [
+            "ai_licensing",
+            "agent_governance",
+            "agent_admission"
+          ],
+          "implementation_namespace": "capability_transforms.atoms",
+          "layer_category": "domain",
+          "module_path_pattern": "{registry_module}.{domain}",
+          "registry_module": "business_domains.ai_governance.registry"
+        },
+        "BLOCKCHAIN": {
+          "allowed_subdomains": [
+            "identity",
+            "transaction",
+            "wallet"
+          ],
+          "implementation_namespace": "capability_transforms.atoms",
+          "layer_category": "domain",
+          "module_path_pattern": "{registry_module}.{subdomain}",
+          "registry_module": "business_domains.blockchain.registry"
+        },
+        "CAPABILITIES": {
+          "layer_category": "platform",
+          "registry_module": "business_domains.registry"
+        },
+        "COMPILER": {
+          "layer_category": "platform",
+          "registry_module": "protocol_compiler.registry"
+        },
+        "EXECUTION": {
+          "layer_category": "platform",
+          "registry_module": "protocol_runtime"
+        },
+        "GOVERNANCE": {
+          "layer_category": "platform",
+          "registry_module": "software_governance.registry"
+        },
+        "INGRESS": {
+          "layer_category": "platform",
+          "registry_module": "protocol_transport.registry"
+        },
+        "REUSABLE_SIDE_EFFECTS": {
+          "layer_category": "platform",
+          "registry_module": "capability_side_effects.registry"
+        },
+        "REUSABLE_TRANSFORMS": {
+          "implementation_namespace": "transforms.atoms",
+          "layer_category": "platform",
+          "registry_module": "capability_transforms.registry"
+        },
+        "STRUCTURE": {
+          "layer_category": "platform",
+          "registry_module": "protocol_compiler.structure"
+        },
+        "TEST_DATA": {
+          "layer_category": "platform",
+          "registry_module": "conformance_workloads.testbed.ct_test_data"
+        }
+      },
+      "rules": {
+        "excluded_directories": [
+          ".git",
+          "__pycache__",
+          "node_modules",
+          ".venv",
+          "metadata"
+        ],
+        "filename_pattern": "^(?P<type>TEST_DATA|[A-Z]+)_(?P<name>[A-Z0-9_]+)_V(?P<version>\\d+)\\.md$",
+        "format_extensions": {
+          "json": ".json",
+          "markdown": ".md"
+        },
+        "format_precedence": [
+          "json",
+          "markdown"
+        ],
+        "ordering": {
+          "deterministic": true
+        },
+        "resolution": {
+          "fallback": "forbidden",
+          "method": "importlib"
+        },
+        "scope": {
+          "type": "platform_only"
+        },
+        "validation": {
+          "on_missing_registry": "FAIL",
+          "require_registry": true
+        }
+      }
+    },
+    "fqdn": "structure::STRUCTURE_DISCOVERY_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

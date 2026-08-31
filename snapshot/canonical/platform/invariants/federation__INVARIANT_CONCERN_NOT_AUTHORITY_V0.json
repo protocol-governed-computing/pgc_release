@@ -1,0 +1,53 @@
+{
+  "artifact_code": "INVARIANT_CONCERN_NOT_AUTHORITY_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_CONCERN_NOT_AUTHORITY_V0\n\n## Machine\n\n```yaml\nfqdn: federation::INVARIANT_CONCERN_NOT_AUTHORITY_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: federation\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  handler: pgs_governance.registry.handlers.assert_concern_not_authority_v0\n  scope:\n    applies_to:\n    - PLATFORM\n  applies_to_kinds:\n  - AC\n  - CC\n  - CONSTITUTION\n  - CS\n  - CT\n  - EV\n  - IN\n  - INVARIANT\n  - RB\n  - SCHEMA\n  - STRUCTURE\n  - SURFACE\n  - TE\n  - TI\n  - VOCAB\n  - WF\n```\n\n---\n\n## A concern classification alone is refused as grounds for an authority\n\nNo value declared as a `concern` MUST also be declared as an `authority`. The two sets MUST be\ndisjoint.\n\nA concern is the semantic subject an artifact is about; an authority is the entity from which\njurisdiction derives. `2e` CA-6: \"A concern classification MUST NOT constitute an authority or a\njurisdiction.\" The ruling's clause 2 states the same, and the defect it was written for is precisely\na concern name promoted to a boundary \u2014 twenty-six of them.\n\nThis predicate is what the collapsed identifier made unwritable. While concern and authority were one\nstring, no check could tell an unlisted namespace from an illegitimate boundary; with separate\ncarriers the question is a set comparison.\n",
+  "content_hash": "10a2d78a8ffad4d7754af06e670bda097c0275c38c561e8b0840cb87e8c3d922",
+  "fqdn_id": "federation::INVARIANT_CONCERN_NOT_AUTHORITY_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "AC",
+        "CC",
+        "CONSTITUTION",
+        "CS",
+        "CT",
+        "EV",
+        "IN",
+        "INVARIANT",
+        "RB",
+        "SCHEMA",
+        "STRUCTURE",
+        "SURFACE",
+        "TE",
+        "TI",
+        "VOCAB",
+        "WF"
+      ],
+      "handler": "pgs_governance.registry.handlers.assert_concern_not_authority_v0",
+      "scope": {
+        "applies_to": [
+          "PLATFORM"
+        ]
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "federation",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "federation::INVARIANT_CONCERN_NOT_AUTHORITY_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "federation",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

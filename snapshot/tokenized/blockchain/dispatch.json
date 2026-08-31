@@ -1,0 +1,1052 @@
+{
+  "admission": {
+    "35": {
+      "contact_address": {
+        "required": true,
+        "type": "string"
+      },
+      "verifying_authority": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "36": {
+      "actor_record": {
+        "required": true,
+        "type": "object"
+      },
+      "registration_schema": {
+        "required": true,
+        "type": "object"
+      }
+    },
+    "37": {
+      "contact_address": {
+        "required": true,
+        "type": "string"
+      },
+      "grounds": {
+        "required": true,
+        "type": "string"
+      },
+      "verifying_authority": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "38": {
+      "contact_address": {
+        "required": true,
+        "type": "string"
+      },
+      "decision": {
+        "required": true,
+        "type": "string"
+      },
+      "grounds": {
+        "required": false,
+        "type": "string"
+      },
+      "verifying_authority": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "39": {
+      "contact_address": {
+        "required": true,
+        "type": "string"
+      },
+      "key_material": {
+        "required": true,
+        "type": "string"
+      },
+      "wallet_id_prefix": {
+        "required": true,
+        "type": "string"
+      }
+    }
+  },
+  "bindings": {
+    "52": {
+      "CC_APPEND_ACTOR_OCCURRENCE_V0": {
+        "contact_address": "$.payload.contact_address",
+        "occurrence_fields": "$.payload.occurrence_fields",
+        "stream_id": "$.payload.stream_id"
+      },
+      "CC_RECORD_VERIFICATION_DECISION_V0": {
+        "admitted_outcomes": "$.payload.admitted_outcomes",
+        "contact_address": "$.payload.contact_address",
+        "current_state": "$.results.28.value.state",
+        "decided_actor_fields": "$.payload.decided_actor_fields",
+        "decision": "$.payload.decision",
+        "self_check_parameters": "$.payload.self_check_parameters",
+        "self_check_rules": "$.payload.self_check_rules",
+        "states_admitting_a_decision": "$.payload.states_admitting_a_decision",
+        "verifying_authority": "$.payload.verifying_authority"
+      },
+      "CC_RESOLVE_ACTOR_V0": {
+        "contact_address": "$.payload.contact_address"
+      }
+    },
+    "53": {
+      "CC_APPEND_WALLET_OCCURRENCE_V0": {
+        "occurrence_fields": "$.payload.occurrence_fields",
+        "stream_id": "$.results.22.id"
+      },
+      "CC_CLAIM_WALLET_IDENTITY_V0": {
+        "wallet_id": "$.results.22.id"
+      },
+      "CC_CREATE_WALLET_RECORD_V0": {
+        "wallet_fields": "$.payload.wallet_fields",
+        "wallet_id": "$.results.22.id"
+      },
+      "CC_DETERMINE_WALLET_IDENTITY_V0": {
+        "holder": "$.results.28.value.contact_address",
+        "wallet_id_prefix": "$.payload.wallet_id_prefix"
+      },
+      "CC_ESTABLISH_WALLET_ADDRESS_V0": {
+        "key_material": "$.payload.key_material"
+      },
+      "CC_REQUIRE_ACCEPTED_HOLDER_V0": {
+        "holder_state": "$.results.28.value.state",
+        "states_admitting_a_wallet": [
+          "ACCEPTED"
+        ]
+      },
+      "CC_RESOLVE_ACTOR_V0": {
+        "contact_address": "$.payload.contact_address"
+      }
+    },
+    "54": {
+      "CC_APPEND_ACTOR_OCCURRENCE_V0": {
+        "contact_address": "$.payload.contact_address",
+        "occurrence_fields": "$.payload.occurrence_fields",
+        "stream_id": "$.payload.stream_id"
+      },
+      "CC_RECORD_VERIFICATION_DECISION_V0": {
+        "admitted_outcomes": "$.payload.admitted_outcomes",
+        "contact_address": "$.payload.contact_address",
+        "current_state": "$.results.28.value.state",
+        "decided_actor_fields": "$.payload.decided_actor_fields",
+        "decision": "$.payload.decision",
+        "states_admitting_a_decision": "$.payload.states_admitting_a_decision",
+        "verifying_authority": "$.payload.verifying_authority"
+      },
+      "CC_RESOLVE_ACTOR_V0": {
+        "contact_address": "$.payload.contact_address"
+      }
+    },
+    "55": {
+      "CC_APPEND_ACTOR_OCCURRENCE_V0": {
+        "contact_address": "$.results.19.result",
+        "occurrence_fields": "$.payload.occurrence_fields",
+        "stream_id": "$.payload.stream_id"
+      },
+      "CC_CLAIM_CONTACT_ADDRESS_V0": {
+        "actor_record": "$.payload.actor_record",
+        "address_path": "$.payload.address_path",
+        "address_type": "$.payload.address_type"
+      },
+      "CC_REGISTER_ACTOR_V0": {
+        "actor_fields": "$.payload.actor_record",
+        "contact_address": "$.results.19.result"
+      },
+      "CC_VALIDATE_REGISTRATION_V0": {
+        "actor_record": "$.payload.actor_record",
+        "registration_schema": "$.payload.registration_schema"
+      }
+    },
+    "56": {
+      "CC_APPEND_ACTOR_OCCURRENCE_V0": {
+        "contact_address": "$.payload.contact_address",
+        "occurrence_fields": "$.payload.occurrence_fields",
+        "stream_id": "$.payload.stream_id"
+      },
+      "CC_RECORD_VERIFICATION_DECISION_V0": {
+        "admitted_outcomes": "$.payload.admitted_outcomes",
+        "contact_address": "$.payload.contact_address",
+        "current_state": "$.results.28.value.state",
+        "decided_actor_fields": "$.payload.decided_actor_fields",
+        "decision": "$.payload.decision",
+        "self_check_parameters": "$.payload.self_check_parameters",
+        "self_check_rules": "$.payload.self_check_rules",
+        "states_admitting_a_decision": "$.payload.states_admitting_a_decision",
+        "verifying_authority": "$.payload.verifying_authority"
+      },
+      "CC_REQUIRE_REJECTION_GROUNDS_V0": {
+        "grounds_parameters": "$.payload.grounds_parameters",
+        "grounds_rules": "$.payload.grounds_rules"
+      },
+      "CC_RESOLVE_ACTOR_V0": {
+        "contact_address": "$.payload.contact_address"
+      }
+    }
+  },
+  "emits": {
+    "52": {
+      "17": {
+        "SUCCESS": [
+          "blockchain::EV_ACTOR_ACCEPTED_V0"
+        ]
+      }
+    },
+    "53": {
+      "18": {
+        "SUCCESS": [
+          "blockchain::EV_WALLET_CREATED_V0"
+        ]
+      }
+    },
+    "55": {
+      "17": {
+        "SUCCESS": [
+          "blockchain::EV_ACTOR_REGISTERED_UNVERIFIED_V0"
+        ]
+      }
+    },
+    "56": {
+      "17": {
+        "SUCCESS": [
+          "blockchain::EV_ACTOR_REJECTED_V0"
+        ]
+      }
+    }
+  },
+  "entry": {
+    "52": {
+      "actor": "blockchain::AC_PARTICIPANT_V0",
+      "rb": 40,
+      "start": 35,
+      "start_key": "IN_ACTOR_ACCEPTANCE_V0"
+    },
+    "53": {
+      "actor": "blockchain::AC_PARTICIPANT_V0",
+      "rb": 41,
+      "start": 39,
+      "start_key": "IN_WALLET_CREATION_V0"
+    },
+    "54": {
+      "actor": "blockchain::AC_PARTICIPANT_V0",
+      "rb": 40,
+      "start": 38,
+      "start_key": "IN_ACTOR_VERIFIED_V0"
+    },
+    "55": {
+      "actor": "blockchain::AC_PARTICIPANT_V0",
+      "rb": 40,
+      "start": 36,
+      "start_key": "IN_ACTOR_REGISTERED_V0"
+    },
+    "56": {
+      "actor": "blockchain::AC_PARTICIPANT_V0",
+      "rb": 40,
+      "start": 37,
+      "start_key": "IN_ACTOR_REJECTION_V0"
+    }
+  },
+  "pipeline": {
+    "17": [
+      {
+        "addr": 66,
+        "inputs": {},
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue"
+        },
+        "op": "NOW",
+        "outputs": {
+          "timestamp": "$.capability_result.timestamp"
+        },
+        "step_id": "read_now"
+      },
+      {
+        "addr": 72,
+        "inputs": {
+          "fields": {
+            "contact_address": "$.inputs.contact_address",
+            "grounds": "$.inputs.occurrence_fields.grounds",
+            "occurred_at": "$.results.read_now.timestamp",
+            "occurrence": "$.inputs.occurrence_fields.occurrence",
+            "verifying_authority": "$.inputs.occurrence_fields.verifying_authority"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "record": "$.capability_result.record"
+        },
+        "step_id": "assemble_occurrence"
+      },
+      {
+        "addr": 65,
+        "inputs": {
+          "__store__": "ACTOR_OCCURRENCES",
+          "actor_id": "$.inputs.contact_address",
+          "record": "$.results.assemble_occurrence.record",
+          "stream_id": "$.inputs.stream_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "sequence_number": "$.capability_result.sequence_number"
+        },
+        "step_id": "append_occurrence"
+      }
+    ],
+    "18": [
+      {
+        "addr": 66,
+        "inputs": {},
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue"
+        },
+        "op": "NOW",
+        "outputs": {
+          "timestamp": "$.capability_result.timestamp"
+        },
+        "step_id": "read_occurred_at"
+      },
+      {
+        "addr": 72,
+        "inputs": {
+          "fields": "$.inputs.occurrence_fields"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "record": "$.capability_result.record"
+        },
+        "step_id": "assemble_occurrence"
+      },
+      {
+        "addr": 65,
+        "inputs": {
+          "__store__": "WALLET_OCCURRENCES",
+          "record": "$.results.assemble_occurrence.record",
+          "stream_id": "$.inputs.stream_id"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "result_status": "$.capability_result.result_status"
+        },
+        "step_id": "append_occurrence"
+      }
+    ],
+    "19": [
+      {
+        "addr": 73,
+        "inputs": {
+          "from": "$.inputs.actor_record",
+          "path": "$.inputs.address_path",
+          "type": "$.inputs.address_type"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "result": "$.capability_result.result"
+        },
+        "step_id": "extract_address"
+      },
+      {
+        "addr": 68,
+        "inputs": {
+          "__store__": "CONTACT_ADDRESS_REGISTRY",
+          "key": "$.results.extract_address.result",
+          "target_cs": "CS_MUTABLE_JSON_V0",
+          "target_ref": "ACTORS"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "address": "$.capability_result.address",
+          "result_status": "$.result_status"
+        },
+        "step_id": "claim_address"
+      }
+    ],
+    "20": [
+      {
+        "addr": 68,
+        "inputs": {
+          "__store__": "WALLET_IDENTITIES",
+          "key": "$.inputs.wallet_id"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "result_status": "$.capability_result.result_status"
+        },
+        "step_id": "claim_wallet_identity"
+      }
+    ],
+    "21": [
+      {
+        "addr": 66,
+        "inputs": {},
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue"
+        },
+        "op": "NOW",
+        "outputs": {
+          "timestamp": "$.capability_result.timestamp"
+        },
+        "step_id": "read_created_at"
+      },
+      {
+        "addr": 72,
+        "inputs": {
+          "fields": "$.inputs.wallet_fields"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "record": "$.capability_result.record"
+        },
+        "step_id": "assemble_wallet"
+      },
+      {
+        "addr": 67,
+        "inputs": {
+          "__store__": "WALLETS",
+          "key": "$.inputs.wallet_id",
+          "value": "$.results.assemble_wallet.record"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.capability_result.result_status"
+        },
+        "step_id": "write_wallet"
+      }
+    ],
+    "22": [
+      {
+        "addr": 74,
+        "inputs": {
+          "data": "$.inputs.holder",
+          "prefix": "$.inputs.wallet_id_prefix"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "id": "$.capability_result.id"
+        },
+        "step_id": "derive_wallet_identity"
+      }
+    ],
+    "23": [
+      {
+        "addr": 30,
+        "inputs": {
+          "key_material": "$.inputs.key_material"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "address": "$.capability_result.address"
+        },
+        "step_id": "derive_wallet_address"
+      }
+    ],
+    "24": [
+      {
+        "addr": 77,
+        "inputs": {
+          "allowed_set": "$.inputs.states_admitting_a_decision",
+          "value": "$.inputs.current_state"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "is_member": "$.capability_result.is_member"
+        },
+        "step_id": "read_state_admits_decision"
+      },
+      {
+        "addr": 77,
+        "inputs": {
+          "allowed_set": "$.inputs.admitted_outcomes",
+          "value": "$.inputs.decision"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "is_member": "$.capability_result.is_member"
+        },
+        "step_id": "read_outcome_admitted"
+      },
+      {
+        "addr": 75,
+        "inputs": {
+          "parameters": "$.inputs.self_check_parameters",
+          "rules": "$.inputs.self_check_rules"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "step_id": "refuse_self_verification"
+      },
+      {
+        "addr": 72,
+        "inputs": {
+          "fields": "$.inputs.decided_actor_fields"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "record": "$.capability_result.record"
+        },
+        "step_id": "assemble_decided_actor"
+      },
+      {
+        "addr": 67,
+        "inputs": {
+          "__store__": "ACTORS",
+          "key": "$.inputs.contact_address",
+          "updates": "$.results.assemble_decided_actor.record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "step_id": "write_decided_actor"
+      }
+    ],
+    "25": [
+      {
+        "addr": 72,
+        "inputs": {
+          "fields": "$.inputs.actor_fields"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "record": "$.capability_result.record"
+        },
+        "step_id": "assemble_actor"
+      },
+      {
+        "addr": 67,
+        "inputs": {
+          "__store__": "ACTORS",
+          "key": "$.inputs.contact_address",
+          "value": "$.results.assemble_actor.record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "step_id": "write_actor"
+      }
+    ],
+    "26": [
+      {
+        "addr": 77,
+        "inputs": {
+          "allowed_set": "$.inputs.states_admitting_a_wallet",
+          "value": "$.inputs.holder_state"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "is_accepted": "$.capability_result.is_member"
+        },
+        "step_id": "require_holder_accepted"
+      }
+    ],
+    "27": [
+      {
+        "addr": 75,
+        "inputs": {
+          "parameters": "$.inputs.grounds_parameters",
+          "rules": "$.inputs.grounds_rules"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "step_id": "require_grounds_stated"
+      }
+    ],
+    "28": [
+      {
+        "addr": 68,
+        "inputs": {
+          "__store__": "CONTACT_ADDRESS_REGISTRY",
+          "key_or_address": "$.inputs.contact_address"
+        },
+        "on_result": {
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "RESOLVE",
+        "outputs": {
+          "target_ref": "$.capability_result.target_ref"
+        },
+        "step_id": "resolve_address"
+      },
+      {
+        "addr": 67,
+        "inputs": {
+          "__store__": "ACTORS",
+          "key": "$.inputs.contact_address"
+        },
+        "on_result": {
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "value": "$.capability_result.value"
+        },
+        "step_id": "read_actor"
+      }
+    ],
+    "29": [
+      {
+        "addr": 76,
+        "inputs": {
+          "record": "$.inputs.actor_record",
+          "schema": "$.inputs.registration_schema"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "violations": "$.capability_result.violations"
+        },
+        "step_id": "read_registration"
+      }
+    ]
+  },
+  "projection_class": "machine_projection",
+  "routing": {
+    "52": {
+      "24": {
+        "24580": {
+          "addr": 17,
+          "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
+        }
+      },
+      "28": {
+        "24580": {
+          "addr": 24,
+          "key": "CC_RECORD_VERIFICATION_DECISION_V0"
+        }
+      },
+      "35": {
+        "24576": {
+          "addr": 28,
+          "key": "CC_RESOLVE_ACTOR_V0"
+        }
+      }
+    },
+    "53": {
+      "20": {
+        "24580": {
+          "addr": 23,
+          "key": "CC_ESTABLISH_WALLET_ADDRESS_V0"
+        }
+      },
+      "21": {
+        "24580": {
+          "addr": 18,
+          "key": "CC_APPEND_WALLET_OCCURRENCE_V0"
+        }
+      },
+      "22": {
+        "24580": {
+          "addr": 20,
+          "key": "CC_CLAIM_WALLET_IDENTITY_V0"
+        }
+      },
+      "23": {
+        "24580": {
+          "addr": 21,
+          "key": "CC_CREATE_WALLET_RECORD_V0"
+        }
+      },
+      "26": {
+        "24580": {
+          "addr": 22,
+          "key": "CC_DETERMINE_WALLET_IDENTITY_V0"
+        }
+      },
+      "28": {
+        "24580": {
+          "addr": 26,
+          "key": "CC_REQUIRE_ACCEPTED_HOLDER_V0"
+        }
+      },
+      "39": {
+        "24576": {
+          "addr": 28,
+          "key": "CC_RESOLVE_ACTOR_V0"
+        }
+      }
+    },
+    "54": {
+      "24": {
+        "24580": {
+          "addr": 17,
+          "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
+        }
+      },
+      "28": {
+        "24580": {
+          "addr": 24,
+          "key": "CC_RECORD_VERIFICATION_DECISION_V0"
+        }
+      },
+      "38": {
+        "24576": {
+          "addr": 28,
+          "key": "CC_RESOLVE_ACTOR_V0"
+        }
+      }
+    },
+    "55": {
+      "19": {
+        "24577": {
+          "addr": 17,
+          "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
+        },
+        "24580": {
+          "addr": 25,
+          "key": "CC_REGISTER_ACTOR_V0"
+        }
+      },
+      "25": {
+        "24580": {
+          "addr": 17,
+          "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
+        }
+      },
+      "29": {
+        "24580": {
+          "addr": 19,
+          "key": "CC_CLAIM_CONTACT_ADDRESS_V0"
+        }
+      },
+      "36": {
+        "24576": {
+          "addr": 29,
+          "key": "CC_VALIDATE_REGISTRATION_V0"
+        }
+      }
+    },
+    "56": {
+      "24": {
+        "24580": {
+          "addr": 17,
+          "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
+        }
+      },
+      "27": {
+        "24580": {
+          "addr": 28,
+          "key": "CC_RESOLVE_ACTOR_V0"
+        }
+      },
+      "28": {
+        "24580": {
+          "addr": 24,
+          "key": "CC_RECORD_VERIFICATION_DECISION_V0"
+        }
+      },
+      "37": {
+        "24576": {
+          "addr": 27,
+          "key": "CC_REQUIRE_REJECTION_GROUNDS_V0"
+        }
+      }
+    }
+  },
+  "terminal": {
+    "52": {
+      "17": {
+        "24580": {
+          "exit": "EXIT_SUCCESS",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "24": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "28": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "35": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "53": {
+      "18": {
+        "24580": {
+          "exit": "EXIT_SUCCESS",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "20": {
+        "24577": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "21": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "23": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "26": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "28": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "39": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "54": {
+      "17": {
+        "24580": {
+          "exit": "EXIT_SUCCESS",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "24": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "28": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "38": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "55": {
+      "17": {
+        "24580": {
+          "exit": "EXIT_SUCCESS",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "19": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "25": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "29": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "36": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "56": {
+      "17": {
+        "24580": {
+          "exit": "EXIT_SUCCESS",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "24": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "27": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "28": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "37": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    }
+  }
+}

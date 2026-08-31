@@ -1,0 +1,45 @@
+{
+  "artifact_code": "TI_SI_CAPABILITY_SURFACE_V0",
+  "artifact_type": "TI",
+  "content": "# TI_SI_CAPABILITY_SURFACE_V0\n\n**Kind:** Transport Ingress Contract (Transport Standard V0 \u00a76)\n**Operation Identity:** `si.capability.surface`\n\nDeclares `si.capability.surface` in full: what it admits, how it is presented, and which implementation\nanswers it. This artifact is the **authority** \u2014 `inspector.catalog` reads the operation set from\nthe compiled contracts, and `inspector.registry` holds implementations and no metadata. Adding,\nrenaming or re-pointing an operation is an authoring act here, sealed into the snapshot and\nattested; it cannot happen silently in code.\n\n`handler.kind: SNAPSHOT_READ` selects the inspector's static entry point rather than the runtime's.\nThe engine routes by KIND and stops there \u2014 the inspector resolves the declared implementation\ninternally. No resolver or adapter code interprets the operation string; one that did would be a\nhidden RPC router.\n\n`handler.implementation` is the same binding a capability transform declares: the artifact names\n`{module, callable}` and the inspector resolves it against a closed, statically imported\nregistry. An implementation the registry does not import cannot be named here.\n\nEach `si.` operation carries its own TI/TE pair. The family shares one HTTP route, but sharing a\nroute is a protocol convenience; sharing a governed identity would leave the boundary unable to\nadmit one operation and refuse another.\n\n## Machine\n\n```yaml\nfqdn: inspection::TI_SI_CAPABILITY_SURFACE_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: inspection\noperation: si.capability.surface\n\n# Input contract \u2014 declared and enforced at the boundary before the handler is reached.\n# A parameter declared `type: boolean` is what a client renders as a switch; `flags` is derived\n# from the contract, never stated twice.\ninput_contract:\n  capability:\n    type: string\n    required: false\n\n# Presentation \u2014 the published catalog a client builds its menu from.\ncatalog:\n  category: STORES\n  label: Capability surface\n  summary: Each capability side effect's operations and the fields they declare they yield.\n\n# Context requirements \u2014 inert in V0 (AC reserved).\ncontext_requirements: []\n\nhandler:\n  kind: SNAPSHOT_READ\n  operation: si.capability.surface\n  implementation:\n    module: inspector.reads.capability_surface\n    callable: capability_surface\n  payload_template:\n    capability: \"${input.capability}\"\n```\n",
+  "content_hash": "76bee61fe8c5701842374a22ccb1ce7e8696e496f0627f7b2130e9b3001e660c",
+  "fqdn_id": "inspection::TI_SI_CAPABILITY_SURFACE_V0",
+  "frontmatter": {
+    "artifact_kind": "TRANSPORT_INGRESS",
+    "authority": "pgc.platform",
+    "catalog": {
+      "category": "STORES",
+      "label": "Capability surface",
+      "summary": "Each capability side effect's operations and the fields they declare they yield."
+    },
+    "concern": "inspection",
+    "context_requirements": [],
+    "fqdn": "inspection::TI_SI_CAPABILITY_SURFACE_V0",
+    "governed_by": "transport::CONSTITUTION_TRANSPORT_INGRESS_V0",
+    "handler": {
+      "implementation": {
+        "callable": "capability_surface",
+        "module": "inspector.reads.capability_surface"
+      },
+      "kind": "SNAPSHOT_READ",
+      "operation": "si.capability.surface",
+      "payload_template": {
+        "capability": "${input.capability}"
+      }
+    },
+    "input_contract": {
+      "capability": {
+        "required": false,
+        "type": "string"
+      }
+    },
+    "operation": "si.capability.surface",
+    "version": "v0"
+  },
+  "layer_code": "INSPECTION_TRANSPORT",
+  "namespace": "inspection",
+  "references": [
+    "transport::CONSTITUTION_TRANSPORT_INGRESS_V0"
+  ],
+  "version": "0"
+}

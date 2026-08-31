@@ -1,0 +1,45 @@
+{
+  "artifact_code": "VOCAB_EXECUTION_STATES_V0",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_EXECUTION_STATES_V0 \u2014 Execution Semantics\n\n**Governance Header**\n- Vocabulary ID: vocabulary::VOCAB_EXECUTION_STATES_V0\n- Version: v0\n- Governed By: vocabulary::CONSTITUTION_VOCABULARY_V0\n- Status: Active\n\n---\n\n## Purpose\n\nDefines execution outcome symbols: result statuses for node-level outcomes and exit reasons for workflow-level termination.\n\n## Allowed Usage\n\n- `result_status`: In `on_result` clauses, `result_status_contract.allowed` arrays, trace event `result_status` fields\n- `exit_reasons`: In EXIT node `reason` field, `execution_end` trace events\n\n## Prohibited Usage\n\n- Must NOT be used as protocol identifiers\n- Must NOT be used as node names or parameter names\n- A `result_status` value must not be used where an `exit_reason` is required, or vice versa\n\n## Governance Rules\n\n- Status symbols represent semantic outcomes, not data values\n- Each capability contract declares which result statuses it may return\n- Exit reasons represent workflow-level termination states only\n- The two sets are **scope-distinct, not disjoint**: `result_status` classifies a node outcome,\n  `exit_reasons` classifies a workflow termination. The same word MAY appear in both when the\n  outcome is meaningful at both scopes (a node may time out; a workflow may terminate on timeout).\n  Each set independently closes its own scope.\n- Additive changes preferred; removal requires migration planning\n\n### Domain extension\n\nThis artifact is the **reserving declaration** for the outcome space \u2014 the statuses the platform\ncompiler and runtime interpret. A domain requiring a domain-specific outcome SHALL declare its own\n`VOCABULARY` artifact in its own namespace, or map the outcome onto a declared status; it SHALL\nNOT add domain symbols here.\n\nExtension is authorized per category, by this artifact, and is machine-checked:\n\n| Category | `domain_extensible` | Why |\n|---|---|---|\n| `result_status` | `true` | A CC may report a domain-specific outcome; the workflow routes on it. The platform does not need to interpret it. |\n| `exit_reasons` | `false` | Terminal dispositions are interpreted by the runtime scheduler. A reason it cannot interpret has no meaning. |\n\nAn extending vocabulary declares `extends: vocabulary::VOCAB_EXECUTION_STATES_V0` and lists\nonly the categories it contributes to. Contributing to a category that is not\n`domain_extensible: true` is a compile-time violation, as is a symbol colliding with\n`VOCAB_LANGUAGE_CONSTRAINTS_V0.reserved_non_authorable`.\n\nThe compiled result is one **vocabulary closure** per build \u2014 reserved vocabulary plus imported\ngovernance plus authorized extensions. There is no separate \"domain vocabulary\" that rules are\nevaluated against; there is one closure, and every symbol rule is evaluated against it.\n\n---\n\n## Machine\n\n```yaml\nfqdn: vocabulary::VOCAB_EXECUTION_STATES_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: vocabulary\nresult_status:\n  casing: UPPER_SNAKE\n  domain_extensible: true\n  entries:\n  - SUCCESS\n  - FAILURE\n  - VIOLATION\n  - ERROR\n  - NOT_FOUND\n  - ALREADY_EXISTS\n  - BACKEND_ERROR\n  - TIMEOUT\nexit_reasons:\n  casing: UPPER_SNAKE\n  domain_extensible: false\n  entries:\n  - COMPLETED\n  - EXITED\n  - FAILED\n  - TIMEOUT\n```\n",
+  "content_hash": "cc9970bc64947097af4489caeacf414d6af913292712ae7ab50a90cd12ff590e",
+  "fqdn_id": "vocabulary::VOCAB_EXECUTION_STATES_V0",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "authority": "pgc.platform",
+    "concern": "vocabulary",
+    "exit_reasons": {
+      "casing": "UPPER_SNAKE",
+      "domain_extensible": false,
+      "entries": [
+        "COMPLETED",
+        "EXITED",
+        "FAILED",
+        "TIMEOUT"
+      ]
+    },
+    "fqdn": "vocabulary::VOCAB_EXECUTION_STATES_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "result_status": {
+      "casing": "UPPER_SNAKE",
+      "domain_extensible": true,
+      "entries": [
+        "SUCCESS",
+        "FAILURE",
+        "VIOLATION",
+        "ERROR",
+        "NOT_FOUND",
+        "ALREADY_EXISTS",
+        "BACKEND_ERROR",
+        "TIMEOUT"
+      ]
+    },
+    "version": "v0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "vocabulary",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

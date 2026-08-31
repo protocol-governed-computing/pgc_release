@@ -1,0 +1,54 @@
+{
+  "artifact_code": "IN_ACTOR_VERIFIED_V0",
+  "artifact_type": "IN",
+  "content": "# IN_ACTOR_VERIFIED_V0\n\n## 1. Intent\n\nA request to record a decision, carrying the authority, the outcome and the grounds\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::IN_ACTOR_VERIFIED_V0\nsuperseded_by:\n- blockchain::IN_ACTOR_ACCEPTANCE_V0\n- blockchain::IN_ACTOR_REJECTION_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: A request to record a decision, carrying the authority, the outcome and the grounds\n  workflow: WF_RECORD_VERIFICATION_DECISION_V0\n  inputs:\n    contact_address:\n      type: string\n      required: true\n    verifying_authority:\n      type: string\n      required: true\n    decision:\n      type: string\n      required: true\n    grounds:\n      type: string\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n",
+  "content_hash": "ad35712315c273e6a5185d9fca7fc9b3ac4329092ed2a404ac4e5fdc0600e601",
+  "fqdn_id": "blockchain::IN_ACTOR_VERIFIED_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "inputs": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "decision": {
+          "required": true,
+          "type": "string"
+        },
+        "grounds": {
+          "type": "string"
+        },
+        "verifying_authority": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to record a decision, carrying the authority, the outcome and the grounds",
+      "workflow": "WF_RECORD_VERIFICATION_DECISION_V0"
+    },
+    "fqdn": "blockchain::IN_ACTOR_VERIFIED_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "superseded_by": [
+      "blockchain::IN_ACTOR_ACCEPTANCE_V0",
+      "blockchain::IN_ACTOR_REJECTION_V0"
+    ],
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

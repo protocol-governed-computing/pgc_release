@@ -1,0 +1,46 @@
+{
+  "artifact_code": "CONSTITUTION_SECURITY_DOMAIN_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_SECURITY_DOMAIN_V0\n\n## Machine\n\n```yaml\nfqdn: security_domain::CONSTITUTION_SECURITY_DOMAIN_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: security_domain\ncore:\n  enforcement_model: process_and_compiler_enforced\nrules:\n- applies_to: compiled_snapshot\n  enforced_by: security_domain::INVARIANT_SECURITY_DOMAIN_DECLARED_V0\n- applies_to: compiled_snapshot\n  enforced_by: security_domain::INVARIANT_SECURITY_DOMAIN_DECLARED_V0\n- applies_to: federation_boundary\n  enforced_by: PROCESS_ENFORCED\n- applies_to: runtime\n  enforced_by: PROCESS_ENFORCED\n- applies_to: runtime\n  enforced_by: PROCESS_ENFORCED\n```\n\n---\n\n## Purpose\n\nThis constitution governs information-control regimes for PGS execution. It answers\nthe question: *within what information-control context is this snapshot permitted to execute,\nand what visibility constraints apply?*\n\nIn V0, the only active regime is `UNCLASSIFIED_LOCAL` \u2014 execution is local, unclassified,\nand trace output is unrestricted. This declaration seeds the governance axis that will\neventually govern classified execution (CONTROLLED, CONFIDENTIAL, SECRET, COMPARTMENTED).\n\n## \u00a71. Sole Owner of Visibility Classification\n\nSnapshot visibility (`INTERNAL`, `FEDERATED_PUBLIC`) is an information-control concern\nand belongs exclusively to this boundary. Other federation boundaries \u2014 placement, trust,\nadmissibility \u2014 do not carry visibility or classification declarations. This is a\ndeliberate separation of concerns enforced by the anti-duplication rule above.\n\n## \u00a72. V0 Security Domain\n\nThe only authorized security domain in V0 is `UNCLASSIFIED_LOCAL`.\n\nThis means:\n- No classification labels are required on artifacts or payloads\n- Cross-domain flow authorization is not needed (no domains to cross)\n- Trace output may emit all fields without redaction\n- Snapshot visibility is `INTERNAL` \u2014 consumed within the local federation only\n\n## \u00a73. Compiler Behavior\n\nThe compiler MUST:\n- Discover the active security domain contract in this boundary\n- Validate that exactly one contract is active\n- Materialize security domain mode into the snapshot federation profile under:\n\n```yaml\nfederation_profile:\n  security_domain: UNCLASSIFIED_LOCAL\n```\n\n## \u00a74. Runtime Behavior\n\nThe runtime MUST:\n- Record `federation_profile.security_domain` in trace metadata\n- Emit trace fields without restriction (UNCLASSIFIED_LOCAL has no redaction rules)\n- NOT perform classification enforcement or domain-boundary checking\n\n## \u00a75. Future Expansion Path\n\n```\nUNCLASSIFIED_LOCAL\n  \u2192 CONTROLLED\n  \u2192 CONFIDENTIAL\n  \u2192 SECRET\n  \u2192 COMPARTMENTED\n```\n\nEach step requires a new security domain contract and new compiler validation passes\nfor cross-domain flow legality and trace projection constraints.\n\n## \u00a76. Versioning\n\nChanges to security domain semantics require a new constitution version and migration rationale.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Declares which information-control regime is active for a compiled snapshot.\n\n    Governs classification domain membership, compartment boundary legality,\n\n    cross-domain flow authorization, and secure trace projection constraints.\n\n\n    FB_SECURITY_DOMAIN is also the sole owner of snapshot visibility classification.\n\n    Visibility is an information-control concern; it belongs here and nowhere else.\n\n    '\n  summary: Governs information-control regimes, classification domains, compartment boundaries, secure\n    flow and projection legality\nrules:\n- rule_id: SECURITY_DOMAIN_MUST_BE_DECLARED\n  constraint: 'Every compiled snapshot MUST declare exactly one active security domain contract. A snapshot\n    with no security domain declaration is a compiler validation failure.\n\n    '\n- rule_id: CROSS_DOMAIN_FLOW_REQUIRES_AUTHORIZATION\n  constraint: 'Cross-domain data flow is not permitted unless the active security domain contract explicitly\n    sets cross_domain_flow_allowed: true with an explicit authorization. In V0 UNCLASSIFIED_LOCAL mode,\n    cross-domain flow is prohibited.\n\n    '\n- rule_id: VISIBILITY_OWNED_BY_SECURITY_DOMAIN\n  constraint: 'Snapshot visibility and classification are information-control concerns. They MUST be declared\n    only within FB_SECURITY_DOMAIN contracts. No other federation boundary (placement, trust, admissibility,\n    topology) may declare or override visibility classifications.\n\n    '\n- rule_id: TRACE_PROJECTION_RESPECTS_DOMAIN\n  constraint: 'Trace projection MUST NOT emit fields that violate the active security domain boundary.\n    In V0 UNCLASSIFIED_LOCAL mode, all trace fields are emittable. In future classified modes, trace projection\n    rules will be governed here.\n\n    '\n- rule_id: RUNTIME_READS_SECURITY_DOMAIN_PASSIVELY\n  constraint: 'Runtime MAY read the active security domain contract for trace metadata emission. Runtime\n    MUST NOT branch on security domain mode or perform classification enforcement. Classification enforcement\n    is a compile-time governance concern.\n\n    '\n```\n",
+  "content_hash": "40b0bb8f53c56ab635bf361007b1989b69268360ffb8d1f9527de7b9e8b9709e",
+  "fqdn_id": "security_domain::CONSTITUTION_SECURITY_DOMAIN_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "security_domain",
+    "core": {
+      "enforcement_model": "process_and_compiler_enforced"
+    },
+    "fqdn": "security_domain::CONSTITUTION_SECURITY_DOMAIN_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "rules": [
+      {
+        "applies_to": "compiled_snapshot",
+        "enforced_by": "security_domain::INVARIANT_SECURITY_DOMAIN_DECLARED_V0"
+      },
+      {
+        "applies_to": "compiled_snapshot",
+        "enforced_by": "security_domain::INVARIANT_SECURITY_DOMAIN_DECLARED_V0"
+      },
+      {
+        "applies_to": "federation_boundary",
+        "enforced_by": "PROCESS_ENFORCED"
+      },
+      {
+        "applies_to": "runtime",
+        "enforced_by": "PROCESS_ENFORCED"
+      },
+      {
+        "applies_to": "runtime",
+        "enforced_by": "PROCESS_ENFORCED"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "security_domain",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

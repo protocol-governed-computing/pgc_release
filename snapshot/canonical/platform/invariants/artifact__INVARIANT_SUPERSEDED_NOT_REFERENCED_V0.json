@@ -1,0 +1,46 @@
+{
+  "artifact_code": "INVARIANT_SUPERSEDED_NOT_REFERENCED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_SUPERSEDED_NOT_REFERENCED_V0\n\nArchitectural Invariant\n\n## Machine\n\n```yaml\nfqdn: artifact::INVARIANT_SUPERSEDED_NOT_REFERENCED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: artifact\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - WF\n  - CC\n  - CS\n  - CT\n  - RB\n  - AC\n  - IN\n  - EV\n  - TI\n  - TE\n  - INVARIANT\n  - CONSTITUTION\n  - STRUCTURE\n  - SURFACE\n  - VOCAB\n```\n\n---\n\n## Purpose\n\nMake supersession mean something.\n\nAn artifact declares `superseded_by` and stops being reachable. Without this invariant that\ndeclaration is a comment: the artifact stays in the composition, stays compiled, stays dispatchable,\nand everything that referenced it goes on reaching it. A change can then stand a workflow down,\nreport success, and leave the composition executing the workflow it retired.\n\nThat is not hypothetical. A change split one deciding workflow into an accept path and a reject path,\nmarked the original superseded, compiled, verified and attested \u2014 while three artifacts still routed\nto it. A caller crossing either boundary would have reached the workflow the design had stood down.\n\n---\n\n## How it is checked\n### Rule: nothing live references a superseded artifact\n\nWhere `X` declares `supersedes: Y` \u2014 equivalently, where `Y` declares `superseded_by` \u2014 no artifact\nin the composition may reference `Y`.\n\n**Violation**:\n\n```yaml\n# WF_RECORD_VERIFICATION_DECISION_V0 declares superseded_by: [WF_ACCEPT_ACTOR_V0, WF_REJECT_ACTOR_V0]\nfqdn: blockchain::TI_ACCEPT_ACTOR_V0\nhandler:\n  workflow: blockchain::WF_RECORD_VERIFICATION_DECISION_V0   # reaches a retired artifact\n```\n\n### Rule: a superseded artifact may reference another\n\nThe closure binds **live** artifacts. A retired artifact naming another retired one is coherent\nhistory \u2014 an entry intent and the workflow it dispatched are stood down together, and each still says\nwhat it said. Refusing that would oblige a change to rewrite the records it is retiring, which is the\nopposite of retaining them.\n\n### Rule: a successor exists\n\n`superseded_by` carries at least one identity. \"Superseded\" with nothing standing in the artifact's\nplace is a deletion wearing a softer word, and deletion is a human act with a `git rm`, not something\na design declares.\n\n---\n\n## What this does not do\n\nIt does not remove the artifact. A superseded artifact is **unreachable, not absent**: excluded from\nthe executable projections, retained in the canonical set and visible through `si.*`, because the\nrecord of what a composition once executed is evidence and deleting it destroys what dossiers exist\nto preserve.\n\nIt does not resolve references. A reference names an exact, versioned identity and continues to; this\ninvariant refuses a reference to a retired identity rather than quietly re-pointing it at a successor.\nRe-authoring the referrers is the work that makes a retirement legible, and doing it automatically\nwould convert visible work into invisible work.\n",
+  "content_hash": "15aea16ff84de93322f9d1c7eb31c6990d3ff7408499f134063842bd4a36b03c",
+  "fqdn_id": "artifact::INVARIANT_SUPERSEDED_NOT_REFERENCED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF",
+        "CC",
+        "CS",
+        "CT",
+        "RB",
+        "AC",
+        "IN",
+        "EV",
+        "TI",
+        "TE",
+        "INVARIANT",
+        "CONSTITUTION",
+        "STRUCTURE",
+        "SURFACE",
+        "VOCAB"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "artifact",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "artifact::INVARIANT_SUPERSEDED_NOT_REFERENCED_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "artifact",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

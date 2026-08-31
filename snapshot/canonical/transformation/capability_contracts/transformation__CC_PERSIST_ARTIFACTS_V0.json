@@ -1,0 +1,89 @@
+{
+  "artifact_code": "CC_PERSIST_ARTIFACTS_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_TEXT_ARTIFACT_V0",
+        "id": "CS_TEXT_ARTIFACT_V0",
+        "kind": "CS",
+        "ops": [
+          "WRITE_ALL",
+          "LIST"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_PERSIST_ARTIFACTS_V0\n\n## 1. Intent\n\nPersist a rendered construction.\n\n---\n\n## 2. Why this is a separate contract\n\n`CC_CONSTRUCT_ARTIFACTS_V0` binds nothing and observes nothing: it parses, measures and renders, and\nthe same design produces the same artifacts wherever it runs. That is what makes construction\ntestable \u2014 its output depends on its input and on nothing else.\n\nWriting is a side effect. A contract that binds one is a different contract from one that binds\nnone, for the same reason `CC_JUDGE_AGAINST_SNAPSHOT_V0` is not `CC_JUDGE_DOCUMENT_V0`. Folding the\nwrite into the pure pipeline would make rendering depend on a filesystem, and a construction that\ncould not be run without writing could not be measured without writing either.\n\nSo the purity boundary is a contract boundary, and it is visible in the workflow: one node renders,\nthe next node persists.\n\n---\n\n## 3. One operation, one construction\n\nA capability contract is a fixed pipeline with no iteration, so the whole rendered set is written in\none call. The outcome that matters is the one that survives: either the construction was persisted\nor it was not.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::CC_PERSIST_ARTIFACTS_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: build\ncore:\n  summary: Write a rendered construction beneath the root its runtime binding declares\n  inputs:\n    documents:\n      type: array\n      required: true\n  outputs:\n    written:\n      type: integer\n    paths:\n      type: array\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: write_artifacts\n    side_effect: capability_side_effects::CS_TEXT_ARTIFACT_V0\n    op: WRITE_ALL\n    inputs:\n      documents: $.inputs.documents\n    outputs:\n      written: $.capability_result.written\n      paths: $.capability_result.paths\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\nextensions:\n  description: The Construction lifecycle's only side effect\n```\n",
+  "content_hash": "e51cb3bf478aecb979d81be42b8b74c0bb21ff926eca87259c0d6e2a3fedf0b2",
+  "fqdn_id": "transformation::CC_PERSIST_ARTIFACTS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "build",
+    "core": {
+      "inputs": {
+        "documents": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "paths": {
+          "type": "array"
+        },
+        "written": {
+          "type": "integer"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "documents": "$.inputs.documents"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "WRITE_ALL",
+          "outputs": {
+            "paths": "$.capability_result.paths",
+            "written": "$.capability_result.written"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_TEXT_ARTIFACT_V0",
+          "step": "write_artifacts"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Write a rendered construction beneath the root its runtime binding declares"
+    },
+    "extensions": {
+      "description": "The Construction lifecycle's only side effect"
+    },
+    "fqdn": "transformation::CC_PERSIST_ARTIFACTS_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

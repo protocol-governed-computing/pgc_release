@@ -1,0 +1,58 @@
+{
+  "artifact_code": "EV_BOOK_REGISTERED_V0",
+  "artifact_type": "EV",
+  "content": "# EV_BOOK_REGISTERED_V0\n\n## 1. Intent\n\nA book entered the catalog and acquired its authoritative record\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::EV_BOOK_REGISTERED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A book entered the catalog and acquired its authoritative record\n  description: A book entered the catalog and acquired its authoritative record\n  subdomain: catalog\n  schema:\n    identity_key:\n      type: string\n      required: true\n    title:\n      type: string\n      required: true\n    author:\n      type: string\n      required: true\n    publication_year:\n      type: integer\n      required: true\n    barcode:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
+  "content_hash": "2313232a0378bb240c0408a76ecdb513ddff89a95c78ffafeb54fcffc6790c4a",
+  "fqdn_id": "book_library_mgmt::EV_BOOK_REGISTERED_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "description": "A book entered the catalog and acquired its authoritative record",
+      "schema": {
+        "author": {
+          "required": true,
+          "type": "string"
+        },
+        "barcode": {
+          "required": true,
+          "type": "string"
+        },
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "publication_year": {
+          "required": true,
+          "type": "integer"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        },
+        "title": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "catalog",
+      "summary": "A book entered the catalog and acquired its authoritative record"
+    },
+    "fqdn": "book_library_mgmt::EV_BOOK_REGISTERED_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

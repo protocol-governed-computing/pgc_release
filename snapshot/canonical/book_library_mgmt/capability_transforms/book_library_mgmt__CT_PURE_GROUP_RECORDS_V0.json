@@ -1,0 +1,84 @@
+{
+  "artifact_code": "CT_PURE_GROUP_RECORDS_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_GROUP_RECORDS_V0\n\n## 1. Intent\n\nGroups records by the value of a named attribute, returning one group per distinct value\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CT_PURE_GROUP_RECORDS_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Groups records by the value of a named attribute, returning one group per distinct value\n  refusal: never\n  inputs:\n    source:\n      type: array\n      required: true\n    attribute:\n      type: string\n      required: true\n  outputs:\n    grouped:\n      type: array\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_GROUP_RECORDS\n  implementation:\n    module: book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_group_records_v0\n    callable: execute\n```\n",
+  "content_hash": "8251dbccc7584b063733b0274f0da77f8ec7c9072c0bf2a8bc846100a782008e",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_GROUP_RECORDS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "attribute": "$.inputs.attribute",
+          "source": "$.inputs.source"
+        },
+        "atom": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_group_records_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+    "inputs": {
+      "attribute": {
+        "required": true,
+        "type": "string"
+      },
+      "source": {
+        "required": true,
+        "type": "array"
+      }
+    },
+    "outputs": {
+      "grouped": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "attribute": {
+          "required": true,
+          "type": "string"
+        },
+        "source": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "grouped": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "refusal": "never",
+      "summary": "Groups records by the value of a named attribute, returning one group per distinct value"
+    },
+    "fqdn": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_group_records_v0"
+      },
+      "operation": "PURE_GROUP_RECORDS"
+    },
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+  ],
+  "version": "0"
+}

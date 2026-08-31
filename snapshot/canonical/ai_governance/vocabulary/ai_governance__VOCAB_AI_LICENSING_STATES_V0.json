@@ -1,0 +1,28 @@
+{
+  "artifact_code": "VOCAB_AI_LICENSING_STATES_V0",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_AI_LICENSING_STATES_V0\n\n## 1. Intent\n\nAuthorized extension of the outcome space for the `ai_licensing` subdomain.\n\nLicence provisioning has one outcome the platform does not model: the request was well-formed and\nthe actor eligible, but the licence cap is already met. That is neither `VIOLATION` (nothing was\nviolated) nor `NOT_FOUND` (everything was found) \u2014 it is a governed refusal with its own audit\nmeaning, so it is declared here rather than mapped onto a platform status that would lose it.\n\n`CAP_REACHED` is consumed by `CC_ENFORCE_LICENSE_CAP_V0` and routed by the provisioning workflow.\n\n---\n\n## 2. Extension Contract\n\nThis artifact `extends` the reserving declaration `vocabulary::VOCAB_EXECUTION_STATES_V0`, and\ncontributes only to `result_status` \u2014 the one category that declaration marks\n`domain_extensible: true`. The compiler folds these entries into the build's **vocabulary\nclosure**; they are not visible to any other domain\n(`CONSTITUTION_VOCABULARY_V0` \u00a79.2, domain isolation).\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::VOCAB_AI_LICENSING_STATES_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: ai_licensing\nextends: vocabulary::VOCAB_EXECUTION_STATES_V0\nresult_status:\n  casing: UPPER_SNAKE\n  entries:\n  - CAP_REACHED\n```\n\n",
+  "content_hash": "43c3393961b1b1a9db66327f805ffdd7e863d44ccffe08e3307fda1b41caaea9",
+  "fqdn_id": "ai_governance::VOCAB_AI_LICENSING_STATES_V0",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "extends": "vocabulary::VOCAB_EXECUTION_STATES_V0",
+    "fqdn": "ai_governance::VOCAB_AI_LICENSING_STATES_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "result_status": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "CAP_REACHED"
+      ]
+    },
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

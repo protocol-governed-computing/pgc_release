@@ -1,0 +1,58 @@
+{
+  "artifact_code": "TE_REJECT_ACTOR_V0",
+  "artifact_type": "TE",
+  "content": "# TE_REJECT_ACTOR_V0\n\n## 1. Intent\n\nClassifies the endings of rejecting an actor, including the actor that does not exist, and projects what was recorded.\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::TE_REJECT_ACTOR_V0\nartifact_kind: TRANSPORT_EGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_EGRESS_V0\nauthority: pgc.platform\nconcern: identity\noperation: blockchain.reject_actor\ncore:\n  summary: Classifies the endings of rejecting an actor, including the actor that does not exist, and\n    projects what was recorded.\noutput_contract:\n- field: contact_address\n  from: surface.contact_address\n- field: occurrence\n  from: surface.record.occurrence\n- field: verifying_authority\n  from: surface.record.verifying_authority\n- field: grounds\n  from: surface.record.grounds\n- field: occurred_at\n  from: surface.record.occurred_at\n- field: sequence_number\n  from: surface.sequence_number\nresult_classification:\n  SUCCESS: SUCCESS\n  VIOLATION: VIOLATION\n  NOT_FOUND: NOT_FOUND\ndefault_result_class: EXECUTION_FAILURE\nevidence_policy: reference_only\n```\n",
+  "content_hash": "bc3ca4057456df931ff80636d47a4fd5c9639bffd2e0a74665eb4ac03fb43b05",
+  "fqdn_id": "blockchain::TE_REJECT_ACTOR_V0",
+  "frontmatter": {
+    "artifact_kind": "TRANSPORT_EGRESS",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "summary": "Classifies the endings of rejecting an actor, including the actor that does not exist, and projects what was recorded."
+    },
+    "default_result_class": "EXECUTION_FAILURE",
+    "evidence_policy": "reference_only",
+    "fqdn": "blockchain::TE_REJECT_ACTOR_V0",
+    "governed_by": "transport::CONSTITUTION_TRANSPORT_EGRESS_V0",
+    "operation": "blockchain.reject_actor",
+    "output_contract": [
+      {
+        "field": "contact_address",
+        "from": "surface.contact_address"
+      },
+      {
+        "field": "occurrence",
+        "from": "surface.record.occurrence"
+      },
+      {
+        "field": "verifying_authority",
+        "from": "surface.record.verifying_authority"
+      },
+      {
+        "field": "grounds",
+        "from": "surface.record.grounds"
+      },
+      {
+        "field": "occurred_at",
+        "from": "surface.record.occurred_at"
+      },
+      {
+        "field": "sequence_number",
+        "from": "surface.sequence_number"
+      }
+    ],
+    "result_classification": {
+      "NOT_FOUND": "NOT_FOUND",
+      "SUCCESS": "SUCCESS",
+      "VIOLATION": "VIOLATION"
+    },
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "transport::CONSTITUTION_TRANSPORT_EGRESS_V0"
+  ],
+  "version": "0"
+}

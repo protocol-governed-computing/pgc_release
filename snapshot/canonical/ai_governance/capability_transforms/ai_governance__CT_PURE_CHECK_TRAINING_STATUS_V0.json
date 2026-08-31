@@ -1,0 +1,79 @@
+{
+  "artifact_code": "CT_PURE_CHECK_TRAINING_STATUS_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_CHECK_TRAINING_STATUS_V0\n\n## 1. Intent\n\nDecide whether an employee's training record satisfies the licensing precondition. Pure predicate \u2014\nthe eligibility *policy* lives in `CC_VALIDATE_ELIGIBILITY_V0`; this transform only evaluates it.\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: ai_licensing\ncore:\n  summary: Evaluate whether required training has been completed\n  refusal: raises\n  description: |\n    Signals VIOLATION by raising CTExecutionError; the runtime maps any CT exception to\n    VIOLATION. A false predicate is never returned as a value \u2014 a plain return is SUCCESS\n    and would let the consuming pipeline continue past a failed gate.\n  inputs:\n    training_completed:\n      type: boolean\n      required: true\n      description: Whether the employee has completed required AI-use training\n  outputs:\n    training_eligible:\n      type: boolean\n      required: true\n      description: True when training is complete and the employee clears this gate\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_CHECK_TRAINING_STATUS\n  implementation:\n    module: ai_governance.implementation.capability_transforms.atoms.ct_pure_check_training_status_v0\n    callable: execute\n```\n",
+  "content_hash": "ade1be32017aafaa107c76c6f3e09c6398132819ac60336362c434082e83bc32",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_CHECK_TRAINING_STATUS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "training_completed": "$.inputs.training_completed"
+        },
+        "atom": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "ai_governance.implementation.capability_transforms.atoms.ct_pure_check_training_status_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
+    "inputs": {
+      "training_completed": {
+        "description": "Whether the employee has completed required AI-use training",
+        "required": true,
+        "type": "boolean"
+      }
+    },
+    "outputs": {
+      "training_eligible": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "description": "Signals VIOLATION by raising CTExecutionError; the runtime maps any CT exception to\nVIOLATION. A false predicate is never returned as a value \u2014 a plain return is SUCCESS\nand would let the consuming pipeline continue past a failed gate.\n",
+      "inputs": {
+        "training_completed": {
+          "description": "Whether the employee has completed required AI-use training",
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "outputs": {
+        "training_eligible": {
+          "description": "True when training is complete and the employee clears this gate",
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "refusal": "raises",
+      "summary": "Evaluate whether required training has been completed"
+    },
+    "fqdn": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "ai_governance.implementation.capability_transforms.atoms.ct_pure_check_training_status_v0"
+      },
+      "operation": "PURE_CHECK_TRAINING_STATUS"
+    },
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+  ],
+  "version": "0"
+}

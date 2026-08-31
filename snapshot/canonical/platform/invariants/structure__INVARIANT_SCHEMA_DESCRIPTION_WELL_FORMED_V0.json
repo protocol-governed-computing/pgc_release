@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_SCHEMA_DESCRIPTION_WELL_FORMED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_SCHEMA_DESCRIPTION_WELL_FORMED_V0\n\n## Machine\n\n```yaml\nfqdn: structure::INVARIANT_SCHEMA_DESCRIPTION_WELL_FORMED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: structure\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - STRUCTURE\n```\n\n---\n\n## Purpose\n\nHold three things about the descriptions the platform governs itself with: that every artifact kind\ncarries a disposition, that a description dispatched to a kind actually describes, and that a\ndescription still matches the artifacts it describes.\n\n## Every kind carries a disposition\n\nA kind is `described` or `exempt`. A kind carrying neither is refused.\n\nA kind absent from the dispatch table was absent for three different reasons and one representation \u2014\nnobody wrote a description, one exists and nobody named it, or the kind needs none. **A reader could\nnot tell a decision from an oversight**, and neither could any check. An exemption states its ground\nbeside it, so that the record is of a decision rather than of a silence.\n\n## A dispatched description describes\n\nA description names at least one required field and closes its surface. One doing neither admits every\ndeclaration of its kind and refuses none.\n\nThis is not hypothetical. One kind was dispatched to exactly such a description and thirty-three\ndeclarations passed it, because everything passes it. Dispatch made the kind *read* as governed while\ngoverning nothing, which is why the count of dispatched kinds measures neither coverage nor\ngovernance.\n\n## A description matches what it describes\n\nEvery dispatched description is measured against every artifact of its kind. A description refusing an\nartifact the composition currently carries is **reported**, and the report is the point: a stale\ndescription refuses correct work with the authority of a rule.\n\nThree descriptions were found to have drifted, at three separate undated divergences, and every one\nwas found by dispatching it and reading the hundred refusals it produced. That method works only\nwhile nobody relies on the description. This reports the next one before a build does.\n\n## What it does not reach\n\n**What a declaration of a kind may contain.** That is the owning subdomain's to state. This invariant\nis about a description existing, describing, and matching \u2014 never about what any description says.\n\n**Descriptions of runtime data.** An authority state, a registry, an authenticated state and a trace\nevent are described beside the artifact-kind descriptions and are not artifact kinds. They are\ndispatched by nothing because there is nothing to dispatch them to, and they are not this invariant's\nsubject.\n",
+  "content_hash": "6b149b02ccd4315b047ae6ac6884098fa23226c77eb7aa27f27c4e414949465e",
+  "fqdn_id": "structure::INVARIANT_SCHEMA_DESCRIPTION_WELL_FORMED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "STRUCTURE"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "structure",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "structure::INVARIANT_SCHEMA_DESCRIPTION_WELL_FORMED_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

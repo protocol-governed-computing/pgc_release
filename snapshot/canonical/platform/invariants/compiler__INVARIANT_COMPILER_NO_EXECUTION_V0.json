@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_COMPILER_NO_EXECUTION_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_COMPILER_NO_EXECUTION_V0\n\n## Machine\n\n```yaml\nfqdn: compiler::INVARIANT_COMPILER_NO_EXECUTION_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: compiler::CONSTITUTION_COMPILER_V0\nauthority: pgc.platform\nconcern: compiler\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - COMPILER\n```\n\n---\n\n## Purpose\n\nEnforces the compile-time purity boundary declared in \u00a79 of CONSTITUTION_COMPILER_V0:\n\"Execution of protocol behavior during compilation\" is a forbidden pattern.\n\nCT and CS artifacts are pure declarations at compile time. A compiled artifact's\nfrontmatter must reflect the declared structure, not an execution output. If a compiled\nCT artifact contains `execution_result` or `trace_id` fields, the compiler has violated\nthe boundary between compilation and execution.\n\nThis invariant is structural \u2014 it checks what is present in the compiled artifact, not\nwhat the compiler did at runtime. It is checkable from the artifact alone.\n\n## Relationship to CONSTITUTION_COMPILER_V0\n\nDirectly enforces \u00a79 Forbidden Pattern #6 (`Execution of protocol behavior during\ncompilation`) and the CT Purity doctrine: CT implementations have zero side effects and\nmust never be invoked during compilation.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Compiled CT and CS artifacts MUST NOT carry execution-time state in their materialized\n    frontmatter. Fields that only appear as the result of executing an artifact (trace_id, execution_result,\n    runtime_output, invocation_id, execution_state, runtime_state) are forbidden in compiled artifact\n    frontmatter. The compiler phase MUST NOT invoke CT or CS implementations \u2014 compiled artifacts are\n    static declarations, not execution receipts.\n\n    '\n  anti_patterns:\n  - execution_state_in_frontmatter: CT/CS artifact frontmatter contains trace_id, execution_result, or\n      runtime_output\n  - compiler_invokes_ct: Compiler phase calls CT implementation module during compilation\n  - compiler_invokes_cs: Compiler phase calls CS implementation module during compilation\n  - execution_contamination: Compiled artifact preserves side-effect outputs in its canonical form\n```\n",
+  "content_hash": "4701cf22085becbf24a0d3ebc7fd82c760bca1edaafbe0235843f2f8a8baf746",
+  "fqdn_id": "compiler::INVARIANT_COMPILER_NO_EXECUTION_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "COMPILER"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "compiler",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "compiler::INVARIANT_COMPILER_NO_EXECUTION_V0",
+    "governed_by": "compiler::CONSTITUTION_COMPILER_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "compiler",
+  "references": [
+    "compiler::CONSTITUTION_COMPILER_V0"
+  ],
+  "version": "0"
+}

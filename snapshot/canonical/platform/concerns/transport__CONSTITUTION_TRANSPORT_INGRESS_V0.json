@@ -1,0 +1,49 @@
+{
+  "artifact_code": "CONSTITUTION_TRANSPORT_INGRESS_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_TRANSPORT_INGRESS_V0\n\n## Machine\n\n```yaml\nfqdn: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: transport\ncore:\n  enforcement_model: process_and_compiler_enforced\n  governs:\n  - TI\nrules:\n- applies_to: TI\n  enforced_by: transport::INVARIANT_TRANSPORT_TARGET_EXISTS_V0\n- applies_to: TI\n  enforced_by: transport::INVARIANT_TRANSPORT_NO_DYNAMIC_ROUTING_V0\n- applies_to: TI\n  enforced_by: transport::INVARIANT_TRANSPORT_NO_WORKFLOW_SEMANTICS_V0\n- applies_to: TI\n  enforced_by: transport::INVARIANT_TRANSPORT_OPERATION_IDENTITY_INDEPENDENCE_V0\n- applies_to: TI\n  enforced_by: PROCESS_ENFORCED\n```\n\n---\n\n## \u00a71. Purpose\n\nGoverns **Transport Ingress** \u2014 the `TI` boundary contract by which an external interaction\nenters governed execution. The semantic authority is `TRANSPORT_STANDARD_V0` (\u00a76); this\nconstitution binds its ingress rules into the governed platform surface.\n\nA `TI` declares admission for a stable **Operation Identity**: the input contract by\nreference, context requirements, and an **invocation binding** to a governed executable\ntarget. It is a membrane, not an execution stage \u2014 it is declared here and resolved by the\ncompiler, never interpreted at request time.\n\n---\n\n## \u00a72. Rules\n\n- **Invocation target exists.** Every `TI` MUST declare an invocation binding to a governed\n  executable target, and that target MUST resolve in the compiled artifact set \u2014 no\n  inference, no fallback. Enforced by `INVARIANT_TRANSPORT_TARGET_EXISTS_V0`.\n- **Static binding, no dynamic routing.** Ingress routing MUST be fully resolved at compile\n  time. Conditional, payload-dependent, or runtime-computed target selection is forbidden.\n  Enforced by `INVARIANT_TRANSPORT_NO_DYNAMIC_ROUTING_V0`.\n- **Membrane, not stage.** A `TI` MUST NOT contain execution logic, capability references\n  (`CC`/`CT`/`CS`), side effects, or execution-retry semantics; it MUST NOT read or alter\n  execution state. Enforced by `INVARIANT_TRANSPORT_NO_WORKFLOW_SEMANTICS_V0`.\n- **Operation Identity independence.** The Operation Identity a `TI` admits MUST be uniquely\n  resolvable within the governance universe and MUST NOT equal a workflow (or other target)\n  identity; the target is re-pointable without any adapter change. Enforced by\n  `INVARIANT_TRANSPORT_OPERATION_IDENTITY_INDEPENDENCE_V0`.\n- **Input contract by reference.** A `TI` MUST reference an existing governed input contract\n  and MUST NOT define operation input semantics inline. *(Process-enforced: the reference-vs-\n  inline distinction awaits a governed input-contract kind.)*\n- **Domain separation.** A `TI` MUST NOT define domain state-transition, resource, or result\n  semantics; domain meaning enters only through declared execution artifacts. *(Process-\n  enforced pending its Phase-3 invariant.)*\n\n---\n\n## \u00a73. Semantic Category\n\nUnder the Governance Ontology, a `TI` is **Contractual** \u2014 the ingress boundary contract. It\nexposes an admission interface and binds it to governed execution; it carries no behavior.\n\n---\n\n## \u00a74. Scope\n\nGoverns `TI` admission semantics only. It does **not** govern the external-protocol binding\n(adapter-owned), the executable target's behavior (`execution_topology`), or egress (`TE`).\n\n---\n\n## \u00a75. Versioning\n\nVersion-immutable. Any normative change requires `CONSTITUTION_TRANSPORT_INGRESS_V1`; never\nedited in place.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs the TI ingress boundary contract \u2014 admission for an Operation Identity,\n    static invocation binding to a governed executable target, and membrane isolation from\n    execution semantics.\nrules:\n- rule_id: TI_TARGET_RESOLVES\n  constraint: every TI MUST bind to a governed executable target that resolves at compile time\n- rule_id: TI_STATIC_ROUTING\n  constraint: TI routing MUST be compile-time static; no dynamic or payload-dependent selection\n- rule_id: TI_MEMBRANE_NOT_STAGE\n  constraint: TI MUST NOT carry execution logic, capability references, side effects, or execution state\n- rule_id: TI_OPERATION_IDENTITY_INDEPENDENT\n  constraint: the admitted Operation Identity MUST be uniquely resolvable and MUST NOT equal a target identity\n- rule_id: TI_INPUT_CONTRACT_BY_REFERENCE\n  constraint: TI MUST reference an existing governed input contract and MUST NOT inline input semantics\n```\n",
+  "content_hash": "9a726d69f59037e2d28934cd2deaecf1f56dad054f8ff3ec924e9ffe1682cbcb",
+  "fqdn_id": "transport::CONSTITUTION_TRANSPORT_INGRESS_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "transport",
+    "core": {
+      "enforcement_model": "process_and_compiler_enforced",
+      "governs": [
+        "TI"
+      ]
+    },
+    "fqdn": "transport::CONSTITUTION_TRANSPORT_INGRESS_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "rules": [
+      {
+        "applies_to": "TI",
+        "enforced_by": "transport::INVARIANT_TRANSPORT_TARGET_EXISTS_V0"
+      },
+      {
+        "applies_to": "TI",
+        "enforced_by": "transport::INVARIANT_TRANSPORT_NO_DYNAMIC_ROUTING_V0"
+      },
+      {
+        "applies_to": "TI",
+        "enforced_by": "transport::INVARIANT_TRANSPORT_NO_WORKFLOW_SEMANTICS_V0"
+      },
+      {
+        "applies_to": "TI",
+        "enforced_by": "transport::INVARIANT_TRANSPORT_OPERATION_IDENTITY_INDEPENDENCE_V0"
+      },
+      {
+        "applies_to": "TI",
+        "enforced_by": "PROCESS_ENFORCED"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "transport",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

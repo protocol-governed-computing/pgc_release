@@ -1,0 +1,31 @@
+{
+  "artifact_code": "SURFACE_CONTRACT_REGISTRY_RESOLVE_V0",
+  "artifact_type": "SURFACE",
+  "content": "# SURFACE_CONTRACT_REGISTRY_RESOLVE_V0\n\n## Purpose\n\nCanonical result surface for registry READ (resolve/lookup) operations.\n\nA registry READ operation can succeed with the resolved record, report that the key is not\nregistered, encounter an invalid input, or fail due to storage unavailability. These four\noutcomes are exhaustive.\n\n---\n\n## Machine\n\n```yaml\nfqdn: surface_contract::SURFACE_CONTRACT_REGISTRY_RESOLVE_V0\nartifact_kind: SURFACE_CONTRACT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: surface_contract\ngoverns:\n- CS_REGISTRY_V0\nop: READ\ncanonical_surface:\n- SUCCESS\n- NOT_FOUND\n- VIOLATION\n- BACKEND_ERROR\n```\n\n---\n\n## What this realizes\n```yaml\ncapability_family: REGISTRY\n```\n",
+  "content_hash": "fadaaf75edca2886fe275993108724198098f9ab92350b67d10711dcf415468c",
+  "fqdn_id": "surface_contract::SURFACE_CONTRACT_REGISTRY_RESOLVE_V0",
+  "frontmatter": {
+    "artifact_kind": "SURFACE_CONTRACT",
+    "authority": "pgc.platform",
+    "canonical_surface": [
+      "SUCCESS",
+      "NOT_FOUND",
+      "VIOLATION",
+      "BACKEND_ERROR"
+    ],
+    "concern": "surface_contract",
+    "fqdn": "surface_contract::SURFACE_CONTRACT_REGISTRY_RESOLVE_V0",
+    "governed_by": "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0",
+    "governs": [
+      "CS_REGISTRY_V0"
+    ],
+    "op": "READ",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "surface_contract",
+  "references": [
+    "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0"
+  ],
+  "version": "0"
+}

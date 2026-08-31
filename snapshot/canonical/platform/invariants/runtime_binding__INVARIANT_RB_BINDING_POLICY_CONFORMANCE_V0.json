@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_RB_BINDING_POLICY_CONFORMANCE_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_RB_BINDING_POLICY_CONFORMANCE_V0\n\nArchitectural Invariant\n\n## Machine\n\n```yaml\nfqdn: runtime_binding::INVARIANT_RB_BINDING_POLICY_CONFORMANCE_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0\nauthority: pgc.platform\nconcern: runtime_binding\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - RB\n```\n\n## Summary\n\nRuntime bindings map declared CS capabilities to concrete host implementations.\nMost CS types (CS_REGISTRY_V0, CS_APPENDONLY_JSONL_V0, etc.) require an explicit\n`policy.path` at runtime because their implementations call `policy['path']` directly.\nOnly `CS_MUTABLE_JSON_V0` resolves paths via a declared STRUCTURE artifact and is\npermitted to declare `policy: {}`.\n\nAn RB compiled with `policy: {}` for a non-STRUCTURE-resolved CS type will cause\na runtime KeyError crash before any payload is processed \u2014 a compiler blind spot\nthat this invariant closes.\n\n## What this realizes\nFor every RB artifact, for every key in `core.bindings`:\n1. Extract the CS artifact code from the binding key FQDN\n2. If the CS code is `CS_REGISTRY_V0` or `CS_APPENDONLY_JSONL_V0`:\n   - The binding MUST declare `policy.path` as a non-empty string\n   - `policy: {}` is a violation \u2014 it causes runtime KeyError before any payload is processed\n3. Other CS types (CS_MUTABLE_JSON_V0, CS_SEND_EMAIL_V0, etc.) are not constrained by this rule\n\n## Where it applies\n- **Artifact Types**: RB\n- **Validation Phase**: ASSERT (Phase 5, compile-time, hard fail)\n- **Enforced By**: ASSERT_RB_BINDING_POLICY_CONFORMANCE_V0\n\n## Rationale\n\nThe compiler must guarantee that any RB artifact admitted to the snapshot is\nexecutable without runtime initialization failure. `policy: {}` for CS types\nthat require an explicit path is a structural defect: the runtime cannot proceed,\nthe trace is empty, and the error is unrelated to payload content. Catching this\nat compile time preserves the PGS invariant that Compiler PASS \u2192 Runtime executable.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: 'For every CS binding in an RB artifact where the CS type is a file-path CS (CS_REGISTRY_V0 or\n    CS_APPENDONLY_JSONL_V0), policy.path must be declared and non-empty. policy: {} causes a runtime KeyError\n    crash for these types.\n\n    '\n  summary: RB bindings for file-path CS types must declare explicit policy.path\n  file_path_cs_types:\n  - CS_REGISTRY_V0\n  - CS_APPENDONLY_JSONL_V0\n```\n",
+  "content_hash": "126f71adc8f38a4b8a399f77afb5646491398d05369ccd6c69213cd633015650",
+  "fqdn_id": "runtime_binding::INVARIANT_RB_BINDING_POLICY_CONFORMANCE_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "RB"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "runtime_binding",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "runtime_binding::INVARIANT_RB_BINDING_POLICY_CONFORMANCE_V0",
+    "governed_by": "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "runtime_binding",
+  "references": [
+    "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0"
+  ],
+  "version": "0"
+}

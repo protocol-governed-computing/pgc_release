@@ -1,0 +1,46 @@
+{
+  "artifact_code": "INVARIANT_CS_SURFACE_CLOSED_V1",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_CS_SURFACE_CLOSED_V1\n\n## Machine\n\n```yaml\nfqdn: capability_side_effects::INVARIANT_CS_SURFACE_CLOSED_V1\nartifact_kind: INVARIANT\nversion: V1\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: capability_side_effects\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  handler: pgs_governance.registry.handlers.assert_cs_surface_closed_v0\n  scope:\n    applies_to:\n    - PLATFORM\n  allowed_capability_side_effects:\n  - capability_side_effects::CS_APPENDONLY_JSONL_V0\n  - capability_side_effects::CS_CLOCK_V0\n  - capability_side_effects::CS_MUTABLE_JSON_V0\n  - capability_side_effects::CS_REGISTRY_V0\n  - capability_side_effects::CS_SNAPSHOT_QUERY_V0\n  - capability_side_effects::CS_TEXT_ARTIFACT_V0\n  applies_to_kinds:\n  - CS\n```\n\n---\n\n## Purpose\n\nEnsure the CS surface is closed for PGC Platform Snapshot V1.\n\n**Core Principle**: A closed snapshot is a complete, finite, auditable side-effect universe\n*for that snapshot*. The PGC reference platform has a deliberately small side-effect universe\n(the storage-contract triple: append-only ledger, mutable JSON, registry).\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'CS surface must be closed for this platform snapshot: every controlled side effect is\n    explicitly declared, every declared CS has a runtime implementation, and no undeclared CS may execute.\n    This closes the CS surface of PGC Platform Snapshot V1 \u2014 the snapshot''s complete, enumerable side-effect\n    universe, NOT a universal catalog. An enterprise extension is a new snapshot that recomputes its own\n    closed surface.\n\n    '\n  clarification:\n    closed_surface_definition: 'Closed CS surface means: Declared_CS_set == Executable_CS_set for THIS\n      snapshot. No more, no less. All side effects are finite, enumerable, and auditable.\n\n      '\n    snapshot_scoped: 'Closure is snapshot-scoped, not universal. Baseline closed; extension open.\n\n      '\n```\n",
+  "content_hash": "21e304eedf01d1f8464424809d40217e9047bba189857c32271c045ea35ea8be",
+  "fqdn_id": "capability_side_effects::INVARIANT_CS_SURFACE_CLOSED_V1",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "allowed_capability_side_effects": [
+        "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+        "capability_side_effects::CS_CLOCK_V0",
+        "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "capability_side_effects::CS_REGISTRY_V0",
+        "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+        "capability_side_effects::CS_TEXT_ARTIFACT_V0"
+      ],
+      "applies_to_kinds": [
+        "CS"
+      ],
+      "handler": "pgs_governance.registry.handlers.assert_cs_surface_closed_v0",
+      "scope": {
+        "applies_to": [
+          "PLATFORM"
+        ]
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_side_effects::INVARIANT_CS_SURFACE_CLOSED_V1",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V1"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_side_effects",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "1"
+}

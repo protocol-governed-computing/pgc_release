@@ -1,0 +1,164 @@
+{
+  "artifact_code": "CS_TEXT_ARTIFACT_V0",
+  "artifact_type": "CS",
+  "content": "",
+  "content_hash": "f1ca9f889e0b2374870b8a0dfea1c92770884d5c6554d532b3317687385e4b15",
+  "cs_ir": {
+    "cs_metadata": {
+      "capability": {
+        "supported_operation_specs": [
+          "WRITE_ALL",
+          "LIST"
+        ]
+      },
+      "operations": {
+        "operations": {
+          "LIST": {
+            "effect": "read",
+            "handler": "list",
+            "idempotent": true,
+            "input": [],
+            "output": [
+              "result_status",
+              "paths"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "NOT_FOUND",
+              "BACKEND_ERROR"
+            ],
+            "summary": "List the documents currently persisted beneath the root"
+          },
+          "WRITE_ALL": {
+            "effect": "write",
+            "handler": "write_all",
+            "idempotent": true,
+            "input": [
+              "documents"
+            ],
+            "output": [
+              "result_status",
+              "written",
+              "paths"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Persist every rendered document in one operation"
+          }
+        }
+      }
+    },
+    "handler_ref": {
+      "callable": "TextArtifactRuntime",
+      "module": "capability_side_effects.implementation.CS_TEXT_ARTIFACT_V0.runtime"
+    }
+  },
+  "fqdn_id": "capability_side_effects::CS_TEXT_ARTIFACT_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_SIDE_EFFECT",
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "category": "storage",
+      "field_types": {
+        "documents": "array",
+        "paths": "array",
+        "result_status": "string",
+        "written": "integer"
+      },
+      "operations": {
+        "LIST": {
+          "effect": "read",
+          "handler": "list",
+          "idempotent": true,
+          "input": [],
+          "output": [
+            "result_status",
+            "paths"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "BACKEND_ERROR"
+          ],
+          "summary": "List the documents currently persisted beneath the root"
+        },
+        "WRITE_ALL": {
+          "effect": "write",
+          "handler": "write_all",
+          "idempotent": true,
+          "input": [
+            "documents"
+          ],
+          "output": [
+            "result_status",
+            "written",
+            "paths"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Persist every rendered document in one operation"
+        }
+      },
+      "policy": {
+        "operations": [
+          "WRITE_ALL",
+          "LIST"
+        ]
+      },
+      "summary": "Persist rendered protocol artifacts as text documents beneath a declared root"
+    },
+    "extensions": {
+      "configuration_schema": {
+        "root": {
+          "description": "Filesystem root beneath which every rendered document is written",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "constraints": {
+        "concurrency": "single_writer",
+        "containment": "paths must resolve beneath the declared root"
+      },
+      "cs_kind": "text_document_store",
+      "failure_modes": [
+        "VIOLATION: documents is not a non-empty array of {path, text}",
+        "VIOLATION: a path escapes the declared root",
+        "BACKEND_ERROR: the root is unwritable"
+      ],
+      "properties": {
+        "concurrent_safe": false,
+        "durability": "persistent",
+        "idempotent": true,
+        "replay_policy": "overwrite",
+        "transactional": false
+      },
+      "side_effect_type": "persistent",
+      "vocabulary": {
+        "result_status": [
+          "SUCCESS",
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ]
+      }
+    },
+    "fqdn": "capability_side_effects::CS_TEXT_ARTIFACT_V0",
+    "governed_by": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+    "implementation": {
+      "callable": "TextArtifactRuntime",
+      "module": "capability_side_effects.implementation.CS_TEXT_ARTIFACT_V0.runtime"
+    },
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "capability_side_effects",
+  "references": [],
+  "version": "V0"
+}

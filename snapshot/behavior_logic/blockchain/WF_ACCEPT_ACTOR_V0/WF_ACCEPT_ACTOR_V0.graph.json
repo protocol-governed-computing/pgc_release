@@ -1,0 +1,291 @@
+{
+  "wf_id": "WF_ACCEPT_ACTOR_V0",
+  "entry": "IN_ACTOR_ACCEPTANCE_V0",
+  "nodes": [
+    {
+      "id": "CC_APPEND_ACTOR_OCCURRENCE_V0",
+      "type": "CC",
+      "cc_code": "CC_APPEND_ACTOR_OCCURRENCE_V0",
+      "capability": "capability_side_effects::CS_CLOCK_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_CLOCK_V0",
+            "id": "CS_CLOCK_V0",
+            "kind": "CS",
+            "ops": [
+              "NOW"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "contact_address": "IN.contact_address",
+          "occurrence_fields": "IN.occurrence_fields",
+          "stream_id": "IN.stream_id"
+        }
+      }
+    },
+    {
+      "id": "CC_RECORD_VERIFICATION_DECISION_V0",
+      "type": "CC",
+      "cc_code": "CC_RECORD_VERIFICATION_DECISION_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "allowed_set": "in.states_admitting_a_decision",
+              "value": "in.current_state"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "inputs": [
+              "allowed_set",
+              "value"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "is_member"
+            ]
+          },
+          {
+            "bindings": {
+              "parameters": "in.self_check_parameters",
+              "rules": "in.self_check_rules"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          },
+          {
+            "bindings": {
+              "fields": "in.decided_actor_fields"
+            },
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "admitted_outcomes": "IN.admitted_outcomes",
+          "contact_address": "IN.contact_address",
+          "current_state": "CC_RESOLVE_ACTOR_V0.value.state",
+          "decided_actor_fields": "IN.decided_actor_fields",
+          "decision": "IN.decision",
+          "self_check_parameters": "IN.self_check_parameters",
+          "self_check_rules": "IN.self_check_rules",
+          "states_admitting_a_decision": "IN.states_admitting_a_decision",
+          "verifying_authority": "IN.verifying_authority"
+        }
+      }
+    },
+    {
+      "id": "CC_RESOLVE_ACTOR_V0",
+      "type": "CC",
+      "cc_code": "CC_RESOLVE_ACTOR_V0",
+      "capability": "capability_side_effects::CS_REGISTRY_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "contact_address": "IN.contact_address"
+        }
+      }
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_SUCCESS",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_ACTOR_ACCEPTANCE_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_APPEND_ACTOR_OCCURRENCE_V0",
+      "to": "EXIT_SUCCESS",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_APPEND_ACTOR_OCCURRENCE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RECORD_VERIFICATION_DECISION_V0",
+      "to": "CC_APPEND_ACTOR_OCCURRENCE_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RECORD_VERIFICATION_DECISION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RESOLVE_ACTOR_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_RESOLVE_ACTOR_V0",
+      "to": "CC_RECORD_VERIFICATION_DECISION_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RESOLVE_ACTOR_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_ACTOR_ACCEPTANCE_V0",
+      "to": "CC_RESOLVE_ACTOR_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_ACTOR_ACCEPTANCE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_ACTOR_ACCEPTANCE_V0",
+      "CC_RESOLVE_ACTOR_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ACTOR_ACCEPTANCE_V0",
+      "CC_RESOLVE_ACTOR_V0",
+      "CC_RECORD_VERIFICATION_DECISION_V0",
+      "CC_APPEND_ACTOR_OCCURRENCE_V0",
+      "EXIT_SUCCESS"
+    ],
+    [
+      "IN_ACTOR_ACCEPTANCE_V0",
+      "CC_RESOLVE_ACTOR_V0",
+      "CC_RECORD_VERIFICATION_DECISION_V0",
+      "CC_APPEND_ACTOR_OCCURRENCE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ACTOR_ACCEPTANCE_V0",
+      "CC_RESOLVE_ACTOR_V0",
+      "CC_RECORD_VERIFICATION_DECISION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ACTOR_ACCEPTANCE_V0",
+      "CC_RESOLVE_ACTOR_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ACTOR_ACCEPTANCE_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

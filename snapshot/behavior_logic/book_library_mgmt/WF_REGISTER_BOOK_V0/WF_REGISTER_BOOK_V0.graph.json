@@ -1,0 +1,899 @@
+{
+  "wf_id": "WF_REGISTER_BOOK_V0",
+  "entry": "IN_REGISTER_BOOK_V0",
+  "nodes": [
+    {
+      "id": "CC_APPEND_CATALOG_OPERATION_V0",
+      "type": "CC",
+      "cc_code": "CC_APPEND_CATALOG_OPERATION_V0",
+      "capability": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "operation": "REGISTER_BOOK",
+          "record": {
+            "operation": "REGISTER_BOOK",
+            "staff_id": "$.payload.staff_id",
+            "subject": "$.payload.title"
+          },
+          "staff_id": "IN.staff_id"
+        }
+      }
+    },
+    {
+      "id": "CC_CLAIM_BOOK_IDENTITY_V0",
+      "type": "CC",
+      "cc_code": "CC_CLAIM_BOOK_IDENTITY_V0",
+      "capability": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "author": "in.author",
+              "publication_year": "in.publication_year",
+              "title": "in.title"
+            },
+            "fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+            "id": "CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+            "inputs": [
+              "title",
+              "author",
+              "publication_year"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "identity_key"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "author": "IN.author",
+          "publication_year": "IN.publication_year",
+          "title": "IN.title"
+        }
+      }
+    },
+    {
+      "id": "CC_CLAIM_COPY_BARCODE_V0",
+      "type": "CC",
+      "cc_code": "CC_CLAIM_COPY_BARCODE_V0",
+      "capability": "capability_side_effects::CS_REGISTRY_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "barcode": "IN.barcode"
+        }
+      }
+    },
+    {
+      "id": "CC_CLAIM_WORK_IDENTITY_V0",
+      "type": "CC",
+      "cc_code": "CC_CLAIM_WORK_IDENTITY_V0",
+      "capability": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "author": "in.author",
+              "title": "in.title"
+            },
+            "fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+            "id": "CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+            "inputs": [
+              "title",
+              "author"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "work_key"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {
+              "fields": "in.work_fields"
+            },
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "author": "IN.author",
+          "title": "IN.title",
+          "work_fields": {
+            "author": "$.payload.author",
+            "title": "$.payload.title"
+          }
+        }
+      }
+    },
+    {
+      "id": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "parameters": "in.staff_credentials",
+              "rules": "in.authorization_rules"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "authorization_rules": "IN.authorization_rules",
+          "staff_credentials": "IN.staff_credentials"
+        }
+      }
+    },
+    {
+      "id": "CC_REGISTER_BOOK_V0",
+      "type": "CC",
+      "cc_code": "CC_REGISTER_BOOK_V0",
+      "capability": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "author": "in.book_fields.author",
+              "title": "in.book_fields.title"
+            },
+            "fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+            "id": "CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+            "inputs": [
+              "title",
+              "author"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "work_key"
+            ]
+          },
+          {
+            "bindings": {
+              "record": "in.book_fields",
+              "schema": "in.book_schema"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "inputs": [
+              "record",
+              "schema"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "violations"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "book_fields": {
+            "author": "$.payload.author",
+            "publication_year": "$.payload.publication_year",
+            "state": "REGISTERED",
+            "subject": "$.payload.subject",
+            "title": "$.payload.title"
+          },
+          "book_schema": "IN.book_schema",
+          "identity_key": "CC_CLAIM_BOOK_IDENTITY_V0.identity_key"
+        }
+      }
+    },
+    {
+      "id": "CC_REGISTER_PHYSICAL_COPY_V0",
+      "type": "CC",
+      "cc_code": "CC_REGISTER_PHYSICAL_COPY_V0",
+      "capability": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "barcode": "IN.barcode",
+          "copy_fields": "IN.copy_fields",
+          "identity_key": "CC_CLAIM_BOOK_IDENTITY_V0.identity_key"
+        }
+      }
+    },
+    {
+      "id": "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "type": "CC",
+      "cc_code": "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "record": "in.book_fields",
+              "schema": "in.book_schema"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "inputs": [
+              "record",
+              "schema"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "violations"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "barcode": "IN.barcode",
+          "book_fields": "IN.book_fields",
+          "book_schema": "IN.book_schema",
+          "work_fields": {
+            "author": "$.payload.author",
+            "title": "$.payload.title"
+          },
+          "work_schema": {
+            "required": [
+              "title",
+              "author"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "EXIT_COMPLETED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_REGISTER_BOOK_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "EXIT_COMPLETED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CLAIM_BOOK_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "ALREADY_EXISTS"
+    },
+    {
+      "from": "CC_CLAIM_BOOK_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_CLAIM_BOOK_IDENTITY_V0",
+      "to": "CC_CLAIM_COPY_BARCODE_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CLAIM_BOOK_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CLAIM_COPY_BARCODE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "ALREADY_EXISTS"
+    },
+    {
+      "from": "CC_CLAIM_COPY_BARCODE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_CLAIM_COPY_BARCODE_V0",
+      "to": "CC_REGISTER_BOOK_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CLAIM_COPY_BARCODE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CLAIM_WORK_IDENTITY_V0",
+      "to": "CC_CLAIM_BOOK_IDENTITY_V0",
+      "condition": "ALREADY_EXISTS"
+    },
+    {
+      "from": "CC_CLAIM_WORK_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_CLAIM_WORK_IDENTITY_V0",
+      "to": "CC_CLAIM_BOOK_IDENTITY_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CLAIM_WORK_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "to": "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REGISTER_BOOK_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_REGISTER_BOOK_V0",
+      "to": "CC_REGISTER_PHYSICAL_COPY_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_REGISTER_BOOK_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REGISTER_PHYSICAL_COPY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_REGISTER_PHYSICAL_COPY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_REGISTER_PHYSICAL_COPY_V0",
+      "to": "CC_APPEND_CATALOG_OPERATION_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_REGISTER_PHYSICAL_COPY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "to": "CC_CLAIM_WORK_IDENTITY_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_REGISTER_BOOK_V0",
+      "to": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_REGISTER_BOOK_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_COMPLETED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_COMPLETED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "CC_REGISTER_PHYSICAL_COPY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "CC_REGISTER_BOOK_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "CC_CLAIM_COPY_BARCODE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "CC_CLAIM_BOOK_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "CC_CLAIM_WORK_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REGISTER_BOOK_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

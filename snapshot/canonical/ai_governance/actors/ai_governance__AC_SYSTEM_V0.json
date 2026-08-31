@@ -1,0 +1,32 @@
+{
+  "artifact_code": "AC_SYSTEM_V0",
+  "artifact_type": "AC",
+  "content": "# AC_SYSTEM_V0\n\n## 1. Identity\n\nA system actor represents a protocol authority for fact injection and automated operations.\n\n---\n\n## 2. Rationale\n\nSystem actors enable protocol automation:\n- Inject facts from external systems (HR, LMS, telemetry)\n- Perform autonomous reclamation\n- Provide audit trail for system-initiated operations\n\n---\n\n## 3. Type\n\n| Property | Value |\n|----------|-------|\n| Type | system |\n\n---\n\n## 4. Attributes\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| role | string | true | System role identifier |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::AC_SYSTEM_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: System Authority Actor\n  description: Represents a protocol authority for fact injection and automation\n  type: system\n\n  attributes:\n    role:\n      type: string\n      required: true\n```\n",
+  "content_hash": "22bf34b64007dd7d68b078e9a33536db4069591e9c1d60d72078603fb06808b1",
+  "fqdn_id": "ai_governance::AC_SYSTEM_V0",
+  "frontmatter": {
+    "artifact_kind": "ACTOR",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "attributes": {
+        "role": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "description": "Represents a protocol authority for fact injection and automation",
+      "summary": "System Authority Actor",
+      "type": "system"
+    },
+    "fqdn": "ai_governance::AC_SYSTEM_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

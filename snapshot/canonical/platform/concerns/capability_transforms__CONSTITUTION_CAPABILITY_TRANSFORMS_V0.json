@@ -1,0 +1,49 @@
+{
+  "artifact_code": "CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_CAPABILITY_TRANSFORMS_V0\n\n## Machine\n```yaml\nfqdn: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_model: compiler_enforced\n  governs:\n  - CT\nrules:\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_ATOM_OUTPUT_PURITY_V0\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_ATOM_OUTPUT_PURITY_V0\n- applies_to: CT\n  enforced_by: execution::INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_CT_SURFACE_CLOSED_V1\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_CT_SURFACE_DERIVED_CLOSED_V0\n```\n\n---\n\n## 1. Purpose\n\nThis constitution defines the governance and enforcement rules for Capability Transforms (CT).\n\nCapability Transforms are pure functions that transform data within the protocol. They are the primary mechanism for logic in the system.\n\n---\n\n## 2. Core Principles\n\n- **Purity:** All CTs MUST be pure functions.\n- **Determinism:** Given the same input, a CT MUST always produce the same output.\n- **Side-Effect Free:** CTs MUST NOT have side effects. Side effects are delegated to Capability Side Effects (CS).\n- **Explicit Inputs/Outputs:** All data required by a CT must be passed as explicit inputs. All results must be returned as explicit outputs.\n\n---\n\n## 3. Required Fields\n\n- `artifact_code`: Unique identifier for the transform.\n- `version`: Version of the transform.\n- `governed_by`: The constitution governing this transform.\n- `core`: Metadata and description.\n- `inputs`: Definition of input parameters.\n- `outputs`: Definition of output parameters.\n- `logic`: Reference to the implementation.\n\n---\n\n## How it is checked\n- CT implementations must be discoverable.\n- Input and output types must match the capability contract.\n- Implementation must adhere to the purity principle.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs Capability Transform (CT) artifacts \u2014 purity, determinism, and explicit IO\nrules:\n- rule_id: CT_PURITY\n  constraint: CT MUST be a pure function; same inputs MUST always produce same outputs\n- rule_id: CT_NO_SIDE_EFFECTS\n  constraint: CT MUST NOT produce side effects; side effects belong in CS\n- rule_id: CT_IMPLEMENTATION_DECLARED\n  constraint: atom CT MUST declare machine.implementation with non-empty module and callable\n- rule_id: CT_EXPLICIT_IO\n  constraint: all CT inputs and outputs MUST be explicitly declared\n```\n",
+  "content_hash": "2d85a6e3f6780dff8235aa9c32d7850f4181b243a92e163ca8528b26513989dc",
+  "fqdn_id": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_model": "compiler_enforced",
+      "governs": [
+        "CT"
+      ]
+    },
+    "fqdn": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "rules": [
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_ATOM_OUTPUT_PURITY_V0"
+      },
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_ATOM_OUTPUT_PURITY_V0"
+      },
+      {
+        "applies_to": "CT",
+        "enforced_by": "execution::INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0"
+      },
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_CT_SURFACE_CLOSED_V1"
+      },
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_CT_SURFACE_DERIVED_CLOSED_V0"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

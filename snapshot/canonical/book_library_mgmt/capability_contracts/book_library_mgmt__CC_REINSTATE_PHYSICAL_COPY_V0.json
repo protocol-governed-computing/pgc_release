@@ -1,0 +1,95 @@
+{
+  "artifact_code": "CC_REINSTATE_PHYSICAL_COPY_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_REINSTATE_PHYSICAL_COPY_V0\n\n## 1. Intent\n\nMark a retired copy registered again\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_REINSTATE_PHYSICAL_COPY_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Mark a retired copy registered again\n  inputs:\n    barcode:\n      type: string\n      required: true\n  outputs:\n    updated_count:\n      type: integer\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: set_record_state\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: UPDATE_WHERE\n    store: PHYSICAL_COPIES\n    inputs:\n      filter:\n        barcode: $.inputs.barcode\n      updates:\n        state: REGISTERED\n    outputs:\n      matched_keys: $.capability_result.matched_keys\n      updated_count: $.capability_result.updated_count\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n",
+  "content_hash": "9b92dfe930f74dc0e678c1da842702e1eebe16390f8b876860dfea6b807286b1",
+  "fqdn_id": "book_library_mgmt::CC_REINSTATE_PHYSICAL_COPY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "barcode": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "updated_count": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "filter": {
+              "barcode": "$.inputs.barcode"
+            },
+            "updates": {
+              "state": "REGISTERED"
+            }
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "UPDATE_WHERE",
+          "outputs": {
+            "matched_keys": "$.capability_result.matched_keys",
+            "result_status": "$.result_status",
+            "updated_count": "$.capability_result.updated_count"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "set_record_state",
+          "store": "PHYSICAL_COPIES"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Mark a retired copy registered again"
+    },
+    "fqdn": "book_library_mgmt::CC_REINSTATE_PHYSICAL_COPY_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

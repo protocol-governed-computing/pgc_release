@@ -1,0 +1,60 @@
+{
+  "artifact_code": "STRUCTURE_AI_LICENSING_STORAGE_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_AI_LICENSING_STORAGE_V0\n\n## 1. Intent\n\nStorage topology for the `ai_licensing` subdomain. Declares every entity store the licensing\nworkflows touch, so the subdomain resolves its own paths and carries no reference into\n`agent_governance`.\n\n`LICENSE_FACTS` is **owned here** \u2014 licensing provisioning and reclamation are what write it.\n`agent_governance` consumes the same feed read-only and declares it independently; neither\nsubdomain references the other's STRUCTURE.\n\n---\n\n## 2. Entity Stores\n\n| Store | Mutability | Purpose |\n|---|---|---|\n| LICENSE_FACTS | read-write (owner) | License tier and status fact feed, keyed by user |\n| LICENSE_REGISTRY | read-write | Employee \u2192 license assignment registry |\n| LICENSE_AUDIT | append-only | Provision, denial, and reclaim decision trail |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0\nartifact_kind: STRUCTURE\nversion: v0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: AI licensing subdomain storage topology\n  description: Maps licensing entity stores to paths under the instance data root.\n\n  layer: DOMAINS\n  domain: ai_governance\n  subdomain: ai_licensing\n\n  storage_roots:\n    base_path: \"{{module_data_root}}\"\n    description: \"Root path for all ai_licensing storage (resolved at runtime)\"\n\n  entity_stores:\n    LICENSE_FACTS:\n      description: \"License tier and status fact feed (user_id \u2192 license record) \u2014 owned by ai_licensing\"\n      path: \"ai_governance/ai_licensing/license_facts.json\"\n    LICENSE_REGISTRY:\n      description: \"Employee \u2192 license assignment registry\"\n      path: \"ai_governance/ai_licensing/license_registry.json\"\n    LICENSE_AUDIT:\n      description: \"Append-only audit trail for license provisioning, denial, and reclaim decisions\"\n      path: \"ai_governance/ai_licensing/audit_log.jsonl\"\n\n  resolution:\n    description: \"Runtime path resolution strategy\"\n    algorithm: \"base_path / entity_stores[entity_type].path\"\n    example: \"{{module_data_root}}/ai_governance/ai_licensing/audit_log.jsonl\"\n\n  isolation:\n    description: \"Entity storage isolation constraints\"\n    rules:\n      - \"Each entity type has dedicated storage\"\n      - \"LICENSE_AUDIT is append-only \u2014 license audit records are immutable\"\n      - \"All paths are scoped under ai_governance/ai_licensing \u2014 no cross-subdomain writes\"\n      - \"Storage paths resolved via STRUCTURE only\"\n```\n\n",
+  "content_hash": "2bb6f4c099c9ab27aace08e93c128dfbc4ac90cc5a546b73a3476850e13ff65b",
+  "fqdn_id": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "description": "Maps licensing entity stores to paths under the instance data root.",
+      "domain": "ai_governance",
+      "entity_stores": {
+        "LICENSE_AUDIT": {
+          "description": "Append-only audit trail for license provisioning, denial, and reclaim decisions",
+          "path": "ai_governance/ai_licensing/audit_log.jsonl"
+        },
+        "LICENSE_FACTS": {
+          "description": "License tier and status fact feed (user_id \u2192 license record) \u2014 owned by ai_licensing",
+          "path": "ai_governance/ai_licensing/license_facts.json"
+        },
+        "LICENSE_REGISTRY": {
+          "description": "Employee \u2192 license assignment registry",
+          "path": "ai_governance/ai_licensing/license_registry.json"
+        }
+      },
+      "isolation": {
+        "description": "Entity storage isolation constraints",
+        "rules": [
+          "Each entity type has dedicated storage",
+          "LICENSE_AUDIT is append-only \u2014 license audit records are immutable",
+          "All paths are scoped under ai_governance/ai_licensing \u2014 no cross-subdomain writes",
+          "Storage paths resolved via STRUCTURE only"
+        ]
+      },
+      "layer": "DOMAINS",
+      "resolution": {
+        "algorithm": "base_path / entity_stores[entity_type].path",
+        "description": "Runtime path resolution strategy",
+        "example": "{{module_data_root}}/ai_governance/ai_licensing/audit_log.jsonl"
+      },
+      "storage_roots": {
+        "base_path": "{{module_data_root}}",
+        "description": "Root path for all ai_licensing storage (resolved at runtime)"
+      },
+      "subdomain": "ai_licensing",
+      "summary": "AI licensing subdomain storage topology"
+    },
+    "fqdn": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

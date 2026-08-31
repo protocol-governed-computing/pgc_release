@@ -1,0 +1,36 @@
+{
+  "artifact_code": "INVARIANT_TOPOLOGY_IMMUTABLE_AFTER_COMPILATION_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_TOPOLOGY_IMMUTABLE_AFTER_COMPILATION_V0\n\n## Machine\n\n```yaml\nfqdn: execution_topology::INVARIANT_TOPOLOGY_IMMUTABLE_AFTER_COMPILATION_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: execution_topology\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - WF\n  - CC\n  - CT\n  - CS\n  - RB\n```\n\n---\n\n## Summary\n\nThe governance guarantee of PGS topology rests on compilation being the terminal authority\nover execution structure. If any runtime component could modify the step sequence, add\nsteps, remove steps, or override routing after compilation, the compiler's validation\nwould be invalidated by changes it never saw.\n\nTopology immutability after compilation is what makes compiler-enforced governance meaningful.\n\n## What this realizes\nCompiled execution topology MUST NOT be:\n1. Modified by any runtime component (workflow engine, executor, host environment)\n2. Extended with runtime-injected steps not present in the compiled artifact\n3. Patched via configuration, environment variable, or feature flag\n4. Overridden by caller-supplied topology modifications\n\nThe compiled artifact is the topology. The runtime traverses it. No other authority exists.\n\n## Where it applies\n- **Artifact Types**: CC\n- **Validation Phase**: compile_time (structural) + runtime (behavioral constraint)\n- **Enforced By**: ASSERT_TOPOLOGY_IMMUTABLE_AFTER_COMPILATION_V0\n\n## Rationale\n\nIf topology can be changed at runtime, compilation is advisory, not authoritative. The\nentire governance model \u2014 invariant checks, routing completeness, dataflow closure \u2014\ncollapses if any of those properties can be overridden after the fact. Immutability\nafter compilation is the property that makes compile-time governance load-bearing.\n\nThis is a Phase 1 stub. Full enforcement is implemented in Phase 3.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: no runtime component, workflow engine, or execution agent may alter, extend, patch, or override\n    a compiled execution topology; the compiled step sequence and routing declarations are immutable for\n    the lifetime of the compiled artifact\n  summary: execution topology is fixed at compile time and MUST NOT be modified, extended, or overridden\n    at runtime; topology is a read-only graph structure after compilation\n```\n",
+  "content_hash": "8d4ad5aa8d2e6dd7ea3094b2ad7dcbc54285ff8fb21ef873feeb0b42ba03289b",
+  "fqdn_id": "execution_topology::INVARIANT_TOPOLOGY_IMMUTABLE_AFTER_COMPILATION_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF",
+        "CC",
+        "CT",
+        "CS",
+        "RB"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "execution_topology",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "execution_topology::INVARIANT_TOPOLOGY_IMMUTABLE_AFTER_COMPILATION_V0",
+    "governed_by": "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "execution_topology",
+  "references": [
+    "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,44 @@
+{
+  "artifact_code": "VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V0",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V0\n\n## Machine\n\n```yaml\nfqdn: vocabulary::VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: vocabulary\ndeterminative_fields:\n  casing: lower_snake\n  domain_extensible: false\n  entries:\n  - trace_schema_version\n  - event_type\n  - domain\n  - wf_addr\n  - cc_addr\n  - step_addr\n  - step_op\n  - result_status\n  - detail\nobservational_fields:\n  casing: lower_snake\n  domain_extensible: false\n  entries:\n  - trace_id\n  - ts_ns\n```\n\n---\n\n## Intent\n\nWhich content of an execution trace is **determinative** and which is **observational**, declared so\nthat a checker can compare the first and disregard the second.\n\n`3e` \u00a75 settles what earlier documents left open, and EV-5 requires the distinction be *declared\nrather than inferred*. Without it, replay comparison is impossible in both directions: a checker\ncomparing everything fails on every timestamp and learns nothing; one comparing nothing established\nnothing; one guessing which fields look stable is deciding for itself what governance meant.\n\n**Determinative content MUST be identical** for the same state, proposal and closure (EV-6). It is\nwhat establishes the path taken and the outcome reached: which act, which contract, which step, what\nthat step reported.\n\n**Observational content MAY differ** between two executions of the same transition, and **MUST NOT\nparticipate in any determination** (EV-7). `ts_ns` is a monotonic reading; `trace_id` carries a\ntimestamp prefix and is documented as \"not purely deterministic\".\n\n---\n\n## Where this is read\n\n`protocol_runtime/runtime/evidence.py` reads both sets from the sealed composition and writes a\n`trace_classification` header as the first record of every trace. The trace therefore carries the\nclassification it was written under, so a party holding the trace and the snapshot can compare\ndeterminative content **without access to the producing system** (EV-16, AI-16).\n\n`.github/process/evidence_determinism.py` executes one workflow twice and asserts that determinative\ncontent is identical and that observational content is what differs.\n\n---\n\n## What is not claimed\n\n**That a field classified determinative carries only determinative content.** `detail` is\ncaller-filled: a step that put a duration or a hostname in it would place observational content on\nthe determinative side, and no check here would see it. The rule is that observational content goes\nin a declared observational field; the rule is stated and is not enforced per value.\n\n**That the classification is complete for evidence other than execution traces.** Construction\nproduces no evidence record at all today, so it has none to classify \u2014 a separate finding, and this\nartifact does not pretend to cover it.\n",
+  "content_hash": "c6630b05a34a6892d8c41b6662701359285c671e6a41f141c3ae6cc1edefe6be",
+  "fqdn_id": "vocabulary::VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V0",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "authority": "pgc.platform",
+    "concern": "vocabulary",
+    "determinative_fields": {
+      "casing": "lower_snake",
+      "domain_extensible": false,
+      "entries": [
+        "trace_schema_version",
+        "event_type",
+        "domain",
+        "wf_addr",
+        "cc_addr",
+        "step_addr",
+        "step_op",
+        "result_status",
+        "detail"
+      ]
+    },
+    "fqdn": "vocabulary::VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "observational_fields": {
+      "casing": "lower_snake",
+      "domain_extensible": false,
+      "entries": [
+        "trace_id",
+        "ts_ns"
+      ]
+    },
+    "version": "v0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "vocabulary",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

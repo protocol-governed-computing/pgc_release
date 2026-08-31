@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_WF_ANNOUNCEMENT_DISTINCT_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_WF_ANNOUNCEMENT_DISTINCT_V0\n\n## Machine\n\n```yaml\nfqdn: workflow::INVARIANT_WF_ANNOUNCEMENT_DISTINCT_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: workflow\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - WF\n```\n\n## Summary\n\nA terminal node announces each moment at most once, and every moment it announces is a declared\nevent artifact. An announcement that names the same moment twice is either a mistake or two\ndifferent moments that were not distinguished, and a reader can act on neither.\n\n## What this realizes\nFor every `WF` artifact, for every node of type `EXIT` or `EXIT_SUCCESS` declaring `emit`:\n\n1. `emit` MUST be a moment or an ordered sequence of moments. A single moment is a sequence of one.\n2. No moment MAY appear twice in one node's `emit`.\n3. Every moment named MUST be a fully-qualified identity, so that what is announced resolves to a\n   declared artifact rather than to a name somebody hoped existed.\n\n## Why this is checked here rather than trusted\n\nThe order in which moments are announced is normative \u2014 it is the order a reader of the account sees\n\u2014 and an ordered sequence is exactly the shape in which a repeat is easy to introduce and invisible\nafterwards. A moment announced twice produces an account stating that something happened twice when\nit happened once, and nothing downstream can tell the difference: the trail is append-only, so the\nsecond entry is as permanent as the first.\n\nThe narrower reading \u2014 that a repeat is harmless because both entries name the same moment \u2014 is the\none this refuses. Two entries are two occurrences to anybody counting them, and counting them is\nwhat an account is for.\n",
+  "content_hash": "93d58cfc532e22817a9054ea5e9a76ca001774a85fa442307c55a8d1ce281fba",
+  "fqdn_id": "workflow::INVARIANT_WF_ANNOUNCEMENT_DISTINCT_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "workflow",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "workflow::INVARIANT_WF_ANNOUNCEMENT_DISTINCT_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "workflow",
+  "references": [
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

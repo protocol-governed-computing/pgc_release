@@ -1,0 +1,111 @@
+{
+  "artifact_code": "WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+  "artifact_type": "WF",
+  "content": "# WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: catalog\nsupersedes: book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\nruntime_binding: book_library_mgmt::RB_CATALOG_BINDINGS_V0\nsubdomain: catalog\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: Corrects what the library publishes about a registered book\n  actor_context: book_library_mgmt::AC_LIBRARY_STAFF_V0\n  start_node: IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1\n  nodes:\n    IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1:\n      type: IN\n      code: IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1\n      next:\n        ACK: CC_CONFIRM_STAFF_AUTHORIZED_V0\n        NACK: EXIT_REJECTED\n    CC_CONFIRM_STAFF_AUTHORIZED_V0:\n      type: CC\n      code: CC_CONFIRM_STAFF_AUTHORIZED_V0\n      inputs:\n        authorization_rules: $.payload.authorization_rules\n        staff_credentials: $.payload.staff_credentials\n      next:\n        SUCCESS: CC_RESOLVE_BOOK_IDENTITY_V0\n        VIOLATION: EXIT_REJECTED\n    CC_RESOLVE_BOOK_IDENTITY_V0:\n      type: CC\n      code: CC_RESOLVE_BOOK_IDENTITY_V0\n      inputs:\n        identity_key: $.payload.identity_key\n      next:\n        SUCCESS: CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0:\n      type: CC\n      code: CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n      inputs:\n        identity_key: $.payload.identity_key\n        updated_fields: $.payload.updated_fields\n      next:\n        SUCCESS: CC_APPEND_CATALOG_OPERATION_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_APPEND_CATALOG_OPERATION_V0:\n      type: CC\n      code: CC_APPEND_CATALOG_OPERATION_V0\n      inputs:\n        operation: UPDATE_BIBLIOGRAPHIC_INFORMATION\n        record:\n          operation: UPDATE_BIBLIOGRAPHIC_INFORMATION\n          staff_id: $.payload.staff_id\n          subject: $.payload.identity_key\n        staff_id: $.payload.staff_id\n      next:\n        SUCCESS: EXIT_COMPLETED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n      emit: book_library_mgmt::EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n\n---\n\n## Intent\n\nCorrects what the library publishes about a registered book\n",
+  "content_hash": "fee9b8787c7c33f26cec1e873cbc41668defc8f333affb473ab8d5c4643bd785",
+  "fqdn_id": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "actor_context": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "nodes": {
+        "CC_APPEND_CATALOG_OPERATION_V0": {
+          "code": "CC_APPEND_CATALOG_OPERATION_V0",
+          "fqdn_id": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0",
+          "inputs": {
+            "operation": "UPDATE_BIBLIOGRAPHIC_INFORMATION",
+            "record": {
+              "operation": "UPDATE_BIBLIOGRAPHIC_INFORMATION",
+              "staff_id": "$.payload.staff_id",
+              "subject": "$.payload.identity_key"
+            },
+            "staff_id": "$.payload.staff_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+          "code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "fqdn_id": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "inputs": {
+            "authorization_rules": "$.payload.authorization_rules",
+            "staff_credentials": "$.payload.staff_credentials"
+          },
+          "next": {
+            "SUCCESS": "CC_RESOLVE_BOOK_IDENTITY_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RESOLVE_BOOK_IDENTITY_V0": {
+          "code": "CC_RESOLVE_BOOK_IDENTITY_V0",
+          "fqdn_id": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V0",
+          "inputs": {
+            "identity_key": "$.payload.identity_key"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "NOT_FOUND": "EXIT_REJECTED",
+            "SUCCESS": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0": {
+          "code": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+          "fqdn_id": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+          "inputs": {
+            "identity_key": "$.payload.identity_key",
+            "updated_fields": "$.payload.updated_fields"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "NOT_FOUND": "EXIT_REJECTED",
+            "SUCCESS": "CC_APPEND_CATALOG_OPERATION_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "emit": "book_library_mgmt::EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1": {
+          "code": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+          "fqdn_id": "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+          "next": {
+            "ACK": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "summary": "Corrects what the library publishes about a registered book"
+    },
+    "fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "catalog",
+    "supersedes": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "1"
+}

@@ -1,0 +1,99 @@
+{
+  "artifact_code": "WF_COLLATZ_CONJECTURE_V0",
+  "artifact_type": "WF",
+  "content": "# WF_COLLATZ_CONJECTURE_V0\n\n## 1. Intent\n\nReference workload: compute Collatz sequences and verify the conjecture holds for the input set \u2014\ndemonstrating that the PGC runtime traverses an independently-authored domain graph with zero\ndomain knowledge. A recursive computation expressed as a finite, acyclic protocol DAG.\n\n**Phase 1 (pure):** compute \u2192 verify. No persistence (the `CC_STORE_RESULTS` step and its platform\n`CS_MUTABLE_JSON` dependency are added in Phase 2, which exercises cross-domain capability\nconsumption).\n\n---\n\n## 2. Execution Graph\n\n```\nIN_COLLATZ_INPUT_VALIDATED_V0\n    \u251c\u2500 ACK  \u2192 CC_COMPUTE_SEQUENCES_V0\n    \u2502            \u251c\u2500 SUCCESS   \u2192 CC_VERIFY_TERMINATION_V0\n    \u2502            \u2502                \u251c\u2500 SUCCESS   \u2192 EXIT:CONJECTURE_PROVEN\n    \u2502            \u2502                \u2514\u2500 VIOLATION \u2192 EXIT:CONJECTURE_VIOLATED\n    \u2502            \u2514\u2500 VIOLATION \u2192 EXIT:ERROR\n    \u2514\u2500 NACK \u2192 EXIT:REJECTED\n```\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::WF_COLLATZ_CONJECTURE_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: workload\nsubdomain: collatz\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\nruntime_binding: workload::RB_COLLATZ_V0\ncore:\n  summary: Compute, verify, and persist Collatz sequences \u2014 domain-blind PGC execution\n  actor_context: workload::AC_REFERENCE_ACTOR_V0\n  start_node: IN_COLLATZ_INPUT_VALIDATED_V0\n  nodes:\n    IN_COLLATZ_INPUT_VALIDATED_V0:\n      type: IN\n      code: IN_COLLATZ_INPUT_VALIDATED_V0\n      next:\n        ACK: CC_COMPUTE_SEQUENCES_V0\n        NACK: EXIT_REJECTED\n    CC_COMPUTE_SEQUENCES_V0:\n      type: CC\n      code: CC_COMPUTE_SEQUENCES_V0\n      inputs:\n        numbers: $.payload.numbers\n      next:\n        SUCCESS: CC_VERIFY_TERMINATION_V0\n        VIOLATION: EXIT_ERROR\n    CC_VERIFY_TERMINATION_V0:\n      type: CC\n      code: CC_VERIFY_TERMINATION_V0\n      inputs:\n        sequences: $.results.CC_COMPUTE_SEQUENCES_V0.sequences\n      next:\n        SUCCESS: CC_STORE_RESULTS_V0\n        VIOLATION: EXIT_CONJECTURE_VIOLATED\n    CC_STORE_RESULTS_V0:\n      type: CC\n      code: CC_STORE_RESULTS_V0\n      inputs:\n        sequences: $.results.CC_COMPUTE_SEQUENCES_V0.sequences\n        all_terminate: $.results.CC_VERIFY_TERMINATION_V0.all_terminate\n        non_terminating: $.results.CC_VERIFY_TERMINATION_V0.non_terminating\n      next:\n        SUCCESS: EXIT_CONJECTURE_PROVEN\n        VIOLATION: EXIT_ERROR\n        BACKEND_ERROR: EXIT_ERROR\n    EXIT_CONJECTURE_PROVEN:\n      type: EXIT\n      reason: COMPLETED\n      emit: workload::EV_CONJECTURE_EVALUATED_V0\n    EXIT_CONJECTURE_VIOLATED:\n      type: EXIT\n      reason: COMPLETED\n      emit: workload::EV_CONJECTURE_EVALUATED_V0\n    EXIT_REJECTED:\n      type: EXIT\n      reason: EXITED\n    EXIT_ERROR:\n      type: EXIT\n      reason: FAILED\n```\n",
+  "content_hash": "377cb0e16a00a93a1d07b6677936135a69e63791816d17614be558bcffd2b685",
+  "fqdn_id": "workload::WF_COLLATZ_CONJECTURE_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "workload",
+    "core": {
+      "actor_context": "workload::AC_REFERENCE_ACTOR_V0",
+      "nodes": {
+        "CC_COMPUTE_SEQUENCES_V0": {
+          "code": "CC_COMPUTE_SEQUENCES_V0",
+          "fqdn_id": "workload::CC_COMPUTE_SEQUENCES_V0",
+          "inputs": {
+            "numbers": "$.payload.numbers"
+          },
+          "next": {
+            "SUCCESS": "CC_VERIFY_TERMINATION_V0",
+            "VIOLATION": "EXIT_ERROR"
+          },
+          "type": "CC"
+        },
+        "CC_STORE_RESULTS_V0": {
+          "code": "CC_STORE_RESULTS_V0",
+          "fqdn_id": "workload::CC_STORE_RESULTS_V0",
+          "inputs": {
+            "all_terminate": "$.results.CC_VERIFY_TERMINATION_V0.all_terminate",
+            "non_terminating": "$.results.CC_VERIFY_TERMINATION_V0.non_terminating",
+            "sequences": "$.results.CC_COMPUTE_SEQUENCES_V0.sequences"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_ERROR",
+            "SUCCESS": "EXIT_CONJECTURE_PROVEN",
+            "VIOLATION": "EXIT_ERROR"
+          },
+          "type": "CC"
+        },
+        "CC_VERIFY_TERMINATION_V0": {
+          "code": "CC_VERIFY_TERMINATION_V0",
+          "fqdn_id": "workload::CC_VERIFY_TERMINATION_V0",
+          "inputs": {
+            "sequences": "$.results.CC_COMPUTE_SEQUENCES_V0.sequences"
+          },
+          "next": {
+            "SUCCESS": "CC_STORE_RESULTS_V0",
+            "VIOLATION": "EXIT_CONJECTURE_VIOLATED"
+          },
+          "type": "CC"
+        },
+        "EXIT_CONJECTURE_PROVEN": {
+          "emit": "workload::EV_CONJECTURE_EVALUATED_V0",
+          "reason": "COMPLETED",
+          "type": "EXIT"
+        },
+        "EXIT_CONJECTURE_VIOLATED": {
+          "emit": "workload::EV_CONJECTURE_EVALUATED_V0",
+          "reason": "COMPLETED",
+          "type": "EXIT"
+        },
+        "EXIT_ERROR": {
+          "reason": "FAILED",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "reason": "EXITED",
+          "type": "EXIT"
+        },
+        "IN_COLLATZ_INPUT_VALIDATED_V0": {
+          "code": "IN_COLLATZ_INPUT_VALIDATED_V0",
+          "fqdn_id": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
+          "next": {
+            "ACK": "CC_COMPUTE_SEQUENCES_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_COLLATZ_INPUT_VALIDATED_V0",
+      "summary": "Compute, verify, and persist Collatz sequences \u2014 domain-blind PGC execution"
+    },
+    "fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "workload::RB_COLLATZ_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "collatz",
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0",
+    "workload::RB_COLLATZ_V0"
+  ],
+  "version": "0"
+}

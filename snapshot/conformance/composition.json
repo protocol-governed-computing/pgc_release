@@ -1,0 +1,90 @@
+{
+  "conformance_version": "v0",
+  "assembler_version": "13",
+  "phase": "composition_conformance",
+  "snapshot_id": "4a1e88967b71a99a566d4b74b8b790fbbb3485149b02db7c401c853e463f7842",
+  "domains": [
+    "ai_governance",
+    "blockchain",
+    "book_library_mgmt",
+    "inspection",
+    "platform",
+    "transformation",
+    "workload"
+  ],
+  "artifacts_examined": 410,
+  "rules_evaluated": 5,
+  "status": "PASSED",
+  "findings": [
+    {
+      "invariant": "cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V0",
+      "subject": "active cryptographic trust contract",
+      "rule": "exactly_one",
+      "status": "PASSED",
+      "examined": 1,
+      "matched": [
+        "cryptographic_trust::STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V0"
+      ],
+      "message": "exactly_one: found 1 active cryptographic trust contract"
+    },
+    {
+      "invariant": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0",
+      "subject": "active execution placement contract",
+      "rule": "exactly_one",
+      "status": "PASSED",
+      "examined": 1,
+      "matched": [
+        "execution_placement::STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V0"
+      ],
+      "message": "exactly_one: found 1 active execution placement contract"
+    },
+    {
+      "invariant": "execution_scheduling::INVARIANT_EXECUTION_SCHEDULING_DECLARED_V0",
+      "subject": "active execution scheduling contract",
+      "rule": "exactly_one",
+      "status": "PASSED",
+      "examined": 1,
+      "matched": [
+        "execution_scheduling::STRUCTURE_EXECUTION_SCHEDULING_SERIAL_SINGLE_WORKER_V0"
+      ],
+      "message": "exactly_one: found 1 active execution scheduling contract"
+    },
+    {
+      "invariant": "security_domain::INVARIANT_SECURITY_DOMAIN_DECLARED_V0",
+      "subject": "active security domain contract",
+      "rule": "exactly_one",
+      "status": "PASSED",
+      "examined": 1,
+      "matched": [
+        "security_domain::STRUCTURE_SECURITY_DOMAIN_UNCLASSIFIED_LOCAL_V0"
+      ],
+      "message": "exactly_one: found 1 active security domain contract"
+    },
+    {
+      "invariant": "transport::INVARIANT_INSPECTION_BOUNDARY_COMPOSED_V0",
+      "subject": "composed inspection boundary contract",
+      "rule": "at_least_one",
+      "status": "PASSED",
+      "examined": 15,
+      "matched": [
+        "inspection::TI_SI_ARTIFACT_INDEXED_V0",
+        "inspection::TI_SI_ARTIFACT_LIST_V0",
+        "inspection::TI_SI_ARTIFACT_SHOW_V0",
+        "inspection::TI_SI_BEHAVIOR_LOGIC_LIST_V0",
+        "inspection::TI_SI_BEHAVIOR_LOGIC_SHOW_V0",
+        "inspection::TI_SI_CAPABILITY_SURFACE_V0",
+        "inspection::TI_SI_CATALOG_V0",
+        "inspection::TI_SI_RULE_SET_LIST_V0",
+        "inspection::TI_SI_SNAPSHOT_SUMMARY_V0",
+        "inspection::TI_SI_SNAPSHOT_TOPOLOGY_V0",
+        "inspection::TI_SI_STORE_CONSUMERS_V0",
+        "inspection::TI_SI_STORE_LIST_V0",
+        "inspection::TI_SI_STORE_SHOW_V0",
+        "inspection::TI_SI_VOCAB_RESOLVE_V0",
+        "inspection::TI_SI_VOCAB_SEARCH_V0"
+      ],
+      "message": "at_least_one: found 15 composed inspection boundary contract"
+    }
+  ],
+  "checked_at": "2026-08-31T01:44:14Z"
+}

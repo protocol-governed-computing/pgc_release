@@ -1,0 +1,300 @@
+{
+  "cs": {
+    "24": {
+      "cs_metadata": {
+        "capability": {
+          "supported_operation_specs": [
+            "READ",
+            "WRITE",
+            "UPDATE",
+            "DELETE",
+            "DELETE_MANY",
+            "EXISTS",
+            "LIST",
+            "SELECT",
+            "UPDATE_WHERE"
+          ]
+        },
+        "operations": {
+          "operations": {
+            "DELETE": {
+              "effect": "write",
+              "handler": "delete",
+              "idempotent": true,
+              "input": [
+                "key"
+              ],
+              "output": [
+                "result_status"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "NOT_FOUND",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Remove the given key and its value"
+            },
+            "DELETE_MANY": {
+              "effect": "write",
+              "handler": "delete_many",
+              "idempotent": true,
+              "input": [
+                "keys"
+              ],
+              "output": [
+                "result_status",
+                "drained_count"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Delete a list of keys; idempotent per key (NOT_FOUND treated as already deleted)"
+            },
+            "EXISTS": {
+              "effect": "read",
+              "handler": "exists",
+              "idempotent": true,
+              "input": [
+                "key"
+              ],
+              "output": [
+                "result_status",
+                "exists"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Check if a key exists in storage"
+            },
+            "LIST": {
+              "effect": "read",
+              "handler": "list_keys",
+              "idempotent": true,
+              "input": [],
+              "output": [
+                "result_status",
+                "keys"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "BACKEND_ERROR"
+              ],
+              "summary": "List all keys in storage"
+            },
+            "READ": {
+              "effect": "read",
+              "handler": "read",
+              "idempotent": true,
+              "input": [
+                "key"
+              ],
+              "output": [
+                "result_status",
+                "value"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "NOT_FOUND",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Retrieve value for a given key"
+            },
+            "SELECT": {
+              "effect": "read",
+              "handler": "list",
+              "idempotent": true,
+              "input": [],
+              "notes": "LIST publishes keys alone, which a caller cannot select by content; SELECT publishes the records themselves. An empty store is SUCCESS with no records \u2014 NOT_FOUND is reserved for a keyed READ of one absent key.",
+              "output": [
+                "result_status",
+                "records",
+                "keys"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Read every record in storage, for a caller that selects among them by content"
+            },
+            "UPDATE": {
+              "effect": "write",
+              "handler": "update",
+              "idempotent": true,
+              "input": [
+                "key",
+                "updates"
+              ],
+              "output": [
+                "result_status"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Set named fields on the record at the given key, leaving its other fields as they are; serialized per file. The point counterpart of UPDATE_WHERE \u2014 WRITE replaces a whole value, and a caller changing part of a record it did not create needs neither a replacement nor a filter."
+            },
+            "UPDATE_WHERE": {
+              "effect": "write",
+              "handler": "update_where",
+              "idempotent": false,
+              "input": [
+                "filter",
+                "updates"
+              ],
+              "notes": "filter={field:value,...} AND semantics; updates={field:value,...} applied to all matched records; null value removes field; VIOLATION when no records match; load+filter+update+save serialized under per-file threading lock",
+              "output": [
+                "result_status",
+                "matched_keys",
+                "updated_count"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Atomically update all records matching ALL filter conditions; serialized per file"
+            },
+            "WRITE": {
+              "effect": "write",
+              "handler": "write",
+              "idempotent": true,
+              "input": [
+                "key",
+                "value"
+              ],
+              "output": [
+                "result_status"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Store or update a value at the given key"
+            }
+          }
+        }
+      },
+      "handler_ref": {
+        "callable": "MutableJsonRuntime",
+        "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
+      }
+    }
+  },
+  "ct": {
+    "85": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_COLLATZ_STEP_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "numbers": "$.inputs.numbers"
+            },
+            "atom": "workload::CT_PURE_COLLATZ_STEP_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "workloads.collatz.implementation.capability_transforms.atoms.ct_pure_collatz_step_v0"
+            },
+            "out": "__atom_result__"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+        "inputs": {
+          "numbers": {
+            "description": "List of positive integers for which to compute sequences",
+            "required": true,
+            "type": "array"
+          }
+        },
+        "outputs": {
+          "sequences": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "86": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_TERMINATION_CHECK_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "sequences": "$.inputs.sequences"
+            },
+            "atom": "workload::CT_PURE_TERMINATION_CHECK_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "workloads.collatz.implementation.capability_transforms.atoms.ct_pure_termination_check_v0"
+            },
+            "out": "__atom_result__"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0",
+        "inputs": {
+          "sequences": {
+            "description": "Mapping from str(n) to Collatz sequence list",
+            "required": true,
+            "type": "object"
+          }
+        },
+        "outputs": {
+          "all_terminate": {
+            "from": "__atom_result__"
+          },
+          "non_terminating": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    }
+  },
+  "projection_class": "machine_projection",
+  "rb_policy": {
+    "89": {
+      "24": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "workload",
+              "core": {
+                "description": "Maps the COLLATZ_RESULTS entity store to a path under the instance data root.",
+                "domain": "workload",
+                "entity_stores": {
+                  "COLLATZ_RESULTS": {
+                    "description": "Mutable store for Collatz sequences + conjecture verdict (last-write-wins)",
+                    "path": "workload/collatz/collatz_results.json"
+                  }
+                },
+                "resolution": {
+                  "algorithm": "base_path / entity_stores[entity_type].path",
+                  "example": "{{module_data_root}}/workload/collatz/collatz_results.json"
+                },
+                "storage_roots": {
+                  "base_path": "{{module_data_root}}",
+                  "description": "Root path for Collatz storage (the runtime instance data root, resolved at runtime)"
+                },
+                "summary": "Collatz reference-workload storage topology"
+              },
+              "fqdn": "workload::STRUCTURE_COLLATZ_STORAGE_V0",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "version": "v0"
+            }
+          }
+        }
+      }
+    }
+  },
+  "wf_storage": {}
+}

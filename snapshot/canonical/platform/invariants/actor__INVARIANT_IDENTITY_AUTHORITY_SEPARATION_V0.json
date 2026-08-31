@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_IDENTITY_AUTHORITY_SEPARATION_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_IDENTITY_AUTHORITY_SEPARATION_V0\n\nArchitectural Invariant\n\n## Machine\n\n```yaml\nfqdn: actor::INVARIANT_IDENTITY_AUTHORITY_SEPARATION_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: actor\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - AC\n```\n\n## Summary\n\nActor identity governance and execution authority governance are orthogonal surfaces. An actor artifact that conflates identity with authority collapses two sovereign governance dimensions into one, destroying the separation that makes authority governance composable and transport-independent.\n\n## What this realizes\nFor every AC_ artifact:\n1. `core.attributes` MUST NOT contain fields named to signal permissions, roles, capabilities, or execution rights (e.g., `allowed_workflows`, `permissions`, `roles`, `authorization`, `execution_rights`)\n2. The artifact MUST NOT declare admissibility rules, projection visibility constraints, or workflow authorization grants\n3. The artifact MUST NOT reference authorization databases, authority stores, or runtime permission tables\n4. Identity attributes (type, email, agent_id, etc.) MUST carry no implicit authority semantics\n\n## Where it applies\n- **Artifact Types**: AC\n- **Validation Phase**: ASSERT (compile-time)\n- **Enforced By**: ASSERT_IDENTITY_AUTHORITY_SEPARATION_V0\n\n## Rationale\n\nIdentity answers: *what is this entity?*\nAuthority answers: *what may this entity do?*\n\nThese are orthogonal governance questions with different answer surfaces, different lifecycle semantics, and different downstream consumers. Identity is stable and structural; authority is dynamic, workflow-scoped, and policy-driven.\n\nCollapsing them into a single artifact conflates identity declaration with execution eligibility, introduces hidden authority semantics into the compiled snapshot, and makes authority governance dependent on identity artifact structure. This is the same class of error as embedding routing logic in transport artifacts or embedding domain logic in the runtime.\n\nThe separation is not a convention \u2014 it is a structural invariant enforced at compile time. Future authority systems (cryptographic, federated, distributed) may evolve independently of actor identity governance precisely because this boundary is invariant.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: AC_ artifacts must not conflate identity with authority; no actor artifact may declare permissions,\n    execution rights, admissibility rules, or authorization semantics\n  summary: Identity declaration and execution authority must remain orthogonal governance surfaces\n```\n",
+  "content_hash": "88bcba86f7c35ec6a36f9f4c6c2603a1e2cf919ab809a6f4c4114ffd4e96a8da",
+  "fqdn_id": "actor::INVARIANT_IDENTITY_AUTHORITY_SEPARATION_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "AC"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "actor",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "actor::INVARIANT_IDENTITY_AUTHORITY_SEPARATION_V0",
+    "governed_by": "actor::CONSTITUTION_ACTOR_IDENTITY_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "actor",
+  "references": [
+    "actor::CONSTITUTION_ACTOR_IDENTITY_V0"
+  ],
+  "version": "0"
+}

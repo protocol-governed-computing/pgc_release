@@ -1,0 +1,36 @@
+{
+  "artifact_code": "EV_LICENSE_CAP_SET_V0",
+  "artifact_type": "EV",
+  "content": "# EV_LICENSE_CAP_SET_V0\n\n## 1. Fact\n\nA license cap has been established for the system.\n\n---\n\n## 2. Rationale\n\nLicense cap is a hard constraint:\n- Injected from Finance/procurement\n- Enforces maximum concurrent licenses\n- Oversubscription impossible by construction\n\n---\n\n## 3. Emitted By\n\n| Source | Description |\n|--------|-------------|\n| Fact Injection | Finance system declares license cap |\n\n---\n\n## 4. Schema\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| cap_count | integer | true | Maximum number of concurrent licenses |\n| effective_date | string (date-time) | true | When cap becomes effective |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::EV_LICENSE_CAP_SET_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: License Cap Set\n  description: Emitted when a license cap is established\n\n  schema:\n    cap_count:\n      type: integer\n      required: true\n    effective_date:\n      type: string\n      format: date-time\n      required: true\n```\n",
+  "content_hash": "d5f302e5ef49b0d5aa463f6b20373f4c86aad3c399409fc5e75d106027cbc708",
+  "fqdn_id": "ai_governance::EV_LICENSE_CAP_SET_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "description": "Emitted when a license cap is established",
+      "schema": {
+        "cap_count": {
+          "required": true,
+          "type": "integer"
+        },
+        "effective_date": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "summary": "License Cap Set"
+    },
+    "fqdn": "ai_governance::EV_LICENSE_CAP_SET_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

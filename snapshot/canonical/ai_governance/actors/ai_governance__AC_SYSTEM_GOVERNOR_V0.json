@@ -1,0 +1,32 @@
+{
+  "artifact_code": "AC_SYSTEM_GOVERNOR_V0",
+  "artifact_type": "AC",
+  "content": "# AC_SYSTEM_GOVERNOR_V0\n\n## 1. Identity\n\nThe governance execution authority that mediates agent-proposed actions.\n\n---\n\n## 2. Rationale\n\nThe system governor enforces protocol governance:\n- Evaluates agent requests against declared policy\n- Binds license authority to tool surfaces\n- Records all governance decisions (authorization and denial)\n\n---\n\n## 3. Type\n\n| Property | Value |\n|----------|-------|\n| Type | system |\n\n---\n\n## 4. Attributes\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| governor_id | string | true | Governance authority identifier |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::AC_SYSTEM_GOVERNOR_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: agent_governance\n\ncore:\n  summary: Governance execution authority\n  description: Mediates agent-proposed actions with constitutional policy enforcement\n  type: system\n\n  attributes:\n    governor_id:\n      type: string\n      required: true\n```\n",
+  "content_hash": "274653827440c7a4fc19c8f6039aeaf64ff8b4b3e141a11d4a8b620d410a618f",
+  "fqdn_id": "ai_governance::AC_SYSTEM_GOVERNOR_V0",
+  "frontmatter": {
+    "artifact_kind": "ACTOR",
+    "authority": "pgc.platform",
+    "concern": "agent_governance",
+    "core": {
+      "attributes": {
+        "governor_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "description": "Mediates agent-proposed actions with constitutional policy enforcement",
+      "summary": "Governance execution authority",
+      "type": "system"
+    },
+    "fqdn": "ai_governance::AC_SYSTEM_GOVERNOR_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

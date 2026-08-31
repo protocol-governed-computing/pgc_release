@@ -1,0 +1,123 @@
+{
+  "artifact_code": "STRUCTURE_BUILD_TRANSFORMATION_CONFIG_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_BUILD_TRANSFORMATION_CONFIG_V0\n\n## 1. Intent\n\nBuild-time manifest for the `transformation` domain \u2014 the governed change pipeline itself.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::STRUCTURE_BUILD_TRANSFORMATION_CONFIG_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: transformation\nstructure_scope: transformation\nreuse_visibility: platform_service\ncore:\n  summary: Build-time STRUCTURE manifest (transformation pipeline domain scope)\n  description: 'Compiles the transformation domain''s own artifacts (WF/IN/CC/CT/AC/RB/STRUCTURE),\n    resolving governance and platform capability references against the imported compiled governance\n    surface. Emits only transformation artifacts. Self-describing: declares its own source layer and\n    namespace rule additively.\n\n    '\nlayer_definitions:\n  TRANSFORMATION:\n    domain_subpath: registry\n    registry_module: transformation.registry\n    implementation_namespace: transformation.implementation.capability_transforms.atoms\n    layer_category: domain\nidentity_rules:\n- match: transformation.registry\n  namespace: transformation\nartifact_discovery:\n  search_layers:\n  - TRANSFORMATION\n  import_surface:\n    domain: platform\n  artifact_types:\n  - WF\n  - IN\n  - CC\n  - CT\n  - AC\n  - RB\n  - STRUCTURE\noutput_configuration:\n  artifacts:\n    layer: PROTOCOL_BUILD_ROOT\n    subpath: compiled/canonical\n  vocabulary_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/vocabulary\n  tokenized_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/tokenized\n  evidence_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/evidence\n  trust_attestation_path:\n    layer: GOVERNANCE\n    subpath: compiled/trust\n  visualization_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/visualization\n  layer_outputs:\n    TRANSFORMATION:\n      layer: TRANSFORMATION\n      subpath: compiled/canonical\n  bootstrap_search_roots:\n  - layer: GOVERNANCE\n    subpath: structure/structures\nbuild_phases:\n- phase: discover\n  description: Discover transformation artifacts via STRUCTURE\n- phase: parse\n  description: Parse artifacts into canonical machine form\n- phase: normalize\n  description: Resolve references (transformation + imported governance surface)\n- phase: validate\n  description: Validate artifacts using compiler schema rules\n- phase: assert\n  description: Evaluate cross-artifact invariants\n- phase: materialize\n  description: Emit deterministic compiled artifacts (transformation scope only)\n  target: compiled/artifacts/\n```\n",
+  "content_hash": "6b2459a8954e894be5a16886d0da70a051e666bfd792d33b442d902d34007221",
+  "fqdn_id": "transformation::STRUCTURE_BUILD_TRANSFORMATION_CONFIG_V0",
+  "frontmatter": {
+    "artifact_discovery": {
+      "artifact_types": [
+        "WF",
+        "IN",
+        "CC",
+        "CT",
+        "AC",
+        "RB",
+        "STRUCTURE"
+      ],
+      "import_surface": {
+        "domain": "platform"
+      },
+      "search_layers": [
+        "TRANSFORMATION"
+      ]
+    },
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "build_phases": [
+      {
+        "description": "Discover transformation artifacts via STRUCTURE",
+        "phase": "discover"
+      },
+      {
+        "description": "Parse artifacts into canonical machine form",
+        "phase": "parse"
+      },
+      {
+        "description": "Resolve references (transformation + imported governance surface)",
+        "phase": "normalize"
+      },
+      {
+        "description": "Validate artifacts using compiler schema rules",
+        "phase": "validate"
+      },
+      {
+        "description": "Evaluate cross-artifact invariants",
+        "phase": "assert"
+      },
+      {
+        "description": "Emit deterministic compiled artifacts (transformation scope only)",
+        "phase": "materialize",
+        "target": "compiled/artifacts/"
+      }
+    ],
+    "concern": "transformation",
+    "core": {
+      "description": "Compiles the transformation domain's own artifacts (WF/IN/CC/CT/AC/RB/STRUCTURE), resolving governance and platform capability references against the imported compiled governance surface. Emits only transformation artifacts. Self-describing: declares its own source layer and namespace rule additively.\n",
+      "summary": "Build-time STRUCTURE manifest (transformation pipeline domain scope)"
+    },
+    "fqdn": "transformation::STRUCTURE_BUILD_TRANSFORMATION_CONFIG_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "identity_rules": [
+      {
+        "match": "transformation.registry",
+        "namespace": "transformation"
+      }
+    ],
+    "layer_definitions": {
+      "TRANSFORMATION": {
+        "domain_subpath": "registry",
+        "implementation_namespace": "transformation.implementation.capability_transforms.atoms",
+        "layer_category": "domain",
+        "registry_module": "transformation.registry"
+      }
+    },
+    "output_configuration": {
+      "artifacts": {
+        "layer": "PROTOCOL_BUILD_ROOT",
+        "subpath": "compiled/canonical"
+      },
+      "bootstrap_search_roots": [
+        {
+          "layer": "GOVERNANCE",
+          "subpath": "structure/structures"
+        }
+      ],
+      "evidence_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/evidence"
+      },
+      "layer_outputs": {
+        "TRANSFORMATION": {
+          "layer": "TRANSFORMATION",
+          "subpath": "compiled/canonical"
+        }
+      },
+      "tokenized_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/tokenized"
+      },
+      "trust_attestation_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/trust"
+      },
+      "visualization_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/visualization"
+      },
+      "vocabulary_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/vocabulary"
+      }
+    },
+    "reuse_visibility": "platform_service",
+    "structure_scope": "transformation",
+    "version": "V0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,43 @@
+{
+  "artifact_code": "AC_PARTICIPANT_V0",
+  "artifact_type": "AC",
+  "content": "# AC_PARTICIPANT_V0\n\n## 1. Intent\n\nThe ordinary participant who registers themselves and is decided about\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::AC_PARTICIPANT_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: The ordinary participant who registers themselves and is decided about\n  type: ENDUSER\n  attributes:\n    contact_address:\n      type: string\n      required: true\n    name:\n      type: string\n      required: true\n    currency_preference:\n      type: string\n      default: BACHI\n    language:\n      type: string\n      default: en\n```\n",
+  "content_hash": "cb7c425d53097f20304d89cc630999eff7d31948ded808ad21e543a52bf2ce79",
+  "fqdn_id": "blockchain::AC_PARTICIPANT_V0",
+  "frontmatter": {
+    "artifact_kind": "ACTOR",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "attributes": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "currency_preference": {
+          "default": "BACHI",
+          "type": "string"
+        },
+        "language": {
+          "default": "en",
+          "type": "string"
+        },
+        "name": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "summary": "The ordinary participant who registers themselves and is decided about",
+      "type": "ENDUSER"
+    },
+    "fqdn": "blockchain::AC_PARTICIPANT_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

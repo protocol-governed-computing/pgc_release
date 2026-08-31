@@ -1,0 +1,136 @@
+{
+  "artifact_code": "CC_VALIDATE_ELIGIBILITY_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "training_completed": "in.training_completed"
+        },
+        "fqdn": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
+        "id": "CT_PURE_CHECK_TRAINING_STATUS_V0",
+        "inputs": [
+          "training_completed"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "training_eligible"
+        ]
+      },
+      {
+        "bindings": {
+          "assigned_count": "in.assigned_count",
+          "quota": "in.cap"
+        },
+        "fqdn": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+        "id": "CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+        "inputs": [
+          "assigned_count",
+          "quota"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "quota_available",
+          "remaining"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_VALIDATE_ELIGIBILITY_V0\n\n## 1. Intent\n\nValidate employee eligibility for AI license provisioning.\n\n---\n\n## 2. Rationale\n\nEligibility validation is a protocol gate:\n- Checks training completion status\n- Checks license cap availability\n- Both must pass for provisioning to proceed\n\n---\n\n## 3. Pipeline\n\n| Step | Capability | Type | Operation |\n|------|------------|------|-----------|\n| 1 | CT_PURE_CHECK_TRAINING_STATUS_V0 | CT | Check training |\n| 2 | CT_PURE_CHECK_QUOTA_AVAILABLE_V0 | CT | Check quota |\n\n---\n\n## 4. Inputs\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| employee_id | string | true | Employee to validate |\n| training_completed | boolean | true | Training status from employee record |\n| assigned_count | integer | true | Current assigned license count |\n| cap | integer | true | Maximum license cap |\n\n---\n\n## 5. Outputs\n\n| Field | Type | Description |\n|-------|------|-------------|\n| result_status | string | Validation result |\n| reason_code | string | Failure reason if not eligible |\n\n---\n\n## 6. Result Status Contract\n\n| Status | Condition |\n|--------|-----------|\n| SUCCESS | Both training and cap checks pass |\n| VIOLATION | Training incomplete or cap reached |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_VALIDATE_ELIGIBILITY_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: Validate employee eligibility for license provisioning\n\n  inputs:\n    employee_id:\n      type: string\n      required: true\n    training_completed:\n      type: boolean\n      required: true\n    assigned_count:\n      type: integer\n      required: true\n    cap:\n      type: integer\n      required: true\n\n  outputs:\n    is_eligible:\n      type: boolean\n    quota_available:\n      type: boolean\n\n  result_status_contract:\n    allowed: [SUCCESS, VIOLATION]\n    on_input_failure: VIOLATION\n\n  pipeline:\n    - step: check_training_status\n      transform: ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0\n      inputs:\n        training_completed: $.inputs.training_completed\n      outputs:\n        is_eligible: $.capability_result.training_eligible\n      result_surface: [SUCCESS, VIOLATION]\n      on_result:\n        SUCCESS: continue\n        VIOLATION: exit\n\n    - step: check_quota_available\n      transform: ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0\n      inputs:\n        assigned_count: $.inputs.assigned_count\n        quota: $.inputs.cap\n      outputs:\n        quota_available: $.capability_result.quota_available\n      result_surface: [SUCCESS, VIOLATION]\n      on_result:\n        SUCCESS: exit\n        VIOLATION: exit\n\nextensions:\n  description: Validates training completion and license cap availability\n```\n",
+  "content_hash": "3dfc68d3a39e1a933c6ddf2bce1e221e2ffdd49c8638031fbfe8031e4208f88c",
+  "fqdn_id": "ai_governance::CC_VALIDATE_ELIGIBILITY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "inputs": {
+        "assigned_count": {
+          "required": true,
+          "type": "integer"
+        },
+        "cap": {
+          "required": true,
+          "type": "integer"
+        },
+        "employee_id": {
+          "required": true,
+          "type": "string"
+        },
+        "training_completed": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "outputs": {
+        "is_eligible": {
+          "type": "boolean"
+        },
+        "quota_available": {
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "training_completed": "$.inputs.training_completed"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "is_eligible": "$.capability_result.training_eligible"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "check_training_status",
+          "transform": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0"
+        },
+        {
+          "inputs": {
+            "assigned_count": "$.inputs.assigned_count",
+            "quota": "$.inputs.cap"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "quota_available": "$.capability_result.quota_available"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "check_quota_available",
+          "transform": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Validate employee eligibility for license provisioning"
+    },
+    "extensions": {
+      "description": "Validates training completion and license cap availability"
+    },
+    "fqdn": "ai_governance::CC_VALIDATE_ELIGIBILITY_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+    "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

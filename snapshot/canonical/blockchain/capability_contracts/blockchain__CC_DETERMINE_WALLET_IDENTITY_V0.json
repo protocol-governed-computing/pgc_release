@@ -1,0 +1,89 @@
+{
+  "artifact_code": "CC_DETERMINE_WALLET_IDENTITY_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "data": "in.holder",
+          "prefix": "in.wallet_id_prefix"
+        },
+        "fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+        "id": "CT_PURE_GENERATE_ID_V0",
+        "inputs": [
+          "data",
+          "prefix"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "id"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_DETERMINE_WALLET_IDENTITY_V0\n\n## 1. Intent\n\nDerives the wallet's identity from the person who holds it\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_DETERMINE_WALLET_IDENTITY_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Derives the wallet's identity from the person who holds it\n  inputs:\n    holder:\n      type: string\n      required: true\n    wallet_id_prefix:\n      type: string\n      required: true\n  outputs:\n    id:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: derive_wallet_identity\n    transform: capability_transforms::CT_PURE_GENERATE_ID_V0\n    inputs:\n      data: $.inputs.holder\n      prefix: $.inputs.wallet_id_prefix\n    outputs:\n      id: $.capability_result.id\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n```\n",
+  "content_hash": "d070101ff23d51d5b64dc6fce7ab7a593798c2c188f574d5ed818ecace4a8d90",
+  "fqdn_id": "blockchain::CC_DETERMINE_WALLET_IDENTITY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "inputs": {
+        "holder": {
+          "required": true,
+          "type": "string"
+        },
+        "wallet_id_prefix": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "data": "$.inputs.holder",
+            "prefix": "$.inputs.wallet_id_prefix"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "id": "$.capability_result.id"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "derive_wallet_identity",
+          "transform": "capability_transforms::CT_PURE_GENERATE_ID_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Derives the wallet's identity from the person who holds it"
+    },
+    "fqdn": "blockchain::CC_DETERMINE_WALLET_IDENTITY_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_GENERATE_ID_V0"
+  ],
+  "version": "0"
+}

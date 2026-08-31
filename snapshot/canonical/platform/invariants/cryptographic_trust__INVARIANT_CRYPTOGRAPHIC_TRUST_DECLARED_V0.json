@@ -1,0 +1,47 @@
+{
+  "artifact_code": "INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V0\n\n## Machine\n\n```yaml\nfqdn: cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: cryptographic_trust\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  enforcement:\n    scope: ALL_ARTIFACTS\n  applies_to_kinds:\n  - SNAPSHOT\n  composition_check:\n    rule: exactly_one\n    subject: active cryptographic trust contract\n    selector:\n      namespace: cryptographic_trust\n      artifact_type: STRUCTURE\n      artifact_code_prefix: STRUCTURE_CRYPTOGRAPHIC_TRUST_\n      where:\n        status: active\n```\n\n---\n\n## Purpose\n\nThis invariant makes the V0 trust contract load-bearing. Trust posture is explicitly\ndeclared for every snapshot \u2014 even in local unsigned development. The declaration\n`LOCAL_DEV_UNSIGNED` is not an absence of trust governance; it is an explicit statement\nthat no cryptographic verification is required in this context. This sets up the\ngovernance axis that future signed and attested execution modes will extend.\n\n## What this realizes\nFor every compiled snapshot:\n1. The compiler MUST scan `cryptographic_trust/` for active contracts\n2. Exactly one MUST be present\n3. The active contract's trust mode MUST be materialized into `federation_profile.cryptographic_trust`\n4. Compile MUST fail if no contract is found or more than one is found\n\n## Anti-Patterns\n\n- `no_trust_contract`: Snapshot compiled without any trust contract present\n- `multiple_active_contracts`: More than one trust contract marked active simultaneously\n- `runtime_trust_negotiation`: Runtime selecting or upgrading trust mode at execution time\n\n## Enforcement\n\n- **Stage:** compiler_validation\n- **Failure Mode:** FAIL_COMPILE \u2014 no snapshot is produced if violated\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: 'The compiler MUST locate exactly one active trust contract within FB_CRYPTOGRAPHIC_TRUST. Zero\n    contracts is a missing declaration violation. More than one active contract is an ambiguity violation.\n\n    '\n  summary: Every compiled snapshot must declare exactly one active cryptographic trust contract\nassert_projection:\n  enforcement:\n    failure_mode: HARD_FAIL\n```\n",
+  "content_hash": "53d84a0a0dc4ae898c8a169de7421210cc0ecc2aab554f55a9d3d27ade56c4c6",
+  "fqdn_id": "cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "SNAPSHOT"
+      ],
+      "composition_check": {
+        "rule": "exactly_one",
+        "selector": {
+          "artifact_code_prefix": "STRUCTURE_CRYPTOGRAPHIC_TRUST_",
+          "artifact_type": "STRUCTURE",
+          "namespace": "cryptographic_trust",
+          "where": {
+            "status": "active"
+          }
+        },
+        "subject": "active cryptographic trust contract"
+      },
+      "enforcement": {
+        "scope": "ALL_ARTIFACTS"
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "cryptographic_trust",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "cryptographic_trust",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

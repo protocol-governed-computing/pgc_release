@@ -1,0 +1,127 @@
+{
+  "artifact_code": "STRUCTURE_BUILD_BOOK_LIBRARY_MGMT_CONFIG_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_BUILD_BOOK_LIBRARY_MGMT_CONFIG_V0\n\n## 1. Intent\n\nBuild-time STRUCTURE manifest (book_library_mgmt business-domain scope)\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::STRUCTURE_BUILD_BOOK_LIBRARY_MGMT_CONFIG_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: book_library_mgmt\nstructure_scope: book_library_mgmt\nreuse_visibility: business\ncore:\n  summary: Build-time STRUCTURE manifest (book_library_mgmt business-domain scope)\n  description: 'Compiles the book_library_mgmt domain''s own artifacts, resolving governance and platform\n    capability references against the imported compiled governance surface. Emits only book_library_mgmt\n    artifacts. Self-describing: declares its own source layer and namespace rule additively. Subdomains:\n    catalog.'\nlayer_definitions:\n  BOOK_LIBRARY_MGMT:\n    domain_subpath: registry\n    registry_module: book_library_mgmt.registry\n    implementation_namespace: book_library_mgmt.implementation.capability_transforms.atoms\n    layer_category: domain\nidentity_rules:\n- match: book_library_mgmt.registry\n  namespace: book_library_mgmt\nartifact_discovery:\n  search_layers:\n  - BOOK_LIBRARY_MGMT\n  import_surface:\n    domain: platform\n  artifact_types:\n  - AC\n  - IN\n  - WF\n  - CC\n  - CT\n  - RB\n  - EV\n  - VOCAB\n  - STRUCTURE\n  - TI\n  - TE\noutput_configuration:\n  artifacts:\n    layer: PROTOCOL_BUILD_ROOT\n    subpath: compiled/canonical\n  vocabulary_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/vocabulary\n  tokenized_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/tokenized\n  evidence_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/evidence\n  trust_attestation_path:\n    layer: GOVERNANCE\n    subpath: compiled/trust\n  visualization_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/visualization\n  layer_outputs:\n    BOOK_LIBRARY_MGMT:\n      layer: BOOK_LIBRARY_MGMT\n      subpath: compiled/canonical\n  bootstrap_search_roots:\n  - layer: GOVERNANCE\n    subpath: structure/structures\nbuild_phases:\n- phase: discover\n  description: Discover book_library_mgmt artifacts via STRUCTURE\n- phase: parse\n  description: Parse artifacts into canonical machine form\n- phase: normalize\n  description: Resolve references (book_library_mgmt + imported governance surface)\n- phase: validate\n  description: Validate artifacts using compiler schema rules\n- phase: assert\n  description: Evaluate cross-artifact invariants\n- phase: materialize\n  description: Emit deterministic compiled artifacts (book_library_mgmt scope only)\n  target: compiled/artifacts/\n```\n",
+  "content_hash": "7bbce48642895fcf8e319c49ea2e5caa13370fecde6f679e8867a61e8e361865",
+  "fqdn_id": "book_library_mgmt::STRUCTURE_BUILD_BOOK_LIBRARY_MGMT_CONFIG_V0",
+  "frontmatter": {
+    "artifact_discovery": {
+      "artifact_types": [
+        "AC",
+        "IN",
+        "WF",
+        "CC",
+        "CT",
+        "RB",
+        "EV",
+        "VOCAB",
+        "STRUCTURE",
+        "TI",
+        "TE"
+      ],
+      "import_surface": {
+        "domain": "platform"
+      },
+      "search_layers": [
+        "BOOK_LIBRARY_MGMT"
+      ]
+    },
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "build_phases": [
+      {
+        "description": "Discover book_library_mgmt artifacts via STRUCTURE",
+        "phase": "discover"
+      },
+      {
+        "description": "Parse artifacts into canonical machine form",
+        "phase": "parse"
+      },
+      {
+        "description": "Resolve references (book_library_mgmt + imported governance surface)",
+        "phase": "normalize"
+      },
+      {
+        "description": "Validate artifacts using compiler schema rules",
+        "phase": "validate"
+      },
+      {
+        "description": "Evaluate cross-artifact invariants",
+        "phase": "assert"
+      },
+      {
+        "description": "Emit deterministic compiled artifacts (book_library_mgmt scope only)",
+        "phase": "materialize",
+        "target": "compiled/artifacts/"
+      }
+    ],
+    "concern": "book_library_mgmt",
+    "core": {
+      "description": "Compiles the book_library_mgmt domain's own artifacts, resolving governance and platform capability references against the imported compiled governance surface. Emits only book_library_mgmt artifacts. Self-describing: declares its own source layer and namespace rule additively. Subdomains: catalog.",
+      "summary": "Build-time STRUCTURE manifest (book_library_mgmt business-domain scope)"
+    },
+    "fqdn": "book_library_mgmt::STRUCTURE_BUILD_BOOK_LIBRARY_MGMT_CONFIG_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "identity_rules": [
+      {
+        "match": "book_library_mgmt.registry",
+        "namespace": "book_library_mgmt"
+      }
+    ],
+    "layer_definitions": {
+      "BOOK_LIBRARY_MGMT": {
+        "domain_subpath": "registry",
+        "implementation_namespace": "book_library_mgmt.implementation.capability_transforms.atoms",
+        "layer_category": "domain",
+        "registry_module": "book_library_mgmt.registry"
+      }
+    },
+    "output_configuration": {
+      "artifacts": {
+        "layer": "PROTOCOL_BUILD_ROOT",
+        "subpath": "compiled/canonical"
+      },
+      "bootstrap_search_roots": [
+        {
+          "layer": "GOVERNANCE",
+          "subpath": "structure/structures"
+        }
+      ],
+      "evidence_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/evidence"
+      },
+      "layer_outputs": {
+        "BOOK_LIBRARY_MGMT": {
+          "layer": "BOOK_LIBRARY_MGMT",
+          "subpath": "compiled/canonical"
+        }
+      },
+      "tokenized_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/tokenized"
+      },
+      "trust_attestation_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/trust"
+      },
+      "visualization_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/visualization"
+      },
+      "vocabulary_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/vocabulary"
+      }
+    },
+    "reuse_visibility": "business",
+    "structure_scope": "book_library_mgmt",
+    "version": "V0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

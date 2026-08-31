@@ -1,0 +1,152 @@
+{
+  "artifact_code": "CC_CREATE_WALLET_RECORD_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_CLOCK_V0",
+        "id": "CS_CLOCK_V0",
+        "kind": "CS",
+        "ops": [
+          "NOW"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {
+          "fields": "in.wallet_fields"
+        },
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CREATE_WALLET_RECORD_V0\n\n## 1. Intent\n\nRecords the wallet with a balance of zero, its denomination and its classification\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_CREATE_WALLET_RECORD_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Records the wallet with a balance of zero, its denomination and its classification\n  inputs:\n    wallet_id:\n      type: string\n      required: true\n    wallet_fields:\n      type: object\n      required: true\n  outputs:\n    result_status:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - BACKEND_ERROR\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_created_at\n    side_effect: capability_side_effects::CS_CLOCK_V0\n    op: NOW\n    inputs: {}\n    outputs:\n      timestamp: $.capability_result.timestamp\n    result_surface:\n    - SUCCESS\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      BACKEND_ERROR: exit\n  - step: assemble_wallet\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields: $.inputs.wallet_fields\n    outputs:\n      record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_wallet\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: WALLETS\n    inputs:\n      key: $.inputs.wallet_id\n      value: $.results.assemble_wallet.record\n    outputs:\n      result_status: $.capability_result.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n```\n",
+  "content_hash": "8f034a513de2309407a0611a14a9d2c75155aa0c12c9e4040d62339d53bb626b",
+  "fqdn_id": "blockchain::CC_CREATE_WALLET_RECORD_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "inputs": {
+        "wallet_fields": {
+          "required": true,
+          "type": "object"
+        },
+        "wallet_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "result_status": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {},
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue"
+          },
+          "op": "NOW",
+          "outputs": {
+            "timestamp": "$.capability_result.timestamp"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_CLOCK_V0",
+          "step": "read_created_at"
+        },
+        {
+          "inputs": {
+            "fields": "$.inputs.wallet_fields"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "record": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_wallet",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "key": "$.inputs.wallet_id",
+            "value": "$.results.assemble_wallet.record"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "WRITE",
+          "outputs": {
+            "result_status": "$.capability_result.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "write_wallet",
+          "store": "WALLETS"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "BACKEND_ERROR",
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Records the wallet with a balance of zero, its denomination and its classification"
+    },
+    "fqdn": "blockchain::CC_CREATE_WALLET_RECORD_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+  ],
+  "version": "0"
+}

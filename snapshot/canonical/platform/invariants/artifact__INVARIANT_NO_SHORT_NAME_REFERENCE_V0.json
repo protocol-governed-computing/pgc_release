@@ -1,0 +1,48 @@
+{
+  "artifact_code": "INVARIANT_NO_SHORT_NAME_REFERENCE_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_NO_SHORT_NAME_REFERENCE_V0\n\n## Machine\n\n```yaml\nfqdn: artifact::INVARIANT_NO_SHORT_NAME_REFERENCE_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: artifact\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  handler: pgs_governance.registry.handlers.assert_fqdn_only_references_v0\n  applies_to_kinds:\n  - AC\n  - CC\n  - CONSTITUTION\n  - CS\n  - CT\n  - EV\n  - IN\n  - INVARIANT\n  - RB\n  - SCHEMA\n  - STRUCTURE\n  - SURFACE\n  - TE\n  - TI\n  - VOCAB\n  - WF\n```\n\n---\n\n## Purpose\n\nEnforce FQDN discipline at the source.\n\n**Constraint**: All references must be resolved to FQDNs during parsing, and the underlying frontmatter must store these as FQDNs.\n\n**Benefit**: Deterministic builds, no ambiguity, portable artifacts.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'All artifact references in machine frontmatter must be fully qualified (FQDN). Short names\n    are prohibited to ensure deterministic, unambiguous resolution across layers and domains.\n\n    '\n  anti_patterns:\n  - short_name_in_id_field: 'vocabulary_id: VOCAB_STATES_V0 (should be fully qualified)'\n  - short_name_in_governed_by: 'governed_by: CONSTITUTION_WF_V0 (should be fully qualified)'\n  - ambiguous_reference: Any reference without double-colon separator\n```\n",
+  "content_hash": "c832800990b6ad2881fb8e9c3e61e03f27921a0ef1bcf1463f04f618689406d8",
+  "fqdn_id": "artifact::INVARIANT_NO_SHORT_NAME_REFERENCE_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "AC",
+        "CC",
+        "CONSTITUTION",
+        "CS",
+        "CT",
+        "EV",
+        "IN",
+        "INVARIANT",
+        "RB",
+        "SCHEMA",
+        "STRUCTURE",
+        "SURFACE",
+        "TE",
+        "TI",
+        "VOCAB",
+        "WF"
+      ],
+      "handler": "pgs_governance.registry.handlers.assert_fqdn_only_references_v0"
+    },
+    "authority": "pgc.platform",
+    "concern": "artifact",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "artifact::INVARIANT_NO_SHORT_NAME_REFERENCE_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "artifact",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

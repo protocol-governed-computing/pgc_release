@@ -1,0 +1,40 @@
+{
+  "artifact_code": "STRUCTURE_REGISTRY_LOCATION_GOVERNANCE_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_REGISTRY_LOCATION_GOVERNANCE_V0\n\nRegistry location declaration for GOVERNANCE layer.\n\n## Purpose\n\nDeclares the physical registry module location for GOVERNANCE layer artifacts. This artifact enables federated ownership of registry locations while maintaining deterministic resolution.\n\n**Constitutional Rule**: Each layer owns exactly one registry location artifact.\n\n---\n\n## Machine\n\n```yaml\nfqdn: structure::STRUCTURE_REGISTRY_LOCATION_GOVERNANCE_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: structure\ncore:\n  layer_code: GOVERNANCE\n  description: 'Core platform governance artifacts (VOCAB, CONSTITUTION, STRUCTURE, SCHEMA). Sovereign\n    authority layer for protocol governance.\n\n    '\n  notes: 'Pattern-based resolution: module_path_pattern defines how to compose registry path. No domain\n    composition for platform governance layer.\n\n    '\noutput_configuration:\n  artifacts_path:\n    layer: GOVERNANCE\n    subpath: compiled/artifacts\n  conformance_path:\n    layer: GOVERNANCE\n    subpath: compiled/conformance\n  vocabulary_path:\n    layer: GOVERNANCE\n    subpath: vocabulary/compiled\n```\n\n---\n\n## Usage\n\nLoaded by artifact discovery during build:\n\n1. Discovery reads `STRUCTURE_LAYER_AUTHORITY_V0` \u2192 enumerates layers\n2. For GOVERNANCE layer \u2192 loads this artifact\n3. Extracts `registry_module: pgs_governance.governance`\n4. Scans that module for protocol artifacts\n\n---\n\n",
+  "content_hash": "5dc9d7e01fe6d9690b8c6a43a430ce17597b74124e505f2be410c3c30b27b0b4",
+  "fqdn_id": "structure::STRUCTURE_REGISTRY_LOCATION_GOVERNANCE_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "structure",
+    "core": {
+      "description": "Core platform governance artifacts (VOCAB, CONSTITUTION, STRUCTURE, SCHEMA). Sovereign authority layer for protocol governance.\n",
+      "layer_code": "GOVERNANCE",
+      "notes": "Pattern-based resolution: module_path_pattern defines how to compose registry path. No domain composition for platform governance layer.\n"
+    },
+    "fqdn": "structure::STRUCTURE_REGISTRY_LOCATION_GOVERNANCE_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "output_configuration": {
+      "artifacts_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/artifacts"
+      },
+      "conformance_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/conformance"
+      },
+      "vocabulary_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "vocabulary/compiled"
+      }
+    },
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

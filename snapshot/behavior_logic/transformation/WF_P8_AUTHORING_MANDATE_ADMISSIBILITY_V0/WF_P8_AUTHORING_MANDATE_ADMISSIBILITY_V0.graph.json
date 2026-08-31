@@ -1,0 +1,513 @@
+{
+  "wf_id": "WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0",
+  "entry": "IN_AUTHORING_MANDATE_SUBMITTED_V0",
+  "nodes": [
+    {
+      "id": "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "type": "CC",
+      "cc_code": "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "capability": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "document_text": "in.document_text"
+            },
+            "fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+            "id": "CT_PURE_PARSE_REGISTERS_V0",
+            "inputs": [
+              "document_text"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "header",
+              "sections",
+              "registers"
+            ]
+          },
+          {
+            "bindings": {
+              "prior_texts": "in.prior_texts"
+            },
+            "fqdn": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0",
+            "id": "CT_PURE_PARSE_PRIOR_PHASES_V0",
+            "inputs": [
+              "prior_texts"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "priors"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+            "id": "CS_SNAPSHOT_QUERY_V0",
+            "kind": "CS",
+            "ops": [
+              "QUERY",
+              "CATALOG"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {
+              "document_text": "in.document_text",
+              "header": "parse_registers.capability_result.header",
+              "registers": "parse_registers.capability_result.registers",
+              "rule_set": "in.rule_set",
+              "sections": "parse_registers.capability_result.sections"
+            },
+            "fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0",
+            "id": "CT_PURE_EVALUATE_RULES_V0",
+            "inputs": [
+              "header",
+              "sections",
+              "registers",
+              "document_text",
+              "rule_set"
+            ],
+            "inputs_truncated": true,
+            "kind": "CT",
+            "outputs": [
+              "verdict",
+              "findings",
+              "rules_evaluated"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "document_text": "IN.register_text",
+          "prior_texts": "IN.prior_texts",
+          "rule_set": [
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "build_order"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Wave",
+                  "Step",
+                  "Code",
+                  "Action",
+                  "Subdomain",
+                  "Depends On"
+                ]
+              },
+              "register": "build_order"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Action is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Action",
+                "vocabulary": [
+                  "REPLACE",
+                  "EXTEND",
+                  "NEW"
+                ]
+              },
+              "register": "build_order"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "critical_path"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Position",
+                  "Code"
+                ]
+              },
+              "register": "critical_path"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "mandate_artifact_summary"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Action",
+                  "Count",
+                  "Description"
+                ]
+              },
+              "register": "mandate_artifact_summary"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "mandate_artifact_summary"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Action is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Action",
+                "vocabulary": [
+                  "REPLACE",
+                  "EXTEND",
+                  "NEW"
+                ]
+              },
+              "register": "mandate_artifact_summary"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "field_declarations"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Code",
+                  "Subdomain Field"
+                ]
+              },
+              "register": "field_declarations"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "field_declarations"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "new_capabilities"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Code",
+                  "Purpose",
+                  "Inputs",
+                  "Outputs"
+                ]
+              },
+              "register": "new_capabilities"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "new_intents"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Code",
+                  "Purpose",
+                  "Workflow",
+                  "Inputs"
+                ]
+              },
+              "register": "new_intents"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "cross_subdomain_notes"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Code",
+                  "Note"
+                ]
+              },
+              "register": "cross_subdomain_notes"
+            },
+            {
+              "check": "COLUMN_SEQUENCE_CONTIGUOUS",
+              "id": "BUILD_STEPS_NOT_CONTIGUOUS",
+              "intent": "the build sequence is total and gapless, because a gap is a dropped artifact",
+              "params": {
+                "column": "Step",
+                "start": 1
+              },
+              "register": "build_order"
+            },
+            {
+              "check": "DEPENDENCY_PRECEDES",
+              "id": "DEPENDENCY_SCHEDULED_LATER",
+              "intent": "everything a step depends on is built before it \u2014 this is what makes it a sort",
+              "params": {
+                "column": "Code",
+                "depends_column": "Depends On",
+                "order_column": "Step"
+              },
+              "register": "build_order"
+            },
+            {
+              "check": "CELL_MATCHES",
+              "id": "BUILD_CODE_MALFORMED",
+              "intent": "a mandate orders binding identities, never re-typed approximations",
+              "params": {
+                "column": "Code",
+                "detail": "build code {value!r} must be a binding FQDN copied verbatim from Stage 7",
+                "pattern": "^[a-z][a-z0-9_.]*::(?:STRUCTURE|VOCAB|AC|IN|WF|CC|CT|CS|RB|EV|TI|TE)_[A-Z0-9_]+_V\\d+$"
+              },
+              "register": "build_order"
+            },
+            {
+              "check": "CITED_ARTIFACTS_ABSENT",
+              "id": "BUILD_CODE_ALREADY_EXISTS",
+              "intent": "an artifact mandated for authoring must not already be in the composition",
+              "params": {
+                "column": "Code",
+                "observation": "si.artifact.list",
+                "pattern": "[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V\\d+"
+              },
+              "register": "build_order"
+            },
+            {
+              "check": "CELL_RESOLVES_IN_REGISTER",
+              "id": "CRITICAL_PATH_NOT_IN_BUILD_ORDER",
+              "intent": "the critical path is a path through this build order",
+              "params": {
+                "column": "Code",
+                "detail": "the critical path runs through steps the mandate schedules, not past them",
+                "target_column": "Code",
+                "target_register": "build_order"
+              },
+              "register": "critical_path"
+            },
+            {
+              "check": "COLUMN_SEQUENCE_CONTIGUOUS",
+              "id": "CRITICAL_PATH_NOT_CONTIGUOUS",
+              "intent": "a path is an ordered chain, not an unordered set of steps",
+              "params": {
+                "column": "Position",
+                "start": 1
+              },
+              "register": "critical_path"
+            },
+            {
+              "check": "CELL_NOT_EMPTY",
+              "id": "CAPABILITY_WITHOUT_PURPOSE",
+              "intent": "a mandated capability says what it is for",
+              "params": {
+                "column": "Purpose",
+                "detail": "capability states no purpose \u2014 a builder needs to know what to build, not only its name"
+              },
+              "register": "new_capabilities"
+            },
+            {
+              "check": "CELL_NOT_EMPTY",
+              "id": "INTENT_WITHOUT_WORKFLOW",
+              "intent": "every mandated intent names the workflow it starts",
+              "params": {
+                "column": "Workflow",
+                "detail": "intent names no workflow \u2014 an entry point that starts nothing cannot be authored"
+              },
+              "register": "new_intents"
+            },
+            {
+              "check": "PRIOR_IDENTITIES_COVERED",
+              "id": "DESIGNED_ARTIFACT_NOT_SCHEDULED",
+              "intent": "an artifact the design declared and the mandate never schedules is not deferred, it is lost",
+              "params": {
+                "column": "Code",
+                "prior_column": "Code",
+                "prior_phase": "p7",
+                "prior_register": "new_artifacts",
+                "require": "prior_in_here"
+              },
+              "register": "build_order"
+            },
+            {
+              "check": "PRIOR_IDENTITIES_COVERED",
+              "id": "SCHEDULED_ARTIFACT_NOT_DESIGNED",
+              "intent": "a mandate orders the build; it does not get to add to it",
+              "params": {
+                "column": "Code",
+                "prior_column": "Code",
+                "prior_phase": "p7",
+                "prior_register": "new_artifacts",
+                "require": "here_in_prior"
+              },
+              "register": "build_order"
+            },
+            {
+              "check": "REGISTER_COVERS_REGISTER",
+              "id": "SCHEDULED_ARTIFACT_UNPLACED",
+              "intent": "every artifact the mandate schedules declares the subdomain it is built into",
+              "params": {
+                "column": "Code",
+                "source_column": "Code",
+                "source_register": "build_order"
+              },
+              "register": "field_declarations"
+            },
+            {
+              "check": "PRIOR_IDENTITIES_COVERED",
+              "id": "AMENDED_ARTIFACT_UNPLACED",
+              "intent": "an artifact this change amends declares the subdomain it is placed in, as a scheduled one does",
+              "params": {
+                "column": "Code",
+                "match_on": "bare_code",
+                "prior_column": "FQDN",
+                "prior_only_when_column": "Action",
+                "prior_only_when_prefixes": [
+                  "AC_",
+                  "IN_",
+                  "WF_",
+                  "CC_",
+                  "CT_",
+                  "EV_",
+                  "RB_",
+                  "VOCAB_",
+                  "TI_",
+                  "TE_"
+                ],
+                "prior_only_when_values": [
+                  "EXTEND"
+                ],
+                "prior_phase": "p7",
+                "prior_register": "existing_inventory",
+                "require": "prior_in_here"
+              },
+              "register": "field_declarations"
+            },
+            {
+              "check": "UNRESOLVED_MARKER_ABSENT",
+              "id": "REGISTER_CELL_UNRESOLVED",
+              "intent": "an unanswered question left in a register reads as decided to every later phase",
+              "params": {
+                "detail": "{column!r} declares the question unanswered ({marker}) rather than answering it \u2014 ask it as a clarification, do not hedge it in a register",
+                "exempt": []
+              }
+            },
+            {
+              "check": "HEADER_FIELD_PRESENT",
+              "id": "HEADER_FIELD_MISSING",
+              "intent": "a dossier document states its phase, its CR, its lifecycle state, and what it feeds",
+              "params": {
+                "fields": [
+                  "Stage",
+                  "CR",
+                  "Status",
+                  "Feeds"
+                ]
+              }
+            },
+            {
+              "check": "HEADER_FIELD_MATCHES",
+              "id": "LIFECYCLE_STATE_NOT_IN_VOCABULARY",
+              "intent": "the lifecycle axis is a controlled vocabulary, not free text",
+              "params": {
+                "fields": [
+                  "Status"
+                ],
+                "pattern": "^(DRAFT|CONSTRUCTION_COMPLETE|ADMITTED_UNVALIDATED|EXECUTION_VALIDATED|PROMOTED)\\b"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EXIT_JUDGED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_AUTHORING_MANDATE_SUBMITTED_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "to": "EXIT_JUDGED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_AUTHORING_MANDATE_SUBMITTED_V0",
+      "to": "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_AUTHORING_MANDATE_SUBMITTED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_AUTHORING_MANDATE_SUBMITTED_V0",
+      "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AUTHORING_MANDATE_SUBMITTED_V0",
+      "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "EXIT_JUDGED"
+    ],
+    [
+      "IN_AUTHORING_MANDATE_SUBMITTED_V0",
+      "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AUTHORING_MANDATE_SUBMITTED_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

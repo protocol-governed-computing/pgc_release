@@ -1,0 +1,46 @@
+{
+  "artifact_code": "RB_CATALOG_BINDINGS_V0",
+  "artifact_type": "RB",
+  "content": "# RB_CATALOG_BINDINGS_V0\n\n## 1. Intent\n\nBinds the catalog's workflows to the stores and mechanisms they use\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::RB_CATALOG_BINDINGS_V0\nartifact_kind: RUNTIME_BINDING\nversion: v0\ngoverned_by: runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Binds the catalog's workflows to the stores and mechanisms they use\n  storage_structure: book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0\n  bindings:\n    capability_side_effects::CS_MUTABLE_JSON_V0:\n      policy:\n        structure: book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0\n    capability_side_effects::CS_REGISTRY_V0:\n      policy:\n        structure: book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0\n    capability_side_effects::CS_APPENDONLY_JSONL_V0:\n      policy:\n        structure: book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0\n```\n",
+  "content_hash": "4e533725c08bdfc9782cf57072ae53d6a87874fc82fdfce26693955c02d0d819",
+  "fqdn_id": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+  "frontmatter": {
+    "artifact_kind": "RUNTIME_BINDING",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "bindings": {
+        "capability_side_effects::CS_APPENDONLY_JSONL_V0": {
+          "policy": {
+            "structure": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0"
+          }
+        },
+        "capability_side_effects::CS_MUTABLE_JSON_V0": {
+          "policy": {
+            "structure": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0"
+          }
+        },
+        "capability_side_effects::CS_REGISTRY_V0": {
+          "policy": {
+            "structure": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0"
+          }
+        }
+      },
+      "storage_structure": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0",
+      "summary": "Binds the catalog's workflows to the stores and mechanisms they use"
+    },
+    "fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "governed_by": "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0",
+    "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0",
+    "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,45 @@
+{
+  "artifact_code": "INVARIANT_INSPECTION_BOUNDARY_COMPOSED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_INSPECTION_BOUNDARY_COMPOSED_V0\n\n## Machine\n\n```yaml\nfqdn: transport::INVARIANT_INSPECTION_BOUNDARY_COMPOSED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: transport\ncore:\n  enforcement_stage:\n  - composition_conformance\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  enforcement:\n    scope: ALL_ARTIFACTS\n  applies_to_kinds:\n  - SNAPSHOT\n  composition_check:\n    rule: at_least_one\n    subject: composed inspection boundary contract\n    selector:\n      artifact_type: TI\n      where:\n        handler.kind: SNAPSHOT_READ\n```\n\n---\n\n## Purpose\n\nA snapshot that carries no inspection boundary cannot be inspected. Nothing about such a snapshot\nis malformed \u2014 it composes cleanly, verifies, and executes \u2014 which is precisely the problem: the\nabsence is invisible until a consumer tries to inspect and finds no operations declared.\n\nCompiling the inspection tool domain is a **mandatory activation step**, not an optional\ncomposition choice, because consumers expect inspection to be available. This invariant makes the\nstep load-bearing: forget it, and assembly fails with a named cause rather than producing a\nsnapshot that is silently unusable by every inspection client.\n\nThe defect it prevents is a specific one, observed in practice. `compile.sh` compiles only the\nplatform; each domain needs its own `compile_domain.sh` run. Miss one and the assembler composes\nwhatever compiled roots exist and reports success \u2014 correctly, since a composition without a given\ndomain is still a valid composition. \"Assembly succeeded\" was therefore not evidence that the\nintended composition had been assembled. Now it is, for this domain.\n\n---\n\n## Scope\n\n**Applies to:** the composed snapshot, evaluated by the Composition Conformance phase.\n\nThe selector matches transport ingress contracts whose handler kind is `SNAPSHOT_READ` \u2014 the\ninspection boundary itself, rather than the domain that happens to publish it. That is deliberate:\nthe requirement is that a caller can *ask something*, and it stays true if the inspection surface\nis ever re-homed to a different namespace or split across several. A selector naming a namespace\nor a build-config artifact would assert where the contracts live, which is not what any consumer\ndepends on.\n\n`at_least_one` rather than `exactly_one`: the inspection surface publishes one contract per\noperation, and the count is expected to grow as operations are added. Fixing a number here would\nmake adding an operation a governance violation.\n\n---\n\n## Why this invariant lives in the platform\n\n**A rule requiring a domain cannot live inside that domain.** Composition Conformance evaluates\nrules read from the assembled snapshot's own artifacts; an invariant authored in the inspection\ndomain would be composed only when that domain is composed. Omit the domain and the rule vanishes\nwith it, the phase finds nothing to evaluate, and the composition passes \u2014 reporting green over an\nempty set.\n\nThat vacuity pattern has bitten this codebase repeatedly: four profile invariants sat unevaluated\nacross two migrations, and vocabulary rules silently skipped because no vocabulary artifact was in\nthe domain build's set. The structural fix is the same each time \u2014 **the checker must not be a\nmember of the thing it checks.** The platform is present in every composition by construction, so\na rule authored here is always evaluated.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Every assembled composition MUST carry at least one transport ingress contract\n    declaring a SNAPSHOT_READ handler kind.\n\n    Inspection is a consumer-facing capability of the platform, not an optional extra: clients,\n    CI gates and change-management tooling all address a snapshot through the si. operation family.\n    A composition that omits the inspection boundary offers those consumers nothing, and does so\n    without any other symptom.\n\n    The rule is deliberately about the BOUNDARY, not about a namespace or a build manifest: what a\n    consumer depends on is that inspection operations are declared, not where they were authored.\n\n    '\n  anti_patterns:\n  - uncompiled_inspection_domain: 'the inspection tool domain was not compiled before assembly,\n      so no boundary contract entered the composition\n\n      '\n  - inspection_rule_self_hosted: 'a rule requiring the inspection boundary is authored inside the\n      inspection domain, so omitting the domain also omits the rule and the check passes vacuously\n\n      '\n```\n\n",
+  "content_hash": "900025ab2fc271417d8c0eb2f4379ba32b0422f092cf857cffb2ff9931794ff8",
+  "fqdn_id": "transport::INVARIANT_INSPECTION_BOUNDARY_COMPOSED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "SNAPSHOT"
+      ],
+      "composition_check": {
+        "rule": "at_least_one",
+        "selector": {
+          "artifact_type": "TI",
+          "where": {
+            "handler.kind": "SNAPSHOT_READ"
+          }
+        },
+        "subject": "composed inspection boundary contract"
+      },
+      "enforcement": {
+        "scope": "ALL_ARTIFACTS"
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "transport",
+    "core": {
+      "enforcement_stage": [
+        "composition_conformance"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "transport::INVARIANT_INSPECTION_BOUNDARY_COMPOSED_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "transport",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

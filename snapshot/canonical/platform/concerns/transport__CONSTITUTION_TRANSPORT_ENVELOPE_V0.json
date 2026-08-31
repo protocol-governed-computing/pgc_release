@@ -1,0 +1,50 @@
+{
+  "artifact_code": "CONSTITUTION_TRANSPORT_ENVELOPE_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_TRANSPORT_ENVELOPE_V0\n\n## Machine\n\n```yaml\nfqdn: transport::CONSTITUTION_TRANSPORT_ENVELOPE_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: transport\ncore:\n  enforcement_model: process_and_compiler_enforced\n  governs:\n  - TI\n  - TE\nrules:\n- applies_to: TI\n  enforced_by: transport::INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0\n- applies_to: TE\n  enforced_by: transport::INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0\n- applies_to: TI\n  enforced_by: PROCESS_ENFORCED\n- applies_to: TE\n  enforced_by: PROCESS_ENFORCED\n- applies_to: compiled_snapshot\n  enforced_by: transport::INVARIANT_INSPECTION_BOUNDARY_COMPOSED_V0\n```\n\n---\n\n## \u00a71. Purpose\n\nGoverns the **Canonical Transport Contract** \u2014 the single protocol-neutral request and\nresponse objects through which every interaction crosses the PGC boundary. The semantic\nauthority is `TRANSPORT_STANDARD_V0` (\u00a75); this constitution binds its envelope rules into\nthe governed platform surface.\n\nThe canonical contract is the boundary's normalization membrane: inbound interactions are\nnormalized into a canonical request before admission, and governed outcomes are normalized\ninto a canonical response before egress. The membrane is explicit, governed, and closed.\n\n---\n\n## \u00a72. Rules\n\n- **Protocol independence.** The canonical request/response and the `TI`/`TE` contracts that\n  produce them MUST NOT depend on HTTP, RPC, CLI, or any external protocol. External-protocol\n  mechanics live only in adapters (Layer 2).\n- **Canonical normalization.** Every `TI` MUST declare an explicit admission normalization\n  into the canonical request; every `TE` MUST declare an explicit projection normalization\n  from the governed outcome into the canonical response. Raw passthrough of inbound payloads\n  or raw execution results is a boundary violation. Enforced by\n  `INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0`.\n- **Representation independence.** The canonical contract is representation-independent. A\n  serialization (JSON in the reference implementation) is not normative unless separately\n  specified.\n\n---\n\n## \u00a73. Semantic Category\n\nUnder the Governance Ontology, the transport boundary contracts (`TI`, `TE`) and the\ncanonical envelope they normalize to are **Contractual** \u2014 a typed boundary exposed between\nthe external world and governed execution. They carry no behavior and no domain truth.\n\n---\n\n## \u00a74. Scope\n\nGoverns the shape and normalization obligations of the canonical transport envelope and the\n`TI`/`TE` contracts that produce it. It does **not** govern external-protocol mechanics\n(adapter-owned) or execution semantics (`execution_topology`).\n\n---\n\n## \u00a75. Versioning\n\nThis constitution is version-immutable. Any normative change requires a new version\n(`CONSTITUTION_TRANSPORT_ENVELOPE_V1`); it is never edited in place.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs the canonical, protocol-neutral, representation-independent transport\n    envelope and the normalization membrane declared by TI/TE contracts.\nrules:\n- rule_id: TRANSPORT_ENVELOPE_PROTOCOL_INDEPENDENT\n  constraint: the canonical transport contract MUST NOT depend on any external protocol\n- rule_id: TRANSPORT_ENVELOPE_NORMALIZED\n  constraint: TI and TE MUST declare explicit normalization; raw passthrough is forbidden\n- rule_id: TRANSPORT_ENVELOPE_REPRESENTATION_INDEPENDENT\n  constraint: a serialization of the canonical contract is not normative unless separately specified\n```\n",
+  "content_hash": "63048e3c5ee0b7efffc3446eebe5c69c3058dd99052e877cb1e41ed214e7a4f1",
+  "fqdn_id": "transport::CONSTITUTION_TRANSPORT_ENVELOPE_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "transport",
+    "core": {
+      "enforcement_model": "process_and_compiler_enforced",
+      "governs": [
+        "TI",
+        "TE"
+      ]
+    },
+    "fqdn": "transport::CONSTITUTION_TRANSPORT_ENVELOPE_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "rules": [
+      {
+        "applies_to": "TI",
+        "enforced_by": "transport::INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0"
+      },
+      {
+        "applies_to": "TE",
+        "enforced_by": "transport::INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0"
+      },
+      {
+        "applies_to": "TI",
+        "enforced_by": "PROCESS_ENFORCED"
+      },
+      {
+        "applies_to": "TE",
+        "enforced_by": "PROCESS_ENFORCED"
+      },
+      {
+        "applies_to": "compiled_snapshot",
+        "enforced_by": "transport::INVARIANT_INSPECTION_BOUNDARY_COMPOSED_V0"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "transport",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

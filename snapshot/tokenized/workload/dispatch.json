@@ -1,0 +1,167 @@
+{
+  "admission": {
+    "88": {
+      "numbers": {
+        "required": true,
+        "type": "array"
+      }
+    }
+  },
+  "bindings": {
+    "94": {
+      "CC_COMPUTE_SEQUENCES_V0": {
+        "numbers": "$.payload.numbers"
+      },
+      "CC_STORE_RESULTS_V0": {
+        "all_terminate": "$.results.84.all_terminate",
+        "non_terminating": "$.results.84.non_terminating",
+        "sequences": "$.results.82.sequences"
+      },
+      "CC_VERIFY_TERMINATION_V0": {
+        "sequences": "$.results.82.sequences"
+      }
+    }
+  },
+  "emits": {
+    "94": {
+      "83": {
+        "SUCCESS": [
+          "workload::EV_CONJECTURE_EVALUATED_V0"
+        ]
+      },
+      "84": {
+        "VIOLATION": [
+          "workload::EV_CONJECTURE_EVALUATED_V0"
+        ]
+      }
+    }
+  },
+  "entry": {
+    "94": {
+      "actor": "workload::AC_REFERENCE_ACTOR_V0",
+      "rb": 89,
+      "start": 88,
+      "start_key": "IN_COLLATZ_INPUT_VALIDATED_V0"
+    }
+  },
+  "pipeline": {
+    "82": [
+      {
+        "addr": 85,
+        "inputs": {
+          "numbers": "$.inputs.numbers"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "sequences": "$.capability_result.sequences"
+        },
+        "step_id": "compute_sequences"
+      }
+    ],
+    "83": [
+      {
+        "addr": 24,
+        "inputs": {
+          "__store__": "COLLATZ_RESULTS",
+          "key": "collatz_results",
+          "value": {
+            "all_terminate": "$.inputs.all_terminate",
+            "non_terminating": "$.inputs.non_terminating",
+            "sequences": "$.inputs.sequences"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "step_id": "store_results"
+      }
+    ],
+    "84": [
+      {
+        "addr": 86,
+        "inputs": {
+          "sequences": "$.inputs.sequences"
+        },
+        "on_result": {
+          "SUCCESS": "evaluate_conjecture",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "all_terminate": "$.capability_result.all_terminate",
+          "non_terminating": "$.capability_result.non_terminating"
+        },
+        "step_id": "check_termination"
+      }
+    ]
+  },
+  "projection_class": "machine_projection",
+  "routing": {
+    "94": {
+      "82": {
+        "24579": {
+          "addr": 84,
+          "key": "CC_VERIFY_TERMINATION_V0"
+        }
+      },
+      "84": {
+        "24579": {
+          "addr": 83,
+          "key": "CC_STORE_RESULTS_V0"
+        }
+      },
+      "88": {
+        "24576": {
+          "addr": 82,
+          "key": "CC_COMPUTE_SEQUENCES_V0"
+        }
+      }
+    }
+  },
+  "terminal": {
+    "94": {
+      "82": {
+        "24580": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        }
+      },
+      "83": {
+        "24577": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        },
+        "24579": {
+          "exit": "EXIT_CONJECTURE_PROVEN",
+          "type": "EXIT"
+        },
+        "24580": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        }
+      },
+      "84": {
+        "24580": {
+          "exit": "EXIT_CONJECTURE_VIOLATED",
+          "type": "EXIT"
+        }
+      },
+      "88": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    }
+  }
+}

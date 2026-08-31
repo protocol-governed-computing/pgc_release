@@ -1,0 +1,47 @@
+{
+  "artifact_code": "IN_COLLATZ_INPUT_VALIDATED_V0",
+  "artifact_type": "IN",
+  "content": "# IN_COLLATZ_INPUT_VALIDATED_V0\n\n## 1. Intent\n\nAdmission gate for the Collatz reference workload. Accepts a non-empty list of positive integers.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::IN_COLLATZ_INPUT_VALIDATED_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Validate Collatz input \u2014 non-empty list of positive integers\n  workflow: WF_COLLATZ_CONJECTURE_V0\n  inputs:\n    numbers:\n      type: array\n      required: true\n      description: List of positive integers\n  outcomes:\n    ACK:\n      description: Input valid \u2014 execution proceeds\n    NACK:\n      description: Input invalid \u2014 execution rejected\nextensions:\n  domain: workload.collatz\n  admission_rules:\n  - numbers must be a non-empty array\n  - each element must be a positive integer\n```\n",
+  "content_hash": "571a1186ec0eec0f7e9af08cca5a07decd33d41ad66a56585c251c1d1647015d",
+  "fqdn_id": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "workload",
+    "core": {
+      "inputs": {
+        "numbers": {
+          "description": "List of positive integers",
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Input valid \u2014 execution proceeds"
+        },
+        "NACK": {
+          "description": "Input invalid \u2014 execution rejected"
+        }
+      },
+      "summary": "Validate Collatz input \u2014 non-empty list of positive integers",
+      "workflow": "WF_COLLATZ_CONJECTURE_V0"
+    },
+    "extensions": {
+      "admission_rules": [
+        "numbers must be a non-empty array",
+        "each element must be a positive integer"
+      ],
+      "domain": "workload.collatz"
+    },
+    "fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

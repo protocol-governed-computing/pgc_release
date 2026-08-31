@@ -1,0 +1,82 @@
+{
+  "artifact_code": "CC_ESTABLISH_WALLET_ADDRESS_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "key_material": "in.key_material"
+        },
+        "fqdn": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+        "id": "CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+        "inputs": [
+          "key_material"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "address"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_ESTABLISH_WALLET_ADDRESS_V0\n\n## 1. Intent\n\nEstablishes the address from key material supplied with the request\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_ESTABLISH_WALLET_ADDRESS_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Establishes the address from key material supplied with the request\n  inputs:\n    key_material:\n      type: string\n      required: true\n  outputs:\n    address:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: derive_wallet_address\n    transform: blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0\n    inputs:\n      key_material: $.inputs.key_material\n    outputs:\n      address: $.capability_result.address\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n```\n",
+  "content_hash": "9ebc64c603da12cd82550e71a4dcebc5ff9f2e47f7096bf6a0ded8d14acdc7a9",
+  "fqdn_id": "blockchain::CC_ESTABLISH_WALLET_ADDRESS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "inputs": {
+        "key_material": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "address": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key_material": "$.inputs.key_material"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "address": "$.capability_result.address"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "derive_wallet_address",
+          "transform": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Establishes the address from key material supplied with the request"
+    },
+    "fqdn": "blockchain::CC_ESTABLISH_WALLET_ADDRESS_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

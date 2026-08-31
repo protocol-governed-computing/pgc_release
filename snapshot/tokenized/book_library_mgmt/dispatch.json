@@ -1,0 +1,2414 @@
+{
+  "admission": {
+    "45": {
+      "author": {
+        "required": true,
+        "type": "string"
+      },
+      "authorization_rules": {
+        "required": true,
+        "type": "array"
+      },
+      "edition_fields": {
+        "required": true,
+        "type": "object"
+      },
+      "edition_schema": {
+        "required": true,
+        "type": "object"
+      },
+      "publication_year": {
+        "required": true,
+        "type": "integer"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      },
+      "subject": {
+        "required": true,
+        "type": "array"
+      },
+      "title": {
+        "required": true,
+        "type": "string"
+      },
+      "work_fields": {
+        "required": true,
+        "type": "object"
+      },
+      "work_schema": {
+        "required": true,
+        "type": "object"
+      }
+    },
+    "46": {
+      "author": {
+        "required": true,
+        "type": "string"
+      },
+      "authorization_rules": {
+        "required": true,
+        "type": "array"
+      },
+      "barcode": {
+        "required": true,
+        "type": "string"
+      },
+      "book_fields": {
+        "required": true,
+        "type": "object"
+      },
+      "book_schema": {
+        "required": true,
+        "type": "object"
+      },
+      "copy_fields": {
+        "required": true,
+        "type": "object"
+      },
+      "publication_year": {
+        "required": true,
+        "type": "integer"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      },
+      "title": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "47": {
+      "authorization_rules": {
+        "required": true,
+        "type": "array"
+      },
+      "barcode": {
+        "required": true,
+        "type": "string"
+      },
+      "copy_fields": {
+        "required": true,
+        "type": "object"
+      },
+      "identity_key": {
+        "required": true,
+        "type": "string"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "48": {
+      "authorization_rules": {
+        "required": true,
+        "type": "array"
+      },
+      "identity_key": {
+        "required": true,
+        "type": "string"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "49": {
+      "authorization_rules": {
+        "required": true,
+        "type": "array"
+      },
+      "barcode": {
+        "required": true,
+        "type": "string"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "50": {
+      "authorization_rules": {
+        "required": true,
+        "type": "array"
+      },
+      "identity_key": {
+        "required": true,
+        "type": "string"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "51": {
+      "authorization_rules": {
+        "required": true,
+        "type": "array"
+      },
+      "barcode": {
+        "required": true,
+        "type": "string"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "52": {
+      "authorization_rules": {
+        "required": true,
+        "type": "array"
+      },
+      "identity_key": {
+        "required": true,
+        "type": "string"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "53": {
+      "authorization_rules": {
+        "required": true,
+        "type": "array"
+      },
+      "search_criteria": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "54": {
+      "author": {
+        "required": true,
+        "type": "string"
+      },
+      "authorization_rules": {
+        "required": true,
+        "type": "array"
+      },
+      "identity_key": {
+        "required": true,
+        "type": "string"
+      },
+      "publication_year": {
+        "required": true,
+        "type": "integer"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      },
+      "title": {
+        "required": true,
+        "type": "string"
+      },
+      "updated_fields": {
+        "required": true,
+        "type": "object"
+      }
+    },
+    "55": {
+      "authorization_rules": {
+        "required": true,
+        "type": "array"
+      },
+      "identity_key": {
+        "required": true,
+        "type": "string"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      },
+      "updated_fields": {
+        "required": true,
+        "type": "object"
+      }
+    }
+  },
+  "bindings": {
+    "59": {
+      "CC_APPEND_CATALOG_OPERATION_V0": {
+        "operation": "REGISTER_ADDITIONAL_EDITION",
+        "record": {
+          "operation": "REGISTER_ADDITIONAL_EDITION",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.results.19.identity_key"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CLAIM_BOOK_IDENTITY_V0": {
+        "author": "$.payload.author",
+        "publication_year": "$.payload.publication_year",
+        "title": "$.payload.title"
+      },
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": "$.payload.authorization_rules",
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_REGISTER_ADDITIONAL_EDITION_V0": {
+        "edition_fields": {
+          "author": "$.payload.author",
+          "identity_key": "$.results.19.identity_key",
+          "publication_year": "$.payload.publication_year",
+          "state": "REGISTERED",
+          "subject": "$.payload.subject",
+          "title": "$.payload.title",
+          "work_key": "$.results.29.work_key"
+        },
+        "edition_schema": "$.payload.edition_schema",
+        "identity_key": "$.results.19.identity_key"
+      },
+      "CC_RESOLVE_WORK_V0": {
+        "author": "$.payload.author",
+        "title": "$.payload.title"
+      },
+      "CC_VALIDATE_BOOK_SUBMISSION_V0": {
+        "book_fields": "$.payload.edition_fields",
+        "book_schema": "$.payload.edition_schema",
+        "work_fields": "$.payload.work_fields",
+        "work_schema": "$.payload.work_schema"
+      }
+    },
+    "60": {
+      "CC_APPEND_CATALOG_OPERATION_V0": {
+        "operation": "REGISTER_BOOK",
+        "record": {
+          "operation": "REGISTER_BOOK",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.title"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CLAIM_BOOK_IDENTITY_V0": {
+        "author": "$.payload.author",
+        "publication_year": "$.payload.publication_year",
+        "title": "$.payload.title"
+      },
+      "CC_CLAIM_COPY_BARCODE_V0": {
+        "barcode": "$.payload.barcode"
+      },
+      "CC_CLAIM_WORK_IDENTITY_V0": {
+        "author": "$.payload.author",
+        "title": "$.payload.title",
+        "work_fields": {
+          "author": "$.payload.author",
+          "title": "$.payload.title"
+        }
+      },
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": "$.payload.authorization_rules",
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_REGISTER_BOOK_V0": {
+        "book_fields": {
+          "author": "$.payload.author",
+          "publication_year": "$.payload.publication_year",
+          "state": "REGISTERED",
+          "subject": "$.payload.subject",
+          "title": "$.payload.title"
+        },
+        "book_schema": "$.payload.book_schema",
+        "identity_key": "$.results.19.identity_key"
+      },
+      "CC_REGISTER_PHYSICAL_COPY_V0": {
+        "barcode": "$.payload.barcode",
+        "copy_fields": "$.payload.copy_fields",
+        "identity_key": "$.results.19.identity_key"
+      },
+      "CC_VALIDATE_BOOK_SUBMISSION_V0": {
+        "barcode": "$.payload.barcode",
+        "book_fields": "$.payload.book_fields",
+        "book_schema": "$.payload.book_schema",
+        "work_fields": {
+          "author": "$.payload.author",
+          "title": "$.payload.title"
+        },
+        "work_schema": {
+          "required": [
+            "title",
+            "author"
+          ]
+        }
+      }
+    },
+    "61": {
+      "CC_APPEND_CATALOG_OPERATION_V0": {
+        "operation": "REGISTER_PHYSICAL_COPY",
+        "record": {
+          "operation": "REGISTER_PHYSICAL_COPY",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.barcode"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CLAIM_COPY_BARCODE_V0": {
+        "barcode": "$.payload.barcode"
+      },
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": "$.payload.authorization_rules",
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_REGISTER_PHYSICAL_COPY_V0": {
+        "barcode": "$.payload.barcode",
+        "copy_fields": "$.payload.copy_fields",
+        "identity_key": "$.payload.identity_key"
+      }
+    },
+    "62": {
+      "CC_APPEND_CATALOG_OPERATION_V0": {
+        "operation": "REINSTATE_BOOK_RECORD",
+        "record": {
+          "operation": "REINSTATE_BOOK_RECORD",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.identity_key"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": "$.payload.authorization_rules",
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_REINSTATE_BOOK_RECORD_V0": {
+        "identity_key": "$.payload.identity_key"
+      }
+    },
+    "63": {
+      "CC_APPEND_CATALOG_OPERATION_V0": {
+        "operation": "REINSTATE_PHYSICAL_COPY",
+        "record": {
+          "operation": "REINSTATE_PHYSICAL_COPY",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.barcode"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": "$.payload.authorization_rules",
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_REINSTATE_PHYSICAL_COPY_V0": {
+        "barcode": "$.payload.barcode"
+      }
+    },
+    "64": {
+      "CC_APPEND_CATALOG_OPERATION_V0": {
+        "operation": "RETIRE_BOOK_RECORD",
+        "record": {
+          "operation": "RETIRE_BOOK_RECORD",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.identity_key"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": "$.payload.authorization_rules",
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_RETIRE_BOOK_RECORD_V0": {
+        "identity_key": "$.payload.identity_key"
+      }
+    },
+    "65": {
+      "CC_APPEND_CATALOG_OPERATION_V0": {
+        "operation": "RETIRE_PHYSICAL_COPY",
+        "record": {
+          "operation": "RETIRE_PHYSICAL_COPY",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.barcode"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": "$.payload.authorization_rules",
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_RETIRE_PHYSICAL_COPY_V0": {
+        "barcode": "$.payload.barcode"
+      }
+    },
+    "66": {
+      "CC_APPEND_CATALOG_OPERATION_V0": {
+        "operation": "RETRIEVE_BOOK_DETAILS",
+        "record": {
+          "operation": "RETRIEVE_BOOK_DETAILS",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.identity_key"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_ASSEMBLE_BOOK_DETAILS_V0": {
+        "copy_criteria": {
+          "identity_key": "$.payload.identity_key"
+        },
+        "identity_key": "$.payload.identity_key"
+      },
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": "$.payload.authorization_rules",
+        "staff_credentials": "$.payload.staff_credentials"
+      }
+    },
+    "67": {
+      "CC_APPEND_CATALOG_OPERATION_V0": {
+        "operation": "SEARCH_CATALOG",
+        "record": {
+          "operation": "SEARCH_CATALOG",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.search_criteria"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": "$.payload.authorization_rules",
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_SEARCH_CATALOG_V0": {
+        "search_criteria": "$.payload.search_criteria"
+      }
+    },
+    "68": {
+      "CC_APPEND_CATALOG_OPERATION_V0": {
+        "operation": "UPDATE_BIBLIOGRAPHIC_INFORMATION",
+        "record": {
+          "operation": "UPDATE_BIBLIOGRAPHIC_INFORMATION",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.identity_key"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": "$.payload.authorization_rules",
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_RESOLVE_BOOK_IDENTITY_V0": {
+        "identity_key": "$.payload.identity_key"
+      },
+      "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0": {
+        "identity_key": "$.payload.identity_key",
+        "updated_fields": "$.payload.updated_fields"
+      }
+    },
+    "69": {
+      "CC_APPEND_CATALOG_OPERATION_V0": {
+        "operation": "UPDATE_BIBLIOGRAPHIC_INFORMATION",
+        "record": {
+          "operation": "UPDATE_BIBLIOGRAPHIC_INFORMATION",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.identity_key"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": "$.payload.authorization_rules",
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_RESOLVE_BOOK_IDENTITY_V0": {
+        "identity_key": "$.payload.identity_key"
+      },
+      "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0": {
+        "identity_key": "$.payload.identity_key",
+        "updated_fields": "$.payload.updated_fields"
+      }
+    }
+  },
+  "emits": {
+    "59": {
+      "17": {
+        "SUCCESS": [
+          "book_library_mgmt::EV_BOOK_REGISTERED_V0"
+        ]
+      }
+    },
+    "60": {
+      "17": {
+        "SUCCESS": [
+          "book_library_mgmt::EV_WORK_REGISTERED_V0",
+          "book_library_mgmt::EV_BOOK_REGISTERED_V0",
+          "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0"
+        ]
+      }
+    },
+    "61": {
+      "17": {
+        "SUCCESS": [
+          "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0"
+        ]
+      }
+    },
+    "64": {
+      "17": {
+        "SUCCESS": [
+          "book_library_mgmt::EV_BOOK_RETIRED_V0"
+        ]
+      }
+    },
+    "65": {
+      "17": {
+        "SUCCESS": [
+          "book_library_mgmt::EV_PHYSICAL_COPY_RETIRED_V0"
+        ]
+      }
+    },
+    "68": {
+      "17": {
+        "SUCCESS": [
+          "book_library_mgmt::EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0"
+        ]
+      }
+    },
+    "69": {
+      "17": {
+        "SUCCESS": [
+          "book_library_mgmt::EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0"
+        ]
+      }
+    }
+  },
+  "entry": {
+    "59": {
+      "actor": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "rb": 56,
+      "start": 45,
+      "start_key": "IN_REGISTER_ADDITIONAL_EDITION_V0"
+    },
+    "60": {
+      "actor": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "rb": 56,
+      "start": 46,
+      "start_key": "IN_REGISTER_BOOK_V0"
+    },
+    "61": {
+      "actor": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "rb": 56,
+      "start": 47,
+      "start_key": "IN_REGISTER_PHYSICAL_COPY_V0"
+    },
+    "62": {
+      "actor": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "rb": 56,
+      "start": 48,
+      "start_key": "IN_REINSTATE_BOOK_RECORD_V0"
+    },
+    "63": {
+      "actor": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "rb": 56,
+      "start": 49,
+      "start_key": "IN_REINSTATE_PHYSICAL_COPY_V0"
+    },
+    "64": {
+      "actor": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "rb": 56,
+      "start": 50,
+      "start_key": "IN_RETIRE_BOOK_RECORD_V0"
+    },
+    "65": {
+      "actor": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "rb": 56,
+      "start": 51,
+      "start_key": "IN_RETIRE_PHYSICAL_COPY_V0"
+    },
+    "66": {
+      "actor": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "rb": 56,
+      "start": 52,
+      "start_key": "IN_RETRIEVE_BOOK_DETAILS_V0"
+    },
+    "67": {
+      "actor": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "rb": 56,
+      "start": 53,
+      "start_key": "IN_SEARCH_CATALOG_V0"
+    },
+    "68": {
+      "actor": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "rb": 56,
+      "start": 54,
+      "start_key": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
+    },
+    "69": {
+      "actor": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "rb": 56,
+      "start": 55,
+      "start_key": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+    }
+  },
+  "pipeline": {
+    "17": [
+      {
+        "addr": 78,
+        "inputs": {
+          "__store__": "CATALOG_OPERATIONS",
+          "actor_id": "$.inputs.staff_id",
+          "record": "$.inputs.record",
+          "stream_id": "CATALOG_OPERATIONS"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "record_id": "$.capability_result.record_id",
+          "sequence_number": "$.capability_result.sequence_number"
+        },
+        "step_id": "append_operation"
+      }
+    ],
+    "18": [
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "BOOKS",
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "book_record": "$.capability_result.value",
+          "result_status": "$.result_status",
+          "value": "$.capability_result.value"
+        },
+        "step_id": "read_book_record"
+      },
+      {
+        "addr": 36,
+        "inputs": {
+          "author": "$.results.read_book_record.value.author",
+          "title": "$.results.read_book_record.value.title"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "work_key": "$.capability_result.work_key"
+        },
+        "step_id": "form_work_key"
+      },
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "WORKS",
+          "key": "$.results.form_work_key.work_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "continue",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "work_record": "$.capability_result.value"
+        },
+        "step_id": "read_work_record"
+      },
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "PHYSICAL_COPIES"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue"
+        },
+        "op": "SELECT",
+        "outputs": {
+          "records": "$.capability_result.records",
+          "result_status": "$.result_status"
+        },
+        "step_id": "select_copy_records"
+      },
+      {
+        "addr": 38,
+        "inputs": {
+          "filter": "$.inputs.copy_criteria",
+          "source": "$.results.select_copy_records.records"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "copies_held": "$.capability_result.extracted"
+        },
+        "step_id": "select_copies_of_book"
+      }
+    ],
+    "19": [
+      {
+        "addr": 35,
+        "inputs": {
+          "author": "$.inputs.author",
+          "publication_year": "$.inputs.publication_year",
+          "title": "$.inputs.title"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "identity_key": "$.capability_result.identity_key"
+        },
+        "step_id": "form_identity_key"
+      },
+      {
+        "addr": 80,
+        "inputs": {
+          "__store__": "BOOK_IDENTITY_REGISTRY",
+          "key": "$.results.form_identity_key.identity_key",
+          "target_cs": "CS_MUTABLE_JSON_V0",
+          "target_ref": "BOOKS"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "address": "$.capability_result.address",
+          "result_status": "$.result_status"
+        },
+        "step_id": "claim_identity"
+      }
+    ],
+    "20": [
+      {
+        "addr": 80,
+        "inputs": {
+          "__store__": "COPY_BARCODE_REGISTRY",
+          "key": "$.inputs.barcode",
+          "target_cs": "CS_MUTABLE_JSON_V0",
+          "target_ref": "PHYSICAL_COPIES"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "address": "$.capability_result.address",
+          "result_status": "$.result_status"
+        },
+        "step_id": "claim_barcode"
+      }
+    ],
+    "21": [
+      {
+        "addr": 36,
+        "inputs": {
+          "author": "$.inputs.author",
+          "title": "$.inputs.title"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "work_key": "$.capability_result.work_key"
+        },
+        "step_id": "form_work_key"
+      },
+      {
+        "addr": 80,
+        "inputs": {
+          "__store__": "WORK_IDENTITY_REGISTRY",
+          "key": "$.results.form_work_key.work_key",
+          "target_cs": "CS_MUTABLE_JSON_V0",
+          "target_ref": "WORKS"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "address": "$.capability_result.address",
+          "result_status": "$.result_status"
+        },
+        "step_id": "claim_work"
+      },
+      {
+        "addr": 84,
+        "inputs": {
+          "fields": "$.inputs.work_fields"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "work_record": "$.capability_result.record"
+        },
+        "step_id": "assemble_work_record"
+      },
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "WORKS",
+          "key": "$.results.form_work_key.work_key",
+          "value": "$.results.assemble_work_record.work_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "step_id": "write_work_record"
+      }
+    ],
+    "22": [
+      {
+        "addr": 87,
+        "inputs": {
+          "parameters": "$.inputs.staff_credentials",
+          "rules": "$.inputs.authorization_rules"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "is_authorized": "$.capability_result.valid"
+        },
+        "step_id": "confirm_authorization"
+      }
+    ],
+    "23": [
+      {
+        "addr": 88,
+        "inputs": {
+          "record": "$.inputs.edition_fields",
+          "schema": "$.inputs.edition_schema"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "violations": "$.capability_result.violations"
+        },
+        "step_id": "validate_edition_fields"
+      },
+      {
+        "addr": 84,
+        "inputs": {
+          "fields": "$.inputs.edition_fields"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "edition_record": "$.capability_result.record"
+        },
+        "step_id": "assemble_edition_record"
+      },
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "BOOKS",
+          "key": "$.inputs.identity_key",
+          "value": "$.results.assemble_edition_record.edition_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "step_id": "write_edition_record"
+      }
+    ],
+    "24": [
+      {
+        "addr": 36,
+        "inputs": {
+          "author": "$.inputs.book_fields.author",
+          "title": "$.inputs.book_fields.title"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "work_key": "$.capability_result.work_key"
+        },
+        "step_id": "form_work_key"
+      },
+      {
+        "addr": 88,
+        "inputs": {
+          "record": "$.inputs.book_fields",
+          "schema": "$.inputs.book_schema"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "violations": "$.capability_result.violations"
+        },
+        "step_id": "validate_book_fields"
+      },
+      {
+        "addr": 84,
+        "inputs": {
+          "fields": {
+            "author": "$.inputs.book_fields.author",
+            "identity_key": "$.inputs.identity_key",
+            "publication_year": "$.inputs.book_fields.publication_year",
+            "state": "$.inputs.book_fields.state",
+            "subject": "$.inputs.book_fields.subject",
+            "title": "$.inputs.book_fields.title",
+            "work_key": "$.results.form_work_key.work_key"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "book_record": "$.capability_result.record"
+        },
+        "step_id": "assemble_book_record"
+      },
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "BOOKS",
+          "key": "$.inputs.identity_key",
+          "value": "$.results.assemble_book_record.book_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "step_id": "write_book_record"
+      }
+    ],
+    "25": [
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "BOOKS",
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "book_record": "$.capability_result.value",
+          "result_status": "$.result_status"
+        },
+        "step_id": "read_book_record"
+      },
+      {
+        "addr": 84,
+        "inputs": {
+          "fields": {
+            "barcode": "$.inputs.barcode",
+            "identity_key": "$.inputs.identity_key",
+            "state": "$.inputs.copy_fields.state"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "copy_record": "$.capability_result.record"
+        },
+        "step_id": "assemble_copy_record"
+      },
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "PHYSICAL_COPIES",
+          "key": "$.inputs.barcode",
+          "value": "$.results.assemble_copy_record.copy_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "step_id": "write_copy_record"
+      }
+    ],
+    "26": [
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "BOOKS",
+          "filter": {
+            "identity_key": "$.inputs.identity_key"
+          },
+          "updates": {
+            "state": "REGISTERED"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "step_id": "set_record_state"
+      }
+    ],
+    "27": [
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "PHYSICAL_COPIES",
+          "filter": {
+            "barcode": "$.inputs.barcode"
+          },
+          "updates": {
+            "state": "REGISTERED"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "step_id": "set_record_state"
+      }
+    ],
+    "28": [
+      {
+        "addr": 80,
+        "inputs": {
+          "__store__": "BOOK_IDENTITY_REGISTRY",
+          "key_or_address": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "RESOLVE",
+        "outputs": {
+          "result_status": "$.result_status",
+          "target_ref": "$.capability_result.target_ref"
+        },
+        "step_id": "resolve_identity"
+      }
+    ],
+    "29": [
+      {
+        "addr": 36,
+        "inputs": {
+          "author": "$.inputs.author",
+          "title": "$.inputs.title"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "work_key": "$.capability_result.work_key"
+        },
+        "step_id": "form_work_key"
+      },
+      {
+        "addr": 80,
+        "inputs": {
+          "__store__": "WORK_IDENTITY_REGISTRY",
+          "key_or_address": "$.results.form_work_key.work_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "RESOLVE",
+        "outputs": {
+          "result_status": "$.result_status",
+          "target_ref": "$.capability_result.target_ref"
+        },
+        "step_id": "resolve_work_claim"
+      },
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "WORKS",
+          "key": "$.results.form_work_key.work_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "result_status": "$.result_status",
+          "work_record": "$.capability_result.value"
+        },
+        "step_id": "read_work_record"
+      }
+    ],
+    "30": [
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "BOOKS",
+          "filter": {
+            "identity_key": "$.inputs.identity_key"
+          },
+          "updates": {
+            "state": "RETIRED"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "step_id": "set_record_state"
+      }
+    ],
+    "31": [
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "PHYSICAL_COPIES",
+          "filter": {
+            "barcode": "$.inputs.barcode"
+          },
+          "updates": {
+            "state": "RETIRED"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "step_id": "set_record_state"
+      }
+    ],
+    "32": [
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "BOOKS"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue"
+        },
+        "op": "SELECT",
+        "outputs": {
+          "records": "$.capability_result.records",
+          "result_status": "$.result_status"
+        },
+        "step_id": "select_book_records"
+      },
+      {
+        "addr": 86,
+        "inputs": {
+          "filter": "$.inputs.search_criteria",
+          "source": "$.results.select_book_records.records"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "matching_books": "$.capability_result.extracted"
+        },
+        "step_id": "select_matching_books"
+      },
+      {
+        "addr": 37,
+        "inputs": {
+          "attribute": "work_key",
+          "source": "$.results.select_matching_books.matching_books"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "matching_works": "$.capability_result.grouped"
+        },
+        "step_id": "group_editions_by_work"
+      }
+    ],
+    "33": [
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "BOOKS",
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "book_record": "$.capability_result.value",
+          "result_status": "$.result_status"
+        },
+        "step_id": "read_book_record"
+      },
+      {
+        "addr": 35,
+        "inputs": {
+          "author": "$.inputs.updated_fields.author",
+          "publication_year": "$.inputs.updated_fields.publication_year",
+          "title": "$.inputs.updated_fields.title"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "updated_identity_key": "$.capability_result.identity_key"
+        },
+        "step_id": "form_updated_identity_key"
+      },
+      {
+        "addr": 85,
+        "inputs": {
+          "left": "$.inputs.identity_key",
+          "right": "$.results.form_updated_identity_key.updated_identity_key"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "identity_unchanged": "$.capability_result.is_equal"
+        },
+        "step_id": "compare_identity"
+      },
+      {
+        "addr": 87,
+        "inputs": {
+          "parameters": {
+            "identity_unchanged": "$.results.compare_identity.identity_unchanged"
+          },
+          "rules": [
+            {
+              "field": "identity_unchanged",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "step_id": "require_identity_unchanged"
+      },
+      {
+        "addr": 84,
+        "inputs": {
+          "fields": {
+            "author": "$.inputs.updated_fields.author",
+            "identity_key": "$.inputs.identity_key",
+            "publication_year": "$.inputs.updated_fields.publication_year",
+            "state": "$.inputs.updated_fields.state",
+            "subject": "$.inputs.updated_fields.subject",
+            "title": "$.inputs.updated_fields.title",
+            "work_key": "$.results.read_book_record.book_record.work_key"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "updated_record": "$.capability_result.record"
+        },
+        "step_id": "assemble_updated_record"
+      },
+      {
+        "addr": 79,
+        "inputs": {
+          "__store__": "BOOKS",
+          "key": "$.inputs.identity_key",
+          "value": "$.results.assemble_updated_record.updated_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "step_id": "write_updated_record"
+      }
+    ],
+    "34": [
+      {
+        "addr": 88,
+        "inputs": {
+          "record": "$.inputs.book_fields",
+          "schema": "$.inputs.book_schema"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "violations": "$.capability_result.violations"
+        },
+        "step_id": "validate_book_fields"
+      },
+      {
+        "addr": 88,
+        "inputs": {
+          "record": "$.inputs.work_fields",
+          "schema": "$.inputs.work_schema"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "violations": "$.capability_result.violations"
+        },
+        "step_id": "validate_work_fields"
+      },
+      {
+        "addr": 87,
+        "inputs": {
+          "parameters": {
+            "barcode": "$.inputs.barcode",
+            "subject": "$.inputs.book_fields.subject"
+          },
+          "rules": [
+            {
+              "field": "barcode",
+              "op": "neq",
+              "value": ""
+            },
+            {
+              "field": "subject",
+              "op": "neq",
+              "value": []
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "step_id": "require_submission_complete"
+      }
+    ]
+  },
+  "projection_class": "machine_projection",
+  "routing": {
+    "59": {
+      "19": {
+        "24581": {
+          "addr": 23,
+          "key": "CC_REGISTER_ADDITIONAL_EDITION_V0"
+        }
+      },
+      "22": {
+        "24581": {
+          "addr": 34,
+          "key": "CC_VALIDATE_BOOK_SUBMISSION_V0"
+        }
+      },
+      "23": {
+        "24581": {
+          "addr": 17,
+          "key": "CC_APPEND_CATALOG_OPERATION_V0"
+        }
+      },
+      "29": {
+        "24581": {
+          "addr": 19,
+          "key": "CC_CLAIM_BOOK_IDENTITY_V0"
+        }
+      },
+      "34": {
+        "24581": {
+          "addr": 29,
+          "key": "CC_RESOLVE_WORK_V0"
+        }
+      },
+      "45": {
+        "24576": {
+          "addr": 22,
+          "key": "CC_CONFIRM_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "60": {
+      "19": {
+        "24581": {
+          "addr": 20,
+          "key": "CC_CLAIM_COPY_BARCODE_V0"
+        }
+      },
+      "20": {
+        "24581": {
+          "addr": 24,
+          "key": "CC_REGISTER_BOOK_V0"
+        }
+      },
+      "21": {
+        "24577": {
+          "addr": 19,
+          "key": "CC_CLAIM_BOOK_IDENTITY_V0"
+        },
+        "24581": {
+          "addr": 19,
+          "key": "CC_CLAIM_BOOK_IDENTITY_V0"
+        }
+      },
+      "22": {
+        "24581": {
+          "addr": 34,
+          "key": "CC_VALIDATE_BOOK_SUBMISSION_V0"
+        }
+      },
+      "24": {
+        "24581": {
+          "addr": 25,
+          "key": "CC_REGISTER_PHYSICAL_COPY_V0"
+        }
+      },
+      "25": {
+        "24581": {
+          "addr": 17,
+          "key": "CC_APPEND_CATALOG_OPERATION_V0"
+        }
+      },
+      "34": {
+        "24581": {
+          "addr": 21,
+          "key": "CC_CLAIM_WORK_IDENTITY_V0"
+        }
+      },
+      "46": {
+        "24576": {
+          "addr": 22,
+          "key": "CC_CONFIRM_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "61": {
+      "20": {
+        "24581": {
+          "addr": 25,
+          "key": "CC_REGISTER_PHYSICAL_COPY_V0"
+        }
+      },
+      "22": {
+        "24581": {
+          "addr": 20,
+          "key": "CC_CLAIM_COPY_BARCODE_V0"
+        }
+      },
+      "25": {
+        "24581": {
+          "addr": 17,
+          "key": "CC_APPEND_CATALOG_OPERATION_V0"
+        }
+      },
+      "47": {
+        "24576": {
+          "addr": 22,
+          "key": "CC_CONFIRM_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "62": {
+      "22": {
+        "24581": {
+          "addr": 26,
+          "key": "CC_REINSTATE_BOOK_RECORD_V0"
+        }
+      },
+      "26": {
+        "24581": {
+          "addr": 17,
+          "key": "CC_APPEND_CATALOG_OPERATION_V0"
+        }
+      },
+      "48": {
+        "24576": {
+          "addr": 22,
+          "key": "CC_CONFIRM_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "63": {
+      "22": {
+        "24581": {
+          "addr": 27,
+          "key": "CC_REINSTATE_PHYSICAL_COPY_V0"
+        }
+      },
+      "27": {
+        "24581": {
+          "addr": 17,
+          "key": "CC_APPEND_CATALOG_OPERATION_V0"
+        }
+      },
+      "49": {
+        "24576": {
+          "addr": 22,
+          "key": "CC_CONFIRM_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "64": {
+      "22": {
+        "24581": {
+          "addr": 30,
+          "key": "CC_RETIRE_BOOK_RECORD_V0"
+        }
+      },
+      "30": {
+        "24581": {
+          "addr": 17,
+          "key": "CC_APPEND_CATALOG_OPERATION_V0"
+        }
+      },
+      "50": {
+        "24576": {
+          "addr": 22,
+          "key": "CC_CONFIRM_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "65": {
+      "22": {
+        "24581": {
+          "addr": 31,
+          "key": "CC_RETIRE_PHYSICAL_COPY_V0"
+        }
+      },
+      "31": {
+        "24581": {
+          "addr": 17,
+          "key": "CC_APPEND_CATALOG_OPERATION_V0"
+        }
+      },
+      "51": {
+        "24576": {
+          "addr": 22,
+          "key": "CC_CONFIRM_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "66": {
+      "17": {
+        "24581": {
+          "addr": 18,
+          "key": "CC_ASSEMBLE_BOOK_DETAILS_V0"
+        }
+      },
+      "22": {
+        "24581": {
+          "addr": 17,
+          "key": "CC_APPEND_CATALOG_OPERATION_V0"
+        }
+      },
+      "52": {
+        "24576": {
+          "addr": 22,
+          "key": "CC_CONFIRM_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "67": {
+      "17": {
+        "24581": {
+          "addr": 32,
+          "key": "CC_SEARCH_CATALOG_V0"
+        }
+      },
+      "22": {
+        "24581": {
+          "addr": 17,
+          "key": "CC_APPEND_CATALOG_OPERATION_V0"
+        }
+      },
+      "53": {
+        "24576": {
+          "addr": 22,
+          "key": "CC_CONFIRM_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "68": {
+      "22": {
+        "24581": {
+          "addr": 28,
+          "key": "CC_RESOLVE_BOOK_IDENTITY_V0"
+        }
+      },
+      "28": {
+        "24581": {
+          "addr": 33,
+          "key": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
+        }
+      },
+      "33": {
+        "24581": {
+          "addr": 17,
+          "key": "CC_APPEND_CATALOG_OPERATION_V0"
+        }
+      },
+      "54": {
+        "24576": {
+          "addr": 22,
+          "key": "CC_CONFIRM_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "69": {
+      "22": {
+        "24581": {
+          "addr": 28,
+          "key": "CC_RESOLVE_BOOK_IDENTITY_V0"
+        }
+      },
+      "28": {
+        "24581": {
+          "addr": 33,
+          "key": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
+        }
+      },
+      "33": {
+        "24581": {
+          "addr": 17,
+          "key": "CC_APPEND_CATALOG_OPERATION_V0"
+        }
+      },
+      "55": {
+        "24576": {
+          "addr": 22,
+          "key": "CC_CONFIRM_STAFF_AUTHORIZED_V0"
+        }
+      }
+    }
+  },
+  "terminal": {
+    "59": {
+      "17": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_COMPLETED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "19": {
+        "24577": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "23": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "29": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24580": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "34": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "45": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "60": {
+      "17": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_COMPLETED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "19": {
+        "24577": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "20": {
+        "24577": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "21": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "24": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "25": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24580": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "34": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "46": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "61": {
+      "17": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_COMPLETED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "20": {
+        "24577": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "25": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24580": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "47": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "62": {
+      "17": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_COMPLETED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "26": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "48": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "63": {
+      "17": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_COMPLETED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "27": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "49": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "64": {
+      "17": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_COMPLETED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "30": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "50": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "65": {
+      "17": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_COMPLETED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "31": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "51": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "66": {
+      "17": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "18": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24580": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_COMPLETED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "52": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "67": {
+      "17": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "32": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_COMPLETED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "53": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "68": {
+      "17": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_COMPLETED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "28": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24580": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "33": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24580": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "54": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "69": {
+      "17": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_COMPLETED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "22": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "28": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24580": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "33": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24580": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "55": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    }
+  }
+}

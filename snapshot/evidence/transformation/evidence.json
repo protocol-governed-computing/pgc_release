@@ -1,0 +1,1307 @@
+{
+  "edges": [
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "wf_fqdn": "transformation::WF_CONSTRUCT_ARTIFACTS_V0"
+      },
+      "source_address": 67,
+      "source_fqdn": "transformation::CC_CONSTRUCT_ARTIFACTS_V0",
+      "target_address": 71,
+      "target_fqdn": "transformation::CC_PERSIST_ARTIFACTS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "rendered": "$.results.render_artifacts.capability_result.artifacts",
+          "sources": "$.results.render_artifacts.capability_result.sources"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "governing_artifacts": "$.capability_result.governing_artifacts",
+          "provenance": "$.capability_result.provenance"
+        },
+        "pipeline_index": 3,
+        "step_id": "attribute_provenance"
+      },
+      "source_address": 67,
+      "source_fqdn": "transformation::CC_CONSTRUCT_ARTIFACTS_V0",
+      "target_address": 72,
+      "target_fqdn": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "design_registers": "$.results.parse_design.capability_result.registers",
+          "mandate_registers": "$.results.parse_mandate.capability_result.registers",
+          "provenance": "$.results.attribute_provenance.capability_result.provenance",
+          "threshold": "$.inputs.threshold"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "completeness": "$.capability_result.completeness"
+        },
+        "pipeline_index": 4,
+        "step_id": "require_determined"
+      },
+      "source_address": 67,
+      "source_fqdn": "transformation::CC_CONSTRUCT_ARTIFACTS_V0",
+      "target_address": 74,
+      "target_fqdn": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "document_text": "$.inputs.design_text"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {},
+        "pipeline_index": 0,
+        "step_id": "parse_design"
+      },
+      "source_address": 67,
+      "source_fqdn": "transformation::CC_CONSTRUCT_ARTIFACTS_V0",
+      "target_address": 76,
+      "target_fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "document_text": "$.inputs.mandate_text"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {},
+        "pipeline_index": 1,
+        "step_id": "parse_mandate"
+      },
+      "source_address": 67,
+      "source_fqdn": "transformation::CC_CONSTRUCT_ARTIFACTS_V0",
+      "target_address": 76,
+      "target_fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "design_registers": "$.results.parse_design.capability_result.registers",
+          "mandate_registers": "$.results.parse_mandate.capability_result.registers"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "artifact_count": "$.capability_result.artifact_count",
+          "artifacts": "$.capability_result.artifacts",
+          "documents": "$.capability_result.documents",
+          "sources": "$.capability_result.sources"
+        },
+        "pipeline_index": 2,
+        "step_id": "render_artifacts"
+      },
+      "source_address": 67,
+      "source_fqdn": "transformation::CC_CONSTRUCT_ARTIFACTS_V0",
+      "target_address": 77,
+      "target_fqdn": "transformation::CT_PURE_RENDER_ARTIFACTS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "operation": "si.artifact.list",
+          "params": {}
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "QUERY",
+        "outputs": {},
+        "pipeline_index": 2,
+        "step_id": "observe_composition",
+        "store": ""
+      },
+      "source_address": 68,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "target_address": 24,
+      "target_fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "operation": "si.snapshot.summary",
+          "params": {}
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "QUERY",
+        "outputs": {},
+        "pipeline_index": 3,
+        "step_id": "observe_declarations",
+        "store": ""
+      },
+      "source_address": 68,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "target_address": 24,
+      "target_fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "document_text": "$.inputs.document_text",
+          "header": "$.results.parse_registers.capability_result.header",
+          "observed": {
+            "si.artifact.list": "$.results.observe_composition.capability_result.result.artifacts",
+            "si.snapshot.summary": "$.results.observe_declarations.capability_result.result.reuse_visibility"
+          },
+          "priors": "$.results.parse_priors.capability_result.priors",
+          "registers": "$.results.parse_registers.capability_result.registers",
+          "rule_set": "$.inputs.rule_set",
+          "sections": "$.results.parse_registers.capability_result.sections"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "findings": "$.capability_result.findings",
+          "rules_evaluated": "$.capability_result.rules_evaluated",
+          "verdict": "$.capability_result.verdict"
+        },
+        "pipeline_index": 4,
+        "step_id": "evaluate_rules"
+      },
+      "source_address": 68,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "target_address": 73,
+      "target_fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "prior_texts": "$.inputs.prior_texts"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {},
+        "pipeline_index": 1,
+        "step_id": "parse_priors"
+      },
+      "source_address": 68,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "target_address": 75,
+      "target_fqdn": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "document_text": "$.inputs.document_text"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {},
+        "pipeline_index": 0,
+        "step_id": "parse_registers"
+      },
+      "source_address": 68,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "target_address": 76,
+      "target_fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "operation": "si.artifact.list",
+          "params": {}
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "QUERY",
+        "outputs": {},
+        "pipeline_index": 2,
+        "step_id": "observe_composition",
+        "store": ""
+      },
+      "source_address": 69,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "target_address": 24,
+      "target_fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "operation": "si.capability.surface",
+          "params": {}
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "QUERY",
+        "outputs": {},
+        "pipeline_index": 3,
+        "step_id": "observe_capabilities",
+        "store": ""
+      },
+      "source_address": 69,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "target_address": 24,
+      "target_fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "operation": "si.snapshot.summary",
+          "params": {}
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "QUERY",
+        "outputs": {},
+        "pipeline_index": 4,
+        "step_id": "observe_reuse_visibility",
+        "store": ""
+      },
+      "source_address": 69,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "target_address": 24,
+      "target_fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "operation": "si.store.list",
+          "params": {}
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "QUERY",
+        "outputs": {},
+        "pipeline_index": 5,
+        "step_id": "observe_store_list",
+        "store": ""
+      },
+      "source_address": 69,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "target_address": 24,
+      "target_fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "operation": "si.rule_set.list",
+          "params": {}
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "QUERY",
+        "outputs": {},
+        "pipeline_index": 6,
+        "step_id": "observe_rule_set_list",
+        "store": ""
+      },
+      "source_address": 69,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "target_address": 24,
+      "target_fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "document_text": "$.inputs.document_text",
+          "header": "$.results.parse_registers.capability_result.header",
+          "observed": {
+            "si.artifact.list": "$.results.observe_composition.capability_result.result.artifacts",
+            "si.capability.surface": "$.results.observe_capabilities.capability_result.result.capabilities",
+            "si.capability.surface#contracts": "$.results.observe_capabilities.capability_result.result.contracts",
+            "si.capability.surface#transforms": "$.results.observe_capabilities.capability_result.result.transforms",
+            "si.rule_set.list": "$.results.observe_rule_set_list.capability_result.result.carriers",
+            "si.snapshot.summary": "$.results.observe_reuse_visibility.capability_result.result.reuse_visibility",
+            "si.store.list": "$.results.observe_store_list.capability_result.result.stores"
+          },
+          "priors": "$.results.parse_priors.capability_result.priors",
+          "registers": "$.results.parse_registers.capability_result.registers",
+          "rule_set": "$.inputs.rule_set",
+          "sections": "$.results.parse_registers.capability_result.sections"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "findings": "$.capability_result.findings",
+          "rules_evaluated": "$.capability_result.rules_evaluated",
+          "verdict": "$.capability_result.verdict"
+        },
+        "pipeline_index": 7,
+        "step_id": "evaluate_rules"
+      },
+      "source_address": 69,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "target_address": 73,
+      "target_fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "prior_texts": "$.inputs.prior_texts"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {},
+        "pipeline_index": 1,
+        "step_id": "parse_priors"
+      },
+      "source_address": 69,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "target_address": 75,
+      "target_fqdn": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "document_text": "$.inputs.document_text"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {},
+        "pipeline_index": 0,
+        "step_id": "parse_registers"
+      },
+      "source_address": 69,
+      "source_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "target_address": 76,
+      "target_fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "document_text": "$.inputs.document_text",
+          "header": "$.results.parse_registers.capability_result.header",
+          "observed": {},
+          "priors": "$.results.parse_priors.capability_result.priors",
+          "registers": "$.results.parse_registers.capability_result.registers",
+          "rule_set": "$.inputs.rule_set",
+          "sections": "$.results.parse_registers.capability_result.sections"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "findings": "$.capability_result.findings",
+          "rules_evaluated": "$.capability_result.rules_evaluated",
+          "verdict": "$.capability_result.verdict"
+        },
+        "pipeline_index": 2,
+        "step_id": "evaluate_rules"
+      },
+      "source_address": 70,
+      "source_fqdn": "transformation::CC_JUDGE_DOCUMENT_V0",
+      "target_address": 73,
+      "target_fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "prior_texts": "$.inputs.prior_texts"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {},
+        "pipeline_index": 1,
+        "step_id": "parse_priors"
+      },
+      "source_address": 70,
+      "source_fqdn": "transformation::CC_JUDGE_DOCUMENT_V0",
+      "target_address": 75,
+      "target_fqdn": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "document_text": "$.inputs.document_text"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {},
+        "pipeline_index": 0,
+        "step_id": "parse_registers"
+      },
+      "source_address": 70,
+      "source_fqdn": "transformation::CC_JUDGE_DOCUMENT_V0",
+      "target_address": 76,
+      "target_fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "documents": "$.inputs.documents"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE_ALL",
+        "outputs": {
+          "paths": "$.capability_result.paths",
+          "written": "$.capability_result.written"
+        },
+        "pipeline_index": 0,
+        "step_id": "write_artifacts",
+        "store": ""
+      },
+      "source_address": 71,
+      "source_fqdn": "transformation::CC_PERSIST_ARTIFACTS_V0",
+      "target_address": 25,
+      "target_fqdn": "capability_side_effects::CS_TEXT_ARTIFACT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "wf_fqdn": "transformation::WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0"
+      },
+      "source_address": 78,
+      "source_fqdn": "transformation::IN_ANALYSIS_LOOP_SUBMITTED_V0",
+      "target_address": 68,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_COMPOSITION_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "wf_fqdn": "transformation::WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0"
+      },
+      "source_address": 79,
+      "source_fqdn": "transformation::IN_AUTHORING_MANDATE_SUBMITTED_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "wf_fqdn": "transformation::WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0"
+      },
+      "source_address": 80,
+      "source_fqdn": "transformation::IN_BUSINESS_INTENT_SUBMITTED_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "wf_fqdn": "transformation::WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0"
+      },
+      "source_address": 81,
+      "source_fqdn": "transformation::IN_BUSINESS_MODEL_SUBMITTED_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "wf_fqdn": "transformation::WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0"
+      },
+      "source_address": 82,
+      "source_fqdn": "transformation::IN_CHANGE_REQUEST_SUBMITTED_V0",
+      "target_address": 70,
+      "target_fqdn": "transformation::CC_JUDGE_DOCUMENT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "wf_fqdn": "transformation::WF_CONSTRUCT_ARTIFACTS_V0"
+      },
+      "source_address": 83,
+      "source_fqdn": "transformation::IN_CONSTRUCTION_REQUESTED_V0",
+      "target_address": 67,
+      "target_fqdn": "transformation::CC_CONSTRUCT_ARTIFACTS_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "wf_fqdn": "transformation::WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0"
+      },
+      "source_address": 84,
+      "source_fqdn": "transformation::IN_DESIGN_INTENT_SUBMITTED_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "wf_fqdn": "transformation::WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0"
+      },
+      "source_address": 85,
+      "source_fqdn": "transformation::IN_DOMAIN_MODEL_SUBMITTED_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "wf_fqdn": "transformation::WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0"
+      },
+      "source_address": 86,
+      "source_fqdn": "transformation::IN_GOVERNANCE_INTENT_SUBMITTED_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "wf_fqdn": "transformation::WF_P0_SEED_ADMISSIBILITY_V0"
+      },
+      "source_address": 87,
+      "source_fqdn": "transformation::IN_SEED_SUBMITTED_V0",
+      "target_address": 70,
+      "target_fqdn": "transformation::CC_JUDGE_DOCUMENT_V0"
+    },
+    {
+      "kind": "RB_MAPS",
+      "kind_address": 16392,
+      "metadata": {
+        "handler_ref": ""
+      },
+      "source_address": 88,
+      "source_fqdn": "transformation::RB_CONSTRUCTION_BINDINGS_V0",
+      "target_address": 25,
+      "target_fqdn": "capability_side_effects::CS_TEXT_ARTIFACT_V0"
+    },
+    {
+      "kind": "RB_MAPS",
+      "kind_address": 16392,
+      "metadata": {
+        "handler_ref": ""
+      },
+      "source_address": 89,
+      "source_fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0",
+      "target_address": 24,
+      "target_fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 93,
+      "source_fqdn": "transformation::WF_CONSTRUCT_ARTIFACTS_V0",
+      "target_address": 67,
+      "target_fqdn": "transformation::CC_CONSTRUCT_ARTIFACTS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 93,
+      "source_fqdn": "transformation::WF_CONSTRUCT_ARTIFACTS_V0",
+      "target_address": 71,
+      "target_fqdn": "transformation::CC_PERSIST_ARTIFACTS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 93,
+      "source_fqdn": "transformation::WF_CONSTRUCT_ARTIFACTS_V0",
+      "target_address": 83,
+      "target_fqdn": "transformation::IN_CONSTRUCTION_REQUESTED_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 93,
+      "source_fqdn": "transformation::WF_CONSTRUCT_ARTIFACTS_V0",
+      "target_address": 83,
+      "target_fqdn": "transformation::IN_CONSTRUCTION_REQUESTED_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 93,
+      "source_fqdn": "transformation::WF_CONSTRUCT_ARTIFACTS_V0",
+      "target_address": 88,
+      "target_fqdn": "transformation::RB_CONSTRUCTION_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 94,
+      "source_fqdn": "transformation::WF_P0_SEED_ADMISSIBILITY_V0",
+      "target_address": 70,
+      "target_fqdn": "transformation::CC_JUDGE_DOCUMENT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 94,
+      "source_fqdn": "transformation::WF_P0_SEED_ADMISSIBILITY_V0",
+      "target_address": 87,
+      "target_fqdn": "transformation::IN_SEED_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 94,
+      "source_fqdn": "transformation::WF_P0_SEED_ADMISSIBILITY_V0",
+      "target_address": 87,
+      "target_fqdn": "transformation::IN_SEED_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 94,
+      "source_fqdn": "transformation::WF_P0_SEED_ADMISSIBILITY_V0",
+      "target_address": 89,
+      "target_fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 95,
+      "source_fqdn": "transformation::WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0",
+      "target_address": 70,
+      "target_fqdn": "transformation::CC_JUDGE_DOCUMENT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 95,
+      "source_fqdn": "transformation::WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0",
+      "target_address": 82,
+      "target_fqdn": "transformation::IN_CHANGE_REQUEST_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 95,
+      "source_fqdn": "transformation::WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0",
+      "target_address": 82,
+      "target_fqdn": "transformation::IN_CHANGE_REQUEST_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 95,
+      "source_fqdn": "transformation::WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0",
+      "target_address": 89,
+      "target_fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 96,
+      "source_fqdn": "transformation::WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 96,
+      "source_fqdn": "transformation::WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0",
+      "target_address": 85,
+      "target_fqdn": "transformation::IN_DOMAIN_MODEL_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 96,
+      "source_fqdn": "transformation::WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0",
+      "target_address": 85,
+      "target_fqdn": "transformation::IN_DOMAIN_MODEL_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 96,
+      "source_fqdn": "transformation::WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0",
+      "target_address": 89,
+      "target_fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 97,
+      "source_fqdn": "transformation::WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0",
+      "target_address": 68,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_COMPOSITION_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 97,
+      "source_fqdn": "transformation::WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0",
+      "target_address": 78,
+      "target_fqdn": "transformation::IN_ANALYSIS_LOOP_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 97,
+      "source_fqdn": "transformation::WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0",
+      "target_address": 78,
+      "target_fqdn": "transformation::IN_ANALYSIS_LOOP_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 97,
+      "source_fqdn": "transformation::WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0",
+      "target_address": 89,
+      "target_fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 98,
+      "source_fqdn": "transformation::WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 98,
+      "source_fqdn": "transformation::WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0",
+      "target_address": 81,
+      "target_fqdn": "transformation::IN_BUSINESS_MODEL_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 98,
+      "source_fqdn": "transformation::WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0",
+      "target_address": 81,
+      "target_fqdn": "transformation::IN_BUSINESS_MODEL_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 98,
+      "source_fqdn": "transformation::WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0",
+      "target_address": 89,
+      "target_fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 99,
+      "source_fqdn": "transformation::WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 99,
+      "source_fqdn": "transformation::WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0",
+      "target_address": 80,
+      "target_fqdn": "transformation::IN_BUSINESS_INTENT_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 99,
+      "source_fqdn": "transformation::WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0",
+      "target_address": 80,
+      "target_fqdn": "transformation::IN_BUSINESS_INTENT_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 99,
+      "source_fqdn": "transformation::WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0",
+      "target_address": 89,
+      "target_fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 100,
+      "source_fqdn": "transformation::WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 100,
+      "source_fqdn": "transformation::WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0",
+      "target_address": 86,
+      "target_fqdn": "transformation::IN_GOVERNANCE_INTENT_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 100,
+      "source_fqdn": "transformation::WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0",
+      "target_address": 86,
+      "target_fqdn": "transformation::IN_GOVERNANCE_INTENT_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 100,
+      "source_fqdn": "transformation::WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0",
+      "target_address": 89,
+      "target_fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 101,
+      "source_fqdn": "transformation::WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 101,
+      "source_fqdn": "transformation::WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0",
+      "target_address": 84,
+      "target_fqdn": "transformation::IN_DESIGN_INTENT_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 101,
+      "source_fqdn": "transformation::WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0",
+      "target_address": 84,
+      "target_fqdn": "transformation::IN_DESIGN_INTENT_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 101,
+      "source_fqdn": "transformation::WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0",
+      "target_address": 89,
+      "target_fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 102,
+      "source_fqdn": "transformation::WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0",
+      "target_address": 69,
+      "target_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 102,
+      "source_fqdn": "transformation::WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0",
+      "target_address": 79,
+      "target_fqdn": "transformation::IN_AUTHORING_MANDATE_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 102,
+      "source_fqdn": "transformation::WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0",
+      "target_address": 79,
+      "target_fqdn": "transformation::IN_AUTHORING_MANDATE_SUBMITTED_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 102,
+      "source_fqdn": "transformation::WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0",
+      "target_address": 89,
+      "target_fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0"
+    }
+  ],
+  "event_catalog": [],
+  "nodes": [
+    {
+      "address": 24,
+      "fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+      "kind": "CS",
+      "kind_address": 16643
+    },
+    {
+      "address": 25,
+      "fqdn": "capability_side_effects::CS_TEXT_ARTIFACT_V0",
+      "kind": "CS",
+      "kind_address": 16643
+    },
+    {
+      "address": 64,
+      "fqdn": "transformation::AC_GATE_REVIEWER_V0",
+      "kind": "AC",
+      "kind_address": 16640
+    },
+    {
+      "address": 65,
+      "fqdn": "transformation::AC_REGISTER_AUTHOR_V0",
+      "kind": "AC",
+      "kind_address": 16640
+    },
+    {
+      "address": 66,
+      "fqdn": "transformation::AC_SEED_AUTHOR_V0",
+      "kind": "AC",
+      "kind_address": 16640
+    },
+    {
+      "address": 67,
+      "fqdn": "transformation::CC_CONSTRUCT_ARTIFACTS_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 68,
+      "fqdn": "transformation::CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 69,
+      "fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 70,
+      "fqdn": "transformation::CC_JUDGE_DOCUMENT_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 71,
+      "fqdn": "transformation::CC_PERSIST_ARTIFACTS_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 72,
+      "fqdn": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 73,
+      "fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 74,
+      "fqdn": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 75,
+      "fqdn": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 76,
+      "fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 77,
+      "fqdn": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 78,
+      "fqdn": "transformation::IN_ANALYSIS_LOOP_SUBMITTED_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 79,
+      "fqdn": "transformation::IN_AUTHORING_MANDATE_SUBMITTED_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 80,
+      "fqdn": "transformation::IN_BUSINESS_INTENT_SUBMITTED_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 81,
+      "fqdn": "transformation::IN_BUSINESS_MODEL_SUBMITTED_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 82,
+      "fqdn": "transformation::IN_CHANGE_REQUEST_SUBMITTED_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 83,
+      "fqdn": "transformation::IN_CONSTRUCTION_REQUESTED_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 84,
+      "fqdn": "transformation::IN_DESIGN_INTENT_SUBMITTED_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 85,
+      "fqdn": "transformation::IN_DOMAIN_MODEL_SUBMITTED_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 86,
+      "fqdn": "transformation::IN_GOVERNANCE_INTENT_SUBMITTED_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 87,
+      "fqdn": "transformation::IN_SEED_SUBMITTED_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 88,
+      "fqdn": "transformation::RB_CONSTRUCTION_BINDINGS_V0",
+      "kind": "RB",
+      "kind_address": 16648
+    },
+    {
+      "address": 89,
+      "fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0",
+      "kind": "RB",
+      "kind_address": 16648
+    },
+    {
+      "address": 90,
+      "fqdn": "transformation::STRUCTURE_BUILD_TRANSFORMATION_CONFIG_V0",
+      "kind": "GOVERNANCE",
+      "kind_address": 16646
+    },
+    {
+      "address": 91,
+      "fqdn": "transformation::STRUCTURE_FIGURE_OF_MERIT_POLICY_V0",
+      "kind": "GOVERNANCE",
+      "kind_address": 16646
+    },
+    {
+      "address": 92,
+      "fqdn": "transformation::STRUCTURE_FIGURE_OF_MERIT_POLICY_V1",
+      "kind": "GOVERNANCE",
+      "kind_address": 16646
+    },
+    {
+      "address": 93,
+      "fqdn": "transformation::WF_CONSTRUCT_ARTIFACTS_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 94,
+      "fqdn": "transformation::WF_P0_SEED_ADMISSIBILITY_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 95,
+      "fqdn": "transformation::WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 96,
+      "fqdn": "transformation::WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 97,
+      "fqdn": "transformation::WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 98,
+      "fqdn": "transformation::WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 99,
+      "fqdn": "transformation::WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 100,
+      "fqdn": "transformation::WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 101,
+      "fqdn": "transformation::WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 102,
+      "fqdn": "transformation::WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    }
+  ],
+  "projection_class": "evidence_substrate"
+}

@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_ARTIFACT_CONTENT_HASH_DECLARED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_ARTIFACT_CONTENT_HASH_DECLARED_V0\n\n## Machine\n\n```yaml\nfqdn: compiler::INVARIANT_ARTIFACT_CONTENT_HASH_DECLARED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: compiler::CONSTITUTION_COMPILER_V0\nauthority: pgc.platform\nconcern: compiler\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - COMPILER\n```\n\n---\n\n## Purpose\n\nEnforces the materialization completeness obligation derived from `COMPILER_LOSSLESS_EMISSION`\nand the determinism guarantees in \u00a77 of CONSTITUTION_COMPILER_V0.\n\nA `content_hash` declared on every compiled artifact is the minimal verifiable evidence that:\n1. The artifact was fully materialized (not partially built)\n2. The artifact's identity is stable across compiler runs given identical inputs\n3. The snapshot can be integrity-audited without re-running the compiler\n\nAn artifact missing a `content_hash` cannot be verified for identity or compared across\nsnapshot versions. It is an incomplete materialization, not a valid compiled artifact.\n\n## Relationship to CONSTITUTION_COMPILER_V0\n\nDirectly enforces `COMPILER_LOSSLESS_EMISSION` (all declared semantics preserved in\nmaterialized output) and `COMPILER_DETERMINISM` (identical inputs \u2192 identical outputs)\nby making content-hash completeness a compile-time assertion rather than a runtime\nassumption.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Every artifact in the compiled snapshot MUST have a content_hash field that is non-empty.\n    An artifact without a content_hash is not fully materialized \u2014 it cannot participate in deterministic\n    identity verification, incremental build checks, or snapshot integrity audits. A snapshot with any\n    artifact missing a content_hash is incomplete and does not satisfy the materialization obligation.\n\n    '\n  anti_patterns:\n  - missing_content_hash: Compiled artifact has no content_hash field\n  - empty_content_hash: Compiled artifact has content_hash set to empty string or null\n  - partial_snapshot: Some artifacts in the compiled set are content-hashed and others are not\n```\n",
+  "content_hash": "d0cbe0b35a1853cc8d8ca73ba784eee592f9384988b6f5334c5ebc2b9fef8027",
+  "fqdn_id": "compiler::INVARIANT_ARTIFACT_CONTENT_HASH_DECLARED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "COMPILER"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "compiler",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "compiler::INVARIANT_ARTIFACT_CONTENT_HASH_DECLARED_V0",
+    "governed_by": "compiler::CONSTITUTION_COMPILER_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "compiler",
+  "references": [
+    "compiler::CONSTITUTION_COMPILER_V0"
+  ],
+  "version": "0"
+}

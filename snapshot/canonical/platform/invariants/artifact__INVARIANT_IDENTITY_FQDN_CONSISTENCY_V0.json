@@ -1,0 +1,53 @@
+{
+  "artifact_code": "INVARIANT_IDENTITY_FQDN_CONSISTENCY_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_IDENTITY_FQDN_CONSISTENCY_V0\n\n## Machine\n\n```yaml\nfqdn: artifact::INVARIANT_IDENTITY_FQDN_CONSISTENCY_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: artifact\ncore:\n  enforcement_stage:\n  - compiler_discovery\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  handler: pgs_governance.registry.handlers.assert_identity_fqdn_consistency\n  enforcement:\n    order: 5\n    scope: ALL_ARTIFACTS\n  applies_to_kinds:\n  - AC\n  - CC\n  - CONSTITUTION\n  - CS\n  - CT\n  - EV\n  - IN\n  - INVARIANT\n  - RB\n  - SCHEMA\n  - STRUCTURE\n  - SURFACE\n  - TE\n  - TI\n  - VOCAB\n  - WF\n```\n\n---\n\n## Purpose\n\nEnsure artifact identity (FQDN) is consistent with namespace and artifact_code.\n\n**Core Principle**: An artifact's identity is declared by its authoritative `fqdn`; its namespace must be authorized; the filesystem location has no semantic authority over identity.\n\n---\n\n## How it is checked\n### Rule 1: FQDN Structure\n\nFQDN must follow pattern: `{namespace}::{artifact_code}`\n\n**Violation**:\n```yaml\n# \u274c WRONG\nnamespace: capability_transforms\nartifact_code: CT_PURE_VALIDATE_V0\nfqdn_id: transforms::CT_PURE_VALIDATE_V0  # Namespace mismatch!\n```\n\n**Correct**:\n```yaml\n# \u2705 CORRECT\nnamespace: capability_transforms\nartifact_code: CT_PURE_VALIDATE_V0\nfqdn_id: capability_transforms::CT_PURE_VALIDATE_V0\n```\n\n### Rule 2: Namespace Consistency\n\nFQDN namespace part must match artifact's actual namespace.\n\n**Detection**:\n```python\nnamespace, code = fqdn_id.split(\"::\")\nassert namespace == artifact[\"namespace\"]\n```\n\n### Rule 3: Code Consistency\n\nFQDN code part must match artifact's declared artifact_code.\n\n**Detection**:\n```python\nnamespace, code = fqdn_id.split(\"::\")\nassert code == artifact[\"artifact_code\"]\n```\n\n---\n\n## Scope\n\n**Applies to**: All artifacts (CT, CS, WF, IN, CC, EV, RB, STRUCTURE, etc.)\n\n**Does NOT validate**:\n- Namespace validity (different concern)\n- Artifact code naming conventions (different concern)\n- FQDN uniqueness (different concern)\n\n---\n\n## Rationale\n\n### Identity Integrity\n\n**Problem without consistency**:\n- Artifact declares `CT_FOO_V0` but FQDN says `CT_BAR_V0`\n- Resolution fails or resolves wrong artifact\n- Debugging becomes impossible\n\n**Solution with consistency**:\n- FQDN deterministically derived from namespace + code\n- Resolution always unambiguous\n- Identity matches reality\n\n### Build-Time Detection\n\nFQDN inconsistency is structural defect, must be caught during discovery/parsing.\n\n**Validation order**:\n1. Discovery: Parse artifact, extract namespace, artifact_code\n2. Validation: Verify FQDN matches namespace::artifact_code\n3. Materialization: Write artifact with validated FQDN\n\n---\n\n## Implementation Note\n\n**FQDN is derived, not authored**:\n\n```python\n# Compiler/discovery phase\nartifact_code = frontmatter[\"artifact_code\"]\nnamespace = derive_namespace(source_path, layer)\n\n# FQDN is constructed (not read from file)\nfqdn_id = f\"{namespace}::{artifact_code}\"\n\n# Validation: If FQDN was manually set in file, verify it matches\nif \"fqdn_id\" in frontmatter:\n    assert frontmatter[\"fqdn_id\"] == fqdn_id, \"FQDN inconsistency\"\n```\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Artifact FQDN must match namespace and artifact_code consistently.\n\n    FQDN format: {namespace}::{artifact_code}\n\n    This ensures identity resolution is deterministic and unambiguous.\n\n    '\n  anti_patterns:\n  - fqdn_namespace_mismatch: FQDN namespace doesn't match artifact's actual namespace\n  - fqdn_code_mismatch: FQDN artifact_code doesn't match artifact's declared code\n  - malformed_fqdn: FQDN doesn't follow {namespace}::{code} pattern\n  clarification:\n    deterministic_identity: 'Every artifact has exactly one FQDN. FQDN is derived from namespace + artifact_code\n      (never manually set). Resolution must be unambiguous and reproducible.\n\n      '\nassert_projection:\n  enforcement:\n    failure_mode: HARD_FAIL\n```\n",
+  "content_hash": "cc91068054bd4b6cb853e7dc77ec26f2fe96cb70f7b755ba343bcff76c7e525b",
+  "fqdn_id": "artifact::INVARIANT_IDENTITY_FQDN_CONSISTENCY_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "AC",
+        "CC",
+        "CONSTITUTION",
+        "CS",
+        "CT",
+        "EV",
+        "IN",
+        "INVARIANT",
+        "RB",
+        "SCHEMA",
+        "STRUCTURE",
+        "SURFACE",
+        "TE",
+        "TI",
+        "VOCAB",
+        "WF"
+      ],
+      "enforcement": {
+        "order": 5,
+        "scope": "ALL_ARTIFACTS"
+      },
+      "handler": "pgs_governance.registry.handlers.assert_identity_fqdn_consistency"
+    },
+    "authority": "pgc.platform",
+    "concern": "artifact",
+    "core": {
+      "enforcement_stage": [
+        "compiler_discovery",
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "artifact::INVARIANT_IDENTITY_FQDN_CONSISTENCY_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "artifact",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,49 @@
+{
+  "artifact_code": "CONSTITUTION_TRANSPORT_EGRESS_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_TRANSPORT_EGRESS_V0\n\n## Machine\n\n```yaml\nfqdn: transport::CONSTITUTION_TRANSPORT_EGRESS_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: transport\ncore:\n  enforcement_model: process_and_compiler_enforced\n  governs:\n  - TE\nrules:\n- applies_to: TE\n  enforced_by: transport::INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0\n- applies_to: TE\n  enforced_by: transport::INVARIANT_TRANSPORT_NO_WORKFLOW_SEMANTICS_V0\n- applies_to: TE\n  enforced_by: transport::INVARIANT_TRANSPORT_RESULT_CLASS_PROTOCOL_INDEPENDENCE_V0\n- applies_to: TE\n  enforced_by: transport::INVARIANT_TRANSPORT_RESPONSE_PROJECTION_EXTERNAL_V0\n- applies_to: TE\n  enforced_by: PROCESS_ENFORCED\n```\n\n---\n\n## \u00a71. Purpose\n\nGoverns **Transport Egress** \u2014 the `TE` boundary contract by which a governed outcome is\nprojected back out. The semantic authority is `TRANSPORT_STANDARD_V0` (\u00a77); this constitution\nbinds its egress rules into the governed platform surface.\n\nA `TE` **declares** the governed classification of outcomes into a protocol-neutral **Result\nClass** and the permitted projection of result payload and evidence. It is a declaration \u2014\ncompiled and applied at runtime \u2014 not a runtime decision engine. A PGC Result exists\nindependently of any transport boundary; the `TE` projects it, it does not own it.\n\n---\n\n## \u00a72. Rules\n\n- **Projection normalization.** Every `TE` MUST declare an explicit projection from the\n  governed outcome into the canonical response. Raw execution-result passthrough leaks\n  internal state and is a boundary violation. Enforced by\n  `INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0`.\n- **Membrane, not stage.** A `TE` MUST NOT contain execution logic, capability references\n  (`CC`/`CT`/`CS`), or side effects; it MUST NOT alter execution state. Enforced by\n  `INVARIANT_TRANSPORT_NO_WORKFLOW_SEMANTICS_V0`.\n- **Result Class protocol independence.** A Result Class\n  (`SUCCESS | VIOLATION | UNAUTHORIZED | NOT_FOUND | OPERATION_NOT_FOUND | EXECUTION_FAILURE`)\n  MUST carry no protocol semantics (no HTTP status, no RPC error code). Enforced by\n  `INVARIANT_TRANSPORT_RESULT_CLASS_PROTOCOL_INDEPENDENCE_V0`.\n\n  `NOT_FOUND` and `OPERATION_NOT_FOUND` are distinct and MUST NOT be conflated.\n  `OPERATION_NOT_FOUND` means the submitted Operation Identity resolves to no registered\n  TI/TE pair \u2014 the boundary could not admit the request at all. `NOT_FOUND` means the request\n  WAS admitted and answered, and the **subject** it named does not exist. A caller must be\n  able to tell \"I asked for something that isn't there\" from \"I asked in a way this boundary\n  does not recognise\", because the first is a normal answer and the second is a caller defect.\n  Neither is a `VIOLATION`: nothing was violated.\n- **Response projection is external.** Mapping a Result Class to an external representation\n  (HTTP status, RPC error, CLI exit code) MUST occur in the adapter, never in a `TE`.\n  Enforced by `INVARIANT_TRANSPORT_RESPONSE_PROJECTION_EXTERNAL_V0`.\n- **Domain separation.** A `TE` MUST NOT define domain-specific result interpretation; result\n  meaning is governed, not domain-encoded at the boundary. *(Process-enforced pending its\n  Phase-3 invariant.)*\n\n---\n\n## \u00a73. Semantic Category\n\nUnder the Governance Ontology, a `TE` is **Contractual** \u2014 the egress boundary contract. It\nexposes a classification-and-projection interface over governed outcomes; it carries no\nbehavior. The governed outcome it projects is itself an **Evidential/Operational** runtime\nconstruct, not a transport artifact.\n\n---\n\n## \u00a74. Scope\n\nGoverns `TE` egress semantics only. It does **not** govern the adapter's response projection\n(external), the producing execution (`execution_topology`), or ingress (`TI`).\n\n---\n\n## \u00a75. Versioning\n\nVersion-immutable. Any normative change requires `CONSTITUTION_TRANSPORT_EGRESS_V1`; never\nedited in place.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs the TE egress boundary contract \u2014 declared classification of governed\n    outcomes into protocol-neutral Result Classes and the permitted projection of result and\n    evidence, isolated from execution and external-protocol semantics.\nrules:\n- rule_id: TE_PROJECTION_NORMALIZED\n  constraint: every TE MUST declare an explicit projection; raw result passthrough is forbidden\n- rule_id: TE_MEMBRANE_NOT_STAGE\n  constraint: TE MUST NOT carry execution logic, capability references, side effects, or execution state\n- rule_id: TE_RESULT_CLASS_PROTOCOL_INDEPENDENT\n  constraint: a Result Class MUST carry no external-protocol semantics\n- rule_id: TE_PROJECTION_EXTERNAL\n  constraint: Result Class to external representation mapping MUST live in the adapter, never in TE\n```\n",
+  "content_hash": "f896caf40c64b54c4b228495792226d6927ebdc473741a540a595e242b7bca36",
+  "fqdn_id": "transport::CONSTITUTION_TRANSPORT_EGRESS_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "transport",
+    "core": {
+      "enforcement_model": "process_and_compiler_enforced",
+      "governs": [
+        "TE"
+      ]
+    },
+    "fqdn": "transport::CONSTITUTION_TRANSPORT_EGRESS_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "rules": [
+      {
+        "applies_to": "TE",
+        "enforced_by": "transport::INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0"
+      },
+      {
+        "applies_to": "TE",
+        "enforced_by": "transport::INVARIANT_TRANSPORT_NO_WORKFLOW_SEMANTICS_V0"
+      },
+      {
+        "applies_to": "TE",
+        "enforced_by": "transport::INVARIANT_TRANSPORT_RESULT_CLASS_PROTOCOL_INDEPENDENCE_V0"
+      },
+      {
+        "applies_to": "TE",
+        "enforced_by": "transport::INVARIANT_TRANSPORT_RESPONSE_PROJECTION_EXTERNAL_V0"
+      },
+      {
+        "applies_to": "TE",
+        "enforced_by": "PROCESS_ENFORCED"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "transport",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

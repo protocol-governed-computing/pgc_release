@@ -1,0 +1,78 @@
+{
+  "artifact_code": "STRUCTURE_FIGURE_OF_MERIT_POLICY_V1",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_FIGURE_OF_MERIT_POLICY_V1\n\n## 1. Intent\n\nWhat a phase document loses a star for, and how much.\n\nThe figure of merit is **not** the verdict. Admissibility is decided by a phase's rule set and by\nnothing else; this policy says how good an artifact is once judged. The two axes are independent in\nboth directions: an admissible document can rate poorly because it carries declared open questions,\nand an inadmissible one can rate well because a single misspelled citation is fatal to\nadmissibility while costing little in quality. Collapsing them would make the rating a second,\nsofter gate, which a governed pipeline must not have.\n\nScoring is **deduction-based**: every artifact begins at the maximum and loses ground only against\ndeclared evidence. Nothing has to earn its stars, so an artifact is presumed excellent until\nsomething objective says otherwise \u2014 and every star lost names the reason it was lost.\n\n## 2. Why this is declared rather than coded\n\nWhat is deducted, and why it matters, is governance. Only *how* the arithmetic runs is\nimplementation. Holding the weights in Python would make the quality bar a property of a build\ntool \u2014 unversioned, unreadable from the composition, and changeable without a governed act.\n\nChanging a weight is therefore a change to this artifact, and a change to this artifact is a new\nversion like any other.\n\n## 3. What a cell value can be, and what scores it\n\nThree categories, and only the middle one belongs in a `rows` term:\n\n| Category | Example | Admissible? | Scored here? |\n|----------|---------|-------------|--------------|\n| A valid value | `Result = VERIFIED` | Yes | No \u2014 nothing is wrong with it |\n| A **governed hole** | `Result = INSUFFICIENT_EVIDENCE` | Yes | **Yes** \u2014 the legal alternative to guessing, surfaced rather than rejected |\n| An **admission violation** | a cell reading `UNRESOLVED`; a clarification still `Blocking = YES` | **No** | No \u2014 a rule already refused it |\n\nA governed hole is the only one this policy has business scoring. The first needs no deduction. The\nthird is already refused by a rule, and scoring it as well **double-counts one defect**: the\ndocument loses a star through `finding` for the rule that fired, and loses a second through\n`open_hole` for the cell that fired it. A reader comparing two documents then sees a gap that\nmeasures how many ways the same cell was counted.\n\n**V0 scored four admission violations this way.** `Identity Field`, `Uniqueness Rule` and `Source`\nreading `UNRESOLVED` became inadmissible under `REGISTER_CELL_UNRESOLVED`, and a clarification\n`Blocking = YES` became inadmissible under `BLOCKING_CLARIFICATION_OUTSTANDING`. The last was\nredundant even before that rule existed: a row present in `clarification_requests` is already\ncounted by the register term above it, so one blocking question cost two stars for one fact. All\nfour are removed here.\n\nThe rule is general, not a list: **when a rule begins refusing a value, the `rows` term that scored\nit comes out of this policy in the same change.** Admission decides whether a document may enter the\npipeline; the figure of merit compares the documents that entered. A term for something admission\nforbids describes a document that cannot exist as an admissible one, and is measured twice in the\none case it can still appear \u2014 the inadmissible document that is rated anyway.\n\n## 4. Deductions\n\n| Deduction | Weight | What it catches |\n|-----------|--------|-----------------|\n| `identity_unresolved` | 2 | A citation that resolves to nothing really in the composition \u2014 a misspelling or a wrong namespace. Weighted double because a wrong identity propagates: every later phase reads it as established fact. |\n| `register_incomplete` | 1 | A declared register that did not arrive intact. |\n| `finding` | 1 | Any remaining rule finding. |\n| `open_hole` | 1 | A declared governed hole \u2014 an open question carried in a register whose content is open questions, or a cell whose value states that the phase could not settle it. Not a defect, and never an admission violation. |\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::STRUCTURE_FIGURE_OF_MERIT_POLICY_V1\nartifact_kind: STRUCTURE\nversion: V1\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: transformation\nsupersedes: transformation::STRUCTURE_FIGURE_OF_MERIT_POLICY_V0\n\ncore:\n  summary: Deterministic figure of merit for a phase document \u2014 deduction-based, 0 to 5\n  maximum: 5\n  minimum: 0\n  deductions:\n  - id: identity_unresolved\n    label: Identity unresolved\n    weight: 2\n    findings:\n    - BASELINE_IDENTITY_UNRESOLVED\n    - VERIFIED_BELIEF_IDENTITY_UNRESOLVED\n    - CITED_ALTERNATIVE_UNRESOLVED\n    - DEPENDENCY_IDENTITY_UNRESOLVED\n  - id: register_incomplete\n    label: Register incomplete\n    weight: 1\n    findings:\n    - REGISTER_MISSING\n    - REGISTER_EMPTY\n    - REGISTER_COLUMN_MISSING\n  - id: finding\n    label: Findings\n    weight: 1\n    remaining_findings: true\n  - id: open_hole\n    label: Open questions\n    weight: 1\n    rows:\n      registers:\n      - open_questions\n      - clarification_requests\n      columns:\n        Resolution Status:\n        - OPEN\n        Status:\n        - NOT_SATISFIED\n        Result:\n        - INSUFFICIENT_EVIDENCE\n```\n\n---\n\n## 5. Not ported from RI-0\n\nRI-0 deducted a star when an iterative worker loop ended forced, at max-iterations, or stalled.\nPGC's phases are deterministic and single-shot: there is no loop, so convergence is *undefined*\nrather than *failed*. RI-0's own note is explicit that undefined convergence must not be penalised,\nso the deduction is absent here rather than carried across as a term nothing could ever trip.\n",
+  "content_hash": "5d01dd42c3290b81a069b24217a6c235b99758abc4c5583d10186b951e4ab813",
+  "fqdn_id": "transformation::STRUCTURE_FIGURE_OF_MERIT_POLICY_V1",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "transformation",
+    "core": {
+      "deductions": [
+        {
+          "findings": [
+            "BASELINE_IDENTITY_UNRESOLVED",
+            "VERIFIED_BELIEF_IDENTITY_UNRESOLVED",
+            "CITED_ALTERNATIVE_UNRESOLVED",
+            "DEPENDENCY_IDENTITY_UNRESOLVED"
+          ],
+          "id": "identity_unresolved",
+          "label": "Identity unresolved",
+          "weight": 2
+        },
+        {
+          "findings": [
+            "REGISTER_MISSING",
+            "REGISTER_EMPTY",
+            "REGISTER_COLUMN_MISSING"
+          ],
+          "id": "register_incomplete",
+          "label": "Register incomplete",
+          "weight": 1
+        },
+        {
+          "id": "finding",
+          "label": "Findings",
+          "remaining_findings": true,
+          "weight": 1
+        },
+        {
+          "id": "open_hole",
+          "label": "Open questions",
+          "rows": {
+            "columns": {
+              "Resolution Status": [
+                "OPEN"
+              ],
+              "Result": [
+                "INSUFFICIENT_EVIDENCE"
+              ],
+              "Status": [
+                "NOT_SATISFIED"
+              ]
+            },
+            "registers": [
+              "open_questions",
+              "clarification_requests"
+            ]
+          },
+          "weight": 1
+        }
+      ],
+      "maximum": 5,
+      "minimum": 0,
+      "summary": "Deterministic figure of merit for a phase document \u2014 deduction-based, 0 to 5"
+    },
+    "fqdn": "transformation::STRUCTURE_FIGURE_OF_MERIT_POLICY_V1",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "supersedes": "transformation::STRUCTURE_FIGURE_OF_MERIT_POLICY_V0",
+    "version": "V1"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "1"
+}

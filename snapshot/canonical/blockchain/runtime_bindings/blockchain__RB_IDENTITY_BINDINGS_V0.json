@@ -1,0 +1,52 @@
+{
+  "artifact_code": "RB_IDENTITY_BINDINGS_V0",
+  "artifact_type": "RB",
+  "content": "# RB_IDENTITY_BINDINGS_V0\n\n## 1. Intent\n\nThe bindings identity's workflows resolve their capabilities and stores through\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::RB_IDENTITY_BINDINGS_V0\nartifact_kind: RUNTIME_BINDING\nversion: v0\ngoverned_by: runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: The bindings identity's workflows resolve their capabilities and stores through\n  storage_structure: blockchain::STRUCTURE_IDENTITY_STORAGE_V0\n  bindings:\n    capability_side_effects::CS_MUTABLE_JSON_V0:\n      policy:\n        structure: blockchain::STRUCTURE_IDENTITY_STORAGE_V0\n    capability_side_effects::CS_APPENDONLY_JSONL_V0:\n      policy:\n        structure: blockchain::STRUCTURE_IDENTITY_STORAGE_V0\n    capability_side_effects::CS_REGISTRY_V0:\n      policy:\n        structure: blockchain::STRUCTURE_IDENTITY_STORAGE_V0\n    capability_side_effects::CS_CLOCK_V0:\n      policy:\n        precision: seconds\n```\n",
+  "content_hash": "773fa2703df4e3d4290501cc59840aa75867ee559eeeadd1e1e9150ea4659242",
+  "fqdn_id": "blockchain::RB_IDENTITY_BINDINGS_V0",
+  "frontmatter": {
+    "artifact_kind": "RUNTIME_BINDING",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "bindings": {
+        "capability_side_effects::CS_APPENDONLY_JSONL_V0": {
+          "policy": {
+            "structure": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0"
+          }
+        },
+        "capability_side_effects::CS_CLOCK_V0": {
+          "policy": {
+            "precision": "seconds"
+          }
+        },
+        "capability_side_effects::CS_MUTABLE_JSON_V0": {
+          "policy": {
+            "structure": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0"
+          }
+        },
+        "capability_side_effects::CS_REGISTRY_V0": {
+          "policy": {
+            "structure": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0"
+          }
+        }
+      },
+      "storage_structure": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0",
+      "summary": "The bindings identity's workflows resolve their capabilities and stores through"
+    },
+    "fqdn": "blockchain::RB_IDENTITY_BINDINGS_V0",
+    "governed_by": "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "blockchain::STRUCTURE_IDENTITY_STORAGE_V0",
+    "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+    "capability_side_effects::CS_CLOCK_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0",
+    "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0"
+  ],
+  "version": "0"
+}

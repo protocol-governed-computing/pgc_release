@@ -1,0 +1,159 @@
+{
+  "artifact_code": "CC_APPEND_ACTOR_OCCURRENCE_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_CLOCK_V0",
+        "id": "CS_CLOCK_V0",
+        "kind": "CS",
+        "ops": [
+          "NOW"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+        "id": "CS_APPENDONLY_JSONL_V0",
+        "kind": "CS",
+        "ops": [
+          "APPEND",
+          "GET_ALL"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_APPEND_ACTOR_OCCURRENCE_V0\n\n## 1. Intent\n\nAppends one occurrence to the trail\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_APPEND_ACTOR_OCCURRENCE_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Appends one occurrence to the trail\n  inputs:\n    occurrence_fields:\n      type: object\n      required: true\n    stream_id:\n      type: string\n      required: true\n    contact_address:\n      type: string\n      required: true\n  outputs:\n    sequence_number:\n      type: integer\n      required: true\n  result_status_contract:\n    allowed:\n    - BACKEND_ERROR\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_now\n    side_effect: capability_side_effects::CS_CLOCK_V0\n    op: NOW\n    inputs: {}\n    outputs:\n      timestamp: $.capability_result.timestamp\n    result_surface:\n    - SUCCESS\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      BACKEND_ERROR: exit\n  - step: assemble_occurrence\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        occurrence: $.inputs.occurrence_fields.occurrence\n        contact_address: $.inputs.contact_address\n        verifying_authority: $.inputs.occurrence_fields.verifying_authority\n        grounds: $.inputs.occurrence_fields.grounds\n        occurred_at: $.results.read_now.timestamp\n    outputs:\n      record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: append_occurrence\n    side_effect: capability_side_effects::CS_APPENDONLY_JSONL_V0\n    op: APPEND\n    store: ACTOR_OCCURRENCES\n    inputs:\n      record: $.results.assemble_occurrence.record\n      stream_id: $.inputs.stream_id\n      actor_id: $.inputs.contact_address\n    outputs:\n      sequence_number: $.capability_result.sequence_number\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n",
+  "content_hash": "4d431ee80eb3fdaeb20118d853ecf0cababd93f12c98e96db4f8d4bd58930c29",
+  "fqdn_id": "blockchain::CC_APPEND_ACTOR_OCCURRENCE_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "inputs": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "occurrence_fields": {
+          "required": true,
+          "type": "object"
+        },
+        "stream_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "sequence_number": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {},
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue"
+          },
+          "op": "NOW",
+          "outputs": {
+            "timestamp": "$.capability_result.timestamp"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_CLOCK_V0",
+          "step": "read_now"
+        },
+        {
+          "inputs": {
+            "fields": {
+              "contact_address": "$.inputs.contact_address",
+              "grounds": "$.inputs.occurrence_fields.grounds",
+              "occurred_at": "$.results.read_now.timestamp",
+              "occurrence": "$.inputs.occurrence_fields.occurrence",
+              "verifying_authority": "$.inputs.occurrence_fields.verifying_authority"
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "record": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_occurrence",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "actor_id": "$.inputs.contact_address",
+            "record": "$.results.assemble_occurrence.record",
+            "stream_id": "$.inputs.stream_id"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "APPEND",
+          "outputs": {
+            "sequence_number": "$.capability_result.sequence_number"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+          "step": "append_occurrence",
+          "store": "ACTOR_OCCURRENCES"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "BACKEND_ERROR",
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Appends one occurrence to the trail"
+    },
+    "fqdn": "blockchain::CC_APPEND_ACTOR_OCCURRENCE_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+  ],
+  "version": "0"
+}

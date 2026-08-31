@@ -1,0 +1,79 @@
+{
+  "artifact_code": "IN_REGISTER_ADDITIONAL_EDITION_V0",
+  "artifact_type": "IN",
+  "content": "# IN_REGISTER_ADDITIONAL_EDITION_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: The boundary that admits a request to register a further edition of a work the catalog already\n    holds\n  workflow: WF_REGISTER_ADDITIONAL_EDITION_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    authorization_rules:\n      type: array\n      required: true\n    staff_id:\n      type: string\n      required: true\n    title:\n      type: string\n      required: true\n    author:\n      type: string\n      required: true\n    publication_year:\n      type: integer\n      required: true\n    subject:\n      type: array\n      required: true\n    edition_fields:\n      type: object\n      required: true\n    edition_schema:\n      type: object\n      required: true\n    work_fields:\n      type: object\n      required: true\n    work_schema:\n      type: object\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nThe boundary that admits a request to register a further edition of a work the catalog already holds\n",
+  "content_hash": "5ac559ca15254ff9fa7d764b6aebe4b102e05d60b75d77e75b8bf18e91c3f9dd",
+  "fqdn_id": "book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "author": {
+          "required": true,
+          "type": "string"
+        },
+        "authorization_rules": {
+          "required": true,
+          "type": "array"
+        },
+        "edition_fields": {
+          "required": true,
+          "type": "object"
+        },
+        "edition_schema": {
+          "required": true,
+          "type": "object"
+        },
+        "publication_year": {
+          "required": true,
+          "type": "integer"
+        },
+        "staff_credentials": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "subject": {
+          "required": true,
+          "type": "array"
+        },
+        "title": {
+          "required": true,
+          "type": "string"
+        },
+        "work_fields": {
+          "required": true,
+          "type": "object"
+        },
+        "work_schema": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "The boundary that admits a request to register a further edition of a work the catalog already holds",
+      "workflow": "WF_REGISTER_ADDITIONAL_EDITION_V0"
+    },
+    "fqdn": "book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

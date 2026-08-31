@@ -1,0 +1,1112 @@
+{
+  "compiler_version": "13",
+  "edge_count": 26,
+  "edges": [
+    {
+      "kind": "STAGE_SEQUENCE",
+      "source_event_id": 14,
+      "target_event_id": 15
+    },
+    {
+      "kind": "STAGE_SEQUENCE",
+      "source_event_id": 19,
+      "target_event_id": 20
+    },
+    {
+      "kind": "STAGE_SEQUENCE",
+      "source_event_id": 20,
+      "target_event_id": 21
+    },
+    {
+      "kind": "STAGE_SEQUENCE",
+      "source_event_id": 21,
+      "target_event_id": 22
+    },
+    {
+      "kind": "STAGE_SEQUENCE",
+      "source_event_id": 28,
+      "target_event_id": 29
+    },
+    {
+      "kind": "STAGE_SEQUENCE",
+      "source_event_id": 48,
+      "target_event_id": 49
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 1
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 2
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 3
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 4
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 5
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 6
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 7
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 8
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 9
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 10
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 11
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 12
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 13
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 0,
+      "target_event_id": 14
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 22,
+      "target_event_id": 28
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 23,
+      "target_event_id": 28
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 24,
+      "target_event_id": 28
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 25,
+      "target_event_id": 28
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 26,
+      "target_event_id": 28
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 27,
+      "target_event_id": 28
+    }
+  ],
+  "event_count": 68,
+  "events": [
+    {
+      "detail": {
+        "artifacts_discovered": 14
+      },
+      "event_id": 0,
+      "family": "DISCOVERY",
+      "operation": "discovery_complete",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "AC",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 1,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::AC_REFERENCE_ACTOR_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "CC",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 2,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "CC",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 3,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::CC_STORE_RESULTS_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "CC",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 4,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "CT",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 5,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "CT",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 6,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "EV",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 7,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::EV_CONJECTURE_EVALUATED_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "IN",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 8,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "RB",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 9,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::RB_COLLATZ_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "GOVERNANCE",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 10,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::STRUCTURE_BUILD_WORKLOAD_CONFIG_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "GOVERNANCE",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 11,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::STRUCTURE_COLLATZ_STORAGE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "TE",
+        "layer_code": "WORKLOAD_TRANSPORT"
+      },
+      "event_id": 12,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::TE_COLLATZ_COMPUTE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "TI",
+        "layer_code": "WORKLOAD_TRANSPORT"
+      },
+      "event_id": 13,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::TI_COLLATZ_COMPUTE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "WF",
+        "layer_code": "WORKLOAD"
+      },
+      "event_id": 14,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "CC_BINDS_CT",
+        "target": "workload::CT_PURE_COLLATZ_STEP_V0"
+      },
+      "event_id": 15,
+      "family": "TOPOLOGY",
+      "operation": "edge_typed",
+      "parent_event_id": -1,
+      "stage": "S2_CANONICALIZE",
+      "subject_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "CC_BINDS_CT",
+        "target": "workload::CT_PURE_TERMINATION_CHECK_V0"
+      },
+      "event_id": 16,
+      "family": "TOPOLOGY",
+      "operation": "edge_typed",
+      "parent_event_id": -1,
+      "stage": "S2_CANONICALIZE",
+      "subject_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "RB_MAPS",
+        "target": "capability_side_effects::CS_MUTABLE_JSON_V0"
+      },
+      "event_id": 17,
+      "family": "TOPOLOGY",
+      "operation": "edge_typed",
+      "parent_event_id": -1,
+      "stage": "S2_CANONICALIZE",
+      "subject_fqdn": "workload::RB_COLLATZ_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "WF_BINDS_RB",
+        "target": "workload::RB_COLLATZ_V0"
+      },
+      "event_id": 18,
+      "family": "TOPOLOGY",
+      "operation": "edge_typed",
+      "parent_event_id": -1,
+      "stage": "S2_CANONICALIZE",
+      "subject_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "count": 3
+      },
+      "event_id": 19,
+      "family": "TOPOLOGY",
+      "operation": "bare_duplicate_edges_dropped",
+      "parent_event_id": -1,
+      "stage": "S2_CANONICALIZE",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "address_hash": "0f8ad9f398389d3303356cb7f40bb5708bf55d7bf8e2223fa514b99f66476380",
+        "address_table_size": 131
+      },
+      "event_id": 20,
+      "family": "ADDRESSING",
+      "operation": "addresses_allocated",
+      "parent_event_id": -1,
+      "stage": "S3_SEMANTIC_ADDRESSING",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "assertions_executed": 73,
+        "assertions_imported": 73,
+        "assertions_passed": 73,
+        "errors": 0,
+        "warnings": 0
+      },
+      "event_id": 21,
+      "family": "GOVERNANCE",
+      "operation": "governance_complete",
+      "parent_event_id": -1,
+      "stage": "S4_GOVERN",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "atom_stream_length": 1
+      },
+      "event_id": 22,
+      "family": "CONSTRUCTION",
+      "operation": "ct_ir_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "atom_stream_length": 1
+      },
+      "event_id": 23,
+      "family": "CONSTRUCTION",
+      "operation": "ct_ir_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {},
+      "event_id": 24,
+      "family": "CONSTRUCTION",
+      "operation": "cs_ir_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "pipeline_steps": 1
+      },
+      "event_id": 25,
+      "family": "CONSTRUCTION",
+      "operation": "cc_projection_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "pipeline_steps": 1
+      },
+      "event_id": 26,
+      "family": "CONSTRUCTION",
+      "operation": "cc_projection_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "workload::CC_STORE_RESULTS_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "pipeline_steps": 1
+      },
+      "event_id": 27,
+      "family": "CONSTRUCTION",
+      "operation": "cc_projection_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "ir_count": 6
+      },
+      "event_id": 28,
+      "family": "CONSTRUCTION",
+      "operation": "construction_complete",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "CS"
+      },
+      "event_id": 29,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "subject_token": 24
+    },
+    {
+      "detail": {
+        "artifact_type": "AC"
+      },
+      "event_id": 30,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::AC_REFERENCE_ACTOR_V0",
+      "subject_token": 81
+    },
+    {
+      "detail": {
+        "artifact_type": "CC"
+      },
+      "event_id": 31,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
+      "subject_token": 82
+    },
+    {
+      "detail": {
+        "artifact_type": "CC"
+      },
+      "event_id": 32,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::CC_STORE_RESULTS_V0",
+      "subject_token": 83
+    },
+    {
+      "detail": {
+        "artifact_type": "CC"
+      },
+      "event_id": 33,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
+      "subject_token": 84
+    },
+    {
+      "detail": {
+        "artifact_type": "CT"
+      },
+      "event_id": 34,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+      "subject_token": 85
+    },
+    {
+      "detail": {
+        "artifact_type": "CT"
+      },
+      "event_id": 35,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0",
+      "subject_token": 86
+    },
+    {
+      "detail": {
+        "artifact_type": "EV"
+      },
+      "event_id": 36,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::EV_CONJECTURE_EVALUATED_V0",
+      "subject_token": 87
+    },
+    {
+      "detail": {
+        "artifact_type": "IN"
+      },
+      "event_id": 37,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
+      "subject_token": 88
+    },
+    {
+      "detail": {
+        "artifact_type": "RB"
+      },
+      "event_id": 38,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::RB_COLLATZ_V0",
+      "subject_token": 89
+    },
+    {
+      "detail": {
+        "artifact_type": "GOVERNANCE"
+      },
+      "event_id": 39,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::STRUCTURE_BUILD_WORKLOAD_CONFIG_V0",
+      "subject_token": 90
+    },
+    {
+      "detail": {
+        "artifact_type": "GOVERNANCE"
+      },
+      "event_id": 40,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::STRUCTURE_COLLATZ_STORAGE_V0",
+      "subject_token": 91
+    },
+    {
+      "detail": {
+        "artifact_type": "TE"
+      },
+      "event_id": 41,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::TE_COLLATZ_COMPUTE_V0",
+      "subject_token": 92
+    },
+    {
+      "detail": {
+        "artifact_type": "TI"
+      },
+      "event_id": 42,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::TI_COLLATZ_COMPUTE_V0",
+      "subject_token": 93
+    },
+    {
+      "detail": {
+        "artifact_type": "WF"
+      },
+      "event_id": 43,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+      "subject_token": 94
+    },
+    {
+      "detail": {
+        "address_count": 51,
+        "projection_hash": "50de48ec457735db8abf434bbc9e14077029b8ce11a5773fe7e1c00bb735b4ff"
+      },
+      "event_id": 44,
+      "family": "PROJECTION",
+      "operation": "vocabulary_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "adjacency_count": 6,
+        "edge_count": 13,
+        "node_count": 15,
+        "projection_hash": "356ad9be8005817b85a748f9f733697101316754d15200e71d937e12736eb93e"
+      },
+      "event_id": 45,
+      "family": "PROJECTION",
+      "operation": "tokenized_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "edge_count": 13,
+        "ev_schema_count": 1,
+        "node_count": 15,
+        "projection_hash": "5ff0cb2e21d9f9de916616126dcafacd51e6c406834e9b63a68055041f2686f9"
+      },
+      "event_id": 46,
+      "family": "PROJECTION",
+      "operation": "evidence_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "bindings_count": 1,
+        "entry_count": 1,
+        "pipeline_count": 3,
+        "projection_hash": "90a5755d02115160f20a36626b96eeb6a8182658b08c63e1d0c9c26987d3bb07",
+        "routing_count": 1,
+        "terminal_count": 6
+      },
+      "event_id": 47,
+      "family": "PROJECTION",
+      "operation": "dispatch_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "cs_count": 1,
+        "ct_count": 2,
+        "projection_hash": "75e5b627ef6e55838a2ffbd133a7988155031b06a3df0bc2a8f4d6ea98349aae",
+        "rb_policy_count": 1
+      },
+      "event_id": 48,
+      "family": "PROJECTION",
+      "operation": "handlers_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "CS",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/capability_side_effects/capability_side_effects__CS_MUTABLE_JSON_V0.json"
+      },
+      "event_id": 49,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "AC",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/actors/workload__AC_REFERENCE_ACTOR_V0.json"
+      },
+      "event_id": 50,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::AC_REFERENCE_ACTOR_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "CC",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/capability_contracts/workload__CC_COMPUTE_SEQUENCES_V0.json"
+      },
+      "event_id": 51,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "CC",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/capability_contracts/workload__CC_STORE_RESULTS_V0.json"
+      },
+      "event_id": 52,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::CC_STORE_RESULTS_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "CC",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/capability_contracts/workload__CC_VERIFY_TERMINATION_V0.json"
+      },
+      "event_id": 53,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "CT",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/capability_transforms/workload__CT_PURE_COLLATZ_STEP_V0.json"
+      },
+      "event_id": 54,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "CT",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/capability_transforms/workload__CT_PURE_TERMINATION_CHECK_V0.json"
+      },
+      "event_id": 55,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "EV",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/events/workload__EV_CONJECTURE_EVALUATED_V0.json"
+      },
+      "event_id": 56,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::EV_CONJECTURE_EVALUATED_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "IN",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/intents/workload__IN_COLLATZ_INPUT_VALIDATED_V0.json"
+      },
+      "event_id": 57,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "RB",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/runtime_bindings/workload__RB_COLLATZ_V0.json"
+      },
+      "event_id": 58,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::RB_COLLATZ_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "STRUCTURE",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/structures/workload__STRUCTURE_BUILD_WORKLOAD_CONFIG_V0.json"
+      },
+      "event_id": 59,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::STRUCTURE_BUILD_WORKLOAD_CONFIG_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "STRUCTURE",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/structures/workload__STRUCTURE_COLLATZ_STORAGE_V0.json"
+      },
+      "event_id": 60,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::STRUCTURE_COLLATZ_STORAGE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "TE",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/transport/egress/workload__TE_COLLATZ_COMPUTE_V0.json"
+      },
+      "event_id": 61,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::TE_COLLATZ_COMPUTE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "TI",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/ingress_intents/workload__TI_COLLATZ_COMPUTE_V0.json"
+      },
+      "event_id": 62,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::TI_COLLATZ_COMPUTE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "WF",
+        "output_path": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/canonical/workflows/workload__WF_COLLATZ_CONJECTURE_V0.json"
+      },
+      "event_id": 63,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "files_written": 3,
+        "output_dir": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/vocabulary/workload",
+        "structure_id": "workload"
+      },
+      "event_id": 64,
+      "family": "MATERIALIZATION",
+      "operation": "vocabulary_materialized",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "edge_count": 13,
+        "files_written": 2,
+        "node_count": 15,
+        "output_dir": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/tokenized/workload",
+        "structure_id": "workload"
+      },
+      "event_id": 65,
+      "family": "MATERIALIZATION",
+      "operation": "tokenized_materialized",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "files_written": [
+          "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/tokenized/workload/dispatch.json",
+          "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/tokenized/workload/handlers.json"
+        ],
+        "output_dir": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/tokenized/workload",
+        "structure_id": "workload"
+      },
+      "event_id": 66,
+      "family": "MATERIALIZATION",
+      "operation": "dispatch_handlers_materialized",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "edge_count": 13,
+        "ev_schema_count": 1,
+        "files_written": 2,
+        "node_count": 15,
+        "output_dir": "/Users/bp/protocol-governed-computing/conformance_workloads/workloads/collatz/snapshot/compiled/evidence/workload",
+        "structure_id": "workload"
+      },
+      "event_id": 67,
+      "family": "MATERIALIZATION",
+      "operation": "evidence_materialized",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "",
+      "subject_token": -1
+    }
+  ],
+  "evidence_graph_hash": "ff602f06fe42871aaa2f04d0bf3b37eedb74d79755458beb8f389ae607b18ff1",
+  "families": {
+    "ADDRESSING": [
+      20
+    ],
+    "ATTESTATION": [],
+    "CONSTRUCTION": [
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "DISCOVERY": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "GOVERNANCE": [
+      21
+    ],
+    "MATERIALIZATION": [
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67
+    ],
+    "PROJECTION": [
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48
+    ],
+    "TOPOLOGY": [
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "VERIFICATION": []
+  },
+  "projection_class": "evidence_substrate",
+  "schema_version": "v0",
+  "structure_id": "workload"
+}

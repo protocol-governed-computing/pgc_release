@@ -1,0 +1,125 @@
+{
+  "artifact_code": "CC_RESOLVE_ACTOR_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+        "id": "CS_REGISTRY_V0",
+        "kind": "CS",
+        "ops": [
+          "REGISTER",
+          "RESOLVE",
+          "EXISTS",
+          "DEREGISTER",
+          "COUNT"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_RESOLVE_ACTOR_V0\n\n## 1. Intent\n\nAnswers which actor a contact address denotes, and reports when none does\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_RESOLVE_ACTOR_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Answers which actor a contact address denotes, and reports when none does\n  inputs:\n    contact_address:\n      type: string\n      required: true\n  outputs:\n    value:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - NOT_FOUND\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: resolve_address\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: RESOLVE\n    store: CONTACT_ADDRESS_REGISTRY\n    inputs:\n      key_or_address: $.inputs.contact_address\n    outputs:\n      target_ref: $.capability_result.target_ref\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n  - step: read_actor\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: ACTORS\n    inputs:\n      key: $.inputs.contact_address\n    outputs:\n      value: $.capability_result.value\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n```\n",
+  "content_hash": "9a431166be5f3e322b7564f7b1cb8aefb3e9883476d5a30e4a1f390d94845cf8",
+  "fqdn_id": "blockchain::CC_RESOLVE_ACTOR_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "inputs": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "value": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key_or_address": "$.inputs.contact_address"
+          },
+          "on_result": {
+            "NOT_FOUND": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "RESOLVE",
+          "outputs": {
+            "target_ref": "$.capability_result.target_ref"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION"
+          ],
+          "side_effect": "capability_side_effects::CS_REGISTRY_V0",
+          "step": "resolve_address",
+          "store": "CONTACT_ADDRESS_REGISTRY"
+        },
+        {
+          "inputs": {
+            "key": "$.inputs.contact_address"
+          },
+          "on_result": {
+            "NOT_FOUND": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "READ",
+          "outputs": {
+            "value": "$.capability_result.value"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "read_actor",
+          "store": "ACTORS"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "NOT_FOUND",
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Answers which actor a contact address denotes, and reports when none does"
+    },
+    "fqdn": "blockchain::CC_RESOLVE_ACTOR_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

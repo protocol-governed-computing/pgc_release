@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_COMPILER_GOVERNANCE_DECLARED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_COMPILER_GOVERNANCE_DECLARED_V0\n\n## Machine\n\n```yaml\nfqdn: compiler::INVARIANT_COMPILER_GOVERNANCE_DECLARED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: compiler::CONSTITUTION_COMPILER_V0\nauthority: pgc.platform\nconcern: compiler\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - COMPILER\n```\n\n---\n\n## Purpose\n\nEnforces `COMPILER_SELF_APPLICABLE` from CONSTITUTION_COMPILER_V0: the compiler must\nbe capable of validating its own governance artifacts, which requires those artifacts to\nbe present in the compiled set.\n\nThe phase sequence and compiler rules are governance declarations \u2014 they live in the\nconstitution as static constraints that conforming compilers must satisfy. They are NOT\nexecution instructions that a compiler reads and interprets at runtime to determine what\nto do next.\n\nA compiler that reads `CONSTITUTION_COMPILER_V0` at runtime to decide phase ordering has\ninverted the model: governance drives execution rather than governing it.\n\n## Relationship to CONSTITUTION_COMPILER_V0\n\nDirectly enforces `COMPILER_SELF_APPLICABLE` (compiler validates its own governance)\nand validates that the static declaration surface is present and non-empty. The\nassertion is structural \u2014 it checks the artifact exists and is well-formed, not that\nthe runtime interprets it.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'CONSTITUTION_COMPILER_V0 MUST be present in every compiled artifact set. Its machine block\n    MUST declare a non-empty rules list that includes the governing constraints for the compiler pipeline.\n    The compiler constitution is a static governance declaration \u2014 not an execution instruction set. Absence\n    of the constitution from the compiled set violates COMPILER_SELF_APPLICABLE.\n\n    '\n  anti_patterns:\n  - missing_constitution: CONSTITUTION_COMPILER_V0 absent from compiled artifact set\n  - empty_rules: CONSTITUTION_COMPILER_V0 machine block has no declared rules\n  - runtime_phase_discovery: Compiler reads its own governance artifacts to determine execution order\n      at runtime\n```\n",
+  "content_hash": "7b90e0f2f9fde5559069c02d75b0f664379520baa7c9b6826059a5b66b7dd214",
+  "fqdn_id": "compiler::INVARIANT_COMPILER_GOVERNANCE_DECLARED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "COMPILER"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "compiler",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "compiler::INVARIANT_COMPILER_GOVERNANCE_DECLARED_V0",
+    "governed_by": "compiler::CONSTITUTION_COMPILER_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "compiler",
+  "references": [
+    "compiler::CONSTITUTION_COMPILER_V0"
+  ],
+  "version": "0"
+}

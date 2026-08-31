@@ -1,0 +1,53 @@
+{
+  "artifact_code": "CONSTITUTION_CAPABILITY_CONTRACT_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_CAPABILITY_CONTRACT_V0\n\n## Machine\n```yaml\nfqdn: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: capability_contracts\ncore:\n  enforcement_model: compiler_enforced\n  governs:\n  - CC\nrules:\n- applies_to: CC\n  enforced_by: capability_contracts::INVARIANT_CC_INPUTS_SATISFIED_V0\n- applies_to: CC\n  enforced_by: capability_contracts::INVARIANT_CC_CAPABILITY_BINDING_VALID_V0\n- applies_to: CC\n  enforced_by: capability_contracts::INVARIANT_CC_NO_IMPLICIT_CHAINING_V0\n- applies_to: CC\n  enforced_by: capability_contracts::INVARIANT_CC_NO_MISSING_DEPENDENCIES_V0\n- applies_to: CC\n  enforced_by: capability_contracts::INVARIANT_CC_NO_UNUSED_OUTPUTS_V0\n- applies_to: CC\n  enforced_by: artifact::INVARIANT_FQDN_ONLY_REFERENCES_V0\n```\n\n---\n\n## 1. Purpose\n\nThis constitution defines the governance and enforcement rules for Capability Contract (CC) artifacts.\n\nCapability Contracts bind pure Capability Transforms (CTs) and authorized Capability Side Effects (CSs) into governed executable units. They are the execution nodes within a workflow \u2014 declarative, deterministic, and auditable.\n\n---\n\n## 2. Core Principles\n\n- **Input Completeness:** All inputs required by a CC MUST be satisfied by declared bindings before execution begins. Unsatisfied inputs are constitutional violations.\n- **Valid Capability Bindings:** Every capability referenced in a CC MUST resolve to a declared CT or CS artifact. Unresolved references fail the build.\n- **No Implicit Chaining:** All dataflow between capabilities MUST be explicitly declared. Implicit chaining or ambient state is forbidden.\n- **No Missing Dependencies:** A CC MUST NOT reference inputs or capabilities not declared in scope.\n- **No Unused Outputs:** All declared outputs MUST be consumed or emitted. Dead outputs are governance noise.\n- **FQDN References:** All artifact references within a CC MUST use fully-qualified names.\n\n---\n\n## 3. Required Fields\n\n- `cc_code`: Unique identifier for the capability contract.\n- `version`: Version of the capability contract artifact.\n- `governed_by`: The constitution governing this capability contract.\n- `core`: Metadata including summary, inputs, outputs, result_status_contract, and pipeline.\n\n**Schema**: `SCHEMA_CAPABILITY_CONTRACT_V0.json` \u2014 canonical JSON Schema for CC artifact structure.\n**Pipeline step schema**: `SCHEMA_CC_PIPELINE_STEP_V0.json` \u2014 canonical JSON Schema for a single execution topology step.\n\n---\n\n## How it is checked\n- All input fields declared in `core.inputs` MUST be bound before execution.\n- All capability references in `core.pipeline` MUST resolve to declared CT or CS artifacts.\n- No output declared in `core.outputs` may remain unconsumed across the pipeline.\n\n---\n\n## End of Constitution\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs Capability Contract (CC) artifacts \u2014 explicit binding, determinism, and governed\n    denial\nrules:\n- rule_id: CC_INPUTS_SATISFIED\n  constraint: all CC inputs MUST be satisfied by declared bindings before execution\n- rule_id: CC_CAPABILITY_BINDING_VALID\n  constraint: every capability reference in CC MUST resolve to a declared CT or CS artifact\n- rule_id: CC_NO_IMPLICIT_CHAINING\n  constraint: CC MUST NOT implicitly chain capabilities; all dataflow MUST be explicitly declared\n- rule_id: CC_NO_MISSING_DEPENDENCIES\n  constraint: CC MUST NOT reference undeclared inputs or capabilities\n- rule_id: CC_NO_UNUSED_OUTPUTS\n  constraint: CC MUST NOT declare outputs that are never consumed or emitted\n- rule_id: CC_FQDN_REFERENCES\n  constraint: all artifact references in CC MUST use FQDN\n```\n",
+  "content_hash": "f9fc46939b7573133d5a4aed519c0a23321309ca09e5ee3155b6d4f322039bd4",
+  "fqdn_id": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "capability_contracts",
+    "core": {
+      "enforcement_model": "compiler_enforced",
+      "governs": [
+        "CC"
+      ]
+    },
+    "fqdn": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "rules": [
+      {
+        "applies_to": "CC",
+        "enforced_by": "capability_contracts::INVARIANT_CC_INPUTS_SATISFIED_V0"
+      },
+      {
+        "applies_to": "CC",
+        "enforced_by": "capability_contracts::INVARIANT_CC_CAPABILITY_BINDING_VALID_V0"
+      },
+      {
+        "applies_to": "CC",
+        "enforced_by": "capability_contracts::INVARIANT_CC_NO_IMPLICIT_CHAINING_V0"
+      },
+      {
+        "applies_to": "CC",
+        "enforced_by": "capability_contracts::INVARIANT_CC_NO_MISSING_DEPENDENCIES_V0"
+      },
+      {
+        "applies_to": "CC",
+        "enforced_by": "capability_contracts::INVARIANT_CC_NO_UNUSED_OUTPUTS_V0"
+      },
+      {
+        "applies_to": "CC",
+        "enforced_by": "artifact::INVARIANT_FQDN_ONLY_REFERENCES_V0"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_contracts",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,50 @@
+{
+  "artifact_code": "IN_DOMAIN_MODEL_SUBMITTED_V0",
+  "artifact_type": "IN",
+  "content": "# IN_DOMAIN_MODEL_SUBMITTED_V0\n\n## 1. Intent\n\nA Domain Model register is offered to P2 for judgement.\n\nThe register arrives as text, as at every phase. What it will be judged *against* \u2014 the assembled\ncomposition \u2014 is not supplied here: it is bound by the runtime binding to the snapshot the workflow\nexecutes from. A caller can offer a document; it cannot choose the reality the document is checked\nagainst.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::IN_DOMAIN_MODEL_SUBMITTED_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: design\n\ncore:\n  summary: Offer a Domain Model register for admissibility judgement\n  workflow: WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0\n\n  inputs:\n    register_text:\n      type: string\n      required: true\n      description: Full text of the P2 register \u2014 supplied by the driver, never read downstream\n    prior_texts:\n      type: object\n      required: true\n      description: |\n        Phase id \u2192 full text of the upstream document \u2014 p1 carries the change request whose System Beliefs this register resolves. Supplied by the\n        driver alongside the register itself: a handoff is checked by reading both documents, and\n        an absent prior is reported as an unchecked handoff rather than passed over.\n    author_of_record:\n      type: string\n      required: true\n      description: Identity of the person accountable for the register's content\n\n  outcomes:\n    ACK:\n      description: Register accepted for judgement\n    NACK:\n      description: Register not accepted for judgement\n```\n",
+  "content_hash": "7d2037b0a3cf9618329675d2f47c9a81a5a244e5f43f3a15b492c605d3a017bd",
+  "fqdn_id": "transformation::IN_DOMAIN_MODEL_SUBMITTED_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "design",
+    "core": {
+      "inputs": {
+        "author_of_record": {
+          "description": "Identity of the person accountable for the register's content",
+          "required": true,
+          "type": "string"
+        },
+        "prior_texts": {
+          "description": "Phase id \u2192 full text of the upstream document \u2014 p1 carries the change request whose System Beliefs this register resolves. Supplied by the\ndriver alongside the register itself: a handoff is checked by reading both documents, and\nan absent prior is reported as an unchecked handoff rather than passed over.\n",
+          "required": true,
+          "type": "object"
+        },
+        "register_text": {
+          "description": "Full text of the P2 register \u2014 supplied by the driver, never read downstream",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Register accepted for judgement"
+        },
+        "NACK": {
+          "description": "Register not accepted for judgement"
+        }
+      },
+      "summary": "Offer a Domain Model register for admissibility judgement",
+      "workflow": "WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0"
+    },
+    "fqdn": "transformation::IN_DOMAIN_MODEL_SUBMITTED_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

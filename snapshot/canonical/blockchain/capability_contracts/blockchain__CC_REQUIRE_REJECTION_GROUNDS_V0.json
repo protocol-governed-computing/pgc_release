@@ -1,0 +1,90 @@
+{
+  "artifact_code": "CC_REQUIRE_REJECTION_GROUNDS_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "parameters": "in.grounds_parameters",
+          "rules": "in.grounds_rules"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_REQUIRE_REJECTION_GROUNDS_V0\n\n## 1. Intent\n\nRefuses a rejection stating no grounds, before anything is recorded\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_REQUIRE_REJECTION_GROUNDS_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Refuses a rejection stating no grounds, before anything is recorded\n  inputs:\n    grounds_parameters:\n      type: object\n      required: true\n    grounds_rules:\n      type: array\n      required: true\n  outputs:\n    valid:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: require_grounds_stated\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters: $.inputs.grounds_parameters\n      rules: $.inputs.grounds_rules\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n```\n",
+  "content_hash": "f17fe2f6ddab427a1f13c837de96c7aec9f64be77760edfe7087a040f9b656ec",
+  "fqdn_id": "blockchain::CC_REQUIRE_REJECTION_GROUNDS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "inputs": {
+        "grounds_parameters": {
+          "required": true,
+          "type": "object"
+        },
+        "grounds_rules": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "valid": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "parameters": "$.inputs.grounds_parameters",
+            "rules": "$.inputs.grounds_rules"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_grounds_stated",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuses a rejection stating no grounds, before anything is recorded"
+    },
+    "fqdn": "blockchain::CC_REQUIRE_REJECTION_GROUNDS_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+  ],
+  "version": "0"
+}

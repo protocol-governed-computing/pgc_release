@@ -1,0 +1,34 @@
+{
+  "artifact_code": "EV_WORK_REGISTERED_V0",
+  "artifact_type": "EV",
+  "content": "# EV_WORK_REGISTERED_V0\n\n## 1. Intent\n\nThe moment a work enters the catalog, created by the edition that evidences it\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::EV_WORK_REGISTERED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: The moment a work enters the catalog, created by the edition that evidences it\n  description: The moment a work enters the catalog, created by the edition that evidences it\n  subdomain: catalog\n  schema:\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
+  "content_hash": "3a64e0ec0ab2f3e80a0b121b6b0c74aef88f6604ab98a6d06ad6c5ab4946ffad",
+  "fqdn_id": "book_library_mgmt::EV_WORK_REGISTERED_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "description": "The moment a work enters the catalog, created by the edition that evidences it",
+      "schema": {
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "catalog",
+      "summary": "The moment a work enters the catalog, created by the edition that evidences it"
+    },
+    "fqdn": "book_library_mgmt::EV_WORK_REGISTERED_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,158 @@
+{
+  "artifact_code": "CC_REGISTER_PHYSICAL_COPY_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_REGISTER_PHYSICAL_COPY_V0\n\n## 1. Intent\n\nRecord a copy against exactly one book\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Record a copy against exactly one book\n  inputs:\n    identity_key:\n      type: string\n      required: true\n    barcode:\n      type: string\n      required: true\n    copy_fields:\n      type: object\n      required: true\n  outputs:\n    book_record:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_book_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n    outputs:\n      book_record: $.capability_result.value\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: assemble_copy_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        identity_key: $.inputs.identity_key\n        barcode: $.inputs.barcode\n        state: $.inputs.copy_fields.state\n    outputs:\n      copy_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_copy_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: PHYSICAL_COPIES\n    inputs:\n      key: $.inputs.barcode\n      value: $.results.assemble_copy_record.copy_record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n",
+  "content_hash": "3ab2a0bf743808cb32d3ddec008a86bf6927bde6512fdebe51456d8d95c9c4c8",
+  "fqdn_id": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "barcode": {
+          "required": true,
+          "type": "string"
+        },
+        "copy_fields": {
+          "required": true,
+          "type": "object"
+        },
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "book_record": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key": "$.inputs.identity_key"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "READ",
+          "outputs": {
+            "book_record": "$.capability_result.value",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "read_book_record",
+          "store": "BOOKS"
+        },
+        {
+          "inputs": {
+            "fields": {
+              "barcode": "$.inputs.barcode",
+              "identity_key": "$.inputs.identity_key",
+              "state": "$.inputs.copy_fields.state"
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "copy_record": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_copy_record",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "key": "$.inputs.barcode",
+            "value": "$.results.assemble_copy_record.copy_record"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "WRITE",
+          "outputs": {
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "write_copy_record",
+          "store": "PHYSICAL_COPIES"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Record a copy against exactly one book"
+    },
+    "fqdn": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+  ],
+  "version": "0"
+}

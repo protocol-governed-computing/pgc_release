@@ -1,0 +1,40 @@
+{
+  "artifact_code": "TI_COLLATZ_COMPUTE_V0",
+  "artifact_type": "TI",
+  "content": "# TI_COLLATZ_COMPUTE_V0\n\n**Kind:** Transport Ingress Contract (Transport Standard V0 \u00a76)\n**Operation Identity:** `collatz.compute`\n**Home:** platform-resident boundary declaration for the Collatz reference workload.\n**Status:** cut-#1 hand-authored. Promoted to a compiler-recognized `TI_` kind in Phase 3.\n\nDeclares the admission semantics for the operation `collatz.compute`: its input\ncontract, the handler it binds to, and how the canonical input maps onto that handler.\nThe public identity `collatz.compute` is stable; the bound workflow\n`workload::WF_COLLATZ_CONJECTURE_V0` is an implementation detail and may be\nre-pointed without any adapter change (`OPERATION_IDENTITY_INDEPENDENCE`, Patch 1).\n\n`handler.kind` is the generalization point: `WF_INVOCATION` here; a future\n`SNAPSHOT_QUERY` (for `pi.query` over the platform-resident PPS) is a sibling kind,\nadded without touching the transport engine.\n\n## Machine\n\n```yaml\nfqdn: workload::TI_COLLATZ_COMPUTE_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: workload\noperation: collatz.compute\n\n# Input contract \u2014 a declared, named contract (not inline schema logic executed at\n# request time; the resolver enforces the compiled boundary \u2014 Patch 3).\ninput_contract:\n  number:\n    type: integer\n    required: true\n    min: 1\n    max: 999999\n\n# Context requirements \u2014 inert in V0 (AC reserved).\ncontext_requirements: []\n\n# Operation binding: operation identity -> handler.\nhandler:\n  kind: WF_INVOCATION\n  workflow: workload::WF_COLLATZ_CONJECTURE_V0\n  # Canonical input -> WF payload. `${input.KEY}` substitutes the canonical input value\n  # (type-preserving). The list wrapper is literal: scalar number -> {\"numbers\": [number]}.\n  payload_template:\n    numbers: [\"${input.number}\"]\n```",
+  "content_hash": "a8dd1fc463e73f80410dc01cc0eed6138f039310852d69a3cd9619b133965d1e",
+  "fqdn_id": "workload::TI_COLLATZ_COMPUTE_V0",
+  "frontmatter": {
+    "artifact_kind": "TRANSPORT_INGRESS",
+    "authority": "pgc.platform",
+    "concern": "workload",
+    "context_requirements": [],
+    "fqdn": "workload::TI_COLLATZ_COMPUTE_V0",
+    "governed_by": "transport::CONSTITUTION_TRANSPORT_INGRESS_V0",
+    "handler": {
+      "kind": "WF_INVOCATION",
+      "payload_template": {
+        "numbers": [
+          "${input.number}"
+        ]
+      },
+      "workflow": "workload::WF_COLLATZ_CONJECTURE_V0"
+    },
+    "input_contract": {
+      "number": {
+        "max": 999999,
+        "min": 1,
+        "required": true,
+        "type": "integer"
+      }
+    },
+    "operation": "collatz.compute",
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD_TRANSPORT",
+  "namespace": "workload",
+  "references": [
+    "transport::CONSTITUTION_TRANSPORT_INGRESS_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,30 @@
+{
+  "artifact_code": "SURFACE_CONTRACT_STORAGE_APPENDONLY_APPEND_V0",
+  "artifact_type": "SURFACE",
+  "content": "# SURFACE_CONTRACT_STORAGE_APPENDONLY_APPEND_V0\n\n## Purpose\n\nCanonical result surface for append-only storage APPEND operations.\n\nAn append-only APPEND can succeed, encounter invalid input (malformed record), or fail\ndue to storage unavailability. APPEND does not produce NOT_FOUND or ALREADY_EXISTS \u2014\nappend-only storage grows monotonically. These three outcomes are exhaustive.\n\n---\n\n## Machine\n\n```yaml\nfqdn: surface_contract::SURFACE_CONTRACT_STORAGE_APPENDONLY_APPEND_V0\nartifact_kind: SURFACE_CONTRACT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: surface_contract\ngoverns:\n- CS_APPENDONLY_JSONL_V0\nop: APPEND\ncanonical_surface:\n- SUCCESS\n- VIOLATION\n- BACKEND_ERROR\n```\n\n---\n\n## What this realizes\n```yaml\ncapability_family: STORAGE_APPENDONLY\n```\n",
+  "content_hash": "5abdaccfd08c9ef3cfdd23c360a26f6fec0b1dd73c0d98b5f8360f278516769d",
+  "fqdn_id": "surface_contract::SURFACE_CONTRACT_STORAGE_APPENDONLY_APPEND_V0",
+  "frontmatter": {
+    "artifact_kind": "SURFACE_CONTRACT",
+    "authority": "pgc.platform",
+    "canonical_surface": [
+      "SUCCESS",
+      "VIOLATION",
+      "BACKEND_ERROR"
+    ],
+    "concern": "surface_contract",
+    "fqdn": "surface_contract::SURFACE_CONTRACT_STORAGE_APPENDONLY_APPEND_V0",
+    "governed_by": "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0",
+    "governs": [
+      "CS_APPENDONLY_JSONL_V0"
+    ],
+    "op": "APPEND",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "surface_contract",
+  "references": [
+    "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0"
+  ],
+  "version": "0"
+}

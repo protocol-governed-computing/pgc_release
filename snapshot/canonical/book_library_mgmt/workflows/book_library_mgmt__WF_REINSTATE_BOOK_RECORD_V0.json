@@ -1,0 +1,93 @@
+{
+  "artifact_code": "WF_REINSTATE_BOOK_RECORD_V0",
+  "artifact_type": "WF",
+  "content": "# WF_REINSTATE_BOOK_RECORD_V0\n\n## 1. Intent\n\nReturning a retired book record to the registered state\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: catalog\nruntime_binding: book_library_mgmt::RB_CATALOG_BINDINGS_V0\nsubdomain: catalog\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: Returning a retired book record to the registered state\n  actor_context: book_library_mgmt::AC_LIBRARY_STAFF_V0\n  start_node: IN_REINSTATE_BOOK_RECORD_V0\n  nodes:\n    IN_REINSTATE_BOOK_RECORD_V0:\n      type: IN\n      code: IN_REINSTATE_BOOK_RECORD_V0\n      next:\n        ACK: CC_CONFIRM_STAFF_AUTHORIZED_V0\n        NACK: EXIT_REJECTED\n    CC_CONFIRM_STAFF_AUTHORIZED_V0:\n      type: CC\n      code: CC_CONFIRM_STAFF_AUTHORIZED_V0\n      inputs:\n        staff_credentials: $.payload.staff_credentials\n        authorization_rules: $.payload.authorization_rules\n      next:\n        SUCCESS: CC_REINSTATE_BOOK_RECORD_V0\n        VIOLATION: EXIT_REJECTED\n    CC_REINSTATE_BOOK_RECORD_V0:\n      type: CC\n      code: CC_REINSTATE_BOOK_RECORD_V0\n      inputs:\n        identity_key: $.payload.identity_key\n      next:\n        SUCCESS: CC_APPEND_CATALOG_OPERATION_V0\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_APPEND_CATALOG_OPERATION_V0:\n      type: CC\n      code: CC_APPEND_CATALOG_OPERATION_V0\n      inputs:\n        staff_id: $.payload.staff_id\n        operation: REINSTATE_BOOK_RECORD\n        record:\n          operation: REINSTATE_BOOK_RECORD\n          staff_id: $.payload.staff_id\n          subject: $.payload.identity_key\n      next:\n        SUCCESS: EXIT_COMPLETED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n    EXIT_REJECTED:\n      type: EXIT\n```\n",
+  "content_hash": "b1e9df75e999e0dff258a0e450e1314a16760f61f4130b730e4ec7d68fdabf00",
+  "fqdn_id": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "actor_context": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "nodes": {
+        "CC_APPEND_CATALOG_OPERATION_V0": {
+          "code": "CC_APPEND_CATALOG_OPERATION_V0",
+          "fqdn_id": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0",
+          "inputs": {
+            "operation": "REINSTATE_BOOK_RECORD",
+            "record": {
+              "operation": "REINSTATE_BOOK_RECORD",
+              "staff_id": "$.payload.staff_id",
+              "subject": "$.payload.identity_key"
+            },
+            "staff_id": "$.payload.staff_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+          "code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "fqdn_id": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "inputs": {
+            "authorization_rules": "$.payload.authorization_rules",
+            "staff_credentials": "$.payload.staff_credentials"
+          },
+          "next": {
+            "SUCCESS": "CC_REINSTATE_BOOK_RECORD_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_REINSTATE_BOOK_RECORD_V0": {
+          "code": "CC_REINSTATE_BOOK_RECORD_V0",
+          "fqdn_id": "book_library_mgmt::CC_REINSTATE_BOOK_RECORD_V0",
+          "inputs": {
+            "identity_key": "$.payload.identity_key"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_APPEND_CATALOG_OPERATION_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "IN_REINSTATE_BOOK_RECORD_V0": {
+          "code": "IN_REINSTATE_BOOK_RECORD_V0",
+          "fqdn_id": "book_library_mgmt::IN_REINSTATE_BOOK_RECORD_V0",
+          "next": {
+            "ACK": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_REINSTATE_BOOK_RECORD_V0",
+      "summary": "Returning a retired book record to the registered state"
+    },
+    "fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "catalog",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

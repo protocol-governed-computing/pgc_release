@@ -1,0 +1,38 @@
+{
+  "artifact_code": "STRUCTURE_WALLET_STORAGE_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_WALLET_STORAGE_V0\n\n## 1. Intent\n\nDeclares the three stores wallet owns\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::STRUCTURE_WALLET_STORAGE_V0\nartifact_kind: STRUCTURE\nversion: v0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Declares the three stores wallet owns\n  layer: DOMAINS\n  domain: blockchain\n  subdomain: wallet\n  entity_stores:\n    WALLETS:\n      path: blockchain/wallet/wallets.json\n    WALLET_OCCURRENCES:\n      path: blockchain/wallet/wallet_occurrences.jsonl\n    WALLET_IDENTITIES:\n      path: blockchain/wallet/wallet_identity_registry.jsonl\n```\n",
+  "content_hash": "f604d8426e83f6f15dbcea73de386065d4336ca0ddca3d58d9e3fa8749be4957",
+  "fqdn_id": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "domain": "blockchain",
+      "entity_stores": {
+        "WALLETS": {
+          "path": "blockchain/wallet/wallets.json"
+        },
+        "WALLET_IDENTITIES": {
+          "path": "blockchain/wallet/wallet_identity_registry.jsonl"
+        },
+        "WALLET_OCCURRENCES": {
+          "path": "blockchain/wallet/wallet_occurrences.jsonl"
+        }
+      },
+      "layer": "DOMAINS",
+      "subdomain": "wallet",
+      "summary": "Declares the three stores wallet owns"
+    },
+    "fqdn": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,27 @@
+{
+  "artifact_code": "STRUCTURE_EXECUTION_SCHEDULING_SERIAL_SINGLE_WORKER_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_EXECUTION_SCHEDULING_SERIAL_SINGLE_WORKER_V0\n\n## Machine\n\n```yaml\nfqdn: execution_scheduling::STRUCTURE_EXECUTION_SCHEDULING_SERIAL_SINGLE_WORKER_V0\nartifact_code: STRUCTURE_EXECUTION_SCHEDULING_SERIAL_SINGLE_WORKER_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: execution_scheduling::CONSTITUTION_EXECUTION_SCHEDULING_V0\nauthority: pgc.platform\nconcern: execution_scheduling\nstatus: active\nscheduling_mode: SERIAL_SINGLE_WORKER\nparallel_branch_execution_allowed: false\nnon_blocking_dispatch_allowed: false\ndeterministic_join_required: false\n```\n\n---\n\n## Purpose\n\nDeclares that this compiled snapshot authorizes serial single-worker scheduling only.\nCC nodes execute one at a time in topological order. No parallel branches, no\nnon-blocking dispatch, no synchronization barriers.\n\nThis is the correct and complete description of V0 runtime execution scheduling.\n\n## Active Declaration\n\nThis structure is the single active scheduling declaration for V0. The compiler validates\nits presence via `INVARIANT_EXECUTION_SCHEDULING_DECLARED_V0` and materializes:\n\n```yaml\nfederation_profile:\n  execution_scheduling: SERIAL_SINGLE_WORKER\n```\n\ninto every compiled snapshot.\n",
+  "content_hash": "5b8ce1cd397e72373646fea3342e9902ecc2ba65e54c23903acfdfdd14c57f76",
+  "fqdn_id": "execution_scheduling::STRUCTURE_EXECUTION_SCHEDULING_SERIAL_SINGLE_WORKER_V0",
+  "frontmatter": {
+    "artifact_code": "STRUCTURE_EXECUTION_SCHEDULING_SERIAL_SINGLE_WORKER_V0",
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "execution_scheduling",
+    "deterministic_join_required": false,
+    "fqdn": "execution_scheduling::STRUCTURE_EXECUTION_SCHEDULING_SERIAL_SINGLE_WORKER_V0",
+    "governed_by": "execution_scheduling::CONSTITUTION_EXECUTION_SCHEDULING_V0",
+    "non_blocking_dispatch_allowed": false,
+    "parallel_branch_execution_allowed": false,
+    "scheduling_mode": "SERIAL_SINGLE_WORKER",
+    "status": "active",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "execution_scheduling",
+  "references": [
+    "execution_scheduling::CONSTITUTION_EXECUTION_SCHEDULING_V0"
+  ],
+  "version": "0"
+}

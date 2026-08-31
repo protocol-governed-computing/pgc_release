@@ -1,0 +1,36 @@
+{
+  "artifact_code": "AC_EMPLOYEE_V0",
+  "artifact_type": "AC",
+  "content": "# AC_EMPLOYEE_V0\n\n## 1. Identity\n\nAn employee actor represents a person eligible for AI license provisioning.\n\n---\n\n## 2. Rationale\n\nEmployee actors are subjects of protocol governance:\n- Represent human identities in the licensing domain\n- Track training completion status\n- Provide natural key for license assignment\n\n---\n\n## 3. Type\n\n| Property | Value |\n|----------|-------|\n| Type | person |\n\n---\n\n## 4. Attributes\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| employee_id | string | true | Unique employee identifier |\n| training_completed | boolean | false | Whether required training is completed |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::AC_EMPLOYEE_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: Employee Actor\n  description: Represents a person eligible for AI license provisioning\n  type: person\n\n  attributes:\n    employee_id:\n      type: string\n      required: true\n    training_completed:\n      type: boolean\n      default: false\n```\n",
+  "content_hash": "0fbf334a8ffdc54489c062b8562a05bdf5568e88184c015cd89f62cc36b2c559",
+  "fqdn_id": "ai_governance::AC_EMPLOYEE_V0",
+  "frontmatter": {
+    "artifact_kind": "ACTOR",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "attributes": {
+        "employee_id": {
+          "required": true,
+          "type": "string"
+        },
+        "training_completed": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "description": "Represents a person eligible for AI license provisioning",
+      "summary": "Employee Actor",
+      "type": "person"
+    },
+    "fqdn": "ai_governance::AC_EMPLOYEE_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

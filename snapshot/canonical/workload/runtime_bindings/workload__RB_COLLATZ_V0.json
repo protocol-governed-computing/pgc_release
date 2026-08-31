@@ -1,0 +1,35 @@
+{
+  "artifact_code": "RB_COLLATZ_V0",
+  "artifact_type": "RB",
+  "content": "# RB_COLLATZ_V0\n\n## 1. Intent\n\nRuntime binding for the Collatz reference workload \u2014 binds the platform side effect\n`capability_side_effects::CS_MUTABLE_JSON_V0` (imported) to its host implementation for persisting\nresults, and names the storage structure that resolves the path.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::RB_COLLATZ_V0\nartifact_kind: RUNTIME_BINDING\nversion: v0\ngoverned_by: runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Runtime binding for Collatz result storage\n  description: Binds the platform CS_MUTABLE_JSON to its host for persisting Collatz results.\n  storage_structure: workload::STRUCTURE_COLLATZ_STORAGE_V0\n  bindings:\n    capability_side_effects::CS_MUTABLE_JSON_V0:\n      type: CS\n      host: MutableJsonRuntime\n      operation: READ_WRITE\n      policy: {}\n```\n",
+  "content_hash": "beb90a28f258da32dada5fe07b3bac0ad5be2d679f661e93b6516581c46674bb",
+  "fqdn_id": "workload::RB_COLLATZ_V0",
+  "frontmatter": {
+    "artifact_kind": "RUNTIME_BINDING",
+    "authority": "pgc.platform",
+    "concern": "workload",
+    "core": {
+      "bindings": {
+        "capability_side_effects::CS_MUTABLE_JSON_V0": {
+          "host": "MutableJsonRuntime",
+          "operation": "READ_WRITE",
+          "policy": {},
+          "type": "CS"
+        }
+      },
+      "description": "Binds the platform CS_MUTABLE_JSON to its host for persisting Collatz results.",
+      "storage_structure": "workload::STRUCTURE_COLLATZ_STORAGE_V0",
+      "summary": "Runtime binding for Collatz result storage"
+    },
+    "fqdn": "workload::RB_COLLATZ_V0",
+    "governed_by": "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0",
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0"
+  ],
+  "version": "0"
+}

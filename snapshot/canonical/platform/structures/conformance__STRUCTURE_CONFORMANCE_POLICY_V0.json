@@ -1,0 +1,38 @@
+{
+  "artifact_code": "STRUCTURE_CONFORMANCE_POLICY_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_CONFORMANCE_POLICY_V0\n\n## Machine\n\n```yaml\nfqdn: conformance::STRUCTURE_CONFORMANCE_POLICY_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: conformance\n\ncore:\n  description: Defines CONFORMANCE_POLICY artifact rules\n\nconformance:\n  scope:\n    - CT\n\n  execution:\n    mode: runtime\n\n  expectations:\n    default: NOT_NONE\n\n  failure:\n    behavior: FAIL_BUILD\n```\n",
+  "content_hash": "5d23ac5ef8d7195e6a54775d91eea67f13bd8fb64a70ee7650cba1a567e9d400",
+  "fqdn_id": "conformance::STRUCTURE_CONFORMANCE_POLICY_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "conformance",
+    "conformance": {
+      "execution": {
+        "mode": "runtime"
+      },
+      "expectations": {
+        "default": "NOT_NONE"
+      },
+      "failure": {
+        "behavior": "FAIL_BUILD"
+      },
+      "scope": [
+        "CT"
+      ]
+    },
+    "core": {
+      "description": "Defines CONFORMANCE_POLICY artifact rules"
+    },
+    "fqdn": "conformance::STRUCTURE_CONFORMANCE_POLICY_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "conformance",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

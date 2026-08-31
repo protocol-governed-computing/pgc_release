@@ -1,0 +1,883 @@
+{
+  "wf_id": "WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0",
+  "entry": "IN_ANALYSIS_LOOP_SUBMITTED_V0",
+  "nodes": [
+    {
+      "id": "CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "type": "CC",
+      "cc_code": "CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "capability": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "document_text": "in.document_text"
+            },
+            "fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+            "id": "CT_PURE_PARSE_REGISTERS_V0",
+            "inputs": [
+              "document_text"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "header",
+              "sections",
+              "registers"
+            ]
+          },
+          {
+            "bindings": {
+              "prior_texts": "in.prior_texts"
+            },
+            "fqdn": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0",
+            "id": "CT_PURE_PARSE_PRIOR_PHASES_V0",
+            "inputs": [
+              "prior_texts"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "priors"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+            "id": "CS_SNAPSHOT_QUERY_V0",
+            "kind": "CS",
+            "ops": [
+              "QUERY",
+              "CATALOG"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {
+              "document_text": "in.document_text",
+              "header": "parse_registers.capability_result.header",
+              "registers": "parse_registers.capability_result.registers",
+              "rule_set": "in.rule_set",
+              "sections": "parse_registers.capability_result.sections"
+            },
+            "fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0",
+            "id": "CT_PURE_EVALUATE_RULES_V0",
+            "inputs": [
+              "header",
+              "sections",
+              "registers",
+              "document_text",
+              "rule_set"
+            ],
+            "inputs_truncated": true,
+            "kind": "CT",
+            "outputs": [
+              "verdict",
+              "findings",
+              "rules_evaluated"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "document_text": "IN.register_text",
+          "prior_texts": "IN.prior_texts",
+          "rule_set": [
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "analysis_findings"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Question Id",
+                  "Finding",
+                  "Impact",
+                  "Evidence Status",
+                  "Confidence",
+                  "Resolution Status",
+                  "Evidence"
+                ]
+              },
+              "register": "analysis_findings"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "analysis_findings"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Evidence Status is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Evidence Status",
+                "vocabulary": [
+                  "OBSERVED",
+                  "INFERRED",
+                  "OPEN"
+                ]
+              },
+              "register": "analysis_findings"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Confidence is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Confidence",
+                "vocabulary": [
+                  "HIGH",
+                  "MEDIUM",
+                  "LOW"
+                ]
+              },
+              "register": "analysis_findings"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Resolution Status is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Resolution Status",
+                "vocabulary": [
+                  "CLOSED",
+                  "OPEN"
+                ]
+              },
+              "register": "analysis_findings"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "verification_results"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Item",
+                  "Origin",
+                  "Result",
+                  "Evidence"
+                ]
+              },
+              "register": "verification_results"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "verification_results"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Result is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Result",
+                "vocabulary": [
+                  "CONFIRMED",
+                  "OVERTURNED"
+                ]
+              },
+              "register": "verification_results"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "dependency_discoveries"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Dependency",
+                  "Type",
+                  "Disposition",
+                  "Evidence"
+                ]
+              },
+              "register": "dependency_discoveries"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "dependency_discoveries"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Disposition is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Disposition",
+                "vocabulary": [
+                  "EXISTING",
+                  "EXTEND",
+                  "REUSE",
+                  "AUTHOR_NEW",
+                  "INVESTIGATE"
+                ]
+              },
+              "register": "dependency_discoveries"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "impact_analysis"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Artifact",
+                  "Impact Scope",
+                  "Consumer Count",
+                  "Evidence"
+                ]
+              },
+              "register": "impact_analysis"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "impact_analysis"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Capability",
+                  "Decision",
+                  "Rationale",
+                  "Alternatives Checked",
+                  "Source Finding"
+                ]
+              },
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Decision is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Decision",
+                "vocabulary": [
+                  "REUSE",
+                  "EXTEND",
+                  "AUTHOR_NEW"
+                ]
+              },
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Capability"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "CELL_NOT_EMPTY",
+              "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "intent": "an uncited row has no provenance in the dossier",
+              "params": {
+                "column": "Source Finding",
+                "detail": "row cites no earlier finding \u2014 a phase restates its input, it does not add to it"
+              },
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "SOURCE_FINDING_RESOLVES",
+              "id": "SOURCE_FINDING_UNRESOLVED",
+              "intent": "a citation must name something this phase can actually cite",
+              "params": {
+                "column": "Source Finding",
+                "known_registers": [
+                  "acceptance_criteria",
+                  "actions",
+                  "actors",
+                  "analysis_findings",
+                  "architectural_observations",
+                  "artifact_properties",
+                  "artifact_summary",
+                  "assumptions",
+                  "authoring_decisions",
+                  "authoring_scope",
+                  "authority_boundaries",
+                  "authority_deferrals",
+                  "belief_verification",
+                  "bm_entities",
+                  "boundary_rules",
+                  "build_order",
+                  "business_events",
+                  "business_invariants",
+                  "business_objects",
+                  "business_processes",
+                  "business_vocabulary",
+                  "capability_graph",
+                  "cc_composition",
+                  "clarification_requests",
+                  "constraint_register",
+                  "constraints",
+                  "cr_type",
+                  "critical_path",
+                  "cross_subdomain_deps",
+                  "cross_subdomain_notes",
+                  "cross_subdomain_refs",
+                  "declared_reach",
+                  "dependency_discoveries",
+                  "dependency_graph",
+                  "design_decisions",
+                  "design_resolution",
+                  "discovery_concerns",
+                  "entities",
+                  "entity_attributes",
+                  "events",
+                  "execution_topology",
+                  "existing_inventory",
+                  "field_declarations",
+                  "gap_register",
+                  "gaps",
+                  "generation_provenance",
+                  "governance_outcome",
+                  "governance_scope",
+                  "identity_and_sameness",
+                  "identity_semantics",
+                  "impact_analysis",
+                  "implementation_bindings",
+                  "interface_fields",
+                  "invariants",
+                  "known_facts",
+                  "lifecycle_states",
+                  "lifecycle_transitions",
+                  "mandate_artifact_summary",
+                  "new_artifacts",
+                  "new_capabilities",
+                  "new_intents",
+                  "open_questions",
+                  "operation_refusals",
+                  "out_of_scope",
+                  "ownership",
+                  "placement_decision",
+                  "pps_artifacts_requiring_action",
+                  "pps_baseline_fqdns",
+                  "process_steps",
+                  "provisional_codes",
+                  "purpose_provenance",
+                  "rb_declarations",
+                  "refusal_deferrals",
+                  "refusal_discharge",
+                  "refusal_governance_discharge",
+                  "relationships",
+                  "requested_outcomes",
+                  "resources",
+                  "runtime_policies",
+                  "saturation",
+                  "scope_boundary",
+                  "step_bindings",
+                  "storage_governance",
+                  "structure_stores",
+                  "subdomain_purpose",
+                  "subdomain_purposes",
+                  "system_beliefs",
+                  "transport_bindings",
+                  "verification_results",
+                  "vocabulary_extensions"
+                ],
+                "literal_sources": [
+                  "CR seed",
+                  "human decision",
+                  "projection",
+                  "S1 seed"
+                ]
+              },
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "CITED_ORDINAL_RESOLVES",
+              "id": "CITATION_ORDINAL_UNRESOLVED",
+              "intent": "an ordinal past the end of a register cites a finding that is not there",
+              "params": {
+                "column": "Source Finding"
+              },
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "placement_decision"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Decision",
+                  "Subdomain",
+                  "Rationale",
+                  "Source Finding"
+                ]
+              },
+              "register": "placement_decision"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "placement_decision"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Decision is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Decision",
+                "vocabulary": [
+                  "NEW_SUBDOMAIN",
+                  "EXTEND"
+                ]
+              },
+              "register": "placement_decision"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Subdomain"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "placement_decision"
+            },
+            {
+              "check": "CELL_NOT_EMPTY",
+              "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "intent": "an uncited row has no provenance in the dossier",
+              "params": {
+                "column": "Source Finding",
+                "detail": "row cites no earlier finding \u2014 a phase restates its input, it does not add to it"
+              },
+              "register": "placement_decision"
+            },
+            {
+              "check": "SOURCE_FINDING_RESOLVES",
+              "id": "SOURCE_FINDING_UNRESOLVED",
+              "intent": "a citation must name something this phase can actually cite",
+              "params": {
+                "column": "Source Finding",
+                "known_registers": [
+                  "acceptance_criteria",
+                  "actions",
+                  "actors",
+                  "analysis_findings",
+                  "architectural_observations",
+                  "artifact_properties",
+                  "artifact_summary",
+                  "assumptions",
+                  "authoring_decisions",
+                  "authoring_scope",
+                  "authority_boundaries",
+                  "authority_deferrals",
+                  "belief_verification",
+                  "bm_entities",
+                  "boundary_rules",
+                  "build_order",
+                  "business_events",
+                  "business_invariants",
+                  "business_objects",
+                  "business_processes",
+                  "business_vocabulary",
+                  "capability_graph",
+                  "cc_composition",
+                  "clarification_requests",
+                  "constraint_register",
+                  "constraints",
+                  "cr_type",
+                  "critical_path",
+                  "cross_subdomain_deps",
+                  "cross_subdomain_notes",
+                  "cross_subdomain_refs",
+                  "declared_reach",
+                  "dependency_discoveries",
+                  "dependency_graph",
+                  "design_decisions",
+                  "design_resolution",
+                  "discovery_concerns",
+                  "entities",
+                  "entity_attributes",
+                  "events",
+                  "execution_topology",
+                  "existing_inventory",
+                  "field_declarations",
+                  "gap_register",
+                  "gaps",
+                  "generation_provenance",
+                  "governance_outcome",
+                  "governance_scope",
+                  "identity_and_sameness",
+                  "identity_semantics",
+                  "impact_analysis",
+                  "implementation_bindings",
+                  "interface_fields",
+                  "invariants",
+                  "known_facts",
+                  "lifecycle_states",
+                  "lifecycle_transitions",
+                  "mandate_artifact_summary",
+                  "new_artifacts",
+                  "new_capabilities",
+                  "new_intents",
+                  "open_questions",
+                  "operation_refusals",
+                  "out_of_scope",
+                  "ownership",
+                  "placement_decision",
+                  "pps_artifacts_requiring_action",
+                  "pps_baseline_fqdns",
+                  "process_steps",
+                  "provisional_codes",
+                  "purpose_provenance",
+                  "rb_declarations",
+                  "refusal_deferrals",
+                  "refusal_discharge",
+                  "refusal_governance_discharge",
+                  "relationships",
+                  "requested_outcomes",
+                  "resources",
+                  "runtime_policies",
+                  "saturation",
+                  "scope_boundary",
+                  "step_bindings",
+                  "storage_governance",
+                  "structure_stores",
+                  "subdomain_purpose",
+                  "subdomain_purposes",
+                  "system_beliefs",
+                  "transport_bindings",
+                  "verification_results",
+                  "vocabulary_extensions"
+                ],
+                "literal_sources": [
+                  "CR seed",
+                  "human decision",
+                  "projection",
+                  "S1 seed"
+                ]
+              },
+              "register": "placement_decision"
+            },
+            {
+              "check": "CITED_ORDINAL_RESOLVES",
+              "id": "CITATION_ORDINAL_UNRESOLVED",
+              "intent": "an ordinal past the end of a register cites a finding that is not there",
+              "params": {
+                "column": "Source Finding"
+              },
+              "register": "placement_decision"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "saturation"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Criterion",
+                  "Status",
+                  "Evidence"
+                ]
+              },
+              "register": "saturation"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "saturation"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Status is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Status",
+                "vocabulary": [
+                  "SATISFIED",
+                  "NOT_SATISFIED"
+                ]
+              },
+              "register": "saturation"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Criterion"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "saturation"
+            },
+            {
+              "check": "REUSE_CANDIDATE_ELIGIBLE",
+              "id": "REUSE_CANDIDATE_NOT_ELIGIBLE",
+              "intent": "a change request may only be offered candidates from a domain that permits reuse",
+              "params": {
+                "artifact_observation": "si.artifact.list",
+                "column": "Alternatives Checked",
+                "eligible": [
+                  "substrate",
+                  "business"
+                ],
+                "observation": "si.snapshot.summary",
+                "pattern": "[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V\\d+"
+              },
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "CELL_NOT_EMPTY",
+              "id": "DECISION_WITHOUT_ALTERNATIVES",
+              "intent": "a committed decision shows the search that produced it",
+              "params": {
+                "column": "Alternatives Checked",
+                "detail": "decision records no alternatives examined \u2014 'I searched and found nothing' is credible only with the search shown"
+              },
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "CELL_NOT_EMPTY",
+              "id": "DECISION_WITHOUT_RATIONALE",
+              "intent": "every decision traces to a grounded reason",
+              "params": {
+                "column": "Rationale",
+                "detail": "decision states no rationale \u2014 a classification without a reason is an assertion"
+              },
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "CITED_ARTIFACTS_RESOLVE",
+              "id": "CITED_ALTERNATIVE_UNRESOLVED",
+              "intent": "an alternative examined must be one that really exists",
+              "params": {
+                "column": "Alternatives Checked",
+                "observation": "si.artifact.list",
+                "pattern": "[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V\\d+"
+              },
+              "register": "authoring_decisions"
+            },
+            {
+              "check": "CELL_NOT_EMPTY",
+              "id": "IMPACT_WITHOUT_EVIDENCE",
+              "intent": "impact is mechanically captured, never summarised from memory",
+              "params": {
+                "column": "Evidence",
+                "detail": "impact row carries no evidence \u2014 consumer counts are observed, never estimated"
+              },
+              "register": "impact_analysis"
+            },
+            {
+              "check": "CELL_NOT_EMPTY",
+              "id": "VERIFICATION_WITHOUT_EVIDENCE",
+              "intent": "an overturned answer is marked with what overturned it, never erased",
+              "params": {
+                "column": "Evidence",
+                "detail": "verification records no evidence \u2014 grounding is not inherited, so a re-check that cites nothing did not happen"
+              },
+              "register": "verification_results"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "SATURATION_CRITERIA_INCOMPLETE",
+              "intent": "analysis is saturated only against every declared criterion; a claim resting on fewer is the gap the criteria exist to close",
+              "params": {
+                "minimum": 5
+              },
+              "register": "saturation"
+            },
+            {
+              "check": "CELL_NOT_EMPTY",
+              "id": "SATURATION_CLAIMED_WITHOUT_EVIDENCE",
+              "intent": "saturation is demonstrated, not declared",
+              "params": {
+                "column": "Evidence",
+                "detail": "criterion is asserted satisfied with nothing to show for it"
+              },
+              "register": "saturation"
+            },
+            {
+              "check": "PRIOR_ROWS_CITED",
+              "id": "BELIEF_RESULT_NOT_REVERIFIED",
+              "intent": "a result nobody re-verified was inherited, and grounding is not inherited",
+              "params": {
+                "citation_column": "Origin",
+                "prior_key_column": "Belief",
+                "prior_phase": "p2",
+                "prior_register": "belief_verification"
+              },
+              "register": "verification_results"
+            },
+            {
+              "check": "PRIOR_ROW_MATCHES_CITED",
+              "id": "BELIEF_RESULT_RESTATED_FROM_P2",
+              "intent": "a re-verification must address the result it cites, not a substitute for it",
+              "params": {
+                "citation_column": "Origin",
+                "key_column": "Item",
+                "prior_key_column": "Belief",
+                "prior_phase": "p2",
+                "prior_register": "belief_verification"
+              },
+              "register": "verification_results"
+            },
+            {
+              "check": "UNRESOLVED_MARKER_ABSENT",
+              "id": "REGISTER_CELL_UNRESOLVED",
+              "intent": "an unanswered question left in a register reads as decided to every later phase",
+              "params": {
+                "detail": "{column!r} declares the question unanswered ({marker}) rather than answering it \u2014 ask it as a clarification, do not hedge it in a register",
+                "exempt": []
+              }
+            },
+            {
+              "check": "HEADER_FIELD_PRESENT",
+              "id": "HEADER_FIELD_MISSING",
+              "intent": "a dossier document states its phase, its CR, its lifecycle state, and what it feeds",
+              "params": {
+                "fields": [
+                  "Stage",
+                  "CR",
+                  "Status",
+                  "Feeds"
+                ]
+              }
+            },
+            {
+              "check": "HEADER_FIELD_MATCHES",
+              "id": "LIFECYCLE_STATE_NOT_IN_VOCABULARY",
+              "intent": "the lifecycle axis is a controlled vocabulary, not free text",
+              "params": {
+                "fields": [
+                  "Status"
+                ],
+                "pattern": "^(DRAFT|CONSTRUCTION_COMPLETE|ADMITTED_UNVALIDATED|EXECUTION_VALIDATED|PROMOTED)\\b"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EXIT_JUDGED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_ANALYSIS_LOOP_SUBMITTED_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "to": "EXIT_JUDGED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_ANALYSIS_LOOP_SUBMITTED_V0",
+      "to": "CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_ANALYSIS_LOOP_SUBMITTED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_ANALYSIS_LOOP_SUBMITTED_V0",
+      "CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ANALYSIS_LOOP_SUBMITTED_V0",
+      "CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "EXIT_JUDGED"
+    ],
+    [
+      "IN_ANALYSIS_LOOP_SUBMITTED_V0",
+      "CC_JUDGE_AGAINST_COMPOSITION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ANALYSIS_LOOP_SUBMITTED_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

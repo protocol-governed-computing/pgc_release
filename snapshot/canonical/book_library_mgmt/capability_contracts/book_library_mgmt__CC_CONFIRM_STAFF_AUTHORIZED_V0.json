@@ -1,0 +1,90 @@
+{
+  "artifact_code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "parameters": "in.staff_credentials",
+          "rules": "in.authorization_rules"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CONFIRM_STAFF_AUTHORIZED_V0\n\n## 1. Intent\n\nConfirm the staff member may perform catalog operations\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Confirm the staff member may perform catalog operations\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    authorization_rules:\n      type: array\n      required: true\n  outputs:\n    is_authorized:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: confirm_authorization\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters: $.inputs.staff_credentials\n      rules: $.inputs.authorization_rules\n    outputs:\n      is_authorized: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n",
+  "content_hash": "3f77674588a05598438d89993149a3af8ddf2b56e5c43eaa2c9da1313c1a7d68",
+  "fqdn_id": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "authorization_rules": {
+          "required": true,
+          "type": "array"
+        },
+        "staff_credentials": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "is_authorized": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "parameters": "$.inputs.staff_credentials",
+            "rules": "$.inputs.authorization_rules"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "is_authorized": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "confirm_authorization",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Confirm the staff member may perform catalog operations"
+    },
+    "fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+  ],
+  "version": "0"
+}

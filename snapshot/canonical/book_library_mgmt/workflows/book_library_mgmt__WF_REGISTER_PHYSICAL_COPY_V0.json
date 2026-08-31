@@ -1,0 +1,111 @@
+{
+  "artifact_code": "WF_REGISTER_PHYSICAL_COPY_V0",
+  "artifact_type": "WF",
+  "content": "# WF_REGISTER_PHYSICAL_COPY_V0\n\n## 1. Intent\n\nThe governed sequence that registers a further physical copy of an edition\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: catalog\nruntime_binding: book_library_mgmt::RB_CATALOG_BINDINGS_V0\nsubdomain: catalog\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: The governed sequence that registers a further physical copy of an edition\n  actor_context: book_library_mgmt::AC_LIBRARY_STAFF_V0\n  start_node: IN_REGISTER_PHYSICAL_COPY_V0\n  nodes:\n    IN_REGISTER_PHYSICAL_COPY_V0:\n      type: IN\n      code: IN_REGISTER_PHYSICAL_COPY_V0\n      next:\n        ACK: CC_CONFIRM_STAFF_AUTHORIZED_V0\n        NACK: EXIT_REJECTED\n    CC_CONFIRM_STAFF_AUTHORIZED_V0:\n      type: CC\n      code: CC_CONFIRM_STAFF_AUTHORIZED_V0\n      inputs:\n        staff_credentials: $.payload.staff_credentials\n        authorization_rules: $.payload.authorization_rules\n      next:\n        SUCCESS: CC_CLAIM_COPY_BARCODE_V0\n        VIOLATION: EXIT_REJECTED\n    CC_CLAIM_COPY_BARCODE_V0:\n      type: CC\n      code: CC_CLAIM_COPY_BARCODE_V0\n      inputs:\n        barcode: $.payload.barcode\n      next:\n        SUCCESS: CC_REGISTER_PHYSICAL_COPY_V0\n        ALREADY_EXISTS: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_REGISTER_PHYSICAL_COPY_V0:\n      type: CC\n      code: CC_REGISTER_PHYSICAL_COPY_V0\n      inputs:\n        identity_key: $.payload.identity_key\n        barcode: $.payload.barcode\n        copy_fields: $.payload.copy_fields\n      next:\n        SUCCESS: CC_APPEND_CATALOG_OPERATION_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_APPEND_CATALOG_OPERATION_V0:\n      type: CC\n      code: CC_APPEND_CATALOG_OPERATION_V0\n      inputs:\n        staff_id: $.payload.staff_id\n        operation: REGISTER_PHYSICAL_COPY\n        record:\n          operation: REGISTER_PHYSICAL_COPY\n          staff_id: $.payload.staff_id\n          subject: $.payload.barcode\n      next:\n        SUCCESS: EXIT_COMPLETED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n      emit: book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n",
+  "content_hash": "59e4394e3b08ff2a249484caca4b693b35ce67f372bc9d486fab5c07091a3211",
+  "fqdn_id": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "actor_context": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "nodes": {
+        "CC_APPEND_CATALOG_OPERATION_V0": {
+          "code": "CC_APPEND_CATALOG_OPERATION_V0",
+          "fqdn_id": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0",
+          "inputs": {
+            "operation": "REGISTER_PHYSICAL_COPY",
+            "record": {
+              "operation": "REGISTER_PHYSICAL_COPY",
+              "staff_id": "$.payload.staff_id",
+              "subject": "$.payload.barcode"
+            },
+            "staff_id": "$.payload.staff_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CLAIM_COPY_BARCODE_V0": {
+          "code": "CC_CLAIM_COPY_BARCODE_V0",
+          "fqdn_id": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V0",
+          "inputs": {
+            "barcode": "$.payload.barcode"
+          },
+          "next": {
+            "ALREADY_EXISTS": "EXIT_REJECTED",
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_REGISTER_PHYSICAL_COPY_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+          "code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "fqdn_id": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "inputs": {
+            "authorization_rules": "$.payload.authorization_rules",
+            "staff_credentials": "$.payload.staff_credentials"
+          },
+          "next": {
+            "SUCCESS": "CC_CLAIM_COPY_BARCODE_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_REGISTER_PHYSICAL_COPY_V0": {
+          "code": "CC_REGISTER_PHYSICAL_COPY_V0",
+          "fqdn_id": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0",
+          "inputs": {
+            "barcode": "$.payload.barcode",
+            "copy_fields": "$.payload.copy_fields",
+            "identity_key": "$.payload.identity_key"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "NOT_FOUND": "EXIT_REJECTED",
+            "SUCCESS": "CC_APPEND_CATALOG_OPERATION_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "emit": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "IN_REGISTER_PHYSICAL_COPY_V0": {
+          "code": "IN_REGISTER_PHYSICAL_COPY_V0",
+          "fqdn_id": "book_library_mgmt::IN_REGISTER_PHYSICAL_COPY_V0",
+          "next": {
+            "ACK": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_REGISTER_PHYSICAL_COPY_V0",
+      "summary": "The governed sequence that registers a further physical copy of an edition"
+    },
+    "fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "catalog",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

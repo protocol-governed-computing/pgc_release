@@ -1,0 +1,55 @@
+{
+  "artifact_code": "IN_CONSTRUCTION_REQUESTED_V0",
+  "artifact_type": "IN",
+  "content": "# IN_CONSTRUCTION_REQUESTED_V0\n\n## 1. Intent\n\nOffer an approved design and mandate for construction.\n\nGate 1 approved the design and Gate 2 froze the mandate; this is the request to build from them.\nBoth documents travel in the payload rather than being read from a path, for the same reason a\nphase document does: a governed capability reads what it is handed, and a capability that opened a\nfile would make its result depend on a filesystem the composition cannot see.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::IN_CONSTRUCTION_REQUESTED_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: build\n\ncore:\n  summary: Offer an approved design and mandate for construction\n  workflow: WF_CONSTRUCT_ARTIFACTS_V0\n\n  inputs:\n    design_text:\n      type: string\n      required: true\n      description: Full text of the P7 design intent\n    mandate_text:\n      type: string\n      required: true\n      description: Full text of the P8 authoring mandate\n    threshold:\n      type: number\n      required: true\n      description: Minimum Construction Completeness required to build\n    author_of_record:\n      type: string\n      required: true\n      description: Identity of the person accountable for the construction\n\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n",
+  "content_hash": "bf85d50136ff79edbe7b3818a6551c5c06ff9fbb0bf305161c9be2feeeb330ab",
+  "fqdn_id": "transformation::IN_CONSTRUCTION_REQUESTED_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "build",
+    "core": {
+      "inputs": {
+        "author_of_record": {
+          "description": "Identity of the person accountable for the construction",
+          "required": true,
+          "type": "string"
+        },
+        "design_text": {
+          "description": "Full text of the P7 design intent",
+          "required": true,
+          "type": "string"
+        },
+        "mandate_text": {
+          "description": "Full text of the P8 authoring mandate",
+          "required": true,
+          "type": "string"
+        },
+        "threshold": {
+          "description": "Minimum Construction Completeness required to build",
+          "required": true,
+          "type": "number"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "Offer an approved design and mandate for construction",
+      "workflow": "WF_CONSTRUCT_ARTIFACTS_V0"
+    },
+    "fqdn": "transformation::IN_CONSTRUCTION_REQUESTED_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

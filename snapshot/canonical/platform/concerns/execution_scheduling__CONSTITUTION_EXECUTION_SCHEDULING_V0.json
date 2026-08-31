@@ -1,0 +1,46 @@
+{
+  "artifact_code": "CONSTITUTION_EXECUTION_SCHEDULING_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_EXECUTION_SCHEDULING_V0\n\n## Machine\n\n```yaml\nfqdn: execution_scheduling::CONSTITUTION_EXECUTION_SCHEDULING_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: execution_scheduling\ncore:\n  enforcement_model: process_and_compiler_enforced\nrules:\n- applies_to: compiled_snapshot\n  enforced_by: execution_scheduling::INVARIANT_EXECUTION_SCHEDULING_DECLARED_V0\n- applies_to: compiled_snapshot\n  enforced_by: execution_scheduling::INVARIANT_EXECUTION_SCHEDULING_DECLARED_V0\n- applies_to: compiled_snapshot\n  enforced_by: execution_scheduling::INVARIANT_EXECUTION_SCHEDULING_DECLARED_V0\n- applies_to: federation_boundary\n  enforced_by: PROCESS_ENFORCED\n- applies_to: runtime\n  enforced_by: PROCESS_ENFORCED\n```\n\n---\n\n## Purpose\n\nThis constitution governs execution scheduling legality. It answers the question:\n*how are execution units within a workflow topology permitted to be scheduled\nand coordinated with each other?*\n\nThis is distinct from whether a workflow is admissible at the entry gate (intent/transport\nconcern) or where it runs (placement concern). Scheduling governs: is this coordination\npattern \u2014 serial, parallel, non-blocking \u2014 legally authorized for this snapshot?\n\n## \u00a71. V0 Scheduling Mode\n\nThe only authorized scheduling mode in V0 is `SERIAL_SINGLE_WORKER`.\n\nThis means:\n- CC nodes execute one at a time, in topological order\n- No parallel branch execution occurs\n- No non-blocking dispatch occurs\n- No deterministic join synchronization is required\n\nThis is the correct and complete description of V0 runtime scheduling behavior.\n\n## \u00a72. Compiler Behavior\n\nThe compiler MUST:\n- Discover the active scheduling contract in this boundary\n- Validate that exactly one contract is active\n- Materialize scheduling mode into the snapshot federation profile under:\n\n```yaml\nfederation_profile:\n  execution_scheduling: SERIAL_SINGLE_WORKER\n```\n\n## \u00a73. Runtime Behavior\n\nThe runtime MUST:\n- Record `federation_profile.execution_scheduling` in trace metadata\n- Execute serially as the current topology requires\n- NOT consult scheduling mode for any execution branching\n\n## \u00a74. Future Expansion Path\n\n```\nSERIAL_SINGLE_WORKER\n  \u2192 PARALLEL_SAFE_DAG\n  \u2192 NON_BLOCKING_DISPATCH\n  \u2192 DETERMINISTIC_JOIN\n```\n\nEach step requires a new scheduling contract and corresponding runtime evolution\n(Runtime V2+). No runtime changes are needed in V0.\n\n## \u00a75. Versioning\n\nChanges to scheduling semantics require a new constitution version and migration rationale.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Declares which execution scheduling model is legally active for a compiled\n\n    snapshot. Governs how execution units within a topology are permitted to\n\n    coordinate: serially, in parallel branches, with non-blocking dispatch,\n\n    or with deterministic joins.\n\n\n    This boundary governs scheduling legality only. It does NOT govern\n\n    global PGS admissibility semantics (intent admission, payload validation,\n\n    or workflow entry-gate logic). Those concerns belong to FB_TRANSPORT and\n\n    the intent admission layer.\n\n    '\n  summary: 'Governs runtime execution scheduling legality \u2014 serial execution, parallel branch authorization,\n    non-blocking dispatch legality, and deterministic synchronization behavior.\n\n    '\nrules:\n- rule_id: SCHEDULING_MUST_BE_DECLARED\n  constraint: 'Every compiled snapshot MUST declare exactly one active scheduling contract. A snapshot\n    with no scheduling declaration is a compiler validation failure.\n\n    '\n- rule_id: PARALLEL_REQUIRES_EXPLICIT_AUTHORIZATION\n  constraint: 'Parallel branch execution is not permitted unless the active scheduling contract explicitly\n    sets parallel_branch_execution_allowed: true. In V0, only SERIAL_SINGLE_WORKER is authorized.\n\n    '\n- rule_id: NON_BLOCKING_REQUIRES_EXPLICIT_AUTHORIZATION\n  constraint: 'Non-blocking dispatch is not permitted unless the active scheduling contract explicitly\n    sets non_blocking_dispatch_allowed: true. In V0 SERIAL_SINGLE_WORKER mode, this is false.\n\n    '\n- rule_id: SCHEDULING_SCOPE_IS_COORDINATION_ONLY\n  constraint: 'FB_EXECUTION_SCHEDULING governs execution scheduling legality only. It MUST NOT be confused\n    with intent admission or payload validation. Admission gate logic remains in FB_TRANSPORT and intent\n    artifacts.\n\n    '\n- rule_id: RUNTIME_READS_SCHEDULING_PASSIVELY\n  constraint: 'Runtime MAY read the active scheduling contract for trace metadata emission. Runtime MUST\n    NOT branch on scheduling mode or alter execution behavior based on scheduling values. In V0, the runtime\n    is always serial.\n\n    '\n```\n",
+  "content_hash": "5a5593d16d6d86b6c0127a24e1c5ba3a19ee84e76cd85fb94fb795557e62e6fb",
+  "fqdn_id": "execution_scheduling::CONSTITUTION_EXECUTION_SCHEDULING_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "execution_scheduling",
+    "core": {
+      "enforcement_model": "process_and_compiler_enforced"
+    },
+    "fqdn": "execution_scheduling::CONSTITUTION_EXECUTION_SCHEDULING_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "rules": [
+      {
+        "applies_to": "compiled_snapshot",
+        "enforced_by": "execution_scheduling::INVARIANT_EXECUTION_SCHEDULING_DECLARED_V0"
+      },
+      {
+        "applies_to": "compiled_snapshot",
+        "enforced_by": "execution_scheduling::INVARIANT_EXECUTION_SCHEDULING_DECLARED_V0"
+      },
+      {
+        "applies_to": "compiled_snapshot",
+        "enforced_by": "execution_scheduling::INVARIANT_EXECUTION_SCHEDULING_DECLARED_V0"
+      },
+      {
+        "applies_to": "federation_boundary",
+        "enforced_by": "PROCESS_ENFORCED"
+      },
+      {
+        "applies_to": "runtime",
+        "enforced_by": "PROCESS_ENFORCED"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "execution_scheduling",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

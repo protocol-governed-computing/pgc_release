@@ -1,0 +1,242 @@
+{
+  "artifact_code": "CC_CONSTRUCT_ARTIFACTS_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "document_text": "in.design_text"
+        },
+        "fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+        "id": "CT_PURE_PARSE_REGISTERS_V0",
+        "inputs": [
+          "document_text"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "header",
+          "sections",
+          "registers"
+        ]
+      },
+      {
+        "bindings": {
+          "design_registers": "parse_design.capability_result.registers",
+          "mandate_registers": "parse_mandate.capability_result.registers"
+        },
+        "fqdn": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
+        "id": "CT_PURE_RENDER_ARTIFACTS_V0",
+        "inputs": [
+          "design_registers",
+          "mandate_registers"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "artifacts",
+          "documents",
+          "artifact_count",
+          "sources"
+        ]
+      },
+      {
+        "bindings": {
+          "rendered": "render_artifacts.capability_result.artifacts",
+          "sources": "render_artifacts.capability_result.sources"
+        },
+        "fqdn": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+        "id": "CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+        "inputs": [
+          "rendered",
+          "sources"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "provenance",
+          "governing_artifacts"
+        ]
+      },
+      {
+        "bindings": {
+          "design_registers": "parse_design.capability_result.registers",
+          "mandate_registers": "parse_mandate.capability_result.registers",
+          "provenance": "attribute_provenance.capability_result.provenance",
+          "threshold": "in.threshold"
+        },
+        "fqdn": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
+        "id": "CT_PURE_MEASURE_COMPLETENESS_V0",
+        "inputs": [
+          "design_registers",
+          "mandate_registers",
+          "threshold",
+          "provenance"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "completeness",
+          "determined",
+          "required",
+          "undetermined"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CONSTRUCT_ARTIFACTS_V0\n\n## 1. Intent\n\nConstruct protocol artifacts from an approved design and mandate.\n\n---\n\n## 2. The gate is a step, not a convention\n\nThe pipeline measures before it renders, and the measurement **refuses**. A design below the\nthreshold never reaches the renderer, so \"construction only runs on a design that determines its\noutput\" is enforced by the composition rather than by a rule someone remembers.\n\nThis is why measuring and rendering are separate steps over the same derivation. One transform doing\nboth would have to choose between reporting a score and refusing.\n\n**The refusal cannot carry its own name, and that is the CT status limit.** A transform has exactly\ntwo outcomes \u2014 SUCCESS on return, VIOLATION on raise \u2014 so an under-determined design and a broken\nconstruction reach the caller as the same status. An earlier draft of this contract declared\n`UNDER_DETERMINED` in its surface and routed on it; nothing could ever produce it, which made it\ndead routing and the vocabulary that declared it vacuous. That is the same defect this pipeline\nfound in `CC_REGISTER_PHYSICAL_COPY_V0`, reproduced immediately in the artifact written to govern\nthe finding. The refusal is distinguishable in the raised message, not in the status.\n\n---\n\n## 3. Both documents, parsed the same way\n\nA design and a mandate are parsed by the same transform the phases use. Construction reading\ndocuments through its own parser would let it disagree with the oracle that admitted them about what\na register contains.\n\n---\n\n## 4. Pipeline\n\n| Step | Capability | Type | Operation |\n|------|------------|------|-----------|\n| 1 | CT_PURE_PARSE_REGISTERS_V0 | CT | Parse the design |\n| 2 | CT_PURE_PARSE_REGISTERS_V0 | CT | Parse the mandate |\n| 3 | CT_PURE_MEASURE_COMPLETENESS_V0 | CT | Gate |\n| 4 | CT_PURE_RENDER_ARTIFACTS_V0 | CT | Render |\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::CC_CONSTRUCT_ARTIFACTS_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: build\ncore:\n  summary: Measure a design, refuse it if under-determined, and render the artifacts it schedules\n  inputs:\n    design_text:\n      type: string\n      required: true\n    mandate_text:\n      type: string\n      required: true\n    threshold:\n      type: number\n      required: true\n  outputs:\n    artifacts:\n      type: array\n    documents:\n      type: array\n    artifact_count:\n      type: integer\n    completeness:\n      type: number\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: parse_design\n    transform: transformation::CT_PURE_PARSE_REGISTERS_V0\n    inputs:\n      document_text: $.inputs.design_text\n    outputs: {}\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n\n  - step: parse_mandate\n    transform: transformation::CT_PURE_PARSE_REGISTERS_V0\n    inputs:\n      document_text: $.inputs.mandate_text\n    outputs: {}\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n\n  # Rendering now precedes the gate, and the gate is unchanged in what it protects. The measure tests\n  # where each value came from, and only the renderer knows \u2014 it is the thing that put it there. So\n  # the renderer runs, reports one source per leaf, and the gate reads the origins derived from them.\n  #\n  # Nothing is written before the gate. Rendering is pure and produces a shape in memory; persistence\n  # is a separate contract and still runs only on a design the gate admitted. What the gate stops is\n  # a construction being *written* from a design that does not determine it, and it still does.\n  - step: render_artifacts\n    transform: transformation::CT_PURE_RENDER_ARTIFACTS_V0\n    inputs:\n      design_registers: $.results.parse_design.capability_result.registers\n      mandate_registers: $.results.parse_mandate.capability_result.registers\n    outputs:\n      artifacts: $.capability_result.artifacts\n      documents: $.capability_result.documents\n      artifact_count: $.capability_result.artifact_count\n      sources: $.capability_result.sources\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n\n  # One origin per leaf: stated by the design, governed elsewhere, carried from the predecessor, or\n  # supplied by the renderer. Only the last is a fact nobody accounted for.\n  - step: attribute_provenance\n    transform: transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0\n    inputs:\n      rendered: $.results.render_artifacts.capability_result.artifacts\n      sources: $.results.render_artifacts.capability_result.sources\n    outputs:\n      provenance: $.capability_result.provenance\n      governing_artifacts: $.capability_result.governing_artifacts\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n\n  # The gate. A design that does not determine its artifacts stops here and nothing is written \u2014\n  # refusal is the transform raising, which the runtime surfaces as UNDER_DETERMINED.\n  - step: require_determined\n    transform: transformation::CT_PURE_MEASURE_COMPLETENESS_V0\n    inputs:\n      design_registers: $.results.parse_design.capability_result.registers\n      mandate_registers: $.results.parse_mandate.capability_result.registers\n      threshold: $.inputs.threshold\n      provenance: $.results.attribute_provenance.capability_result.provenance\n    outputs:\n      completeness: $.capability_result.completeness\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\nextensions:\n  description: The Construction lifecycle's single governed capability\n```\n",
+  "content_hash": "97c5b273bb957577556624d2b9f37e1a116f41cd727620e6bae329b67fff34b4",
+  "fqdn_id": "transformation::CC_CONSTRUCT_ARTIFACTS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "build",
+    "core": {
+      "inputs": {
+        "design_text": {
+          "required": true,
+          "type": "string"
+        },
+        "mandate_text": {
+          "required": true,
+          "type": "string"
+        },
+        "threshold": {
+          "required": true,
+          "type": "number"
+        }
+      },
+      "outputs": {
+        "artifact_count": {
+          "type": "integer"
+        },
+        "artifacts": {
+          "type": "array"
+        },
+        "completeness": {
+          "type": "number"
+        },
+        "documents": {
+          "type": "array"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "document_text": "$.inputs.design_text"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {},
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "parse_design",
+          "transform": "transformation::CT_PURE_PARSE_REGISTERS_V0"
+        },
+        {
+          "inputs": {
+            "document_text": "$.inputs.mandate_text"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {},
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "parse_mandate",
+          "transform": "transformation::CT_PURE_PARSE_REGISTERS_V0"
+        },
+        {
+          "inputs": {
+            "design_registers": "$.results.parse_design.capability_result.registers",
+            "mandate_registers": "$.results.parse_mandate.capability_result.registers"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "artifact_count": "$.capability_result.artifact_count",
+            "artifacts": "$.capability_result.artifacts",
+            "documents": "$.capability_result.documents",
+            "sources": "$.capability_result.sources"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "render_artifacts",
+          "transform": "transformation::CT_PURE_RENDER_ARTIFACTS_V0"
+        },
+        {
+          "inputs": {
+            "rendered": "$.results.render_artifacts.capability_result.artifacts",
+            "sources": "$.results.render_artifacts.capability_result.sources"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "governing_artifacts": "$.capability_result.governing_artifacts",
+            "provenance": "$.capability_result.provenance"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "attribute_provenance",
+          "transform": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0"
+        },
+        {
+          "inputs": {
+            "design_registers": "$.results.parse_design.capability_result.registers",
+            "mandate_registers": "$.results.parse_mandate.capability_result.registers",
+            "provenance": "$.results.attribute_provenance.capability_result.provenance",
+            "threshold": "$.inputs.threshold"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "completeness": "$.capability_result.completeness"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_determined",
+          "transform": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Measure a design, refuse it if under-determined, and render the artifacts it schedules"
+    },
+    "extensions": {
+      "description": "The Construction lifecycle's single governed capability"
+    },
+    "fqdn": "transformation::CC_CONSTRUCT_ARTIFACTS_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+    "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
+    "transformation::CT_PURE_PARSE_REGISTERS_V0",
+    "transformation::CT_PURE_RENDER_ARTIFACTS_V0"
+  ],
+  "version": "0"
+}

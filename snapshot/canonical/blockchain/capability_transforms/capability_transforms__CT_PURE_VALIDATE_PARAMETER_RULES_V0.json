@@ -1,0 +1,96 @@
+{
+  "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+  "artifact_type": "CT",
+  "content": "",
+  "content_hash": "67b6c20d9e882e6da5d7e05aea020e9e654faa5e41526cd7a99573d00131eac6",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "parameters": "$.inputs.parameters",
+          "rules": "$.inputs.rules"
+        },
+        "atom": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "capability_transforms.implementation.ct_pure_validate_parameter_rules_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "inputs": {
+      "parameters": {
+        "description": "Parameter key-value map to validate",
+        "required": true,
+        "type": "object"
+      },
+      "rules": {
+        "description": "List of constraint rule objects",
+        "required": true,
+        "type": "array"
+      }
+    },
+    "outputs": {
+      "failed_rule": {
+        "from": "__atom_result__"
+      },
+      "valid": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "description": "Evaluates a set of declarative constraint rules (eq, gt, in, etc.) against a provided parameter map.",
+      "inputs": {
+        "parameters": {
+          "description": "Parameter key-value map to validate",
+          "required": true,
+          "type": "object"
+        },
+        "rules": {
+          "description": "List of constraint rule objects",
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "failed_rule": {
+          "description": "Always null \u2014 the rule that failed is carried in the raised error, never returned",
+          "nullable": true,
+          "required": false,
+          "type": "object"
+        },
+        "valid": {
+          "description": "Always true \u2014 a failed rule is raised, so the transform returns only when all rules passed",
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "refusal": "raises",
+      "summary": "Validate parameters against rules"
+    },
+    "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "capability_transforms.implementation.ct_pure_validate_parameter_rules_v0"
+      }
+    },
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "capability_transforms",
+  "references": [],
+  "version": "V0"
+}

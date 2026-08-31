@@ -1,0 +1,115 @@
+{
+  "artifact_code": "CS_CLOCK_V0",
+  "artifact_type": "CS",
+  "content": "# CS_CLOCK_V0\n\n## Human\n\n### 1. Intent\n\nAnswers the time now.\n\nA record that states when something happened is evidence; one that states when something was\n*claimed* to have happened is a claim about a claim. The difference is who determines the value. A\ncaller supplying a time can supply any time, including the same time twice, and a trail whose times\ndo not advance is not a trail. So the time is determined where the occurrence is recorded, not\nwhere it is requested.\n\n### 2. Why this is a side effect and not a transform\n\nA capability transform is pure by declaration: the same inputs give the same outputs, no I/O, no\nhidden state. A clock is the opposite of all three \u2014 it takes no inputs, gives a different answer\nevery time it is asked, and reads something outside the composition. No transform can supply a\ntime however it is written, which is why domains that needed one had to accept it from their\ncaller and hope.\n\n### 3. What it does not do\n\nIt does not format, parse, compare or advance a time, and it holds none. Those are pure operations\non a value, and a value it has already answered is an ordinary input to an ordinary transform.\n\n---\n\n## Machine\n\n```yaml\nfqdn: capability_side_effects::CS_CLOCK_V0\nartifact_kind: CAPABILITY_SIDE_EFFECT\nversion: v0\ngoverned_by: capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0\nauthority: pgc.platform\nconcern: capability_side_effects\ncore:\n  summary: Answers the current instant, so a record states when something happened rather than when it was claimed to\n  category: external\n  policy:\n    operations:\n    - NOW\n  operations:\n    NOW:\n      summary: The current instant, as an ISO-8601 timestamp in UTC\n      handler: now\n      effect: read\n      input: []\n      output:\n      - result_status\n      - timestamp\n      idempotent: false\n      result_status_values:\n      - SUCCESS\n      - BACKEND_ERROR\n  configuration:\n    precision:\n      type: string\n      required: false\n      description: Resolution of the answer \u2014 `seconds` or `milliseconds`; defaults to seconds\n  failure_modes:\n  - 'BACKEND_ERROR: No clock is available to the runtime'\n  architecture:\n    role: Neutral temporal capability\n    purpose: Determines a time at the moment of occurrence, so no caller may assert one\n    bindings:\n      timestamp: ISO-8601 instant in UTC, always advancing\n  use_cases:\n  - 'Audit trail: stamp an appended occurrence with when it occurred'\n  - 'Lifecycle: record when a state transition was made, by the party that made it'\nimplementation:\n  module: capability_side_effects.implementation.CS_CLOCK_V0.runtime\n  callable: ClockRuntime\nextensions:\n  cs_kind: clock\n  side_effect_type: ambient\n  properties:\n    durability: none\n    idempotent: false\n    replay_policy: never\n    transactional: false\n    concurrent_safe: always\n```\n",
+  "content_hash": "96f8f261e3971dc7b5f39c5d57ca679d6f97c2385f013b8ebe3a85087a75726a",
+  "cs_ir": {
+    "cs_metadata": {
+      "capability": {
+        "supported_operation_specs": [
+          "NOW"
+        ]
+      },
+      "operations": {
+        "operations": {
+          "NOW": {
+            "effect": "read",
+            "handler": "now",
+            "idempotent": false,
+            "input": [],
+            "output": [
+              "result_status",
+              "timestamp"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "BACKEND_ERROR"
+            ],
+            "summary": "The current instant, as an ISO-8601 timestamp in UTC"
+          }
+        }
+      }
+    },
+    "handler_ref": {
+      "callable": "ClockRuntime",
+      "module": "capability_side_effects.implementation.CS_CLOCK_V0.runtime"
+    }
+  },
+  "fqdn_id": "capability_side_effects::CS_CLOCK_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_SIDE_EFFECT",
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "architecture": {
+        "bindings": {
+          "timestamp": "ISO-8601 instant in UTC, always advancing"
+        },
+        "purpose": "Determines a time at the moment of occurrence, so no caller may assert one",
+        "role": "Neutral temporal capability"
+      },
+      "category": "external",
+      "configuration": {
+        "precision": {
+          "description": "Resolution of the answer \u2014 `seconds` or `milliseconds`; defaults to seconds",
+          "required": false,
+          "type": "string"
+        }
+      },
+      "failure_modes": [
+        "BACKEND_ERROR: No clock is available to the runtime"
+      ],
+      "operations": {
+        "NOW": {
+          "effect": "read",
+          "handler": "now",
+          "idempotent": false,
+          "input": [],
+          "output": [
+            "result_status",
+            "timestamp"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "summary": "The current instant, as an ISO-8601 timestamp in UTC"
+        }
+      },
+      "policy": {
+        "operations": [
+          "NOW"
+        ]
+      },
+      "summary": "Answers the current instant, so a record states when something happened rather than when it was claimed to",
+      "use_cases": [
+        "Audit trail: stamp an appended occurrence with when it occurred",
+        "Lifecycle: record when a state transition was made, by the party that made it"
+      ]
+    },
+    "extensions": {
+      "cs_kind": "clock",
+      "properties": {
+        "concurrent_safe": "always",
+        "durability": "none",
+        "idempotent": false,
+        "replay_policy": "never",
+        "transactional": false
+      },
+      "side_effect_type": "ambient"
+    },
+    "fqdn": "capability_side_effects::CS_CLOCK_V0",
+    "governed_by": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+    "implementation": {
+      "callable": "ClockRuntime",
+      "module": "capability_side_effects.implementation.CS_CLOCK_V0.runtime"
+    },
+    "version": "v0"
+  },
+  "layer_code": "REUSABLE_SIDE_EFFECTS",
+  "namespace": "capability_side_effects",
+  "references": [
+    "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0"
+  ],
+  "version": "0"
+}

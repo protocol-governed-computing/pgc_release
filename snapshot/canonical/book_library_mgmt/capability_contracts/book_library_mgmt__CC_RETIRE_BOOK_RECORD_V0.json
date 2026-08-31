@@ -1,0 +1,95 @@
+{
+  "artifact_code": "CC_RETIRE_BOOK_RECORD_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_RETIRE_BOOK_RECORD_V0\n\n## 1. Intent\n\nMark a book record retired so it is no longer offered as current\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_RETIRE_BOOK_RECORD_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Mark a book record retired so it is no longer offered as current\n  inputs:\n    identity_key:\n      type: string\n      required: true\n  outputs:\n    updated_count:\n      type: integer\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: set_record_state\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: UPDATE_WHERE\n    store: BOOKS\n    inputs:\n      filter:\n        identity_key: $.inputs.identity_key\n      updates:\n        state: RETIRED\n    outputs:\n      matched_keys: $.capability_result.matched_keys\n      updated_count: $.capability_result.updated_count\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n",
+  "content_hash": "7d8b82523e22d41cebebb68b139455b45bad88a0a53a32d9871a30f528c8cda9",
+  "fqdn_id": "book_library_mgmt::CC_RETIRE_BOOK_RECORD_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "updated_count": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "filter": {
+              "identity_key": "$.inputs.identity_key"
+            },
+            "updates": {
+              "state": "RETIRED"
+            }
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "UPDATE_WHERE",
+          "outputs": {
+            "matched_keys": "$.capability_result.matched_keys",
+            "result_status": "$.result_status",
+            "updated_count": "$.capability_result.updated_count"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "set_record_state",
+          "store": "BOOKS"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Mark a book record retired so it is no longer offered as current"
+    },
+    "fqdn": "book_library_mgmt::CC_RETIRE_BOOK_RECORD_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

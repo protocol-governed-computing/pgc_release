@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_CC_NO_IMPLICIT_CHAINING_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_CC_NO_IMPLICIT_CHAINING_V0\n\n## Machine\n\n```yaml\nfqdn: capability_contracts::INVARIANT_CC_NO_IMPLICIT_CHAINING_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: capability_contracts\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - CC\n```\n\n---\n\n## Purpose\n\nEnforce architectural separation: CC defines capability, WF defines execution flow.\n\n**Core Principle**: CC has zero knowledge of execution context or next steps.\n\n---\n\n## How it is checked\n### Rule 1: No Explicit Chaining\n\nCC must not contain `next_step` field.\n\n**Violation**:\n```yaml\n# \u274c FORBIDDEN\npipeline:\n  - step: validate\n    transform: CT_VALIDATE_V0\nnext_step: CC_PROCESS_V0  # \u274c Implicit chaining\n```\n\n**Correct**:\n```yaml\n# \u2705 CC defines capability only\npipeline:\n  - step: validate\n    transform: CT_VALIDATE_V0\n    # No next_step - WF controls flow\n```\n\n**Detection**: Check for `next_step` field in CC frontmatter.\n\n---\n\n### Rule 2: No State Transitions\n\nCC must not contain `next` field (workflow construct).\n\n**Violation**:\n```yaml\n# \u274c FORBIDDEN\npipeline:\n  - step: process\n    transform: CT_PROCESS_V0\nnext:  # \u274c State transitions\n  SUCCESS: CC_FINALIZE_V0\n  VIOLATION: CC_ERROR_V0\n```\n\n**Detection**: Check for `next` field in CC frontmatter or pipeline steps.\n\n---\n\n### Rule 3: No Transition Logic\n\nCC must not contain `transitions` field.\n\n**Violation**:\n```yaml\n# \u274c FORBIDDEN\ntransitions:  # \u274c Workflow logic\n  - from: validate\n    to: process\n    condition: valid\n```\n\n**Detection**: Check for `transitions` field in CC frontmatter.\n\n---\n\n### Rule 4: No Control Flow\n\nCC must not contain `flow`, `conditional`, or `loop` fields.\n\n**Violation**:\n```yaml\n# \u274c FORBIDDEN\nflow:  # \u274c Control flow\n  type: conditional\n  condition: $.inputs.flag\n  true_path: CC_A_V0\n  false_path: CC_B_V0\n```\n\n**Detection**: Check for `flow`, `conditional`, `loop` fields.\n\n---\n\n## Scope\n\n**Applies to**:\n- All CC artifacts (platform + domains)\n- CC frontmatter section\n- CC pipeline steps\n\n**Does NOT validate**:\n- Pipeline correctness (Phase 3)\n- Input/output availability (Phase 5)\n- CT/CS binding validity (Phase 3)\n\n---\n\n## Rationale\n\n**Clean architectural boundaries**\n\n### Separation of Concerns\n- CC = pure capability wrapper\n- WF = execution orchestrator\n- No overlap, no ambiguity\n\n### Maintainability\n- Change workflow flow \u2192 edit WF only\n- Change capability logic \u2192 edit CT/CS only\n- CC remains stable interface\n\n### Composability\n- Same CC used in multiple workflows\n- No workflow-specific logic in CC\n- True reusability\n\n### Debugging\n- Execution trace shows WF decisions\n- CC invocation is pure function call\n- Clear cause/effect chain\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'CC must not contain orchestration logic or flow control. CCs define ONLY capability pipelines\n    (CT/CS bindings). Workflow orchestration belongs in WF artifacts, not CC.\n\n    Forbidden fields: - next_step (implicit chaining) - next (state transitions) - transitions (workflow\n    logic) - flow (control flow) - conditional (branching logic) - loop (iteration control)\n\n    CC defines WHAT capability to invoke, WF defines WHEN and in what ORDER.\n\n    '\n  anti_patterns:\n  - next_step_field: CC contains next_step field (implicit chaining)\n  - next_field: CC contains next field (state transitions)\n  - transitions_field: CC contains transitions field (workflow logic)\n  - flow_field: CC contains flow field (control flow)\n  - conditional_field: CC contains conditional field (branching logic)\n  - loop_field: CC contains loop field (iteration control)\n  clarification:\n    cc_responsibility: 'CC is a capability wrapper, not a workflow fragment. It binds inputs to CT/CS,\n      produces outputs, and stops. No knowledge of what happens next, no control flow.\n\n      '\n    wf_responsibility: 'WF controls execution flow via nodes graph. CC nodes reference CCs, WF decides\n      transitions. Clean separation: WF = orchestration, CC = capability.'\n```\n",
+  "content_hash": "2f0b81be2e9c250ed0bace299182934f15dd776013a055d5bef821711063a7f6",
+  "fqdn_id": "capability_contracts::INVARIANT_CC_NO_IMPLICIT_CHAINING_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CC"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_contracts",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_contracts::INVARIANT_CC_NO_IMPLICIT_CHAINING_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_contracts",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

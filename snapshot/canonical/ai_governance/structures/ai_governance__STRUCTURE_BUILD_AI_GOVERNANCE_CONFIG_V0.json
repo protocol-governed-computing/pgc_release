@@ -1,0 +1,125 @@
+{
+  "artifact_code": "STRUCTURE_BUILD_AI_GOVERNANCE_CONFIG_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_BUILD_AI_GOVERNANCE_CONFIG_V0\n\n**Artifact Type**: STRUCTURE\n**Version**: V0\n**Governed By**: structure::CONSTITUTION_STRUCTURE_V0\n\n---\n\n## Purpose\n\nSelf-describing build manifest for the **AI governance business domain** (`ai_governance::`) \u2014 an\nindependently-authored domain compiled **against** the already-compiled governance surface, then\ncomposed into the assembled universe.\n\nThis artifact lives in the domain's own repo (`business_domains`), so the governance surface is\nnever edited to admit the domain \u2014 its identity and hash are unchanged. The compiler merges this\nmanifest's `layer_definitions` and `identity_rules` **additively**, for this build only, on top of\nthe immutable `STRUCTURE_DISCOVERY_V0` / `STRUCTURE_IDENTITY_V0`.\n\n## Subdomains\n\nThe domain is one namespace (`ai_governance`) partitioned into two subdomains, each carried by the\n`subdomain:` declaration on its workflows and resolved by recursive discovery under `registry/`:\n\n| Subdomain | Concern |\n|---|---|\n| `agent_governance` | Constitutional mediation of agent-proposed actions against license-tier authority |\n| `ai_licensing` | License provisioning, cap enforcement, and reclamation of dormant licenses |\n\nNeither subdomain references the other's artifacts. `agent_governance` consumes the license fact\nfeed read-only through its own STRUCTURE declaration, so either subdomain can be removed by\ndeleting its folder \u2014 no other artifact is touched.\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::STRUCTURE_BUILD_AI_GOVERNANCE_CONFIG_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: ai_governance\nstructure_scope: ai_governance\nreuse_visibility: business\ncore:\n  summary: Build-time STRUCTURE manifest (AI governance business-domain scope)\n  description: 'Compiles the ai_governance domain''s own artifacts (WF/IN/CC/CT/EV/AC/RB/STRUCTURE),\n    resolving governance and platform capability references against the imported compiled governance\n    surface. Emits only ai_governance artifacts. Self-describing: declares its own source layer and\n    namespace rule additively.\n\n    '\nlayer_definitions:\n  AI_GOVERNANCE:\n    domain_subpath: registry\n    registry_module: ai_governance.registry\n    implementation_namespace: ai_governance.implementation.capability_transforms.atoms\n    layer_category: domain\nidentity_rules:\n- match: ai_governance.registry\n  namespace: ai_governance\nartifact_discovery:\n  search_layers:\n  - AI_GOVERNANCE\n  import_surface:\n    domain: platform\n  artifact_types:\n  - WF\n  - IN\n  - CC\n  - CT\n  - EV\n  - AC\n  - RB\n  - STRUCTURE\n  - VOCAB\noutput_configuration:\n  artifacts:\n    layer: PROTOCOL_BUILD_ROOT\n    subpath: compiled/canonical\n  vocabulary_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/vocabulary\n  tokenized_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/tokenized\n  evidence_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/evidence\n  trust_attestation_path:\n    layer: GOVERNANCE\n    subpath: compiled/trust\n  visualization_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/visualization\n  layer_outputs:\n    AI_GOVERNANCE:\n      layer: AI_GOVERNANCE\n      subpath: compiled/canonical\n  bootstrap_search_roots:\n  - layer: GOVERNANCE\n    subpath: structure/structures\nbuild_phases:\n- phase: discover\n  description: Discover ai_governance artifacts via STRUCTURE\n- phase: parse\n  description: Parse artifacts into canonical machine form\n- phase: normalize\n  description: Resolve references (ai_governance + imported governance surface)\n- phase: validate\n  description: Validate artifacts using compiler schema rules\n- phase: assert\n  description: Evaluate cross-artifact invariants\n- phase: materialize\n  description: Emit deterministic compiled artifacts (ai_governance scope only)\n  target: compiled/artifacts/\n```\n\n",
+  "content_hash": "cb1aa859bd78c75964f03f64c5d9074e5588a98b58c92f4b6829d614fd1d1cf6",
+  "fqdn_id": "ai_governance::STRUCTURE_BUILD_AI_GOVERNANCE_CONFIG_V0",
+  "frontmatter": {
+    "artifact_discovery": {
+      "artifact_types": [
+        "WF",
+        "IN",
+        "CC",
+        "CT",
+        "EV",
+        "AC",
+        "RB",
+        "STRUCTURE",
+        "VOCAB"
+      ],
+      "import_surface": {
+        "domain": "platform"
+      },
+      "search_layers": [
+        "AI_GOVERNANCE"
+      ]
+    },
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "build_phases": [
+      {
+        "description": "Discover ai_governance artifacts via STRUCTURE",
+        "phase": "discover"
+      },
+      {
+        "description": "Parse artifacts into canonical machine form",
+        "phase": "parse"
+      },
+      {
+        "description": "Resolve references (ai_governance + imported governance surface)",
+        "phase": "normalize"
+      },
+      {
+        "description": "Validate artifacts using compiler schema rules",
+        "phase": "validate"
+      },
+      {
+        "description": "Evaluate cross-artifact invariants",
+        "phase": "assert"
+      },
+      {
+        "description": "Emit deterministic compiled artifacts (ai_governance scope only)",
+        "phase": "materialize",
+        "target": "compiled/artifacts/"
+      }
+    ],
+    "concern": "ai_governance",
+    "core": {
+      "description": "Compiles the ai_governance domain's own artifacts (WF/IN/CC/CT/EV/AC/RB/STRUCTURE), resolving governance and platform capability references against the imported compiled governance surface. Emits only ai_governance artifacts. Self-describing: declares its own source layer and namespace rule additively.\n",
+      "summary": "Build-time STRUCTURE manifest (AI governance business-domain scope)"
+    },
+    "fqdn": "ai_governance::STRUCTURE_BUILD_AI_GOVERNANCE_CONFIG_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "identity_rules": [
+      {
+        "match": "ai_governance.registry",
+        "namespace": "ai_governance"
+      }
+    ],
+    "layer_definitions": {
+      "AI_GOVERNANCE": {
+        "domain_subpath": "registry",
+        "implementation_namespace": "ai_governance.implementation.capability_transforms.atoms",
+        "layer_category": "domain",
+        "registry_module": "ai_governance.registry"
+      }
+    },
+    "output_configuration": {
+      "artifacts": {
+        "layer": "PROTOCOL_BUILD_ROOT",
+        "subpath": "compiled/canonical"
+      },
+      "bootstrap_search_roots": [
+        {
+          "layer": "GOVERNANCE",
+          "subpath": "structure/structures"
+        }
+      ],
+      "evidence_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/evidence"
+      },
+      "layer_outputs": {
+        "AI_GOVERNANCE": {
+          "layer": "AI_GOVERNANCE",
+          "subpath": "compiled/canonical"
+        }
+      },
+      "tokenized_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/tokenized"
+      },
+      "trust_attestation_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/trust"
+      },
+      "visualization_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/visualization"
+      },
+      "vocabulary_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/vocabulary"
+      }
+    },
+    "reuse_visibility": "business",
+    "structure_scope": "ai_governance",
+    "version": "V0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

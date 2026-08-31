@@ -1,0 +1,102 @@
+{
+  "artifact_code": "CC_STORE_RESULTS_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_STORE_RESULTS_V0\n\n## 1. Intent\n\nPersist the Collatz evaluation results to the `COLLATZ_RESULTS` store \u2014 the Capability Side Effect\nconcern, consuming the platform's `capability_side_effects::CS_MUTABLE_JSON_V0` (imported).\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::CC_STORE_RESULTS_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Store Collatz results to mutable JSON storage\n  inputs:\n    sequences:\n      type: object\n      required: true\n    all_terminate:\n      type: boolean\n      required: true\n    non_terminating:\n      type: array\n  outputs:\n    result_status:\n      type: string\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: store_results\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: COLLATZ_RESULTS\n    inputs:\n      key: collatz_results\n      value:\n        sequences: $.inputs.sequences\n        all_terminate: $.inputs.all_terminate\n        non_terminating: $.inputs.non_terminating\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\nextensions:\n  description: Persists conjecture results with last-write-wins semantics\n```\n",
+  "content_hash": "ef6e0b5a06e3100199e5ab78b3bafd10b5d21c10b8202b75884412bca6544ae6",
+  "fqdn_id": "workload::CC_STORE_RESULTS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "workload",
+    "core": {
+      "inputs": {
+        "all_terminate": {
+          "required": true,
+          "type": "boolean"
+        },
+        "non_terminating": {
+          "type": "array"
+        },
+        "sequences": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "result_status": {
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key": "collatz_results",
+            "value": {
+              "all_terminate": "$.inputs.all_terminate",
+              "non_terminating": "$.inputs.non_terminating",
+              "sequences": "$.inputs.sequences"
+            }
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "WRITE",
+          "outputs": {
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "store_results",
+          "store": "COLLATZ_RESULTS"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Store Collatz results to mutable JSON storage"
+    },
+    "extensions": {
+      "description": "Persists conjecture results with last-write-wins semantics"
+    },
+    "fqdn": "workload::CC_STORE_RESULTS_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

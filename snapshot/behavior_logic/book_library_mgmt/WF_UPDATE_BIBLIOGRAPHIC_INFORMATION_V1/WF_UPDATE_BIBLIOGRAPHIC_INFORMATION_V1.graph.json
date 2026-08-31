@@ -1,0 +1,365 @@
+{
+  "wf_id": "WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+  "entry": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+  "nodes": [
+    {
+      "id": "CC_APPEND_CATALOG_OPERATION_V0",
+      "type": "CC",
+      "cc_code": "CC_APPEND_CATALOG_OPERATION_V0",
+      "capability": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "operation": "UPDATE_BIBLIOGRAPHIC_INFORMATION",
+          "record": {
+            "operation": "UPDATE_BIBLIOGRAPHIC_INFORMATION",
+            "staff_id": "$.payload.staff_id",
+            "subject": "$.payload.identity_key"
+          },
+          "staff_id": "IN.staff_id"
+        }
+      }
+    },
+    {
+      "id": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "parameters": "in.staff_credentials",
+              "rules": "in.authorization_rules"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "authorization_rules": "IN.authorization_rules",
+          "staff_credentials": "IN.staff_credentials"
+        }
+      }
+    },
+    {
+      "id": "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "type": "CC",
+      "cc_code": "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "capability": "capability_side_effects::CS_REGISTRY_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "identity_key": "IN.identity_key"
+        }
+      }
+    },
+    {
+      "id": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "type": "CC",
+      "cc_code": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "capability": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {
+              "author": "in.updated_fields.author",
+              "publication_year": "in.updated_fields.publication_year",
+              "title": "in.updated_fields.title"
+            },
+            "fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+            "id": "CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+            "inputs": [
+              "title",
+              "author",
+              "publication_year"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "identity_key"
+            ]
+          },
+          {
+            "bindings": {
+              "left": "in.identity_key",
+              "right": "form_updated_identity_key.updated_identity_key"
+            },
+            "fqdn": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+            "id": "CT_PURE_COMPARE_EQUAL_V0",
+            "inputs": [
+              "left",
+              "right"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "is_equal"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "identity_key": "IN.identity_key",
+          "updated_fields": "IN.updated_fields"
+        }
+      }
+    },
+    {
+      "id": "EXIT_COMPLETED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "EXIT_COMPLETED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "to": "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "to": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "to": "CC_APPEND_CATALOG_OPERATION_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "to": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_COMPLETED"
+    ],
+    [
+      "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_RESOLVE_BOOK_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

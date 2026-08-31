@@ -1,0 +1,50 @@
+{
+  "artifact_code": "TE_COLLATZ_COMPUTE_V0",
+  "artifact_type": "TE",
+  "content": "# TE_COLLATZ_COMPUTE_V0\n\n**Kind:** Transport Egress Contract (Transport Standard V0 \u00a77)\n**Operation Identity:** `collatz.compute`\n**Home:** platform-resident boundary declaration for the Collatz reference workload.\n**Status:** cut-#1 hand-authored. Promoted to a compiler-recognized `TE_` kind in Phase 3.\n\nClassifies a PGC Result into a protocol-neutral Result Class and declares the output\nprojection and evidence exposure. It carries **no** protocol semantics \u2014 no HTTP status,\nno exit code (`RESULT_CLASS_PROTOCOL_INDEPENDENCE`). The adapter alone projects the\nResult Class onto a wire representation (`RESPONSE_PROJECTION_EXTERNAL`).\n\n## Machine\n\n```yaml\nfqdn: workload::TE_COLLATZ_COMPUTE_V0\nartifact_kind: TRANSPORT_EGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_EGRESS_V0\nauthority: pgc.platform\nconcern: workload\noperation: collatz.compute\n\n# Result classification: runtime terminal status -> governed Result Class.\nresult_classification:\n  SUCCESS:   SUCCESS\n  VIOLATION: VIOLATION\n  NACK:      VIOLATION\n  REJECTED:  VIOLATION\n# Declared (not inferred) class for any status not enumerated above.\ndefault_result_class: EXECUTION_FAILURE\n\n# Output contract: project the WF result surface + canonical input into the exposed\n# result. `from` is a dotted path over {input, surface}; a `$key` segment substitutes\n# str(input[key]) as a lookup key (e.g. surface.sequences.$number -> surface.sequences.\"27\").\n# `op` derives a value from the resolved node (default: identity).\noutput_contract:\n  - { field: number,   from: input.number }\n  - { field: sequence, from: surface.sequences.$number }\n  - { field: steps,    from: surface.sequences.$number, op: length_minus_one }\n  - { field: peak,     from: surface.sequences.$number, op: max }\n\n# Evidence exposure: reference-only (emit trace id references, never inline evidence).\nevidence_policy: reference_only\n```",
+  "content_hash": "c00f00ec3cae19baa65768ed8858422a9457ddbd6dc5951ac1459ceff07794da",
+  "fqdn_id": "workload::TE_COLLATZ_COMPUTE_V0",
+  "frontmatter": {
+    "artifact_kind": "TRANSPORT_EGRESS",
+    "authority": "pgc.platform",
+    "concern": "workload",
+    "default_result_class": "EXECUTION_FAILURE",
+    "evidence_policy": "reference_only",
+    "fqdn": "workload::TE_COLLATZ_COMPUTE_V0",
+    "governed_by": "transport::CONSTITUTION_TRANSPORT_EGRESS_V0",
+    "operation": "collatz.compute",
+    "output_contract": [
+      {
+        "field": "number",
+        "from": "input.number"
+      },
+      {
+        "field": "sequence",
+        "from": "surface.sequences.$number"
+      },
+      {
+        "field": "steps",
+        "from": "surface.sequences.$number",
+        "op": "length_minus_one"
+      },
+      {
+        "field": "peak",
+        "from": "surface.sequences.$number",
+        "op": "max"
+      }
+    ],
+    "result_classification": {
+      "NACK": "VIOLATION",
+      "REJECTED": "VIOLATION",
+      "SUCCESS": "SUCCESS",
+      "VIOLATION": "VIOLATION"
+    },
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD_TRANSPORT",
+  "namespace": "workload",
+  "references": [
+    "transport::CONSTITUTION_TRANSPORT_EGRESS_V0"
+  ],
+  "version": "0"
+}

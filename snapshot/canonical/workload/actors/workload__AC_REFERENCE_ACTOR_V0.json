@@ -1,0 +1,33 @@
+{
+  "artifact_code": "AC_REFERENCE_ACTOR_V0",
+  "artifact_type": "AC",
+  "content": "# AC_REFERENCE_ACTOR_V0\n\n## 1. Intent\n\nActor context under which the Collatz reference workflow executes. This is the Authority concern at\nits declaration/binding stage: a named actor that the workflow binds and the runtime propagates into\nthe execution context and attributes in the trace.\n\n**Scope note:** this artifact declares an actor *identity/context* only. It does NOT implement\nauthorization or enforcement \u2014 real authority checks belong to the governance/authority model and are\nout of scope here. The reference value is the lifecycle it demonstrates:\n`declaration \u2192 workflow binding \u2192 runtime context propagation \u2192 trace attribution`.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::AC_REFERENCE_ACTOR_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Reference workload actor\n  description: System actor context under which the Collatz reference workload executes.\n  type: system\n  attributes:\n    role:\n      type: string\n      required: true\n      value: reference_workload_runner\n```\n",
+  "content_hash": "2623143eb6d65e774c62d5194728350b8f61f5b38c82e76659e3bbed5215f9d6",
+  "fqdn_id": "workload::AC_REFERENCE_ACTOR_V0",
+  "frontmatter": {
+    "artifact_kind": "ACTOR",
+    "authority": "pgc.platform",
+    "concern": "workload",
+    "core": {
+      "attributes": {
+        "role": {
+          "required": true,
+          "type": "string",
+          "value": "reference_workload_runner"
+        }
+      },
+      "description": "System actor context under which the Collatz reference workload executes.",
+      "summary": "Reference workload actor",
+      "type": "system"
+    },
+    "fqdn": "workload::AC_REFERENCE_ACTOR_V0",
+    "governed_by": "actor::CONSTITUTION_ACTOR_IDENTITY_V0",
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "actor::CONSTITUTION_ACTOR_IDENTITY_V0"
+  ],
+  "version": "0"
+}

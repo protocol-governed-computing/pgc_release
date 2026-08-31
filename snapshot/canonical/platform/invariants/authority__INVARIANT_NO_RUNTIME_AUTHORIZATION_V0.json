@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_NO_RUNTIME_AUTHORIZATION_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_NO_RUNTIME_AUTHORIZATION_V0\n\nArchitectural Invariant\n\n## Machine\n\n```yaml\nfqdn: authority::INVARIANT_NO_RUNTIME_AUTHORIZATION_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: authority::CONSTITUTION_AUTHORITY_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: authority\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - WF\n  - CC\n```\n\n## Summary\n\nRuntime dumbness is a core PGS architectural principle. The runtime is a graph traversal engine \u2014 it executes what is declared, without interpretation. This invariant extends that principle to authority: the runtime must never perform authorization evaluation. Authority is resolved before execution begins. The runtime reads the resolved state; it does not participate in producing it.\n\n## What this realizes\nFor every runtime interaction with authority state:\n1. The runtime MUST NOT evaluate permissions, resolve roles, or execute authorization logic\n2. The runtime MUST NOT query authorization databases at execution time\n3. The runtime MUST NOT negotiate permissions with external systems during execution\n4. Authority state MUST be fully resolved before the runtime receives it\n5. The runtime treats authority state as immutable input \u2014 not as a source to be re-evaluated\n\n## Where it applies\n- **Artifact Types**: WF, CC, CT, CS (runtime boundary)\n- **Validation Phase**: ASSERT (compile-time)\n- **Enforced By**: ASSERT_NO_RUNTIME_AUTHORIZATION_V0\n\n## Rationale\n\nIf the runtime evaluates authorization, it becomes a policy engine. Policy engines are not graph traversal engines. They are dynamic, stateful, non-deterministic, and difficult to audit. PGS explicitly forbids this evolution. The authority state envelope is the output of pre-execution authority evaluation \u2014 the runtime consumes it without contributing to it.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: Runtime must consume pre-resolved authority state; dynamic authorization, role inference, policy\n    evaluation, and permission negotiation at runtime are constitutional violations\n  summary: The runtime must never perform authorization evaluation; it consumes resolved authority state\n    only\n```\n",
+  "content_hash": "25d7ca2d8a31d9a6f8ce244fe7c067d2a690891dfdcc3c3892b7fb81de6d925f",
+  "fqdn_id": "authority::INVARIANT_NO_RUNTIME_AUTHORIZATION_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF",
+        "CC"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "authority",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "authority::INVARIANT_NO_RUNTIME_AUTHORIZATION_V0",
+    "governed_by": "authority::CONSTITUTION_AUTHORITY_GOVERNANCE_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "authority",
+  "references": [
+    "authority::CONSTITUTION_AUTHORITY_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_TRANSPORT_NO_DYNAMIC_ROUTING_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_TRANSPORT_NO_DYNAMIC_ROUTING_V0\n\n## Machine\n\n```yaml\nfqdn: transport::INVARIANT_TRANSPORT_NO_DYNAMIC_ROUTING_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: transport\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - TI\n  - TE\n```\n\n---\n\n## Purpose\n\nTransport artifacts are compile-time declarations. The routing from transport\ningress to execution workflow is fully resolved at compile time and stored in\nthe snapshot. Runtime has no routing decisions to make \u2014 it reads the static\nbinding and executes it.\n\nThis invariant ensures that transport remains a pure static membrane, not a\nrouting engine.\n\n---\n\n## Scope\n\n**Applies to:** All TI_ and TE_ artifacts\n\n**Does NOT apply to:**\n- Outcome routing within a CC node (that is execution semantics)\n- Workflow-internal DAG branching (governed by WF assertions)\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Transport routing MUST be static and explicit. No conditional routing logic, dynamic target\n    resolution, or runtime dispatch declarations are permitted in TI_ or TE_ artifacts.\n\n    Transport is a static binding layer. Routing decisions are made at compile time, not at runtime. Any\n    routing that requires inspection of runtime context, payload values, or dynamic references collapses\n    the transport/execution separation and is forbidden.\n\n    '\n  anti_patterns:\n  - conditional_workflow_selection: 'TI declares if/else or match routing to select between workflows\n\n      '\n  - dynamic_workflow_reference: 'TI core.workflow uses a $ prefix (runtime-computed reference)\n\n      '\n  - wildcard_routing: 'Transport artifact uses * or ? in routing declarations\n\n      '\n  - runtime_dispatch_key: 'Transport artifact declares route_by, dispatch, switch, or when keys\n\n      '\n  - payload_dependent_routing: Routing target is determined by inspecting payload field values at runtime\n```\n",
+  "content_hash": "b739af4ae54d94b6cd0d73de4fab285cbf656f9cbd119c33a33aab796c5de9f5",
+  "fqdn_id": "transport::INVARIANT_TRANSPORT_NO_DYNAMIC_ROUTING_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "TI",
+        "TE"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "transport",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "transport::INVARIANT_TRANSPORT_NO_DYNAMIC_ROUTING_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "transport",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

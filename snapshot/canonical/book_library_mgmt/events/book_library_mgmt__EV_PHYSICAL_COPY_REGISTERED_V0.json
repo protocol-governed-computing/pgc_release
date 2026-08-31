@@ -1,0 +1,46 @@
+{
+  "artifact_code": "EV_PHYSICAL_COPY_REGISTERED_V0",
+  "artifact_type": "EV",
+  "content": "# EV_PHYSICAL_COPY_REGISTERED_V0\n\n## 1. Intent\n\nThe library recorded another copy it owns\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: The library recorded another copy it owns\n  description: The library recorded another copy it owns\n  subdomain: catalog\n  schema:\n    identity_key:\n      type: string\n      required: true\n    barcode:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
+  "content_hash": "72b92b2ce70a23f0ad76ef956a0a7d612f54ee741ada00e6c9c2903540cddbe1",
+  "fqdn_id": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "description": "The library recorded another copy it owns",
+      "schema": {
+        "barcode": {
+          "required": true,
+          "type": "string"
+        },
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "catalog",
+      "summary": "The library recorded another copy it owns"
+    },
+    "fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

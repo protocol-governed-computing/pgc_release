@@ -1,0 +1,51 @@
+{
+  "artifact_code": "IN_RETIRE_BOOK_RECORD_V0",
+  "artifact_type": "IN",
+  "content": "# IN_RETIRE_BOOK_RECORD_V0\n\n## 1. Intent\n\nA request to retire a book record judged obsolete\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to retire a book record judged obsolete\n  workflow: WF_RETIRE_BOOK_RECORD_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    authorization_rules:\n      type: array\n      required: true\n    identity_key:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n",
+  "content_hash": "0bc9e2faa072b5597420b6386170215ea7795a12c761aa4228abf45d19a3a33b",
+  "fqdn_id": "book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "authorization_rules": {
+          "required": true,
+          "type": "array"
+        },
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_credentials": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to retire a book record judged obsolete",
+      "workflow": "WF_RETIRE_BOOK_RECORD_V0"
+    },
+    "fqdn": "book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

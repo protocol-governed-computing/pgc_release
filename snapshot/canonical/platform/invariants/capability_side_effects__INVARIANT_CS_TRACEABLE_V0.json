@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_CS_TRACEABLE_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_CS_TRACEABLE_V0\n\nArchitectural Invariant\n\n## Machine\n\n```yaml\nfqdn: capability_side_effects::INVARIANT_CS_TRACEABLE_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0\nauthority: pgc.platform\nconcern: capability_side_effects\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - CS\n```\n\n## Summary\n\nEvery execution of a Capability Side Effect must leave an observable record in the execution\ntrace. Traceability is what makes the system auditable, replayable, and debuggable. A CS\nexecution that does not appear in the trace is an invisible side effect \u2014 a constitutional\nviolation.\n\n## What this realizes\nFor every CS artifact execution:\n1. The executor MUST emit a trace entry recording the CS invocation\n2. The trace entry MUST include the CS code, inputs, output result, and timestamp\n\nThis invariant is enforced at runtime by the execution engine. Compile-time static\nanalysis cannot verify executor behavior.\n\n## Where it applies\n- **Artifact Types**: CS\n- **Validation Phase**: Runtime (execution engine)\n- **Compile-Time**: ASSERT_CS_TRACEABLE_V0 (parity stub \u2014 runtime enforcement)\n- **Enforced By**: ASSERT_CS_TRACEABLE_V0\n\n## Rationale\n\nWithout traceability, the system cannot provide a complete audit trail. Side effects that\noccur outside the trace are indistinguishable from unrecorded mutations, undermining the\nguarantee that the trace is the definitive record of what happened.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: CS executors must emit a trace entry for every side-effect execution\n  summary: Every CS execution must be recorded in the execution trace\n```\n",
+  "content_hash": "3f89cbac1a0b9812624c6aec6b998d778c3e072d11dc11a5eba6eac8d5d59c19",
+  "fqdn_id": "capability_side_effects::INVARIANT_CS_TRACEABLE_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CS"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_side_effects::INVARIANT_CS_TRACEABLE_V0",
+    "governed_by": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_side_effects",
+  "references": [
+    "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0"
+  ],
+  "version": "0"
+}

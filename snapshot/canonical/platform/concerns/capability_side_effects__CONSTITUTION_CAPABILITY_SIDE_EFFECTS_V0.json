@@ -1,0 +1,49 @@
+{
+  "artifact_code": "CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0\n\n## Machine\n```yaml\nfqdn: capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: capability_side_effects\ncore:\n  enforcement_model: compiler_enforced\n  governs:\n  - CS\nrules:\n- applies_to: CS\n  enforced_by: capability_side_effects::INVARIANT_CS_SURFACE_CLOSED_V1\n- applies_to: CS\n  enforced_by: execution::INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0\n- applies_to: CS\n  enforced_by: capability_side_effects::INVARIANT_CS_TRACEABLE_V0\n- applies_to: CS\n  enforced_by: capability_side_effects::INVARIANT_CS_ISOLATED_EXECUTION_V0\n- applies_to: CS\n  enforced_by: capability_side_effects::INVARIANT_INSPECTION_CAPABILITY_READ_ONLY_V0\n```\n\n---\n\n## 1. Purpose\n\nThis constitution defines the governance and enforcement rules for Capability Side Effects (CS).\n\nCapability Side Effects are the mechanism for interacting with the outside world, such as databases, external APIs, and filesystem.\n\n---\n\n## 2. Core Principles\n\n- **Explicit Declaration:** All side effects must be explicitly declared in the protocol.\n- **Isolated Execution:** Side effects must be executed through dedicated executors.\n- **Traceability:** Every execution of a side effect must be recorded in the trace.\n- **Limited Mutability:** Side effects should be restricted to the necessary scope of mutability.\n\n---\n\n## 3. Required Fields\n\n- `cs_code`: Unique identifier for the side effect.\n- `version`: Version of the side effect.\n- `governed_by`: The constitution governing this side effect.\n- `core`: Metadata and description.\n- `inputs`: Definition of input parameters.\n- `outputs`: Definition of output parameters (e.g., success status, return data).\n- `logic`: Reference to the implementation executor.\n\n---\n\n## How it is checked\n- Side effect implementations must be discoverable.\n- Input and output types must match the capability contract.\n- Side effects must be restricted to authorized layers.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs Capability Side Effect (CS) artifacts \u2014 explicit declaration, traceability, and\n    isolation\nrules:\n- rule_id: CS_EXPLICIT_DECLARATION\n  constraint: all side effects MUST be explicitly declared in protocol; no implicit side effects\n- rule_id: CS_IMPLEMENTATION_DECLARED\n  constraint: CS MUST declare implementation with non-empty module and callable\n- rule_id: CS_TRACEABLE\n  constraint: every CS execution MUST be recorded in the execution trace\n- rule_id: CS_ISOLATED_EXECUTION\n  constraint: CS MUST execute through dedicated executors only; not inline in CT or CC\n```\n",
+  "content_hash": "654652a97e72ec7cde17302fa038a8d3f4d63fcd751f3b28da8d0619d4096d11",
+  "fqdn_id": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "enforcement_model": "compiler_enforced",
+      "governs": [
+        "CS"
+      ]
+    },
+    "fqdn": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "rules": [
+      {
+        "applies_to": "CS",
+        "enforced_by": "capability_side_effects::INVARIANT_CS_SURFACE_CLOSED_V1"
+      },
+      {
+        "applies_to": "CS",
+        "enforced_by": "execution::INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0"
+      },
+      {
+        "applies_to": "CS",
+        "enforced_by": "capability_side_effects::INVARIANT_CS_TRACEABLE_V0"
+      },
+      {
+        "applies_to": "CS",
+        "enforced_by": "capability_side_effects::INVARIANT_CS_ISOLATED_EXECUTION_V0"
+      },
+      {
+        "applies_to": "CS",
+        "enforced_by": "capability_side_effects::INVARIANT_INSPECTION_CAPABILITY_READ_ONLY_V0"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_side_effects",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

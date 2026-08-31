@@ -1,0 +1,439 @@
+{
+  "artifact_code": "CS_MUTABLE_JSON_V0",
+  "artifact_type": "CS",
+  "content": "",
+  "content_hash": "7f1c0914fc6d4733cebbf57b4c074e4ea62ffc293ac0719bd2704997cc0b4819",
+  "cs_ir": {
+    "cs_metadata": {
+      "capability": {
+        "supported_operation_specs": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY",
+          "EXISTS",
+          "LIST",
+          "SELECT",
+          "UPDATE_WHERE"
+        ]
+      },
+      "operations": {
+        "operations": {
+          "DELETE": {
+            "effect": "write",
+            "handler": "delete",
+            "idempotent": true,
+            "input": [
+              "key"
+            ],
+            "output": [
+              "result_status"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "NOT_FOUND",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Remove the given key and its value"
+          },
+          "DELETE_MANY": {
+            "effect": "write",
+            "handler": "delete_many",
+            "idempotent": true,
+            "input": [
+              "keys"
+            ],
+            "output": [
+              "result_status",
+              "drained_count"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Delete a list of keys; idempotent per key (NOT_FOUND treated as already deleted)"
+          },
+          "EXISTS": {
+            "effect": "read",
+            "handler": "exists",
+            "idempotent": true,
+            "input": [
+              "key"
+            ],
+            "output": [
+              "result_status",
+              "exists"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Check if a key exists in storage"
+          },
+          "LIST": {
+            "effect": "read",
+            "handler": "list_keys",
+            "idempotent": true,
+            "input": [],
+            "output": [
+              "result_status",
+              "keys"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "BACKEND_ERROR"
+            ],
+            "summary": "List all keys in storage"
+          },
+          "READ": {
+            "effect": "read",
+            "handler": "read",
+            "idempotent": true,
+            "input": [
+              "key"
+            ],
+            "output": [
+              "result_status",
+              "value"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "NOT_FOUND",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Retrieve value for a given key"
+          },
+          "SELECT": {
+            "effect": "read",
+            "handler": "list",
+            "idempotent": true,
+            "input": [],
+            "notes": "LIST publishes keys alone, which a caller cannot select by content; SELECT publishes the records themselves. An empty store is SUCCESS with no records \u2014 NOT_FOUND is reserved for a keyed READ of one absent key.",
+            "output": [
+              "result_status",
+              "records",
+              "keys"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Read every record in storage, for a caller that selects among them by content"
+          },
+          "UPDATE": {
+            "effect": "write",
+            "handler": "update",
+            "idempotent": true,
+            "input": [
+              "key",
+              "updates"
+            ],
+            "output": [
+              "result_status"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Set named fields on the record at the given key, leaving its other fields as they are; serialized per file. The point counterpart of UPDATE_WHERE \u2014 WRITE replaces a whole value, and a caller changing part of a record it did not create needs neither a replacement nor a filter."
+          },
+          "UPDATE_WHERE": {
+            "effect": "write",
+            "handler": "update_where",
+            "idempotent": false,
+            "input": [
+              "filter",
+              "updates"
+            ],
+            "notes": "filter={field:value,...} AND semantics; updates={field:value,...} applied to all matched records; null value removes field; VIOLATION when no records match; load+filter+update+save serialized under per-file threading lock",
+            "output": [
+              "result_status",
+              "matched_keys",
+              "updated_count"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Atomically update all records matching ALL filter conditions; serialized per file"
+          },
+          "WRITE": {
+            "effect": "write",
+            "handler": "write",
+            "idempotent": true,
+            "input": [
+              "key",
+              "value"
+            ],
+            "output": [
+              "result_status"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Store or update a value at the given key"
+          }
+        }
+      }
+    },
+    "handler_ref": {
+      "callable": "MutableJsonRuntime",
+      "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
+    }
+  },
+  "fqdn_id": "capability_side_effects::CS_MUTABLE_JSON_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_SIDE_EFFECT",
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "category": "storage",
+      "field_types": {
+        "drained_count": "integer",
+        "exists": "boolean",
+        "filter": "object",
+        "key": "string",
+        "keys": "array",
+        "matched_keys": "array",
+        "result_status": "string",
+        "updated_count": "integer",
+        "updates": "object",
+        "value": "object"
+      },
+      "operations": {
+        "DELETE": {
+          "effect": "write",
+          "handler": "delete",
+          "idempotent": true,
+          "input": [
+            "key"
+          ],
+          "output": [
+            "result_status"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Remove the given key and its value"
+        },
+        "DELETE_MANY": {
+          "effect": "write",
+          "handler": "delete_many",
+          "idempotent": true,
+          "input": [
+            "keys"
+          ],
+          "output": [
+            "result_status",
+            "drained_count"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Delete a list of keys; idempotent per key (NOT_FOUND treated as already deleted)"
+        },
+        "EXISTS": {
+          "effect": "read",
+          "handler": "exists",
+          "idempotent": true,
+          "input": [
+            "key"
+          ],
+          "output": [
+            "result_status",
+            "exists"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Check if a key exists in storage"
+        },
+        "LIST": {
+          "effect": "read",
+          "handler": "list_keys",
+          "idempotent": true,
+          "input": [],
+          "output": [
+            "result_status",
+            "keys"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "summary": "List all keys in storage"
+        },
+        "READ": {
+          "effect": "read",
+          "handler": "read",
+          "idempotent": true,
+          "input": [
+            "key"
+          ],
+          "output": [
+            "result_status",
+            "value"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Retrieve value for a given key"
+        },
+        "SELECT": {
+          "effect": "read",
+          "handler": "list",
+          "idempotent": true,
+          "input": [],
+          "notes": "LIST publishes keys alone, which a caller cannot select by content; SELECT publishes the records themselves. An empty store is SUCCESS with no records \u2014 NOT_FOUND is reserved for a keyed READ of one absent key.",
+          "output": [
+            "result_status",
+            "records",
+            "keys"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Read every record in storage, for a caller that selects among them by content"
+        },
+        "UPDATE": {
+          "effect": "write",
+          "handler": "update",
+          "idempotent": true,
+          "input": [
+            "key",
+            "updates"
+          ],
+          "output": [
+            "result_status"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Set named fields on the record at the given key, leaving its other fields as they are; serialized per file. The point counterpart of UPDATE_WHERE \u2014 WRITE replaces a whole value, and a caller changing part of a record it did not create needs neither a replacement nor a filter."
+        },
+        "UPDATE_WHERE": {
+          "effect": "write",
+          "handler": "update_where",
+          "idempotent": false,
+          "input": [
+            "filter",
+            "updates"
+          ],
+          "notes": "filter={field:value,...} AND semantics; updates={field:value,...} applied to all matched records; null value removes field; VIOLATION when no records match; load+filter+update+save serialized under per-file threading lock",
+          "output": [
+            "result_status",
+            "matched_keys",
+            "updated_count"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Atomically update all records matching ALL filter conditions; serialized per file"
+        },
+        "WRITE": {
+          "effect": "write",
+          "handler": "write",
+          "idempotent": true,
+          "input": [
+            "key",
+            "value"
+          ],
+          "output": [
+            "result_status"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Store or update a value at the given key"
+        }
+      },
+      "policy": {
+        "operations": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY",
+          "EXISTS",
+          "LIST",
+          "SELECT",
+          "UPDATE_WHERE"
+        ]
+      },
+      "summary": "Mutable key-addressable JSON state store with last-write-wins semantics"
+    },
+    "extensions": {
+      "configuration_schema": {
+        "path": {
+          "description": "Filesystem path to JSON storage file",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "constraints": {
+        "concurrency": "single_writer",
+        "max_key_length": 256,
+        "max_value_size_mb": 10
+      },
+      "cs_kind": "mutable_state",
+      "failure_modes": [
+        "VIOLATION: Invalid key (type, format, empty)",
+        "NOT_FOUND: Key does not exist",
+        "BACKEND_ERROR: Storage unavailable or corrupt"
+      ],
+      "properties": {
+        "concurrent_safe": true,
+        "durability": "persistent",
+        "idempotent": true,
+        "replay_policy": "safe_replay",
+        "transactional": false
+      },
+      "side_effect_type": "persistent",
+      "vocabulary": {
+        "result_status": [
+          "SUCCESS",
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ]
+      }
+    },
+    "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "governed_by": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+    "implementation": {
+      "callable": "MutableJsonRuntime",
+      "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
+    },
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "capability_side_effects",
+  "references": [],
+  "version": "V0"
+}

@@ -1,0 +1,167 @@
+{
+  "artifact_code": "CC_VALIDATE_BOOK_SUBMISSION_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "record": "in.book_fields",
+          "schema": "in.book_schema"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "inputs": [
+          "record",
+          "schema"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "violations"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_VALIDATE_BOOK_SUBMISSION_V0\n\n## 1. Intent\n\nConfirms a registration carries what a work and an edition require, before any identity is claimed\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Confirms a registration carries what a work and an edition require, before any identity is\n    claimed\n  inputs:\n    work_fields:\n      type: object\n      required: true\n    work_schema:\n      type: object\n      required: true\n    book_fields:\n      type: object\n      required: true\n    book_schema:\n      type: object\n      required: true\n    barcode:\n      type: string\n  outputs:\n    valid:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: validate_book_fields\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.book_fields\n      schema: $.inputs.book_schema\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: validate_work_fields\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.work_fields\n      schema: $.inputs.work_schema\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: require_submission_complete\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        barcode: $.inputs.barcode\n        subject: $.inputs.book_fields.subject\n      rules:\n      - field: barcode\n        op: neq\n        value: ''\n      - field: subject\n        op: neq\n        value: []\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n",
+  "content_hash": "30c10fecab5bad8b2a0914b07b1113c0479b0489144239bee2a8467f3243ef83",
+  "fqdn_id": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "barcode": {
+          "type": "string"
+        },
+        "book_fields": {
+          "required": true,
+          "type": "object"
+        },
+        "book_schema": {
+          "required": true,
+          "type": "object"
+        },
+        "work_fields": {
+          "required": true,
+          "type": "object"
+        },
+        "work_schema": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "valid": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "record": "$.inputs.book_fields",
+            "schema": "$.inputs.book_schema"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "violations": "$.capability_result.violations"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "validate_book_fields",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+        },
+        {
+          "inputs": {
+            "record": "$.inputs.work_fields",
+            "schema": "$.inputs.work_schema"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "violations": "$.capability_result.violations"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "validate_work_fields",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "barcode": "$.inputs.barcode",
+              "subject": "$.inputs.book_fields.subject"
+            },
+            "rules": [
+              {
+                "field": "barcode",
+                "op": "neq",
+                "value": ""
+              },
+              {
+                "field": "subject",
+                "op": "neq",
+                "value": []
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_submission_complete",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Confirms a registration carries what a work and an edition require, before any identity is claimed"
+    },
+    "fqdn": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

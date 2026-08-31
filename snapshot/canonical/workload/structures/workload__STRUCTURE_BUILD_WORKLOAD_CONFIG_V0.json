@@ -1,0 +1,140 @@
+{
+  "artifact_code": "STRUCTURE_BUILD_WORKLOAD_CONFIG_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_BUILD_WORKLOAD_CONFIG_V0\n\n**Artifact Type**: STRUCTURE\n**Version**: V0\n**Status**: CANONICAL\n**Governed By**: structure::CONSTITUTION_STRUCTURE_V0\n\n---\n\n## Purpose\n\nSelf-describing build manifest for the **PGC reference-workload** domain (`workload::`) \u2014 an\nindependently-authored domain compiled **against** the already-compiled platform surface, then\ncomposed into the assembled universe.\n\nThis artifact lives in the **domain's own repo** (`conformance_workloads`, not the platform\nsurface), so the platform\nsurface is never edited to add a domain \u2014 its identity/hash is unchanged. The compiler merges this\nmanifest's `layer_definitions` and `identity_rules` **additively** (only for this build) on top of\nthe immutable platform `STRUCTURE_DISCOVERY_V0` / `STRUCTURE_IDENTITY_V0`.\n\nFirst consumer: `workload::collatz` (Phase 1 \u2014 pure compute \u2192 verify).\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::STRUCTURE_BUILD_WORKLOAD_CONFIG_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: workload\nstructure_scope: workload\nreuse_visibility: internal\ncore:\n  summary: Build-time STRUCTURE manifest (PGC reference-workload domain scope)\n  description: 'Compiles the workload domain''s own artifacts (WF/IN/CC/CT), resolving governance and\n    platform capability references against the imported compiled platform surface. Emits only workload\n    artifacts. Self-describing: declares its own source layer and namespace rule additively.\n\n    '\nlayer_definitions:\n  WORKLOAD:\n    domain_subpath: registry\n    registry_module: workload.registry\n    implementation_namespace: workloads.collatz.implementation.capability_transforms.atoms\n    layer_category: workload\n  WORKLOAD_TRANSPORT:\n    domain_subpath: transport\n    registry_module: workload.transport\n    layer_category: workload\nidentity_rules:\n- match: workload.registry\n  namespace: workload\n- match: workload.transport\n  namespace: workload\nartifact_discovery:\n  search_layers:\n  - WORKLOAD\n  - WORKLOAD_TRANSPORT\n  import_surface:\n    domain: platform\n  artifact_types:\n  - WF\n  - IN\n  - CC\n  - CT\n  - EV\n  - AC\n  - RB\n  - STRUCTURE\n  - TI\n  - TE\noutput_configuration:\n  artifacts:\n    layer: PROTOCOL_BUILD_ROOT\n    subpath: compiled/canonical\n  vocabulary_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/vocabulary\n  tokenized_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/tokenized\n  evidence_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/evidence\n  trust_attestation_path:\n    layer: GOVERNANCE\n    subpath: compiled/trust\n  visualization_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/visualization\n  layer_outputs:\n    WORKLOAD:\n      layer: WORKLOAD\n      subpath: compiled/canonical\n    WORKLOAD_TRANSPORT:\n      layer: WORKLOAD\n      subpath: compiled/canonical\n  bootstrap_search_roots:\n  - layer: GOVERNANCE\n    subpath: structure/structures\nbuild_phases:\n- phase: discover\n  description: Discover workload artifacts via STRUCTURE\n- phase: parse\n  description: Parse artifacts into canonical machine form\n- phase: normalize\n  description: Resolve references (workload + imported platform surface)\n- phase: validate\n  description: Validate artifacts using compiler schema rules\n- phase: assert\n  description: Evaluate cross-artifact invariants (surface closure)\n- phase: materialize\n  description: Emit deterministic compiled artifacts (workload scope only)\n  target: compiled/artifacts/\n```\n\n",
+  "content_hash": "d218cbefd9589d26c685b88a45d047960faa2d2d0db51af810bb5ed4c50fe557",
+  "fqdn_id": "workload::STRUCTURE_BUILD_WORKLOAD_CONFIG_V0",
+  "frontmatter": {
+    "artifact_discovery": {
+      "artifact_types": [
+        "WF",
+        "IN",
+        "CC",
+        "CT",
+        "EV",
+        "AC",
+        "RB",
+        "STRUCTURE",
+        "TI",
+        "TE"
+      ],
+      "import_surface": {
+        "domain": "platform"
+      },
+      "search_layers": [
+        "WORKLOAD",
+        "WORKLOAD_TRANSPORT"
+      ]
+    },
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "build_phases": [
+      {
+        "description": "Discover workload artifacts via STRUCTURE",
+        "phase": "discover"
+      },
+      {
+        "description": "Parse artifacts into canonical machine form",
+        "phase": "parse"
+      },
+      {
+        "description": "Resolve references (workload + imported platform surface)",
+        "phase": "normalize"
+      },
+      {
+        "description": "Validate artifacts using compiler schema rules",
+        "phase": "validate"
+      },
+      {
+        "description": "Evaluate cross-artifact invariants (surface closure)",
+        "phase": "assert"
+      },
+      {
+        "description": "Emit deterministic compiled artifacts (workload scope only)",
+        "phase": "materialize",
+        "target": "compiled/artifacts/"
+      }
+    ],
+    "concern": "workload",
+    "core": {
+      "description": "Compiles the workload domain's own artifacts (WF/IN/CC/CT), resolving governance and platform capability references against the imported compiled platform surface. Emits only workload artifacts. Self-describing: declares its own source layer and namespace rule additively.\n",
+      "summary": "Build-time STRUCTURE manifest (PGC reference-workload domain scope)"
+    },
+    "fqdn": "workload::STRUCTURE_BUILD_WORKLOAD_CONFIG_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "identity_rules": [
+      {
+        "match": "workload.registry",
+        "namespace": "workload"
+      },
+      {
+        "match": "workload.transport",
+        "namespace": "workload"
+      }
+    ],
+    "layer_definitions": {
+      "WORKLOAD": {
+        "domain_subpath": "registry",
+        "implementation_namespace": "workloads.collatz.implementation.capability_transforms.atoms",
+        "layer_category": "workload",
+        "registry_module": "workload.registry"
+      },
+      "WORKLOAD_TRANSPORT": {
+        "domain_subpath": "transport",
+        "layer_category": "workload",
+        "registry_module": "workload.transport"
+      }
+    },
+    "output_configuration": {
+      "artifacts": {
+        "layer": "PROTOCOL_BUILD_ROOT",
+        "subpath": "compiled/canonical"
+      },
+      "bootstrap_search_roots": [
+        {
+          "layer": "GOVERNANCE",
+          "subpath": "structure/structures"
+        }
+      ],
+      "evidence_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/evidence"
+      },
+      "layer_outputs": {
+        "WORKLOAD": {
+          "layer": "WORKLOAD",
+          "subpath": "compiled/canonical"
+        },
+        "WORKLOAD_TRANSPORT": {
+          "layer": "WORKLOAD",
+          "subpath": "compiled/canonical"
+        }
+      },
+      "tokenized_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/tokenized"
+      },
+      "trust_attestation_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/trust"
+      },
+      "visualization_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/visualization"
+      },
+      "vocabulary_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/vocabulary"
+      }
+    },
+    "reuse_visibility": "internal",
+    "structure_scope": "workload",
+    "version": "V0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

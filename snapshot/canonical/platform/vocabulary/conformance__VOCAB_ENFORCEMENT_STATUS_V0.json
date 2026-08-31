@@ -1,0 +1,34 @@
+{
+  "artifact_code": "VOCAB_ENFORCEMENT_STATUS_V0",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_ENFORCEMENT_STATUS_V0\n\n## Machine\n\n```yaml\nfqdn: conformance::VOCAB_ENFORCEMENT_STATUS_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: conformance\nextends: ''\nenforcement_stage:\n  casing: lower_snake\n  entries:\n  - compiler_assertion\n  - compiler_validation\n  - compiler_meta_validation\n  - runtime_outcome\n  - composition_conformance\n  - enforced_elsewhere\n  - declared_not_enforced\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "0947d3751ffb2614333e96c84840eefe87809dab0d8eb834a49d789c8b703a60",
+  "fqdn_id": "conformance::VOCAB_ENFORCEMENT_STATUS_V0",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "authority": "pgc.platform",
+    "concern": "conformance",
+    "enforcement_stage": {
+      "casing": "lower_snake",
+      "entries": [
+        "compiler_assertion",
+        "compiler_validation",
+        "compiler_meta_validation",
+        "runtime_outcome",
+        "composition_conformance",
+        "enforced_elsewhere",
+        "declared_not_enforced"
+      ]
+    },
+    "extends": "",
+    "fqdn": "conformance::VOCAB_ENFORCEMENT_STATUS_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "version": "v0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "conformance",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

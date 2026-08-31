@@ -1,0 +1,1005 @@
+{
+  "wf_id": "WF_P0_SEED_ADMISSIBILITY_V0",
+  "entry": "IN_SEED_SUBMITTED_V0",
+  "nodes": [
+    {
+      "id": "CC_JUDGE_DOCUMENT_V0",
+      "type": "CC",
+      "cc_code": "CC_JUDGE_DOCUMENT_V0",
+      "capability": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "document_text": "in.document_text"
+            },
+            "fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+            "id": "CT_PURE_PARSE_REGISTERS_V0",
+            "inputs": [
+              "document_text"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "header",
+              "sections",
+              "registers"
+            ]
+          },
+          {
+            "bindings": {
+              "prior_texts": "in.prior_texts"
+            },
+            "fqdn": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0",
+            "id": "CT_PURE_PARSE_PRIOR_PHASES_V0",
+            "inputs": [
+              "prior_texts"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "priors"
+            ]
+          },
+          {
+            "bindings": {
+              "document_text": "in.document_text",
+              "header": "parse_registers.capability_result.header",
+              "registers": "parse_registers.capability_result.registers",
+              "rule_set": "in.rule_set",
+              "sections": "parse_registers.capability_result.sections"
+            },
+            "fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0",
+            "id": "CT_PURE_EVALUATE_RULES_V0",
+            "inputs": [
+              "header",
+              "sections",
+              "registers",
+              "document_text",
+              "rule_set"
+            ],
+            "inputs_truncated": true,
+            "kind": "CT",
+            "outputs": [
+              "verdict",
+              "findings",
+              "rules_evaluated"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "document_text": "IN.seed_text",
+          "prior_texts": {},
+          "rule_set": [
+            {
+              "check": "SECTION_HAS_TEXT",
+              "id": "REGISTER_EMPTY",
+              "intent": "a narrative register carries the context nothing downstream can rederive",
+              "params": {
+                "detail": "narrative register is empty \u2014 it states nothing"
+              },
+              "register": "subdomain_purpose"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "cr_type"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Subdomain",
+                  "Classification",
+                  "Rationale"
+                ]
+              },
+              "register": "cr_type"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "cr_type"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Classification is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Classification",
+                "vocabulary": [
+                  "NEW_SUBDOMAIN",
+                  "EXTEND_SUBDOMAIN",
+                  "MODIFY",
+                  "DEPRECATE"
+                ]
+              },
+              "register": "cr_type"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Subdomain",
+                  "Classification",
+                  "Rationale"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "cr_type"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "business_vocabulary"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Term",
+                  "Definition"
+                ]
+              },
+              "register": "business_vocabulary"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "business_vocabulary"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Term",
+                  "Definition"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "business_vocabulary"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "requested_outcomes"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Outcome"
+                ]
+              },
+              "register": "requested_outcomes"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "requested_outcomes"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Outcome"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "requested_outcomes"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "known_facts"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Fact",
+                  "Certainty"
+                ]
+              },
+              "register": "known_facts"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "known_facts"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Certainty is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Certainty",
+                "vocabulary": [
+                  "HIGH",
+                  "MEDIUM",
+                  "LOW"
+                ]
+              },
+              "register": "known_facts"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Fact",
+                  "Certainty"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "known_facts"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "system_beliefs"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Belief",
+                  "Why It Matters",
+                  "Verification Goal"
+                ]
+              },
+              "register": "system_beliefs"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "system_beliefs"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Belief",
+                  "Why It Matters",
+                  "Verification Goal"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "system_beliefs"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "assumptions"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Assumption",
+                  "Basis"
+                ]
+              },
+              "register": "assumptions"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Assumption",
+                  "Basis"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "assumptions"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "constraints"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Constraint",
+                  "Source"
+                ]
+              },
+              "register": "constraints"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Constraint",
+                  "Source"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "constraints"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "business_invariants"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Invariant"
+                ]
+              },
+              "register": "business_invariants"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "business_invariants"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Invariant"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "business_invariants"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "lifecycle_states"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Object",
+                  "State",
+                  "Meaning"
+                ]
+              },
+              "register": "lifecycle_states"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "lifecycle_states"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Object",
+                  "State",
+                  "Meaning"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "lifecycle_states"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "business_events"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Event",
+                  "When It Occurs",
+                  "Significance"
+                ]
+              },
+              "register": "business_events"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "business_events"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Event",
+                  "When It Occurs",
+                  "Significance"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "business_events"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "authority_boundaries"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Business Object",
+                  "Authoritative Owner"
+                ]
+              },
+              "register": "authority_boundaries"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "authority_boundaries"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Business Object",
+                  "Authoritative Owner"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "authority_boundaries"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "out_of_scope"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Item",
+                  "Reason"
+                ]
+              },
+              "register": "out_of_scope"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "out_of_scope"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Item",
+                  "Reason"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "out_of_scope"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "governance_scope"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Scope Item",
+                  "Relationship"
+                ]
+              },
+              "register": "governance_scope"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "governance_scope"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Relationship is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Relationship",
+                "vocabulary": [
+                  "CREATED",
+                  "EXTENDED",
+                  "MODIFIED",
+                  "DEPRECATED",
+                  "ADJACENT"
+                ]
+              },
+              "register": "governance_scope"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Scope Item",
+                  "Relationship"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "governance_scope"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "clarification_requests"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Question",
+                  "Why Needed",
+                  "Blocking",
+                  "Owner"
+                ]
+              },
+              "register": "clarification_requests"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Blocking is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Blocking",
+                "vocabulary": [
+                  "YES",
+                  "NO"
+                ]
+              },
+              "register": "clarification_requests"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "intent": "Owner is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Owner",
+                "vocabulary": [
+                  "HUMAN",
+                  "SNAPSHOT",
+                  "GOVERNANCE"
+                ]
+              },
+              "register": "clarification_requests"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Question",
+                  "Why Needed",
+                  "Blocking",
+                  "Owner"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "clarification_requests"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "acceptance_criteria"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Criterion"
+                ]
+              },
+              "register": "acceptance_criteria"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "intent": "an empty required register asserts nothing",
+              "register": "acceptance_criteria"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Criterion"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "acceptance_criteria"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "identity_and_sameness"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Business Object",
+                  "Identified By",
+                  "Two Are The Same When"
+                ]
+              },
+              "register": "identity_and_sameness"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Business Object",
+                  "Identified By",
+                  "Two Are The Same When"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "identity_and_sameness"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "lifecycle_transitions"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Object",
+                  "From State",
+                  "To State",
+                  "Triggered By",
+                  "Cascade"
+                ]
+              },
+              "register": "lifecycle_transitions"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Object",
+                  "From State",
+                  "To State",
+                  "Triggered By",
+                  "Cascade"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "lifecycle_transitions"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "operation_refusals"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Operation",
+                  "Refused When",
+                  "Business Reason"
+                ]
+              },
+              "register": "operation_refusals"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Operation",
+                  "Refused When",
+                  "Business Reason"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "operation_refusals"
+            },
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "authority_deferrals"
+            },
+            {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Business Object",
+                  "Deferred To",
+                  "Until"
+                ]
+              },
+              "register": "authority_deferrals"
+            },
+            {
+              "check": "CELL_TOKEN_ABSENT",
+              "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "intent": "business registers name no compiled artifact",
+              "params": {
+                "columns": [
+                  "Business Object",
+                  "Deferred To",
+                  "Until"
+                ],
+                "detail": "{token!r} appears in business-language column {column!r} \u2014 this register states business meaning, not design",
+                "pattern": "\\b(?:AC|CC|CS|CT|EV|IN|PR|RB|SD|ST|TI|TE|WF)_[A-Z0-9_]+_V\\d+\\b"
+              },
+              "register": "authority_deferrals"
+            },
+            {
+              "check": "COLUMN_ABSENT",
+              "id": "BELIEF_CARRIES_CERTAINTY",
+              "intent": "the truth/belief split is what P2 verification depends on",
+              "params": {
+                "column": "Certainty",
+                "detail": "beliefs must not carry a Certainty column \u2014 that would make them facts"
+              },
+              "register": "system_beliefs"
+            },
+            {
+              "check": "CELL_NOT_EMPTY",
+              "id": "BELIEF_WITHOUT_VERIFICATION_GOAL",
+              "intent": "an unverifiable belief silently becomes an assumption",
+              "params": {
+                "column": "Verification Goal",
+                "detail": "every belief must state what P2 has to establish"
+              },
+              "register": "system_beliefs"
+            },
+            {
+              "check": "CELL_NOT_PREFIXED",
+              "id": "BELIEF_STATED_AS_FACT",
+              "intent": "P0 must not promote a System Belief to a Known Fact",
+              "params": {
+                "column": "Belief",
+                "detail": "belief is asserted, not suspected ({prefix!r}) \u2014 state it as a belief or move it to Known Facts",
+                "prefixes": [
+                  "there is ",
+                  "there are ",
+                  "the system provides ",
+                  "the system has ",
+                  "it is confirmed ",
+                  "confirmed: "
+                ]
+              },
+              "register": "system_beliefs"
+            },
+            {
+              "check": "UNRESOLVED_MARKER_ABSENT",
+              "id": "REGISTER_CELL_UNRESOLVED",
+              "intent": "an unanswered question left in a register reads as decided to every later phase",
+              "params": {
+                "detail": "{column!r} declares the question unanswered ({marker}) rather than answering it \u2014 ask it as a clarification, do not hedge it in a register",
+                "exempt": [
+                  "clarification_requests"
+                ]
+              }
+            },
+            {
+              "check": "ROW_ABSENT_WHEN",
+              "id": "BLOCKING_CLARIFICATION_OUTSTANDING",
+              "intent": "a blocking question the next phase never sees is answered by invention",
+              "params": {
+                "column": "Blocking",
+                "detail": "a blocking clarification is unanswered \u2014 resolve it with the named owner and fold the answer into the document before any phase consumes it",
+                "value": "YES"
+              },
+              "register": "clarification_requests"
+            },
+            {
+              "check": "ROW_ABSENT_WHEN",
+              "id": "BUSINESS_CLARIFICATION_OUTSTANDING",
+              "intent": "a business question that outlives the seed is answered downstream by inference",
+              "params": {
+                "column": "Owner",
+                "detail": "only the business can answer this \u2014 ask it, fold the answer into the problem statement, and re-author the seed rather than carrying the question forward",
+                "value": "HUMAN"
+              },
+              "register": "clarification_requests"
+            },
+            {
+              "check": "HEADER_FIELD_PRESENT",
+              "id": "HEADER_FIELD_MISSING",
+              "intent": "a dossier document states its phase, its CR, its lifecycle state, and what it feeds",
+              "params": {
+                "fields": [
+                  "Stage",
+                  "CR",
+                  "Status",
+                  "Feeds"
+                ]
+              }
+            },
+            {
+              "check": "HEADER_FIELD_MATCHES",
+              "id": "LIFECYCLE_STATE_NOT_IN_VOCABULARY",
+              "intent": "the lifecycle axis is a controlled vocabulary, not free text",
+              "params": {
+                "fields": [
+                  "Status"
+                ],
+                "pattern": "^(DRAFT|CONSTRUCTION_COMPLETE|ADMITTED_UNVALIDATED|EXECUTION_VALIDATED|PROMOTED)\\b"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EXIT_JUDGED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_SEED_SUBMITTED_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_JUDGE_DOCUMENT_V0",
+      "to": "EXIT_JUDGED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_JUDGE_DOCUMENT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_SEED_SUBMITTED_V0",
+      "to": "CC_JUDGE_DOCUMENT_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_SEED_SUBMITTED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_SEED_SUBMITTED_V0",
+      "CC_JUDGE_DOCUMENT_V0",
+      "EXIT_JUDGED"
+    ],
+    [
+      "IN_SEED_SUBMITTED_V0",
+      "CC_JUDGE_DOCUMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_SEED_SUBMITTED_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

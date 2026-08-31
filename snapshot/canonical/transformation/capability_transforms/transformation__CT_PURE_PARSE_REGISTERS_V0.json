@@ -1,0 +1,95 @@
+{
+  "artifact_code": "CT_PURE_PARSE_REGISTERS_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_PARSE_REGISTERS_V0\n\n## 1. Intent\n\nRead a phase document into the registers a rule set can be applied to.\n\n**Phase-neutral by design.** Every phase document in the pipeline has the same shape \u2014 header\nfields, numbered sections, pipe tables \u2014 so every phase parses the same way and differs only in\nwhich rule set it then applies. P1 through P7 reuse this transform.\n\n`document_text` is the **document itself**, never a location to read. A pure CT may not touch the\nfilesystem \u2014 doing so would make the transform non-deterministic and unreplayable, and would put\nI/O inside a transform. The caller reads the file and supplies its content, so the same text always\nparses to the same registers.\n\nThis transform **reports what a document contains and judges nothing**. A malformed document yields\na partial structure rather than an error, because a parse failure would report a syntax problem\nwhere the author needs a governance finding. Deciding admissibility belongs to the rule set.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::CT_PURE_PARSE_REGISTERS_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: design\ncore:\n  summary: Parse phase document text into structured registers\n  refusal: never\n  description: |\n    Splits a phase document into its header fields, its numbered sections, and its registers.\n\n    A register is addressed by the `<!-- register:id -->` marker an authored document repeats from\n    its template \u2014 a stable identity that survives retitling and stays unambiguous when one section\n    carries several registers. Sections remain for documents that predate the templates.\n\n    Judges nothing: an absent register is simply absent from the result, and the rule set decides\n    what that means.\n  inputs:\n    document_text:\n      type: string\n      required: true\n      description: The full text of the phase document \u2014 never a path, never read from disk\n  outputs:\n    header:\n      type: object\n      required: true\n      description: Header field name to declared value\n    sections:\n      type: array\n      required: true\n      description: Ordered sections, each with number, title, text, and any table columns and rows\n    registers:\n      type: array\n      required: true\n      description: Registers addressed by their marker id, each with columns and rows\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_PARSE_REGISTERS\n  implementation:\n    module: transformation.implementation.capability_transforms.atoms.ct_pure_parse_registers_v0\n    callable: execute\n```\n",
+  "content_hash": "8afb247706309341f1018b500821fcc80cada6e22c1aa9eafc6b810ed4f76d1c",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_PARSE_REGISTERS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "document_text": "$.inputs.document_text"
+        },
+        "atom": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "transformation.implementation.capability_transforms.atoms.ct_pure_parse_registers_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+    "inputs": {
+      "document_text": {
+        "description": "The full text of the phase document \u2014 never a path, never read from disk",
+        "required": true,
+        "type": "string"
+      }
+    },
+    "outputs": {
+      "header": {
+        "from": "__atom_result__"
+      },
+      "registers": {
+        "from": "__atom_result__"
+      },
+      "sections": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "design",
+    "core": {
+      "description": "Splits a phase document into its header fields, its numbered sections, and its registers.\n\nA register is addressed by the `<!-- register:id -->` marker an authored document repeats from\nits template \u2014 a stable identity that survives retitling and stays unambiguous when one section\ncarries several registers. Sections remain for documents that predate the templates.\n\nJudges nothing: an absent register is simply absent from the result, and the rule set decides\nwhat that means.\n",
+      "inputs": {
+        "document_text": {
+          "description": "The full text of the phase document \u2014 never a path, never read from disk",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "header": {
+          "description": "Header field name to declared value",
+          "required": true,
+          "type": "object"
+        },
+        "registers": {
+          "description": "Registers addressed by their marker id, each with columns and rows",
+          "required": true,
+          "type": "array"
+        },
+        "sections": {
+          "description": "Ordered sections, each with number, title, text, and any table columns and rows",
+          "required": true,
+          "type": "array"
+        }
+      },
+      "refusal": "never",
+      "summary": "Parse phase document text into structured registers"
+    },
+    "fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "transformation.implementation.capability_transforms.atoms.ct_pure_parse_registers_v0"
+      },
+      "operation": "PURE_PARSE_REGISTERS"
+    },
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+  ],
+  "version": "0"
+}

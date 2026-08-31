@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_TOPOLOGY_INPUT_REFERENCE_DECLARED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_TOPOLOGY_INPUT_REFERENCE_DECLARED_V0\n\n## Machine\n\n```yaml\nfqdn: capability_contracts::INVARIANT_TOPOLOGY_INPUT_REFERENCE_DECLARED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: capability_contracts\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - WF\n  - CC\n```\n\n---\n\n## Summary\n\nInput references are the dataflow edges of the execution graph. If a step references the\noutput of a step that does not exist, the execution graph has a dangling edge \u2014 a reference\ninto empty space. If it references a step that appears later in the pipeline, the runtime\nwould need to execute out of declared order to satisfy it.\n\nBoth dangling references and forward references are compile-time violations. The compiler\nmust be able to validate every input reference before the runtime executes a single step.\n\n## What this realizes\nFor every execution topology step:\n1. All `$.results.<step_id>.*` input references MUST name a `step_id` declared in the same pipeline\n2. Referenced step IDs MUST be declared before the referencing step (no forward references)\n3. `$.inputs.*` references (CC-level inputs) are always valid and require no step resolution\n4. Dangling references (step_id not found in any declared step) are constitutional violations\n5. Circular references are constitutional violations\n\n## Where it applies\n- **Artifact Types**: CC\n- **Validation Phase**: compile_time\n- **Enforced By**: ASSERT_TOPOLOGY_INPUT_REFERENCE_DECLARED_V0\n\n## Rationale\n\nDataflow closure is the property that makes topology statically verifiable. When every\ninput reference resolves to a declared, earlier step, the compiler can trace every value\nfrom its origin to its consumption without executing the graph. This is the mechanism\nthat eliminates runtime surprises about missing or unexpected data shapes.\n\nFull enforcement is implemented in Phase 3.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: every $.results.<step_id>.* reference in step inputs MUST name a step_id that is explicitly declared\n    earlier in the same pipeline; references to undeclared or future steps are compile-time violations\n  summary: all step input references to prior step outputs MUST resolve to a declared step ID within the\n    same pipeline; forward references and dangling references are constitutional violations\n```\n",
+  "content_hash": "34835fd7c80e68cc717e5d3765ee85f23e1b2d2f35d5dba936cad3bf739febe9",
+  "fqdn_id": "capability_contracts::INVARIANT_TOPOLOGY_INPUT_REFERENCE_DECLARED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF",
+        "CC"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_contracts",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_contracts::INVARIANT_TOPOLOGY_INPUT_REFERENCE_DECLARED_V0",
+    "governed_by": "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_contracts",
+  "references": [
+    "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0"
+  ],
+  "version": "0"
+}

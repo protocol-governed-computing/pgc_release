@@ -1,0 +1,96 @@
+{
+  "artifact_code": "CC_VERIFY_TERMINATION_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "sequences": "in.sequences"
+        },
+        "fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0",
+        "id": "CT_PURE_TERMINATION_CHECK_V0",
+        "inputs": [
+          "sequences"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "all_terminate",
+          "non_terminating"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_VERIFY_TERMINATION_V0\n\n## 1. Intent\n\nVerify that every computed Collatz sequence terminates at 1. A VIOLATION here is a first-class\nprotocol outcome (the conjecture was tested and failed), not an error.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::CC_VERIFY_TERMINATION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Verify all Collatz sequences terminate at 1\n  inputs:\n    sequences:\n      type: object\n      required: true\n  outputs:\n    all_terminate:\n      type: boolean\n    non_terminating:\n      type: array\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: check_termination\n    transform: workload::CT_PURE_TERMINATION_CHECK_V0\n    inputs:\n      sequences: $.inputs.sequences\n    outputs:\n      all_terminate: $.capability_result.all_terminate\n      non_terminating: $.capability_result.non_terminating\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: evaluate_conjecture\n      VIOLATION: exit\n  evaluation:\n    evaluate_conjecture:\n      condition: $.capability_result.all_terminate == true\n      on_true: SUCCESS\n      on_false: VIOLATION\nextensions:\n  description: Protocol gate for Collatz Conjecture \u2014 SUCCESS means conjecture holds for this input set\n```\n",
+  "content_hash": "3dcc652b7b0aab65d38f2b3cb2c236b53ea026f39d37c7e9f01e402ab3999d0f",
+  "fqdn_id": "workload::CC_VERIFY_TERMINATION_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "workload",
+    "core": {
+      "evaluation": {
+        "evaluate_conjecture": {
+          "condition": "$.capability_result.all_terminate == true",
+          "on_false": "VIOLATION",
+          "on_true": "SUCCESS"
+        }
+      },
+      "inputs": {
+        "sequences": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "all_terminate": {
+          "type": "boolean"
+        },
+        "non_terminating": {
+          "type": "array"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "sequences": "$.inputs.sequences"
+          },
+          "on_result": {
+            "SUCCESS": "evaluate_conjecture",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "all_terminate": "$.capability_result.all_terminate",
+            "non_terminating": "$.capability_result.non_terminating"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "check_termination",
+          "transform": "workload::CT_PURE_TERMINATION_CHECK_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Verify all Collatz sequences terminate at 1"
+    },
+    "extensions": {
+      "description": "Protocol gate for Collatz Conjecture \u2014 SUCCESS means conjecture holds for this input set"
+    },
+    "fqdn": "workload::CC_VERIFY_TERMINATION_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "workload::CT_PURE_TERMINATION_CHECK_V0"
+  ],
+  "version": "0"
+}

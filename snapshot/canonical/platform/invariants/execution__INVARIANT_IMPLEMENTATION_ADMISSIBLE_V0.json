@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0\n\n## Machine\n\n```yaml\nfqdn: execution::INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: execution\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - CT\n  - CS\n```\n\n---\n\n## Purpose\n\nEnsure every executable capability artifact has a structurally complete implementation declaration. This is the compile-time guarantee that the runtime binding surface can resolve all execution targets.\n\n**Core Principle**: Implementation admissibility is a compile-time invariant, not a runtime discovery.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'All capability artifacts (CT atoms and CS side effects) must declare structurally complete\n    implementation specifications. An atom CT must have machine.implementation with non-empty module and\n    callable. A CS must have implementation with non-empty module and callable. Without these declarations,\n    the runtime binding surface is incomplete and execution cannot be resolved.\n\n    '\n  anti_patterns:\n  - missing_implementation: CT atom or CS with no implementation block\n  - empty_module: Implementation declared but module field empty\n  - empty_callable: Implementation declared but callable field empty\n  clarification:\n    ct_molecule_exemption: 'CT molecules (ct_kind: molecule) do NOT require direct implementation declarations\n      \u2014 they compose atoms, and the atom_stream provides the execution specification. Only ct_kind: atom\n      requires implementation.\n\n      '\n    cs_always_required: All CS artifacts require implementation declarations. CS artifacts interact with\n      external state and must always have concrete handlers.\n```\n",
+  "content_hash": "224907da3db0a8fea2e16dfd4d940ab56617d651d6913cc5311ac3aba662717a",
+  "fqdn_id": "execution::INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CT",
+        "CS"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "execution",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "execution::INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "execution",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

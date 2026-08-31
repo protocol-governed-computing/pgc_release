@@ -1,0 +1,161 @@
+{
+  "artifact_code": "CT_PURE_EVALUATE_RULES_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_EVALUATE_RULES_V0\n\n## 1. Intent\n\nApply a declared rule set to parsed registers and report every rule that failed.\n\n**This transform is phase-neutral by design.** Every phase of the pipeline does the same thing to a\ndifferent document with a different rule set: parse registers, evaluate declared rules, reach a\nverdict. Naming this `..._SEED_RULES_` would have forced each later phase to author its own copy of\nthe same mechanism \u2014 the exact duplication the analysis loop exists to prevent. P1 through P7 reuse\nthis transform and supply their own rule sets.\n\nIt is a **mechanism, not a policy**. It knows how to perform a kind of check \u2014 is this cell's value\nin a vocabulary, is this column absent, does this token appear anywhere \u2014 and nothing about which\nregister should be checked or why that matters. Reading it tells you how a check runs; it cannot\ntell you what is governed. That is declared in the rule set the calling workflow supplies.\n\n`rule_set` is therefore a **declared input**, not embedded content. The rules travel in the calling\nworkflow's artifact, where they are compiled, sealed, versioned and readable from the composition \u2014\na rule table buried in this transform would be less inspectable than the code it replaced.\n\nEvery rule is applied to every document. There is no short-circuit on first failure: an author needs\nthe whole finding set, and a rule that stops running is a rule that cannot be trusted. An unknown\ncheck kind is a hard failure, never a skipped rule \u2014 silently skipping a rule reports green over an\nunevaluated subject.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::CT_PURE_EVALUATE_RULES_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: design\ncore:\n  summary: Evaluate a declared rule set against parsed registers\n  refusal: returns\n  description: |\n    Iterates the declared rule set, dispatching each rule to its check kind and collecting findings.\n    Raises CTExecutionError on an unknown check kind; the runtime maps any CT exception to\n    VIOLATION. A verdict of INADMISSIBLE is a normal return value, not an exception \u2014 an\n    inadmissible document is a governed outcome, not an execution failure.\n  inputs:\n    header:\n      type: object\n      required: true\n      description: Header fields as parsed from the document\n    sections:\n      type: array\n      required: true\n      description: Parsed document sections\n    registers:\n      type: array\n      required: true\n      description: Parsed registers, addressed by marker id \u2014 how a rule locates what it governs\n    document_text:\n      type: string\n      required: true\n      description: The original document text, for whole-document rules\n    rule_set:\n      type: array\n      required: true\n      description: The declared rules deciding admissibility \u2014 supplied by the calling workflow\n    observed:\n      type: object\n      required: true\n      description: |\n        Facts gathered about the composition, keyed by the inspection operation that produced each.\n        Empty for a phase that judges a document alone; a phase that grounds claims fills it from a\n        governed inspection capability. A rule needing an observation that is absent reports that\n        it could not be checked rather than passing silently.\n    priors:\n      type: object\n      required: true\n      description: |\n        The upstream phase documents this one is judged against, parsed, keyed by phase id. Empty\n        for a phase judged on its own document; a phase that preserves an upstream commitment fills\n        it from the priors the caller handed over. A cross-phase rule whose prior is absent reports\n        that the handoff is unchecked rather than passing silently \u2014 an unchecked handoff and a\n        preserved one are otherwise indistinguishable.\n  outputs:\n    verdict:\n      type: string\n      required: true\n      description: ADMISSIBLE when no rule failed, INADMISSIBLE otherwise\n    findings:\n      type: array\n      required: true\n      description: One entry per failed rule, naming the rule, where it failed, and why it matters\n    rules_evaluated:\n      type: integer\n      required: true\n      description: How many rules were applied \u2014 every rule in the set, always\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_EVALUATE_RULES\n  implementation:\n    module: transformation.implementation.capability_transforms.atoms.ct_pure_evaluate_rules_v0\n    callable: execute\n```\n",
+  "content_hash": "79950394ade07d0e7fcd92a2e1f2cdeab61771d01d818eb6c00ae8d4caa5a54c",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_EVALUATE_RULES_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "document_text": "$.inputs.document_text",
+          "header": "$.inputs.header",
+          "observed": "$.inputs.observed",
+          "priors": "$.inputs.priors",
+          "registers": "$.inputs.registers",
+          "rule_set": "$.inputs.rule_set",
+          "sections": "$.inputs.sections"
+        },
+        "atom": "transformation::CT_PURE_EVALUATE_RULES_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "transformation.implementation.capability_transforms.atoms.ct_pure_evaluate_rules_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0",
+    "inputs": {
+      "document_text": {
+        "description": "The original document text, for whole-document rules",
+        "required": true,
+        "type": "string"
+      },
+      "header": {
+        "description": "Header fields as parsed from the document",
+        "required": true,
+        "type": "object"
+      },
+      "observed": {
+        "description": "Facts gathered about the composition, keyed by the inspection operation that produced each.\nEmpty for a phase that judges a document alone; a phase that grounds claims fills it from a\ngoverned inspection capability. A rule needing an observation that is absent reports that\nit could not be checked rather than passing silently.\n",
+        "required": true,
+        "type": "object"
+      },
+      "priors": {
+        "description": "The upstream phase documents this one is judged against, parsed, keyed by phase id. Empty\nfor a phase judged on its own document; a phase that preserves an upstream commitment fills\nit from the priors the caller handed over. A cross-phase rule whose prior is absent reports\nthat the handoff is unchecked rather than passing silently \u2014 an unchecked handoff and a\npreserved one are otherwise indistinguishable.\n",
+        "required": true,
+        "type": "object"
+      },
+      "registers": {
+        "description": "Parsed registers, addressed by marker id \u2014 how a rule locates what it governs",
+        "required": true,
+        "type": "array"
+      },
+      "rule_set": {
+        "description": "The declared rules deciding admissibility \u2014 supplied by the calling workflow",
+        "required": true,
+        "type": "array"
+      },
+      "sections": {
+        "description": "Parsed document sections",
+        "required": true,
+        "type": "array"
+      }
+    },
+    "outputs": {
+      "findings": {
+        "from": "__atom_result__"
+      },
+      "rules_evaluated": {
+        "from": "__atom_result__"
+      },
+      "verdict": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "transformation::CT_PURE_EVALUATE_RULES_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "design",
+    "core": {
+      "description": "Iterates the declared rule set, dispatching each rule to its check kind and collecting findings.\nRaises CTExecutionError on an unknown check kind; the runtime maps any CT exception to\nVIOLATION. A verdict of INADMISSIBLE is a normal return value, not an exception \u2014 an\ninadmissible document is a governed outcome, not an execution failure.\n",
+      "inputs": {
+        "document_text": {
+          "description": "The original document text, for whole-document rules",
+          "required": true,
+          "type": "string"
+        },
+        "header": {
+          "description": "Header fields as parsed from the document",
+          "required": true,
+          "type": "object"
+        },
+        "observed": {
+          "description": "Facts gathered about the composition, keyed by the inspection operation that produced each.\nEmpty for a phase that judges a document alone; a phase that grounds claims fills it from a\ngoverned inspection capability. A rule needing an observation that is absent reports that\nit could not be checked rather than passing silently.\n",
+          "required": true,
+          "type": "object"
+        },
+        "priors": {
+          "description": "The upstream phase documents this one is judged against, parsed, keyed by phase id. Empty\nfor a phase judged on its own document; a phase that preserves an upstream commitment fills\nit from the priors the caller handed over. A cross-phase rule whose prior is absent reports\nthat the handoff is unchecked rather than passing silently \u2014 an unchecked handoff and a\npreserved one are otherwise indistinguishable.\n",
+          "required": true,
+          "type": "object"
+        },
+        "registers": {
+          "description": "Parsed registers, addressed by marker id \u2014 how a rule locates what it governs",
+          "required": true,
+          "type": "array"
+        },
+        "rule_set": {
+          "description": "The declared rules deciding admissibility \u2014 supplied by the calling workflow",
+          "required": true,
+          "type": "array"
+        },
+        "sections": {
+          "description": "Parsed document sections",
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "findings": {
+          "description": "One entry per failed rule, naming the rule, where it failed, and why it matters",
+          "required": true,
+          "type": "array"
+        },
+        "rules_evaluated": {
+          "description": "How many rules were applied \u2014 every rule in the set, always",
+          "required": true,
+          "type": "integer"
+        },
+        "verdict": {
+          "description": "ADMISSIBLE when no rule failed, INADMISSIBLE otherwise",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "refusal": "returns",
+      "summary": "Evaluate a declared rule set against parsed registers"
+    },
+    "fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "transformation.implementation.capability_transforms.atoms.ct_pure_evaluate_rules_v0"
+      },
+      "operation": "PURE_EVALUATE_RULES"
+    },
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,169 @@
+{
+  "artifact_code": "STRUCTURE_BUILD_PLATFORM_CONFIG_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_BUILD_PLATFORM_CONFIG_V0\n\n**Artifact Type**: STRUCTURE\n**Version**: V0\n**Status**: CANONICAL\n**Governed By**: structure::CONSTITUTION_STRUCTURE_V0\n\n---\n\n## Purpose\n\nDefines artifact discovery and output paths for platform compilation.\n\nThis STRUCTURE governs:\n\n* Where the compiler discovers artifacts\n* Which artifact types are in scope\n* Where compiled artifacts are written\n\n**Scope**: Platform build only (domains excluded)\n\n---\n\n## Core\n\nBuild-time STRUCTURE configuration.\n\nThis artifact is the **single source of truth** for:\n\n* discovery scope\n* artifact inclusion\n* output location\n\nNo fallback or implicit behavior is permitted.\n\n---\n\n## Machine\n\n```yaml\nfqdn: structure::STRUCTURE_BUILD_PLATFORM_CONFIG_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: structure\nstructure_scope: platform\nreuse_visibility: substrate\ncore:\n  summary: Build-time STRUCTURE configuration (platform scope)\n  description: 'Defines artifact discovery and output paths for platform compilation.\n\n    '\nartifact_discovery:\n  search_layers:\n  - GOVERNANCE\n  - REUSABLE_TRANSFORMS\n  - REUSABLE_SIDE_EFFECTS\n  - CAPABILITIES\n  - TEST_DATA\n  artifact_types:\n  - VOCAB\n  - CONSTITUTION\n  - INVARIANT\n  - ASSERT\n  - SCHEMA\n  - STRUCTURE\n  - EXECUTION_POLICY\n  - WF\n  - IN\n  - TI\n  - TE\n  - CC\n  - CT\n  - CS\n  - EV\n  - RB\n  - TEST_DATA\n  - SURFACE\noutput_configuration:\n  artifacts:\n    layer: PROTOCOL_BUILD_ROOT\n    subpath: compiled/canonical\n  conformance:\n    layer: REUSABLE_TRANSFORMS\n    subpath: compiled/conformance/ct\n  vocabulary_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/vocabulary\n  tokenized_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/tokenized\n  evidence_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/evidence\n  trust_attestation_path:\n    layer: GOVERNANCE\n    subpath: compiled/trust\n  visualization_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/visualization\n  layer_outputs:\n    GOVERNANCE:\n      layer: GOVERNANCE\n      subpath: compiled/canonical\n    REUSABLE_TRANSFORMS:\n      layer: REUSABLE_TRANSFORMS\n      subpath: compiled/canonical\n    REUSABLE_SIDE_EFFECTS:\n      layer: REUSABLE_SIDE_EFFECTS\n      subpath: compiled/canonical\n    CAPABILITIES:\n      layer: CAPABILITIES\n      subpath: compiled/canonical\n    TEST_DATA:\n      layer: REUSABLE_TRANSFORMS\n      subpath: compiled/canonical\n    EXECUTION:\n      layer: PROTOCOL_BUILD_ROOT\n      subpath: compiled/canonical\n    AUTHORING:\n      layer: PROTOCOL_BUILD_ROOT\n      subpath: compiled/canonical\n    TRANSPORT:\n      layer: PROTOCOL_BUILD_ROOT\n      subpath: compiled/canonical\n    INGRESS:\n      layer: PROTOCOL_BUILD_ROOT\n      subpath: compiled/canonical\n    EGRESS:\n      layer: PROTOCOL_BUILD_ROOT\n      subpath: compiled/canonical\n  bootstrap_search_roots:\n  - layer: GOVERNANCE\n    subpath: declaration/structure/structures\nbuild_phases:\n- phase: discover\n  description: Discover artifacts via STRUCTURE\n- phase: parse\n  description: Parse artifacts into canonical machine form\n- phase: normalize\n  description: Resolve references to FQDN with deterministic binding\n- phase: validate\n  description: Validate artifacts using compiler schema rules\n- phase: assert\n  description: Evaluate cross-artifact invariants (surface closure)\n- phase: materialize\n  description: Emit deterministic compiled artifacts\n  target: compiled/artifacts/\n- phase: conformance_generate\n  description: Generate CT conformance tests from TEST_DATA\n- phase: conformance_execute\n  description: Blindly execute CT-IR conformance tests\n```\n\n",
+  "content_hash": "85b4474472edbaa380eee09a104b7bc4d27c87db437b01cc082f6825a10120b6",
+  "fqdn_id": "structure::STRUCTURE_BUILD_PLATFORM_CONFIG_V0",
+  "frontmatter": {
+    "artifact_discovery": {
+      "artifact_types": [
+        "VOCAB",
+        "CONSTITUTION",
+        "INVARIANT",
+        "ASSERT",
+        "SCHEMA",
+        "STRUCTURE",
+        "EXECUTION_POLICY",
+        "WF",
+        "IN",
+        "TI",
+        "TE",
+        "CC",
+        "CT",
+        "CS",
+        "EV",
+        "RB",
+        "TEST_DATA",
+        "SURFACE"
+      ],
+      "search_layers": [
+        "GOVERNANCE",
+        "REUSABLE_TRANSFORMS",
+        "REUSABLE_SIDE_EFFECTS",
+        "CAPABILITIES",
+        "TEST_DATA"
+      ]
+    },
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "build_phases": [
+      {
+        "description": "Discover artifacts via STRUCTURE",
+        "phase": "discover"
+      },
+      {
+        "description": "Parse artifacts into canonical machine form",
+        "phase": "parse"
+      },
+      {
+        "description": "Resolve references to FQDN with deterministic binding",
+        "phase": "normalize"
+      },
+      {
+        "description": "Validate artifacts using compiler schema rules",
+        "phase": "validate"
+      },
+      {
+        "description": "Evaluate cross-artifact invariants (surface closure)",
+        "phase": "assert"
+      },
+      {
+        "description": "Emit deterministic compiled artifacts",
+        "phase": "materialize",
+        "target": "compiled/artifacts/"
+      },
+      {
+        "description": "Generate CT conformance tests from TEST_DATA",
+        "phase": "conformance_generate"
+      },
+      {
+        "description": "Blindly execute CT-IR conformance tests",
+        "phase": "conformance_execute"
+      }
+    ],
+    "concern": "structure",
+    "core": {
+      "description": "Defines artifact discovery and output paths for platform compilation.\n",
+      "summary": "Build-time STRUCTURE configuration (platform scope)"
+    },
+    "fqdn": "structure::STRUCTURE_BUILD_PLATFORM_CONFIG_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "output_configuration": {
+      "artifacts": {
+        "layer": "PROTOCOL_BUILD_ROOT",
+        "subpath": "compiled/canonical"
+      },
+      "bootstrap_search_roots": [
+        {
+          "layer": "GOVERNANCE",
+          "subpath": "declaration/structure/structures"
+        }
+      ],
+      "conformance": {
+        "layer": "REUSABLE_TRANSFORMS",
+        "subpath": "compiled/conformance/ct"
+      },
+      "evidence_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/evidence"
+      },
+      "layer_outputs": {
+        "AUTHORING": {
+          "layer": "PROTOCOL_BUILD_ROOT",
+          "subpath": "compiled/canonical"
+        },
+        "CAPABILITIES": {
+          "layer": "CAPABILITIES",
+          "subpath": "compiled/canonical"
+        },
+        "EGRESS": {
+          "layer": "PROTOCOL_BUILD_ROOT",
+          "subpath": "compiled/canonical"
+        },
+        "EXECUTION": {
+          "layer": "PROTOCOL_BUILD_ROOT",
+          "subpath": "compiled/canonical"
+        },
+        "GOVERNANCE": {
+          "layer": "GOVERNANCE",
+          "subpath": "compiled/canonical"
+        },
+        "INGRESS": {
+          "layer": "PROTOCOL_BUILD_ROOT",
+          "subpath": "compiled/canonical"
+        },
+        "REUSABLE_SIDE_EFFECTS": {
+          "layer": "REUSABLE_SIDE_EFFECTS",
+          "subpath": "compiled/canonical"
+        },
+        "REUSABLE_TRANSFORMS": {
+          "layer": "REUSABLE_TRANSFORMS",
+          "subpath": "compiled/canonical"
+        },
+        "TEST_DATA": {
+          "layer": "REUSABLE_TRANSFORMS",
+          "subpath": "compiled/canonical"
+        },
+        "TRANSPORT": {
+          "layer": "PROTOCOL_BUILD_ROOT",
+          "subpath": "compiled/canonical"
+        }
+      },
+      "tokenized_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/tokenized"
+      },
+      "trust_attestation_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/trust"
+      },
+      "visualization_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/visualization"
+      },
+      "vocabulary_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/vocabulary"
+      }
+    },
+    "reuse_visibility": "substrate",
+    "structure_scope": "platform",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

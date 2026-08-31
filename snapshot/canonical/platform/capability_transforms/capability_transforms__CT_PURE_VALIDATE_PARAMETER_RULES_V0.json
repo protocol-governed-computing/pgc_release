@@ -1,0 +1,98 @@
+{
+  "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_VALIDATE_PARAMETER_RULES_V0\n\n## 1. Intent\n\nEvaluate declarative parameter constraint rules against a parameter map.\n\n---\n\n## 2. Rationale\n\nParameter rule validation is a generic governance primitive:\n- Rules are declared in governance artifacts, not in code\n- Supports operators: eq, neq, lte, gte, lt, gt, in, not_null\n- Domain-agnostic \u2014 any parameter map can be validated against any rule set\n\n---\n\n## 3. Purity\n\n| Property | Value |\n|----------|-------|\n| Purity | ct_pure |\n| Kind | atom |\n\n---\n\n## 4. Inputs\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| parameters | object | true | Parameter key-value map to validate |\n| rules | array | true | Array of rule objects with field, op, and value/allowed |\n\n---\n\n## 5. Outputs\n\nProduced only when every rule passes. A failed rule is refused rather than reported, so there is no\ncall in which `valid` is false or `failed_rule` is populated.\n\n| Field | Type | Description |\n|-------|------|-------------|\n| valid | boolean | Always true \u2014 the transform returns only when all rules passed |\n| failed_rule | object | Always null, for the same reason |\n\n---\n\n## 6. Result Status\n\nThis transform **refuses by raising** (`refusal: raises`): the failed rule is carried in the raised\nerror, not in a returned value. That is what lets a step route on the judgement \u2014 a `CT` step yields\n`SUCCESS` when its transform returns and `VIOLATION` when it raises, so a transform that returned\n`valid=false` would succeed on a rule that failed, and every branch declared for VIOLATION would be\nunreachable.\n\n| Status | Condition |\n|--------|-----------|\n| SUCCESS | All rules pass; `valid=true`, `failed_rule=null` |\n| VIOLATION | The first rule that fails, named in the raised error. No outputs are returned |\n\n---\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Validate parameters against rules\n  refusal: raises\n  description: Evaluates a set of declarative constraint rules (eq, gt, in, etc.) against a provided parameter\n    map.\n  inputs:\n    parameters:\n      type: object\n      required: true\n      description: Parameter key-value map to validate\n    rules:\n      type: array\n      required: true\n      description: List of constraint rule objects\n  outputs:\n    valid:\n      type: boolean\n      required: true\n      description: Always true \u2014 a failed rule is raised, so the transform returns only when all\n        rules passed\n    failed_rule:\n      type: object\n      required: false\n      nullable: true\n      description: Always null \u2014 the rule that failed is carried in the raised error, never returned\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  implementation:\n    module: capability_transforms.implementation.ct_pure_validate_parameter_rules_v0\n    callable: execute\n```\n",
+  "content_hash": "67b6c20d9e882e6da5d7e05aea020e9e654faa5e41526cd7a99573d00131eac6",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "parameters": "$.inputs.parameters",
+          "rules": "$.inputs.rules"
+        },
+        "atom": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "capability_transforms.implementation.ct_pure_validate_parameter_rules_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "inputs": {
+      "parameters": {
+        "description": "Parameter key-value map to validate",
+        "required": true,
+        "type": "object"
+      },
+      "rules": {
+        "description": "List of constraint rule objects",
+        "required": true,
+        "type": "array"
+      }
+    },
+    "outputs": {
+      "failed_rule": {
+        "from": "__atom_result__"
+      },
+      "valid": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "description": "Evaluates a set of declarative constraint rules (eq, gt, in, etc.) against a provided parameter map.",
+      "inputs": {
+        "parameters": {
+          "description": "Parameter key-value map to validate",
+          "required": true,
+          "type": "object"
+        },
+        "rules": {
+          "description": "List of constraint rule objects",
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "failed_rule": {
+          "description": "Always null \u2014 the rule that failed is carried in the raised error, never returned",
+          "nullable": true,
+          "required": false,
+          "type": "object"
+        },
+        "valid": {
+          "description": "Always true \u2014 a failed rule is raised, so the transform returns only when all rules passed",
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "refusal": "raises",
+      "summary": "Validate parameters against rules"
+    },
+    "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "capability_transforms.implementation.ct_pure_validate_parameter_rules_v0"
+      }
+    },
+    "version": "v0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+  ],
+  "version": "0"
+}

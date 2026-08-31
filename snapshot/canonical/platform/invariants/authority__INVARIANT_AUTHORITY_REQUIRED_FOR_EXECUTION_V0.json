@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_AUTHORITY_REQUIRED_FOR_EXECUTION_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_AUTHORITY_REQUIRED_FOR_EXECUTION_V0\n\nArchitectural Invariant\n\n## Machine\n\n```yaml\nfqdn: authority::INVARIANT_AUTHORITY_REQUIRED_FOR_EXECUTION_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: authority::CONSTITUTION_AUTHORITY_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: authority\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - WF\n  - CC\n```\n\n## Summary\n\nThe invariant of execution requiring authority is the foundational constraint of the authority governance plane. If a workflow can be invoked without any authority declaration, the entire authority plane is optional rather than sovereign. This invariant makes authority mandatory for all workflows.\n\n## What this realizes\nFor every WF_ artifact:\n1. The workflow MUST have an associated authority declaration before execution may begin\n2. No workflow may be invoked by the runtime without a resolved authority boundary\n3. The compiler MUST reject WF_ artifacts that lack authority declarations\n\n## Where it applies\n- **Artifact Types**: WF\n- **Validation Phase**: ASSERT (compile-time)\n- **Enforced By**: ASSERT_AUTHORITY_REQUIRED_FOR_EXECUTION_V0\n\n## Rationale\n\nAuthority governance determines whether execution may exist. If that determination is optional, authority governance is advisory rather than constitutional. This invariant makes the determination mandatory at the architectural level: no authority declaration, no execution.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: Every WF_ artifact must declare an authority requirement; ungoverned execution entry points are\n    a constitutional violation\n  summary: Execution may not proceed without a declared authority boundary requirement\n```\n",
+  "content_hash": "400a72688ed6a45d12689b0e268ff53cc43a3394bcdddff04ffeefd8b900eefd",
+  "fqdn_id": "authority::INVARIANT_AUTHORITY_REQUIRED_FOR_EXECUTION_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF",
+        "CC"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "authority",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "authority::INVARIANT_AUTHORITY_REQUIRED_FOR_EXECUTION_V0",
+    "governed_by": "authority::CONSTITUTION_AUTHORITY_GOVERNANCE_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "authority",
+  "references": [
+    "authority::CONSTITUTION_AUTHORITY_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

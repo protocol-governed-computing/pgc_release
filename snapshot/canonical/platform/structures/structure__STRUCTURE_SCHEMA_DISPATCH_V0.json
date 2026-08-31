@@ -1,0 +1,61 @@
+{
+  "artifact_code": "STRUCTURE_SCHEMA_DISPATCH_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_SCHEMA_DISPATCH_V0\n\n## Machine\n\n```yaml\nfqdn: structure::STRUCTURE_SCHEMA_DISPATCH_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: structure\ncore:\n  summary: Declares which schema governs each artifact kind, and the disposition of every kind toward\n    description.\n  disposition_vocabulary: structure::VOCAB_SCHEMA_DISPOSITION_V0\n  schema_dispatch:\n    CAPABILITY_TRANSFORM: SCHEMA_CAPABILITY_TRANSFORM_V0.json\n    CAPABILITY_SIDE_EFFECT: SCHEMA_CAPABILITY_SIDE_EFFECT_V0.json\n    CAPABILITY_CONTRACT: SCHEMA_CAPABILITY_CONTRACT_V0.json\n    WORKFLOW: SCHEMA_WORKFLOW_V0.json\n    RUNTIME_BINDING: SCHEMA_RUNTIME_BINDING_V0.json\n    INVARIANT: SCHEMA_INVARIANT_V0.json\n    CONSTITUTION: SCHEMA_CONSTITUTION_V0.json\n    VOCABULARY: SCHEMA_VOCABULARY_V0.json\n    SURFACE_CONTRACT: SCHEMA_SURFACE_CONTRACT_V0.json\n    STRUCTURE: SCHEMA_STRUCTURE_V0.json\n  # Every kind the composition carries, and what was decided about describing it. A kind absent from\n  # the dispatch above was absent for three different reasons and one representation \u2014 nobody wrote a\n  # description, one exists and nobody named it, or the kind needs none \u2014 so a reader could not tell a\n  # decision from an oversight. Each disposition is drawn from the vocabulary named above.\n  schema_disposition:\n    CAPABILITY_TRANSFORM: described\n    CAPABILITY_SIDE_EFFECT: described\n    CAPABILITY_CONTRACT: described\n    WORKFLOW: described\n    RUNTIME_BINDING: described\n    INVARIANT: described\n    CONSTITUTION: described\n    VOCABULARY: described\n    SURFACE_CONTRACT: described\n    STRUCTURE: described\n    ACTOR: described\n    EVENT: described\n    INTENT: described\n    TRANSPORT_INGRESS: described\n    TRANSPORT_EGRESS: described\n  # Where a kind is described and its description is not yet dispatched, the ground is recorded here\n  # rather than left as an absence. Removing a row means the description was corrected and the kind\n  # dispatched; a row that stays is a debt that stays readable.\n  description_pending:\n    ACTOR: description expects a role and forbids the attributes every actor carries; owned by actor\n    EVENT: description forbids content twenty declarations carry; owned by event\n    INTENT: description rejects a whole number as a type; owned by intent\n    TRANSPORT_INGRESS: no description exists; owned by transport\n    TRANSPORT_EGRESS: no description exists; owned by transport\n```\n\n---\n\n## Purpose\n\nWhich artifacts are schema-governed was decided by a dictionary inside the compiler. That made the governed set a property of the implementation rather than of the protocol \u2014 the same defect the closure work removed from artifact machine blocks, one level up.\n\nThis artifact declares the mapping. The compiler resolves it.\n\n---\n\n## Scope\n\nDeliberately narrow: **canonical `artifact_kind` \u2192 schema identity**, and nothing else.\n\nThe mapping does not carry compiler phase, loader selection, error severity, or exception behaviour. Admitting any of those would relocate the hardcoded dispatch table into a protocol artifact without improving the architecture \u2014 the declaration would become an opaque registry of compiler behaviour, which is harder to reason about than the dictionary it replaced.\n\nKeys are canonical `artifact_kind` values (the in-block discriminator), matching the kind registry. Values are filenames resolved against the governance schema directory. A kind absent from this mapping is not schema-governed.\n\n---\n\n## Rationale\n\nA declaration the compiler follows can be inspected, versioned, and reasoned about by anyone reading the protocol surface. A dictionary in `s4_govern.py` can be reasoned about only by reading the compiler.\n",
+  "content_hash": "76057869297bf075fd5957af24cd7ecdb5af5bef51e1962b6e8a126437d9ef93",
+  "fqdn_id": "structure::STRUCTURE_SCHEMA_DISPATCH_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "structure",
+    "core": {
+      "description_pending": {
+        "ACTOR": "description expects a role and forbids the attributes every actor carries; owned by actor",
+        "EVENT": "description forbids content twenty declarations carry; owned by event",
+        "INTENT": "description rejects a whole number as a type; owned by intent",
+        "TRANSPORT_EGRESS": "no description exists; owned by transport",
+        "TRANSPORT_INGRESS": "no description exists; owned by transport"
+      },
+      "disposition_vocabulary": "structure::VOCAB_SCHEMA_DISPOSITION_V0",
+      "schema_dispatch": {
+        "CAPABILITY_CONTRACT": "SCHEMA_CAPABILITY_CONTRACT_V0.json",
+        "CAPABILITY_SIDE_EFFECT": "SCHEMA_CAPABILITY_SIDE_EFFECT_V0.json",
+        "CAPABILITY_TRANSFORM": "SCHEMA_CAPABILITY_TRANSFORM_V0.json",
+        "CONSTITUTION": "SCHEMA_CONSTITUTION_V0.json",
+        "INVARIANT": "SCHEMA_INVARIANT_V0.json",
+        "RUNTIME_BINDING": "SCHEMA_RUNTIME_BINDING_V0.json",
+        "STRUCTURE": "SCHEMA_STRUCTURE_V0.json",
+        "SURFACE_CONTRACT": "SCHEMA_SURFACE_CONTRACT_V0.json",
+        "VOCABULARY": "SCHEMA_VOCABULARY_V0.json",
+        "WORKFLOW": "SCHEMA_WORKFLOW_V0.json"
+      },
+      "schema_disposition": {
+        "ACTOR": "described",
+        "CAPABILITY_CONTRACT": "described",
+        "CAPABILITY_SIDE_EFFECT": "described",
+        "CAPABILITY_TRANSFORM": "described",
+        "CONSTITUTION": "described",
+        "EVENT": "described",
+        "INTENT": "described",
+        "INVARIANT": "described",
+        "RUNTIME_BINDING": "described",
+        "STRUCTURE": "described",
+        "SURFACE_CONTRACT": "described",
+        "TRANSPORT_EGRESS": "described",
+        "TRANSPORT_INGRESS": "described",
+        "VOCABULARY": "described",
+        "WORKFLOW": "described"
+      },
+      "summary": "Declares which schema governs each artifact kind, and the disposition of every kind toward description."
+    },
+    "fqdn": "structure::STRUCTURE_SCHEMA_DISPATCH_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

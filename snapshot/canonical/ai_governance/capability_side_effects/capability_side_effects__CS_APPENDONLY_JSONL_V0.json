@@ -1,0 +1,176 @@
+{
+  "artifact_code": "CS_APPENDONLY_JSONL_V0",
+  "artifact_type": "CS",
+  "content": "",
+  "content_hash": "5b679d400bfc3459f671efb84bc1db764ac783a8cd901fc1cf05f5422bf4a195",
+  "cs_ir": {
+    "cs_metadata": {
+      "capability": {
+        "supported_operation_specs": [
+          "APPEND",
+          "GET_ALL"
+        ]
+      },
+      "operations": {
+        "operations": {
+          "APPEND": {
+            "effect": "write",
+            "handler": "append",
+            "idempotent": false,
+            "input": [
+              "record",
+              "stream_id",
+              "actor_id"
+            ],
+            "output": [
+              "result_status",
+              "record_id",
+              "sequence_number"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Append a record to the end of the log"
+          },
+          "GET_ALL": {
+            "effect": "read",
+            "handler": "read_all",
+            "idempotent": true,
+            "input": [
+              "stream_id"
+            ],
+            "output": [
+              "result_status",
+              "entries"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Retrieve all records from the log"
+          }
+        }
+      }
+    },
+    "handler_ref": {
+      "callable": "AppendOnlyJsonlRuntime",
+      "module": "capability_side_effects.implementation.CS_APPENDONLY_JSONL_V0.runtime"
+    }
+  },
+  "fqdn_id": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_SIDE_EFFECT",
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "category": "storage",
+      "field_types": {
+        "actor_id": "string",
+        "entries": "array",
+        "record": "object",
+        "record_id": "string",
+        "result_status": "string",
+        "sequence_number": "integer",
+        "stream_id": "string"
+      },
+      "operations": {
+        "APPEND": {
+          "effect": "write",
+          "handler": "append",
+          "idempotent": false,
+          "input": [
+            "record",
+            "stream_id",
+            "actor_id"
+          ],
+          "output": [
+            "result_status",
+            "record_id",
+            "sequence_number"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Append a record to the end of the log"
+        },
+        "GET_ALL": {
+          "effect": "read",
+          "handler": "read_all",
+          "idempotent": true,
+          "input": [
+            "stream_id"
+          ],
+          "output": [
+            "result_status",
+            "entries"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Retrieve all records from the log"
+        }
+      },
+      "policy": {
+        "operations": [
+          "APPEND",
+          "GET_ALL"
+        ]
+      },
+      "summary": "Append-only JSONL persistence layer with ordered event history"
+    },
+    "extensions": {
+      "configuration_schema": {
+        "path": {
+          "description": "Filesystem path to JSONL storage file",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "constraints": {
+        "concurrency": "single_writer",
+        "max_record_size_mb": 10
+      },
+      "cs_kind": "append_only_log",
+      "failure_modes": [
+        "VIOLATION: Invalid record (type, format)",
+        "BACKEND_ERROR: Storage unavailable or corrupt"
+      ],
+      "properties": {
+        "concurrent_safe": false,
+        "durability": "persistent",
+        "idempotent": false,
+        "replay_policy": "append_once",
+        "transactional": false
+      },
+      "side_effect_type": "persistent",
+      "vocabulary": {
+        "entry_validation_result": [
+          "VALID",
+          "INVALID"
+        ],
+        "result_status": [
+          "SUCCESS",
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ]
+      }
+    },
+    "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+    "governed_by": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+    "implementation": {
+      "callable": "AppendOnlyJsonlRuntime",
+      "module": "capability_side_effects.implementation.CS_APPENDONLY_JSONL_V0.runtime"
+    },
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "capability_side_effects",
+  "references": [],
+  "version": "V0"
+}

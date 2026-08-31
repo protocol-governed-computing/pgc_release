@@ -1,0 +1,291 @@
+{
+  "edges": [
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "wf_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0"
+      },
+      "source_address": 82,
+      "source_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
+      "target_address": 84,
+      "target_fqdn": "workload::CC_VERIFY_TERMINATION_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "numbers": "$.inputs.numbers"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "sequences": "$.capability_result.sequences"
+        },
+        "pipeline_index": 0,
+        "step_id": "compute_sequences"
+      },
+      "source_address": 82,
+      "source_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
+      "target_address": 85,
+      "target_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "collatz_results",
+          "value": {
+            "all_terminate": "$.inputs.all_terminate",
+            "non_terminating": "$.inputs.non_terminating",
+            "sequences": "$.inputs.sequences"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 0,
+        "step_id": "store_results",
+        "store": "COLLATZ_RESULTS"
+      },
+      "source_address": 83,
+      "source_fqdn": "workload::CC_STORE_RESULTS_V0",
+      "target_address": 24,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "wf_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0"
+      },
+      "source_address": 84,
+      "source_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
+      "target_address": 83,
+      "target_fqdn": "workload::CC_STORE_RESULTS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "sequences": "$.inputs.sequences"
+        },
+        "on_result": {
+          "SUCCESS": "evaluate_conjecture",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "all_terminate": "$.capability_result.all_terminate",
+          "non_terminating": "$.capability_result.non_terminating"
+        },
+        "pipeline_index": 0,
+        "step_id": "check_termination"
+      },
+      "source_address": 84,
+      "source_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
+      "target_address": 86,
+      "target_fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "wf_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0"
+      },
+      "source_address": 88,
+      "source_fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
+      "target_address": 82,
+      "target_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0"
+    },
+    {
+      "kind": "RB_MAPS",
+      "kind_address": 16392,
+      "metadata": {
+        "handler_ref": ""
+      },
+      "source_address": 89,
+      "source_fqdn": "workload::RB_COLLATZ_V0",
+      "target_address": 24,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 94,
+      "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+      "target_address": 82,
+      "target_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 94,
+      "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+      "target_address": 83,
+      "target_fqdn": "workload::CC_STORE_RESULTS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 94,
+      "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+      "target_address": 84,
+      "target_fqdn": "workload::CC_VERIFY_TERMINATION_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 94,
+      "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+      "target_address": 88,
+      "target_fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 94,
+      "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+      "target_address": 88,
+      "target_fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 94,
+      "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+      "target_address": 89,
+      "target_fqdn": "workload::RB_COLLATZ_V0"
+    }
+  ],
+  "event_catalog": [
+    {
+      "address": 87,
+      "fqdn": "workload::EV_CONJECTURE_EVALUATED_V0",
+      "kind": "EV",
+      "kind_address": 16645,
+      "schema": {
+        "all_terminate": {
+          "required": true,
+          "type": "boolean"
+        },
+        "non_terminating": {
+          "required": true,
+          "type": "array"
+        }
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "address": 24,
+      "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "kind": "CS",
+      "kind_address": 16643
+    },
+    {
+      "address": 81,
+      "fqdn": "workload::AC_REFERENCE_ACTOR_V0",
+      "kind": "AC",
+      "kind_address": 16640
+    },
+    {
+      "address": 82,
+      "fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 83,
+      "fqdn": "workload::CC_STORE_RESULTS_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 84,
+      "fqdn": "workload::CC_VERIFY_TERMINATION_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 85,
+      "fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 86,
+      "fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 87,
+      "fqdn": "workload::EV_CONJECTURE_EVALUATED_V0",
+      "kind": "EV",
+      "kind_address": 16645
+    },
+    {
+      "address": 88,
+      "fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 89,
+      "fqdn": "workload::RB_COLLATZ_V0",
+      "kind": "RB",
+      "kind_address": 16648
+    },
+    {
+      "address": 90,
+      "fqdn": "workload::STRUCTURE_BUILD_WORKLOAD_CONFIG_V0",
+      "kind": "GOVERNANCE",
+      "kind_address": 16646
+    },
+    {
+      "address": 91,
+      "fqdn": "workload::STRUCTURE_COLLATZ_STORAGE_V0",
+      "kind": "GOVERNANCE",
+      "kind_address": 16646
+    },
+    {
+      "address": 92,
+      "fqdn": "workload::TE_COLLATZ_COMPUTE_V0",
+      "kind": "TE",
+      "kind_address": 16649
+    },
+    {
+      "address": 93,
+      "fqdn": "workload::TI_COLLATZ_COMPUTE_V0",
+      "kind": "TI",
+      "kind_address": 16651
+    },
+    {
+      "address": 94,
+      "fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    }
+  ],
+  "projection_class": "evidence_substrate"
+}

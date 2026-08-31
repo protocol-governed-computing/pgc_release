@@ -1,0 +1,35 @@
+{
+  "artifact_code": "VOCAB_WALLET_CLASSIFICATION_V0",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_WALLET_CLASSIFICATION_V0\n\n## 1. Intent\n\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::VOCAB_WALLET_CLASSIFICATION_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: wallet\nextends: ''\nresult_status:\n  casing: UPPER_SNAKE\n  entries:\n  - DEFAULT\n  - PRIVATE\n  - BUSINESS\n  - SAVINGS\n  - INVESTMENT\n  - MINT\n  - BURN\n  - POOL\n```\n",
+  "content_hash": "e3b9f6255a030e03a38a1c57242e4d672faf62c3bdd32ee585df8a5747fcd12c",
+  "fqdn_id": "blockchain::VOCAB_WALLET_CLASSIFICATION_V0",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "extends": "",
+    "fqdn": "blockchain::VOCAB_WALLET_CLASSIFICATION_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "result_status": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "DEFAULT",
+        "PRIVATE",
+        "BUSINESS",
+        "SAVINGS",
+        "INVESTMENT",
+        "MINT",
+        "BURN",
+        "POOL"
+      ]
+    },
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

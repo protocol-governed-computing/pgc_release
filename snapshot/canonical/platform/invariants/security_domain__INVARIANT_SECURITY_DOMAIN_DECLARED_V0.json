@@ -1,0 +1,47 @@
+{
+  "artifact_code": "INVARIANT_SECURITY_DOMAIN_DECLARED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_SECURITY_DOMAIN_DECLARED_V0\n\n## Machine\n\n```yaml\nfqdn: security_domain::INVARIANT_SECURITY_DOMAIN_DECLARED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: security_domain\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  enforcement:\n    scope: ALL_ARTIFACTS\n  applies_to_kinds:\n  - SNAPSHOT\n  composition_check:\n    rule: exactly_one\n    subject: active security domain contract\n    selector:\n      namespace: security_domain\n      artifact_type: STRUCTURE\n      artifact_code_prefix: STRUCTURE_SECURITY_DOMAIN_\n      where:\n        status: active\n```\n\n---\n\n## Purpose\n\nThis invariant makes the V0 security domain contract load-bearing. It ensures that every\nsnapshot explicitly declares its information-control regime rather than leaving it undefined.\nIn V0, `UNCLASSIFIED_LOCAL` is not a default \u2014 it is a declared governance posture.\nThe difference matters: future classified execution modes require this axis to already exist\nand be compiler-validated.\n\n## What this realizes\nFor every compiled snapshot:\n1. The compiler MUST scan `security_domain/` for active contracts\n2. Exactly one MUST be present\n3. The active contract's security domain MUST be materialized into `federation_profile.security_domain`\n4. Compile MUST fail if no contract is found or more than one is found\n\n## Anti-Patterns\n\n- `no_security_domain_contract`: Snapshot compiled without any security domain contract present\n- `multiple_active_contracts`: More than one security domain contract marked active simultaneously\n- `visibility_declared_elsewhere`: Snapshot visibility declared in a non-security-domain boundary\n\n## Enforcement\n\n- **Stage:** compiler_validation\n- **Failure Mode:** FAIL_COMPILE \u2014 no snapshot is produced if violated\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: 'The compiler MUST locate exactly one active security domain contract within FB_SECURITY_DOMAIN.\n    Zero contracts is a missing declaration violation. More than one active contract is an ambiguity violation.\n\n    '\n  summary: Every compiled snapshot must declare exactly one active security domain contract\nassert_projection:\n  enforcement:\n    failure_mode: HARD_FAIL\n```\n",
+  "content_hash": "2e90c433a1429d9c9206d2956e54726d09b676f07d2ed7eaad94c95934572d6c",
+  "fqdn_id": "security_domain::INVARIANT_SECURITY_DOMAIN_DECLARED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "SNAPSHOT"
+      ],
+      "composition_check": {
+        "rule": "exactly_one",
+        "selector": {
+          "artifact_code_prefix": "STRUCTURE_SECURITY_DOMAIN_",
+          "artifact_type": "STRUCTURE",
+          "namespace": "security_domain",
+          "where": {
+            "status": "active"
+          }
+        },
+        "subject": "active security domain contract"
+      },
+      "enforcement": {
+        "scope": "ALL_ARTIFACTS"
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "security_domain",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "security_domain::INVARIANT_SECURITY_DOMAIN_DECLARED_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "security_domain",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

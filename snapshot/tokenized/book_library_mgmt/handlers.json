@@ -1,0 +1,837 @@
+{
+  "cs": {
+    "78": {
+      "cs_metadata": {
+        "capability": {
+          "supported_operation_specs": [
+            "APPEND",
+            "GET_ALL"
+          ]
+        },
+        "operations": {
+          "operations": {
+            "APPEND": {
+              "effect": "write",
+              "handler": "append",
+              "idempotent": false,
+              "input": [
+                "record",
+                "stream_id",
+                "actor_id"
+              ],
+              "output": [
+                "result_status",
+                "record_id",
+                "sequence_number"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Append a record to the end of the log"
+            },
+            "GET_ALL": {
+              "effect": "read",
+              "handler": "read_all",
+              "idempotent": true,
+              "input": [
+                "stream_id"
+              ],
+              "output": [
+                "result_status",
+                "entries"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Retrieve all records from the log"
+            }
+          }
+        }
+      },
+      "handler_ref": {
+        "callable": "AppendOnlyJsonlRuntime",
+        "module": "capability_side_effects.implementation.CS_APPENDONLY_JSONL_V0.runtime"
+      }
+    },
+    "79": {
+      "cs_metadata": {
+        "capability": {
+          "supported_operation_specs": [
+            "READ",
+            "WRITE",
+            "UPDATE",
+            "DELETE",
+            "DELETE_MANY",
+            "EXISTS",
+            "LIST",
+            "SELECT",
+            "UPDATE_WHERE"
+          ]
+        },
+        "operations": {
+          "operations": {
+            "DELETE": {
+              "effect": "write",
+              "handler": "delete",
+              "idempotent": true,
+              "input": [
+                "key"
+              ],
+              "output": [
+                "result_status"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "NOT_FOUND",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Remove the given key and its value"
+            },
+            "DELETE_MANY": {
+              "effect": "write",
+              "handler": "delete_many",
+              "idempotent": true,
+              "input": [
+                "keys"
+              ],
+              "output": [
+                "result_status",
+                "drained_count"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Delete a list of keys; idempotent per key (NOT_FOUND treated as already deleted)"
+            },
+            "EXISTS": {
+              "effect": "read",
+              "handler": "exists",
+              "idempotent": true,
+              "input": [
+                "key"
+              ],
+              "output": [
+                "result_status",
+                "exists"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Check if a key exists in storage"
+            },
+            "LIST": {
+              "effect": "read",
+              "handler": "list_keys",
+              "idempotent": true,
+              "input": [],
+              "output": [
+                "result_status",
+                "keys"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "BACKEND_ERROR"
+              ],
+              "summary": "List all keys in storage"
+            },
+            "READ": {
+              "effect": "read",
+              "handler": "read",
+              "idempotent": true,
+              "input": [
+                "key"
+              ],
+              "output": [
+                "result_status",
+                "value"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "NOT_FOUND",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Retrieve value for a given key"
+            },
+            "SELECT": {
+              "effect": "read",
+              "handler": "list",
+              "idempotent": true,
+              "input": [],
+              "notes": "LIST publishes keys alone, which a caller cannot select by content; SELECT publishes the records themselves. An empty store is SUCCESS with no records \u2014 NOT_FOUND is reserved for a keyed READ of one absent key.",
+              "output": [
+                "result_status",
+                "records",
+                "keys"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Read every record in storage, for a caller that selects among them by content"
+            },
+            "UPDATE": {
+              "effect": "write",
+              "handler": "update",
+              "idempotent": true,
+              "input": [
+                "key",
+                "updates"
+              ],
+              "output": [
+                "result_status"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Set named fields on the record at the given key, leaving its other fields as they are; serialized per file. The point counterpart of UPDATE_WHERE \u2014 WRITE replaces a whole value, and a caller changing part of a record it did not create needs neither a replacement nor a filter."
+            },
+            "UPDATE_WHERE": {
+              "effect": "write",
+              "handler": "update_where",
+              "idempotent": false,
+              "input": [
+                "filter",
+                "updates"
+              ],
+              "notes": "filter={field:value,...} AND semantics; updates={field:value,...} applied to all matched records; null value removes field; VIOLATION when no records match; load+filter+update+save serialized under per-file threading lock",
+              "output": [
+                "result_status",
+                "matched_keys",
+                "updated_count"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Atomically update all records matching ALL filter conditions; serialized per file"
+            },
+            "WRITE": {
+              "effect": "write",
+              "handler": "write",
+              "idempotent": true,
+              "input": [
+                "key",
+                "value"
+              ],
+              "output": [
+                "result_status"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Store or update a value at the given key"
+            }
+          }
+        }
+      },
+      "handler_ref": {
+        "callable": "MutableJsonRuntime",
+        "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
+      }
+    },
+    "80": {
+      "cs_metadata": {
+        "capability": {
+          "supported_operation_specs": [
+            "REGISTER",
+            "RESOLVE",
+            "EXISTS",
+            "DEREGISTER",
+            "COUNT"
+          ]
+        },
+        "operations": {
+          "operations": {
+            "COUNT": {
+              "effect": "read",
+              "handler": "count",
+              "idempotent": true,
+              "input": [],
+              "output": [
+                "result_status",
+                "count"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Count active (non-tombstoned) registry entries"
+            },
+            "DEREGISTER": {
+              "effect": "write",
+              "handler": "deregister",
+              "idempotent": true,
+              "input": [
+                "key_or_address"
+              ],
+              "output": [
+                "result_status"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "NOT_FOUND",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Mark a key or address as deregistered via tombstone"
+            },
+            "EXISTS": {
+              "effect": "read",
+              "handler": "exists",
+              "idempotent": true,
+              "input": [
+                "key_or_address"
+              ],
+              "output": [
+                "result_status",
+                "exists"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Check if a key or address is registered"
+            },
+            "REGISTER": {
+              "effect": "write",
+              "handler": "register",
+              "idempotent": false,
+              "input": [
+                "key",
+                "target_cs",
+                "target_ref"
+              ],
+              "output": [
+                "result_status",
+                "address"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "ALREADY_EXISTS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Register a new key to address binding"
+            },
+            "RESOLVE": {
+              "effect": "read",
+              "handler": "resolve",
+              "idempotent": true,
+              "input": [
+                "key_or_address"
+              ],
+              "output": [
+                "result_status",
+                "target_cs",
+                "target_ref"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "NOT_FOUND",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Resolve a key or address to its storage target"
+            }
+          }
+        }
+      },
+      "handler_ref": {
+        "callable": "RegistryRuntime",
+        "module": "capability_side_effects.implementation.CS_REGISTRY_V0.runtime"
+      }
+    }
+  },
+  "ct": {
+    "35": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "author": "$.inputs.author",
+              "publication_year": "$.inputs.publication_year",
+              "title": "$.inputs.title"
+            },
+            "atom": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_form_book_identity_key_v0"
+            },
+            "out": "__atom_result__"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+        "inputs": {
+          "author": {
+            "required": true,
+            "type": "string"
+          },
+          "publication_year": {
+            "required": true,
+            "type": "integer"
+          },
+          "title": {
+            "required": true,
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "identity_key": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "36": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "author": "$.inputs.author",
+              "title": "$.inputs.title"
+            },
+            "atom": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_form_work_identity_key_v0"
+            },
+            "out": "__atom_result__"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+        "inputs": {
+          "author": {
+            "required": true,
+            "type": "string"
+          },
+          "title": {
+            "required": true,
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "work_key": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "37": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_GROUP_RECORDS_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "attribute": "$.inputs.attribute",
+              "source": "$.inputs.source"
+            },
+            "atom": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_group_records_v0"
+            },
+            "out": "__atom_result__"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+        "inputs": {
+          "attribute": {
+            "required": true,
+            "type": "string"
+          },
+          "source": {
+            "required": true,
+            "type": "array"
+          }
+        },
+        "outputs": {
+          "grouped": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "38": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_SELECT_RECORDS_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "filter": "$.inputs.filter",
+              "source": "$.inputs.source"
+            },
+            "atom": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_select_records_v0"
+            },
+            "out": "__atom_result__"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
+        "inputs": {
+          "filter": {
+            "required": true,
+            "type": "object"
+          },
+          "source": {
+            "required": true,
+            "type": "array"
+          }
+        },
+        "outputs": {
+          "extracted": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "84": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "fields": "$.inputs.fields"
+            },
+            "atom": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_assemble_record_v0"
+            },
+            "out": "__atom_result__"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": {
+          "fields": {
+            "description": "Key-value map of fields to include in the record",
+            "required": true,
+            "type": "object"
+          }
+        },
+        "outputs": {
+          "record": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "85": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_COMPARE_EQUAL_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "left": "$.inputs.left",
+              "right": "$.inputs.right"
+            },
+            "atom": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_compare_equal_v0"
+            },
+            "out": "__atom_result__"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+        "inputs": {
+          "left": {
+            "required": true,
+            "type": "string"
+          },
+          "right": {
+            "required": true,
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "is_equal": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "86": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_FILTER_RECORDS_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "filter": "$.inputs.filter",
+              "source": "$.inputs.source"
+            },
+            "atom": "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_filter_records_v0"
+            },
+            "out": "__atom_result__"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+        "inputs": {
+          "filter": {
+            "description": "Field criteria dict. Values are exact match or \"present\" for existence check.",
+            "required": true,
+            "type": "object"
+          },
+          "source": {
+            "description": "Array of record objects to filter",
+            "required": true,
+            "type": "array"
+          }
+        },
+        "outputs": {
+          "extracted": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "87": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "parameters": "$.inputs.parameters",
+              "rules": "$.inputs.rules"
+            },
+            "atom": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_validate_parameter_rules_v0"
+            },
+            "out": "__atom_result__"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": {
+          "parameters": {
+            "description": "Parameter key-value map to validate",
+            "required": true,
+            "type": "object"
+          },
+          "rules": {
+            "description": "List of constraint rule objects",
+            "required": true,
+            "type": "array"
+          }
+        },
+        "outputs": {
+          "failed_rule": {
+            "from": "__atom_result__"
+          },
+          "valid": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "88": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "record": "$.inputs.record",
+              "schema": "$.inputs.schema"
+            },
+            "atom": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_validate_record_structure_v0"
+            },
+            "out": "__atom_result__"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "inputs": {
+          "record": {
+            "description": "The record to validate",
+            "required": true,
+            "type": "object"
+          },
+          "schema": {
+            "description": "Validation rules keyed by field name",
+            "required": true,
+            "type": "object"
+          }
+        },
+        "outputs": {
+          "violations": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    }
+  },
+  "projection_class": "machine_projection",
+  "rb_policy": {
+    "56": {
+      "78": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "catalog",
+              "core": {
+                "domain": "book_library_mgmt",
+                "entity_stores": {
+                  "BOOKS": {
+                    "path": "book_library_mgmt/catalog/books.json"
+                  },
+                  "BOOK_IDENTITY_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/book_identity_registry.jsonl"
+                  },
+                  "CATALOG_OPERATIONS": {
+                    "path": "book_library_mgmt/catalog/catalog_operations.jsonl"
+                  },
+                  "COPY_BARCODE_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/copy_barcode_registry.jsonl"
+                  },
+                  "PHYSICAL_COPIES": {
+                    "path": "book_library_mgmt/catalog/physical_copies.json"
+                  },
+                  "WORKS": {
+                    "path": "book_library_mgmt/catalog/works.json"
+                  },
+                  "WORK_IDENTITY_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/work_identity_registry.jsonl"
+                  }
+                },
+                "layer": "DOMAINS",
+                "subdomain": "catalog",
+                "summary": "Declares the stores the catalog owns and the paths they occupy"
+              },
+              "fqdn": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "version": "v0"
+            }
+          },
+          "structure": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0"
+        }
+      },
+      "79": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "catalog",
+              "core": {
+                "domain": "book_library_mgmt",
+                "entity_stores": {
+                  "BOOKS": {
+                    "path": "book_library_mgmt/catalog/books.json"
+                  },
+                  "BOOK_IDENTITY_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/book_identity_registry.jsonl"
+                  },
+                  "CATALOG_OPERATIONS": {
+                    "path": "book_library_mgmt/catalog/catalog_operations.jsonl"
+                  },
+                  "COPY_BARCODE_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/copy_barcode_registry.jsonl"
+                  },
+                  "PHYSICAL_COPIES": {
+                    "path": "book_library_mgmt/catalog/physical_copies.json"
+                  },
+                  "WORKS": {
+                    "path": "book_library_mgmt/catalog/works.json"
+                  },
+                  "WORK_IDENTITY_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/work_identity_registry.jsonl"
+                  }
+                },
+                "layer": "DOMAINS",
+                "subdomain": "catalog",
+                "summary": "Declares the stores the catalog owns and the paths they occupy"
+              },
+              "fqdn": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "version": "v0"
+            }
+          },
+          "structure": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0"
+        }
+      },
+      "80": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "catalog",
+              "core": {
+                "domain": "book_library_mgmt",
+                "entity_stores": {
+                  "BOOKS": {
+                    "path": "book_library_mgmt/catalog/books.json"
+                  },
+                  "BOOK_IDENTITY_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/book_identity_registry.jsonl"
+                  },
+                  "CATALOG_OPERATIONS": {
+                    "path": "book_library_mgmt/catalog/catalog_operations.jsonl"
+                  },
+                  "COPY_BARCODE_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/copy_barcode_registry.jsonl"
+                  },
+                  "PHYSICAL_COPIES": {
+                    "path": "book_library_mgmt/catalog/physical_copies.json"
+                  },
+                  "WORKS": {
+                    "path": "book_library_mgmt/catalog/works.json"
+                  },
+                  "WORK_IDENTITY_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/work_identity_registry.jsonl"
+                  }
+                },
+                "layer": "DOMAINS",
+                "subdomain": "catalog",
+                "summary": "Declares the stores the catalog owns and the paths they occupy"
+              },
+              "fqdn": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "version": "v0"
+            }
+          },
+          "structure": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0"
+        }
+      }
+    }
+  },
+  "wf_storage": {}
+}

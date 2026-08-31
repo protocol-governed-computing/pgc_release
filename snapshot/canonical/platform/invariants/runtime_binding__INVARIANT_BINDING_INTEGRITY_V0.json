@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_BINDING_INTEGRITY_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_BINDING_INTEGRITY_V0\n\n## Machine\n\n```yaml\nfqdn: runtime_binding::INVARIANT_BINDING_INTEGRITY_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: runtime_binding\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - RB\n```\n\n---\n\n## Purpose\n\nEnsure RB binding surfaces are structurally sound. Every binding must point to a real, addressable artifact via its FQDN.\n\n**Core Principle**: Binding integrity is a compile-time guarantee \u2014 no dangling references reach runtime.\n\n---\n\n## How it is checked\n### Rule 1: FQDN-Only Binding Keys\n\nAll `core.bindings` keys in RB artifacts must contain `::` (FQDN separator).\n\n**Violation**: `CT_GENERATE_ID_V0` instead of `capability_transforms::CT_GENERATE_ID_V0`\n\n### Rule 2: Binding Target Existence\n\nAll `core.bindings` keys must reference artifacts present in the compiled graph.\n\n**Violation**: `blockchain::CT_NONEXISTENT_V0` when that artifact does not exist.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Runtime Binding (RB) artifacts must declare bindings only to artifacts that exist in the\n    compiled graph, and all binding keys must use fully-qualified domain names (FQDNs). Bindings to non-existent\n    artifacts or short-name references are inadmissible \u2014 they indicate broken execution surface.\n\n    '\n  anti_patterns:\n  - short_name_binding: RB binding key uses short name instead of FQDN\n  - dangling_binding: RB binding key references artifact not in compiled graph\n  clarification:\n    fqdn_requirement: 'Binding keys must contain ''::'' (the FQDN separator). Short names are never admissible\n      in binding declarations \u2014 they create ambiguity across domain boundaries.\n\n      '\n    existence_requirement: Every binding key must resolve to a node in the compiled graph. Bindings to\n      removed, renamed, or misspelled artifacts are structural errors that would cause runtime failures.\n```\n",
+  "content_hash": "8159f1db640f953cb9711fc9a062553f3bad91471138ff6e25a4653bae6d9b3f",
+  "fqdn_id": "runtime_binding::INVARIANT_BINDING_INTEGRITY_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "RB"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "runtime_binding",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "runtime_binding::INVARIANT_BINDING_INTEGRITY_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "runtime_binding",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

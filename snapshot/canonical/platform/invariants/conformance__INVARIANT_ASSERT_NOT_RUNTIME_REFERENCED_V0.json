@@ -1,0 +1,40 @@
+{
+  "artifact_code": "INVARIANT_ASSERT_NOT_RUNTIME_REFERENCED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_ASSERT_NOT_RUNTIME_REFERENCED_V0\n\n## Machine\n\n```yaml\nfqdn: conformance::INVARIANT_ASSERT_NOT_RUNTIME_REFERENCED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: conformance::CONSTITUTION_ASSERT_V0\nauthority: pgc.platform\nconcern: conformance\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  enforcement:\n    level: ERROR\n    order: 22\n  applies_to_kinds:\n  - WF\n  - CC\n  - CS\n  - CT\n  - RB\n```\n\n---\n\n## Purpose\n\nAn ASSERT is compile-time governance. If an executable artifact can reference one, governance becomes reachable from execution \u2014 and a rule that runs during execution is no longer a property proven before it.\n\n---\n\n## How it is checked\n### Rule 1: No executable artifact references an ASSERT\n\nNo WF, CC, CS, CT or RB artifact may reference an `ASSERT_*` code, at any depth of its machine block.\n\n---\n\n## Rationale\n\nThe compile/execute boundary is only real if it is one-way. ASSERTs read the compiled graph; nothing in the compiled graph may read back.\n",
+  "content_hash": "4f3f8a6c3985a23e140ce3801a180596a815c14026686cdf2323ee000b1a37d4",
+  "fqdn_id": "conformance::INVARIANT_ASSERT_NOT_RUNTIME_REFERENCED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF",
+        "CC",
+        "CS",
+        "CT",
+        "RB"
+      ],
+      "enforcement": {
+        "level": "ERROR",
+        "order": 22
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "conformance",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "conformance::INVARIANT_ASSERT_NOT_RUNTIME_REFERENCED_V0",
+    "governed_by": "conformance::CONSTITUTION_ASSERT_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "conformance",
+  "references": [
+    "conformance::CONSTITUTION_ASSERT_V0"
+  ],
+  "version": "0"
+}

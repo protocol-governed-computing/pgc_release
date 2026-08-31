@@ -1,0 +1,105 @@
+{
+  "artifact_code": "CT_PURE_RENDER_ARTIFACTS_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_RENDER_ARTIFACTS_V0\n\n## Machine\n\n```yaml\nfqdn: transformation::CT_PURE_RENDER_ARTIFACTS_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: build\ncore:\n  summary: Render every artifact a mandate schedules from the design that determines it\n  refusal: raises\n  inputs:\n    design_registers:\n      type: array\n      required: true\n    mandate_registers:\n      type: array\n      required: true\n  outputs:\n    artifacts:\n      type: array\n      required: true\n    documents:\n      type: array\n      required: true\n    artifact_count:\n      type: integer\n      required: true\n    sources:\n      type: object\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_RENDER_ARTIFACTS\n  implementation:\n    module: transformation.implementation.capability_transforms.atoms.ct_pure_render_artifacts_v0\n    callable: execute\n```\n\n---\n\n## Intent\n\nRender every artifact a mandate schedules from the design that determines it\n",
+  "content_hash": "c4465d9ed42ac414265fece2335a2fdd69ade4446f68b6d0b67656e2f2f67fd4",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_RENDER_ARTIFACTS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "design_registers": "$.inputs.design_registers",
+          "mandate_registers": "$.inputs.mandate_registers"
+        },
+        "atom": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "transformation.implementation.capability_transforms.atoms.ct_pure_render_artifacts_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
+    "inputs": {
+      "design_registers": {
+        "required": true,
+        "type": "array"
+      },
+      "mandate_registers": {
+        "required": true,
+        "type": "array"
+      }
+    },
+    "outputs": {
+      "artifact_count": {
+        "from": "__atom_result__"
+      },
+      "artifacts": {
+        "from": "__atom_result__"
+      },
+      "documents": {
+        "from": "__atom_result__"
+      },
+      "sources": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "build",
+    "core": {
+      "inputs": {
+        "design_registers": {
+          "required": true,
+          "type": "array"
+        },
+        "mandate_registers": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "artifact_count": {
+          "required": true,
+          "type": "integer"
+        },
+        "artifacts": {
+          "required": true,
+          "type": "array"
+        },
+        "documents": {
+          "required": true,
+          "type": "array"
+        },
+        "sources": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "refusal": "raises",
+      "summary": "Render every artifact a mandate schedules from the design that determines it"
+    },
+    "fqdn": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "transformation.implementation.capability_transforms.atoms.ct_pure_render_artifacts_v0"
+      },
+      "operation": "PURE_RENDER_ARTIFACTS"
+    },
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+  ],
+  "version": "0"
+}

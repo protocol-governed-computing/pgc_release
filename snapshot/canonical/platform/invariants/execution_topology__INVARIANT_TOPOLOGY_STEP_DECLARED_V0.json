@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_TOPOLOGY_STEP_DECLARED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_TOPOLOGY_STEP_DECLARED_V0\n\n## Machine\n\n```yaml\nfqdn: execution_topology::INVARIANT_TOPOLOGY_STEP_DECLARED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: execution_topology\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - WF\n```\n\n---\n\n## Summary\n\nAn undeclared step is an ungoverned execution unit. If a CC's execution topology contains\nsteps that are implied rather than declared \u2014 by field naming patterns, positional convention,\nor ambient coupling \u2014 the compiler cannot validate them, and the runtime cannot traverse them\ndeterministically.\n\nEvery step that executes must exist by name in the topology before compilation completes.\n\n## What this realizes\nFor every CC execution topology:\n1. Every step MUST be an explicit named entry in the pipeline array\n2. Step identity is the `step` field \u2014 not position, not key name, not inference\n3. No step may be implied by proximity to another step\n4. Wildcard bindings (`$.results.*` without a step ID) are constitutional violations\n5. Ambient dataflow (state shared across steps without explicit binding) is a constitutional violation\n\n## Where it applies\n- **Artifact Types**: CC\n- **Validation Phase**: compile_time\n- **Enforced By**: ASSERT_TOPOLOGY_STEP_DECLARED_V0\n\n## Rationale\n\nExplicit declaration is the foundation of compile-time governance. If steps can be implied,\nthe compiler cannot enumerate the execution graph, cannot validate dataflow closure, and\ncannot verify routing completeness. Declared steps are the compiler's unit of analysis.\n\nFull enforcement is implemented in Phase 3.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: each step in a CC pipeline MUST appear as an explicit named entry in the pipeline array; no step\n    may be implied by position, naming convention, field co-location, or runtime inference\n  summary: every execution topology step MUST be fully and explicitly declared; implicit steps, wildcard\n    bindings, and ambient dataflow are constitutional violations\n```\n",
+  "content_hash": "3d1915c5fbf52ea05c2d8526b259c974169971ae620c5d2636601d621a01c7b8",
+  "fqdn_id": "execution_topology::INVARIANT_TOPOLOGY_STEP_DECLARED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "execution_topology",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "execution_topology::INVARIANT_TOPOLOGY_STEP_DECLARED_V0",
+    "governed_by": "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "execution_topology",
+  "references": [
+    "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0"
+  ],
+  "version": "0"
+}

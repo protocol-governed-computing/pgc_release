@@ -1,0 +1,33 @@
+{
+  "artifact_code": "AC_SEED_AUTHOR_V0",
+  "artifact_type": "AC",
+  "content": "# AC_SEED_AUTHOR_V0\n\n## 1. Intent\n\nThe person accountable for a seed's content.\n\nA seed is a faithful rewrite of a business problem statement, and someone must answer for whether it\nsays what the business meant. Declaring that as an actor makes authorship a property of the\ncomposition rather than a convention: the pipeline cannot run without one, and no automated drafter\ncan occupy this role.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::AC_SEED_AUTHOR_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: design\ncore:\n  summary: Author of record for a seed\n  description: The human accountable for the content of a seed offered to the seed phase.\n  type: human\n  attributes:\n    role:\n      type: string\n      required: true\n      value: seed_author\n```\n",
+  "content_hash": "22db9f4dae3fc92eafe5cf9a23978ca8b4282ce1828021dc23bd607bd149a165",
+  "fqdn_id": "transformation::AC_SEED_AUTHOR_V0",
+  "frontmatter": {
+    "artifact_kind": "ACTOR",
+    "authority": "pgc.platform",
+    "concern": "design",
+    "core": {
+      "attributes": {
+        "role": {
+          "required": true,
+          "type": "string",
+          "value": "seed_author"
+        }
+      },
+      "description": "The human accountable for the content of a seed offered to the seed phase.",
+      "summary": "Author of record for a seed",
+      "type": "human"
+    },
+    "fqdn": "transformation::AC_SEED_AUTHOR_V0",
+    "governed_by": "actor::CONSTITUTION_ACTOR_IDENTITY_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "actor::CONSTITUTION_ACTOR_IDENTITY_V0"
+  ],
+  "version": "0"
+}

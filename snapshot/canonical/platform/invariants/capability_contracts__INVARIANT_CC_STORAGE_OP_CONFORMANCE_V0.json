@@ -1,0 +1,36 @@
+{
+  "artifact_code": "INVARIANT_CC_STORAGE_OP_CONFORMANCE_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_CC_STORAGE_OP_CONFORMANCE_V0\n\n## Machine\n\n```yaml\nfqdn: capability_contracts::INVARIANT_CC_STORAGE_OP_CONFORMANCE_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: capability_contracts\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  enforcement:\n    order: 42\n    level: ERROR\n  applies_to_kinds:\n  - CC\n```\n\n---\n\n## Purpose\n\nEnsure CC pipeline steps invoke only operations that the target CS explicitly declares.\n\n**Core Principle**: Operation vocabulary is declared in protocol, enforced by compiler, executed verbatim by runtime. No translation, no aliasing, no heuristics.\n\n---\n\n## How it is checked\n### Rule 1: op \u2208 CS.core.policy.operations\n\nFor every CC pipeline step with a `side_effect` binding:\n- The step must declare an `op` field\n- The declared `op` must exist in the target CS's `core.policy.operations` list\n\n**Violation \u2014 Undeclared Op**:\n```yaml\n# \u274c FORBIDDEN \u2014 CS_MUTABLE_JSON_V0 declares READ not GET\npipeline:\n  - step: check_exists\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: GET   # \u274c GET is not in CS_MUTABLE_JSON_V0.core.policy.operations\n```\n\n**Correct**:\n```yaml\n# \u2705 op matches CS declaration\npipeline:\n  - step: check_exists\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ  # \u2713 READ is declared in CS_MUTABLE_JSON_V0.core.policy.operations\n```\n\n---\n\n## Rationale\n\nWithout this invariant, a CC can declare any string as `op`. The compiler accepts\nit. The runtime dispatches via `getattr(engine, op.lower(), None)`. If no handler\nmethod matches, the result is BACKEND_ERROR at execution time \u2014 a runtime failure\nthat was detectable at compile time.\n\nThis invariant closes the gap: **Governance declares \u2192 Compiler enforces \u2192 Runtime executes.**\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Each CC pipeline step that binds a CS (side_effect) must declare an `op` that is a member\n    of that CS''s `core.policy.operations` list.\n\n    The CS artifact is the authoritative declaration of its supported operation vocabulary. A CC may not\n    invoke an operation the CS does not declare. Unknown ops produce runtime BACKEND_ERROR \u2014 this invariant\n    moves that failure to compile time.\n\n    '\n  anti_patterns:\n  - undeclared_op: CC pipeline step declares op not in CS.core.policy.operations\n  - missing_op: CC pipeline step with side_effect binding has no op declared\n  clarification:\n    single_vocabulary: 'The canonical operation vocabulary for each CS is declared in CS.core.policy.operations.\n      This is the protocol-layer source of truth. CC authors must use ops from that list. The compiler\n      enforces this; the runtime never aliases or translates op names.\n\n      '\n    ct_steps_exempt: 'Pipeline steps that bind a CT (transform) are exempt \u2014 transforms have no op field.\n      Only CS-binding steps are subject to this invariant.\n\n      '\n```\n",
+  "content_hash": "be867298cca7cd3a092fed33681f91e0686c93dfbfa50e16fcf8a9f32132d5a9",
+  "fqdn_id": "capability_contracts::INVARIANT_CC_STORAGE_OP_CONFORMANCE_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CC"
+      ],
+      "enforcement": {
+        "level": "ERROR",
+        "order": 42
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_contracts",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_contracts::INVARIANT_CC_STORAGE_OP_CONFORMANCE_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_contracts",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

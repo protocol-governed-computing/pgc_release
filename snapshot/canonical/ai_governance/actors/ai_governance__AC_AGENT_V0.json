@@ -1,0 +1,36 @@
+{
+  "artifact_code": "AC_AGENT_V0",
+  "artifact_type": "AC",
+  "content": "# AC_AGENT_V0\n\n## 1. Identity\n\nAn autonomous agent that proposes actions through the governance protocol.\n\n---\n\n## 2. Rationale\n\nAgent actors are probabilistic intent emitters:\n- Propose tool invocations on behalf of users\n- Subject to governance mediation before any action executes\n- May not invoke tools directly \u2014 all actions route through governance\n\n---\n\n## 3. Type\n\n| Property | Value |\n|----------|-------|\n| Type | agent |\n\n---\n\n## 4. Attributes\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| agent_id | string | true | Unique agent identifier |\n| requesting_user_id | string | true | User the agent acts on behalf of |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::AC_AGENT_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: agent_governance\n\ncore:\n  summary: Probabilistic intent emitter\n  description: Autonomous agent that proposes actions through governance protocol\n  type: agent\n\n  attributes:\n    agent_id:\n      type: string\n      required: true\n    requesting_user_id:\n      type: string\n      required: true\n```\n",
+  "content_hash": "3a7fc58ecd3b85747345e2988c1bf59eb54d830b4b43efdf23d016c07ccd116b",
+  "fqdn_id": "ai_governance::AC_AGENT_V0",
+  "frontmatter": {
+    "artifact_kind": "ACTOR",
+    "authority": "pgc.platform",
+    "concern": "agent_governance",
+    "core": {
+      "attributes": {
+        "agent_id": {
+          "required": true,
+          "type": "string"
+        },
+        "requesting_user_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "description": "Autonomous agent that proposes actions through governance protocol",
+      "summary": "Probabilistic intent emitter",
+      "type": "agent"
+    },
+    "fqdn": "ai_governance::AC_AGENT_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

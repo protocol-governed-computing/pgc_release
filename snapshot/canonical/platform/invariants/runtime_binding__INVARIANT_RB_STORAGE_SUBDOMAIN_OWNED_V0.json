@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_RB_STORAGE_SUBDOMAIN_OWNED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_RB_STORAGE_SUBDOMAIN_OWNED_V0\n\nArchitectural Invariant\n\n## Machine\n\n```yaml\nfqdn: runtime_binding::INVARIANT_RB_STORAGE_SUBDOMAIN_OWNED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0\nauthority: pgc.platform\nconcern: runtime_binding\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - RB\n```\n\n## Summary\n\nA binding names the storage description its own subdomain wrote. It never names another\nsubdomain's, because a description maintained by someone other than the owner of what it\ndescribes is a second copy of one truth, and the second copy is the one nobody maintains.\n\n## What this realizes\nFor every RB artifact declaring `core.storage_structure`:\n\n1. The named structure MUST resolve to a STRUCTURE artifact in the composition.\n2. The structure's owning subdomain MUST equal the binding's owning subdomain.\n\nA binding that declares no `storage_structure` is out of scope: it binds capabilities that\naddress no records.\n\nOwnership is read from the artifact's module organization, which is the same source the\ncomposition uses everywhere else and is immutable for a given version.\n\n## Where it applies\n- **Artifact Types**: RB\n- **Validation Phase**: ASSERT (Phase 5, compile-time, hard fail)\n- **Enforced By**: ASSERT_RB_STORAGE_SUBDOMAIN_OWNED_V0\n\n## Rationale\n\nAn act that needs records another subdomain owns has one workaround available today: describe\nthose records in its own storage description. It works, it needs nothing from the platform, and\nevery check passes \u2014 which is what makes it the easy wrong act. Two subdomains then declare where\none record lives, and nothing says which is authoritative.\n\nThis invariant closes that route. It does not grant the reach the workaround was standing in for \u2014\nthat is a wider change, and this rule is what stops the wider change from being answered by copying\nwhile it is still being made.\n\n**What it does not check.** Whether two descriptions elsewhere in the composition name one record\nis a question about the composition as a whole and belongs where descriptions meet, at assembly.\nThis invariant sees one binding at a time and holds the narrower, sharper statement: a binding\nspeaks for its own subdomain and no other.\n\n---\n",
+  "content_hash": "22f3309a3b9f74cd41dfd38ff545b236c03b574c2e1ebc26b74866b5610501d5",
+  "fqdn_id": "runtime_binding::INVARIANT_RB_STORAGE_SUBDOMAIN_OWNED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "RB"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "runtime_binding",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "runtime_binding::INVARIANT_RB_STORAGE_SUBDOMAIN_OWNED_V0",
+    "governed_by": "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "runtime_binding",
+  "references": [
+    "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0"
+  ],
+  "version": "0"
+}

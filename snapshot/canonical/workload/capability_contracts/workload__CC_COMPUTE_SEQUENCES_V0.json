@@ -1,0 +1,84 @@
+{
+  "artifact_code": "CC_COMPUTE_SEQUENCES_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "numbers": "in.numbers"
+        },
+        "fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+        "id": "CT_PURE_COLLATZ_STEP_V0",
+        "inputs": [
+          "numbers"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "sequences"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_COMPUTE_SEQUENCES_V0\n\n## 1. Intent\n\nCompute Collatz sequences for all numbers in the input list.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::CC_COMPUTE_SEQUENCES_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Compute Collatz sequences for all input numbers\n  inputs:\n    numbers:\n      type: array\n      required: true\n  outputs:\n    sequences:\n      type: object\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: compute_sequences\n    transform: workload::CT_PURE_COLLATZ_STEP_V0\n    inputs:\n      numbers: $.inputs.numbers\n    outputs:\n      sequences: $.capability_result.sequences\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\nextensions:\n  description: Computes full Collatz iteration path for each input integer\n```\n",
+  "content_hash": "e747cfc9f1de48138aa615c2568fea6b0683ed5c2a4ec39b8c91d47b37977685",
+  "fqdn_id": "workload::CC_COMPUTE_SEQUENCES_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "workload",
+    "core": {
+      "inputs": {
+        "numbers": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "sequences": {
+          "type": "object"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "numbers": "$.inputs.numbers"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "sequences": "$.capability_result.sequences"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "compute_sequences",
+          "transform": "workload::CT_PURE_COLLATZ_STEP_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Compute Collatz sequences for all input numbers"
+    },
+    "extensions": {
+      "description": "Computes full Collatz iteration path for each input integer"
+    },
+    "fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "workload::CT_PURE_COLLATZ_STEP_V0"
+  ],
+  "version": "0"
+}

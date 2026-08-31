@@ -1,0 +1,82 @@
+{
+  "artifact_code": "WF_CONSTRUCT_ARTIFACTS_V0",
+  "artifact_type": "WF",
+  "content": "# WF_CONSTRUCT_ARTIFACTS_V0\n\n## 1. Intent\n\nThe Construction lifecycle, executed as a governed workflow.\n\nEvery other stage of the pipeline is a composition the snapshot seals and the runtime executes.\nConstruction was ordinary Python called by a testbed \u2014 which meant the one step that *creates*\nartifacts was the one step nothing governed.\n\n---\n\n## 2. Why this is not P9\n\nP0\u2013P8 judge documents and emit verdicts. This consumes P7 and P8 and emits artifacts. Numbering it\nwould blur the two failure classes the lifecycle split exists to separate: a **P8 failure** is \"the\nmandate is incomplete or contradictory\", a **construction failure** is \"the mandate was valid and\ndid not uniquely determine an artifact\". Those are caught by different mechanisms and fixed by\ndifferent people.\n\nSo Construction is a lifecycle stage alongside compilation and execution, and this workflow is its\nentry point.\n\n---\n\n## 3. The refusal is a composition, not a convention\n\nA convention that construction \"should\" only run on a complete design is a convention. A step that\nrefuses is a composition: an under-determined design stops at the gate and never reaches the\nrenderer, so zero artifacts are emitted rather than twenty-five approximations.\n\nWhat the surface **cannot** say is which kind of refusal it was. A transform yields SUCCESS on\nreturn and VIOLATION on raise and nothing else, so a design that does not determine its artifacts\nand a construction that is broken arrive as the same status. The exit is named `EXIT_REFUSED`\nbecause refusal is overwhelmingly the likelier cause, and the reason travels in the raised message.\nDistinguishing them at the status would need the CT surface to widen, which is a platform change and\nnot this workflow's to make.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::WF_CONSTRUCT_ARTIFACTS_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: build\n\nruntime_binding: transformation::RB_CONSTRUCTION_BINDINGS_V0\nsubdomain: build\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\n\ncore:\n  summary: Construct protocol artifacts from an approved design and mandate\n  actor_context: transformation::AC_REGISTER_AUTHOR_V0\n\n  start_node: IN_CONSTRUCTION_REQUESTED_V0\n\n  nodes:\n    IN_CONSTRUCTION_REQUESTED_V0:\n      type: IN\n      code: IN_CONSTRUCTION_REQUESTED_V0\n      next:\n        ACK: CC_CONSTRUCT_ARTIFACTS_V0\n        NACK: EXIT_REJECTED\n\n    CC_CONSTRUCT_ARTIFACTS_V0:\n      type: CC\n      code: CC_CONSTRUCT_ARTIFACTS_V0\n      inputs:\n        design_text: $.payload.design_text\n        mandate_text: $.payload.mandate_text\n        threshold: $.payload.threshold\n      next:\n        SUCCESS: CC_PERSIST_ARTIFACTS_V0\n        VIOLATION: EXIT_REFUSED\n        BACKEND_ERROR: EXIT_REJECTED\n\n    CC_PERSIST_ARTIFACTS_V0:\n      type: CC\n      code: CC_PERSIST_ARTIFACTS_V0\n      inputs:\n        documents: $.results.CC_CONSTRUCT_ARTIFACTS_V0.documents\n      next:\n        SUCCESS: EXIT_CONSTRUCTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n\n    EXIT_CONSTRUCTED:\n      type: EXIT\n      status: SUCCESS\n\n    EXIT_REFUSED:\n      type: EXIT\n      status: VIOLATION\n\n    EXIT_REJECTED:\n      type: EXIT\n      status: VIOLATION\n```\n",
+  "content_hash": "18ae41a8f330bbb91ce3c29b8802180eeca9b38c6e6c8bde6173c5023c5aedb8",
+  "fqdn_id": "transformation::WF_CONSTRUCT_ARTIFACTS_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "build",
+    "core": {
+      "actor_context": "transformation::AC_REGISTER_AUTHOR_V0",
+      "nodes": {
+        "CC_CONSTRUCT_ARTIFACTS_V0": {
+          "code": "CC_CONSTRUCT_ARTIFACTS_V0",
+          "fqdn_id": "transformation::CC_CONSTRUCT_ARTIFACTS_V0",
+          "inputs": {
+            "design_text": "$.payload.design_text",
+            "mandate_text": "$.payload.mandate_text",
+            "threshold": "$.payload.threshold"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_PERSIST_ARTIFACTS_V0",
+            "VIOLATION": "EXIT_REFUSED"
+          },
+          "type": "CC"
+        },
+        "CC_PERSIST_ARTIFACTS_V0": {
+          "code": "CC_PERSIST_ARTIFACTS_V0",
+          "fqdn_id": "transformation::CC_PERSIST_ARTIFACTS_V0",
+          "inputs": {
+            "documents": "$.results.CC_CONSTRUCT_ARTIFACTS_V0.documents"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_CONSTRUCTED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_CONSTRUCTED": {
+          "status": "SUCCESS",
+          "type": "EXIT"
+        },
+        "EXIT_REFUSED": {
+          "status": "VIOLATION",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "status": "VIOLATION",
+          "type": "EXIT"
+        },
+        "IN_CONSTRUCTION_REQUESTED_V0": {
+          "code": "IN_CONSTRUCTION_REQUESTED_V0",
+          "fqdn_id": "transformation::IN_CONSTRUCTION_REQUESTED_V0",
+          "next": {
+            "ACK": "CC_CONSTRUCT_ARTIFACTS_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_CONSTRUCTION_REQUESTED_V0",
+      "summary": "Construct protocol artifacts from an approved design and mandate"
+    },
+    "fqdn": "transformation::WF_CONSTRUCT_ARTIFACTS_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "transformation::RB_CONSTRUCTION_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "build",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "transformation::RB_CONSTRUCTION_BINDINGS_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

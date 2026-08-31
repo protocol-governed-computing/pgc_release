@@ -1,0 +1,41 @@
+{
+  "artifact_code": "CONSTITUTION_TEST_DATA_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_TEST_DATA_V0\n\n## Machine\n```yaml\nfqdn: conformance::CONSTITUTION_TEST_DATA_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: conformance\ncore:\n  enforcement_model: compiler_enforced\n  governs:\n  - TEST_DATA\nrules:\n- applies_to: TEST_DATA\n  enforced_by: conformance::INVARIANT_TEST_DATA_MATCH_CT_OUTPUT_V0\n- applies_to: TEST_DATA\n  enforced_by: artifact::INVARIANT_FQDN_ONLY_REFERENCES_V0\n- applies_to: TEST_DATA\n  enforced_by: conformance::INVARIANT_CONFORMANCE_ASSERTION_MODE_VALID_V0\n```\n\n---\n\n## 1. Purpose\n\nThis constitution defines the governance and enforcement rules for Test Data (TEST_DATA) artifacts.\n\nTest Data artifacts provide declarative test specifications for validating Capability Transforms (CTs). They are the conformance surface for CT behavior \u2014 each test case declares input bindings and expected outputs that the CT must produce deterministically.\n\n---\n\n## 2. Core Principles\n\n- **CT Output Match:** Expected outputs in test cases MUST match the actual output contract declared by the target CT. Mismatches are constitutional violations.\n- **FQDN References:** All references to target artifacts MUST use fully-qualified names.\n\n---\n\n## 3. Required Fields\n\n- `test_data_code`: Unique identifier for the test data artifact.\n- `version`: Version of the test data artifact.\n- `governed_by`: The constitution governing this test data.\n- `core`: Metadata including summary, target artifact reference, and test cases.\n\n---\n\n## How it is checked\n- Each test case MUST declare input bindings that satisfy the target CT's input schema.\n- Each test case MUST declare expected outputs that match the target CT's output contract.\n- The target artifact reference MUST use FQDN and resolve to a declared CT artifact.\n\n---\n\n## End of Constitution\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs Test Data (TEST_DATA) artifacts \u2014 declarative test specifications for CT conformance\nrules:\n- rule_id: TD_CT_OUTPUT_MATCH\n  constraint: test case expected outputs MUST match the actual CT output contract\n- rule_id: TD_FQDN_REFERENCES\n  constraint: target artifact references in TEST_DATA MUST use FQDN\n```\n",
+  "content_hash": "83740f1adb31ba618e3aea9670498833959e61e4eee6ef9e758370baede547aa",
+  "fqdn_id": "conformance::CONSTITUTION_TEST_DATA_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "conformance",
+    "core": {
+      "enforcement_model": "compiler_enforced",
+      "governs": [
+        "TEST_DATA"
+      ]
+    },
+    "fqdn": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "rules": [
+      {
+        "applies_to": "TEST_DATA",
+        "enforced_by": "conformance::INVARIANT_TEST_DATA_MATCH_CT_OUTPUT_V0"
+      },
+      {
+        "applies_to": "TEST_DATA",
+        "enforced_by": "artifact::INVARIANT_FQDN_ONLY_REFERENCES_V0"
+      },
+      {
+        "applies_to": "TEST_DATA",
+        "enforced_by": "conformance::INVARIANT_CONFORMANCE_ASSERTION_MODE_VALID_V0"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "conformance",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

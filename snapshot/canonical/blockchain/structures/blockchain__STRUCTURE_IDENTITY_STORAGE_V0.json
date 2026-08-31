@@ -1,0 +1,38 @@
+{
+  "artifact_code": "STRUCTURE_IDENTITY_STORAGE_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_IDENTITY_STORAGE_V0\n\n## 1. Intent\n\nDeclares the three stores identity owns and the paths they occupy\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::STRUCTURE_IDENTITY_STORAGE_V0\nartifact_kind: STRUCTURE\nversion: v0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Declares the three stores identity owns and the paths they occupy\n  layer: DOMAINS\n  domain: blockchain\n  subdomain: identity\n  entity_stores:\n    ACTORS:\n      path: blockchain/identity/actors.json\n    CONTACT_ADDRESS_REGISTRY:\n      path: blockchain/identity/contact_address_registry.jsonl\n    ACTOR_OCCURRENCES:\n      path: blockchain/identity/actor_occurrences.jsonl\n```\n",
+  "content_hash": "0ba99e4f6fc4984caf027cdc3ba7da83f616830dcf9f4f0248a99faf361cdce9",
+  "fqdn_id": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "domain": "blockchain",
+      "entity_stores": {
+        "ACTORS": {
+          "path": "blockchain/identity/actors.json"
+        },
+        "ACTOR_OCCURRENCES": {
+          "path": "blockchain/identity/actor_occurrences.jsonl"
+        },
+        "CONTACT_ADDRESS_REGISTRY": {
+          "path": "blockchain/identity/contact_address_registry.jsonl"
+        }
+      },
+      "layer": "DOMAINS",
+      "subdomain": "identity",
+      "summary": "Declares the three stores identity owns and the paths they occupy"
+    },
+    "fqdn": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

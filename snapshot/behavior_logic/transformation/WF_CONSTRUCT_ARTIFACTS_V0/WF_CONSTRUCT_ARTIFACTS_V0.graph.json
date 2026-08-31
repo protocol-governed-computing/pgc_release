@@ -1,0 +1,221 @@
+{
+  "wf_id": "WF_CONSTRUCT_ARTIFACTS_V0",
+  "entry": "IN_CONSTRUCTION_REQUESTED_V0",
+  "nodes": [
+    {
+      "id": "CC_CONSTRUCT_ARTIFACTS_V0",
+      "type": "CC",
+      "cc_code": "CC_CONSTRUCT_ARTIFACTS_V0",
+      "capability": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "document_text": "in.design_text"
+            },
+            "fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+            "id": "CT_PURE_PARSE_REGISTERS_V0",
+            "inputs": [
+              "document_text"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "header",
+              "sections",
+              "registers"
+            ]
+          },
+          {
+            "bindings": {
+              "design_registers": "parse_design.capability_result.registers",
+              "mandate_registers": "parse_mandate.capability_result.registers"
+            },
+            "fqdn": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
+            "id": "CT_PURE_RENDER_ARTIFACTS_V0",
+            "inputs": [
+              "design_registers",
+              "mandate_registers"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "artifacts",
+              "documents",
+              "artifact_count",
+              "sources"
+            ]
+          },
+          {
+            "bindings": {
+              "rendered": "render_artifacts.capability_result.artifacts",
+              "sources": "render_artifacts.capability_result.sources"
+            },
+            "fqdn": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+            "id": "CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+            "inputs": [
+              "rendered",
+              "sources"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "provenance",
+              "governing_artifacts"
+            ]
+          },
+          {
+            "bindings": {
+              "design_registers": "parse_design.capability_result.registers",
+              "mandate_registers": "parse_mandate.capability_result.registers",
+              "provenance": "attribute_provenance.capability_result.provenance",
+              "threshold": "in.threshold"
+            },
+            "fqdn": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
+            "id": "CT_PURE_MEASURE_COMPLETENESS_V0",
+            "inputs": [
+              "design_registers",
+              "mandate_registers",
+              "threshold",
+              "provenance"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "completeness",
+              "determined",
+              "required",
+              "undetermined"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "design_text": "IN.design_text",
+          "mandate_text": "IN.mandate_text",
+          "threshold": "IN.threshold"
+        }
+      }
+    },
+    {
+      "id": "CC_PERSIST_ARTIFACTS_V0",
+      "type": "CC",
+      "cc_code": "CC_PERSIST_ARTIFACTS_V0",
+      "capability": "capability_side_effects::CS_TEXT_ARTIFACT_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_TEXT_ARTIFACT_V0",
+            "id": "CS_TEXT_ARTIFACT_V0",
+            "kind": "CS",
+            "ops": [
+              "WRITE_ALL",
+              "LIST"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "documents": "CC_CONSTRUCT_ARTIFACTS_V0.documents"
+        }
+      }
+    },
+    {
+      "id": "EXIT_CONSTRUCTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REFUSED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_CONSTRUCTION_REQUESTED_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_CONSTRUCT_ARTIFACTS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_CONSTRUCT_ARTIFACTS_V0",
+      "to": "CC_PERSIST_ARTIFACTS_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONSTRUCT_ARTIFACTS_V0",
+      "to": "EXIT_REFUSED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_PERSIST_ARTIFACTS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_PERSIST_ARTIFACTS_V0",
+      "to": "EXIT_CONSTRUCTED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_PERSIST_ARTIFACTS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_CONSTRUCTION_REQUESTED_V0",
+      "to": "CC_CONSTRUCT_ARTIFACTS_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_CONSTRUCTION_REQUESTED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_CONSTRUCTION_REQUESTED_V0",
+      "CC_CONSTRUCT_ARTIFACTS_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_CONSTRUCTION_REQUESTED_V0",
+      "CC_CONSTRUCT_ARTIFACTS_V0",
+      "CC_PERSIST_ARTIFACTS_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_CONSTRUCTION_REQUESTED_V0",
+      "CC_CONSTRUCT_ARTIFACTS_V0",
+      "CC_PERSIST_ARTIFACTS_V0",
+      "EXIT_CONSTRUCTED"
+    ],
+    [
+      "IN_CONSTRUCTION_REQUESTED_V0",
+      "CC_CONSTRUCT_ARTIFACTS_V0",
+      "CC_PERSIST_ARTIFACTS_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_CONSTRUCTION_REQUESTED_V0",
+      "CC_CONSTRUCT_ARTIFACTS_V0",
+      "EXIT_REFUSED"
+    ],
+    [
+      "IN_CONSTRUCTION_REQUESTED_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

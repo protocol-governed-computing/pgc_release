@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_RB_PARAMETERS_DECLARED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_RB_PARAMETERS_DECLARED_V0\n\nArchitectural Invariant\n\n## Machine\n\n```yaml\nfqdn: runtime_binding::INVARIANT_RB_PARAMETERS_DECLARED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0\nauthority: pgc.platform\nconcern: runtime_binding\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - RB\n```\n\n## Summary\n\nA runtime binding declares the template parameters its policies expand at runtime:\n\n```yaml\nparameters:\n  - module_data_root\ncore:\n  bindings:\n    capability_side_effects::CS_REGISTRY_V0:\n      policy:\n        path: \"{{module_data_root}}/ai_governance/ai_licensing/license_registry.json\"\n```\n\nThe template is load-bearing \u2014 the compiler emits it unchanged and the runtime expands it against\nthe supplied data root. The `parameters` list is the binding's *declaration* of what it requires,\nand nothing consumed it, so it could disagree with the policies indefinitely without any signal.\nA machine-block census flagged it as a key with no detected consumer, which is exactly what an\nundetected drift looks like.\n\nTwo directions of disagreement, both silent before this invariant:\n\n- A template with **no declared parameter** is an undeclared runtime requirement: the binding\n  depends on a value its own contract never announces, so provisioning it correctly relies on\n  reading the policy strings rather than the declaration.\n- A declared parameter used by **no template** is a stale declaration: it claims the binding needs\n  something it does not, which misleads anyone provisioning the runtime.\n\nNeither breaks a build today, and both make the declaration untrustworthy. This invariant makes\n`parameters` a checked contract rather than documentation that happens to be nearby.\n\n## What this realizes\nFor every RB artifact:\n\n1. Collect every `{{name}}` appearing in any value under `core.bindings`, at any nesting depth.\n2. Collect every entry in the artifact's `parameters` list.\n3. Every used template name MUST appear in `parameters`.\n4. Every declared parameter MUST be used by at least one template.\n\nAn RB that declares no parameters and uses no templates is conformant \u2014 the rule constrains\nagreement, not the presence of parameters.\n\n## Anti-Patterns\n\n- `undeclared_template`: a policy expands `{{x}}` while `parameters` omits `x`\n- `stale_parameter`: `parameters` lists `x` while no policy expands `{{x}}`\n\n## Enforcement\n\n- **Stage:** compiler_assertion\n- **Failure Mode:** FAIL_IMMEDIATELY\n\n",
+  "content_hash": "7ba471fecff14c47b47e16a2ccd804c16f89e1202005f6b5b5829fc3925fe000",
+  "fqdn_id": "runtime_binding::INVARIANT_RB_PARAMETERS_DECLARED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "RB"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "runtime_binding",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "runtime_binding::INVARIANT_RB_PARAMETERS_DECLARED_V0",
+    "governed_by": "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "runtime_binding",
+  "references": [
+    "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0"
+  ],
+  "version": "0"
+}

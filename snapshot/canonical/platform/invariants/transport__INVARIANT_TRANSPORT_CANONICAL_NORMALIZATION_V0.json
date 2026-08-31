@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0\n\n## Machine\n\n```yaml\nfqdn: transport::INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: transport\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - TI\n  - TE\n```\n\n---\n\n## Purpose\n\nThe system boundary is not transparent \u2014 it is a normalization membrane. Transport\ningress must normalize inbound payloads into a canonical admission envelope before\nhanding off to execution. Transport egress must project execution results into a\ncanonical response envelope before emitting to the caller.\n\nThis invariant enforces that both boundaries are explicit, governed, and closed.\n\n---\n\n## Scope\n\n**Applies to:** All TI_ and TE_ artifacts\n\n**Does NOT validate:**\n- Type compatibility between admission schema fields and workflow payload schema\n- Completeness of projection (whether all execution output fields are projected)\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Transport artifacts MUST declare explicit normalization schemas. No passthrough of raw\n    payloads or raw execution results is permitted.\n\n    (1) TI_ admission normalization: Every TI_ artifact must declare an explicit input_contract that\n    specifies which fields are accepted. Raw payload passthrough (forwarding the entire incoming payload\n    without schema enforcement) is a boundary violation.\n\n    PRESENCE of the contract is the declaration. An EMPTY contract is legal and meaningful: it declares\n    that the operation admits no input whatsoever, which is the strongest normalization available, not\n    the absence of one. A parameterless operation must never be made to invent a field in order to be\n    governed.\n\n    (2) TE_ projection normalization: Every TE_ artifact must declare an explicit projection schema (response_schema,\n    projection_schema, or projection) that specifies which execution result fields are emitted. Raw execution\n    result passthrough leaks internal state through the boundary.\n\n    Normalization is deterministic and pure: given the same input, the same canonical envelope is always\n    produced.\n\n    '\n  anti_patterns:\n  - ti_passthrough_mode: 'TI artifact declares passthrough: true instead of an admission schema\n\n      '\n  - ti_no_admission_schema: 'TI artifact missing core.admission_schema declaration\n\n      '\n  - ti_empty_admission_schema: 'TI core.admission_schema contains no fields\n\n      '\n  - te_no_projection_schema: 'TE artifact missing response_schema, projection_schema, or projection field\n\n      '\n  - te_raw_result_passthrough: TE artifact forwards raw execution result without projection\n```\n",
+  "content_hash": "5af83022dab06c7e376ed974276b851868a27980116bcdaf5c307268ceb45cbc",
+  "fqdn_id": "transport::INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "TI",
+        "TE"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "transport",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "transport::INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "transport",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

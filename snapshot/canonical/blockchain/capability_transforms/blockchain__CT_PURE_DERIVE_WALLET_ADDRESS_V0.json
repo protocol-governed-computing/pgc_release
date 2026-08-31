@@ -1,0 +1,75 @@
+{
+  "artifact_code": "CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_DERIVE_WALLET_ADDRESS_V0\n\n## 1. Intent\n\nDerives an address from supplied key material; the same material always yields the same address\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Derives an address from supplied key material; the same material always yields the same address\n  refusal: never\n  inputs:\n    key_material:\n      type: string\n      required: true\n  outputs:\n    address:\n      type: string\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: DERIVE_WALLET_ADDRESS\n  implementation:\n    module: blockchain.implementation.capability_transforms.atoms.ct_pure_derive_wallet_address_v0\n    callable: execute\n```\n",
+  "content_hash": "8e8082e9e62241c2f1c88c309d4e3bcc78606e3aebb2f6b7306c2feba957f09e",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "key_material": "$.inputs.key_material"
+        },
+        "atom": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "blockchain.implementation.capability_transforms.atoms.ct_pure_derive_wallet_address_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+    "inputs": {
+      "key_material": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "outputs": {
+      "address": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "inputs": {
+        "key_material": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "address": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "refusal": "never",
+      "summary": "Derives an address from supplied key material; the same material always yields the same address"
+    },
+    "fqdn": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "blockchain.implementation.capability_transforms.atoms.ct_pure_derive_wallet_address_v0"
+      },
+      "operation": "DERIVE_WALLET_ADDRESS"
+    },
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+  ],
+  "version": "0"
+}

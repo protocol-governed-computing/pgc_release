@@ -1,0 +1,54 @@
+{
+  "artifact_code": "VOCAB_HUMAN_BLOCK_CONSTRAINTS_V0",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_HUMAN_BLOCK_CONSTRAINTS_V0\n\n## Machine\n\n```yaml\nfqdn: vocabulary::VOCAB_HUMAN_BLOCK_CONSTRAINTS_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: vocabulary\nforbidden_section_names:\n  casing: lower_snake\n  domain_extensible: false\n  entries:\n  - header\n  - header (mandatory)\n  - rule\n  - rule statement\n  - rules\n  - requirements\n  - validation rules\n  - enforcement scope\n  - version history\n  - status\nrestated_machine_keys:\n  casing: lower_snake\n  domain_extensible: false\n  entries:\n  - artifact code\n  - artifact kind\n  - governed by\n  - version\n  - status\n  - supersedes\n  - superseded by\n  - fqdn\n  - authority\n  - concern\n  - namespace\n```\n\n---\n\n## Intent\n\nThe two closed name sets that decide whether an artifact's prose has started declaring something.\n\n`forbidden_section_names` are section headings that announce a rule is being stated. The prose beside\na machine block is a realization document \u2014 it explains how declarations realize what the standard\nrequires \u2014 and a section called `Rule Statement` in such a document is a second specification with no\nauthority behind it.\n\n`restated_machine_keys` are prose field labels naming a fact the machine block already declares.\nA label alone is not a violation: a glossary may legitimately define *Namespace*. What makes it one\nis the prose carrying the same **value** the machine block carries, because two copies of one fact\ncan disagree \u2014 and when this was first measured the prose copy was already the weaker one, a short\nname where the declaration carried an identity.\n\n---\n\n## Where this is read\n\n`.github/process/human_block_fidelity.py` reads both sets from the sealed composition and carries no\ncopy of its own. The check is a mechanism; this artifact is the policy. Adding a forbidden name is an\nauthoring act here, sealed and attested, rather than an edit to a script.\n\n---\n\n## What is not claimed\n\nThese two sets are what is mechanically decidable. They do not decide whether a sentence **cites** a\nnormative requirement or **restates** it \u2014 that is a reading rather than a pattern, and it is the\nrule most likely to be broken. It is a review obligation, stated as one.\n\nThe doctrine these sets serve, and the reasoning behind it, is the Field Manual section *The human\nblock*. That is where it is explained; this artifact is where it is governed.\n",
+  "content_hash": "e382c9fb9a8f262c8bc4104b4cf3daafb9d32dadf0ff18f4e7574d991bcba36e",
+  "fqdn_id": "vocabulary::VOCAB_HUMAN_BLOCK_CONSTRAINTS_V0",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "authority": "pgc.platform",
+    "concern": "vocabulary",
+    "forbidden_section_names": {
+      "casing": "lower_snake",
+      "domain_extensible": false,
+      "entries": [
+        "header",
+        "header (mandatory)",
+        "rule",
+        "rule statement",
+        "rules",
+        "requirements",
+        "validation rules",
+        "enforcement scope",
+        "version history",
+        "status"
+      ]
+    },
+    "fqdn": "vocabulary::VOCAB_HUMAN_BLOCK_CONSTRAINTS_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "restated_machine_keys": {
+      "casing": "lower_snake",
+      "domain_extensible": false,
+      "entries": [
+        "artifact code",
+        "artifact kind",
+        "governed by",
+        "version",
+        "status",
+        "supersedes",
+        "superseded by",
+        "fqdn",
+        "authority",
+        "concern",
+        "namespace"
+      ]
+    },
+    "version": "v0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "vocabulary",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

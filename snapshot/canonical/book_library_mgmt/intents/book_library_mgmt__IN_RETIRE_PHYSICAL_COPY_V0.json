@@ -1,0 +1,51 @@
+{
+  "artifact_code": "IN_RETIRE_PHYSICAL_COPY_V0",
+  "artifact_type": "IN",
+  "content": "# IN_RETIRE_PHYSICAL_COPY_V0\n\n## 1. Intent\n\nA request to retire a lost or damaged copy\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to retire a lost or damaged copy\n  workflow: WF_RETIRE_PHYSICAL_COPY_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    authorization_rules:\n      type: array\n      required: true\n    barcode:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n",
+  "content_hash": "2d395b3d0cef8c650bc1ac4433ac5e11b5bd2158f5b4e9c2564799b649c3f10b",
+  "fqdn_id": "book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "authorization_rules": {
+          "required": true,
+          "type": "array"
+        },
+        "barcode": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_credentials": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to retire a lost or damaged copy",
+      "workflow": "WF_RETIRE_PHYSICAL_COPY_V0"
+    },
+    "fqdn": "book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

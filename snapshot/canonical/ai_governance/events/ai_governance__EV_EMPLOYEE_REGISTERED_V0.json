@@ -1,0 +1,36 @@
+{
+  "artifact_code": "EV_EMPLOYEE_REGISTERED_V0",
+  "artifact_type": "EV",
+  "content": "# EV_EMPLOYEE_REGISTERED_V0\n\n## 1. Fact\n\nAn employee has been registered in the system.\n\n---\n\n## 2. Rationale\n\nEmployee registration is a fact declaration:\n- Injected from HR system\n- Creates subject for protocol governance\n- Enables downstream provisioning workflows\n\n---\n\n## 3. Emitted By\n\n| Source | Description |\n|--------|-------------|\n| Fact Injection | HR system declares employee existence |\n\n---\n\n## 4. Schema\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| employee_id | string | true | Unique employee identifier |\n| timestamp | string (date-time) | true | When registration occurred |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::EV_EMPLOYEE_REGISTERED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: Employee Registered\n  description: Emitted when an employee is registered in the system\n\n  schema:\n    employee_id:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n```\n",
+  "content_hash": "8f06906463089309c0a0a2963a8feabf66f03cdc0f1311af78b50666bd2ac136",
+  "fqdn_id": "ai_governance::EV_EMPLOYEE_REGISTERED_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "description": "Emitted when an employee is registered in the system",
+      "schema": {
+        "employee_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "summary": "Employee Registered"
+    },
+    "fqdn": "ai_governance::EV_EMPLOYEE_REGISTERED_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

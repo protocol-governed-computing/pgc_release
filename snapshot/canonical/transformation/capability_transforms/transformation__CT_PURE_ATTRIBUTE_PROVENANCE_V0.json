@@ -1,0 +1,91 @@
+{
+  "artifact_code": "CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_ATTRIBUTE_PROVENANCE_V0\n\n## Machine\n\n```yaml\nfqdn: transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: build\ncore:\n  summary: Report, for each leaf of a rendered artifact, whether the design stated it, a constitution\n    governs it, or the renderer supplied it\n  refusal: returns\n  inputs:\n    rendered:\n      type: object\n      required: true\n    sources:\n      type: object\n      required: true\n  outputs:\n    provenance:\n      type: object\n      required: true\n    governing_artifacts:\n      type: object\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: ATTRIBUTE_PROVENANCE\n  implementation:\n    module: transformation.implementation.capability_transforms.atoms.ct_pure_attribute_provenance_v0\n    callable: execute\n```\n\n---\n\n## Intent\n\nReport, for each leaf of a rendered artifact, whether the design stated it, a constitution governs it, or the renderer supplied it\n",
+  "content_hash": "36681f44663d871621fe3f5201c6c6f6479758849ad6bedda939a176f954d6a9",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "rendered": "$.inputs.rendered",
+          "sources": "$.inputs.sources"
+        },
+        "atom": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "transformation.implementation.capability_transforms.atoms.ct_pure_attribute_provenance_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+    "inputs": {
+      "rendered": {
+        "required": true,
+        "type": "object"
+      },
+      "sources": {
+        "required": true,
+        "type": "object"
+      }
+    },
+    "outputs": {
+      "governing_artifacts": {
+        "from": "__atom_result__"
+      },
+      "provenance": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "build",
+    "core": {
+      "inputs": {
+        "rendered": {
+          "required": true,
+          "type": "object"
+        },
+        "sources": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "governing_artifacts": {
+          "required": true,
+          "type": "object"
+        },
+        "provenance": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "refusal": "returns",
+      "summary": "Report, for each leaf of a rendered artifact, whether the design stated it, a constitution governs it, or the renderer supplied it"
+    },
+    "fqdn": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "transformation.implementation.capability_transforms.atoms.ct_pure_attribute_provenance_v0"
+      },
+      "operation": "ATTRIBUTE_PROVENANCE"
+    },
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+  ],
+  "version": "0"
+}

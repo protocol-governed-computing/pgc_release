@@ -1,0 +1,44 @@
+{
+  "artifact_code": "IN_ACTOR_ACCEPTANCE_V0",
+  "artifact_type": "IN",
+  "content": "# IN_ACTOR_ACCEPTANCE_V0\n\n## 1. Intent\n\nAdmits a request to accept a person, and refuses one that names nobody\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::IN_ACTOR_ACCEPTANCE_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: identity\nsupersedes: blockchain::IN_ACTOR_VERIFIED_V0\ncore:\n  summary: Admits a request to accept a person, and refuses one that names nobody\n  workflow: WF_ACCEPT_ACTOR_V0\n  inputs:\n    contact_address:\n      type: string\n      required: true\n    verifying_authority:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n",
+  "content_hash": "a5883e420b032ac94fc783b8347d7eaef19ed377471cbc8d8ba48f1c6a7d347e",
+  "fqdn_id": "blockchain::IN_ACTOR_ACCEPTANCE_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "inputs": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "verifying_authority": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "Admits a request to accept a person, and refuses one that names nobody",
+      "workflow": "WF_ACCEPT_ACTOR_V0"
+    },
+    "fqdn": "blockchain::IN_ACTOR_ACCEPTANCE_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "supersedes": "blockchain::IN_ACTOR_VERIFIED_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,46 @@
+{
+  "artifact_code": "CONSTITUTION_EXECUTION_PLACEMENT_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_EXECUTION_PLACEMENT_V0\n\n## Machine\n\n```yaml\nfqdn: execution_placement::CONSTITUTION_EXECUTION_PLACEMENT_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: execution_placement\ncore:\n  enforcement_model: process_and_compiler_enforced\nrules:\n- applies_to: compiled_snapshot\n  enforced_by: execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0\n- applies_to: compiled_snapshot\n  enforced_by: execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0\n- applies_to: compiled_snapshot\n  enforced_by: execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0\n- applies_to: federation_boundary\n  enforced_by: PROCESS_ENFORCED\n- applies_to: runtime\n  enforced_by: PROCESS_ENFORCED\n```\n\n---\n\n## Purpose\n\nThis constitution governs how and where PGS execution is permitted to run. It answers\nthe question: *on what substrate, in what configuration, is execution legal?*\n\nPlacement is a governance axis, not an infrastructure concern. The same canonical snapshot\nmay eventually be executed on a local process, a distributed worker pool, a secure appliance,\nor silicon \u2014 placement governance ensures that each transition is authorized by declaration\nrather than discovered at runtime.\n\n## \u00a71. V0 Placement Mode\n\nThe only authorized placement mode in V0 is `LOCAL_SINGLE_NODE`.\n\nThis means:\n- Execution runs in a single process on the local machine\n- No remote dispatch occurs\n- No worker pool is consulted\n- No distribution layer is involved\n\nThis is not a limitation \u2014 it is the correct starting declaration. Future placement modes\n(multi-worker, remote pool, federated node) extend this axis additively.\n\n## \u00a72. Compiler Behavior\n\nThe compiler MUST:\n- Discover the active placement contract in this boundary\n- Validate that exactly one contract is active\n- Materialize placement mode into the snapshot federation profile under:\n\n```yaml\nfederation_profile:\n  execution_placement: LOCAL_SINGLE_NODE\n```\n\nThe compiler MUST NOT schedule, dispatch, or route execution.\n\n## \u00a73. Runtime Behavior\n\nThe runtime executes what the compiler governed. It MUST:\n- Record `federation_profile.execution_placement` in trace metadata\n- Execute the governed topology without consulting placement mode for branching\n\n## \u00a74. Future Expansion Path\n\n```\nLOCAL_SINGLE_NODE\n  \u2192 LOCAL_MULTI_WORKER\n  \u2192 REMOTE_WORKER_POOL\n  \u2192 FEDERATED_NODE\n  \u2192 SILICON_HOSTED\n```\n\nEach step requires a new placement contract authorized by this boundary.\nNo runtime changes are needed until the runtime evolution model is engaged (V3+).\n\n## \u00a75. Versioning\n\nChanges to placement semantics require a new constitution version and migration rationale.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Declares which execution substrates are legal, how execution locality is\n\n    constrained, and what placement modes a compiled snapshot may authorize.\n\n    Placement is a compile-time governance declaration \u2014 not a runtime decision.\n\n    The runtime executes the already-governed placement; it does not negotiate it.\n\n    '\n  summary: Governs execution substrate legality, locality, isolation, and placement admissibility\nrules:\n- rule_id: PLACEMENT_MUST_BE_DECLARED\n  constraint: 'Every compiled snapshot MUST declare exactly one active placement contract. A snapshot\n    with no placement declaration is a compiler validation failure.\n\n    '\n- rule_id: PLACEMENT_IMMUTABLE_AFTER_COMPILE\n  constraint: 'Placement mode is resolved at compile time and is immutable. Runtime MUST NOT select, override,\n    or negotiate placement mode.\n\n    '\n- rule_id: REMOTE_EXECUTION_REQUIRES_CONTRACT\n  constraint: 'Remote execution is not permitted unless an explicit placement contract authorizing a remote-capable\n    placement mode is present. In V0, only LOCAL_SINGLE_NODE is authorized.\n\n    '\n- rule_id: PLACEMENT_IS_NOT_INFRASTRUCTURE\n  constraint: 'FB_EXECUTION_PLACEMENT governs semantic placement legality only. It MUST NOT be bound to\n    any infrastructure technology (Kubernetes, AWS, containers, FPGAs). Technology-specific placement\n    is a future runtime concern, not a governance concern.\n\n    '\n- rule_id: RUNTIME_READS_PLACEMENT_PASSIVELY\n  constraint: 'Runtime MAY read the active placement contract for trace metadata emission. Runtime MUST\n    NOT branch on placement mode or alter execution behavior based on placement values.\n\n    '\n```\n",
+  "content_hash": "2a8fb3e69f4628fcbe921e89d377933e43e4b53a3cb9222ece171fba8f296c32",
+  "fqdn_id": "execution_placement::CONSTITUTION_EXECUTION_PLACEMENT_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "execution_placement",
+    "core": {
+      "enforcement_model": "process_and_compiler_enforced"
+    },
+    "fqdn": "execution_placement::CONSTITUTION_EXECUTION_PLACEMENT_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "rules": [
+      {
+        "applies_to": "compiled_snapshot",
+        "enforced_by": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0"
+      },
+      {
+        "applies_to": "compiled_snapshot",
+        "enforced_by": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0"
+      },
+      {
+        "applies_to": "compiled_snapshot",
+        "enforced_by": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0"
+      },
+      {
+        "applies_to": "federation_boundary",
+        "enforced_by": "PROCESS_ENFORCED"
+      },
+      {
+        "applies_to": "runtime",
+        "enforced_by": "PROCESS_ENFORCED"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "execution_placement",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

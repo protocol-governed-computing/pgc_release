@@ -1,0 +1,129 @@
+{
+  "artifact_code": "STRUCTURE_IDENTITY_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_IDENTITY_V0\n\n**Artifact Type**: STRUCTURE\n**Version**: V0\n**Status**: CANONICAL\n**Authority**: CONSTITUTIONAL\n\n---\n\n## Purpose\n\nSingle source of truth for artifact identity. Defines FQDN composition, normalization rules from short names to fully qualified IDs, and identity uniqueness constraints.\n\n---\n\n## Machine\n\n```yaml\nfqdn: structure::STRUCTURE_IDENTITY_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: structure\ncore:\n  summary: Consolidated artifact identity and FQDN configuration\n  description: 'Defines the canonical identity system for all protocol artifacts. Namespace identity is\n    federation-boundary-scoped under the fb.* scheme.\n\n    '\nidentity:\n  fqdn:\n    format: '{namespace}::{artifact_code}'\n    namespace:\n      derivation:\n        rules:\n        - namespace: capability_side_effects\n        - namespace: capability_transforms\n        - namespace: actor\n        - namespace: artifact\n        - namespace: authority\n        - namespace: capability_contracts\n        - namespace: compiler\n        - namespace: conformance\n        - namespace: cryptographic_trust\n        - namespace: event\n        - namespace: execution\n        - namespace: execution_placement\n        - namespace: execution_scheduling\n        - namespace: execution_topology\n        - namespace: federation\n        - namespace: governance\n        - namespace: intent\n        - namespace: lifecycle\n        - namespace: runtime_binding\n        - namespace: security_domain\n        - namespace: structure\n        - namespace: surface_contract\n        - namespace: trace\n        - namespace: transport\n        - namespace: vocabulary\n        - namespace: workflow\n    uniqueness:\n      scope: global\n      constraint: no_duplicate_fqdn\nnormalization:\n  short_name_resolution:\n    allowed: true\n    resolution_phase: compile_time\n    rules:\n    - local_scope_first\n    - global_search\n    on_ambiguity: FAIL\n```\n",
+  "content_hash": "512ac1c2d89d292873c2173f1c50a5d79801a87b70518040cf595329ddb95d2a",
+  "fqdn_id": "structure::STRUCTURE_IDENTITY_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "structure",
+    "core": {
+      "description": "Defines the canonical identity system for all protocol artifacts. Namespace identity is federation-boundary-scoped under the fb.* scheme.\n",
+      "summary": "Consolidated artifact identity and FQDN configuration"
+    },
+    "fqdn": "structure::STRUCTURE_IDENTITY_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "identity": {
+      "fqdn": {
+        "format": "{namespace}::{artifact_code}",
+        "namespace": {
+          "derivation": {
+            "rules": [
+              {
+                "namespace": "capability_side_effects"
+              },
+              {
+                "namespace": "capability_transforms"
+              },
+              {
+                "namespace": "actor"
+              },
+              {
+                "namespace": "artifact"
+              },
+              {
+                "namespace": "authority"
+              },
+              {
+                "namespace": "capability_contracts"
+              },
+              {
+                "namespace": "compiler"
+              },
+              {
+                "namespace": "conformance"
+              },
+              {
+                "namespace": "cryptographic_trust"
+              },
+              {
+                "namespace": "event"
+              },
+              {
+                "namespace": "execution"
+              },
+              {
+                "namespace": "execution_placement"
+              },
+              {
+                "namespace": "execution_scheduling"
+              },
+              {
+                "namespace": "execution_topology"
+              },
+              {
+                "namespace": "federation"
+              },
+              {
+                "namespace": "governance"
+              },
+              {
+                "namespace": "intent"
+              },
+              {
+                "namespace": "lifecycle"
+              },
+              {
+                "namespace": "runtime_binding"
+              },
+              {
+                "namespace": "security_domain"
+              },
+              {
+                "namespace": "structure"
+              },
+              {
+                "namespace": "surface_contract"
+              },
+              {
+                "namespace": "trace"
+              },
+              {
+                "namespace": "transport"
+              },
+              {
+                "namespace": "vocabulary"
+              },
+              {
+                "namespace": "workflow"
+              }
+            ]
+          }
+        },
+        "uniqueness": {
+          "constraint": "no_duplicate_fqdn",
+          "scope": "global"
+        }
+      }
+    },
+    "normalization": {
+      "short_name_resolution": {
+        "allowed": true,
+        "on_ambiguity": "FAIL",
+        "resolution_phase": "compile_time",
+        "rules": [
+          "local_scope_first",
+          "global_search"
+        ]
+      }
+    },
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

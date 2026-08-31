@@ -1,0 +1,33 @@
+{
+  "artifact_code": "EV_CONJECTURE_EVALUATED_V0",
+  "artifact_type": "EV",
+  "content": "# EV_CONJECTURE_EVALUATED_V0\n\n## 1. Intent\n\nDomain event emitted once the Collatz conjecture has been evaluated for an input set \u2014 records\nwhether every sequence terminated at 1 and, if not, which seeds did not. This is the Observation\nconcern: a governed, declared event that becomes visible in the execution trace.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::EV_CONJECTURE_EVALUATED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\ncore:\n  summary: Conjecture Evaluated\n  description: Emitted when the Collatz conjecture has been evaluated for the input set.\n  schema:\n    all_terminate:\n      type: boolean\n      required: true\n    non_terminating:\n      type: array\n      required: true\n```\n",
+  "content_hash": "c6f55e7cd17a8fb4c698531e81ca50ab46c1d0ee8b42a1152657c803ae8616ba",
+  "fqdn_id": "workload::EV_CONJECTURE_EVALUATED_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "core": {
+      "description": "Emitted when the Collatz conjecture has been evaluated for the input set.",
+      "schema": {
+        "all_terminate": {
+          "required": true,
+          "type": "boolean"
+        },
+        "non_terminating": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "summary": "Conjecture Evaluated"
+    },
+    "fqdn": "workload::EV_CONJECTURE_EVALUATED_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

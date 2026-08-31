@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_CT_SURFACE_DERIVED_CLOSED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_CT_SURFACE_DERIVED_CLOSED_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::INVARIANT_CT_SURFACE_DERIVED_CLOSED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - CT\n  - CC\n```\n\n---\n\n## Purpose\n\nClose a domain's capability-transform surface **by derivation rather than by enumeration**: every\ntransform a domain declares is invoked by a capability contract of that domain, and every transform\none of its contracts invokes is declared where it can be resolved.\n\n## Why this exists beside `INVARIANT_CT_SURFACE_CLOSED_V1`\n\nThe platform closes its own surface with an allow-list, which is right: the platform's transform\nuniverse is a deliberate, enumerated set, and a list is how you state a deliberate set.\n\n**A domain's surface cannot be closed the same way.** The allow-list belongs to the artifact that\ncarries it, so importing the platform's invariant into a domain asserts the *platform's* list against\nthat domain's transforms \u2014 which is not the domain's surface and would refuse every transform the\ndomain legitimately declares. So the platform's invariant scopes itself to `PLATFORM`, and for a\nwhile nothing closed a domain surface at all: a workload's own closure invariant was withdrawn when\nthe governance chain was closed, because no constitution named it, and **nothing would have refused a\nthird transform being added to that domain.** The property held as a fact and was enforced by nothing.\n\nA domain must not author its own invariant to fix that \u2014 an invariant no constitution names is\nexactly what the governance chain refuses. So the closure must be stated once, by the platform, in a\nform that does not name any domain.\n\n**That form is a quantification.** Closure is the equality\n`declared == invoked`, evaluated within a domain, and neither side is a list anyone maintains:\n\n- **declared** \u2014 the transforms the domain's own registry carries\n- **invoked** \u2014 the transforms named by the pipeline steps of the domain's capability contracts\n\nA list goes stale the moment a domain adds a transform. An equality does not, because both sides move\ntogether or the build refuses.\n\n## What it refuses\n\n| Condition | Why it is refused |\n|---|---|\n| a declared transform no contract of the domain invokes | the surface is not enumerable \u2014 something executable exists that no act reaches, and nothing constrains what it may do |\n| an invoked transform declared in neither the domain nor the imported platform surface | the contract names a capability that resolves nowhere |\n\n## What it does not reach\n\n**The platform's own surface.** Platform transforms are invoked by the domains that import them, not\nby platform contracts, so the equality does not hold there and is not asserted there \u2014\n`INVARIANT_CT_SURFACE_CLOSED_V1` remains the platform's closure and is unchanged.\n\n**Purity.** Whether a transform imports or invokes a side effect is\n`INVARIANT_ATOM_OUTPUT_PURITY_V0`'s subject. This one is about the surface being closed, not about\nwhat is on it.\n",
+  "content_hash": "1a66be78d90acb8961377a0f7bc8d0e0afdc665600708f4fa8b49406ee85215f",
+  "fqdn_id": "capability_transforms::INVARIANT_CT_SURFACE_DERIVED_CLOSED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CT",
+        "CC"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_transforms::INVARIANT_CT_SURFACE_DERIVED_CLOSED_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

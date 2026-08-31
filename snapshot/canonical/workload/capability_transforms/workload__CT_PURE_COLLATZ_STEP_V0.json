@@ -1,0 +1,79 @@
+{
+  "artifact_code": "CT_PURE_COLLATZ_STEP_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_COLLATZ_STEP_V0\n\n## 1. Intent\n\nCompute the full Collatz sequence for each input number. Pure, deterministic, no side effects.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::CT_PURE_COLLATZ_STEP_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Compute full Collatz sequence for each input number\n  refusal: never\n  description: For each n in numbers, iterates the Collatz rule until reaching 1. Returns mapping of n\n    \u2192 sequence.\n  inputs:\n    numbers:\n      type: array\n      required: true\n      description: List of positive integers for which to compute sequences\n  outputs:\n    sequences:\n      type: object\n      required: true\n      description: Mapping from str(n) to full Collatz sequence as list of integers\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_COLLATZ_STEP\n  implementation:\n    module: workloads.collatz.implementation.capability_transforms.atoms.ct_pure_collatz_step_v0\n    callable: execute\n```\n",
+  "content_hash": "ce0ea053bb8f4a45f5d372cb9c172d2d13a5125031edd841d74cf1c1891211f3",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_COLLATZ_STEP_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "numbers": "$.inputs.numbers"
+        },
+        "atom": "workload::CT_PURE_COLLATZ_STEP_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "workloads.collatz.implementation.capability_transforms.atoms.ct_pure_collatz_step_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+    "inputs": {
+      "numbers": {
+        "description": "List of positive integers for which to compute sequences",
+        "required": true,
+        "type": "array"
+      }
+    },
+    "outputs": {
+      "sequences": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "workload::CT_PURE_COLLATZ_STEP_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "workload",
+    "core": {
+      "description": "For each n in numbers, iterates the Collatz rule until reaching 1. Returns mapping of n \u2192 sequence.",
+      "inputs": {
+        "numbers": {
+          "description": "List of positive integers for which to compute sequences",
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "sequences": {
+          "description": "Mapping from str(n) to full Collatz sequence as list of integers",
+          "required": true,
+          "type": "object"
+        }
+      },
+      "refusal": "never",
+      "summary": "Compute full Collatz sequence for each input number"
+    },
+    "fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "workloads.collatz.implementation.capability_transforms.atoms.ct_pure_collatz_step_v0"
+      },
+      "operation": "PURE_COLLATZ_STEP"
+    },
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+  ],
+  "version": "0"
+}

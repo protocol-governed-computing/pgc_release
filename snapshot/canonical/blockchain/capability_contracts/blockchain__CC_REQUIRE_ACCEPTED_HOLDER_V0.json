@@ -1,0 +1,89 @@
+{
+  "artifact_code": "CC_REQUIRE_ACCEPTED_HOLDER_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "allowed_set": "in.states_admitting_a_wallet",
+          "value": "in.holder_state"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "inputs": [
+          "allowed_set",
+          "value"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "is_member"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_REQUIRE_ACCEPTED_HOLDER_V0\n\n## 1. Intent\n\nRefuses a wallet for a person the business has not accepted, before anything is claimed or recorded\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_REQUIRE_ACCEPTED_HOLDER_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Refuses a wallet for a person the business has not accepted, before anything is claimed or\n    recorded\n  inputs:\n    holder_state:\n      type: string\n      required: true\n    states_admitting_a_wallet:\n      type: array\n      required: true\n  outputs:\n    is_accepted:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: require_holder_accepted\n    transform: capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\n    inputs:\n      value: $.inputs.holder_state\n      allowed_set: $.inputs.states_admitting_a_wallet\n    outputs:\n      is_accepted: $.capability_result.is_member\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n```\n",
+  "content_hash": "327ea78626bac4b93830f38034b9a36c7be96610014773a09222412a1d45673c",
+  "fqdn_id": "blockchain::CC_REQUIRE_ACCEPTED_HOLDER_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "inputs": {
+        "holder_state": {
+          "required": true,
+          "type": "string"
+        },
+        "states_admitting_a_wallet": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "is_accepted": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "allowed_set": "$.inputs.states_admitting_a_wallet",
+            "value": "$.inputs.holder_state"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "is_accepted": "$.capability_result.is_member"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_holder_accepted",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuses a wallet for a person the business has not accepted, before anything is claimed or recorded"
+    },
+    "fqdn": "blockchain::CC_REQUIRE_ACCEPTED_HOLDER_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
+  "version": "0"
+}

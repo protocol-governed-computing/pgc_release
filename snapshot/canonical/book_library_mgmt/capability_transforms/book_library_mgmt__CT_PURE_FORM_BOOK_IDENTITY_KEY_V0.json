@@ -1,0 +1,93 @@
+{
+  "artifact_code": "CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\n\n## 1. Intent\n\nForms the single key the registry claims from the three identifying attributes\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Forms the single key the registry claims from the three identifying attributes\n  refusal: never\n  inputs:\n    title:\n      type: string\n      required: true\n    author:\n      type: string\n      required: true\n    publication_year:\n      type: integer\n      required: true\n  outputs:\n    identity_key:\n      type: string\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_FORM_BOOK_IDENTITY_KEY\n  implementation:\n    module: book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_form_book_identity_key_v0\n    callable: execute\n```\n",
+  "content_hash": "fd404962ca0025d231ed7c7c10baded271e7a294e7b06ce0ebcff33191214c90",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "author": "$.inputs.author",
+          "publication_year": "$.inputs.publication_year",
+          "title": "$.inputs.title"
+        },
+        "atom": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_form_book_identity_key_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+    "inputs": {
+      "author": {
+        "required": true,
+        "type": "string"
+      },
+      "publication_year": {
+        "required": true,
+        "type": "integer"
+      },
+      "title": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "outputs": {
+      "identity_key": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "author": {
+          "required": true,
+          "type": "string"
+        },
+        "publication_year": {
+          "required": true,
+          "type": "integer"
+        },
+        "title": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "refusal": "never",
+      "summary": "Forms the single key the registry claims from the three identifying attributes"
+    },
+    "fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_form_book_identity_key_v0"
+      },
+      "operation": "PURE_FORM_BOOK_IDENTITY_KEY"
+    },
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+  ],
+  "version": "0"
+}

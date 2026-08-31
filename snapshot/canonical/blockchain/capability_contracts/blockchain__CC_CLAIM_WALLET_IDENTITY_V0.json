@@ -1,0 +1,87 @@
+{
+  "artifact_code": "CC_CLAIM_WALLET_IDENTITY_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+        "id": "CS_REGISTRY_V0",
+        "kind": "CS",
+        "ops": [
+          "REGISTER",
+          "RESOLVE",
+          "EXISTS",
+          "DEREGISTER",
+          "COUNT"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CLAIM_WALLET_IDENTITY_V0\n\n## 1. Intent\n\nClaims the identity, and refuses when the person already holds a wallet\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_CLAIM_WALLET_IDENTITY_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Claims the identity, and refuses when the person already holds a wallet\n  inputs:\n    wallet_id:\n      type: string\n      required: true\n  outputs:\n    result_status:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - ALREADY_EXISTS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: claim_wallet_identity\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: REGISTER\n    store: WALLET_IDENTITIES\n    inputs:\n      key: $.inputs.wallet_id\n    outputs:\n      result_status: $.capability_result.result_status\n    result_surface:\n    - SUCCESS\n    - ALREADY_EXISTS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      ALREADY_EXISTS: exit\n      VIOLATION: exit\n```\n",
+  "content_hash": "4a1a8e15707916a63704065f5f5bd8eeb548e2d937f62b7b42842660ddcf5caa",
+  "fqdn_id": "blockchain::CC_CLAIM_WALLET_IDENTITY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "inputs": {
+        "wallet_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "result_status": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key": "$.inputs.wallet_id"
+          },
+          "on_result": {
+            "ALREADY_EXISTS": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "REGISTER",
+          "outputs": {
+            "result_status": "$.capability_result.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "ALREADY_EXISTS",
+            "VIOLATION"
+          ],
+          "side_effect": "capability_side_effects::CS_REGISTRY_V0",
+          "step": "claim_wallet_identity",
+          "store": "WALLET_IDENTITIES"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "ALREADY_EXISTS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Claims the identity, and refuses when the person already holds a wallet"
+    },
+    "fqdn": "blockchain::CC_CLAIM_WALLET_IDENTITY_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

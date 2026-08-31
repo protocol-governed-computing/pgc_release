@@ -1,0 +1,38 @@
+{
+  "artifact_code": "STRUCTURE_REGISTRY_LOCATION_REUSABLE_TRANSFORMS_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_REGISTRY_LOCATION_REUSABLE_TRANSFORMS_V0\n\nRegistry location declaration for REUSABLE_TRANSFORMS layer.\n\n## Purpose\n\nDeclares the physical registry module location for REUSABLE_TRANSFORMS layer artifacts. This artifact enables federated ownership of registry locations while maintaining deterministic resolution.\n\n**Constitutional Rule**: Each layer owns exactly one registry location artifact.\n\n---\n\n## Machine\n\n```yaml\nfqdn: structure::STRUCTURE_REGISTRY_LOCATION_REUSABLE_TRANSFORMS_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: structure\n# The shared mechanism every domain composes with. Declared here because a reusable\n# layer has no build manifest of its own, and substrate that declares nothing would\n# have to have its eligibility inferred.\nstructure_scope: capability_transforms\nreuse_visibility: substrate\ncore:\n  layer_code: REUSABLE_TRANSFORMS\n  description: 'Platform capability transforms (CT artifacts). Pure, deterministic, side-effect-free functions.\n\n    '\n  notes: 'Pattern-based resolution: module_path_pattern defines how to compose registry path. No domain\n    composition for platform transforms layer.\n\n    '\noutput_configuration:\n  artifacts_path:\n    layer: REUSABLE_TRANSFORMS\n    subpath: compiled/artifacts\n  molecules_path:\n    layer: REUSABLE_TRANSFORMS\n    subpath: compiled/molecules\n```\n\n---\n\n## Usage\n\nLoaded by artifact discovery during build:\n\n1. Discovery reads `STRUCTURE_LAYER_AUTHORITY_V0` \u2192 enumerates layers\n2. For REUSABLE_TRANSFORMS layer \u2192 loads this artifact\n3. Extracts `registry_module: pgs_transforms.registry`\n4. Scans that module for protocol artifacts\n\n---\n\n",
+  "content_hash": "ab130c264985a8a4e594a20a8aa942410c3750a97cbd455fff80e0ffda6339ad",
+  "fqdn_id": "structure::STRUCTURE_REGISTRY_LOCATION_REUSABLE_TRANSFORMS_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "structure",
+    "core": {
+      "description": "Platform capability transforms (CT artifacts). Pure, deterministic, side-effect-free functions.\n",
+      "layer_code": "REUSABLE_TRANSFORMS",
+      "notes": "Pattern-based resolution: module_path_pattern defines how to compose registry path. No domain composition for platform transforms layer.\n"
+    },
+    "fqdn": "structure::STRUCTURE_REGISTRY_LOCATION_REUSABLE_TRANSFORMS_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "output_configuration": {
+      "artifacts_path": {
+        "layer": "REUSABLE_TRANSFORMS",
+        "subpath": "compiled/artifacts"
+      },
+      "molecules_path": {
+        "layer": "REUSABLE_TRANSFORMS",
+        "subpath": "compiled/molecules"
+      }
+    },
+    "reuse_visibility": "substrate",
+    "structure_scope": "capability_transforms",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

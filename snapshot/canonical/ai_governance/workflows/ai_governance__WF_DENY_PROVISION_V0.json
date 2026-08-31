@@ -1,0 +1,71 @@
+{
+  "artifact_code": "WF_DENY_PROVISION_V0",
+  "artifact_type": "WF",
+  "content": "# WF_DENY_PROVISION_V0\n\n## 1. Intent\n\nHandle provisioning denial by emitting denial event and recording to audit log.\n\n---\n\n## 2. Rationale\n\nDenial handling ensures first-class terminal outcomes:\n- Emits EV_PROVISION_DENIED_V0\n- Appends to audit log\n- Terminates cleanly (no retries, no loops)\n\n---\n\n## 3. Execution Graph\n\n```\nIN_DENY_PROVISION_V0\n    \u251c\u2500 ACK \u2192 CC_APPEND_AUDIT_EVENT_V0\n    \u2514\u2500 NACK \u2192 EXIT:ERROR\n\nCC_APPEND_AUDIT_EVENT_V0\n    \u251c\u2500 SUCCESS \u2192 EXIT:DENIED\n    \u2514\u2500 VIOLATION/BACKEND_ERROR \u2192 EXIT:ERROR\n```\n\n---\n\n## 4. Nodes\n\n| Node | Type | Purpose |\n|------|------|---------|\n| IN_DENY_PROVISION_V0 | IN | Entry point for provision denial |\n| CC_APPEND_AUDIT_EVENT_V0 | CC | Record denial to audit log |\n| EXIT | EXIT | Terminal node |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::WF_DENY_PROVISION_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\nruntime_binding: ai_governance::RB_LICENSE_BINDINGS_V0\nsubdomain: ai_licensing\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\n\ncore:\n  summary: Handle provisioning denial\n  actor_context: ai_governance::AC_SYSTEM_V0\n\n  start_node: IN_DENY_PROVISION_V0\n\n  nodes:\n    IN_DENY_PROVISION_V0:\n      type: IN\n      code: IN_DENY_PROVISION_V0\n      payload_schema:\n        employee_id: string\n        reason_code: string\n      next:\n        ACK: CC_APPEND_AUDIT_EVENT_V0\n        NACK: EXIT_ERROR\n\n    CC_APPEND_AUDIT_EVENT_V0:\n      type: CC\n      code: CC_APPEND_AUDIT_EVENT_V0\n      inputs:\n        event_type: EV_PROVISION_DENIED_V0\n        employee_id: $.payload.employee_id\n        decision: DENIED\n        reason_code: $.payload.reason_code\n      next:\n        SUCCESS: EXIT_DENIED\n        VIOLATION: EXIT_ERROR\n        BACKEND_ERROR: EXIT_ERROR\n\n    EXIT_DENIED:\n      type: EXIT\n      reason: COMPLETED\n      emit: ai_governance::EV_PROVISION_DENIED_V0\n    EXIT_ERROR:\n      type: EXIT\n      reason: FAILED\n```\n",
+  "content_hash": "361db30eae61cfe272528c14f215aed1f43f393d222a053c8095e332edad2269",
+  "fqdn_id": "ai_governance::WF_DENY_PROVISION_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "actor_context": "ai_governance::AC_SYSTEM_V0",
+      "nodes": {
+        "CC_APPEND_AUDIT_EVENT_V0": {
+          "code": "CC_APPEND_AUDIT_EVENT_V0",
+          "fqdn_id": "ai_governance::CC_APPEND_AUDIT_EVENT_V0",
+          "inputs": {
+            "decision": "DENIED",
+            "employee_id": "$.payload.employee_id",
+            "event_type": "EV_PROVISION_DENIED_V0",
+            "reason_code": "$.payload.reason_code"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_ERROR",
+            "SUCCESS": "EXIT_DENIED",
+            "VIOLATION": "EXIT_ERROR"
+          },
+          "type": "CC"
+        },
+        "EXIT_DENIED": {
+          "emit": "ai_governance::EV_PROVISION_DENIED_V0",
+          "reason": "COMPLETED",
+          "type": "EXIT"
+        },
+        "EXIT_ERROR": {
+          "reason": "FAILED",
+          "type": "EXIT"
+        },
+        "IN_DENY_PROVISION_V0": {
+          "code": "IN_DENY_PROVISION_V0",
+          "fqdn_id": "ai_governance::IN_DENY_PROVISION_V0",
+          "next": {
+            "ACK": "CC_APPEND_AUDIT_EVENT_V0",
+            "NACK": "EXIT_ERROR"
+          },
+          "payload_schema": {
+            "employee_id": "string",
+            "reason_code": "string"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_DENY_PROVISION_V0",
+      "summary": "Handle provisioning denial"
+    },
+    "fqdn": "ai_governance::WF_DENY_PROVISION_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "ai_governance::RB_LICENSE_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "ai_licensing",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "ai_governance::RB_LICENSE_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

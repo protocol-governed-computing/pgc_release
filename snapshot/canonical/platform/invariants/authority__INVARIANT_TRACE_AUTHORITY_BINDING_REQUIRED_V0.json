@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_TRACE_AUTHORITY_BINDING_REQUIRED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_TRACE_AUTHORITY_BINDING_REQUIRED_V0\n\nArchitectural Invariant\n\n## Machine\n\n```yaml\nfqdn: authority::INVARIANT_TRACE_AUTHORITY_BINDING_REQUIRED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: authority::CONSTITUTION_AUTHORITY_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: authority\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - WF\n```\n\n## Summary\n\nAuthority without trace is not accountable. Non-repudiation requires that every execution can be attributed to an actor, under a specific authority grant, at a specific time, with a recorded admissibility outcome. Authority trace binding is the accountability complement to authority evaluation: it closes the loop between the pre-execution authority decision and the post-execution audit record.\n\n## What this realizes\nFor every execution trace:\n1. MUST bind `actor_id` \u2014 the identity of the actor whose authority was evaluated\n2. MUST bind `workflow_fqdn` \u2014 the fully qualified workflow that was authorized\n3. MUST bind `authority_provenance` \u2014 the source, chain, and timestamp of authority that produced the admissibility decision\n4. MUST bind `admissibility_outcome` \u2014 the resolved admissibility result (admitted / denied)\n5. These fields are required, not optional \u2014 absent authority trace bindings constitute ungoverned execution\n\n## Where it applies\n- **Artifact Types**: WF (trace output)\n- **Validation Phase**: ASSERT (compile-time declaration check)\n- **Enforced By**: ASSERT_TRACE_AUTHORITY_BINDING_REQUIRED_V0\n\n## Rationale\n\nAmbient authority has no trace. Implicit permissions produce no audit record. This invariant is the accountability complement to the no-ambient-authority rule: not only must authority be explicit, but its exercise must be recorded. The authority trace binding transforms authority governance from a pre-execution gate into a complete, deterministic accountability chain spanning execution and post-execution.\n\nFull authority trace binding enforcement is implemented in Phase 5.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: Execution without complete authority trace binding is ungoverned execution; actor_id, workflow_fqdn,\n    authority_provenance, and admissibility_outcome are required trace fields\n  summary: All execution traces must bind actor identity, workflow FQDN, authority provenance, and admissibility\n    outcome \u2014 ungoverned execution has no audit chain\n```\n",
+  "content_hash": "92362f707dc4c7ac143edcee1c6d50e219604e7dd2e6f56b5f4d4710787b2905",
+  "fqdn_id": "authority::INVARIANT_TRACE_AUTHORITY_BINDING_REQUIRED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "authority",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "authority::INVARIANT_TRACE_AUTHORITY_BINDING_REQUIRED_V0",
+    "governed_by": "authority::CONSTITUTION_AUTHORITY_GOVERNANCE_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "authority",
+  "references": [
+    "authority::CONSTITUTION_AUTHORITY_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

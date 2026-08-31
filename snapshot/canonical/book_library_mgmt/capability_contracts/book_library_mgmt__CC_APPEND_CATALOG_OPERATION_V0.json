@@ -1,0 +1,99 @@
+{
+  "artifact_code": "CC_APPEND_CATALOG_OPERATION_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+        "id": "CS_APPENDONLY_JSONL_V0",
+        "kind": "CS",
+        "ops": [
+          "APPEND",
+          "GET_ALL"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_APPEND_CATALOG_OPERATION_V0\n\n## 1. Intent\n\nAppend a durable account of a performed operation to the catalog's own trail\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Append a durable account of a performed operation to the catalog's own trail\n  inputs:\n    record:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n    operation:\n      type: string\n      required: true\n  outputs:\n    record_id:\n      type: string\n      required: true\n    sequence_number:\n      type: integer\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: append_operation\n    side_effect: capability_side_effects::CS_APPENDONLY_JSONL_V0\n    op: APPEND\n    store: CATALOG_OPERATIONS\n    inputs:\n      record: $.inputs.record\n      stream_id: CATALOG_OPERATIONS\n      actor_id: $.inputs.staff_id\n    outputs:\n      record_id: $.capability_result.record_id\n      sequence_number: $.capability_result.sequence_number\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n",
+  "content_hash": "69ed537e2835a8f8bfb0425f58e3c104b2f653f843cf4783cf02f81e2ede0210",
+  "fqdn_id": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "operation": {
+          "required": true,
+          "type": "string"
+        },
+        "record": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "record_id": {
+          "required": true,
+          "type": "string"
+        },
+        "sequence_number": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "actor_id": "$.inputs.staff_id",
+            "record": "$.inputs.record",
+            "stream_id": "CATALOG_OPERATIONS"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "APPEND",
+          "outputs": {
+            "record_id": "$.capability_result.record_id",
+            "sequence_number": "$.capability_result.sequence_number"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+          "step": "append_operation",
+          "store": "CATALOG_OPERATIONS"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Append a durable account of a performed operation to the catalog's own trail"
+    },
+    "fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

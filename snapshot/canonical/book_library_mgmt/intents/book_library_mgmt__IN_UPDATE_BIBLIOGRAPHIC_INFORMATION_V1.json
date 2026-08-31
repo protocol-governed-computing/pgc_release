@@ -1,0 +1,56 @@
+{
+  "artifact_code": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+  "artifact_type": "IN",
+  "content": "# IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\nsupersedes: book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\ncore:\n  summary: A request to change a registered book's description\n  workflow: WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    authorization_rules:\n      type: array\n      required: true\n    staff_id:\n      type: string\n      required: true\n    identity_key:\n      type: string\n      required: true\n    updated_fields:\n      type: object\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to change a registered book's description\n",
+  "content_hash": "df01ec392390632c217c58c6a2f904ccc4caca1be0b4c94d72cbbef0d34b3e16",
+  "fqdn_id": "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "authorization_rules": {
+          "required": true,
+          "type": "array"
+        },
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_credentials": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "updated_fields": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to change a registered book's description",
+      "workflow": "WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+    },
+    "fqdn": "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "supersedes": "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "1"
+}

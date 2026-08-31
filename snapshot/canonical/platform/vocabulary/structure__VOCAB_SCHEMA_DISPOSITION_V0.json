@@ -1,0 +1,29 @@
+{
+  "artifact_code": "VOCAB_SCHEMA_DISPOSITION_V0",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_SCHEMA_DISPOSITION_V0\n\n## Machine\n\n```yaml\nfqdn: structure::VOCAB_SCHEMA_DISPOSITION_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: structure\nextends: ''\nschema_disposition:\n  casing: lower_snake\n  entries:\n  - described\n  - exempt\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "45a3561d585341f7abf8cf2c26d9312284fccb859af2580c1f7121fc45897fd4",
+  "fqdn_id": "structure::VOCAB_SCHEMA_DISPOSITION_V0",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "authority": "pgc.platform",
+    "concern": "structure",
+    "extends": "",
+    "fqdn": "structure::VOCAB_SCHEMA_DISPOSITION_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "schema_disposition": {
+      "casing": "lower_snake",
+      "entries": [
+        "described",
+        "exempt"
+      ]
+    },
+    "version": "v0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

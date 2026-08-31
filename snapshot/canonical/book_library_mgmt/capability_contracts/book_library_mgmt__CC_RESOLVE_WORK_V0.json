@@ -1,0 +1,175 @@
+{
+  "artifact_code": "CC_RESOLVE_WORK_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "author": "in.author",
+          "title": "in.title"
+        },
+        "fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+        "id": "CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+        "inputs": [
+          "title",
+          "author"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "work_key"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+        "id": "CS_REGISTRY_V0",
+        "kind": "CS",
+        "ops": [
+          "REGISTER",
+          "RESOLVE",
+          "EXISTS",
+          "DEREGISTER",
+          "COUNT"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_RESOLVE_WORK_V0\n\n## 1. Intent\n\nForms the work key, resolves it against the registry, and reads the work record it names\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_RESOLVE_WORK_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Forms the work key, resolves it against the registry, and reads the work record it names\n  inputs:\n    title:\n      type: string\n      required: true\n    author:\n      type: string\n      required: true\n  outputs:\n    work_key:\n      type: string\n      required: true\n    work_record:\n      type: object\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - NOT_FOUND\n    - BACKEND_ERROR\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: form_work_key\n    transform: book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0\n    inputs:\n      title: $.inputs.title\n      author: $.inputs.author\n    outputs:\n      work_key: $.capability_result.work_key\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: resolve_work_claim\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: RESOLVE\n    store: WORK_IDENTITY_REGISTRY\n    inputs:\n      key_or_address: $.results.form_work_key.work_key\n    outputs:\n      target_ref: $.capability_result.target_ref\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: read_work_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: WORKS\n    inputs:\n      key: $.results.form_work_key.work_key\n    outputs:\n      work_record: $.capability_result.value\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n",
+  "content_hash": "6006efa9b2ceffaca27ffd30e134812f4681cfc78ccc5164c4f4b3056bb8fea2",
+  "fqdn_id": "book_library_mgmt::CC_RESOLVE_WORK_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "author": {
+          "required": true,
+          "type": "string"
+        },
+        "title": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "work_key": {
+          "required": true,
+          "type": "string"
+        },
+        "work_record": {
+          "type": "object"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "author": "$.inputs.author",
+            "title": "$.inputs.title"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "work_key": "$.capability_result.work_key"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "form_work_key",
+          "transform": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
+        },
+        {
+          "inputs": {
+            "key_or_address": "$.results.form_work_key.work_key"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "RESOLVE",
+          "outputs": {
+            "result_status": "$.result_status",
+            "target_ref": "$.capability_result.target_ref"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_REGISTRY_V0",
+          "step": "resolve_work_claim",
+          "store": "WORK_IDENTITY_REGISTRY"
+        },
+        {
+          "inputs": {
+            "key": "$.results.form_work_key.work_key"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "READ",
+          "outputs": {
+            "result_status": "$.result_status",
+            "work_record": "$.capability_result.value"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "read_work_record",
+          "store": "WORKS"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "NOT_FOUND",
+          "BACKEND_ERROR",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Forms the work key, resolves it against the registry, and reads the work record it names"
+    },
+    "fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

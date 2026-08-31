@@ -1,0 +1,150 @@
+{
+  "artifact_code": "WF_REGISTER_ADDITIONAL_EDITION_V0",
+  "artifact_type": "WF",
+  "content": "# WF_REGISTER_ADDITIONAL_EDITION_V0\n\n## 1. Intent\n\nThe governed sequence that registers a further edition of a work the library already holds\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: catalog\nruntime_binding: book_library_mgmt::RB_CATALOG_BINDINGS_V0\nsubdomain: catalog\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: The governed sequence that registers a further edition of a work the library already holds\n  actor_context: book_library_mgmt::AC_LIBRARY_STAFF_V0\n  start_node: IN_REGISTER_ADDITIONAL_EDITION_V0\n  nodes:\n    IN_REGISTER_ADDITIONAL_EDITION_V0:\n      type: IN\n      code: IN_REGISTER_ADDITIONAL_EDITION_V0\n      next:\n        ACK: CC_CONFIRM_STAFF_AUTHORIZED_V0\n        NACK: EXIT_REJECTED\n    CC_CONFIRM_STAFF_AUTHORIZED_V0:\n      type: CC\n      code: CC_CONFIRM_STAFF_AUTHORIZED_V0\n      inputs:\n        staff_credentials: $.payload.staff_credentials\n        authorization_rules: $.payload.authorization_rules\n      next:\n        SUCCESS: CC_VALIDATE_BOOK_SUBMISSION_V0\n        VIOLATION: EXIT_REJECTED\n    CC_VALIDATE_BOOK_SUBMISSION_V0:\n      type: CC\n      code: CC_VALIDATE_BOOK_SUBMISSION_V0\n      inputs:\n        book_fields: $.payload.edition_fields\n        book_schema: $.payload.edition_schema\n        work_fields: $.payload.work_fields\n        work_schema: $.payload.work_schema\n      next:\n        SUCCESS: CC_RESOLVE_WORK_V0\n        VIOLATION: EXIT_REJECTED\n    CC_RESOLVE_WORK_V0:\n      type: CC\n      code: CC_RESOLVE_WORK_V0\n      inputs:\n        title: $.payload.title\n        author: $.payload.author\n      next:\n        SUCCESS: CC_CLAIM_BOOK_IDENTITY_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_CLAIM_BOOK_IDENTITY_V0:\n      type: CC\n      code: CC_CLAIM_BOOK_IDENTITY_V0\n      inputs:\n        title: $.payload.title\n        author: $.payload.author\n        publication_year: $.payload.publication_year\n      next:\n        SUCCESS: CC_REGISTER_ADDITIONAL_EDITION_V0\n        ALREADY_EXISTS: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_REGISTER_ADDITIONAL_EDITION_V0:\n      type: CC\n      code: CC_REGISTER_ADDITIONAL_EDITION_V0\n      inputs:\n        identity_key: $.results.CC_CLAIM_BOOK_IDENTITY_V0.identity_key\n        edition_schema: $.payload.edition_schema\n        edition_fields:\n          identity_key: $.results.CC_CLAIM_BOOK_IDENTITY_V0.identity_key\n          title: $.payload.title\n          author: $.payload.author\n          publication_year: $.payload.publication_year\n          subject: $.payload.subject\n          state: REGISTERED\n          work_key: $.results.CC_RESOLVE_WORK_V0.work_key\n      next:\n        SUCCESS: CC_APPEND_CATALOG_OPERATION_V0\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_APPEND_CATALOG_OPERATION_V0:\n      type: CC\n      code: CC_APPEND_CATALOG_OPERATION_V0\n      inputs:\n        staff_id: $.payload.staff_id\n        operation: REGISTER_ADDITIONAL_EDITION\n        record:\n          operation: REGISTER_ADDITIONAL_EDITION\n          staff_id: $.payload.staff_id\n          subject: $.results.CC_CLAIM_BOOK_IDENTITY_V0.identity_key\n      next:\n        SUCCESS: EXIT_COMPLETED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n      emit: book_library_mgmt::EV_BOOK_REGISTERED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n",
+  "content_hash": "cda9d2f5ce4a3ededbce563205bdc319af7421ff9d8091e2fba81ec0b3c21267",
+  "fqdn_id": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "actor_context": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "nodes": {
+        "CC_APPEND_CATALOG_OPERATION_V0": {
+          "code": "CC_APPEND_CATALOG_OPERATION_V0",
+          "fqdn_id": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0",
+          "inputs": {
+            "operation": "REGISTER_ADDITIONAL_EDITION",
+            "record": {
+              "operation": "REGISTER_ADDITIONAL_EDITION",
+              "staff_id": "$.payload.staff_id",
+              "subject": "$.results.CC_CLAIM_BOOK_IDENTITY_V0.identity_key"
+            },
+            "staff_id": "$.payload.staff_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CLAIM_BOOK_IDENTITY_V0": {
+          "code": "CC_CLAIM_BOOK_IDENTITY_V0",
+          "fqdn_id": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0",
+          "inputs": {
+            "author": "$.payload.author",
+            "publication_year": "$.payload.publication_year",
+            "title": "$.payload.title"
+          },
+          "next": {
+            "ALREADY_EXISTS": "EXIT_REJECTED",
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_REGISTER_ADDITIONAL_EDITION_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+          "code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "fqdn_id": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "inputs": {
+            "authorization_rules": "$.payload.authorization_rules",
+            "staff_credentials": "$.payload.staff_credentials"
+          },
+          "next": {
+            "SUCCESS": "CC_VALIDATE_BOOK_SUBMISSION_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_REGISTER_ADDITIONAL_EDITION_V0": {
+          "code": "CC_REGISTER_ADDITIONAL_EDITION_V0",
+          "fqdn_id": "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0",
+          "inputs": {
+            "edition_fields": {
+              "author": "$.payload.author",
+              "identity_key": "$.results.CC_CLAIM_BOOK_IDENTITY_V0.identity_key",
+              "publication_year": "$.payload.publication_year",
+              "state": "REGISTERED",
+              "subject": "$.payload.subject",
+              "title": "$.payload.title",
+              "work_key": "$.results.CC_RESOLVE_WORK_V0.work_key"
+            },
+            "edition_schema": "$.payload.edition_schema",
+            "identity_key": "$.results.CC_CLAIM_BOOK_IDENTITY_V0.identity_key"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_APPEND_CATALOG_OPERATION_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RESOLVE_WORK_V0": {
+          "code": "CC_RESOLVE_WORK_V0",
+          "fqdn_id": "book_library_mgmt::CC_RESOLVE_WORK_V0",
+          "inputs": {
+            "author": "$.payload.author",
+            "title": "$.payload.title"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "NOT_FOUND": "EXIT_REJECTED",
+            "SUCCESS": "CC_CLAIM_BOOK_IDENTITY_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_VALIDATE_BOOK_SUBMISSION_V0": {
+          "code": "CC_VALIDATE_BOOK_SUBMISSION_V0",
+          "fqdn_id": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0",
+          "inputs": {
+            "book_fields": "$.payload.edition_fields",
+            "book_schema": "$.payload.edition_schema",
+            "work_fields": "$.payload.work_fields",
+            "work_schema": "$.payload.work_schema"
+          },
+          "next": {
+            "SUCCESS": "CC_RESOLVE_WORK_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "emit": "book_library_mgmt::EV_BOOK_REGISTERED_V0",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "IN_REGISTER_ADDITIONAL_EDITION_V0": {
+          "code": "IN_REGISTER_ADDITIONAL_EDITION_V0",
+          "fqdn_id": "book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0",
+          "next": {
+            "ACK": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_REGISTER_ADDITIONAL_EDITION_V0",
+      "summary": "The governed sequence that registers a further edition of a work the library already holds"
+    },
+    "fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "catalog",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

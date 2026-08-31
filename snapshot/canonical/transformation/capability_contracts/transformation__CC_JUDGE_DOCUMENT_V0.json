@@ -1,0 +1,182 @@
+{
+  "artifact_code": "CC_JUDGE_DOCUMENT_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "document_text": "in.document_text"
+        },
+        "fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+        "id": "CT_PURE_PARSE_REGISTERS_V0",
+        "inputs": [
+          "document_text"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "header",
+          "sections",
+          "registers"
+        ]
+      },
+      {
+        "bindings": {
+          "prior_texts": "in.prior_texts"
+        },
+        "fqdn": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0",
+        "id": "CT_PURE_PARSE_PRIOR_PHASES_V0",
+        "inputs": [
+          "prior_texts"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "priors"
+        ]
+      },
+      {
+        "bindings": {
+          "document_text": "in.document_text",
+          "header": "parse_registers.capability_result.header",
+          "registers": "parse_registers.capability_result.registers",
+          "rule_set": "in.rule_set",
+          "sections": "parse_registers.capability_result.sections"
+        },
+        "fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0",
+        "id": "CT_PURE_EVALUATE_RULES_V0",
+        "inputs": [
+          "header",
+          "sections",
+          "registers",
+          "document_text",
+          "rule_set"
+        ],
+        "inputs_truncated": true,
+        "kind": "CT",
+        "outputs": [
+          "verdict",
+          "findings",
+          "rules_evaluated"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_JUDGE_DOCUMENT_V0\n\n## 1. Intent\n\nJudge a phase document against a declared rule set: read it into registers, then apply every rule\nand report what failed.\n\nReused by every phase. Each phase supplies its own document and its own rule set; the mechanism is\nthe same one.\n\n---\n\n## 2. Rationale\n\nParsing and evaluating are two steps of one governed capability rather than two capabilities. A\nworkflow composes capability *calls*, and data does not flow between them \u2014 a node reads the intent\npayload, not a previous node's result. Chaining belongs inside a contract's pipeline, where step two\nreads step one through `$.results.parse_registers.*`.\n\nKeeping the two transforms separate still matters: parsing judges nothing and evaluating knows\nnothing about markdown, so each can be reused or replaced without disturbing the other.\n\nAdmissibility must be reproducible \u2014 the same document and the same rule set always give the same\nverdict. The rule set arrives as an input rather than as embedded content, so what is governed can\nbe read from the composition without reading any code.\n\n---\n\n## 3. Pipeline\n\n| Step | Capability | Type | Operation |\n|------|------------|------|-----------|\n| 1 | CT_PURE_PARSE_REGISTERS_V0 | CT | Parse |\n| 2 | CT_PURE_EVALUATE_RULES_V0 | CT | Evaluate |\n\n---\n\n## 4. Inputs\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| document_text | string | true | Full text of the phase document |\n| rule_set | array | true | The declared rules deciding admissibility |\n\n---\n\n## 5. Outputs\n\n| Field | Type | Description |\n|-------|------|-------------|\n| verdict | string | ADMISSIBLE or INADMISSIBLE |\n| findings | array | One entry per failed rule |\n| rules_evaluated | integer | Number of rules applied |\n\n---\n\n## 6. Result Status Contract\n\n| Status | Condition |\n|--------|-----------|\n| SUCCESS | The rule set was applied in full and a verdict reached |\n| VIOLATION | The input was unusable, or a rule named an unimplemented check kind |\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::CC_JUDGE_DOCUMENT_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: design\ncore:\n  summary: Parse a phase document and judge it against a declared rule set\n  inputs:\n    document_text:\n      type: string\n      required: true\n    prior_texts:\n      type: object\n      required: true\n      description: |\n        Phase id \u2192 full text of the upstream document. Empty when this phase reads none \u2014 which for\n        P0 is permanent: its input is human prose, not a phase document, so there is no upstream\n        register to preserve and never will be.\n    rule_set:\n      type: array\n      required: true\n  outputs:\n    verdict:\n      type: string\n    findings:\n      type: array\n    rules_evaluated:\n      type: integer\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  # Declares no outputs: registers are an intermediate, not a result of judging a document.\n  # Every step's outputs mapping accumulates into the CC surface, so declaring them here would\n  # publish the entire parsed document as an observable output of the phase. Step two reads the\n  # raw result directly instead, which the dispatcher addresses as\n  # $.results.<step_id>.capability_result.<field>.\n  - step: parse_registers\n    transform: transformation::CT_PURE_PARSE_REGISTERS_V0\n    inputs:\n      document_text: $.inputs.document_text\n    outputs: {}\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n\n  - step: parse_priors\n    transform: transformation::CT_PURE_PARSE_PRIOR_PHASES_V0\n    inputs:\n      prior_texts: $.inputs.prior_texts\n    outputs: {}\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n\n  - step: evaluate_rules\n    transform: transformation::CT_PURE_EVALUATE_RULES_V0\n    inputs:\n      header: $.results.parse_registers.capability_result.header\n      sections: $.results.parse_registers.capability_result.sections\n      registers: $.results.parse_registers.capability_result.registers\n      document_text: $.inputs.document_text\n      rule_set: $.inputs.rule_set\n      # Judges a document alone \u2014 it binds no capability and observes nothing. Declared empty\n      # rather than omitted: a rule needing an observation must find it absent, not undefined.\n      observed: {}\n      # Keyed by the phase that produced it, so a rule can say which handoff it relied on.\n      priors: $.results.parse_priors.capability_result.priors\n    outputs:\n      verdict: $.capability_result.verdict\n      findings: $.capability_result.findings\n      rules_evaluated: $.capability_result.rules_evaluated\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\nextensions:\n  description: Reads a phase document into registers and evaluates every declared rule against it\n```\n",
+  "content_hash": "7abe13e2c305a11ce77f1ae5bfdfbe9bcfc7b7204877063f0f07064b54da2de4",
+  "fqdn_id": "transformation::CC_JUDGE_DOCUMENT_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "design",
+    "core": {
+      "inputs": {
+        "document_text": {
+          "required": true,
+          "type": "string"
+        },
+        "prior_texts": {
+          "description": "Phase id \u2192 full text of the upstream document. Empty when this phase reads none \u2014 which for\nP0 is permanent: its input is human prose, not a phase document, so there is no upstream\nregister to preserve and never will be.\n",
+          "required": true,
+          "type": "object"
+        },
+        "rule_set": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "findings": {
+          "type": "array"
+        },
+        "rules_evaluated": {
+          "type": "integer"
+        },
+        "verdict": {
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "document_text": "$.inputs.document_text"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {},
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "parse_registers",
+          "transform": "transformation::CT_PURE_PARSE_REGISTERS_V0"
+        },
+        {
+          "inputs": {
+            "prior_texts": "$.inputs.prior_texts"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {},
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "parse_priors",
+          "transform": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0"
+        },
+        {
+          "inputs": {
+            "document_text": "$.inputs.document_text",
+            "header": "$.results.parse_registers.capability_result.header",
+            "observed": {},
+            "priors": "$.results.parse_priors.capability_result.priors",
+            "registers": "$.results.parse_registers.capability_result.registers",
+            "rule_set": "$.inputs.rule_set",
+            "sections": "$.results.parse_registers.capability_result.sections"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "findings": "$.capability_result.findings",
+            "rules_evaluated": "$.capability_result.rules_evaluated",
+            "verdict": "$.capability_result.verdict"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "evaluate_rules",
+          "transform": "transformation::CT_PURE_EVALUATE_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Parse a phase document and judge it against a declared rule set"
+    },
+    "extensions": {
+      "description": "Reads a phase document into registers and evaluates every declared rule against it"
+    },
+    "fqdn": "transformation::CC_JUDGE_DOCUMENT_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "transformation::CT_PURE_EVALUATE_RULES_V0",
+    "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0",
+    "transformation::CT_PURE_PARSE_REGISTERS_V0"
+  ],
+  "version": "0"
+}

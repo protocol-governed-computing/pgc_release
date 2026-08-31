@@ -1,0 +1,246 @@
+{
+  "artifact_code": "CC_RECORD_VERIFICATION_DECISION_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "allowed_set": "in.states_admitting_a_decision",
+          "value": "in.current_state"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "inputs": [
+          "allowed_set",
+          "value"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "is_member"
+        ]
+      },
+      {
+        "bindings": {
+          "parameters": "in.self_check_parameters",
+          "rules": "in.self_check_rules"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      },
+      {
+        "bindings": {
+          "fields": "in.decided_actor_fields"
+        },
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_RECORD_VERIFICATION_DECISION_V0\n\n## 1. Intent\n\nRefuses every declared refusal and moves the actor to its decided state\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_RECORD_VERIFICATION_DECISION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Refuses every declared refusal and moves the actor to its decided state\n  inputs:\n    current_state:\n      type: string\n      required: true\n    states_admitting_a_decision:\n      type: array\n      required: true\n    decision:\n      type: string\n      required: true\n    admitted_outcomes:\n      type: array\n      required: true\n    verifying_authority:\n      type: string\n      required: true\n    contact_address:\n      type: string\n      required: true\n    decided_actor_fields:\n      type: object\n      required: true\n    self_check_parameters:\n      type: object\n      required: true\n    self_check_rules:\n      type: array\n      required: true\n  outputs:\n    result_status:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_state_admits_decision\n    transform: capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\n    inputs:\n      value: $.inputs.current_state\n      allowed_set: $.inputs.states_admitting_a_decision\n    outputs:\n      is_member: $.capability_result.is_member\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: read_outcome_admitted\n    transform: capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\n    inputs:\n      value: $.inputs.decision\n      allowed_set: $.inputs.admitted_outcomes\n    outputs:\n      is_member: $.capability_result.is_member\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: refuse_self_verification\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters: $.inputs.self_check_parameters\n      rules: $.inputs.self_check_rules\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: assemble_decided_actor\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields: $.inputs.decided_actor_fields\n    outputs:\n      record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_decided_actor\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: UPDATE\n    store: ACTORS\n    inputs:\n      key: $.inputs.contact_address\n      updates: $.results.assemble_decided_actor.record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n",
+  "content_hash": "5e98b78f6c5087cd59b0df13e58bbf80464bf295207a2a632850845cdf39714d",
+  "fqdn_id": "blockchain::CC_RECORD_VERIFICATION_DECISION_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "inputs": {
+        "admitted_outcomes": {
+          "required": true,
+          "type": "array"
+        },
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "current_state": {
+          "required": true,
+          "type": "string"
+        },
+        "decided_actor_fields": {
+          "required": true,
+          "type": "object"
+        },
+        "decision": {
+          "required": true,
+          "type": "string"
+        },
+        "self_check_parameters": {
+          "required": true,
+          "type": "object"
+        },
+        "self_check_rules": {
+          "required": true,
+          "type": "array"
+        },
+        "states_admitting_a_decision": {
+          "required": true,
+          "type": "array"
+        },
+        "verifying_authority": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "result_status": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "allowed_set": "$.inputs.states_admitting_a_decision",
+            "value": "$.inputs.current_state"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "is_member": "$.capability_result.is_member"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "read_state_admits_decision",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+        },
+        {
+          "inputs": {
+            "allowed_set": "$.inputs.admitted_outcomes",
+            "value": "$.inputs.decision"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "is_member": "$.capability_result.is_member"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "read_outcome_admitted",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+        },
+        {
+          "inputs": {
+            "parameters": "$.inputs.self_check_parameters",
+            "rules": "$.inputs.self_check_rules"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "refuse_self_verification",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        },
+        {
+          "inputs": {
+            "fields": "$.inputs.decided_actor_fields"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "record": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_decided_actor",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "key": "$.inputs.contact_address",
+            "updates": "$.results.assemble_decided_actor.record"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "UPDATE",
+          "outputs": {
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "write_decided_actor",
+          "store": "ACTORS"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuses every declared refusal and moves the actor to its decided state"
+    },
+    "fqdn": "blockchain::CC_RECORD_VERIFICATION_DECISION_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
+  "version": "0"
+}

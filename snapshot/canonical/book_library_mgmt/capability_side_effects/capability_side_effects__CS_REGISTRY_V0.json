@@ -1,0 +1,303 @@
+{
+  "artifact_code": "CS_REGISTRY_V0",
+  "artifact_type": "CS",
+  "content": "",
+  "content_hash": "4f0b21ac8383e402bf79e11966febc41736c9c41682474307fc5314495c1e619",
+  "cs_ir": {
+    "cs_metadata": {
+      "capability": {
+        "supported_operation_specs": [
+          "REGISTER",
+          "RESOLVE",
+          "EXISTS",
+          "DEREGISTER",
+          "COUNT"
+        ]
+      },
+      "operations": {
+        "operations": {
+          "COUNT": {
+            "effect": "read",
+            "handler": "count",
+            "idempotent": true,
+            "input": [],
+            "output": [
+              "result_status",
+              "count"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Count active (non-tombstoned) registry entries"
+          },
+          "DEREGISTER": {
+            "effect": "write",
+            "handler": "deregister",
+            "idempotent": true,
+            "input": [
+              "key_or_address"
+            ],
+            "output": [
+              "result_status"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "NOT_FOUND",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Mark a key or address as deregistered via tombstone"
+          },
+          "EXISTS": {
+            "effect": "read",
+            "handler": "exists",
+            "idempotent": true,
+            "input": [
+              "key_or_address"
+            ],
+            "output": [
+              "result_status",
+              "exists"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Check if a key or address is registered"
+          },
+          "REGISTER": {
+            "effect": "write",
+            "handler": "register",
+            "idempotent": false,
+            "input": [
+              "key",
+              "target_cs",
+              "target_ref"
+            ],
+            "output": [
+              "result_status",
+              "address"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "ALREADY_EXISTS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Register a new key to address binding"
+          },
+          "RESOLVE": {
+            "effect": "read",
+            "handler": "resolve",
+            "idempotent": true,
+            "input": [
+              "key_or_address"
+            ],
+            "output": [
+              "result_status",
+              "target_cs",
+              "target_ref"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "NOT_FOUND",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Resolve a key or address to its storage target"
+          }
+        }
+      }
+    },
+    "handler_ref": {
+      "callable": "RegistryRuntime",
+      "module": "capability_side_effects.implementation.CS_REGISTRY_V0.runtime"
+    }
+  },
+  "fqdn_id": "capability_side_effects::CS_REGISTRY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_SIDE_EFFECT",
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "category": "storage",
+      "operations": {
+        "COUNT": {
+          "effect": "read",
+          "handler": "count",
+          "idempotent": true,
+          "input": [],
+          "output": [
+            "result_status",
+            "count"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Count active (non-tombstoned) registry entries"
+        },
+        "DEREGISTER": {
+          "effect": "write",
+          "handler": "deregister",
+          "idempotent": true,
+          "input": [
+            "key_or_address"
+          ],
+          "output": [
+            "result_status"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Mark a key or address as deregistered via tombstone"
+        },
+        "EXISTS": {
+          "effect": "read",
+          "handler": "exists",
+          "idempotent": true,
+          "input": [
+            "key_or_address"
+          ],
+          "output": [
+            "result_status",
+            "exists"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Check if a key or address is registered"
+        },
+        "REGISTER": {
+          "effect": "write",
+          "handler": "register",
+          "idempotent": false,
+          "input": [
+            "key",
+            "target_cs",
+            "target_ref"
+          ],
+          "output": [
+            "result_status",
+            "address"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "ALREADY_EXISTS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Register a new key to address binding"
+        },
+        "RESOLVE": {
+          "effect": "read",
+          "handler": "resolve",
+          "idempotent": true,
+          "input": [
+            "key_or_address"
+          ],
+          "output": [
+            "result_status",
+            "target_cs",
+            "target_ref"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Resolve a key or address to its storage target"
+        }
+      },
+      "policy": {
+        "operations": [
+          "REGISTER",
+          "RESOLVE",
+          "EXISTS",
+          "DEREGISTER",
+          "COUNT"
+        ]
+      },
+      "summary": "Registry for stable indirection by binding symbolic keys to opaque addresses"
+    },
+    "extensions": {
+      "architecture": {
+        "bindings": {
+          "address": "Opaque content-addressable hash",
+          "key": "Human-readable symbolic identifier",
+          "target_cs": "Which storage capability holds the actual data",
+          "target_ref": "Reference within that capability"
+        },
+        "purpose": "Provides stable symbolic addressing layer above concrete storage",
+        "role": "Meta-capability for indirection"
+      },
+      "configuration_schema": {
+        "path": {
+          "description": "Filesystem path to JSONL registry file (append-only)",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "constraints": {
+        "address_format": "content_addressable_hash",
+        "deregistration_model": "tombstone",
+        "key_scope": "global",
+        "max_key_length": 256,
+        "mutability": "append_only"
+      },
+      "cs_kind": "registry",
+      "failure_modes": [
+        "VIOLATION: Invalid key (type, format, empty)",
+        "ALREADY_EXISTS: Key already registered",
+        "NOT_FOUND: Key or address not registered",
+        "BACKEND_ERROR: Storage unavailable or corrupt"
+      ],
+      "properties": {
+        "concurrent_safe": "register_once",
+        "durability": "persistent",
+        "idempotent": false,
+        "replay_policy": "append_once",
+        "transactional": false
+      },
+      "side_effect_type": "persistent",
+      "use_cases": [
+        "Address book: map kyc_key to user_id in user index",
+        "Name service: map DNS-like names to storage locations",
+        "Content addressing: map human keys to content hashes",
+        "Symbolic links: stable references across storage reorganization"
+      ],
+      "vocabulary": {
+        "key_validation_result": [
+          "VALID",
+          "INVALID"
+        ],
+        "result_status": [
+          "SUCCESS",
+          "NOT_FOUND",
+          "ALREADY_EXISTS",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ]
+      }
+    },
+    "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+    "governed_by": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+    "implementation": {
+      "callable": "RegistryRuntime",
+      "module": "capability_side_effects.implementation.CS_REGISTRY_V0.runtime"
+    },
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "capability_side_effects",
+  "references": [],
+  "version": "V0"
+}

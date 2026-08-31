@@ -1,0 +1,217 @@
+{
+  "wf_id": "WF_REINSTATE_PHYSICAL_COPY_V0",
+  "entry": "IN_REINSTATE_PHYSICAL_COPY_V0",
+  "nodes": [
+    {
+      "id": "CC_APPEND_CATALOG_OPERATION_V0",
+      "type": "CC",
+      "cc_code": "CC_APPEND_CATALOG_OPERATION_V0",
+      "capability": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "operation": "REINSTATE_PHYSICAL_COPY",
+          "record": {
+            "operation": "REINSTATE_PHYSICAL_COPY",
+            "staff_id": "$.payload.staff_id",
+            "subject": "$.payload.barcode"
+          },
+          "staff_id": "IN.staff_id"
+        }
+      }
+    },
+    {
+      "id": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "parameters": "in.staff_credentials",
+              "rules": "in.authorization_rules"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "authorization_rules": "IN.authorization_rules",
+          "staff_credentials": "IN.staff_credentials"
+        }
+      }
+    },
+    {
+      "id": "CC_REINSTATE_PHYSICAL_COPY_V0",
+      "type": "CC",
+      "cc_code": "CC_REINSTATE_PHYSICAL_COPY_V0",
+      "capability": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "barcode": "IN.barcode"
+        }
+      }
+    },
+    {
+      "id": "EXIT_COMPLETED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_REINSTATE_PHYSICAL_COPY_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "EXIT_COMPLETED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "to": "CC_REINSTATE_PHYSICAL_COPY_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REINSTATE_PHYSICAL_COPY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_REINSTATE_PHYSICAL_COPY_V0",
+      "to": "CC_APPEND_CATALOG_OPERATION_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_REINSTATE_PHYSICAL_COPY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_REINSTATE_PHYSICAL_COPY_V0",
+      "to": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_REINSTATE_PHYSICAL_COPY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_REINSTATE_PHYSICAL_COPY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_REINSTATE_PHYSICAL_COPY_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_REINSTATE_PHYSICAL_COPY_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_COMPLETED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_REINSTATE_PHYSICAL_COPY_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_REINSTATE_PHYSICAL_COPY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

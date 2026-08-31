@@ -1,0 +1,40 @@
+{
+  "artifact_code": "STRUCTURE_COLLATZ_STORAGE_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_COLLATZ_STORAGE_V0\n\n## 1. Intent\n\nStorage topology for the Collatz reference workload \u2014 maps the `COLLATZ_RESULTS` entity store to a\nconcrete path under the runtime instance root. Storage paths are a governance concern, resolved via\nSTRUCTURE only (never hardcoded in a capability or the runtime).\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::STRUCTURE_COLLATZ_STORAGE_V0\nartifact_kind: STRUCTURE\nversion: v0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Collatz reference-workload storage topology\n  description: Maps the COLLATZ_RESULTS entity store to a path under the instance data root.\n  domain: workload\n  storage_roots:\n    base_path: '{{module_data_root}}'\n    description: Root path for Collatz storage (the runtime instance data root, resolved at runtime)\n  entity_stores:\n    COLLATZ_RESULTS:\n      description: Mutable store for Collatz sequences + conjecture verdict (last-write-wins)\n      path: workload/collatz/collatz_results.json\n  resolution:\n    algorithm: base_path / entity_stores[entity_type].path\n    example: '{{module_data_root}}/workload/collatz/collatz_results.json'\n```\n",
+  "content_hash": "50f413a2c68ec87d7041030ed1411c1ccc4e9ba856003d654d67f8f96e34a964",
+  "fqdn_id": "workload::STRUCTURE_COLLATZ_STORAGE_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "workload",
+    "core": {
+      "description": "Maps the COLLATZ_RESULTS entity store to a path under the instance data root.",
+      "domain": "workload",
+      "entity_stores": {
+        "COLLATZ_RESULTS": {
+          "description": "Mutable store for Collatz sequences + conjecture verdict (last-write-wins)",
+          "path": "workload/collatz/collatz_results.json"
+        }
+      },
+      "resolution": {
+        "algorithm": "base_path / entity_stores[entity_type].path",
+        "example": "{{module_data_root}}/workload/collatz/collatz_results.json"
+      },
+      "storage_roots": {
+        "base_path": "{{module_data_root}}",
+        "description": "Root path for Collatz storage (the runtime instance data root, resolved at runtime)"
+      },
+      "summary": "Collatz reference-workload storage topology"
+    },
+    "fqdn": "workload::STRUCTURE_COLLATZ_STORAGE_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "v0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

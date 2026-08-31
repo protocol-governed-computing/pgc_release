@@ -1,0 +1,47 @@
+{
+  "artifact_code": "INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0\n\n## Machine\n\n```yaml\nfqdn: execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: execution_placement\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  enforcement:\n    scope: ALL_ARTIFACTS\n  applies_to_kinds:\n  - SNAPSHOT\n  composition_check:\n    rule: exactly_one\n    subject: active execution placement contract\n    selector:\n      namespace: execution_placement\n      artifact_type: STRUCTURE\n      artifact_code_prefix: STRUCTURE_EXECUTION_PLACEMENT_\n      where:\n        status: active\n```\n\n---\n\n## Purpose\n\nThis invariant is what makes the V0 placement contract non-dead-code. Without it, the\n`STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V0` would be documentation. With it, the compiler\nis required to find and validate it \u2014 making placement declaration a hard compile-time\nrequirement, not an optional annotation.\n\n## What this realizes\nFor every compiled snapshot:\n1. The compiler MUST scan `execution_placement/` for active contracts\n2. Exactly one MUST be present\n3. The active contract's placement mode MUST be materialized into `federation_profile.execution_placement`\n4. Compile MUST fail if no contract is found or more than one is found\n\n## Anti-Patterns\n\n- `no_placement_contract`: Snapshot compiled without any placement contract present\n- `multiple_active_contracts`: More than one placement contract marked active simultaneously\n- `runtime_placement_override`: Runtime selecting placement mode at execution time\n\n## Enforcement\n\n- **Stage:** compiler_validation\n- **Failure Mode:** FAIL_COMPILE \u2014 no snapshot is produced if violated\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: 'The compiler MUST locate exactly one active placement contract within FB_EXECUTION_PLACEMENT.\n    Zero contracts is a missing declaration violation. More than one active contract is an ambiguity violation.\n\n    '\n  summary: Every compiled snapshot must declare exactly one active execution placement contract\nassert_projection:\n  enforcement:\n    failure_mode: HARD_FAIL\n```\n",
+  "content_hash": "5627dabffb38fbd3efacd6b18a1fe48060875b769a29e9c5c462c5b4f7d380e3",
+  "fqdn_id": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "SNAPSHOT"
+      ],
+      "composition_check": {
+        "rule": "exactly_one",
+        "selector": {
+          "artifact_code_prefix": "STRUCTURE_EXECUTION_PLACEMENT_",
+          "artifact_type": "STRUCTURE",
+          "namespace": "execution_placement",
+          "where": {
+            "status": "active"
+          }
+        },
+        "subject": "active execution placement contract"
+      },
+      "enforcement": {
+        "scope": "ALL_ARTIFACTS"
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "execution_placement",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "execution_placement",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

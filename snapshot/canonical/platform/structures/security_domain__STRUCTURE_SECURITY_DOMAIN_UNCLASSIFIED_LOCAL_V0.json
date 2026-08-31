@@ -1,0 +1,30 @@
+{
+  "artifact_code": "STRUCTURE_SECURITY_DOMAIN_UNCLASSIFIED_LOCAL_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_SECURITY_DOMAIN_UNCLASSIFIED_LOCAL_V0\n\n## Machine\n\n```yaml\nfqdn: security_domain::STRUCTURE_SECURITY_DOMAIN_UNCLASSIFIED_LOCAL_V0\nartifact_code: STRUCTURE_SECURITY_DOMAIN_UNCLASSIFIED_LOCAL_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: security_domain::CONSTITUTION_SECURITY_DOMAIN_V0\nauthority: pgc.platform\nconcern: security_domain\nstatus: active\nsecurity_domain: UNCLASSIFIED_LOCAL\nclassification_level: UNCLASSIFIED\nnetwork_boundary: LOCAL\ncross_domain_transfer_allowed: false\nsnapshot_scope:\n  visibility: INTERNAL\n```\n\n---\n\n## Purpose\n\nDeclares that this compiled snapshot operates in the UNCLASSIFIED_LOCAL security domain.\nAll data is unclassified. Execution is confined to the local network boundary.\nNo cross-domain data transfer is authorized.\n\nThis is the correct and complete description of V0 security domain posture.\n\n## Active Declaration\n\nThis structure is the single active security domain declaration for V0. The compiler validates\nits presence via `INVARIANT_SECURITY_DOMAIN_DECLARED_V0` and materializes:\n\n```yaml\nfederation_profile:\n  security_domain: UNCLASSIFIED_LOCAL\n```\n\ninto every compiled snapshot. The `snapshot_scope.visibility: INTERNAL` field is\nexclusively owned by this boundary \u2014 no other FB may declare visibility.\n",
+  "content_hash": "52417061e81cdc84cd6bd559cc36ba5672dd71443484f38cff329e6914b00c6c",
+  "fqdn_id": "security_domain::STRUCTURE_SECURITY_DOMAIN_UNCLASSIFIED_LOCAL_V0",
+  "frontmatter": {
+    "artifact_code": "STRUCTURE_SECURITY_DOMAIN_UNCLASSIFIED_LOCAL_V0",
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "classification_level": "UNCLASSIFIED",
+    "concern": "security_domain",
+    "cross_domain_transfer_allowed": false,
+    "fqdn": "security_domain::STRUCTURE_SECURITY_DOMAIN_UNCLASSIFIED_LOCAL_V0",
+    "governed_by": "security_domain::CONSTITUTION_SECURITY_DOMAIN_V0",
+    "network_boundary": "LOCAL",
+    "security_domain": "UNCLASSIFIED_LOCAL",
+    "snapshot_scope": {
+      "visibility": "INTERNAL"
+    },
+    "status": "active",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "security_domain",
+  "references": [
+    "security_domain::CONSTITUTION_SECURITY_DOMAIN_V0"
+  ],
+  "version": "0"
+}

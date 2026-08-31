@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_TRANSPORT_RESPONSE_PROJECTION_EXTERNAL_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_TRANSPORT_RESPONSE_PROJECTION_EXTERNAL_V0\n\n## Machine\n\n```yaml\nfqdn: transport::INVARIANT_TRANSPORT_RESPONSE_PROJECTION_EXTERNAL_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: transport\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - TE\n```\n\n---\n\n## Purpose\n\nMapping a governed Result Class to an external representation (HTTP status, RPC error, CLI\nexit code) is adapter-owned and protocol-specific. A `TE` MUST NOT declare any such\nprojection. A `TE` that maps outcomes to protocol representations collapses the\ntransport/adapter separation the boundary exists to protect.\n\n---\n\n## Scope\n\n**Applies to:** all `TE_` artifacts.\n\n**Does NOT apply to:** the adapter's own response-projection table (external, correct).\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'A TE MUST NOT declare external-protocol response projection (HTTP status, RPC\n    error, CLI exit code, or an equivalent status map). Projection is adapter-owned.'\n  anti_patterns:\n  - protocol_projection_in_te: TE declares http_status, status_code, exit_code, rpc_error, or a status map\n```\n",
+  "content_hash": "ed228d477479a54c85f40c7e5c44d7a80cd7c7be24ff3a4c2dae73f784b7c489",
+  "fqdn_id": "transport::INVARIANT_TRANSPORT_RESPONSE_PROJECTION_EXTERNAL_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "TE"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "transport",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "transport::INVARIANT_TRANSPORT_RESPONSE_PROJECTION_EXTERNAL_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "transport",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

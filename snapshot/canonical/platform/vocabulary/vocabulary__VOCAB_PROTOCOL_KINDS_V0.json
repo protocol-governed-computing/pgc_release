@@ -1,0 +1,58 @@
+{
+  "artifact_code": "VOCAB_PROTOCOL_KINDS_V0",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_PROTOCOL_KINDS_V0 \u2014 Protocol Ontology\n\n**Governance Header**\n- Vocabulary ID: vocabulary::VOCAB_PROTOCOL_KINDS_V0\n- Version: v0\n- Governed By: vocabulary::CONSTITUTION_VOCABULARY_V0\n- Status: Active\n\n---\n\n## Purpose\n\nDefines what things ARE in the protocol: node type prefixes and artifact kind names.\n\n## Allowed Usage\n\n- `node_types`: As node type values in workflow DAG definitions\n- `artifact_kinds`: In artifact header `Artifact Kind` field and schema routing\n\n## Prohibited Usage\n\n- Must NOT be used as protocol identifiers (WF_*, CC_*, etc.)\n- Must NOT be used as parameter names or free-form identifiers\n- Node types and artifact kinds must not appear in other vocabulary files\n\n## Governance Rules\n\n- Node types are globally unique UPPER_SNAKE symbols. Most are the two-letter kind prefix of an\n  authorable artifact; `EXIT` is structural and has no artifact kind.\n- Artifact kinds are globally unique UPPER_SNAKE names, and are exactly the canonical values of the\n  Kind Vocabulary. A kind absent from that vocabulary is invalid for this revision.\n- An artifact kind MAY have a governing JSON Schema. Twelve of the sixteen kinds do; `ASSERT`,\n  `VOCABULARY`, `TRANSPORT_INGRESS`, and `TRANSPORT_EGRESS` are governed by their constitutions\n  without a separate schema.\n- `TRANSPORT_INGRESS` and `TRANSPORT_EGRESS` are first-class kinds, not aliases of `EVENT` / `INTENT`.\n\n### Domain extension\n\nThis artifact declares the **platform** symbol space. A domain that requires a symbol the platform\ndoes not interpret SHALL declare its own `VOCABULARY` artifact in its own namespace; it SHALL NOT\nadd domain symbols here. Platform vocabulary is closed to domain concepts \u2014 a symbol belongs here\nonly if the platform compiler or runtime interprets it.\n\n---\n\n## Machine\n\n```yaml\nfqdn: vocabulary::VOCAB_PROTOCOL_KINDS_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: vocabulary\nnode_types:\n  casing: UPPER_SNAKE\n  entries:\n  - AC\n  - CC\n  - CS\n  - CT\n  - EV\n  - EXIT\n  - IN\n  - RB\n  - TE\n  - TI\n  - WF\nartifact_kinds:\n  casing: UPPER_SNAKE\n  entries:\n  - ACTOR\n  - ASSERT\n  - CAPABILITY_CONTRACT\n  - CAPABILITY_SIDE_EFFECT\n  - CAPABILITY_TRANSFORM\n  - CONSTITUTION\n  - EVENT\n  - INTENT\n  - INVARIANT\n  - RUNTIME_BINDING\n  - STRUCTURE\n  - SURFACE_CONTRACT\n  - TRANSPORT_EGRESS\n  - TRANSPORT_INGRESS\n  - VOCABULARY\n  - WORKFLOW\n```\n",
+  "content_hash": "96c2c2e855fa6d7deca8d340aeb1f3bd8ead67a2d69305838c02d4a842a16013",
+  "fqdn_id": "vocabulary::VOCAB_PROTOCOL_KINDS_V0",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "artifact_kinds": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "ACTOR",
+        "ASSERT",
+        "CAPABILITY_CONTRACT",
+        "CAPABILITY_SIDE_EFFECT",
+        "CAPABILITY_TRANSFORM",
+        "CONSTITUTION",
+        "EVENT",
+        "INTENT",
+        "INVARIANT",
+        "RUNTIME_BINDING",
+        "STRUCTURE",
+        "SURFACE_CONTRACT",
+        "TRANSPORT_EGRESS",
+        "TRANSPORT_INGRESS",
+        "VOCABULARY",
+        "WORKFLOW"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "vocabulary",
+    "fqdn": "vocabulary::VOCAB_PROTOCOL_KINDS_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "node_types": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "AC",
+        "CC",
+        "CS",
+        "CT",
+        "EV",
+        "EXIT",
+        "IN",
+        "RB",
+        "TE",
+        "TI",
+        "WF"
+      ]
+    },
+    "version": "v0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "vocabulary",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

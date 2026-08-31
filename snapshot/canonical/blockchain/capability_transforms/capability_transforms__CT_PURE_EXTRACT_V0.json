@@ -1,0 +1,98 @@
+{
+  "artifact_code": "CT_PURE_EXTRACT_V0",
+  "artifact_type": "CT",
+  "content": "",
+  "content_hash": "bfa9bdcab536d12ce1658ccf449a8fd83ebd83d150035e310350940dd71e28d7",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_EXTRACT_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "from": "$.inputs.from",
+          "path": "$.inputs.path",
+          "type": "$.inputs.type"
+        },
+        "atom": "capability_transforms::CT_PURE_EXTRACT_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "capability_transforms.implementation.ct_pure_extract_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "capability_transforms::CT_PURE_EXTRACT_V0",
+    "inputs": {
+      "from": {
+        "description": "Context symbol or object to extract from",
+        "required": true,
+        "type": "any"
+      },
+      "path": {
+        "description": "JSONPath expression selector",
+        "required": true,
+        "type": "string"
+      },
+      "type": {
+        "description": "Expected output type for validation",
+        "required": true,
+        "type": "string"
+      }
+    },
+    "outputs": {
+      "result": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "capability_transforms::CT_PURE_EXTRACT_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "description": "Extracts a single value from a structured context or object using a declarative JSONPath expression.",
+      "inputs": {
+        "from": {
+          "description": "Context symbol or object to extract from",
+          "required": true,
+          "type": "any"
+        },
+        "path": {
+          "description": "JSONPath expression selector",
+          "required": true,
+          "type": "string"
+        },
+        "type": {
+          "description": "Expected output type for validation",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "result": {
+          "description": "The extracted value",
+          "type": "any"
+        }
+      },
+      "refusal": "never",
+      "summary": "Extract a value using JSONPath"
+    },
+    "fqdn": "capability_transforms::CT_PURE_EXTRACT_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "capability_transforms.implementation.ct_pure_extract_v0"
+      },
+      "operation": "EXTRACT"
+    },
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "capability_transforms",
+  "references": [],
+  "version": "V0"
+}

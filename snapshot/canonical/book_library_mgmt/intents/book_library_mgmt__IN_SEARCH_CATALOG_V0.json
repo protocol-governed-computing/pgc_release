@@ -1,0 +1,51 @@
+{
+  "artifact_code": "IN_SEARCH_CATALOG_V0",
+  "artifact_type": "IN",
+  "content": "# IN_SEARCH_CATALOG_V0\n\n## 1. Intent\n\nA request to locate material by subject or by title\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_SEARCH_CATALOG_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to locate material by subject or by title\n  workflow: WF_SEARCH_CATALOG_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    authorization_rules:\n      type: array\n      required: true\n    search_criteria:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n",
+  "content_hash": "a73ca41f114b99247e7e52a326013884085169a1254b308410f9a24d1f9e0cfd",
+  "fqdn_id": "book_library_mgmt::IN_SEARCH_CATALOG_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "authorization_rules": {
+          "required": true,
+          "type": "array"
+        },
+        "search_criteria": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_credentials": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to locate material by subject or by title",
+      "workflow": "WF_SEARCH_CATALOG_V0"
+    },
+    "fqdn": "book_library_mgmt::IN_SEARCH_CATALOG_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

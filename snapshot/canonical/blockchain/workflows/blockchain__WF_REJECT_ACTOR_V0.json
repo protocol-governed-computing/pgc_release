@@ -1,0 +1,110 @@
+{
+  "artifact_code": "WF_REJECT_ACTOR_V0",
+  "artifact_type": "WF",
+  "content": "# WF_REJECT_ACTOR_V0\n\n## 1. Intent\n\nThe governed sequence that records a rejection, with grounds required, and announces it\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::WF_REJECT_ACTOR_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: identity\nsupersedes: blockchain::WF_RECORD_VERIFICATION_DECISION_V0\nruntime_binding: blockchain::RB_IDENTITY_BINDINGS_V0\nsubdomain: identity\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: The governed sequence that records a rejection, with grounds required, and announces it\n  actor_context: blockchain::AC_PARTICIPANT_V0\n  start_node: IN_ACTOR_REJECTION_V0\n  nodes:\n    IN_ACTOR_REJECTION_V0:\n      type: IN\n      code: IN_ACTOR_REJECTION_V0\n      next:\n        ACK: CC_REQUIRE_REJECTION_GROUNDS_V0\n        NACK: EXIT_REJECTED\n    CC_REQUIRE_REJECTION_GROUNDS_V0:\n      type: CC\n      code: CC_REQUIRE_REJECTION_GROUNDS_V0\n      inputs:\n        grounds_parameters: $.payload.grounds_parameters\n        grounds_rules: $.payload.grounds_rules\n      next:\n        SUCCESS: CC_RESOLVE_ACTOR_V0\n        VIOLATION: EXIT_REJECTED\n    CC_RESOLVE_ACTOR_V0:\n      type: CC\n      code: CC_RESOLVE_ACTOR_V0\n      inputs:\n        contact_address: $.payload.contact_address\n      next:\n        SUCCESS: CC_RECORD_VERIFICATION_DECISION_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n    CC_RECORD_VERIFICATION_DECISION_V0:\n      type: CC\n      code: CC_RECORD_VERIFICATION_DECISION_V0\n      inputs:\n        self_check_parameters: $.payload.self_check_parameters\n        self_check_rules: $.payload.self_check_rules\n        current_state: $.results.CC_RESOLVE_ACTOR_V0.value.state\n        states_admitting_a_decision: $.payload.states_admitting_a_decision\n        decision: $.payload.decision\n        admitted_outcomes: $.payload.admitted_outcomes\n        verifying_authority: $.payload.verifying_authority\n        contact_address: $.payload.contact_address\n        decided_actor_fields: $.payload.decided_actor_fields\n      next:\n        SUCCESS: CC_APPEND_ACTOR_OCCURRENCE_V0\n        VIOLATION: EXIT_REJECTED\n    CC_APPEND_ACTOR_OCCURRENCE_V0:\n      type: CC\n      code: CC_APPEND_ACTOR_OCCURRENCE_V0\n      inputs:\n        occurrence_fields: $.payload.occurrence_fields\n        stream_id: $.payload.stream_id\n        contact_address: $.payload.contact_address\n      next:\n        SUCCESS: EXIT_SUCCESS\n        VIOLATION: EXIT_REJECTED\n    EXIT_SUCCESS:\n      type: EXIT\n      emit: blockchain::EV_ACTOR_REJECTED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n",
+  "content_hash": "bfc7b0b0aa1f03f4662009a2e2d3d8d0a80a0524d337c0d93ffcaf096ba6a80a",
+  "fqdn_id": "blockchain::WF_REJECT_ACTOR_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "actor_context": "blockchain::AC_PARTICIPANT_V0",
+      "nodes": {
+        "CC_APPEND_ACTOR_OCCURRENCE_V0": {
+          "code": "CC_APPEND_ACTOR_OCCURRENCE_V0",
+          "fqdn_id": "blockchain::CC_APPEND_ACTOR_OCCURRENCE_V0",
+          "inputs": {
+            "contact_address": "$.payload.contact_address",
+            "occurrence_fields": "$.payload.occurrence_fields",
+            "stream_id": "$.payload.stream_id"
+          },
+          "next": {
+            "SUCCESS": "EXIT_SUCCESS",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RECORD_VERIFICATION_DECISION_V0": {
+          "code": "CC_RECORD_VERIFICATION_DECISION_V0",
+          "fqdn_id": "blockchain::CC_RECORD_VERIFICATION_DECISION_V0",
+          "inputs": {
+            "admitted_outcomes": "$.payload.admitted_outcomes",
+            "contact_address": "$.payload.contact_address",
+            "current_state": "$.results.CC_RESOLVE_ACTOR_V0.value.state",
+            "decided_actor_fields": "$.payload.decided_actor_fields",
+            "decision": "$.payload.decision",
+            "self_check_parameters": "$.payload.self_check_parameters",
+            "self_check_rules": "$.payload.self_check_rules",
+            "states_admitting_a_decision": "$.payload.states_admitting_a_decision",
+            "verifying_authority": "$.payload.verifying_authority"
+          },
+          "next": {
+            "SUCCESS": "CC_APPEND_ACTOR_OCCURRENCE_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_REQUIRE_REJECTION_GROUNDS_V0": {
+          "code": "CC_REQUIRE_REJECTION_GROUNDS_V0",
+          "fqdn_id": "blockchain::CC_REQUIRE_REJECTION_GROUNDS_V0",
+          "inputs": {
+            "grounds_parameters": "$.payload.grounds_parameters",
+            "grounds_rules": "$.payload.grounds_rules"
+          },
+          "next": {
+            "SUCCESS": "CC_RESOLVE_ACTOR_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RESOLVE_ACTOR_V0": {
+          "code": "CC_RESOLVE_ACTOR_V0",
+          "fqdn_id": "blockchain::CC_RESOLVE_ACTOR_V0",
+          "inputs": {
+            "contact_address": "$.payload.contact_address"
+          },
+          "next": {
+            "NOT_FOUND": "EXIT_REJECTED",
+            "SUCCESS": "CC_RECORD_VERIFICATION_DECISION_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "EXIT_SUCCESS": {
+          "emit": "blockchain::EV_ACTOR_REJECTED_V0",
+          "type": "EXIT"
+        },
+        "IN_ACTOR_REJECTION_V0": {
+          "code": "IN_ACTOR_REJECTION_V0",
+          "fqdn_id": "blockchain::IN_ACTOR_REJECTION_V0",
+          "next": {
+            "ACK": "CC_REQUIRE_REJECTION_GROUNDS_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_ACTOR_REJECTION_V0",
+      "summary": "The governed sequence that records a rejection, with grounds required, and announces it"
+    },
+    "fqdn": "blockchain::WF_REJECT_ACTOR_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "blockchain::RB_IDENTITY_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "identity",
+    "supersedes": "blockchain::WF_RECORD_VERIFICATION_DECISION_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "blockchain::RB_IDENTITY_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,36 @@
+{
+  "artifact_code": "INVARIANT_AC_DECLARATION_WELL_FORMED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_AC_DECLARATION_WELL_FORMED_V0\n\n## Machine\n\n```yaml\nfqdn: actor::INVARIANT_AC_DECLARATION_WELL_FORMED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: actor\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  enforcement:\n    level: ERROR\n    order: 20\n  applies_to_kinds:\n  - AC\n```\n\n---\n\n## Purpose\n\nAn actor declares who execution runs as. It is an identity declaration and nothing else: the moment an actor can carry execution logic, routing, or side effects, identity becomes a place to hide behaviour.\n\n---\n\n## How it is checked\n### Rule 1: Type declared\n\nEvery AC MUST declare a non-empty `core.type`.\n\n### Rule 2: Attributes typed\n\nEvery entry under `core.attributes` MUST declare an explicit `type`. Schemaless attributes are inadmissible.\n\n### Rule 3: Identity only\n\nAn AC MUST NOT declare execution, routing, or side-effect surface. The forbidden keys are `implementation`, `pipeline`, `steps`, `operations`, `side_effects`, `transforms`, `bindings`, `next`, and `on_result`, at any depth.\n\n### Rule 4: Identity governed\n\nAttribute values MUST be literal declarations. A runtime path expression (`$.\u2026`) makes identity a function of execution state rather than a compile-time governed fact.\n\n---\n\n## Rationale\n\nIdentity resolved at compile time is identity that can be reasoned about before anything runs. Ambient or inferred identity cannot be audited, because the thing being audited does not exist until the run does.\n",
+  "content_hash": "834db1dddccc1121807b0fe51de8000bd17f38effe0f4623d9a94854be516f29",
+  "fqdn_id": "actor::INVARIANT_AC_DECLARATION_WELL_FORMED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "AC"
+      ],
+      "enforcement": {
+        "level": "ERROR",
+        "order": 20
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "actor",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "actor::INVARIANT_AC_DECLARATION_WELL_FORMED_V0",
+    "governed_by": "actor::CONSTITUTION_ACTOR_IDENTITY_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "actor",
+  "references": [
+    "actor::CONSTITUTION_ACTOR_IDENTITY_V0"
+  ],
+  "version": "0"
+}

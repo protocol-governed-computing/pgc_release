@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_CT_OUTPUT_CONTRACT_MATCH_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_CT_OUTPUT_CONTRACT_MATCH_V0\n\nArchitectural Invariant\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::INVARIANT_CT_OUTPUT_CONTRACT_MATCH_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - CT\n```\n\n## Summary\n\nEvery Capability Transform (CT) must produce outputs that exactly match the keys declared in its governing Capability Contract (CC).\n\n## What this realizes\nFor every CT artifact:\n1. CT must declare `governed_by` binding to a CC artifact\n2. CC must declare `output` section with explicit keys\n3. CT implementation must return dict with EXACTLY those keys\n4. Extra keys, missing keys, or mismatched types are violations\n\n## Where it applies\n- **Artifact Types**: CT\n- **Validation Phase**: Phase 5 (ASSERT)\n- **Enforcement**: MANDATORY (build fails on violation)\n\n## Examples\n\n### \u2705 VALID\n\n**CC Declaration:**\n```yaml\noutput:\n  seed_bytes: hex_string\n```\n\n**CT Implementation:**\n```python\ndef execute(inputs, context=None):\n    return {\n        \"seed_bytes\": \"0x123abc...\"\n    }\n```\n\n### \u274c INVALID\n\n**Missing key:**\n```python\nreturn {}  # \u274c Missing \"seed_bytes\"\n```\n\n**Extra key:**\n```python\nreturn {\n    \"seed_bytes\": \"0x123abc...\",\n    \"extra_field\": \"value\"  # \u274c Not in contract\n}\n```\n\n## Rationale\n\nOutput contract matching ensures:\n- Predictable transform behavior\n- Type safety at compilation\n- Explicit interface contracts\n- No hidden outputs\n- Traceable data flow\n\n## Related Artifacts\n\n- `capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0` - Governs CT behavior\n- `capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0` - Defines CC schema\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: All CT artifacts must produce outputs matching their CC declaration keys and types\n  summary: CT output structure must match declared capability contract\n```\n",
+  "content_hash": "e2d5a608bd86fec1d5bb860dd941a75af0e6fb0db4a46319a042d0c9f9c9602f",
+  "fqdn_id": "capability_transforms::INVARIANT_CT_OUTPUT_CONTRACT_MATCH_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CT"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_transforms::INVARIANT_CT_OUTPUT_CONTRACT_MATCH_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

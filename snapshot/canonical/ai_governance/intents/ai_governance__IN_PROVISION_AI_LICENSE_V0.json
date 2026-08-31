@@ -1,0 +1,53 @@
+{
+  "artifact_code": "IN_PROVISION_AI_LICENSE_V0",
+  "artifact_type": "IN",
+  "content": "# IN_PROVISION_AI_LICENSE_V0\n\n## 1. Intent\n\nRequest to provision an AI license for an employee.\n\n---\n\n## 2. Rationale\n\nLicense provisioning intent is a protocol entry point:\n- Declares desired outcome (employee gets license)\n- Protocol evaluates eligibility\n- Outcome is deterministic (PROVISIONED or DENIED)\n\n---\n\n## 3. Workflow Binding\n\n| Target | Description |\n|--------|-------------|\n| WF_PROVISION_AI_LICENSING_V0 | Workflow that processes this intent |\n\n---\n\n## 4. Inputs\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| employee_id | string | true | Employee requesting license |\n| context | object | false | Runtime context data (training_completed, assigned_count, cap, reason_code) |\n| generated | object | false | Generated data (license_id) |\n\n---\n\n## 5. Outcomes\n\n| Outcome | Description |\n|---------|-------------|\n| ACK | Provisioning request accepted for processing |\n| NACK | Provisioning request rejected |\n\n---\n\n## 6. Domain\n\n- **Domain:** pgs.ai_licensing\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::IN_PROVISION_AI_LICENSE_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: Request AI license provisioning\n  workflow: WF_PROVISION_AI_LICENSING_V0\n\n  inputs:\n    employee_id:\n      type: string\n      required: true\n      description: Employee requesting license\n    context:\n      type: object\n      required: false\n      description: Runtime context data (training_completed, assigned_count, cap, reason_code)\n    generated:\n      type: object\n      required: false\n      description: Generated data (license_id)\n\n  outcomes:\n    ACK:\n      description: Provisioning request accepted for processing\n    NACK:\n      description: Provisioning request rejected\n\nextensions:\n  domain: pgs.testbed\n```\n",
+  "content_hash": "f320e4e3da9aa2336d1f0f455645997076026d905b01e727e67a1a447808a815",
+  "fqdn_id": "ai_governance::IN_PROVISION_AI_LICENSE_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "inputs": {
+        "context": {
+          "description": "Runtime context data (training_completed, assigned_count, cap, reason_code)",
+          "required": false,
+          "type": "object"
+        },
+        "employee_id": {
+          "description": "Employee requesting license",
+          "required": true,
+          "type": "string"
+        },
+        "generated": {
+          "description": "Generated data (license_id)",
+          "required": false,
+          "type": "object"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Provisioning request accepted for processing"
+        },
+        "NACK": {
+          "description": "Provisioning request rejected"
+        }
+      },
+      "summary": "Request AI license provisioning",
+      "workflow": "WF_PROVISION_AI_LICENSING_V0"
+    },
+    "extensions": {
+      "domain": "pgs.testbed"
+    },
+    "fqdn": "ai_governance::IN_PROVISION_AI_LICENSE_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

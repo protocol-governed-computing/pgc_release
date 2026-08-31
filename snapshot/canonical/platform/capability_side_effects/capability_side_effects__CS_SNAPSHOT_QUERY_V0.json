@@ -1,0 +1,163 @@
+{
+  "artifact_code": "CS_SNAPSHOT_QUERY_V0",
+  "artifact_type": "CS",
+  "content": "# CS_SNAPSHOT_QUERY_V0\n\n## 1. Intent\n\nObserve an assembled snapshot through the governed inspection surface.\n\n**This capability exists so that observation is never ad hoc.** Whenever any workflow needs a fact\nabout the composition it runs inside \u2014 which artifacts exist, what a store contains, what a\nvocabulary resolves to \u2014 it asks through this capability. It does not read projection files, and it\ndoes not import the compiler that produced them.\n\nThe capability is deliberately general. It is not named for, or shaped around, any one consumer:\nthe phases of the transformation pipeline are simply the first workflows to need it, and any future\ndomain that must observe the assembled system uses the same governed route.\n\n## 2. Why observation is a side effect\n\nReading a snapshot is not pure. The same query yields different answers against different\ncompositions, so a transform that consulted a snapshot would be neither deterministic nor\nreplayable from its declared inputs alone. Observation therefore belongs on the side-effect side of\nthe boundary, where the thing being read is bound explicitly by a runtime binding rather than\ndiscovered.\n\nThat the result is *stable for a given snapshot* is what makes it usable as evidence; that it\nvaries *across* snapshots is what makes it a side effect.\n\n## 3. Why it delegates to the inspection surface\n\nThe operations this capability exposes are the published `si.*` inspection operations, and nothing\nelse. It resolves them through `inspector.api.query` \u2014 the same interface any external reader uses.\n\nThe alternative, reaching into compiled projections directly, is precisely the coupling the\ninspection boundary was built to remove: a consumer that reads projection layout is bound to the\ncompiler's internals and breaks whenever they change. A capability that reads through the published\nsurface is bound only to the operation catalogue, which is itself governed.\n\n## 4. Read-only by construction\n\nEvery operation is a read. There is no write, no delete, no mutation of any kind \u2014 a capability\nthat could alter the composition it observes would make its own evidence unreliable, and would let\na workflow modify the sealed snapshot it is executing from.\n\n---\n\n## Machine\n\n```yaml\nfqdn: capability_side_effects::CS_SNAPSHOT_QUERY_V0\nartifact_kind: CAPABILITY_SIDE_EFFECT\nversion: v0\ngoverned_by: capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0\nauthority: pgc.platform\nconcern: capability_side_effects\ncore:\n  summary: Read-only observation of an assembled snapshot through the governed inspection surface\n  category: inspection\n  policy:\n    operations:\n    - QUERY\n    - CATALOG\n  field_types:\n    operation: string\n    params: object\n    result: object\n    operations: array\n    result_status: string\n  operations:\n    QUERY:\n      summary: Execute a published si.* inspection operation against the bound snapshot\n      handler: query\n      effect: read\n      input:\n      - operation\n      - params\n      output:\n      - result_status\n      - result\n      idempotent: true\n      result_status_values:\n      - SUCCESS\n      - NOT_FOUND\n      - VIOLATION\n      - BACKEND_ERROR\n    CATALOG:\n      summary: List the inspection operations the bound snapshot answers\n      handler: catalog\n      effect: read\n      input: []\n      output:\n      - result_status\n      - operations\n      idempotent: true\n      result_status_values:\n      - SUCCESS\n      - BACKEND_ERROR\n  semantics:\n    durability: read_only\n    idempotent: true\n    replay_policy: safe_replay\n    transactional: false\n    concurrent_safe: true\n  constraints:\n    mutates_snapshot: false\n    resolves_through: inspector.api.query\n  vocabulary:\n    result_status:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n  configuration_schema:\n    snapshot_root:\n      type: string\n      required: true\n      description: Filesystem path to the assembled snapshot to observe\n  failure_modes:\n  - 'VIOLATION: operation is not a published inspection operation, or params are malformed'\n  - 'NOT_FOUND: the operation ran but the requested subject does not exist in the snapshot'\n  - 'BACKEND_ERROR: snapshot root missing, unreadable, or not an assembled snapshot'\n\nimplementation:\n  module: capability_side_effects.implementation.CS_SNAPSHOT_QUERY_V0.runtime\n  callable: SnapshotQueryRuntime\n```\n",
+  "content_hash": "647cdb76bc325272e0b035921397e7164c9b5133635decc4ac930140658a67df",
+  "cs_ir": {
+    "cs_metadata": {
+      "capability": {
+        "supported_operation_specs": [
+          "QUERY",
+          "CATALOG"
+        ]
+      },
+      "operations": {
+        "operations": {
+          "CATALOG": {
+            "effect": "read",
+            "handler": "catalog",
+            "idempotent": true,
+            "input": [],
+            "output": [
+              "result_status",
+              "operations"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "BACKEND_ERROR"
+            ],
+            "summary": "List the inspection operations the bound snapshot answers"
+          },
+          "QUERY": {
+            "effect": "read",
+            "handler": "query",
+            "idempotent": true,
+            "input": [
+              "operation",
+              "params"
+            ],
+            "output": [
+              "result_status",
+              "result"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "NOT_FOUND",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Execute a published si.* inspection operation against the bound snapshot"
+          }
+        }
+      }
+    },
+    "handler_ref": {
+      "callable": "SnapshotQueryRuntime",
+      "module": "capability_side_effects.implementation.CS_SNAPSHOT_QUERY_V0.runtime"
+    }
+  },
+  "fqdn_id": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_SIDE_EFFECT",
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "category": "inspection",
+      "configuration_schema": {
+        "snapshot_root": {
+          "description": "Filesystem path to the assembled snapshot to observe",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "constraints": {
+        "mutates_snapshot": false,
+        "resolves_through": "inspector.api.query"
+      },
+      "failure_modes": [
+        "VIOLATION: operation is not a published inspection operation, or params are malformed",
+        "NOT_FOUND: the operation ran but the requested subject does not exist in the snapshot",
+        "BACKEND_ERROR: snapshot root missing, unreadable, or not an assembled snapshot"
+      ],
+      "field_types": {
+        "operation": "string",
+        "operations": "array",
+        "params": "object",
+        "result": "object",
+        "result_status": "string"
+      },
+      "operations": {
+        "CATALOG": {
+          "effect": "read",
+          "handler": "catalog",
+          "idempotent": true,
+          "input": [],
+          "output": [
+            "result_status",
+            "operations"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "summary": "List the inspection operations the bound snapshot answers"
+        },
+        "QUERY": {
+          "effect": "read",
+          "handler": "query",
+          "idempotent": true,
+          "input": [
+            "operation",
+            "params"
+          ],
+          "output": [
+            "result_status",
+            "result"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Execute a published si.* inspection operation against the bound snapshot"
+        }
+      },
+      "policy": {
+        "operations": [
+          "QUERY",
+          "CATALOG"
+        ]
+      },
+      "semantics": {
+        "concurrent_safe": true,
+        "durability": "read_only",
+        "idempotent": true,
+        "replay_policy": "safe_replay",
+        "transactional": false
+      },
+      "summary": "Read-only observation of an assembled snapshot through the governed inspection surface",
+      "vocabulary": {
+        "result_status": [
+          "SUCCESS",
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ]
+      }
+    },
+    "fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+    "governed_by": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+    "implementation": {
+      "callable": "SnapshotQueryRuntime",
+      "module": "capability_side_effects.implementation.CS_SNAPSHOT_QUERY_V0.runtime"
+    },
+    "version": "v0"
+  },
+  "layer_code": "REUSABLE_SIDE_EFFECTS",
+  "namespace": "capability_side_effects",
+  "references": [
+    "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0"
+  ],
+  "version": "0"
+}

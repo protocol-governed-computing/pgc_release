@@ -1,0 +1,166 @@
+{
+  "artifact_code": "CS_TEXT_ARTIFACT_V0",
+  "artifact_type": "CS",
+  "content": "# CS_TEXT_ARTIFACT_V0\n\n## 1. Intent\n\nPersist rendered protocol artifacts as text documents beneath a policy-declared root.\n\nConstruction renders; this writes. Rendering is a pure transformation of a design into artifacts and\nmust stay pure \u2014 the moment it touched a filesystem its result would depend on something the\ncomposition cannot see, and the same design would stop producing the same output.\n\n---\n\n## 2. The root is policy, never an input\n\nA caller that named its own destination could write anywhere the process can reach. Where generated\nartifacts land is a governance decision, so it belongs to the runtime binding that declares the\npolicy rather than to whoever dispatched the workflow. A path that escapes the declared root is\nrefused rather than resolved.\n\n---\n\n## 3. One operation writes the whole construction\n\nA capability contract is a fixed pipeline with no iteration, so persisting twenty-five artifacts one\ncall at a time is not expressible. `WRITE_ALL` takes the whole set, which also makes the outcome\nthe one that matters: either the construction was persisted or it was not.\n\n---\n\n## Machine\n\n```yaml\nfqdn: capability_side_effects::CS_TEXT_ARTIFACT_V0\nartifact_kind: CAPABILITY_SIDE_EFFECT\nversion: v0\ngoverned_by: capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0\nauthority: pgc.platform\nconcern: capability_side_effects\ncore:\n  summary: Persist rendered protocol artifacts as text documents beneath a declared root\n  category: storage\n  policy:\n    operations:\n    - WRITE_ALL\n    - LIST\n  field_types:\n    documents: array\n    written: integer\n    paths: array\n    result_status: string\n  operations:\n    WRITE_ALL:\n      summary: Persist every rendered document in one operation\n      handler: write_all\n      effect: write\n      input:\n      - documents\n      output:\n      - result_status\n      - written\n      - paths\n      idempotent: true\n      result_status_values:\n      - SUCCESS\n      - VIOLATION\n      - BACKEND_ERROR\n    LIST:\n      summary: List the documents currently persisted beneath the root\n      handler: list\n      effect: read\n      input: []\n      output:\n      - result_status\n      - paths\n      idempotent: true\n      result_status_values:\n      - SUCCESS\n      - NOT_FOUND\n      - BACKEND_ERROR\nimplementation:\n  module: capability_side_effects.implementation.CS_TEXT_ARTIFACT_V0.runtime\n  callable: TextArtifactRuntime\nextensions:\n  cs_kind: text_document_store\n  side_effect_type: persistent\n  properties:\n    durability: persistent\n    idempotent: true\n    replay_policy: overwrite\n    transactional: false\n    concurrent_safe: false\n  constraints:\n    concurrency: single_writer\n    containment: paths must resolve beneath the declared root\n  vocabulary:\n    result_status:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n  configuration_schema:\n    root:\n      type: string\n      required: true\n      description: Filesystem root beneath which every rendered document is written\n  failure_modes:\n  - 'VIOLATION: documents is not a non-empty array of {path, text}'\n  - 'VIOLATION: a path escapes the declared root'\n  - 'BACKEND_ERROR: the root is unwritable'\n```\n",
+  "content_hash": "f1ca9f889e0b2374870b8a0dfea1c92770884d5c6554d532b3317687385e4b15",
+  "cs_ir": {
+    "cs_metadata": {
+      "capability": {
+        "supported_operation_specs": [
+          "WRITE_ALL",
+          "LIST"
+        ]
+      },
+      "operations": {
+        "operations": {
+          "LIST": {
+            "effect": "read",
+            "handler": "list",
+            "idempotent": true,
+            "input": [],
+            "output": [
+              "result_status",
+              "paths"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "NOT_FOUND",
+              "BACKEND_ERROR"
+            ],
+            "summary": "List the documents currently persisted beneath the root"
+          },
+          "WRITE_ALL": {
+            "effect": "write",
+            "handler": "write_all",
+            "idempotent": true,
+            "input": [
+              "documents"
+            ],
+            "output": [
+              "result_status",
+              "written",
+              "paths"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "Persist every rendered document in one operation"
+          }
+        }
+      }
+    },
+    "handler_ref": {
+      "callable": "TextArtifactRuntime",
+      "module": "capability_side_effects.implementation.CS_TEXT_ARTIFACT_V0.runtime"
+    }
+  },
+  "fqdn_id": "capability_side_effects::CS_TEXT_ARTIFACT_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_SIDE_EFFECT",
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "category": "storage",
+      "field_types": {
+        "documents": "array",
+        "paths": "array",
+        "result_status": "string",
+        "written": "integer"
+      },
+      "operations": {
+        "LIST": {
+          "effect": "read",
+          "handler": "list",
+          "idempotent": true,
+          "input": [],
+          "output": [
+            "result_status",
+            "paths"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "BACKEND_ERROR"
+          ],
+          "summary": "List the documents currently persisted beneath the root"
+        },
+        "WRITE_ALL": {
+          "effect": "write",
+          "handler": "write_all",
+          "idempotent": true,
+          "input": [
+            "documents"
+          ],
+          "output": [
+            "result_status",
+            "written",
+            "paths"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "Persist every rendered document in one operation"
+        }
+      },
+      "policy": {
+        "operations": [
+          "WRITE_ALL",
+          "LIST"
+        ]
+      },
+      "summary": "Persist rendered protocol artifacts as text documents beneath a declared root"
+    },
+    "extensions": {
+      "configuration_schema": {
+        "root": {
+          "description": "Filesystem root beneath which every rendered document is written",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "constraints": {
+        "concurrency": "single_writer",
+        "containment": "paths must resolve beneath the declared root"
+      },
+      "cs_kind": "text_document_store",
+      "failure_modes": [
+        "VIOLATION: documents is not a non-empty array of {path, text}",
+        "VIOLATION: a path escapes the declared root",
+        "BACKEND_ERROR: the root is unwritable"
+      ],
+      "properties": {
+        "concurrent_safe": false,
+        "durability": "persistent",
+        "idempotent": true,
+        "replay_policy": "overwrite",
+        "transactional": false
+      },
+      "side_effect_type": "persistent",
+      "vocabulary": {
+        "result_status": [
+          "SUCCESS",
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ]
+      }
+    },
+    "fqdn": "capability_side_effects::CS_TEXT_ARTIFACT_V0",
+    "governed_by": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+    "implementation": {
+      "callable": "TextArtifactRuntime",
+      "module": "capability_side_effects.implementation.CS_TEXT_ARTIFACT_V0.runtime"
+    },
+    "version": "v0"
+  },
+  "layer_code": "REUSABLE_SIDE_EFFECTS",
+  "namespace": "capability_side_effects",
+  "references": [
+    "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0"
+  ],
+  "version": "0"
+}

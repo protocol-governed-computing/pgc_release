@@ -1,0 +1,45 @@
+{
+  "artifact_code": "IN_SEED_SUBMITTED_V0",
+  "artifact_type": "IN",
+  "content": "# IN_SEED_SUBMITTED_V0\n\n## 1. Intent\n\nA seed is offered to the seed phase for judgement.\n\n`seed_text` is the document itself. The driver reads the file; nothing downstream touches the\nfilesystem, which is what makes a verdict reproducible.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::IN_SEED_SUBMITTED_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: design\n\ncore:\n  summary: Offer a seed document for admissibility judgement\n  workflow: WF_P0_SEED_ADMISSIBILITY_V0\n\n  inputs:\n    seed_text:\n      type: string\n      required: true\n      description: Full text of the seed document \u2014 supplied by the driver, never read downstream\n    author_of_record:\n      type: string\n      required: true\n      description: Identity of the person accountable for the seed's content\n\n  outcomes:\n    ACK:\n      description: Seed accepted for judgement\n    NACK:\n      description: Seed not accepted for judgement\n```\n",
+  "content_hash": "75407e8c7437cb733af2379adb267823e15455d7d4345dbe24267258ad931d25",
+  "fqdn_id": "transformation::IN_SEED_SUBMITTED_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "design",
+    "core": {
+      "inputs": {
+        "author_of_record": {
+          "description": "Identity of the person accountable for the seed's content",
+          "required": true,
+          "type": "string"
+        },
+        "seed_text": {
+          "description": "Full text of the seed document \u2014 supplied by the driver, never read downstream",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Seed accepted for judgement"
+        },
+        "NACK": {
+          "description": "Seed not accepted for judgement"
+        }
+      },
+      "summary": "Offer a seed document for admissibility judgement",
+      "workflow": "WF_P0_SEED_ADMISSIBILITY_V0"
+    },
+    "fqdn": "transformation::IN_SEED_SUBMITTED_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

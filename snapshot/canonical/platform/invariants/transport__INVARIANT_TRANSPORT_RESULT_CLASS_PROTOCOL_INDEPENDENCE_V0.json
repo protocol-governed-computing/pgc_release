@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_TRANSPORT_RESULT_CLASS_PROTOCOL_INDEPENDENCE_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_TRANSPORT_RESULT_CLASS_PROTOCOL_INDEPENDENCE_V0\n\n## Machine\n\n```yaml\nfqdn: transport::INVARIANT_TRANSPORT_RESULT_CLASS_PROTOCOL_INDEPENDENCE_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: transport\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - TE\n```\n\n---\n\n## Purpose\n\nA Result Class is governed and protocol-neutral. Every class a `TE` emits \u2014 through its\n`result_classification` map and `default_result_class` \u2014 MUST be one of the governed\nclasses and MUST NOT encode an external-protocol response semantic (no HTTP status, no RPC\nerror code). Protocol meaning enters only in the adapter's response projection.\n\n---\n\n## Scope\n\n**Applies to:** all `TE_` artifacts.\n\nGoverned classes: `SUCCESS`, `VIOLATION`, `UNAUTHORIZED`, `NOT_FOUND`,\n`OPERATION_NOT_FOUND`, `EXECUTION_FAILURE`.\n\n`NOT_FOUND` names an **admitted request whose subject does not exist** (an artifact, store, or\nother named thing the snapshot does not carry). `OPERATION_NOT_FOUND` names an Operation Identity\nthat resolves to no registered TI/TE pair. The two are not interchangeable \u2014 see\n`CONSTITUTION_TRANSPORT_EGRESS_V0`.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Every Result Class a TE emits MUST be a governed, protocol-neutral class;\n    protocol-specific response semantics are forbidden in a TE.'\n  anti_patterns:\n  - non_governed_result_class: result_classification or default maps to a class outside the governed set\n  - protocol_result_class: a result class carries HTTP/RPC/CLI response semantics\n```\n",
+  "content_hash": "e7bf0ee80c358b3f866bb97698095457962214bcc79c2cc72574ff6f4eb65eab",
+  "fqdn_id": "transport::INVARIANT_TRANSPORT_RESULT_CLASS_PROTOCOL_INDEPENDENCE_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "TE"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "transport",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "transport::INVARIANT_TRANSPORT_RESULT_CLASS_PROTOCOL_INDEPENDENCE_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "transport",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

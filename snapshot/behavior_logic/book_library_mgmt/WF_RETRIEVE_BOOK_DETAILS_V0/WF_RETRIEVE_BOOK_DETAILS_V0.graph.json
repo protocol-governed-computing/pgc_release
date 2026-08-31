@@ -1,0 +1,264 @@
+{
+  "wf_id": "WF_RETRIEVE_BOOK_DETAILS_V0",
+  "entry": "IN_RETRIEVE_BOOK_DETAILS_V0",
+  "nodes": [
+    {
+      "id": "CC_APPEND_CATALOG_OPERATION_V0",
+      "type": "CC",
+      "cc_code": "CC_APPEND_CATALOG_OPERATION_V0",
+      "capability": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "operation": "RETRIEVE_BOOK_DETAILS",
+          "record": {
+            "operation": "RETRIEVE_BOOK_DETAILS",
+            "staff_id": "$.payload.staff_id",
+            "subject": "$.payload.identity_key"
+          },
+          "staff_id": "IN.staff_id"
+        }
+      }
+    },
+    {
+      "id": "CC_ASSEMBLE_BOOK_DETAILS_V0",
+      "type": "CC",
+      "cc_code": "CC_ASSEMBLE_BOOK_DETAILS_V0",
+      "capability": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {
+              "author": "read_book_record.value.author",
+              "title": "read_book_record.value.title"
+            },
+            "fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+            "id": "CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+            "inputs": [
+              "title",
+              "author"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "work_key"
+            ]
+          },
+          {
+            "bindings": {
+              "filter": "in.copy_criteria",
+              "source": "select_copy_records.records"
+            },
+            "fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
+            "id": "CT_PURE_SELECT_RECORDS_V0",
+            "inputs": [
+              "source",
+              "filter"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "extracted"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "copy_criteria": {
+            "identity_key": "$.payload.identity_key"
+          },
+          "identity_key": "IN.identity_key"
+        }
+      }
+    },
+    {
+      "id": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "parameters": "in.staff_credentials",
+              "rules": "in.authorization_rules"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "authorization_rules": "IN.authorization_rules",
+          "staff_credentials": "IN.staff_credentials"
+        }
+      }
+    },
+    {
+      "id": "EXIT_COMPLETED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "CC_ASSEMBLE_BOOK_DETAILS_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_APPEND_CATALOG_OPERATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_ASSEMBLE_BOOK_DETAILS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_ASSEMBLE_BOOK_DETAILS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_ASSEMBLE_BOOK_DETAILS_V0",
+      "to": "EXIT_COMPLETED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_ASSEMBLE_BOOK_DETAILS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "to": "CC_APPEND_CATALOG_OPERATION_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "to": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "CC_ASSEMBLE_BOOK_DETAILS_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "CC_ASSEMBLE_BOOK_DETAILS_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "CC_ASSEMBLE_BOOK_DETAILS_V0",
+      "EXIT_COMPLETED"
+    ],
+    [
+      "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "CC_ASSEMBLE_BOOK_DETAILS_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_APPEND_CATALOG_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

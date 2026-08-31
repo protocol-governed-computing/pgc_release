@@ -1,0 +1,91 @@
+{
+  "artifact_code": "CC_RESOLVE_BOOK_IDENTITY_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+        "id": "CS_REGISTRY_V0",
+        "kind": "CS",
+        "ops": [
+          "REGISTER",
+          "RESOLVE",
+          "EXISTS",
+          "DEREGISTER",
+          "COUNT"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_RESOLVE_BOOK_IDENTITY_V0\n\n## 1. Intent\n\nResolve a registered book's identity key\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Resolve a registered book's identity key\n  inputs:\n    identity_key:\n      type: string\n      required: true\n  outputs:\n    target_ref:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: resolve_identity\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: RESOLVE\n    store: BOOK_IDENTITY_REGISTRY\n    inputs:\n      key_or_address: $.inputs.identity_key\n    outputs:\n      target_ref: $.capability_result.target_ref\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n",
+  "content_hash": "271a1666d2ce73ea9485e1a2322b6dde38d6f1b8c4e65ffd4a88dc702dd37a8c",
+  "fqdn_id": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "target_ref": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key_or_address": "$.inputs.identity_key"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "RESOLVE",
+          "outputs": {
+            "result_status": "$.result_status",
+            "target_ref": "$.capability_result.target_ref"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_REGISTRY_V0",
+          "step": "resolve_identity",
+          "store": "BOOK_IDENTITY_REGISTRY"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Resolve a registered book's identity key"
+    },
+    "fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,51 @@
+{
+  "artifact_code": "INVARIANT_FQDN_NAMESPACE_AUTHORIZED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_FQDN_NAMESPACE_AUTHORIZED_V0\n\n## Machine\n\n```yaml\nfqdn: artifact::INVARIANT_FQDN_NAMESPACE_AUTHORIZED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: artifact\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  handler: pgs_governance.registry.handlers.assert_fqdn_namespace_authorized_v0\n  enforcement:\n    order: 6\n  applies_to_kinds:\n  - AC\n  - CC\n  - CONSTITUTION\n  - CS\n  - CT\n  - EV\n  - IN\n  - INVARIANT\n  - RB\n  - SCHEMA\n  - STRUCTURE\n  - SURFACE\n  - TE\n  - TI\n  - VOCAB\n  - WF\n```\n\n---\n\n## Purpose\n\nIdentity is declared by the artifact, not derived from its folder. The one constraint on a declared identity is that its **namespace must be authorized** \u2014 drawn from the identity authorization set (the identity rules, repurposed from derivation to authorization). A file may live anywhere in the tree; it may not mint an unauthorized namespace.\n\n---\n\n## How it is checked\n### Rule 1: Declared namespace is authorized\n\nEvery non-imported artifact's declared FQDN namespace MUST appear in the authorized namespace set for the build. Imported artifacts carry their origin namespace (resolved externally) and are exempt.\n\n---\n\n## Rationale\n\nDecoupling identity from the filesystem removes the folder's accidental authority over identity. Authorization replaces derivation: the set of legal namespaces is declared once and enforced, so identity is free of the directory layout without becoming a free-for-all.\n",
+  "content_hash": "0c26217f1f681e278961de59815a722df118acd2b8e0a7efee13d6100eefe097",
+  "fqdn_id": "artifact::INVARIANT_FQDN_NAMESPACE_AUTHORIZED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "AC",
+        "CC",
+        "CONSTITUTION",
+        "CS",
+        "CT",
+        "EV",
+        "IN",
+        "INVARIANT",
+        "RB",
+        "SCHEMA",
+        "STRUCTURE",
+        "SURFACE",
+        "TE",
+        "TI",
+        "VOCAB",
+        "WF"
+      ],
+      "enforcement": {
+        "order": 6
+      },
+      "handler": "pgs_governance.registry.handlers.assert_fqdn_namespace_authorized_v0"
+    },
+    "authority": "pgc.platform",
+    "concern": "artifact",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "artifact::INVARIANT_FQDN_NAMESPACE_AUTHORIZED_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "artifact",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

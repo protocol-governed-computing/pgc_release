@@ -1,0 +1,61 @@
+{
+  "artifact_code": "CONSTITUTION_STRUCTURE_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_STRUCTURE_V0\n\n## Machine\n```yaml\nfqdn: structure::CONSTITUTION_STRUCTURE_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: structure\ncore:\n  enforcement_model: process_and_compiler_enforced\n  governs:\n  - STRUCTURE\nrules:\n- applies_to: STRUCTURE\n  enforced_by: structure::INVARIANT_STRUCTURE_PATHS_WELL_FORMED_V0\n- applies_to: STRUCTURE\n  enforced_by: structure::INVARIANT_STRUCTURE_PATHS_WELL_FORMED_V0\n- applies_to: STRUCTURE\n  enforced_by: structure::INVARIANT_STRUCTURE_PATHS_WELL_FORMED_V0\n- applies_to: STRUCTURE\n  enforced_by: structure::INVARIANT_STRUCTURE_PATHS_WELL_FORMED_V0\n- applies_to: STRUCTURE\n  enforced_by: structure::INVARIANT_SCHEMA_DESCRIPTION_WELL_FORMED_V0\n- applies_to: STRUCTURE\n  enforced_by: PROCESS_ENFORCED\n- applies_to: STRUCTURE\n  enforced_by: PROCESS_ENFORCED\n- applies_to: STRUCTURE\n  enforced_by: artifact::INVARIANT_FQDN_ONLY_REFERENCES_V0\n```\n\n\n---\n\n## What makes a description a description\n\nA schema governing an artifact kind **names at least one required field and closes its surface**. One\nthat does neither admits every declaration of its kind and refuses none, and a kind dispatched to it\nreads as governed by any reader counting dispatched kinds. **Coverage is not governance**, and the\ncount of dispatched kinds measures neither.\n\nThat was not a hypothetical. One kind was dispatched to a description requiring no field and closing\nno surface, and thirty-three declarations passed it because everything passes it.\n\n## Every kind carries a disposition\n\nAn artifact kind is **described** or **exempt**, drawn from `structure::VOCAB_SCHEMA_DISPOSITION_V0`,\nand a kind carrying neither is refused. An exemption states its ground beside it.\n\nA kind absent from the dispatch table was absent for three different reasons and one representation:\nnobody wrote a description, one exists and nobody named it, or the kind needs none. A reader could not\ntell a decision from an oversight, and neither could a check.\n\n## A description matches what it describes\n\nA description states the shape the platform currently builds. One that has drifted refuses correct\nwork **with the authority of a rule**, which is worse than describing nothing, so a description is\nmeasured against every artifact of its kind before it is dispatched \u2014 never dispatched to find out.\n\nDrift is continuous rather than episodic. Three descriptions were found to have diverged at three\nseparate undated points, and every one was found by dispatching it and reading what it refused: a\nmethod that only works while nobody relies on the description. `INVARIANT_SCHEMA_DESCRIPTION_WELL_FORMED_V0`\nis what reports the next one before a build does.\n\n---\n\n## 1. Purpose\n\nThis constitution governs STRUCTURE artifacts \u2014 the configuration authority for the entire protocol system.\n\nA STRUCTURE artifact declares how the protocol discovers, loads, and routes artifacts. It is the sole source of path governance, layer resolution, and artifact discovery configuration.\n\nFor structural field definitions see: `registry/schema/SCHEMA_STRUCTURE_V0.json`\nFor usage examples and path patterns see: `doc/STRUCTURE_GUIDE.md`\n\n---\n\n## 2. Core Principles\n\n- **Explicit Declaration:** All paths and layers MUST be explicitly declared. No implicit defaults.\n- **Layer-Relative Paths:** All paths are relative to a declared layer root. Absolute paths are forbidden.\n- **Layer Isolation:** Subpaths MUST NOT use `..` to escape layer boundaries.\n- **Deterministic Resolution:** Same STRUCTURE artifact MUST produce identical resolution output.\n- **Bootstrap Eligibility:** Runtime STRUCTURE artifacts MUST be loadable without the compiler.\n\n---\n\n## 3. Relationship to Other Constitutions\n\n- `CONSTITUTION_COMPILER_V0` \u2014 compiler consumes STRUCTURE for artifact discovery (STRUCTURE_FQDN_TREE_AUTHORITY rule)\n- `STRUCTURE_LAYER_AUTHORITY_V0` \u2014 declares valid layer codes that STRUCTURE artifacts may reference\n- `CONSTITUTION_GOVERNANCE_V0` \u2014 root authority\n\n---\n\n## End of Constitution\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs STRUCTURE artifacts \u2014 system configuration and artifact discovery declarations\nrules:\n- rule_id: STRUCTURE_EXPLICIT_PATHS\n  constraint: all paths MUST be explicitly declared; no implicit defaults, heuristics, or fallback\n- rule_id: STRUCTURE_NO_ABSOLUTE_PATHS\n  constraint: absolute filesystem paths are forbidden; all paths MUST be layer-relative\n- rule_id: STRUCTURE_NO_ESCAPE\n  constraint: subpaths MUST NOT contain \"..\" layer escapes\n- rule_id: STRUCTURE_LAYER_DECLARED\n  constraint: every path declaration MUST reference a valid declared layer code\n- rule_id: STRUCTURE_DETERMINISTIC_RESOLUTION\n  constraint: given identical STRUCTURE artifact, path resolution MUST be deterministic\n- rule_id: STRUCTURE_BOOTSTRAP_ELIGIBLE\n  constraint: runtime STRUCTURE artifacts MUST be loadable without compiler\n- rule_id: STRUCTURE_FQDN_REFERENCES\n  constraint: all artifact references in STRUCTURE MUST use FQDN\n```\n",
+  "content_hash": "9b8835bbc80fd46c585a8aa18adb56990babc2a98501869bb2194dc7675c6ec1",
+  "fqdn_id": "structure::CONSTITUTION_STRUCTURE_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "structure",
+    "core": {
+      "enforcement_model": "process_and_compiler_enforced",
+      "governs": [
+        "STRUCTURE"
+      ]
+    },
+    "fqdn": "structure::CONSTITUTION_STRUCTURE_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "rules": [
+      {
+        "applies_to": "STRUCTURE",
+        "enforced_by": "structure::INVARIANT_STRUCTURE_PATHS_WELL_FORMED_V0"
+      },
+      {
+        "applies_to": "STRUCTURE",
+        "enforced_by": "structure::INVARIANT_STRUCTURE_PATHS_WELL_FORMED_V0"
+      },
+      {
+        "applies_to": "STRUCTURE",
+        "enforced_by": "structure::INVARIANT_STRUCTURE_PATHS_WELL_FORMED_V0"
+      },
+      {
+        "applies_to": "STRUCTURE",
+        "enforced_by": "structure::INVARIANT_STRUCTURE_PATHS_WELL_FORMED_V0"
+      },
+      {
+        "applies_to": "STRUCTURE",
+        "enforced_by": "structure::INVARIANT_SCHEMA_DESCRIPTION_WELL_FORMED_V0"
+      },
+      {
+        "applies_to": "STRUCTURE",
+        "enforced_by": "PROCESS_ENFORCED"
+      },
+      {
+        "applies_to": "STRUCTURE",
+        "enforced_by": "PROCESS_ENFORCED"
+      },
+      {
+        "applies_to": "STRUCTURE",
+        "enforced_by": "artifact::INVARIANT_FQDN_ONLY_REFERENCES_V0"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,80 @@
+{
+  "artifact_code": "TI_ACCEPT_ACTOR_V0",
+  "artifact_type": "TI",
+  "content": "# TI_ACCEPT_ACTOR_V0\n\n## 1. Intent\n\nAdmits a request to accept a registered actor, declaring the contact address, authority and optional grounds a caller sends and holding the decision, admitted states and outcomes, and the acceptance occurrence label\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::TI_ACCEPT_ACTOR_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: identity\noperation: blockchain.accept_actor\ncore:\n  summary: Admits a request to accept a registered actor, declaring the contact address, authority and\n    optional grounds a caller sends and holding the decision, admitted states and outcomes, and the acceptance\n    occurrence label\ninput_contract:\n  contact_address:\n    type: string\n    required: true\n  verifying_authority:\n    type: string\n    required: true\n  grounds:\n    type: string\ncontext_requirements: []\nhandler:\n  kind: WF_INVOCATION\n  workflow: blockchain::WF_ACCEPT_ACTOR_V0\n  payload_template:\n    contact_address: ${input.contact_address}\n    verifying_authority: ${input.verifying_authority}\n    decision: ACCEPTED\n    grounds: ${input.grounds}\n    states_admitting_a_decision:\n    - UNVERIFIED\n    admitted_outcomes:\n    - ACCEPTED\n    - REJECTED\n    decided_actor_fields:\n      contact_address: ${input.contact_address}\n      state: ACCEPTED\n      verifying_authority: ${input.verifying_authority}\n      grounds: ${input.grounds}\n    self_check_parameters:\n      verifying_authority: ${input.verifying_authority}\n      contact_address: ${input.contact_address}\n    self_check_rules:\n    - field: verifying_authority\n      op: neq\n      value: ${input.contact_address}\n    stream_id: ACTOR_OCCURRENCES\n    occurrence_fields:\n      occurrence: ACTOR_ACCEPTED\n      contact_address: ${input.contact_address}\n      verifying_authority: ${input.verifying_authority}\n      grounds: ${input.grounds}\n```\n",
+  "content_hash": "ed4cad88315158ada5f196ee4db72860662177f1d1dfac0cffa9726fb8665bf1",
+  "fqdn_id": "blockchain::TI_ACCEPT_ACTOR_V0",
+  "frontmatter": {
+    "artifact_kind": "TRANSPORT_INGRESS",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "context_requirements": [],
+    "core": {
+      "summary": "Admits a request to accept a registered actor, declaring the contact address, authority and optional grounds a caller sends and holding the decision, admitted states and outcomes, and the acceptance occurrence label"
+    },
+    "fqdn": "blockchain::TI_ACCEPT_ACTOR_V0",
+    "governed_by": "transport::CONSTITUTION_TRANSPORT_INGRESS_V0",
+    "handler": {
+      "kind": "WF_INVOCATION",
+      "payload_template": {
+        "admitted_outcomes": [
+          "ACCEPTED",
+          "REJECTED"
+        ],
+        "contact_address": "${input.contact_address}",
+        "decided_actor_fields": {
+          "contact_address": "${input.contact_address}",
+          "grounds": "${input.grounds}",
+          "state": "ACCEPTED",
+          "verifying_authority": "${input.verifying_authority}"
+        },
+        "decision": "ACCEPTED",
+        "grounds": "${input.grounds}",
+        "occurrence_fields": {
+          "contact_address": "${input.contact_address}",
+          "grounds": "${input.grounds}",
+          "occurrence": "ACTOR_ACCEPTED",
+          "verifying_authority": "${input.verifying_authority}"
+        },
+        "self_check_parameters": {
+          "contact_address": "${input.contact_address}",
+          "verifying_authority": "${input.verifying_authority}"
+        },
+        "self_check_rules": [
+          {
+            "field": "verifying_authority",
+            "op": "neq",
+            "value": "${input.contact_address}"
+          }
+        ],
+        "states_admitting_a_decision": [
+          "UNVERIFIED"
+        ],
+        "stream_id": "ACTOR_OCCURRENCES",
+        "verifying_authority": "${input.verifying_authority}"
+      },
+      "workflow": "blockchain::WF_ACCEPT_ACTOR_V0"
+    },
+    "input_contract": {
+      "contact_address": {
+        "required": true,
+        "type": "string"
+      },
+      "grounds": {
+        "type": "string"
+      },
+      "verifying_authority": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "operation": "blockchain.accept_actor",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "transport::CONSTITUTION_TRANSPORT_INGRESS_V0"
+  ],
+  "version": "0"
+}

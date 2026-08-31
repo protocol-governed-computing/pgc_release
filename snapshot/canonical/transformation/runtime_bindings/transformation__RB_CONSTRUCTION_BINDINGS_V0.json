@@ -1,0 +1,45 @@
+{
+  "artifact_code": "RB_CONSTRUCTION_BINDINGS_V0",
+  "artifact_type": "RB",
+  "content": "# RB_CONSTRUCTION_BINDINGS_V0\n\n## 1. Intent\n\nRuntime bindings for the Construction lifecycle: the one write the pipeline performs.\n\n---\n\n## 2. Why construction does not reuse the phase bindings\n\n`RB_TRANSFORMATION_BINDINGS_V0` declares, in its own words, *no storage, no writes* \u2014 observation\ncannot disturb what it observes. Adding a write binding to it would make that declaration false for\nevery phase workflow that binds it, and a phase would silently acquire the ability to write.\n\nSo the subdomain split is a binding split too. Phases observe and cannot write **by construction**;\nconstruction writes and declares exactly where.\n\n---\n\n## 3. The root is declared here, not by a caller\n\nWhere generated artifacts land is governance, so the policy root lives in the binding. Construction\nwrites beneath the instance data root, never into a source registry: a generated artifact is build\noutput, and whether it replaces an authored one is a separate, human decision. Having the runtime\noverwrite the corpus that proves it correct would destroy the evidence in the act of producing it.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::RB_CONSTRUCTION_BINDINGS_V0\nartifact_kind: RUNTIME_BINDING\nversion: v0\ngoverned_by: runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0\nauthority: pgc.platform\nconcern: build\nparameters:\n- module_data_root\ncore:\n  summary: Runtime bindings for the construction lifecycle\n  description: Binds the single write the construction pipeline performs, beneath a declared root.\n  bindings:\n    capability_side_effects::CS_TEXT_ARTIFACT_V0:\n      type: CS\n      host: TextArtifactRuntime\n      operation: WRITE_ALL\n      policy:\n        root: \"{{module_data_root}}/construction\"\n\nextensions:\n  notes:\n    - Generated artifacts are build output; they are never written into a source registry.\n    - The root is policy, so no caller can redirect where a construction lands.\n```\n",
+  "content_hash": "19ab082496693e5e071c2d94a70ec4c761ac48a9e5a24e61aa27a2f6b8fd801a",
+  "fqdn_id": "transformation::RB_CONSTRUCTION_BINDINGS_V0",
+  "frontmatter": {
+    "artifact_kind": "RUNTIME_BINDING",
+    "authority": "pgc.platform",
+    "concern": "build",
+    "core": {
+      "bindings": {
+        "capability_side_effects::CS_TEXT_ARTIFACT_V0": {
+          "host": "TextArtifactRuntime",
+          "operation": "WRITE_ALL",
+          "policy": {
+            "root": "{{module_data_root}}/construction"
+          },
+          "type": "CS"
+        }
+      },
+      "description": "Binds the single write the construction pipeline performs, beneath a declared root.",
+      "summary": "Runtime bindings for the construction lifecycle"
+    },
+    "extensions": {
+      "notes": [
+        "Generated artifacts are build output; they are never written into a source registry.",
+        "The root is policy, so no caller can redirect where a construction lands."
+      ]
+    },
+    "fqdn": "transformation::RB_CONSTRUCTION_BINDINGS_V0",
+    "governed_by": "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0",
+    "parameters": [
+      "module_data_root"
+    ],
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "capability_side_effects::CS_TEXT_ARTIFACT_V0",
+    "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0"
+  ],
+  "version": "0"
+}

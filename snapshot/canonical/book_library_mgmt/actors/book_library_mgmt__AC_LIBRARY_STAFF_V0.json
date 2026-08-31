@@ -1,0 +1,35 @@
+{
+  "artifact_code": "AC_LIBRARY_STAFF_V0",
+  "artifact_type": "AC",
+  "content": "# AC_LIBRARY_STAFF_V0\n\n## 1. Intent\n\nThe actor whose authorization every catalog operation binds\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::AC_LIBRARY_STAFF_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: The actor whose authorization every catalog operation binds\n  type: ENDUSER\n  attributes:\n    staff_id:\n      type: string\n      required: true\n    authorized:\n      type: boolean\n      default: false\n```\n",
+  "content_hash": "1c281ef2f7c1213f4aa1d5d0615e8048132185f687165186026d609dddfb78b6",
+  "fqdn_id": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+  "frontmatter": {
+    "artifact_kind": "ACTOR",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "attributes": {
+        "authorized": {
+          "default": false,
+          "type": "boolean"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "summary": "The actor whose authorization every catalog operation binds",
+      "type": "ENDUSER"
+    },
+    "fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

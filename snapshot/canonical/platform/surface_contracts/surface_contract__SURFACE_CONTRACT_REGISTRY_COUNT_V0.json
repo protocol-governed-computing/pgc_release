@@ -1,0 +1,29 @@
+{
+  "artifact_code": "SURFACE_CONTRACT_REGISTRY_COUNT_V0",
+  "artifact_type": "SURFACE",
+  "content": "# SURFACE_CONTRACT_REGISTRY_COUNT_V0\n\n## Purpose\n\nCanonical result surface for registry COUNT operations.\n\nA registry COUNT operation either succeeds with a count or fails due to storage unavailability.\nCOUNT does not produce NOT_FOUND (the count of a missing key is 0, not an error) and does not\nproduce VIOLATION (COUNT takes no input that can be invalid). These two outcomes are exhaustive.\n\n---\n\n## Machine\n\n```yaml\nfqdn: surface_contract::SURFACE_CONTRACT_REGISTRY_COUNT_V0\nartifact_kind: SURFACE_CONTRACT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: surface_contract\ngoverns:\n- CS_REGISTRY_V0\nop: COUNT\ncanonical_surface:\n- SUCCESS\n- BACKEND_ERROR\n```\n\n---\n\n## What this realizes\n```yaml\ncapability_family: REGISTRY\n```\n",
+  "content_hash": "c49d3309c4f271c18afb8042119beab08367536695ff29efbb084e288f7f79ad",
+  "fqdn_id": "surface_contract::SURFACE_CONTRACT_REGISTRY_COUNT_V0",
+  "frontmatter": {
+    "artifact_kind": "SURFACE_CONTRACT",
+    "authority": "pgc.platform",
+    "canonical_surface": [
+      "SUCCESS",
+      "BACKEND_ERROR"
+    ],
+    "concern": "surface_contract",
+    "fqdn": "surface_contract::SURFACE_CONTRACT_REGISTRY_COUNT_V0",
+    "governed_by": "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0",
+    "governs": [
+      "CS_REGISTRY_V0"
+    ],
+    "op": "COUNT",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "surface_contract",
+  "references": [
+    "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0"
+  ],
+  "version": "0"
+}

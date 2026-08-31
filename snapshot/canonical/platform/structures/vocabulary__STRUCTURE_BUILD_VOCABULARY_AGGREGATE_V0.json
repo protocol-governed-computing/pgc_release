@@ -1,0 +1,72 @@
+{
+  "artifact_code": "STRUCTURE_BUILD_VOCABULARY_AGGREGATE_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_BUILD_VOCABULARY_AGGREGATE_V0\n\nCross-structure vocabulary aggregation configuration.\n\n## Purpose\n\nDeclares the federated vocabulary aggregation phase.\n\nVocabulary generation is NOT per-structure compilation \u2014 it is federated ontology\naggregation. This artifact governs a Phase Type B aggregation: it consumes declared\ncompiled output surfaces from all contributing domain structures and produces the\ncross-system vocabulary snapshot.\n\nThis artifact is the **sole declaration** of:\n- Which compiled artifact directories contribute to vocabulary\n- What artifact types are scanned per source\n- Where the aggregated vocabulary output is written\n\nNo per-structure STRUCTURE artifact should declare `vocabulary_artifacts_path`.\n\n---\n\n## Machine\n\n```yaml\nfqdn: vocabulary::STRUCTURE_BUILD_VOCABULARY_AGGREGATE_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: vocabulary\naggregation_type: VOCABULARY\ncore:\n  summary: Federated vocabulary aggregation (cross-structure Phase Type B)\n  description: 'Aggregates CT, CS, CC, WF, and IN codes from all compiled domain outputs and produces\n    vocabulary_symbols.json and vocabulary_semantic_index.json. Requires all contributing domain structures\n    to have been compiled first.\n\n    '\nartifact_source_dirs:\n  capability_transforms:\n  - layer: REUSABLE_TRANSFORMS\n    subpath: compiled/canonical/capability_transforms\n  capability_side_effects:\n  - layer: REUSABLE_SIDE_EFFECTS\n    subpath: compiled/canonical/capability_side_effects\n  capability_contracts:\n  - layer: CAPABILITIES\n    subpath: compiled/canonical/capability_contracts\n  workflows:\n  - layer: BLOCKCHAIN\n    subpath: compiled/canonical/workflows\n  - layer: AI_GOVERNANCE\n    subpath: compiled/canonical/workflows\n  intents:\n  - layer: BLOCKCHAIN\n    subpath: compiled/canonical/intents\n  - layer: AI_GOVERNANCE\n    subpath: compiled/canonical/intents\noutput_configuration:\n  vocabulary_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/vocabulary\n```\n\n---\n\n## Doctrine\n\n**Vocabulary generation is federated ontology aggregation, not structure compilation.**\n\nThe compiler pipeline has two phase types:\n- **Phase Type A** \u2014 per-structure compilation (DISCOVER \u2192 MATERIALIZE)\n- **Phase Type B** \u2014 cross-structure aggregation (consumes declared output surfaces)\n\nThis artifact governs a Phase Type B aggregation. It is invoked after all Phase Type A\nbuilds complete. It MUST NOT be passed to the per-structure `_run_compile()` path.\n\n",
+  "content_hash": "780e0783e750bc556365d2d09f896ba8b564d6abd099577fbef0e28a3475ef19",
+  "fqdn_id": "vocabulary::STRUCTURE_BUILD_VOCABULARY_AGGREGATE_V0",
+  "frontmatter": {
+    "aggregation_type": "VOCABULARY",
+    "artifact_kind": "STRUCTURE",
+    "artifact_source_dirs": {
+      "capability_contracts": [
+        {
+          "layer": "CAPABILITIES",
+          "subpath": "compiled/canonical/capability_contracts"
+        }
+      ],
+      "capability_side_effects": [
+        {
+          "layer": "REUSABLE_SIDE_EFFECTS",
+          "subpath": "compiled/canonical/capability_side_effects"
+        }
+      ],
+      "capability_transforms": [
+        {
+          "layer": "REUSABLE_TRANSFORMS",
+          "subpath": "compiled/canonical/capability_transforms"
+        }
+      ],
+      "intents": [
+        {
+          "layer": "BLOCKCHAIN",
+          "subpath": "compiled/canonical/intents"
+        },
+        {
+          "layer": "AI_GOVERNANCE",
+          "subpath": "compiled/canonical/intents"
+        }
+      ],
+      "workflows": [
+        {
+          "layer": "BLOCKCHAIN",
+          "subpath": "compiled/canonical/workflows"
+        },
+        {
+          "layer": "AI_GOVERNANCE",
+          "subpath": "compiled/canonical/workflows"
+        }
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "vocabulary",
+    "core": {
+      "description": "Aggregates CT, CS, CC, WF, and IN codes from all compiled domain outputs and produces vocabulary_symbols.json and vocabulary_semantic_index.json. Requires all contributing domain structures to have been compiled first.\n",
+      "summary": "Federated vocabulary aggregation (cross-structure Phase Type B)"
+    },
+    "fqdn": "vocabulary::STRUCTURE_BUILD_VOCABULARY_AGGREGATE_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "output_configuration": {
+      "vocabulary_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/vocabulary"
+      }
+    },
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "vocabulary",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

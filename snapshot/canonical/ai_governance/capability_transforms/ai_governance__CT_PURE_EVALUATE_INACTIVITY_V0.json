@@ -1,0 +1,109 @@
+{
+  "artifact_code": "CT_PURE_EVALUATE_INACTIVITY_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_EVALUATE_INACTIVITY_V0\n\n## 1. Intent\n\nDecide whether a license has been dormant past its reclamation threshold.\n\n`evaluation_date` is an **explicit declared input**, not a clock read. A pure CT may not consult\nthe system clock \u2014 doing so would make the transform non-deterministic and unreplayable. The\ncaller supplies the evaluation instant, so the same inputs always produce the same verdict.\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: ai_licensing\ncore:\n  summary: Evaluate license inactivity against a declared threshold\n  refusal: raises\n  description: |\n    Signals VIOLATION by raising CTExecutionError; the runtime maps any CT exception to\n    VIOLATION. A false predicate is never returned as a value \u2014 a plain return is SUCCESS\n    and would let the consuming pipeline continue past a failed gate.\n  inputs:\n    last_active_date:\n      type: string\n      required: true\n      description: ISO-8601 date or date-time of last recorded license activity\n    evaluation_date:\n      type: string\n      required: true\n      description: ISO-8601 date or date-time the evaluation is made as of \u2014 declared, never a clock read\n    threshold_days:\n      type: integer\n      required: true\n      description: Inactivity threshold in days\n  outputs:\n    is_inactive:\n      type: boolean\n      required: true\n      description: True when days_inactive meets or exceeds threshold_days\n    days_inactive:\n      type: integer\n      required: true\n      description: Whole days elapsed between last_active_date and evaluation_date\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_EVALUATE_INACTIVITY\n  implementation:\n    module: ai_governance.implementation.capability_transforms.atoms.ct_pure_evaluate_inactivity_v0\n    callable: execute\n```\n",
+  "content_hash": "c9be5fa1c06d7dbd33071941150f84b63c00bd8600c3918468b826e17716421b",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_EVALUATE_INACTIVITY_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "evaluation_date": "$.inputs.evaluation_date",
+          "last_active_date": "$.inputs.last_active_date",
+          "threshold_days": "$.inputs.threshold_days"
+        },
+        "atom": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "ai_governance.implementation.capability_transforms.atoms.ct_pure_evaluate_inactivity_v0"
+        },
+        "out": "__atom_result__"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
+    "inputs": {
+      "evaluation_date": {
+        "description": "ISO-8601 date or date-time the evaluation is made as of \u2014 declared, never a clock read",
+        "required": true,
+        "type": "string"
+      },
+      "last_active_date": {
+        "description": "ISO-8601 date or date-time of last recorded license activity",
+        "required": true,
+        "type": "string"
+      },
+      "threshold_days": {
+        "description": "Inactivity threshold in days",
+        "required": true,
+        "type": "integer"
+      }
+    },
+    "outputs": {
+      "days_inactive": {
+        "from": "__atom_result__"
+      },
+      "is_inactive": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "description": "Signals VIOLATION by raising CTExecutionError; the runtime maps any CT exception to\nVIOLATION. A false predicate is never returned as a value \u2014 a plain return is SUCCESS\nand would let the consuming pipeline continue past a failed gate.\n",
+      "inputs": {
+        "evaluation_date": {
+          "description": "ISO-8601 date or date-time the evaluation is made as of \u2014 declared, never a clock read",
+          "required": true,
+          "type": "string"
+        },
+        "last_active_date": {
+          "description": "ISO-8601 date or date-time of last recorded license activity",
+          "required": true,
+          "type": "string"
+        },
+        "threshold_days": {
+          "description": "Inactivity threshold in days",
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "outputs": {
+        "days_inactive": {
+          "description": "Whole days elapsed between last_active_date and evaluation_date",
+          "required": true,
+          "type": "integer"
+        },
+        "is_inactive": {
+          "description": "True when days_inactive meets or exceeds threshold_days",
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "refusal": "raises",
+      "summary": "Evaluate license inactivity against a declared threshold"
+    },
+    "fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "ai_governance.implementation.capability_transforms.atoms.ct_pure_evaluate_inactivity_v0"
+      },
+      "operation": "PURE_EVALUATE_INACTIVITY"
+    },
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+  ],
+  "version": "0"
+}

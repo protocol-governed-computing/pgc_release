@@ -1,0 +1,303 @@
+{
+  "artifact_code": "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "document_text": "in.document_text"
+        },
+        "fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+        "id": "CT_PURE_PARSE_REGISTERS_V0",
+        "inputs": [
+          "document_text"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "header",
+          "sections",
+          "registers"
+        ]
+      },
+      {
+        "bindings": {
+          "prior_texts": "in.prior_texts"
+        },
+        "fqdn": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0",
+        "id": "CT_PURE_PARSE_PRIOR_PHASES_V0",
+        "inputs": [
+          "prior_texts"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "priors"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+        "id": "CS_SNAPSHOT_QUERY_V0",
+        "kind": "CS",
+        "ops": [
+          "QUERY",
+          "CATALOG"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {
+          "document_text": "in.document_text",
+          "header": "parse_registers.capability_result.header",
+          "registers": "parse_registers.capability_result.registers",
+          "rule_set": "in.rule_set",
+          "sections": "parse_registers.capability_result.sections"
+        },
+        "fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0",
+        "id": "CT_PURE_EVALUATE_RULES_V0",
+        "inputs": [
+          "header",
+          "sections",
+          "registers",
+          "document_text",
+          "rule_set"
+        ],
+        "inputs_truncated": true,
+        "kind": "CT",
+        "outputs": [
+          "verdict",
+          "findings",
+          "rules_evaluated"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_JUDGE_AGAINST_SNAPSHOT_V0\n\n## 1. Intent\n\nJudge a phase document against a declared rule set, **against the composition it describes**, and\nagainst the upstream phase documents it was handed.\n\nReused by every phase that grounds claims. Each supplies its own document and rule set; the\nmechanism is the same one.\n\n---\n\n## 2. Why this is a separate contract\n\n`CC_JUDGE_DOCUMENT_V0` judges a document alone and binds nothing. That is sufficient while a rule\nis a property of what the register says about itself \u2014 structure, vocabulary, traceability.\n\nIt stops being sufficient the moment a register claims something already exists. That is a claim\nabout the assembled composition, and no amount of reading the document can settle it. Grounding\nneeds an observation, an observation is a side effect, and a contract that binds a side effect is a\ndifferent contract from one that binds none.\n\nBoth remain: a phase that grounds nothing should not acquire a capability it does not use, and a\ncontract that always observed would make every phase depend on a snapshot being present.\n\n---\n\n## 3. Why the prior parse does not fork the contract\n\nReading an upstream document is the other thing a rule may need from outside the document, and it\ndoes **not** get its own contract. What forks a contract here is a side effect: an observation binds\na capability, and binding one is a commitment a phase that never observes should not make.\n\nParsing text the caller already supplied binds nothing and observes nothing. It is the same class of\nstep as parsing the judged document, which every contract already carries. Forking on it would give\nthree contracts six shapes and say nothing true about any of them.\n\nSo the step is unconditional, and a phase that reads no upstream document says so at the call site\nby handing over an empty mapping. That is more inspectable than an absence: `prior_texts: {}` in a\ncompiled workflow is a declaration that this phase's handoff is ungoverned, and it is greppable.\n\n---\n\n## 4. Pipeline\n\n| Step | Capability | Type | Operation |\n|------|------------|------|-----------|\n| 1 | CT_PURE_PARSE_REGISTERS_V0 | CT | Parse |\n| 2 | CT_PURE_PARSE_PRIOR_PHASES_V0 | CT | Parse priors |\n| 3 | CS_SNAPSHOT_QUERY_V0 | CS | QUERY (si.artifact.list) |\n| 4 | CS_SNAPSHOT_QUERY_V0 | CS | QUERY (si.capability.surface) |\n| 5 | CT_PURE_EVALUATE_RULES_V0 | CT | Evaluate |\n\n---\n\n## 5. Inputs\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| document_text | string | true | Full text of the phase document |\n| prior_texts | object | true | Phase id \u2192 text of the upstream document; empty when none is read |\n| rule_set | array | true | The declared rules deciding admissibility |\n\n---\n\n## 6. Outputs\n\n| Field | Type | Description |\n|-------|------|-------------|\n| verdict | string | ADMISSIBLE or INADMISSIBLE |\n| findings | array | One entry per failed rule |\n| rules_evaluated | integer | Number of rules applied |\n\n---\n\n## 7. Result Status Contract\n\n| Status | Condition |\n|--------|-----------|\n| SUCCESS | The composition was observed, the rule set applied in full, and a verdict reached |\n| VIOLATION | The input was unusable, or a rule named an unimplemented check kind |\n| BACKEND_ERROR | The bound snapshot could not be read |\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: design\ncore:\n  summary: Parse a phase document and its priors, observe the composition, and judge them together\n  inputs:\n    document_text:\n      type: string\n      required: true\n    prior_texts:\n      type: object\n      required: true\n      description: |\n        Phase id \u2192 full text of the upstream document. Empty when this phase reads none; the rule\n        set decides whether that is a defect, and for a phase declaring a cross-phase rule it is one.\n    rule_set:\n      type: array\n      required: true\n  outputs:\n    verdict:\n      type: string\n    findings:\n      type: array\n    rules_evaluated:\n      type: integer\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: parse_registers\n    transform: transformation::CT_PURE_PARSE_REGISTERS_V0\n    inputs:\n      document_text: $.inputs.document_text\n    outputs: {}\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n\n  - step: parse_priors\n    transform: transformation::CT_PURE_PARSE_PRIOR_PHASES_V0\n    inputs:\n      prior_texts: $.inputs.prior_texts\n    outputs: {}\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n\n  # Observation is a governed capability, never an ad hoc read. The snapshot observed is the one\n  # this workflow executes from, bound by the runtime binding rather than named by a caller.\n  - step: observe_composition\n    side_effect: capability_side_effects::CS_SNAPSHOT_QUERY_V0\n    op: QUERY\n    inputs:\n      operation: si.artifact.list\n      params: {}\n    outputs: {}\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n\n  # A third question of the same bound capability, not a new capability. What an operation declares\n  # it yields is the only fact that separates a binding reading a real field from one reading a\n  # field somebody hoped existed.\n  - step: observe_capabilities\n    side_effect: capability_side_effects::CS_SNAPSHOT_QUERY_V0\n    op: QUERY\n    inputs:\n      operation: si.capability.surface\n      params: {}\n    outputs: {}\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n\n  # What each domain declares about being drawn on. A phase deciding whether an artifact may be\n  # reused needs the owning domain's own statement, and inferring relevance from a namespace is\n  # reserved to the author. Declared by P3 and observed by nothing until the observed map was\n  # generated, at which point the omission became a build failure instead of a quiet degradation.\n  - step: observe_reuse_visibility\n    side_effect: capability_side_effects::CS_SNAPSHOT_QUERY_V0\n    op: QUERY\n    inputs:\n      operation: si.snapshot.summary\n      params: {}\n    outputs: {}\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n\n  - step: observe_store_list\n    side_effect: capability_side_effects::CS_SNAPSHOT_QUERY_V0\n    op: QUERY\n    inputs:\n      operation: si.store.list\n      params: {}\n    outputs: {}\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: observe_rule_set_list\n    side_effect: capability_side_effects::CS_SNAPSHOT_QUERY_V0\n    op: QUERY\n    inputs:\n      operation: si.rule_set.list\n      params: {}\n    outputs: {}\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: evaluate_rules\n    transform: transformation::CT_PURE_EVALUATE_RULES_V0\n    inputs:\n      header: $.results.parse_registers.capability_result.header\n      sections: $.results.parse_registers.capability_result.sections\n      registers: $.results.parse_registers.capability_result.registers\n      document_text: $.inputs.document_text\n      rule_set: $.inputs.rule_set\n      # Keyed by the operation that produced it, so a rule can say which observation it relied on.\n      observed:\n        si.artifact.list: $.results.observe_composition.capability_result.result.artifacts\n        si.capability.surface: $.results.observe_capabilities.capability_result.result.capabilities\n        si.capability.surface#contracts: $.results.observe_capabilities.capability_result.result.contracts\n        si.capability.surface#transforms: $.results.observe_capabilities.capability_result.result.transforms\n        si.rule_set.list: $.results.observe_rule_set_list.capability_result.result.carriers\n        si.snapshot.summary: $.results.observe_reuse_visibility.capability_result.result.reuse_visibility\n        si.store.list: $.results.observe_store_list.capability_result.result.stores\n      # Keyed by the phase that produced it, for the same reason.\n      priors: $.results.parse_priors.capability_result.priors\n    outputs:\n      verdict: $.capability_result.verdict\n      findings: $.capability_result.findings\n      rules_evaluated: $.capability_result.rules_evaluated\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\nextensions:\n  description: Grounds a phase document against the composition it is executing within\n```\n",
+  "content_hash": "979fe2cd13aeaf0afef799773706b02effe572df864f1ecdec53bc132a7c4337",
+  "fqdn_id": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "design",
+    "core": {
+      "inputs": {
+        "document_text": {
+          "required": true,
+          "type": "string"
+        },
+        "prior_texts": {
+          "description": "Phase id \u2192 full text of the upstream document. Empty when this phase reads none; the rule\nset decides whether that is a defect, and for a phase declaring a cross-phase rule it is one.\n",
+          "required": true,
+          "type": "object"
+        },
+        "rule_set": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "findings": {
+          "type": "array"
+        },
+        "rules_evaluated": {
+          "type": "integer"
+        },
+        "verdict": {
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "document_text": "$.inputs.document_text"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {},
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "parse_registers",
+          "transform": "transformation::CT_PURE_PARSE_REGISTERS_V0"
+        },
+        {
+          "inputs": {
+            "prior_texts": "$.inputs.prior_texts"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {},
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "parse_priors",
+          "transform": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0"
+        },
+        {
+          "inputs": {
+            "operation": "si.artifact.list",
+            "params": {}
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "QUERY",
+          "outputs": {},
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+          "step": "observe_composition"
+        },
+        {
+          "inputs": {
+            "operation": "si.capability.surface",
+            "params": {}
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "QUERY",
+          "outputs": {},
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+          "step": "observe_capabilities"
+        },
+        {
+          "inputs": {
+            "operation": "si.snapshot.summary",
+            "params": {}
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "QUERY",
+          "outputs": {},
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+          "step": "observe_reuse_visibility"
+        },
+        {
+          "inputs": {
+            "operation": "si.store.list",
+            "params": {}
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "QUERY",
+          "outputs": {},
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+          "step": "observe_store_list"
+        },
+        {
+          "inputs": {
+            "operation": "si.rule_set.list",
+            "params": {}
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "QUERY",
+          "outputs": {},
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
+          "step": "observe_rule_set_list"
+        },
+        {
+          "inputs": {
+            "document_text": "$.inputs.document_text",
+            "header": "$.results.parse_registers.capability_result.header",
+            "observed": {
+              "si.artifact.list": "$.results.observe_composition.capability_result.result.artifacts",
+              "si.capability.surface": "$.results.observe_capabilities.capability_result.result.capabilities",
+              "si.capability.surface#contracts": "$.results.observe_capabilities.capability_result.result.contracts",
+              "si.capability.surface#transforms": "$.results.observe_capabilities.capability_result.result.transforms",
+              "si.rule_set.list": "$.results.observe_rule_set_list.capability_result.result.carriers",
+              "si.snapshot.summary": "$.results.observe_reuse_visibility.capability_result.result.reuse_visibility",
+              "si.store.list": "$.results.observe_store_list.capability_result.result.stores"
+            },
+            "priors": "$.results.parse_priors.capability_result.priors",
+            "registers": "$.results.parse_registers.capability_result.registers",
+            "rule_set": "$.inputs.rule_set",
+            "sections": "$.results.parse_registers.capability_result.sections"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "findings": "$.capability_result.findings",
+            "rules_evaluated": "$.capability_result.rules_evaluated",
+            "verdict": "$.capability_result.verdict"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "evaluate_rules",
+          "transform": "transformation::CT_PURE_EVALUATE_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Parse a phase document and its priors, observe the composition, and judge them together"
+    },
+    "extensions": {
+      "description": "Grounds a phase document against the composition it is executing within"
+    },
+    "fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "transformation::CT_PURE_EVALUATE_RULES_V0",
+    "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0",
+    "transformation::CT_PURE_PARSE_REGISTERS_V0"
+  ],
+  "version": "0"
+}

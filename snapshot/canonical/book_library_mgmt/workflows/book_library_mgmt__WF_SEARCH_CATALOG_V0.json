@@ -1,0 +1,93 @@
+{
+  "artifact_code": "WF_SEARCH_CATALOG_V0",
+  "artifact_type": "WF",
+  "content": "# WF_SEARCH_CATALOG_V0\n\n## 1. Intent\n\nSearching by subject or title, excluding retired books\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::WF_SEARCH_CATALOG_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: catalog\nruntime_binding: book_library_mgmt::RB_CATALOG_BINDINGS_V0\nsubdomain: catalog\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: Searching by subject or title, excluding retired books\n  actor_context: book_library_mgmt::AC_LIBRARY_STAFF_V0\n  start_node: IN_SEARCH_CATALOG_V0\n  nodes:\n    IN_SEARCH_CATALOG_V0:\n      type: IN\n      code: IN_SEARCH_CATALOG_V0\n      next:\n        ACK: CC_CONFIRM_STAFF_AUTHORIZED_V0\n        NACK: EXIT_REJECTED\n    CC_CONFIRM_STAFF_AUTHORIZED_V0:\n      type: CC\n      code: CC_CONFIRM_STAFF_AUTHORIZED_V0\n      inputs:\n        staff_credentials: $.payload.staff_credentials\n        authorization_rules: $.payload.authorization_rules\n      next:\n        SUCCESS: CC_APPEND_CATALOG_OPERATION_V0\n        VIOLATION: EXIT_REJECTED\n    CC_SEARCH_CATALOG_V0:\n      type: CC\n      code: CC_SEARCH_CATALOG_V0\n      inputs:\n        search_criteria: $.payload.search_criteria\n      next:\n        SUCCESS: EXIT_COMPLETED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_APPEND_CATALOG_OPERATION_V0:\n      type: CC\n      code: CC_APPEND_CATALOG_OPERATION_V0\n      inputs:\n        staff_id: $.payload.staff_id\n        operation: SEARCH_CATALOG\n        record:\n          operation: SEARCH_CATALOG\n          staff_id: $.payload.staff_id\n          subject: $.payload.search_criteria\n      next:\n        SUCCESS: CC_SEARCH_CATALOG_V0\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n    EXIT_REJECTED:\n      type: EXIT\n```\n",
+  "content_hash": "3eb6dc629157c8e91e7e166480d531a371999a68b019b041ae59159573210742",
+  "fqdn_id": "book_library_mgmt::WF_SEARCH_CATALOG_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "actor_context": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "nodes": {
+        "CC_APPEND_CATALOG_OPERATION_V0": {
+          "code": "CC_APPEND_CATALOG_OPERATION_V0",
+          "fqdn_id": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0",
+          "inputs": {
+            "operation": "SEARCH_CATALOG",
+            "record": {
+              "operation": "SEARCH_CATALOG",
+              "staff_id": "$.payload.staff_id",
+              "subject": "$.payload.search_criteria"
+            },
+            "staff_id": "$.payload.staff_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_SEARCH_CATALOG_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+          "code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "fqdn_id": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "inputs": {
+            "authorization_rules": "$.payload.authorization_rules",
+            "staff_credentials": "$.payload.staff_credentials"
+          },
+          "next": {
+            "SUCCESS": "CC_APPEND_CATALOG_OPERATION_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_SEARCH_CATALOG_V0": {
+          "code": "CC_SEARCH_CATALOG_V0",
+          "fqdn_id": "book_library_mgmt::CC_SEARCH_CATALOG_V0",
+          "inputs": {
+            "search_criteria": "$.payload.search_criteria"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "IN_SEARCH_CATALOG_V0": {
+          "code": "IN_SEARCH_CATALOG_V0",
+          "fqdn_id": "book_library_mgmt::IN_SEARCH_CATALOG_V0",
+          "next": {
+            "ACK": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_SEARCH_CATALOG_V0",
+      "summary": "Searching by subject or title, excluding retired books"
+    },
+    "fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "catalog",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

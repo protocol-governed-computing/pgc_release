@@ -1,0 +1,113 @@
+{
+  "artifact_code": "CS_CLOCK_V0",
+  "artifact_type": "CS",
+  "content": "",
+  "content_hash": "96f8f261e3971dc7b5f39c5d57ca679d6f97c2385f013b8ebe3a85087a75726a",
+  "cs_ir": {
+    "cs_metadata": {
+      "capability": {
+        "supported_operation_specs": [
+          "NOW"
+        ]
+      },
+      "operations": {
+        "operations": {
+          "NOW": {
+            "effect": "read",
+            "handler": "now",
+            "idempotent": false,
+            "input": [],
+            "output": [
+              "result_status",
+              "timestamp"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "BACKEND_ERROR"
+            ],
+            "summary": "The current instant, as an ISO-8601 timestamp in UTC"
+          }
+        }
+      }
+    },
+    "handler_ref": {
+      "callable": "ClockRuntime",
+      "module": "capability_side_effects.implementation.CS_CLOCK_V0.runtime"
+    }
+  },
+  "fqdn_id": "capability_side_effects::CS_CLOCK_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_SIDE_EFFECT",
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "architecture": {
+        "bindings": {
+          "timestamp": "ISO-8601 instant in UTC, always advancing"
+        },
+        "purpose": "Determines a time at the moment of occurrence, so no caller may assert one",
+        "role": "Neutral temporal capability"
+      },
+      "category": "external",
+      "configuration": {
+        "precision": {
+          "description": "Resolution of the answer \u2014 `seconds` or `milliseconds`; defaults to seconds",
+          "required": false,
+          "type": "string"
+        }
+      },
+      "failure_modes": [
+        "BACKEND_ERROR: No clock is available to the runtime"
+      ],
+      "operations": {
+        "NOW": {
+          "effect": "read",
+          "handler": "now",
+          "idempotent": false,
+          "input": [],
+          "output": [
+            "result_status",
+            "timestamp"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "summary": "The current instant, as an ISO-8601 timestamp in UTC"
+        }
+      },
+      "policy": {
+        "operations": [
+          "NOW"
+        ]
+      },
+      "summary": "Answers the current instant, so a record states when something happened rather than when it was claimed to",
+      "use_cases": [
+        "Audit trail: stamp an appended occurrence with when it occurred",
+        "Lifecycle: record when a state transition was made, by the party that made it"
+      ]
+    },
+    "extensions": {
+      "cs_kind": "clock",
+      "properties": {
+        "concurrent_safe": "always",
+        "durability": "none",
+        "idempotent": false,
+        "replay_policy": "never",
+        "transactional": false
+      },
+      "side_effect_type": "ambient"
+    },
+    "fqdn": "capability_side_effects::CS_CLOCK_V0",
+    "governed_by": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+    "implementation": {
+      "callable": "ClockRuntime",
+      "module": "capability_side_effects.implementation.CS_CLOCK_V0.runtime"
+    },
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "capability_side_effects",
+  "references": [],
+  "version": "V0"
+}

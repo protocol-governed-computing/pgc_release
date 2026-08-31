@@ -1,0 +1,47 @@
+{
+  "artifact_code": "IN_WALLET_CREATION_V0",
+  "artifact_type": "IN",
+  "content": "# IN_WALLET_CREATION_V0\n\n## 1. Intent\n\nAdmits a request naming the person a wallet is for, and refuses one that names nobody\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::IN_WALLET_CREATION_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Admits a request naming the person a wallet is for, and refuses one that names nobody\n  workflow: WF_CREATE_WALLET_V0\n  inputs:\n    contact_address:\n      type: string\n      required: true\n    key_material:\n      type: string\n      required: true\n    wallet_id_prefix:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n",
+  "content_hash": "3a2042d37624c61dc97beb4c6c85969185b094ae6e3bf67be87ab43475c23d2f",
+  "fqdn_id": "blockchain::IN_WALLET_CREATION_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "inputs": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "key_material": {
+          "required": true,
+          "type": "string"
+        },
+        "wallet_id_prefix": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "Admits a request naming the person a wallet is for, and refuses one that names nobody",
+      "workflow": "WF_CREATE_WALLET_V0"
+    },
+    "fqdn": "blockchain::IN_WALLET_CREATION_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

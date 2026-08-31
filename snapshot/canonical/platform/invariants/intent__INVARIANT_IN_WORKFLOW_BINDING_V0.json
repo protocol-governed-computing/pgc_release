@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_IN_WORKFLOW_BINDING_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_IN_WORKFLOW_BINDING_V0\n\n## Machine\n\n```yaml\nfqdn: intent::INVARIANT_IN_WORKFLOW_BINDING_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: intent\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - IN\n  - WF\n```\n\n---\n\n## Purpose\n\nEnsure entry intents are dedicated per-workflow and resolvable.\n\n---\n\n## How it is checked\n### Rule: IN Resolves to Declared Artifact\n\nIN node FQDN in each WF must resolve to an IN artifact in the compilation graph.\n\n**Violation**:\n```yaml\nnodes:\n  IN_MISSING_V0:    # Not declared anywhere\n    type: IN\n```\n\n### Rule: IN Used by At Most One WF\n\nNo IN FQDN may appear as start_node in more than one workflow.\n\n**Violation**:\n- `WF_REGISTER_ACTOR_V0` start_node \u2192 `IN_REGISTER_V0`\n- `WF_REGISTER_DEVICE_V0` start_node \u2192 `IN_REGISTER_V0`  \u2190 WRONG: same IN\n\n---\n\n## Scope\n\n**Applies to**: All IN artifacts, all WF artifacts\n\n**Does NOT validate**: IN schema content (see INVARIANT_IN_SCHEMA_REQUIRED_V0)\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: 'Every IN artifact used as a WF entry node must resolve to a declared IN artifact, and\n    each IN artifact may be the entry point of at most one workflow. Shared entry intents create ambiguous\n    admission semantics.\n\n    '\n  anti_patterns:\n  - shared_entry_intent: Same IN FQDN referenced as start_node by multiple WFs\n  - unresolvable_in: IN FQDN referenced by WF does not resolve to a declared IN artifact\n  clarification:\n    single_binding: 'An IN artifact is a workflow-specific admission contract. Sharing it across workflows\n      would couple admission semantics of distinct workflows.\n\n      '\n    fqdn_resolution: The IN node code in the WF nodes map must resolve to a declared IN artifact via FQDN.\n      This invariant enforces both resolution and uniqueness.\n```\n",
+  "content_hash": "57a56090bcc50eb5ab147cf5440b832ef4e78abdccfd9dd556532524ca8ffcef",
+  "fqdn_id": "intent::INVARIANT_IN_WORKFLOW_BINDING_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "IN",
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "intent",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "intent::INVARIANT_IN_WORKFLOW_BINDING_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "intent",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}
