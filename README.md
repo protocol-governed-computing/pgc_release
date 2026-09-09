@@ -29,8 +29,6 @@ snapshot_inspector     snapshot    → inspection
 - `snapshot/` — the sealed snapshot, expanded. 597 files across seven governed domains.
 - `MANIFEST.md` — snapshot id, conformance result, and the nine components with their version DOIs
   and commits at `v3`.
-- `profile/` — the conformance profile the snapshot claims, copied at release time. A release is
-  evidence, so it carries what it is evaluated against rather than pointing at it.
 - `.zenodo.json` — deposit metadata; the GitHub–Zenodo integration reads it when a release is tagged.
 
 ## Verifying
@@ -54,6 +52,9 @@ This repository holds the snapshot and no toolchain. The toolchain is published 
 running the cited artifact takes an install and no build: nothing here is compiled, because the
 compiling already happened and this is its output.
 
+To build a platform from source rather than run this one — or to author a domain against it — see
+[`pgc_install`](https://github.com/protocol-governed-computing/pgc_install).
+
 **1. The toolchain, from PyPI.**
 
 ```sh
@@ -61,13 +62,18 @@ python3.12 -m venv .venv && source .venv/bin/activate
 pip install protocol-governed-computing
 ```
 
-**2. Point at the profile this snapshot claims.** A snapshot names the conformance profile it claims,
-and acceptance refuses to boot one whose profile it cannot read — a claim nobody can read is not a
-claim. The profile is shipped here, in `profile/`, so nothing else needs obtaining:
+**2. The profile this snapshot claims.** A snapshot names the conformance profile it claims, and
+acceptance refuses to boot one whose profile it cannot read — a claim nobody can read is not a claim.
+Profiles are published in the org's `.github` repository, which is where they are governed; this
+repository does not carry a copy, because two copies of one profile are two things that can disagree.
 
 ```sh
-export PGC_SNAPSHOT_PROFILES=$PWD/profile
+git clone https://github.com/protocol-governed-computing/.github pgc_github
+export PGC_SNAPSHOT_PROFILES=$PWD/pgc_github/snapshot_profiles
 ```
+
+The snapshot names its profile in `snapshot/manifest.json` under `profile`, so you can check which
+one is being read.
 
 **3. Boot it.** This verifies every constituent against the manifest and refuses on any disagreement.
 
@@ -114,7 +120,7 @@ domains over 410 artifacts under a single governance surface — rather than abo
 
 Each release is a new sealed composition:
 
-1. Replace `snapshot/` with the newly assembled snapshot, and `profile/` with the profile it claims.
+1. Replace `snapshot/` with the newly assembled snapshot.
 2. Update `MANIFEST.md` — snapshot id, conformance numbers, component DOIs and commits.
 3. Update `version` in `.zenodo.json`, and add the new component DOIs as `hasPart`.
 4. Bump `VERSION` to the assembler ordinal.
