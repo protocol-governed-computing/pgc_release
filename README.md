@@ -4,8 +4,10 @@
 
 A platform is not a repository. It is the composition of a governance surface, workloads, and
 business domains under a conformance profile. This repository holds one such composition, sealed:
-the assembled snapshot for public identity `v3`, together with the manifest naming every component
-it was built from.
+the assembled snapshot for one public identity, together with the manifest naming every component
+it was built from. Which identity, which snapshot, and which components are stated in `MANIFEST.md`,
+which is generated at release time — this file does not restate them, because a hand-kept copy of a
+generated fact is a copy that drifts.
 
 It contains no source and no toolchain. It is the output the toolchain produced, kept so it can be
 cited, browsed, and checked.
@@ -26,9 +28,9 @@ snapshot_inspector     snapshot    → inspection
 
 ## What is here
 
-- `snapshot/` — the sealed snapshot, expanded. 597 files across seven governed domains.
+- `snapshot/` — the sealed snapshot, expanded.
 - `MANIFEST.md` — snapshot id, conformance result, and the nine components with their version DOIs
-  and commits at `v3`.
+  and commits, for the identity this release carries.
 - `.zenodo.json` — deposit metadata; the GitHub–Zenodo integration reads it when a release is tagged.
 
 ## Verifying
@@ -40,8 +42,9 @@ python -c "import json;print(json.load(open('snapshot/manifest.json'))['snapshot
 python -c "import json;d=json.load(open('snapshot/conformance/composition.json'));print(d['status'],d['artifacts_examined'],'artifacts',d['rules_evaluated'],'rules')"
 ```
 
-Expected: snapshot id `cb56beb413476f9be6e2b0f4dabc134a9fb072156d1aec5584a5157f98809167`,
-and `PASSED 410 artifacts 5 rules`.
+Both values are stated in `MANIFEST.md`. Compare them: the commands read the snapshot, the manifest
+records what was sealed, and the two agreeing is the check. Nothing to look up, and nothing here that
+can be stale — an expected value written into prose is one more thing that can be wrong, and once was.
 
 That reads the claim. Checking the claim against the content — every constituent rehashed, the
 identity re-derived, the profile evaluated — is what booting it does, below.
@@ -113,8 +116,8 @@ the snapshot as carrying content its self-description does not enumerate. `find 
 ## Citing
 
 Cite the version DOI of the release you used. The component repositories carry their own DOIs and
-are named in `MANIFEST.md`; cite this one when the claim is about the composition — seven governed
-domains over 410 artifacts under a single governance surface — rather than about any one component.
+are named in `MANIFEST.md`; cite this one when the claim is about the composition — every governed
+domain under a single governance surface — rather than about any one component.
 
 ## Releasing
 
