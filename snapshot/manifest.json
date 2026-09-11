@@ -1,7 +1,7 @@
 {
   "manifest_version": "v0",
-  "snapshot_id": "cb56beb413476f9be6e2b0f4dabc134a9fb072156d1aec5584a5157f98809167",
-  "composite_hash": "cb56beb413476f9be6e2b0f4dabc134a9fb072156d1aec5584a5157f98809167",
+  "snapshot_id": "d92b447fd39eaf926bb2f4330f9efbb19d744ecfbc3fe9a214ae52945918905d",
+  "composite_hash": "d92b447fd39eaf926bb2f4330f9efbb19d744ecfbc3fe9a214ae52945918905d",
   "identity_covers": [
     "domains",
     "constituents",
@@ -10,7 +10,7 @@
   "post_seal": [
     "conformance/"
   ],
-  "profile": "REFERENCE_PLATFORM_PROFILE_V1",
+  "profile": "GOVERNANCE_SURFACE_PROFILE_V0",
   "domains": [
     {
       "domain": "ai_governance",
@@ -123,7 +123,7 @@
         },
         "canonical": {
           "path": "canonical/platform",
-          "projection_hash": "68fb3deb37d7d905fabb21cfce639ea58ddc9d8a4dc6cf97c3d2f951854f365c"
+          "projection_hash": "c8e5ff54b22e96d0ada8e932216c7f6afe8bb19c15ca4c8d8e0f32d24b37e7ce"
         },
         "trust": {
           "path": "trust/platform",
@@ -184,7 +184,7 @@
   "constituents": [
     {
       "path": "artifact_index/index.json",
-      "sha256": "b9a50958dbac150ddce378876b45a86b80a30d100877944d2189962c36075353"
+      "sha256": "c57e9613080158b09882a341790373be43ab6802505554f10ce4509742c54b44"
     },
     {
       "path": "behavior_logic/ai_governance/WF_AUTO_RECLAIM_V0/WF_AUTO_RECLAIM_V0.graph.json",
@@ -1352,7 +1352,7 @@
     },
     {
       "path": "canonical/platform/concerns/conformance__CONSTITUTION_ASSERT_V0.json",
-      "sha256": "c54864b4a414d83344a209c6ae17ad6cb101a7615628edeeca50402ca7da9768"
+      "sha256": "354c6c8a227bc8489cfcbe4c44a04c0d6fa968496c78478ba0d61a9f977e1742"
     },
     {
       "path": "canonical/platform/concerns/conformance__CONSTITUTION_TEST_DATA_V0.json",
@@ -1820,7 +1820,7 @@
     },
     {
       "path": "canonical/platform/metadata.json",
-      "sha256": "7ec5d9d43ae33ef4403c5a128277350373362c9b12d92ba5c6dd8220b697835f"
+      "sha256": "07af02988b290d91d2efa9754811774343fdae37e1d15f08e5600456fe0e7fd7"
     },
     {
       "path": "canonical/platform/structures/capability_transforms__STRUCTURE_CT_IR_CONTRACT_V0.json",
@@ -2280,7 +2280,7 @@
     },
     {
       "path": "evidence/platform/metadata.json",
-      "sha256": "ac39dacad19612697a2839c55bd9eeaceb51a3ce81a0aeba5643d8b5dd524eae"
+      "sha256": "3db7aff689fa89134c677d6b54d7e8b4090577cb41b5415f2e51a0892bc16cd5"
     },
     {
       "path": "evidence/platform/views/family_view.png",
@@ -2332,7 +2332,7 @@
     },
     {
       "path": "kind_index/index.json",
-      "sha256": "92c64babf6b013b28f104c282debc807e388cf111a6a1e3cebfa2a94debe68d9"
+      "sha256": "e5b321c8c9479b84605d0947b0978241674297ccab38a56695dfe4015ad76c52"
     },
     {
       "path": "store_index/index.json",
@@ -2412,7 +2412,7 @@
     },
     {
       "path": "tokenized/platform/metadata.json",
-      "sha256": "327c7b65609a18dc0c2e336676bb546421e721675bfe0b41ad05ba47a87717e9"
+      "sha256": "df8709a69c87b29b31c65e515edb1af483ece25804b9961ec61cf48df458bbbf"
     },
     {
       "path": "tokenized/platform/topology.json",
@@ -2532,7 +2532,7 @@
     },
     {
       "path": "vocabulary/platform/metadata.json",
-      "sha256": "06c9c09d9fae44aa785f10553b3a69c2f61753198fe31c55a98e030082fc76b0"
+      "sha256": "a4287e947a430683e87ab825b591b54ae4f7b38263243d1da0db4788391c9f06"
     },
     {
       "path": "vocabulary/platform/reverse.json",
@@ -2565,13 +2565,13 @@
   ],
   "provenance": {
     "assembler_version": "16",
-    "assembled_at": "2026-09-07T00:34:29Z",
+    "assembled_at": "2026-09-11T21:05:08Z",
     "source_commits": {
-      "business_domains": "b019513275fb36e8192d50e0c8c50434574de21e",
-      "snapshot_inspector": "28185dbcf56caafd0cd14cc03e32bb0131486a21",
-      "software_governance": "ebc1faab4b253945c28b3f6befdb3b24e883be4f",
-      "transformation": "07b30f3f83245b9b8c86ee95e42a509cf500e515",
-      "conformance_workloads": "64cd39f717bd9c6644127836fc769f17c78f7cf6"
+      "business_domains": "6da9e68a1632c7787694cd087792946ff9031051",
+      "snapshot_inspector": "d4947e7b0c299cf49b15669e26d179a2915f31fd",
+      "software_governance": "09f87fe7f6f5cc36c941f0d44ef305b44cb9463f",
+      "transformation": "0214063883bcf142e3834b4b461092ccfb274d55",
+      "conformance_workloads": "852358416af12b216530eee014e5e95fe6d37bf7"
     },
     "compiler_versions": {
       "ai_governance": "16",
