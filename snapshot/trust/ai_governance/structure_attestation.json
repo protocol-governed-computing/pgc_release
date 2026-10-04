@@ -1,15 +1,25 @@
 {
-  "attestation_hash": "6f8fc20f346a8e60ea79925b572821fe0421895006cb36a6e2b339d49cf9876f",
+  "attestation_hash": "e1d04083d140ca267897e88bb7415424581e65e709d6906e958f654e95d5b438",
   "attestation_version": "V0",
+  "imported_capabilities": [
+    "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+    "capability_side_effects::CS_CLOCK_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0",
+    "capability_transforms::CT_PURE_GENERATE_ID_V0",
+    "capability_transforms::CT_PURE_LOOKUP_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
   "imported_governance": {
-    "closure_member_count": 80,
-    "governance_closure_hash": "392dd260d3febce88aed8723a3f9687a7bab8be7028fa1423ad753bf674ef040",
+    "closure_member_count": 87,
+    "governance_closure_hash": "6d8eea38b83351ccaaf20a6c6637cb108c3da062161593f893c22b78de4db560",
     "import_domain": "platform"
   },
   "public_key_ref": "STUB",
   "signature": "STUB_NOT_CRYPTOGRAPHICALLY_SIGNED",
-  "signed_at": "2026-09-11T21:05:04.441690+00:00",
+  "signed_at": "2026-10-04T01:14:01.904067+00:00",
   "signing_algorithm": "STUB",
   "structure_id": "ai_governance",
-  "tokenized_projection_hash": "ae3e91a51e1eaa7ea48a3c0cb27279404b39514142d21ae3877c27915e95dcc7"
+  "tokenized_projection_hash": "4e3a398d9edf00af055df8a04508656b979ecd3ddb391ffdcf102a0c539b53e4"
 }

@@ -1,0 +1,31 @@
+{
+  "artifact_code": "AC_MODEL_HOST_V0",
+  "artifact_type": "AC",
+  "content": "# AC_MODEL_HOST_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::AC_MODEL_HOST_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: The host of a model in service, which proposes and holds no authority\n  type: ENDUSER\n  attributes:\n    host_id:\n      type: string\n      required: true\n```\n\n---\n\n## Intent\n\nThe host of a model in service, which proposes and holds no authority\n",
+  "content_hash": "63c218b5a079fa4e40cbbbd911f928d0a847e456f6f1547bc032d185c28f5a6d",
+  "fqdn_id": "causal_language_model::AC_MODEL_HOST_V0",
+  "frontmatter": {
+    "artifact_kind": "ACTOR",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "attributes": {
+        "host_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "summary": "The host of a model in service, which proposes and holds no authority",
+      "type": "ENDUSER"
+    },
+    "fqdn": "causal_language_model::AC_MODEL_HOST_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,26 @@
+{
+  "artifact_code": "STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V1",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V1\n\n## Machine\n\n```yaml\nfqdn: execution_placement::STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V1\nartifact_code: STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V1\nartifact_kind: STRUCTURE\nversion: V1\ngoverned_by: execution_placement::CONSTITUTION_EXECUTION_PLACEMENT_V1\nauthority: pgc.platform\nconcern: execution_placement\nplacement_mode: LOCAL_SINGLE_NODE\nremote_execution_allowed: false\ncross_node_dispatch_allowed: false\nplacement_target: local_process\n```\n\n---\n\n## Purpose\n\nDeclares that one process on one host is an available placement arrangement.\n\nExecution runs in a single process on the local host. No worker pool is consulted and no\ndispatch occurs, because there is nothing to dispatch to.\n\nThis is the same mode V0 declared and it means the same thing. What changed is how a build reaches\nit: the structure no longer marks itself active, and a build configuration names it.\n\n## Availability is not activity\n\nThis structure carries no `status`. It states that the mode is **available** to a build, never that\nit is **active** in one \u2014 activity is named by a build configuration and recorded in the snapshot\nthat results (`CONSTITUTION_EXECUTION_PLACEMENT_V1` \u00a72).\n\nThe same artifact is available to a build that selects it and to a build that does not. An artifact\nasserting its own activity could not be both, which is why V0's `status: active` could not survive\na surface serving more than one composition.\n",
+  "content_hash": "9c3b42f1da5d3d2c1bda6108cf480c395f4d1adc1fd8507e2f430e93519ddbc1",
+  "fqdn_id": "execution_placement::STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V1",
+  "frontmatter": {
+    "artifact_code": "STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V1",
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "execution_placement",
+    "cross_node_dispatch_allowed": false,
+    "fqdn": "execution_placement::STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V1",
+    "governed_by": "execution_placement::CONSTITUTION_EXECUTION_PLACEMENT_V1",
+    "placement_mode": "LOCAL_SINGLE_NODE",
+    "placement_target": "local_process",
+    "remote_execution_allowed": false,
+    "version": "V1"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "execution_placement",
+  "references": [
+    "execution_placement::CONSTITUTION_EXECUTION_PLACEMENT_V1"
+  ],
+  "version": "1"
+}

@@ -62,7 +62,7 @@
     }
   },
   "bindings": {
-    "41": {
+    "44": {
       "CC_APPEND_AUDIT_EVENT_RECLAIMED": {
         "data": {
           "days_inactive": "$.payload.context.days_inactive",
@@ -81,7 +81,7 @@
         "threshold_days": "$.payload.threshold_days"
       }
     },
-    "42": {
+    "45": {
       "CC_APPEND_AUDIT_EVENT_V0": {
         "decision": "DENIED",
         "employee_id": "$.payload.employee_id",
@@ -89,7 +89,7 @@
         "reason_code": "$.payload.reason_code"
       }
     },
-    "43": {
+    "46": {
       "CC_AUDIT_PARAMETER_VIOLATION": {
         "denial_reason": "PARAMETER_VIOLATION",
         "domain_context": "$.payload.domain_context",
@@ -142,7 +142,7 @@
         "tool_name": "$.payload.tool_name"
       }
     },
-    "44": {
+    "47": {
       "CC_APPEND_AUDIT_EVENT_DENIED": {
         "data": {},
         "decision": "DENIED",
@@ -171,27 +171,42 @@
     }
   },
   "emits": {
-    "41": {
-      "7": {
+    "44": {
+      "CC_APPEND_AUDIT_EVENT_RECLAIMED": {
         "SUCCESS": [
           "ai_governance::EV_LICENSE_REVOKED_V0"
         ]
       }
     },
-    "42": {
-      "7": {
+    "45": {
+      "CC_APPEND_AUDIT_EVENT_V0": {
         "SUCCESS": [
           "ai_governance::EV_PROVISION_DENIED_V0"
         ]
       }
     },
-    "43": {
-      "14": {
+    "46": {
+      "CC_AUDIT_PARAMETER_VIOLATION": {
         "SUCCESS": [
           "ai_governance::EV_AGENT_ACTION_DENIED_V0"
         ]
       },
-      "15": {
+      "CC_AUDIT_UNAUTHORIZED_ACTOR": {
+        "SUCCESS": [
+          "ai_governance::EV_AGENT_ACTION_DENIED_V0"
+        ]
+      },
+      "CC_AUDIT_UNAUTHORIZED_TOOL": {
+        "SUCCESS": [
+          "ai_governance::EV_AGENT_ACTION_DENIED_V0"
+        ]
+      },
+      "CC_AUDIT_UNDECLARED_TOOL": {
+        "SUCCESS": [
+          "ai_governance::EV_AGENT_ACTION_DENIED_V0"
+        ]
+      },
+      "CC_RECORD_GOVERNED_ACTION_V0": {
         "ALREADY_EXISTS": [
           "ai_governance::EV_AGENT_ACTION_AUTHORIZED_V0"
         ],
@@ -200,34 +215,39 @@
         ]
       }
     },
-    "44": {
-      "7": {
+    "47": {
+      "CC_APPEND_AUDIT_EVENT_DENIED": {
         "SUCCESS": [
           "ai_governance::EV_PROVISION_DENIED_V0"
+        ]
+      },
+      "CC_APPEND_AUDIT_EVENT_SUCCESS": {
+        "SUCCESS": [
+          "ai_governance::EV_LICENSE_PROVISIONED_V0"
         ]
       }
     }
   },
   "entry": {
-    "41": {
+    "44": {
       "actor": "ai_governance::AC_SYSTEM_V0",
       "rb": 36,
       "start": 34,
       "start_key": "IN_RECLAIM_LICENSE_V0"
     },
-    "42": {
+    "45": {
       "actor": "ai_governance::AC_SYSTEM_V0",
       "rb": 36,
       "start": 32,
       "start_key": "IN_DENY_PROVISION_V0"
     },
-    "43": {
+    "46": {
       "actor": "ai_governance::AC_SYSTEM_GOVERNOR_V0",
       "rb": 35,
       "start": 31,
       "start_key": "IN_AGENT_ACTION_REQUESTED_V0"
     },
-    "44": {
+    "47": {
       "actor": "ai_governance::AC_EMPLOYEE_V0",
       "rb": 36,
       "start": 33,
@@ -237,7 +257,7 @@
   "pipeline": {
     "10": [
       {
-        "addr": 70,
+        "addr": 74,
         "inputs": {},
         "on_result": {
           "BACKEND_ERROR": "exit",
@@ -252,7 +272,7 @@
     ],
     "11": [
       {
-        "addr": 74,
+        "addr": 78,
         "inputs": {
           "data": {
             "domain_context": "$.inputs.domain_context",
@@ -274,7 +294,7 @@
     ],
     "12": [
       {
-        "addr": 70,
+        "addr": 74,
         "inputs": {
           "key": "$.inputs.employee_id",
           "target_cs": "CS_REGISTRY_V0",
@@ -313,7 +333,7 @@
         "step_id": "evaluate_inactivity"
       },
       {
-        "addr": 70,
+        "addr": 74,
         "inputs": {
           "key_or_address": "$.inputs.employee_id"
         },
@@ -331,7 +351,7 @@
     ],
     "14": [
       {
-        "addr": 68,
+        "addr": 72,
         "inputs": {},
         "on_result": {
           "BACKEND_ERROR": "exit",
@@ -344,7 +364,7 @@
         "step_id": "read_now"
       },
       {
-        "addr": 74,
+        "addr": 78,
         "inputs": {
           "data": {
             "domain_context": "$.inputs.domain_context",
@@ -364,7 +384,7 @@
         "step_id": "generate_action_id"
       },
       {
-        "addr": 67,
+        "addr": 71,
         "inputs": {
           "__store__": "GOVERNANCE_AUDIT",
           "record": {
@@ -392,7 +412,7 @@
     ],
     "15": [
       {
-        "addr": 68,
+        "addr": 72,
         "inputs": {},
         "on_result": {
           "BACKEND_ERROR": "exit",
@@ -405,7 +425,7 @@
         "step_id": "read_now"
       },
       {
-        "addr": 74,
+        "addr": 78,
         "inputs": {
           "data": {
             "intent_hash": "$.inputs.intent_hash",
@@ -425,7 +445,7 @@
         "step_id": "generate_action_id"
       },
       {
-        "addr": 70,
+        "addr": 74,
         "inputs": {
           "key": "$.results.generate_action_id.action_id",
           "metadata": {
@@ -451,7 +471,7 @@
         "step_id": "register_action"
       },
       {
-        "addr": 67,
+        "addr": 71,
         "inputs": {
           "__store__": "GOVERNANCE_AUDIT",
           "record": {
@@ -480,7 +500,7 @@
     ],
     "16": [
       {
-        "addr": 69,
+        "addr": 73,
         "inputs": {
           "__store__": "LICENSE_FACTS",
           "key": "$.inputs.requesting_user_id"
@@ -500,7 +520,7 @@
         "step_id": "read_license_record"
       },
       {
-        "addr": 77,
+        "addr": 81,
         "inputs": {
           "allowed_set": [
             "active"
@@ -556,7 +576,7 @@
     ],
     "18": [
       {
-        "addr": 75,
+        "addr": 79,
         "inputs": {
           "key": "$.inputs.tool_name",
           "map": {
@@ -611,7 +631,7 @@
         "step_id": "lookup_parameter_rules"
       },
       {
-        "addr": 76,
+        "addr": 80,
         "inputs": {
           "parameters": "$.inputs.parameters",
           "rules": "$.results.lookup_parameter_rules.rules"
@@ -630,7 +650,7 @@
     ],
     "7": [
       {
-        "addr": 68,
+        "addr": 72,
         "inputs": {},
         "on_result": {
           "BACKEND_ERROR": "exit",
@@ -643,7 +663,7 @@
         "step_id": "read_now"
       },
       {
-        "addr": 67,
+        "addr": 71,
         "inputs": {
           "__store__": "LICENSE_AUDIT",
           "record": {
@@ -670,7 +690,7 @@
     ],
     "8": [
       {
-        "addr": 75,
+        "addr": 79,
         "inputs": {
           "key": "$.inputs.license_tier",
           "map": {
@@ -699,7 +719,7 @@
         "step_id": "lookup_tier_tools"
       },
       {
-        "addr": 77,
+        "addr": 81,
         "inputs": {
           "allowed_set": "$.results.lookup_tier_tools.allowed_tools",
           "value": "$.inputs.tool_name"
@@ -718,7 +738,7 @@
     ],
     "9": [
       {
-        "addr": 77,
+        "addr": 81,
         "inputs": {
           "allowed_set": [
             "READ_RECORD",
@@ -741,36 +761,56 @@
   },
   "projection_class": "machine_projection",
   "routing": {
-    "41": {
-      "13": {
+    "44": {
+      "CC_RECLAIM_UNUSED_LICENSE_V0": {
         "24581": {
           "addr": 7,
           "key": "CC_APPEND_AUDIT_EVENT_RECLAIMED"
         }
       },
-      "34": {
+      "IN_RECLAIM_LICENSE_V0": {
         "24576": {
           "addr": 13,
           "key": "CC_RECLAIM_UNUSED_LICENSE_V0"
         }
       }
     },
-    "42": {
-      "32": {
+    "45": {
+      "IN_DENY_PROVISION_V0": {
         "24576": {
           "addr": 7,
           "key": "CC_APPEND_AUDIT_EVENT_V0"
         }
       }
     },
-    "43": {
-      "11": {
+    "46": {
+      "CC_BIND_LICENSE_TO_TOOL_SURFACE_V0": {
+        "24581": {
+          "addr": 18,
+          "key": "CC_VALIDATE_TOOL_PARAMETERS_V0"
+        },
+        "24582": {
+          "addr": 14,
+          "key": "CC_AUDIT_UNAUTHORIZED_TOOL"
+        }
+      },
+      "CC_CHECK_TOOL_DECLARED_V0": {
+        "24581": {
+          "addr": 16,
+          "key": "CC_RESOLVE_LICENSE_TIER_V0"
+        },
+        "24582": {
+          "addr": 14,
+          "key": "CC_AUDIT_UNDECLARED_TOOL"
+        }
+      },
+      "CC_NORMALIZE_AGENT_REQUEST_V0": {
         "24581": {
           "addr": 9,
           "key": "CC_CHECK_TOOL_DECLARED_V0"
         }
       },
-      "16": {
+      "CC_RESOLVE_LICENSE_TIER_V0": {
         "24580": {
           "addr": 14,
           "key": "CC_AUDIT_UNAUTHORIZED_ACTOR"
@@ -784,7 +824,7 @@
           "key": "CC_AUDIT_UNAUTHORIZED_ACTOR"
         }
       },
-      "18": {
+      "CC_VALIDATE_TOOL_PARAMETERS_V0": {
         "24581": {
           "addr": 15,
           "key": "CC_RECORD_GOVERNED_ACTION_V0"
@@ -794,41 +834,21 @@
           "key": "CC_AUDIT_PARAMETER_VIOLATION"
         }
       },
-      "31": {
+      "IN_AGENT_ACTION_REQUESTED_V0": {
         "24576": {
           "addr": 11,
           "key": "CC_NORMALIZE_AGENT_REQUEST_V0"
         }
-      },
-      "8": {
-        "24581": {
-          "addr": 18,
-          "key": "CC_VALIDATE_TOOL_PARAMETERS_V0"
-        },
-        "24582": {
-          "addr": 14,
-          "key": "CC_AUDIT_UNAUTHORIZED_TOOL"
-        }
-      },
-      "9": {
-        "24581": {
-          "addr": 16,
-          "key": "CC_RESOLVE_LICENSE_TIER_V0"
-        },
-        "24582": {
-          "addr": 14,
-          "key": "CC_AUDIT_UNDECLARED_TOOL"
-        }
       }
     },
-    "44": {
-      "12": {
+    "47": {
+      "CC_PROVISION_LICENSE_V0": {
         "24581": {
           "addr": 7,
           "key": "CC_APPEND_AUDIT_EVENT_SUCCESS"
         }
       },
-      "17": {
+      "CC_VALIDATE_ELIGIBILITY_V0": {
         "24581": {
           "addr": 12,
           "key": "CC_PROVISION_LICENSE_V0"
@@ -838,7 +858,7 @@
           "key": "CC_APPEND_AUDIT_EVENT_DENIED"
         }
       },
-      "33": {
+      "IN_PROVISION_AI_LICENSE_V0": {
         "24576": {
           "addr": 17,
           "key": "CC_VALIDATE_ELIGIBILITY_V0"
@@ -847,8 +867,22 @@
     }
   },
   "terminal": {
-    "41": {
-      "13": {
+    "44": {
+      "CC_APPEND_AUDIT_EVENT_RECLAIMED": {
+        "24578": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_RECLAIMED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        }
+      },
+      "CC_RECLAIM_UNUSED_LICENSE_V0": {
         "24578": {
           "exit": "EXIT_ERROR",
           "type": "EXIT"
@@ -862,35 +896,15 @@
           "type": "EXIT"
         }
       },
-      "34": {
+      "IN_RECLAIM_LICENSE_V0": {
         "24579": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
         }
-      },
-      "7": {
-        "24578": {
-          "exit": "EXIT_ERROR",
-          "type": "EXIT"
-        },
-        "24581": {
-          "exit": "EXIT_RECLAIMED",
-          "type": "EXIT"
-        },
-        "24582": {
-          "exit": "EXIT_ERROR",
-          "type": "EXIT"
-        }
       }
     },
-    "42": {
-      "32": {
-        "24579": {
-          "exit": "EXIT_ERROR",
-          "type": "EXIT"
-        }
-      },
-      "7": {
+    "45": {
+      "CC_APPEND_AUDIT_EVENT_V0": {
         "24578": {
           "exit": "EXIT_ERROR",
           "type": "EXIT"
@@ -903,16 +917,16 @@
           "exit": "EXIT_ERROR",
           "type": "EXIT"
         }
-      }
-    },
-    "43": {
-      "11": {
-        "24582": {
+      },
+      "IN_DENY_PROVISION_V0": {
+        "24579": {
           "exit": "EXIT_ERROR",
           "type": "EXIT"
         }
-      },
-      "14": {
+      }
+    },
+    "46": {
+      "CC_AUDIT_PARAMETER_VIOLATION": {
         "24578": {
           "exit": "EXIT_ERROR",
           "type": "EXIT"
@@ -926,7 +940,55 @@
           "type": "EXIT"
         }
       },
-      "15": {
+      "CC_AUDIT_UNAUTHORIZED_ACTOR": {
+        "24578": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_UNAUTHORIZED_ACTOR",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        }
+      },
+      "CC_AUDIT_UNAUTHORIZED_TOOL": {
+        "24578": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_UNAUTHORIZED_TOOL",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        }
+      },
+      "CC_AUDIT_UNDECLARED_TOOL": {
+        "24578": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_UNDECLARED_TOOL",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        }
+      },
+      "CC_NORMALIZE_AGENT_REQUEST_V0": {
+        "24582": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        }
+      },
+      "CC_RECORD_GOVERNED_ACTION_V0": {
         "24577": {
           "exit": "EXIT_SUCCESS",
           "type": "EXIT"
@@ -944,41 +1006,21 @@
           "type": "EXIT"
         }
       },
-      "16": {
+      "CC_RESOLVE_LICENSE_TIER_V0": {
         "24578": {
           "exit": "EXIT_ERROR",
           "type": "EXIT"
         }
       },
-      "31": {
+      "IN_AGENT_ACTION_REQUESTED_V0": {
         "24579": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
         }
       }
     },
-    "44": {
-      "12": {
-        "24577": {
-          "exit": "EXIT_ERROR",
-          "type": "EXIT"
-        },
-        "24578": {
-          "exit": "EXIT_ERROR",
-          "type": "EXIT"
-        },
-        "24582": {
-          "exit": "EXIT_ERROR",
-          "type": "EXIT"
-        }
-      },
-      "33": {
-        "24579": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        }
-      },
-      "7": {
+    "47": {
+      "CC_APPEND_AUDIT_EVENT_DENIED": {
         "24578": {
           "exit": "EXIT_ERROR",
           "type": "EXIT"
@@ -989,6 +1031,40 @@
         },
         "24582": {
           "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        }
+      },
+      "CC_APPEND_AUDIT_EVENT_SUCCESS": {
+        "24578": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_PROVISIONED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        }
+      },
+      "CC_PROVISION_LICENSE_V0": {
+        "24577": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        },
+        "24578": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_ERROR",
+          "type": "EXIT"
+        }
+      },
+      "IN_PROVISION_AI_LICENSE_V0": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
           "type": "EXIT"
         }
       }

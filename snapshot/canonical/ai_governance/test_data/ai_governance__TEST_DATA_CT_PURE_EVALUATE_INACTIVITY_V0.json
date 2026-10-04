@@ -1,0 +1,59 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: ai_licensing\ntarget: ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0\ncases:\n- case_id: inactive_past_threshold\n  expected_outcome: SUCCESS\n  bindings:\n    last_active_date: '2024-01-01T00:00:00Z'\n    evaluation_date: '2024-02-15T00:00:00Z'\n    threshold_days: 30\n  expected:\n    is_inactive: true\n    days_inactive: 45\n- case_id: inactive_at_threshold\n  expected_outcome: SUCCESS\n  bindings:\n    last_active_date: '2024-01-16T00:00:00Z'\n    evaluation_date: '2024-02-15T00:00:00Z'\n    threshold_days: 30\n  expected:\n    is_inactive: true\n    days_inactive: 30\n- case_id: refuses_recently_used\n  expected_outcome: VIOLATION\n  bindings:\n    last_active_date: '2024-02-10T00:00:00Z'\n    evaluation_date: '2024-02-15T00:00:00Z'\n    threshold_days: 30\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "85b6911f1debb45c408682f4fc61e38d30d95928d339487ed8d6d8fd256ecc1f",
+  "fqdn_id": "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "evaluation_date": "2024-02-15T00:00:00Z",
+          "last_active_date": "2024-01-01T00:00:00Z",
+          "threshold_days": 30
+        },
+        "case_id": "inactive_past_threshold",
+        "expected": {
+          "days_inactive": 45,
+          "is_inactive": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "evaluation_date": "2024-02-15T00:00:00Z",
+          "last_active_date": "2024-01-16T00:00:00Z",
+          "threshold_days": 30
+        },
+        "case_id": "inactive_at_threshold",
+        "expected": {
+          "days_inactive": 30,
+          "is_inactive": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "evaluation_date": "2024-02-15T00:00:00Z",
+          "last_active_date": "2024-02-10T00:00:00Z",
+          "threshold_days": 30
+        },
+        "case_id": "refuses_recently_used",
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "ai_licensing",
+    "fqdn": "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
+    "version": "V0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,145 @@
+{
+  "artifact_code": "CC_WRITE_MODEL_RESPONSE_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "account_numbers": "in.account_numbers",
+          "response_rules": "in.response_rules",
+          "seed": "in.seed"
+        },
+        "fqdn": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0",
+        "id": "CT_PURE_FORM_RESPONSE_RULES_V0",
+        "inputs": [
+          "response_rules",
+          "account_numbers",
+          "seed"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "rules_in_force",
+          "positions"
+        ]
+      },
+      {
+        "bindings": {
+          "positions": "form_rules_in_force.positions",
+          "reading": "in.reading",
+          "rules_in_force": "form_rules_in_force.rules_in_force"
+        },
+        "fqdn": "causal_language_model::CT_WRITE_RESPONSE_V0",
+        "id": "CT_WRITE_RESPONSE_V0",
+        "inputs": [
+          "reading",
+          "rules_in_force",
+          "positions"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "result"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_WRITE_MODEL_RESPONSE_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CC_WRITE_MODEL_RESPONSE_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Form the rules in force and write the response word by word under them\n  inputs:\n    response_rules:\n      type: object\n      required: true\n    account_numbers:\n      type: array\n      required: true\n    seed:\n      type: integer\n      required: true\n    reading:\n      type: object\n      required: true\n  outputs:\n    rules_in_force:\n      type: object\n      required: true\n    written_response:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: form_rules_in_force\n    transform: causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0\n    inputs:\n      response_rules: $.inputs.response_rules\n      account_numbers: $.inputs.account_numbers\n      seed: $.inputs.seed\n    outputs:\n      rules_in_force: $.capability_result.rules_in_force\n      positions: $.capability_result.positions\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_response\n    transform: causal_language_model::CT_WRITE_RESPONSE_V0\n    inputs:\n      reading: $.inputs.reading\n      rules_in_force: $.results.form_rules_in_force.rules_in_force\n      positions: $.results.form_rules_in_force.positions\n    outputs:\n      written_response: $.capability_result.result\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nForm the rules in force and write the response word by word under them\n",
+  "content_hash": "b1e555df82e9aca9f8f015125b59d2c37198f2fbb4575f2282e9cd2b651f64ed",
+  "fqdn_id": "causal_language_model::CC_WRITE_MODEL_RESPONSE_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "account_numbers": {
+          "required": true,
+          "type": "array"
+        },
+        "reading": {
+          "required": true,
+          "type": "object"
+        },
+        "response_rules": {
+          "required": true,
+          "type": "object"
+        },
+        "seed": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "outputs": {
+        "rules_in_force": {
+          "required": true,
+          "type": "object"
+        },
+        "written_response": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "account_numbers": "$.inputs.account_numbers",
+            "response_rules": "$.inputs.response_rules",
+            "seed": "$.inputs.seed"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "positions": "$.capability_result.positions",
+            "rules_in_force": "$.capability_result.rules_in_force"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "form_rules_in_force",
+          "transform": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0"
+        },
+        {
+          "inputs": {
+            "positions": "$.results.form_rules_in_force.positions",
+            "reading": "$.inputs.reading",
+            "rules_in_force": "$.results.form_rules_in_force.rules_in_force"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "written_response": "$.capability_result.result"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "write_response",
+          "transform": "causal_language_model::CT_WRITE_RESPONSE_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Form the rules in force and write the response word by word under them"
+    },
+    "fqdn": "causal_language_model::CC_WRITE_MODEL_RESPONSE_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0",
+    "causal_language_model::CT_WRITE_RESPONSE_V0"
+  ],
+  "version": "0"
+}

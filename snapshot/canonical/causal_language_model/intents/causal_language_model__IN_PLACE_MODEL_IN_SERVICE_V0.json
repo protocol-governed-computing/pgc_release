@@ -1,0 +1,63 @@
+{
+  "artifact_code": "IN_PLACE_MODEL_IN_SERVICE_V0",
+  "artifact_type": "IN",
+  "content": "# IN_PLACE_MODEL_IN_SERVICE_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::IN_PLACE_MODEL_IN_SERVICE_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: A request to place a registered model in service with its ceiling, system prompt and response\n    rules\n  workflow: WF_PLACE_MODEL_IN_SERVICE_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n    identity_key:\n      type: string\n      required: true\n    time_in_service_id:\n      type: string\n      required: true\n    ceiling:\n      type: string\n      required: true\n    system_prompt:\n      type: string\n      required: true\n    response_rules:\n      type: object\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to place a registered model in service with its ceiling, system prompt and response rules\n",
+  "content_hash": "8b23f60c6420a1d96b67a897af817396ef2db6a1381752dcf8aeb22181f89745",
+  "fqdn_id": "causal_language_model::IN_PLACE_MODEL_IN_SERVICE_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "ceiling": {
+          "required": true,
+          "type": "string"
+        },
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "response_rules": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_credentials": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "system_prompt": {
+          "required": true,
+          "type": "string"
+        },
+        "time_in_service_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to place a registered model in service with its ceiling, system prompt and response rules",
+      "workflow": "WF_PLACE_MODEL_IN_SERVICE_V0"
+    },
+    "fqdn": "causal_language_model::IN_PLACE_MODEL_IN_SERVICE_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

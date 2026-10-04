@@ -1,45 +1,7 @@
 {
   "admission": {
-    "35": {
-      "contact_address": {
-        "required": true,
-        "type": "string"
-      },
-      "verifying_authority": {
-        "required": true,
-        "type": "string"
-      }
-    },
     "36": {
-      "actor_record": {
-        "required": true,
-        "type": "object"
-      },
-      "registration_schema": {
-        "required": true,
-        "type": "object"
-      }
-    },
-    "37": {
       "contact_address": {
-        "required": true,
-        "type": "string"
-      },
-      "grounds": {
-        "required": true,
-        "type": "string"
-      },
-      "verifying_authority": {
-        "required": true,
-        "type": "string"
-      }
-    },
-    "38": {
-      "contact_address": {
-        "required": true,
-        "type": "string"
-      },
-      "decision": {
         "required": true,
         "type": "string"
       },
@@ -52,7 +14,27 @@
         "type": "string"
       }
     },
-    "39": {
+    "37": {
+      "actor_record": {
+        "required": true,
+        "type": "object"
+      }
+    },
+    "38": {
+      "contact_address": {
+        "required": true,
+        "type": "string"
+      },
+      "grounds": {
+        "required": true,
+        "type": "string"
+      },
+      "verifying_authority": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "40": {
       "contact_address": {
         "required": true,
         "type": "string"
@@ -68,48 +50,44 @@
     }
   },
   "bindings": {
-    "52": {
+    "53": {
       "CC_APPEND_ACTOR_OCCURRENCE_V0": {
         "contact_address": "$.payload.contact_address",
         "occurrence_fields": "$.payload.occurrence_fields",
         "stream_id": "$.payload.stream_id"
       },
       "CC_RECORD_VERIFICATION_DECISION_V0": {
-        "admitted_outcomes": "$.payload.admitted_outcomes",
         "contact_address": "$.payload.contact_address",
-        "current_state": "$.results.28.value.state",
-        "decided_actor_fields": "$.payload.decided_actor_fields",
-        "decision": "$.payload.decision",
-        "self_check_parameters": "$.payload.self_check_parameters",
-        "self_check_rules": "$.payload.self_check_rules",
-        "states_admitting_a_decision": "$.payload.states_admitting_a_decision",
+        "current_state": "$.results.29.value.state",
+        "decision": "ACCEPTED",
+        "grounds": "$.payload.grounds",
         "verifying_authority": "$.payload.verifying_authority"
       },
       "CC_RESOLVE_ACTOR_V0": {
         "contact_address": "$.payload.contact_address"
       }
     },
-    "53": {
+    "54": {
       "CC_APPEND_WALLET_OCCURRENCE_V0": {
         "occurrence_fields": "$.payload.occurrence_fields",
-        "stream_id": "$.results.22.id"
+        "stream_id": "$.results.23.id"
       },
       "CC_CLAIM_WALLET_IDENTITY_V0": {
-        "wallet_id": "$.results.22.id"
+        "wallet_id": "$.results.23.id"
       },
       "CC_CREATE_WALLET_RECORD_V0": {
         "wallet_fields": "$.payload.wallet_fields",
-        "wallet_id": "$.results.22.id"
+        "wallet_id": "$.results.23.id"
       },
       "CC_DETERMINE_WALLET_IDENTITY_V0": {
-        "holder": "$.results.28.value.contact_address",
+        "holder": "$.results.29.value.contact_address",
         "wallet_id_prefix": "$.payload.wallet_id_prefix"
       },
       "CC_ESTABLISH_WALLET_ADDRESS_V0": {
         "key_material": "$.payload.key_material"
       },
       "CC_REQUIRE_ACCEPTED_HOLDER_V0": {
-        "holder_state": "$.results.28.value.state",
+        "holder_state": "$.results.29.value.state",
         "states_admitting_a_wallet": [
           "ACCEPTED"
         ]
@@ -118,7 +96,7 @@
         "contact_address": "$.payload.contact_address"
       }
     },
-    "54": {
+    "55": {
       "CC_APPEND_ACTOR_OCCURRENCE_V0": {
         "contact_address": "$.payload.contact_address",
         "occurrence_fields": "$.payload.occurrence_fields",
@@ -127,7 +105,7 @@
       "CC_RECORD_VERIFICATION_DECISION_V0": {
         "admitted_outcomes": "$.payload.admitted_outcomes",
         "contact_address": "$.payload.contact_address",
-        "current_state": "$.results.28.value.state",
+        "current_state": "$.results.29.value.state",
         "decided_actor_fields": "$.payload.decided_actor_fields",
         "decision": "$.payload.decision",
         "states_admitting_a_decision": "$.payload.states_admitting_a_decision",
@@ -137,9 +115,9 @@
         "contact_address": "$.payload.contact_address"
       }
     },
-    "55": {
+    "56": {
       "CC_APPEND_ACTOR_OCCURRENCE_V0": {
-        "contact_address": "$.results.19.result",
+        "contact_address": "$.results.20.result",
         "occurrence_fields": "$.payload.occurrence_fields",
         "stream_id": "$.payload.stream_id"
       },
@@ -149,34 +127,34 @@
         "address_type": "$.payload.address_type"
       },
       "CC_REGISTER_ACTOR_V0": {
-        "actor_fields": "$.payload.actor_record",
-        "contact_address": "$.results.19.result"
+        "actor_fields": {
+          "contact_address": "$.payload.actor_record.contact_address",
+          "currency_preference": "$.payload.actor_record.currency_preference",
+          "language": "$.payload.actor_record.language",
+          "name": "$.payload.actor_record.name",
+          "state": "UNVERIFIED"
+        },
+        "contact_address": "$.results.20.result"
       },
       "CC_VALIDATE_REGISTRATION_V0": {
-        "actor_record": "$.payload.actor_record",
-        "registration_schema": "$.payload.registration_schema"
+        "actor_record": "$.payload.actor_record"
       }
     },
-    "56": {
+    "57": {
       "CC_APPEND_ACTOR_OCCURRENCE_V0": {
         "contact_address": "$.payload.contact_address",
         "occurrence_fields": "$.payload.occurrence_fields",
         "stream_id": "$.payload.stream_id"
       },
       "CC_RECORD_VERIFICATION_DECISION_V0": {
-        "admitted_outcomes": "$.payload.admitted_outcomes",
         "contact_address": "$.payload.contact_address",
-        "current_state": "$.results.28.value.state",
-        "decided_actor_fields": "$.payload.decided_actor_fields",
-        "decision": "$.payload.decision",
-        "self_check_parameters": "$.payload.self_check_parameters",
-        "self_check_rules": "$.payload.self_check_rules",
-        "states_admitting_a_decision": "$.payload.states_admitting_a_decision",
+        "current_state": "$.results.29.value.state",
+        "decision": "REJECTED",
+        "grounds": "$.payload.grounds",
         "verifying_authority": "$.payload.verifying_authority"
       },
       "CC_REQUIRE_REJECTION_GROUNDS_V0": {
-        "grounds_parameters": "$.payload.grounds_parameters",
-        "grounds_rules": "$.payload.grounds_rules"
+        "grounds": "$.payload.grounds"
       },
       "CC_RESOLVE_ACTOR_V0": {
         "contact_address": "$.payload.contact_address"
@@ -184,29 +162,29 @@
     }
   },
   "emits": {
-    "52": {
-      "17": {
+    "53": {
+      "CC_APPEND_ACTOR_OCCURRENCE_V0": {
         "SUCCESS": [
           "blockchain::EV_ACTOR_ACCEPTED_V0"
         ]
       }
     },
-    "53": {
-      "18": {
+    "54": {
+      "CC_APPEND_WALLET_OCCURRENCE_V0": {
         "SUCCESS": [
           "blockchain::EV_WALLET_CREATED_V0"
         ]
       }
     },
-    "55": {
-      "17": {
+    "56": {
+      "CC_APPEND_ACTOR_OCCURRENCE_V0": {
         "SUCCESS": [
           "blockchain::EV_ACTOR_REGISTERED_UNVERIFIED_V0"
         ]
       }
     },
-    "56": {
-      "17": {
+    "57": {
+      "CC_APPEND_ACTOR_OCCURRENCE_V0": {
         "SUCCESS": [
           "blockchain::EV_ACTOR_REJECTED_V0"
         ]
@@ -214,41 +192,35 @@
     }
   },
   "entry": {
-    "52": {
-      "actor": "blockchain::AC_PARTICIPANT_V0",
-      "rb": 40,
-      "start": 35,
-      "start_key": "IN_ACTOR_ACCEPTANCE_V0"
-    },
     "53": {
       "actor": "blockchain::AC_PARTICIPANT_V0",
       "rb": 41,
-      "start": 39,
-      "start_key": "IN_WALLET_CREATION_V0"
+      "start": 36,
+      "start_key": "IN_ACTOR_ACCEPTANCE_V0"
     },
     "54": {
       "actor": "blockchain::AC_PARTICIPANT_V0",
-      "rb": 40,
-      "start": 38,
-      "start_key": "IN_ACTOR_VERIFIED_V0"
-    },
-    "55": {
-      "actor": "blockchain::AC_PARTICIPANT_V0",
-      "rb": 40,
-      "start": 36,
-      "start_key": "IN_ACTOR_REGISTERED_V0"
+      "rb": 42,
+      "start": 40,
+      "start_key": "IN_WALLET_CREATION_V0"
     },
     "56": {
       "actor": "blockchain::AC_PARTICIPANT_V0",
-      "rb": 40,
+      "rb": 41,
       "start": 37,
+      "start_key": "IN_ACTOR_REGISTERED_V0"
+    },
+    "57": {
+      "actor": "blockchain::AC_PARTICIPANT_V0",
+      "rb": 41,
+      "start": 38,
       "start_key": "IN_ACTOR_REJECTION_V0"
     }
   },
   "pipeline": {
-    "17": [
+    "18": [
       {
-        "addr": 66,
+        "addr": 67,
         "inputs": {},
         "on_result": {
           "BACKEND_ERROR": "exit",
@@ -261,7 +233,7 @@
         "step_id": "read_now"
       },
       {
-        "addr": 72,
+        "addr": 73,
         "inputs": {
           "fields": {
             "contact_address": "$.inputs.contact_address",
@@ -282,7 +254,7 @@
         "step_id": "assemble_occurrence"
       },
       {
-        "addr": 65,
+        "addr": 66,
         "inputs": {
           "__store__": "ACTOR_OCCURRENCES",
           "actor_id": "$.inputs.contact_address",
@@ -301,9 +273,9 @@
         "step_id": "append_occurrence"
       }
     ],
-    "18": [
+    "19": [
       {
-        "addr": 66,
+        "addr": 67,
         "inputs": {},
         "on_result": {
           "BACKEND_ERROR": "exit",
@@ -316,7 +288,7 @@
         "step_id": "read_occurred_at"
       },
       {
-        "addr": 72,
+        "addr": 73,
         "inputs": {
           "fields": "$.inputs.occurrence_fields"
         },
@@ -331,7 +303,7 @@
         "step_id": "assemble_occurrence"
       },
       {
-        "addr": 65,
+        "addr": 66,
         "inputs": {
           "__store__": "WALLET_OCCURRENCES",
           "record": "$.results.assemble_occurrence.record",
@@ -348,9 +320,9 @@
         "step_id": "append_occurrence"
       }
     ],
-    "19": [
+    "20": [
       {
-        "addr": 73,
+        "addr": 75,
         "inputs": {
           "from": "$.inputs.actor_record",
           "path": "$.inputs.address_path",
@@ -367,7 +339,7 @@
         "step_id": "extract_address"
       },
       {
-        "addr": 68,
+        "addr": 69,
         "inputs": {
           "__store__": "CONTACT_ADDRESS_REGISTRY",
           "key": "$.results.extract_address.result",
@@ -388,9 +360,9 @@
         "step_id": "claim_address"
       }
     ],
-    "20": [
+    "21": [
       {
-        "addr": 68,
+        "addr": 69,
         "inputs": {
           "__store__": "WALLET_IDENTITIES",
           "key": "$.inputs.wallet_id"
@@ -407,9 +379,9 @@
         "step_id": "claim_wallet_identity"
       }
     ],
-    "21": [
+    "22": [
       {
-        "addr": 66,
+        "addr": 67,
         "inputs": {},
         "on_result": {
           "BACKEND_ERROR": "exit",
@@ -422,7 +394,7 @@
         "step_id": "read_created_at"
       },
       {
-        "addr": 72,
+        "addr": 73,
         "inputs": {
           "fields": "$.inputs.wallet_fields"
         },
@@ -437,7 +409,7 @@
         "step_id": "assemble_wallet"
       },
       {
-        "addr": 67,
+        "addr": 68,
         "inputs": {
           "__store__": "WALLETS",
           "key": "$.inputs.wallet_id",
@@ -454,9 +426,9 @@
         "step_id": "write_wallet"
       }
     ],
-    "22": [
+    "23": [
       {
-        "addr": 74,
+        "addr": 76,
         "inputs": {
           "data": "$.inputs.holder",
           "prefix": "$.inputs.wallet_id_prefix"
@@ -472,9 +444,9 @@
         "step_id": "derive_wallet_identity"
       }
     ],
-    "23": [
+    "24": [
       {
-        "addr": 30,
+        "addr": 31,
         "inputs": {
           "key_material": "$.inputs.key_material"
         },
@@ -489,11 +461,13 @@
         "step_id": "derive_wallet_address"
       }
     ],
-    "24": [
+    "25": [
       {
-        "addr": 77,
+        "addr": 79,
         "inputs": {
-          "allowed_set": "$.inputs.states_admitting_a_decision",
+          "allowed_set": [
+            "UNVERIFIED"
+          ],
           "value": "$.inputs.current_state"
         },
         "on_result": {
@@ -507,9 +481,12 @@
         "step_id": "read_state_admits_decision"
       },
       {
-        "addr": 77,
+        "addr": 79,
         "inputs": {
-          "allowed_set": "$.inputs.admitted_outcomes",
+          "allowed_set": [
+            "ACCEPTED",
+            "REJECTED"
+          ],
           "value": "$.inputs.decision"
         },
         "on_result": {
@@ -523,10 +500,34 @@
         "step_id": "read_outcome_admitted"
       },
       {
-        "addr": 75,
+        "addr": 74,
         "inputs": {
-          "parameters": "$.inputs.self_check_parameters",
-          "rules": "$.inputs.self_check_rules"
+          "left": "$.inputs.verifying_authority",
+          "right": "$.inputs.contact_address"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "is_self": "$.capability_result.is_equal"
+        },
+        "step_id": "compare_authority_to_person"
+      },
+      {
+        "addr": 77,
+        "inputs": {
+          "parameters": {
+            "is_self": "$.results.compare_authority_to_person.is_self"
+          },
+          "rules": [
+            {
+              "field": "is_self",
+              "op": "eq",
+              "value": false
+            }
+          ]
         },
         "on_result": {
           "SUCCESS": "continue",
@@ -536,12 +537,17 @@
         "outputs": {
           "valid": "$.capability_result.valid"
         },
-        "step_id": "refuse_self_verification"
+        "step_id": "refuse_self_decision"
       },
       {
-        "addr": 72,
+        "addr": 73,
         "inputs": {
-          "fields": "$.inputs.decided_actor_fields"
+          "fields": {
+            "contact_address": "$.inputs.contact_address",
+            "grounds": "$.inputs.grounds",
+            "state": "$.inputs.decision",
+            "verifying_authority": "$.inputs.verifying_authority"
+          }
         },
         "on_result": {
           "SUCCESS": "continue",
@@ -554,7 +560,7 @@
         "step_id": "assemble_decided_actor"
       },
       {
-        "addr": 67,
+        "addr": 68,
         "inputs": {
           "__store__": "ACTORS",
           "key": "$.inputs.contact_address",
@@ -572,9 +578,9 @@
         "step_id": "write_decided_actor"
       }
     ],
-    "25": [
+    "26": [
       {
-        "addr": 72,
+        "addr": 73,
         "inputs": {
           "fields": "$.inputs.actor_fields"
         },
@@ -589,7 +595,7 @@
         "step_id": "assemble_actor"
       },
       {
-        "addr": 67,
+        "addr": 68,
         "inputs": {
           "__store__": "ACTORS",
           "key": "$.inputs.contact_address",
@@ -607,9 +613,9 @@
         "step_id": "write_actor"
       }
     ],
-    "26": [
+    "27": [
       {
-        "addr": 77,
+        "addr": 79,
         "inputs": {
           "allowed_set": "$.inputs.states_admitting_a_wallet",
           "value": "$.inputs.holder_state"
@@ -625,12 +631,24 @@
         "step_id": "require_holder_accepted"
       }
     ],
-    "27": [
+    "28": [
       {
-        "addr": 75,
+        "addr": 77,
         "inputs": {
-          "parameters": "$.inputs.grounds_parameters",
-          "rules": "$.inputs.grounds_rules"
+          "parameters": {
+            "grounds": "$.inputs.grounds"
+          },
+          "rules": [
+            {
+              "field": "grounds",
+              "op": "not_null"
+            },
+            {
+              "field": "grounds",
+              "op": "neq",
+              "value": ""
+            }
+          ]
         },
         "on_result": {
           "SUCCESS": "continue",
@@ -643,9 +661,9 @@
         "step_id": "require_grounds_stated"
       }
     ],
-    "28": [
+    "29": [
       {
-        "addr": 68,
+        "addr": 69,
         "inputs": {
           "__store__": "CONTACT_ADDRESS_REGISTRY",
           "key_or_address": "$.inputs.contact_address"
@@ -662,7 +680,7 @@
         "step_id": "resolve_address"
       },
       {
-        "addr": 67,
+        "addr": 68,
         "inputs": {
           "__store__": "ACTORS",
           "key": "$.inputs.contact_address"
@@ -679,12 +697,21 @@
         "step_id": "read_actor"
       }
     ],
-    "29": [
+    "30": [
       {
-        "addr": 76,
+        "addr": 78,
         "inputs": {
           "record": "$.inputs.actor_record",
-          "schema": "$.inputs.registration_schema"
+          "schema": {
+            "contact_address": {
+              "required": true,
+              "type": "string"
+            },
+            "name": {
+              "required": true,
+              "type": "string"
+            }
+          }
         },
         "on_result": {
           "SUCCESS": "continue",
@@ -695,155 +722,179 @@
           "violations": "$.capability_result.violations"
         },
         "step_id": "read_registration"
+      },
+      {
+        "addr": 77,
+        "inputs": {
+          "parameters": {
+            "violations": "$.results.read_registration.violations"
+          },
+          "rules": [
+            {
+              "field": "violations",
+              "op": "eq",
+              "value": []
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "step_id": "refuse_incomplete_registration"
       }
     ]
   },
   "projection_class": "machine_projection",
   "routing": {
-    "52": {
-      "24": {
+    "53": {
+      "CC_RECORD_VERIFICATION_DECISION_V0": {
         "24580": {
-          "addr": 17,
+          "addr": 18,
           "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
         }
       },
-      "28": {
+      "CC_RESOLVE_ACTOR_V0": {
         "24580": {
-          "addr": 24,
+          "addr": 25,
           "key": "CC_RECORD_VERIFICATION_DECISION_V0"
         }
       },
-      "35": {
+      "IN_ACTOR_ACCEPTANCE_V0": {
         "24576": {
-          "addr": 28,
-          "key": "CC_RESOLVE_ACTOR_V0"
-        }
-      }
-    },
-    "53": {
-      "20": {
-        "24580": {
-          "addr": 23,
-          "key": "CC_ESTABLISH_WALLET_ADDRESS_V0"
-        }
-      },
-      "21": {
-        "24580": {
-          "addr": 18,
-          "key": "CC_APPEND_WALLET_OCCURRENCE_V0"
-        }
-      },
-      "22": {
-        "24580": {
-          "addr": 20,
-          "key": "CC_CLAIM_WALLET_IDENTITY_V0"
-        }
-      },
-      "23": {
-        "24580": {
-          "addr": 21,
-          "key": "CC_CREATE_WALLET_RECORD_V0"
-        }
-      },
-      "26": {
-        "24580": {
-          "addr": 22,
-          "key": "CC_DETERMINE_WALLET_IDENTITY_V0"
-        }
-      },
-      "28": {
-        "24580": {
-          "addr": 26,
-          "key": "CC_REQUIRE_ACCEPTED_HOLDER_V0"
-        }
-      },
-      "39": {
-        "24576": {
-          "addr": 28,
+          "addr": 29,
           "key": "CC_RESOLVE_ACTOR_V0"
         }
       }
     },
     "54": {
-      "24": {
-        "24580": {
-          "addr": 17,
-          "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
-        }
-      },
-      "28": {
+      "CC_CLAIM_WALLET_IDENTITY_V0": {
         "24580": {
           "addr": 24,
-          "key": "CC_RECORD_VERIFICATION_DECISION_V0"
+          "key": "CC_ESTABLISH_WALLET_ADDRESS_V0"
         }
       },
-      "38": {
+      "CC_CREATE_WALLET_RECORD_V0": {
+        "24580": {
+          "addr": 19,
+          "key": "CC_APPEND_WALLET_OCCURRENCE_V0"
+        }
+      },
+      "CC_DETERMINE_WALLET_IDENTITY_V0": {
+        "24580": {
+          "addr": 21,
+          "key": "CC_CLAIM_WALLET_IDENTITY_V0"
+        }
+      },
+      "CC_ESTABLISH_WALLET_ADDRESS_V0": {
+        "24580": {
+          "addr": 22,
+          "key": "CC_CREATE_WALLET_RECORD_V0"
+        }
+      },
+      "CC_REQUIRE_ACCEPTED_HOLDER_V0": {
+        "24580": {
+          "addr": 23,
+          "key": "CC_DETERMINE_WALLET_IDENTITY_V0"
+        }
+      },
+      "CC_RESOLVE_ACTOR_V0": {
+        "24580": {
+          "addr": 27,
+          "key": "CC_REQUIRE_ACCEPTED_HOLDER_V0"
+        }
+      },
+      "IN_WALLET_CREATION_V0": {
         "24576": {
-          "addr": 28,
+          "addr": 29,
           "key": "CC_RESOLVE_ACTOR_V0"
         }
       }
     },
     "55": {
-      "19": {
-        "24577": {
-          "addr": 17,
+      "CC_RECORD_VERIFICATION_DECISION_V0": {
+        "24580": {
+          "addr": 18,
           "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
-        },
+        }
+      },
+      "CC_RESOLVE_ACTOR_V0": {
         "24580": {
           "addr": 25,
-          "key": "CC_REGISTER_ACTOR_V0"
+          "key": "CC_RECORD_VERIFICATION_DECISION_V0"
         }
       },
-      "25": {
-        "24580": {
-          "addr": 17,
-          "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
-        }
-      },
-      "29": {
-        "24580": {
-          "addr": 19,
-          "key": "CC_CLAIM_CONTACT_ADDRESS_V0"
-        }
-      },
-      "36": {
+      "IN_ACTOR_VERIFIED_V0": {
         "24576": {
           "addr": 29,
-          "key": "CC_VALIDATE_REGISTRATION_V0"
+          "key": "CC_RESOLVE_ACTOR_V0"
         }
       }
     },
     "56": {
-      "24": {
+      "CC_CLAIM_CONTACT_ADDRESS_V0": {
+        "24577": {
+          "addr": 18,
+          "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
+        },
         "24580": {
-          "addr": 17,
+          "addr": 26,
+          "key": "CC_REGISTER_ACTOR_V0"
+        }
+      },
+      "CC_REGISTER_ACTOR_V0": {
+        "24580": {
+          "addr": 18,
           "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
         }
       },
-      "27": {
+      "CC_VALIDATE_REGISTRATION_V0": {
         "24580": {
-          "addr": 28,
+          "addr": 20,
+          "key": "CC_CLAIM_CONTACT_ADDRESS_V0"
+        }
+      },
+      "IN_ACTOR_REGISTERED_V0": {
+        "24576": {
+          "addr": 30,
+          "key": "CC_VALIDATE_REGISTRATION_V0"
+        }
+      }
+    },
+    "57": {
+      "CC_RECORD_VERIFICATION_DECISION_V0": {
+        "24580": {
+          "addr": 18,
+          "key": "CC_APPEND_ACTOR_OCCURRENCE_V0"
+        }
+      },
+      "CC_REQUIRE_REJECTION_GROUNDS_V0": {
+        "24580": {
+          "addr": 29,
           "key": "CC_RESOLVE_ACTOR_V0"
         }
       },
-      "28": {
+      "CC_RESOLVE_ACTOR_V0": {
         "24580": {
-          "addr": 24,
+          "addr": 25,
           "key": "CC_RECORD_VERIFICATION_DECISION_V0"
         }
       },
-      "37": {
+      "IN_ACTOR_REJECTION_V0": {
         "24576": {
-          "addr": 27,
+          "addr": 28,
           "key": "CC_REQUIRE_REJECTION_GROUNDS_V0"
         }
       }
     }
   },
   "terminal": {
-    "52": {
-      "17": {
+    "53": {
+      "CC_APPEND_ACTOR_OCCURRENCE_V0": {
         "24580": {
           "exit": "EXIT_SUCCESS",
           "type": "EXIT"
@@ -853,13 +904,13 @@
           "type": "EXIT"
         }
       },
-      "24": {
+      "CC_RECORD_VERIFICATION_DECISION_V0": {
         "24581": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
         }
       },
-      "28": {
+      "CC_RESOLVE_ACTOR_V0": {
         "24579": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
@@ -869,15 +920,15 @@
           "type": "EXIT"
         }
       },
-      "35": {
+      "IN_ACTOR_ACCEPTANCE_V0": {
         "24578": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
         }
       }
     },
-    "53": {
-      "18": {
+    "54": {
+      "CC_APPEND_WALLET_OCCURRENCE_V0": {
         "24580": {
           "exit": "EXIT_SUCCESS",
           "type": "EXIT"
@@ -887,7 +938,7 @@
           "type": "EXIT"
         }
       },
-      "20": {
+      "CC_CLAIM_WALLET_IDENTITY_V0": {
         "24577": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
@@ -897,31 +948,31 @@
           "type": "EXIT"
         }
       },
-      "21": {
+      "CC_CREATE_WALLET_RECORD_V0": {
         "24581": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
         }
       },
-      "22": {
+      "CC_DETERMINE_WALLET_IDENTITY_V0": {
         "24581": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
         }
       },
-      "23": {
+      "CC_ESTABLISH_WALLET_ADDRESS_V0": {
         "24581": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
         }
       },
-      "26": {
+      "CC_REQUIRE_ACCEPTED_HOLDER_V0": {
         "24581": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
         }
       },
-      "28": {
+      "CC_RESOLVE_ACTOR_V0": {
         "24579": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
@@ -931,41 +982,7 @@
           "type": "EXIT"
         }
       },
-      "39": {
-        "24578": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        }
-      }
-    },
-    "54": {
-      "17": {
-        "24580": {
-          "exit": "EXIT_SUCCESS",
-          "type": "EXIT"
-        },
-        "24581": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        }
-      },
-      "24": {
-        "24581": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        }
-      },
-      "28": {
-        "24579": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        },
-        "24581": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        }
-      },
-      "38": {
+      "IN_WALLET_CREATION_V0": {
         "24578": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
@@ -973,7 +990,7 @@
       }
     },
     "55": {
-      "17": {
+      "CC_APPEND_ACTOR_OCCURRENCE_V0": {
         "24580": {
           "exit": "EXIT_SUCCESS",
           "type": "EXIT"
@@ -983,55 +1000,13 @@
           "type": "EXIT"
         }
       },
-      "19": {
+      "CC_RECORD_VERIFICATION_DECISION_V0": {
         "24581": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
         }
       },
-      "25": {
-        "24581": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        }
-      },
-      "29": {
-        "24581": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        }
-      },
-      "36": {
-        "24578": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        }
-      }
-    },
-    "56": {
-      "17": {
-        "24580": {
-          "exit": "EXIT_SUCCESS",
-          "type": "EXIT"
-        },
-        "24581": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        }
-      },
-      "24": {
-        "24581": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        }
-      },
-      "27": {
-        "24581": {
-          "exit": "EXIT_REJECTED",
-          "type": "EXIT"
-        }
-      },
-      "28": {
+      "CC_RESOLVE_ACTOR_V0": {
         "24579": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"
@@ -1041,7 +1016,83 @@
           "type": "EXIT"
         }
       },
-      "37": {
+      "IN_ACTOR_VERIFIED_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "56": {
+      "CC_APPEND_ACTOR_OCCURRENCE_V0": {
+        "24580": {
+          "exit": "EXIT_SUCCESS",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_CLAIM_CONTACT_ADDRESS_V0": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_REGISTER_ACTOR_V0": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_VALIDATE_REGISTRATION_V0": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "IN_ACTOR_REGISTERED_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "57": {
+      "CC_APPEND_ACTOR_OCCURRENCE_V0": {
+        "24580": {
+          "exit": "EXIT_SUCCESS",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_RECORD_VERIFICATION_DECISION_V0": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_REQUIRE_REJECTION_GROUNDS_V0": {
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_RESOLVE_ACTOR_V0": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "IN_ACTOR_REJECTION_V0": {
         "24578": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"

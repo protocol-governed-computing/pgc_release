@@ -1,0 +1,55 @@
+{
+  "artifact_code": "IN_OFFER_NEXT_TOKENS_V0",
+  "artifact_type": "IN",
+  "content": "# IN_OFFER_NEXT_TOKENS_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::IN_OFFER_NEXT_TOKENS_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: The candidates a hosted model could write next, naming its fingerprint and the size of what\n    it reads\n  workflow: WF_OFFER_NEXT_TOKENS_V0\n  inputs:\n    user_prompt_id:\n      type: string\n      required: true\n    host_id:\n      type: string\n      required: true\n    fingerprint:\n      type: string\n      required: true\n    reported_reading_size:\n      type: integer\n      required: true\n    candidates:\n      type: array\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nThe candidates a hosted model could write next, naming its fingerprint and the size of what it reads\n",
+  "content_hash": "010b670b77edcf973de679a24eeec669df9a703b989ac7bf56741ebbae060df0",
+  "fqdn_id": "causal_language_model::IN_OFFER_NEXT_TOKENS_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "candidates": {
+          "required": true,
+          "type": "array"
+        },
+        "fingerprint": {
+          "required": true,
+          "type": "string"
+        },
+        "host_id": {
+          "required": true,
+          "type": "string"
+        },
+        "reported_reading_size": {
+          "required": true,
+          "type": "integer"
+        },
+        "user_prompt_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "The candidates a hosted model could write next, naming its fingerprint and the size of what it reads",
+      "workflow": "WF_OFFER_NEXT_TOKENS_V0"
+    },
+    "fqdn": "causal_language_model::IN_OFFER_NEXT_TOKENS_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

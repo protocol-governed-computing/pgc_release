@@ -1,0 +1,82 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_FORM_RESPONSE_RULES_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "account_numbers": "$.inputs.account_numbers",
+          "response_rules": "$.inputs.response_rules",
+          "seed": "$.inputs.seed"
+        },
+        "atom": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_form_response_rules_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0",
+    "input_types": {
+      "account_numbers": "array",
+      "response_rules": "object",
+      "seed": "integer"
+    },
+    "inputs": {
+      "account_numbers": [
+        "12345678"
+      ],
+      "response_rules": {
+        "account_number_pattern": "[0-9](?:[ -]?[0-9]){7}",
+        "forbidden": [
+          {
+            "pattern": "\\bguaranteed\\b",
+            "rule": "no_guarantees"
+          }
+        ],
+        "freedom": 0,
+        "longest_response": 3
+      },
+      "seed": 7
+    },
+    "outputs": {
+      "positions": {
+        "from": "__atom_result__"
+      },
+      "rules_in_force": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "positions": [
+      1,
+      2,
+      3
+    ],
+    "rules_in_force": {
+      "forbidden": [
+        {
+          "pattern": "\\bguaranteed\\b",
+          "rule": "no_guarantees"
+        },
+        {
+          "except": [
+            "12345678"
+          ],
+          "pattern": "[0-9](?:[ -]?[0-9]){7}",
+          "rule": "another_customers_account_number"
+        }
+      ],
+      "freedom": 0,
+      "seed": 7
+    }
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0::adds_the_account_rule_and_positions",
+  "test_data_source": "causal_language_model::TEST_DATA_CT_PURE_FORM_RESPONSE_RULES_V0"
+}

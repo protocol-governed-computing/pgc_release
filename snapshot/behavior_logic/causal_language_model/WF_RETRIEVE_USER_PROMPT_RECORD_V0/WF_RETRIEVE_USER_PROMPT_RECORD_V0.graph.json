@@ -1,0 +1,234 @@
+{
+  "wf_id": "WF_RETRIEVE_USER_PROMPT_RECORD_V0",
+  "entry": "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+  "nodes": [
+    {
+      "id": "CC_APPEND_MODEL_OPERATION_V0",
+      "type": "CC",
+      "cc_code": "CC_APPEND_MODEL_OPERATION_V0",
+      "capability": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "operation": "RETRIEVE_USER_PROMPT_RECORD",
+          "record": {
+            "operation": "RETRIEVE_USER_PROMPT_RECORD",
+            "staff_id": "$.payload.staff_id",
+            "subject": "$.payload.user_prompt_id"
+          },
+          "staff_id": "IN.staff_id"
+        }
+      }
+    },
+    {
+      "id": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "parameters": "in.staff_credentials",
+              "rules": "in.authorization_rules"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "authorization_rules": [
+            {
+              "field": "role",
+              "op": "eq",
+              "value": "model_staff"
+            }
+          ],
+          "staff_credentials": "IN.staff_credentials"
+        }
+      }
+    },
+    {
+      "id": "CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "type": "CC",
+      "cc_code": "CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "capability": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {
+              "source": "read_user_prompt_entries.entries"
+            },
+            "fqdn": "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+            "id": "CT_PURE_FILTER_RECORDS_V0",
+            "inputs": [
+              "filter",
+              "source"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "extracted"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_RETRIEVED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_APPEND_MODEL_OPERATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_APPEND_MODEL_OPERATION_V0",
+      "to": "CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_APPEND_MODEL_OPERATION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "to": "CC_APPEND_MODEL_OPERATION_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "to": "EXIT_RETRIEVED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "to": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "CC_APPEND_MODEL_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "CC_APPEND_MODEL_OPERATION_V0",
+      "CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "CC_APPEND_MODEL_OPERATION_V0",
+      "CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "EXIT_RETRIEVED"
+    ],
+    [
+      "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "CC_APPEND_MODEL_OPERATION_V0",
+      "CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "CC_APPEND_MODEL_OPERATION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

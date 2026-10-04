@@ -1,0 +1,55 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\ntarget: capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\ncases:\n- case_id: value_in_set\n  expected_outcome: SUCCESS\n  bindings:\n    value: active\n    allowed_set:\n    - active\n    - pending\n    - inactive\n  expected:\n    is_member: true\n- case_id: value_not_in_set\n  expected_outcome: VIOLATION\n  bindings:\n    value: deleted\n    allowed_set:\n    - active\n    - pending\n    - inactive\n  expected: {}\n```\n\n## Intent\n\nTest set membership validation.\n",
+  "content_hash": "78cb41496151bddf080ab17b8b5674ea8d5549316bd6308caf27c0aacf83adad",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "allowed_set": [
+            "active",
+            "pending",
+            "inactive"
+          ],
+          "value": "active"
+        },
+        "case_id": "value_in_set",
+        "expected": {
+          "is_member": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "allowed_set": [
+            "active",
+            "pending",
+            "inactive"
+          ],
+          "value": "deleted"
+        },
+        "case_id": "value_not_in_set",
+        "expected": {},
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

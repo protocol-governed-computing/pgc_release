@@ -1,0 +1,120 @@
+{
+  "artifact_code": "CC_READ_HOSTED_STATE_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+        "id": "CS_APPENDONLY_JSONL_V0",
+        "kind": "CS",
+        "ops": [
+          "APPEND",
+          "GET_ALL"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {
+          "entries": "read_trail.entries"
+        },
+        "fqdn": "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0",
+        "id": "CT_PURE_READ_HOSTED_STATE_V0",
+        "inputs": [
+          "entries"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "state"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_READ_HOSTED_STATE_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CC_READ_HOSTED_STATE_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Read a hosted request's trail and reduce it to the response as built\n  inputs:\n    user_prompt_id:\n      type: string\n      required: true\n  outputs:\n    entries:\n      type: array\n      required: true\n    state:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - BACKEND_ERROR\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_trail\n    side_effect: capability_side_effects::CS_APPENDONLY_JSONL_V0\n    op: GET_ALL\n    store: USER_PROMPT_RECORDS\n    inputs:\n      stream_id: $.inputs.user_prompt_id\n    outputs:\n      entries: $.capability_result.entries\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      BACKEND_ERROR: exit\n  - step: reduce_trail\n    transform: causal_language_model::CT_PURE_READ_HOSTED_STATE_V0\n    inputs:\n      entries: $.results.read_trail.entries\n    outputs:\n      state: $.capability_result.state\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRead a hosted request's trail and reduce it to the response as built\n",
+  "content_hash": "6d716cc1191800f8461f6ba1d382fa83699af59191464a2cc4ea839ef93fe52b",
+  "fqdn_id": "causal_language_model::CC_READ_HOSTED_STATE_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "user_prompt_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "entries": {
+          "required": true,
+          "type": "array"
+        },
+        "state": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "stream_id": "$.inputs.user_prompt_id"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue"
+          },
+          "op": "GET_ALL",
+          "outputs": {
+            "entries": "$.capability_result.entries",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+          "step": "read_trail",
+          "store": "USER_PROMPT_RECORDS"
+        },
+        {
+          "inputs": {
+            "entries": "$.results.read_trail.entries"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "state": "$.capability_result.state"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "reduce_trail",
+          "transform": "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "BACKEND_ERROR",
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Read a hosted request's trail and reduce it to the response as built"
+    },
+    "fqdn": "causal_language_model::CC_READ_HOSTED_STATE_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0"
+  ],
+  "version": "0"
+}

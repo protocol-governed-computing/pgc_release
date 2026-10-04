@@ -2,7 +2,7 @@
   "artifact_code": "CT_PURE_FILTER_RECORDS_V0",
   "artifact_type": "CT",
   "content": "",
-  "content_hash": "0bd9f2113a3358c62f6155a9f78305b964435cf237924e1dd3cb0384da831832",
+  "content_hash": "94191df076a73a316bf017744ecea16eb75ed2db7e7868ffeecff2ec252aeda4",
   "ct_ir": {
     "artifact_code": "CT_PURE_FILTER_RECORDS_V0",
     "atom_stream": [
@@ -16,7 +16,8 @@
           "callable": "execute",
           "module": "capability_transforms.implementation.ct_pure_filter_records_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -68,7 +69,7 @@
       "summary": "Filter an array of records by declared field criteria"
     },
     "fqdn": "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",

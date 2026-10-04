@@ -1,8 +1,8 @@
 {
   "artifact_code": "EV_WALLET_CREATED_V0",
   "artifact_type": "EV",
-  "content": "# EV_WALLET_CREATED_V0\n\n## 1. Intent\n\nAnnounces that a wallet was created, for whom, and when\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_WALLET_CREATED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Announces that a wallet was created, for whom, and when\n  description: Announces that a wallet was created, for whom, and when\n  subdomain: wallet\n  schema:\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
-  "content_hash": "dc45edddd52ba82711ba64bd54e4848c28723d2c1dfe4cdb136cda3c81a1a5dd",
+  "content": "# EV_WALLET_CREATED_V0\n\n## 1. Intent\n\nAnnounces that a wallet was created, for whom, and when\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_WALLET_CREATED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Announces that a wallet was created, for whom, and when\n  description: Announces that a wallet was created, for whom, and when\n  subdomain: wallet\n  schema:\n    wallet_id:\n      type: string\n      required: true\n    holder:\n      type: string\n      required: true\n    occurred_at:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
+  "content_hash": "1e9c537cadba62095810835a12c81ffd342503c14c08b39457f59164f878de64",
   "fqdn_id": "blockchain::EV_WALLET_CREATED_V0",
   "frontmatter": {
     "artifact_kind": "EVENT",
@@ -11,9 +11,21 @@
     "core": {
       "description": "Announces that a wallet was created, for whom, and when",
       "schema": {
+        "holder": {
+          "required": true,
+          "type": "string"
+        },
+        "occurred_at": {
+          "required": true,
+          "type": "string"
+        },
         "timestamp": {
           "description": "When the moment occurred",
           "format": "date-time",
+          "required": true,
+          "type": "string"
+        },
+        "wallet_id": {
           "required": true,
           "type": "string"
         }

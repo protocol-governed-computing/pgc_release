@@ -1,0 +1,97 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "candidates": "$.inputs.candidates",
+          "finished": "$.inputs.finished",
+          "position": "$.inputs.position",
+          "rules_in_force": "$.inputs.rules_in_force",
+          "stopped": "$.inputs.stopped",
+          "stopped_by": "$.inputs.stopped_by",
+          "text": "$.inputs.text"
+        },
+        "atom": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_choose_permitted_word_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+    "input_types": {
+      "candidates": "array",
+      "finished": "boolean",
+      "position": "integer",
+      "rules_in_force": "object",
+      "stopped": "array",
+      "stopped_by": "string",
+      "text": "string"
+    },
+    "inputs": {
+      "candidates": [
+        {
+          "likelihood": 0.9,
+          "word": "87654321"
+        }
+      ],
+      "finished": false,
+      "position": 1,
+      "rules_in_force": {
+        "forbidden": [
+          {
+            "pattern": "\\bguaranteed\\b",
+            "rule": "no_guarantees"
+          },
+          {
+            "except": [
+              "12345678"
+            ],
+            "pattern": "[0-9](?:[ -]?[0-9]){7}",
+            "rule": "another_customers_account_number"
+          }
+        ],
+        "freedom": 0,
+        "seed": 7
+      },
+      "stopped": [],
+      "stopped_by": "none",
+      "text": ""
+    },
+    "outputs": {
+      "finished": {
+        "from": "__atom_result__"
+      },
+      "stopped": {
+        "from": "__atom_result__"
+      },
+      "stopped_by": {
+        "from": "__atom_result__"
+      },
+      "text": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "finished": false,
+    "stopped": [
+      {
+        "position": 1,
+        "rule": "another_customers_account_number",
+        "word": "87654321"
+      }
+    ],
+    "stopped_by": "another_customers_account_number",
+    "text": ""
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0::names_the_rule_when_no_permitted_word_remains",
+  "test_data_source": "causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_WORD_V0"
+}

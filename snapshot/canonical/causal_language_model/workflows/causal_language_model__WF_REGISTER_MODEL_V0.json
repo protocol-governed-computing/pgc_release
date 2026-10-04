@@ -1,0 +1,123 @@
+{
+  "artifact_code": "WF_REGISTER_MODEL_V0",
+  "artifact_type": "WF",
+  "content": "# WF_REGISTER_MODEL_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::WF_REGISTER_MODEL_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: model_response\nruntime_binding: causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0\nsubdomain: model_response\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: Registering a model, refusing a second registration of the same model\n  actor_context: causal_language_model::AC_MODEL_STAFF_V0\n  start_node: IN_REGISTER_MODEL_V0\n  nodes:\n    IN_REGISTER_MODEL_V0:\n      type: IN\n      code: IN_REGISTER_MODEL_V0\n      next:\n        ACK: CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0\n        NACK: EXIT_REJECTED\n    CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0:\n      type: CC\n      code: CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0\n      inputs:\n        staff_credentials: $.payload.staff_credentials\n        authorization_rules:\n        - field: role\n          op: eq\n          value: model_staff\n      next:\n        SUCCESS: CC_CLAIM_MODEL_IDENTITY_V0\n        VIOLATION: EXIT_REJECTED\n    CC_CLAIM_MODEL_IDENTITY_V0:\n      type: CC\n      code: CC_CLAIM_MODEL_IDENTITY_V0\n      inputs:\n        description: $.payload.description\n        fingerprint: $.payload.fingerprint\n        description_schema:\n          reading_capacity:\n            type: integer\n            required: true\n      next:\n        SUCCESS: CC_REGISTER_MODEL_V0\n        ALREADY_EXISTS: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_REGISTER_MODEL_V0:\n      type: CC\n      code: CC_REGISTER_MODEL_V0\n      inputs:\n        identity_key: $.results.CC_CLAIM_MODEL_IDENTITY_V0.identity_key\n        description: $.payload.description\n        fingerprint: $.payload.fingerprint\n      next:\n        SUCCESS: CC_APPEND_MODEL_OPERATION_V0\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_APPEND_MODEL_OPERATION_V0:\n      type: CC\n      code: CC_APPEND_MODEL_OPERATION_V0\n      inputs:\n        staff_id: $.payload.staff_id\n        operation: REGISTER_MODEL\n        record:\n          operation: REGISTER_MODEL\n          staff_id: $.payload.staff_id\n          subject: $.results.CC_CLAIM_MODEL_IDENTITY_V0.identity_key\n      next:\n        SUCCESS: EXIT_REGISTERED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_REGISTERED:\n      type: EXIT\n      emit: causal_language_model::EV_MODEL_REGISTERED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n\n---\n\n## Intent\n\nRegistering a model, refusing a second registration of the same model\n",
+  "content_hash": "d5e7a34e94f96257acce47c61610d4a7005d48b3c1eb89f45813969cb84dec66",
+  "fqdn_id": "causal_language_model::WF_REGISTER_MODEL_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "actor_context": "causal_language_model::AC_MODEL_STAFF_V0",
+      "nodes": {
+        "CC_APPEND_MODEL_OPERATION_V0": {
+          "code": "CC_APPEND_MODEL_OPERATION_V0",
+          "fqdn_id": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0",
+          "inputs": {
+            "operation": "REGISTER_MODEL",
+            "record": {
+              "operation": "REGISTER_MODEL",
+              "staff_id": "$.payload.staff_id",
+              "subject": "$.results.CC_CLAIM_MODEL_IDENTITY_V0.identity_key"
+            },
+            "staff_id": "$.payload.staff_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_REGISTERED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CLAIM_MODEL_IDENTITY_V0": {
+          "code": "CC_CLAIM_MODEL_IDENTITY_V0",
+          "fqdn_id": "causal_language_model::CC_CLAIM_MODEL_IDENTITY_V0",
+          "inputs": {
+            "description": "$.payload.description",
+            "description_schema": {
+              "reading_capacity": {
+                "required": true,
+                "type": "integer"
+              }
+            },
+            "fingerprint": "$.payload.fingerprint"
+          },
+          "next": {
+            "ALREADY_EXISTS": "EXIT_REJECTED",
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_REGISTER_MODEL_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+          "code": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+          "fqdn_id": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+          "inputs": {
+            "authorization_rules": [
+              {
+                "field": "role",
+                "op": "eq",
+                "value": "model_staff"
+              }
+            ],
+            "staff_credentials": "$.payload.staff_credentials"
+          },
+          "next": {
+            "SUCCESS": "CC_CLAIM_MODEL_IDENTITY_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_REGISTER_MODEL_V0": {
+          "code": "CC_REGISTER_MODEL_V0",
+          "fqdn_id": "causal_language_model::CC_REGISTER_MODEL_V0",
+          "inputs": {
+            "description": "$.payload.description",
+            "fingerprint": "$.payload.fingerprint",
+            "identity_key": "$.results.CC_CLAIM_MODEL_IDENTITY_V0.identity_key"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_APPEND_MODEL_OPERATION_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_REGISTERED": {
+          "emit": "causal_language_model::EV_MODEL_REGISTERED_V0",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "IN_REGISTER_MODEL_V0": {
+          "code": "IN_REGISTER_MODEL_V0",
+          "fqdn_id": "causal_language_model::IN_REGISTER_MODEL_V0",
+          "next": {
+            "ACK": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_REGISTER_MODEL_V0",
+      "summary": "Registering a model, refusing a second registration of the same model"
+    },
+    "fqdn": "causal_language_model::WF_REGISTER_MODEL_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "model_response",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

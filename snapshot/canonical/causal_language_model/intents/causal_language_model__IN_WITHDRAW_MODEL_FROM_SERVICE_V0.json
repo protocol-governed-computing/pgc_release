@@ -1,0 +1,47 @@
+{
+  "artifact_code": "IN_WITHDRAW_MODEL_FROM_SERVICE_V0",
+  "artifact_type": "IN",
+  "content": "# IN_WITHDRAW_MODEL_FROM_SERVICE_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::IN_WITHDRAW_MODEL_FROM_SERVICE_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: A request to withdraw a model from service\n  workflow: WF_WITHDRAW_MODEL_FROM_SERVICE_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n    identity_key:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to withdraw a model from service\n",
+  "content_hash": "72ca13911a469f7f3a37ca745b5fd5e2e46fec28d5df3a420b02f449736d2435",
+  "fqdn_id": "causal_language_model::IN_WITHDRAW_MODEL_FROM_SERVICE_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_credentials": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to withdraw a model from service",
+      "workflow": "WF_WITHDRAW_MODEL_FROM_SERVICE_V0"
+    },
+    "fqdn": "causal_language_model::IN_WITHDRAW_MODEL_FROM_SERVICE_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

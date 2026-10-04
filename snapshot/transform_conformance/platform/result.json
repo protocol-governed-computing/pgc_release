@@ -1,0 +1,226 @@
+{
+  "carried": [],
+  "cases": [
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_array_objects",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_array_primitives",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_boolean_false",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_boolean_true",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_empty_array",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_empty_object",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_integer",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_large_array",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_mixed_array",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_nested_object",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_null",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_simple_object",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_string",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_unicode_strings",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_EXEC_EMIT_V0::emit_workflow_result",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0::assemble_nested_record",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0::assemble_simple_record",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_EXTRACT_V0::extract_nested_field",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_EXTRACT_V0::extract_nested_numeric",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_EXTRACT_V0::extract_top_level_field",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_FILTER_RECORDS_V0::filter_by_exact_value",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_FILTER_RECORDS_V0::filter_by_field_presence",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_FILTER_RECORDS_V0::filter_multi_criteria",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_FILTER_RECORDS_V0::filter_single_match",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_GENERATE_ID_V0::generate_id_deterministic",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_GENERATE_ID_V0::generate_id_numeric_data",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_GENERATE_ID_V0::generate_id_object_data",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_GENERATE_ID_V0::generate_id_string_data",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_LOOKUP_V0::lookup_array_value",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_LOOKUP_V0::lookup_numeric_value",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_LOOKUP_V0::lookup_object_value",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_LOOKUP_V0::lookup_string_value",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0::error_with_custom_mapping",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0::failure_validation_array",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0::failure_with_error",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0::success_complex_nested",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0::success_empty_value",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0::success_with_data",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_PASSTHROUGH_V0::passthrough_array",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_PASSTHROUGH_V0::passthrough_boolean",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_PASSTHROUGH_V0::passthrough_number",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_PASSTHROUGH_V0::passthrough_object",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_PASSTHROUGH_V0::passthrough_string",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0::all_rules_pass",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0::rule_fails",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0::invalid_record_missing_field",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0::valid_record",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0::value_in_set",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0::value_not_in_set",
+      "passed": true
+    }
+  ],
+  "counts": {
+    "cases": 49,
+    "cases_failed": 0,
+    "proven": 11,
+    "refused": 0,
+    "unproven": 1
+  },
+  "domain": "platform",
+  "proven": [
+    "capability_transforms::CT_EXEC_EMIT_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_EXTRACT_V0",
+    "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+    "capability_transforms::CT_PURE_GENERATE_ID_V0",
+    "capability_transforms::CT_PURE_LOOKUP_V0",
+    "capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0",
+    "capability_transforms::CT_PURE_PASSTHROUGH_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
+  "refused": [],
+  "unproven": [
+    "capability_transforms::CT_PURE_COMPARE_EQUAL_V0"
+  ]
+}

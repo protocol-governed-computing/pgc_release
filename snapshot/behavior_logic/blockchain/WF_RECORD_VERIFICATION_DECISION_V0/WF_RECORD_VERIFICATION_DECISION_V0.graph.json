@@ -66,7 +66,6 @@
         "steps": [
           {
             "bindings": {
-              "allowed_set": "in.states_admitting_a_decision",
               "value": "in.current_state"
             },
             "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
@@ -82,9 +81,22 @@
           },
           {
             "bindings": {
-              "parameters": "in.self_check_parameters",
-              "rules": "in.self_check_rules"
+              "left": "in.verifying_authority",
+              "right": "in.contact_address"
             },
+            "fqdn": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+            "id": "CT_PURE_COMPARE_EQUAL_V0",
+            "inputs": [
+              "left",
+              "right"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "is_equal"
+            ]
+          },
+          {
+            "bindings": {},
             "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
             "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
             "inputs": [
@@ -98,9 +110,7 @@
             ]
           },
           {
-            "bindings": {
-              "fields": "in.decided_actor_fields"
-            },
+            "bindings": {},
             "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
             "id": "CT_PURE_ASSEMBLE_RECORD_V0",
             "inputs": [

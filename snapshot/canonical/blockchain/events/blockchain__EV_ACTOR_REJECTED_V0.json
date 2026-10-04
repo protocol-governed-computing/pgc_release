@@ -1,8 +1,8 @@
 {
   "artifact_code": "EV_ACTOR_REJECTED_V0",
   "artifact_type": "EV",
-  "content": "# EV_ACTOR_REJECTED_V0\n\n## 1. Intent\n\nThe moment an authority records a decision not to trust an actor\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_ACTOR_REJECTED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: The moment an authority records a decision not to trust an actor\n  description: The moment an authority records a decision not to trust an actor\n  subdomain: identity\n  schema:\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
-  "content_hash": "a0dc3b08d1995cd69e2d96419379719418048254a19fa68c6932a9ae637da9f7",
+  "content": "# EV_ACTOR_REJECTED_V0\n\n## 1. Intent\n\nThe moment an authority records a decision not to trust an actor\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_ACTOR_REJECTED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: The moment an authority records a decision not to trust an actor\n  description: The moment an authority records a decision not to trust an actor\n  subdomain: identity\n  schema:\n    contact_address:\n      type: string\n      required: true\n    verifying_authority:\n      type: string\n      required: true\n    grounds:\n      type: string\n      required: true\n    occurred_at:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
+  "content_hash": "e35a64bd91683ea4157756ef9d0cea9e3eb3f3e2b57b19a262675077c5864000",
   "fqdn_id": "blockchain::EV_ACTOR_REJECTED_V0",
   "frontmatter": {
     "artifact_kind": "EVENT",
@@ -11,9 +11,25 @@
     "core": {
       "description": "The moment an authority records a decision not to trust an actor",
       "schema": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "grounds": {
+          "required": true,
+          "type": "string"
+        },
+        "occurred_at": {
+          "required": true,
+          "type": "string"
+        },
         "timestamp": {
           "description": "When the moment occurred",
           "format": "date-time",
+          "required": true,
+          "type": "string"
+        },
+        "verifying_authority": {
           "required": true,
           "type": "string"
         }

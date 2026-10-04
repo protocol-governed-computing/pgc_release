@@ -1,0 +1,1284 @@
+{
+  "cs": {
+    "25": {
+      "cs_metadata": {
+        "capability": {
+          "supported_operation_specs": [
+            "APPEND",
+            "GET_ALL"
+          ]
+        },
+        "operations": {
+          "operations": {
+            "APPEND": {
+              "effect": "write",
+              "handler": "append",
+              "idempotent": false,
+              "input": [
+                "record",
+                "stream_id",
+                "actor_id"
+              ],
+              "output": [
+                "result_status",
+                "record_id",
+                "sequence_number"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Append a record to the end of the log"
+            },
+            "GET_ALL": {
+              "effect": "read",
+              "handler": "read_all",
+              "idempotent": true,
+              "input": [
+                "stream_id"
+              ],
+              "output": [
+                "result_status",
+                "entries"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Retrieve all records from the log"
+            }
+          }
+        }
+      },
+      "handler_ref": {
+        "callable": "AppendOnlyJsonlRuntime",
+        "module": "capability_side_effects.implementation.CS_APPENDONLY_JSONL_V0.runtime"
+      }
+    },
+    "26": {
+      "cs_metadata": {
+        "capability": {
+          "supported_operation_specs": [
+            "READ",
+            "WRITE",
+            "UPDATE",
+            "DELETE",
+            "DELETE_MANY",
+            "EXISTS",
+            "LIST",
+            "SELECT",
+            "UPDATE_WHERE"
+          ]
+        },
+        "operations": {
+          "operations": {
+            "DELETE": {
+              "effect": "write",
+              "handler": "delete",
+              "idempotent": true,
+              "input": [
+                "key"
+              ],
+              "output": [
+                "result_status"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "NOT_FOUND",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Remove the given key and its value"
+            },
+            "DELETE_MANY": {
+              "effect": "write",
+              "handler": "delete_many",
+              "idempotent": true,
+              "input": [
+                "keys"
+              ],
+              "output": [
+                "result_status",
+                "drained_count"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Delete a list of keys; idempotent per key (NOT_FOUND treated as already deleted)"
+            },
+            "EXISTS": {
+              "effect": "read",
+              "handler": "exists",
+              "idempotent": true,
+              "input": [
+                "key"
+              ],
+              "output": [
+                "result_status",
+                "exists"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Check if a key exists in storage"
+            },
+            "LIST": {
+              "effect": "read",
+              "handler": "list_keys",
+              "idempotent": true,
+              "input": [],
+              "output": [
+                "result_status",
+                "keys"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "BACKEND_ERROR"
+              ],
+              "summary": "List all keys in storage"
+            },
+            "READ": {
+              "effect": "read",
+              "handler": "read",
+              "idempotent": true,
+              "input": [
+                "key"
+              ],
+              "output": [
+                "result_status",
+                "value"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "NOT_FOUND",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Retrieve value for a given key"
+            },
+            "SELECT": {
+              "effect": "read",
+              "handler": "list",
+              "idempotent": true,
+              "input": [],
+              "notes": "LIST publishes keys alone, which a caller cannot select by content; SELECT publishes the records themselves. An empty store is SUCCESS with no records \u2014 NOT_FOUND is reserved for a keyed READ of one absent key.",
+              "output": [
+                "result_status",
+                "records",
+                "keys"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Read every record in storage, for a caller that selects among them by content"
+            },
+            "UPDATE": {
+              "effect": "write",
+              "handler": "update",
+              "idempotent": true,
+              "input": [
+                "key",
+                "updates"
+              ],
+              "output": [
+                "result_status"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Set named fields on the record at the given key, leaving its other fields as they are; serialized per file. The point counterpart of UPDATE_WHERE \u2014 WRITE replaces a whole value, and a caller changing part of a record it did not create needs neither a replacement nor a filter."
+            },
+            "UPDATE_WHERE": {
+              "effect": "write",
+              "handler": "update_where",
+              "idempotent": false,
+              "input": [
+                "filter",
+                "updates"
+              ],
+              "notes": "filter={field:value,...} AND semantics; updates={field:value,...} applied to all matched records; null value removes field; VIOLATION when no records match; load+filter+update+save serialized under per-file threading lock",
+              "output": [
+                "result_status",
+                "matched_keys",
+                "updated_count"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Atomically update all records matching ALL filter conditions; serialized per file"
+            },
+            "WRITE": {
+              "effect": "write",
+              "handler": "write",
+              "idempotent": true,
+              "input": [
+                "key",
+                "value"
+              ],
+              "output": [
+                "result_status"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Store or update a value at the given key"
+            }
+          }
+        }
+      },
+      "handler_ref": {
+        "callable": "MutableJsonRuntime",
+        "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
+      }
+    },
+    "27": {
+      "cs_metadata": {
+        "capability": {
+          "supported_operation_specs": [
+            "REGISTER",
+            "RESOLVE",
+            "EXISTS",
+            "DEREGISTER",
+            "COUNT"
+          ]
+        },
+        "operations": {
+          "operations": {
+            "COUNT": {
+              "effect": "read",
+              "handler": "count",
+              "idempotent": true,
+              "input": [],
+              "output": [
+                "result_status",
+                "count"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Count active (non-tombstoned) registry entries"
+            },
+            "DEREGISTER": {
+              "effect": "write",
+              "handler": "deregister",
+              "idempotent": true,
+              "input": [
+                "key_or_address"
+              ],
+              "output": [
+                "result_status"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "NOT_FOUND",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Mark a key or address as deregistered via tombstone"
+            },
+            "EXISTS": {
+              "effect": "read",
+              "handler": "exists",
+              "idempotent": true,
+              "input": [
+                "key_or_address"
+              ],
+              "output": [
+                "result_status",
+                "exists"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Check if a key or address is registered"
+            },
+            "REGISTER": {
+              "effect": "write",
+              "handler": "register",
+              "idempotent": false,
+              "input": [
+                "key",
+                "target_cs",
+                "target_ref"
+              ],
+              "output": [
+                "result_status",
+                "address"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "ALREADY_EXISTS",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Register a new key to address binding"
+            },
+            "RESOLVE": {
+              "effect": "read",
+              "handler": "resolve",
+              "idempotent": true,
+              "input": [
+                "key_or_address"
+              ],
+              "output": [
+                "result_status",
+                "target_cs",
+                "target_ref"
+              ],
+              "result_status_values": [
+                "SUCCESS",
+                "NOT_FOUND",
+                "VIOLATION",
+                "BACKEND_ERROR"
+              ],
+              "summary": "Resolve a key or address to its storage target"
+            }
+          }
+        }
+      },
+      "handler_ref": {
+        "callable": "RegistryRuntime",
+        "module": "capability_side_effects.implementation.CS_REGISTRY_V0.runtime"
+      }
+    }
+  },
+  "ct": {
+    "31": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "fields": "$.inputs.fields"
+            },
+            "atom": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_assemble_record_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": {
+          "fields": {
+            "description": "Key-value map of fields to include in the record",
+            "required": true,
+            "type": "object"
+          }
+        },
+        "outputs": {
+          "record": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "32": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_FILTER_RECORDS_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "filter": "$.inputs.filter",
+              "source": "$.inputs.source"
+            },
+            "atom": "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_filter_records_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+        "inputs": {
+          "filter": {
+            "description": "Field criteria dict. Values are exact match or \"present\" for existence check.",
+            "required": true,
+            "type": "object"
+          },
+          "source": {
+            "description": "Array of record objects to filter",
+            "required": true,
+            "type": "array"
+          }
+        },
+        "outputs": {
+          "extracted": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "33": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "parameters": "$.inputs.parameters",
+              "rules": "$.inputs.rules"
+            },
+            "atom": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_validate_parameter_rules_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": {
+          "parameters": {
+            "description": "Parameter key-value map to validate",
+            "required": true,
+            "type": "object"
+          },
+          "rules": {
+            "description": "List of constraint rule objects",
+            "required": true,
+            "type": "array"
+          }
+        },
+        "outputs": {
+          "failed_rule": {
+            "from": "__atom_result__"
+          },
+          "valid": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "34": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "record": "$.inputs.record",
+              "schema": "$.inputs.schema"
+            },
+            "atom": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_validate_record_structure_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "inputs": {
+          "record": {
+            "description": "The record to validate",
+            "required": true,
+            "type": "object"
+          },
+          "schema": {
+            "description": "Validation rules keyed by field name",
+            "required": true,
+            "type": "object"
+          }
+        },
+        "outputs": {
+          "violations": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "35": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "allowed_set": "$.inputs.allowed_set",
+              "value": "$.inputs.value"
+            },
+            "atom": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_validate_set_membership_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "inputs": {
+          "allowed_set": {
+            "description": "The list of permitted values",
+            "required": true,
+            "type": "array"
+          },
+          "value": {
+            "description": "The value to check",
+            "required": true,
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "is_member": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "68": {
+      "ct_ir": {
+        "artifact_code": "CT_IMPURE_OFFER_NEXT_WORDS_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "finished": "$.inputs.finished",
+              "reading": "$.inputs.reading",
+              "stopped_by": "$.inputs.stopped_by",
+              "text": "$.inputs.text"
+            },
+            "atom": "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "causal_language_model.implementation.capability_transforms.atoms.ct_impure_offer_next_words_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_impure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0",
+        "inputs": {
+          "finished": {
+            "required": true,
+            "type": "boolean"
+          },
+          "reading": {
+            "required": true,
+            "type": "object"
+          },
+          "stopped_by": {
+            "required": true,
+            "type": "string"
+          },
+          "text": {
+            "required": true,
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "candidates": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "69": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_ASSEMBLE_MODEL_READING_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "question": "$.inputs.question",
+              "reading_capacity": "$.inputs.reading_capacity",
+              "supporting_material": "$.inputs.supporting_material",
+              "system_prompt": "$.inputs.system_prompt"
+            },
+            "atom": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_assemble_model_reading_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0",
+        "inputs": {
+          "question": {
+            "required": true,
+            "type": "string"
+          },
+          "reading_capacity": {
+            "required": true,
+            "type": "integer"
+          },
+          "supporting_material": {
+            "required": true,
+            "type": "string"
+          },
+          "system_prompt": {
+            "required": true,
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "reading": {
+            "from": "__atom_result__"
+          },
+          "reading_length": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "70": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "candidates": "$.inputs.candidates",
+              "state": "$.inputs.state"
+            },
+            "atom": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_choose_permitted_token_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+        "inputs": {
+          "candidates": {
+            "required": true,
+            "type": "array"
+          },
+          "state": {
+            "required": true,
+            "type": "object"
+          }
+        },
+        "outputs": {
+          "finished": {
+            "from": "__atom_result__"
+          },
+          "step": {
+            "from": "__atom_result__"
+          },
+          "stopped_by": {
+            "from": "__atom_result__"
+          },
+          "text": {
+            "from": "__atom_result__"
+          },
+          "within_length": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "71": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "candidates": "$.inputs.candidates",
+              "finished": "$.inputs.finished",
+              "position": "$.inputs.position",
+              "rules_in_force": "$.inputs.rules_in_force",
+              "stopped": "$.inputs.stopped",
+              "stopped_by": "$.inputs.stopped_by",
+              "text": "$.inputs.text"
+            },
+            "atom": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_choose_permitted_word_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+        "inputs": {
+          "candidates": {
+            "required": true,
+            "type": "array"
+          },
+          "finished": {
+            "required": true,
+            "type": "boolean"
+          },
+          "position": {
+            "required": true,
+            "type": "integer"
+          },
+          "rules_in_force": {
+            "required": true,
+            "type": "object"
+          },
+          "stopped": {
+            "required": true,
+            "type": "array"
+          },
+          "stopped_by": {
+            "required": true,
+            "type": "string"
+          },
+          "text": {
+            "required": true,
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "finished": {
+            "from": "__atom_result__"
+          },
+          "stopped": {
+            "from": "__atom_result__"
+          },
+          "stopped_by": {
+            "from": "__atom_result__"
+          },
+          "text": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "72": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_COMPARE_SENSITIVITY_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "ceiling": "$.inputs.ceiling",
+              "kind": "$.inputs.kind",
+              "kinds": "$.inputs.kinds"
+            },
+            "atom": "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_compare_sensitivity_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0",
+        "inputs": {
+          "ceiling": {
+            "required": true,
+            "type": "string"
+          },
+          "kind": {
+            "required": true,
+            "type": "string"
+          },
+          "kinds": {
+            "required": true,
+            "type": "array"
+          }
+        },
+        "outputs": {
+          "within_ceiling": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "73": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "description": "$.inputs.description",
+              "fingerprint": "$.inputs.fingerprint"
+            },
+            "atom": "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_form_model_identity_key_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+        "inputs": {
+          "description": {
+            "required": true,
+            "type": "object"
+          },
+          "fingerprint": {
+            "required": true,
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "identity_key": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "74": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_FORM_RESPONSE_RULES_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "account_numbers": "$.inputs.account_numbers",
+              "response_rules": "$.inputs.response_rules",
+              "seed": "$.inputs.seed"
+            },
+            "atom": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_form_response_rules_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0",
+        "inputs": {
+          "account_numbers": {
+            "required": true,
+            "type": "array"
+          },
+          "response_rules": {
+            "required": true,
+            "type": "object"
+          },
+          "seed": {
+            "required": true,
+            "type": "integer"
+          }
+        },
+        "outputs": {
+          "positions": {
+            "from": "__atom_result__"
+          },
+          "rules_in_force": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "75": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_READ_HOSTED_STATE_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "entries": "$.inputs.entries"
+            },
+            "atom": "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_read_hosted_state_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0",
+        "inputs": {
+          "entries": {
+            "required": true,
+            "type": "array"
+          }
+        },
+        "outputs": {
+          "state": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "76": {
+      "ct_ir": {
+        "artifact_code": "CT_WRITE_NEXT_WORD_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "finished": "$.inputs.finished",
+              "reading": "$.inputs.reading",
+              "stopped_by": "$.inputs.stopped_by",
+              "text": "$.inputs.text"
+            },
+            "atom": "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "causal_language_model.implementation.capability_transforms.atoms.ct_impure_offer_next_words_v0"
+            },
+            "input_types": {
+              "finished": "boolean",
+              "reading": "object",
+              "stopped_by": "string",
+              "text": "string"
+            },
+            "out": "offered",
+            "purity": "ct_impure"
+          },
+          {
+            "args": {
+              "candidates": "$.results.offered.candidates",
+              "finished": "$.inputs.finished",
+              "position": "$.inputs.position",
+              "rules_in_force": "$.inputs.rules_in_force",
+              "stopped": "$.inputs.stopped",
+              "stopped_by": "$.inputs.stopped_by",
+              "text": "$.inputs.text"
+            },
+            "atom": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_choose_permitted_word_v0"
+            },
+            "input_types": {
+              "candidates": "array",
+              "finished": "boolean",
+              "position": "integer",
+              "rules_in_force": "object",
+              "stopped": "array",
+              "stopped_by": "string",
+              "text": "string"
+            },
+            "out": "chosen",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "causal_language_model::CT_WRITE_NEXT_WORD_V0",
+        "inputs": {
+          "finished": {
+            "required": true,
+            "type": "boolean"
+          },
+          "position": {
+            "required": true,
+            "type": "integer"
+          },
+          "reading": {
+            "required": true,
+            "type": "object"
+          },
+          "rules_in_force": {
+            "required": true,
+            "type": "object"
+          },
+          "stopped": {
+            "required": true,
+            "type": "array"
+          },
+          "stopped_by": {
+            "required": true,
+            "type": "string"
+          },
+          "text": {
+            "required": true,
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "result": {
+            "from": "chosen"
+          }
+        }
+      }
+    },
+    "77": {
+      "ct_ir": {
+        "artifact_code": "CT_WRITE_RESPONSE_V0",
+        "atom_stream": [
+          {
+            "atom": "causal_language_model::CT_WRITE_NEXT_WORD_V0",
+            "input_types": {
+              "finished": "boolean",
+              "position": "integer",
+              "reading": "object",
+              "rules_in_force": "object",
+              "stopped": "array",
+              "stopped_by": "string",
+              "text": "string"
+            },
+            "loop": {
+              "accumulator": {
+                "finished": false,
+                "stopped": [],
+                "stopped_by": "none",
+                "text": ""
+              },
+              "inputs": {
+                "finished": "$.accumulator.finished",
+                "position": "$.iterator",
+                "reading": "$.inputs.reading",
+                "rules_in_force": "$.inputs.rules_in_force",
+                "stopped": "$.accumulator.stopped",
+                "stopped_by": "$.accumulator.stopped_by",
+                "text": "$.accumulator.text"
+              },
+              "iterator": "position",
+              "over": "$.inputs.positions",
+              "update_accumulator": {
+                "finished": "$.results.finished",
+                "stopped": "$.results.stopped",
+                "stopped_by": "$.results.stopped_by",
+                "text": "$.results.text"
+              }
+            },
+            "molecule": {
+              "atom_stream": [
+                {
+                  "args": {
+                    "finished": "$.inputs.finished",
+                    "reading": "$.inputs.reading",
+                    "stopped_by": "$.inputs.stopped_by",
+                    "text": "$.inputs.text"
+                  },
+                  "atom": "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0",
+                  "handler_ref": {
+                    "callable": "execute",
+                    "module": "causal_language_model.implementation.capability_transforms.atoms.ct_impure_offer_next_words_v0"
+                  },
+                  "input_types": {
+                    "finished": "boolean",
+                    "reading": "object",
+                    "stopped_by": "string",
+                    "text": "string"
+                  },
+                  "out": "offered",
+                  "purity": "ct_impure"
+                },
+                {
+                  "args": {
+                    "candidates": "$.results.offered.candidates",
+                    "finished": "$.inputs.finished",
+                    "position": "$.inputs.position",
+                    "rules_in_force": "$.inputs.rules_in_force",
+                    "stopped": "$.inputs.stopped",
+                    "stopped_by": "$.inputs.stopped_by",
+                    "text": "$.inputs.text"
+                  },
+                  "atom": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+                  "handler_ref": {
+                    "callable": "execute",
+                    "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_choose_permitted_word_v0"
+                  },
+                  "input_types": {
+                    "candidates": "array",
+                    "finished": "boolean",
+                    "position": "integer",
+                    "rules_in_force": "object",
+                    "stopped": "array",
+                    "stopped_by": "string",
+                    "text": "string"
+                  },
+                  "out": "chosen",
+                  "purity": "ct_pure"
+                }
+              ],
+              "outputs": {
+                "result": {
+                  "from": "chosen"
+                }
+              }
+            },
+            "out": "written",
+            "purity": "ct_impure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "causal_language_model::CT_WRITE_RESPONSE_V0",
+        "inputs": {
+          "positions": {
+            "required": true,
+            "type": "array"
+          },
+          "reading": {
+            "required": true,
+            "type": "object"
+          },
+          "rules_in_force": {
+            "required": true,
+            "type": "object"
+          }
+        },
+        "outputs": {
+          "result": {
+            "from": "written"
+          }
+        }
+      }
+    }
+  },
+  "projection_class": "machine_projection",
+  "rb_policy": {
+    "91": {
+      "25": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "model_response",
+              "core": {
+                "domain": "causal_language_model",
+                "entity_stores": {
+                  "MODELS": {
+                    "path": "causal_language_model/model_response/models.json"
+                  },
+                  "MODEL_IDENTITY_REGISTRY": {
+                    "path": "causal_language_model/model_response/model_identity_registry.jsonl"
+                  },
+                  "MODEL_OPERATIONS": {
+                    "path": "causal_language_model/model_response/model_operations.jsonl"
+                  },
+                  "TIMES_IN_SERVICE": {
+                    "path": "causal_language_model/model_response/times_in_service.json"
+                  },
+                  "TIME_IN_SERVICE_REGISTRY": {
+                    "path": "causal_language_model/model_response/time_in_service_registry.jsonl"
+                  },
+                  "USER_PROMPT_RECORDS": {
+                    "path": "causal_language_model/model_response/user_prompt_records.jsonl"
+                  },
+                  "USER_PROMPT_REGISTRY": {
+                    "path": "causal_language_model/model_response/user_prompt_registry.jsonl"
+                  }
+                },
+                "layer": "DOMAINS",
+                "subdomain": "model_response",
+                "summary": "Declares the seven stores the subdomain owns and the paths they occupy"
+              },
+              "fqdn": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "version": "v0"
+            }
+          },
+          "structure": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0"
+        }
+      },
+      "26": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "model_response",
+              "core": {
+                "domain": "causal_language_model",
+                "entity_stores": {
+                  "MODELS": {
+                    "path": "causal_language_model/model_response/models.json"
+                  },
+                  "MODEL_IDENTITY_REGISTRY": {
+                    "path": "causal_language_model/model_response/model_identity_registry.jsonl"
+                  },
+                  "MODEL_OPERATIONS": {
+                    "path": "causal_language_model/model_response/model_operations.jsonl"
+                  },
+                  "TIMES_IN_SERVICE": {
+                    "path": "causal_language_model/model_response/times_in_service.json"
+                  },
+                  "TIME_IN_SERVICE_REGISTRY": {
+                    "path": "causal_language_model/model_response/time_in_service_registry.jsonl"
+                  },
+                  "USER_PROMPT_RECORDS": {
+                    "path": "causal_language_model/model_response/user_prompt_records.jsonl"
+                  },
+                  "USER_PROMPT_REGISTRY": {
+                    "path": "causal_language_model/model_response/user_prompt_registry.jsonl"
+                  }
+                },
+                "layer": "DOMAINS",
+                "subdomain": "model_response",
+                "summary": "Declares the seven stores the subdomain owns and the paths they occupy"
+              },
+              "fqdn": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "version": "v0"
+            }
+          },
+          "structure": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0"
+        }
+      },
+      "27": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "model_response",
+              "core": {
+                "domain": "causal_language_model",
+                "entity_stores": {
+                  "MODELS": {
+                    "path": "causal_language_model/model_response/models.json"
+                  },
+                  "MODEL_IDENTITY_REGISTRY": {
+                    "path": "causal_language_model/model_response/model_identity_registry.jsonl"
+                  },
+                  "MODEL_OPERATIONS": {
+                    "path": "causal_language_model/model_response/model_operations.jsonl"
+                  },
+                  "TIMES_IN_SERVICE": {
+                    "path": "causal_language_model/model_response/times_in_service.json"
+                  },
+                  "TIME_IN_SERVICE_REGISTRY": {
+                    "path": "causal_language_model/model_response/time_in_service_registry.jsonl"
+                  },
+                  "USER_PROMPT_RECORDS": {
+                    "path": "causal_language_model/model_response/user_prompt_records.jsonl"
+                  },
+                  "USER_PROMPT_REGISTRY": {
+                    "path": "causal_language_model/model_response/user_prompt_registry.jsonl"
+                  }
+                },
+                "layer": "DOMAINS",
+                "subdomain": "model_response",
+                "summary": "Declares the seven stores the subdomain owns and the paths they occupy"
+              },
+              "fqdn": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "version": "v0"
+            }
+          },
+          "structure": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0"
+        }
+      }
+    }
+  },
+  "wf_storage": {}
+}

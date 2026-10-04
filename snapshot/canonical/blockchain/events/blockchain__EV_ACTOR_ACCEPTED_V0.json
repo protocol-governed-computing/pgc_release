@@ -1,8 +1,8 @@
 {
   "artifact_code": "EV_ACTOR_ACCEPTED_V0",
   "artifact_type": "EV",
-  "content": "# EV_ACTOR_ACCEPTED_V0\n\n## 1. Intent\n\nThe moment an authority records a decision to trust an actor\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_ACTOR_ACCEPTED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: The moment an authority records a decision to trust an actor\n  description: The moment an authority records a decision to trust an actor\n  subdomain: identity\n  schema:\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
-  "content_hash": "c05be7c84ff09ec4dbe6fbe11c8bc0c67378fb2277fef037069c19d861281a16",
+  "content": "# EV_ACTOR_ACCEPTED_V0\n\n## 1. Intent\n\nThe moment an authority records a decision to trust an actor\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_ACTOR_ACCEPTED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: The moment an authority records a decision to trust an actor\n  description: The moment an authority records a decision to trust an actor\n  subdomain: identity\n  schema:\n    contact_address:\n      type: string\n      required: true\n    verifying_authority:\n      type: string\n      required: true\n    grounds:\n      type: string\n    occurred_at:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
+  "content_hash": "2a8d9c3bc35595f8520ae9232f40aca7673d827c09a6cee2567bcd8141483219",
   "fqdn_id": "blockchain::EV_ACTOR_ACCEPTED_V0",
   "frontmatter": {
     "artifact_kind": "EVENT",
@@ -11,9 +11,24 @@
     "core": {
       "description": "The moment an authority records a decision to trust an actor",
       "schema": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "grounds": {
+          "type": "string"
+        },
+        "occurred_at": {
+          "required": true,
+          "type": "string"
+        },
         "timestamp": {
           "description": "When the moment occurred",
           "format": "date-time",
+          "required": true,
+          "type": "string"
+        },
+        "verifying_authority": {
           "required": true,
           "type": "string"
         }

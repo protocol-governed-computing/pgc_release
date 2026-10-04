@@ -1,0 +1,46 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "description": "$.inputs.description",
+          "fingerprint": "$.inputs.fingerprint"
+        },
+        "atom": "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_form_model_identity_key_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+    "input_types": {
+      "description": "object",
+      "fingerprint": "string"
+    },
+    "inputs": {
+      "description": {
+        "layers": 2,
+        "reading_capacity": 64
+      },
+      "fingerprint": "sha256:ab12"
+    },
+    "outputs": {
+      "identity_key": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "identity_key": "{\"layers\":2,\"reading_capacity\":64}|sha256:ab12"
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0::forms_key_from_description_and_fingerprint",
+  "test_data_source": "causal_language_model::TEST_DATA_CT_PURE_FORM_MODEL_IDENTITY_KEY_V0"
+}

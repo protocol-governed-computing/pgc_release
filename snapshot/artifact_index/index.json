@@ -1,5 +1,5 @@
 {
-  "artifact_count": 403,
+  "artifact_count": 500,
   "artifacts": {
     "actor::CONSTITUTION_ACTOR_IDENTITY_V0": {
       "addresses": {
@@ -493,9 +493,45 @@
       "kind": "STRUCTURE",
       "owner_subdomain": "ai_governance"
     },
-    "ai_governance::VOCAB_AI_LICENSING_STATES_V0": {
+    "ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0": {
       "addresses": {
         "ai_governance": "0x0028"
+      },
+      "canonical_path": "canonical/ai_governance/test_data/ai_governance__TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0.json",
+      "domain": "ai_governance",
+      "evidence_paths": {
+        "ai_governance": "evidence/ai_governance/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "ai_licensing"
+    },
+    "ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0": {
+      "addresses": {
+        "ai_governance": "0x0029"
+      },
+      "canonical_path": "canonical/ai_governance/test_data/ai_governance__TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0.json",
+      "domain": "ai_governance",
+      "evidence_paths": {
+        "ai_governance": "evidence/ai_governance/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "ai_licensing"
+    },
+    "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0": {
+      "addresses": {
+        "ai_governance": "0x002A"
+      },
+      "canonical_path": "canonical/ai_governance/test_data/ai_governance__TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0.json",
+      "domain": "ai_governance",
+      "evidence_paths": {
+        "ai_governance": "evidence/ai_governance/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "ai_licensing"
+    },
+    "ai_governance::VOCAB_AI_LICENSING_STATES_V0": {
+      "addresses": {
+        "ai_governance": "0x002B"
       },
       "canonical_path": "canonical/ai_governance/vocabulary/ai_governance__VOCAB_AI_LICENSING_STATES_V0.json",
       "domain": "ai_governance",
@@ -507,7 +543,7 @@
     },
     "ai_governance::WF_AUTO_RECLAIM_V0": {
       "addresses": {
-        "ai_governance": "0x0029"
+        "ai_governance": "0x002C"
       },
       "canonical_path": "canonical/ai_governance/workflows/ai_governance__WF_AUTO_RECLAIM_V0.json",
       "domain": "ai_governance",
@@ -519,7 +555,7 @@
     },
     "ai_governance::WF_DENY_PROVISION_V0": {
       "addresses": {
-        "ai_governance": "0x002A"
+        "ai_governance": "0x002D"
       },
       "canonical_path": "canonical/ai_governance/workflows/ai_governance__WF_DENY_PROVISION_V0.json",
       "domain": "ai_governance",
@@ -531,7 +567,7 @@
     },
     "ai_governance::WF_GOVERN_AGENT_ACTION_V0": {
       "addresses": {
-        "ai_governance": "0x002B"
+        "ai_governance": "0x002E"
       },
       "canonical_path": "canonical/ai_governance/workflows/ai_governance__WF_GOVERN_AGENT_ACTION_V0.json",
       "domain": "ai_governance",
@@ -543,7 +579,7 @@
     },
     "ai_governance::WF_PROVISION_AI_LICENSING_V0": {
       "addresses": {
-        "ai_governance": "0x002C"
+        "ai_governance": "0x002F"
       },
       "canonical_path": "canonical/ai_governance/workflows/ai_governance__WF_PROVISION_AI_LICENSING_V0.json",
       "domain": "ai_governance",
@@ -613,9 +649,21 @@
       "kind": "INVARIANT",
       "owner_subdomain": "artifact"
     },
-    "artifact::INVARIANT_SUPERSEDED_NOT_REFERENCED_V0": {
+    "artifact::INVARIANT_SUPERSEDED_NOT_IN_FORCE_V0": {
       "addresses": {
         "platform": "0x0008"
+      },
+      "canonical_path": "canonical/platform/invariants/artifact__INVARIANT_SUPERSEDED_NOT_IN_FORCE_V0.json",
+      "domain": "artifact",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "INVARIANT",
+      "owner_subdomain": "artifact"
+    },
+    "artifact::INVARIANT_SUPERSEDED_NOT_REFERENCED_V0": {
+      "addresses": {
+        "platform": "0x0009"
       },
       "canonical_path": "canonical/platform/invariants/artifact__INVARIANT_SUPERSEDED_NOT_REFERENCED_V0.json",
       "domain": "artifact",
@@ -627,7 +675,7 @@
     },
     "artifact::INVARIANT_UNIQUE_ARTIFACT_ID_V0": {
       "addresses": {
-        "platform": "0x0009"
+        "platform": "0x000A"
       },
       "canonical_path": "canonical/platform/invariants/artifact__INVARIANT_UNIQUE_ARTIFACT_ID_V0.json",
       "domain": "artifact",
@@ -639,7 +687,7 @@
     },
     "authority::CONSTITUTION_AUTHORITY_GOVERNANCE_V0": {
       "addresses": {
-        "platform": "0x000A"
+        "platform": "0x000B"
       },
       "canonical_path": "canonical/platform/concerns/authority__CONSTITUTION_AUTHORITY_GOVERNANCE_V0.json",
       "domain": "authority",
@@ -651,7 +699,7 @@
     },
     "authority::INVARIANT_ACTOR_AUTHORITY_SEPARATION_V0": {
       "addresses": {
-        "platform": "0x000B"
+        "platform": "0x000C"
       },
       "canonical_path": "canonical/platform/invariants/authority__INVARIANT_ACTOR_AUTHORITY_SEPARATION_V0.json",
       "domain": "authority",
@@ -663,7 +711,7 @@
     },
     "authority::INVARIANT_AUTHORITY_REQUIRED_FOR_EXECUTION_V0": {
       "addresses": {
-        "platform": "0x000C"
+        "platform": "0x000D"
       },
       "canonical_path": "canonical/platform/invariants/authority__INVARIANT_AUTHORITY_REQUIRED_FOR_EXECUTION_V0.json",
       "domain": "authority",
@@ -675,7 +723,7 @@
     },
     "authority::INVARIANT_AUTHORITY_STATE_WELL_FORMED_V0": {
       "addresses": {
-        "platform": "0x000D"
+        "platform": "0x000E"
       },
       "canonical_path": "canonical/platform/invariants/authority__INVARIANT_AUTHORITY_STATE_WELL_FORMED_V0.json",
       "domain": "authority",
@@ -687,7 +735,7 @@
     },
     "authority::INVARIANT_NO_AMBIENT_AUTHORITY_V0": {
       "addresses": {
-        "platform": "0x000E"
+        "platform": "0x000F"
       },
       "canonical_path": "canonical/platform/invariants/authority__INVARIANT_NO_AMBIENT_AUTHORITY_V0.json",
       "domain": "authority",
@@ -699,7 +747,7 @@
     },
     "authority::INVARIANT_NO_RUNTIME_AUTHORIZATION_V0": {
       "addresses": {
-        "platform": "0x000F"
+        "platform": "0x0010"
       },
       "canonical_path": "canonical/platform/invariants/authority__INVARIANT_NO_RUNTIME_AUTHORIZATION_V0.json",
       "domain": "authority",
@@ -711,7 +759,7 @@
     },
     "authority::INVARIANT_NO_WORKFLOW_AUTHORIZATION_LOGIC_V0": {
       "addresses": {
-        "platform": "0x0010"
+        "platform": "0x0011"
       },
       "canonical_path": "canonical/platform/invariants/authority__INVARIANT_NO_WORKFLOW_AUTHORIZATION_LOGIC_V0.json",
       "domain": "authority",
@@ -723,7 +771,7 @@
     },
     "authority::INVARIANT_TRACE_AUTHORITY_BINDING_REQUIRED_V0": {
       "addresses": {
-        "platform": "0x0011"
+        "platform": "0x0012"
       },
       "canonical_path": "canonical/platform/invariants/authority__INVARIANT_TRACE_AUTHORITY_BINDING_REQUIRED_V0.json",
       "domain": "authority",
@@ -735,7 +783,7 @@
     },
     "blockchain::AC_PARTICIPANT_V0": {
       "addresses": {
-        "blockchain": "0x0010"
+        "blockchain": "0x0011"
       },
       "canonical_path": "canonical/blockchain/actors/blockchain__AC_PARTICIPANT_V0.json",
       "domain": "blockchain",
@@ -747,7 +795,7 @@
     },
     "blockchain::CC_APPEND_ACTOR_OCCURRENCE_V0": {
       "addresses": {
-        "blockchain": "0x0011"
+        "blockchain": "0x0012"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_APPEND_ACTOR_OCCURRENCE_V0.json",
       "domain": "blockchain",
@@ -759,7 +807,7 @@
     },
     "blockchain::CC_APPEND_WALLET_OCCURRENCE_V0": {
       "addresses": {
-        "blockchain": "0x0012"
+        "blockchain": "0x0013"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_APPEND_WALLET_OCCURRENCE_V0.json",
       "domain": "blockchain",
@@ -771,7 +819,7 @@
     },
     "blockchain::CC_CLAIM_CONTACT_ADDRESS_V0": {
       "addresses": {
-        "blockchain": "0x0013"
+        "blockchain": "0x0014"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_CLAIM_CONTACT_ADDRESS_V0.json",
       "domain": "blockchain",
@@ -783,7 +831,7 @@
     },
     "blockchain::CC_CLAIM_WALLET_IDENTITY_V0": {
       "addresses": {
-        "blockchain": "0x0014"
+        "blockchain": "0x0015"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_CLAIM_WALLET_IDENTITY_V0.json",
       "domain": "blockchain",
@@ -795,7 +843,7 @@
     },
     "blockchain::CC_CREATE_WALLET_RECORD_V0": {
       "addresses": {
-        "blockchain": "0x0015"
+        "blockchain": "0x0016"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_CREATE_WALLET_RECORD_V0.json",
       "domain": "blockchain",
@@ -807,7 +855,7 @@
     },
     "blockchain::CC_DETERMINE_WALLET_IDENTITY_V0": {
       "addresses": {
-        "blockchain": "0x0016"
+        "blockchain": "0x0017"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_DETERMINE_WALLET_IDENTITY_V0.json",
       "domain": "blockchain",
@@ -819,7 +867,7 @@
     },
     "blockchain::CC_ESTABLISH_WALLET_ADDRESS_V0": {
       "addresses": {
-        "blockchain": "0x0017"
+        "blockchain": "0x0018"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_ESTABLISH_WALLET_ADDRESS_V0.json",
       "domain": "blockchain",
@@ -831,7 +879,7 @@
     },
     "blockchain::CC_RECORD_VERIFICATION_DECISION_V0": {
       "addresses": {
-        "blockchain": "0x0018"
+        "blockchain": "0x0019"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_RECORD_VERIFICATION_DECISION_V0.json",
       "domain": "blockchain",
@@ -843,7 +891,7 @@
     },
     "blockchain::CC_REGISTER_ACTOR_V0": {
       "addresses": {
-        "blockchain": "0x0019"
+        "blockchain": "0x001A"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_REGISTER_ACTOR_V0.json",
       "domain": "blockchain",
@@ -855,7 +903,7 @@
     },
     "blockchain::CC_REQUIRE_ACCEPTED_HOLDER_V0": {
       "addresses": {
-        "blockchain": "0x001A"
+        "blockchain": "0x001B"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_REQUIRE_ACCEPTED_HOLDER_V0.json",
       "domain": "blockchain",
@@ -867,7 +915,7 @@
     },
     "blockchain::CC_REQUIRE_REJECTION_GROUNDS_V0": {
       "addresses": {
-        "blockchain": "0x001B"
+        "blockchain": "0x001C"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_REQUIRE_REJECTION_GROUNDS_V0.json",
       "domain": "blockchain",
@@ -879,7 +927,7 @@
     },
     "blockchain::CC_RESOLVE_ACTOR_V0": {
       "addresses": {
-        "blockchain": "0x001C"
+        "blockchain": "0x001D"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_RESOLVE_ACTOR_V0.json",
       "domain": "blockchain",
@@ -891,7 +939,7 @@
     },
     "blockchain::CC_VALIDATE_REGISTRATION_V0": {
       "addresses": {
-        "blockchain": "0x001D"
+        "blockchain": "0x001E"
       },
       "canonical_path": "canonical/blockchain/capability_contracts/blockchain__CC_VALIDATE_REGISTRATION_V0.json",
       "domain": "blockchain",
@@ -903,7 +951,7 @@
     },
     "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0": {
       "addresses": {
-        "blockchain": "0x001E"
+        "blockchain": "0x001F"
       },
       "canonical_path": "canonical/blockchain/capability_transforms/blockchain__CT_PURE_DERIVE_WALLET_ADDRESS_V0.json",
       "domain": "blockchain",
@@ -915,7 +963,7 @@
     },
     "blockchain::EV_ACTOR_ACCEPTED_V0": {
       "addresses": {
-        "blockchain": "0x001F"
+        "blockchain": "0x0020"
       },
       "canonical_path": "canonical/blockchain/events/blockchain__EV_ACTOR_ACCEPTED_V0.json",
       "domain": "blockchain",
@@ -927,7 +975,7 @@
     },
     "blockchain::EV_ACTOR_REGISTERED_UNVERIFIED_V0": {
       "addresses": {
-        "blockchain": "0x0020"
+        "blockchain": "0x0021"
       },
       "canonical_path": "canonical/blockchain/events/blockchain__EV_ACTOR_REGISTERED_UNVERIFIED_V0.json",
       "domain": "blockchain",
@@ -939,7 +987,7 @@
     },
     "blockchain::EV_ACTOR_REJECTED_V0": {
       "addresses": {
-        "blockchain": "0x0021"
+        "blockchain": "0x0022"
       },
       "canonical_path": "canonical/blockchain/events/blockchain__EV_ACTOR_REJECTED_V0.json",
       "domain": "blockchain",
@@ -951,7 +999,7 @@
     },
     "blockchain::EV_WALLET_CREATED_V0": {
       "addresses": {
-        "blockchain": "0x0022"
+        "blockchain": "0x0023"
       },
       "canonical_path": "canonical/blockchain/events/blockchain__EV_WALLET_CREATED_V0.json",
       "domain": "blockchain",
@@ -963,7 +1011,7 @@
     },
     "blockchain::IN_ACTOR_ACCEPTANCE_V0": {
       "addresses": {
-        "blockchain": "0x0023"
+        "blockchain": "0x0024"
       },
       "canonical_path": "canonical/blockchain/intents/blockchain__IN_ACTOR_ACCEPTANCE_V0.json",
       "domain": "blockchain",
@@ -975,7 +1023,7 @@
     },
     "blockchain::IN_ACTOR_REGISTERED_V0": {
       "addresses": {
-        "blockchain": "0x0024"
+        "blockchain": "0x0025"
       },
       "canonical_path": "canonical/blockchain/intents/blockchain__IN_ACTOR_REGISTERED_V0.json",
       "domain": "blockchain",
@@ -987,7 +1035,7 @@
     },
     "blockchain::IN_ACTOR_REJECTION_V0": {
       "addresses": {
-        "blockchain": "0x0025"
+        "blockchain": "0x0026"
       },
       "canonical_path": "canonical/blockchain/intents/blockchain__IN_ACTOR_REJECTION_V0.json",
       "domain": "blockchain",
@@ -999,7 +1047,7 @@
     },
     "blockchain::IN_ACTOR_VERIFIED_V0": {
       "addresses": {
-        "blockchain": "0x0026"
+        "blockchain": "0x0027"
       },
       "canonical_path": "canonical/blockchain/intents/blockchain__IN_ACTOR_VERIFIED_V0.json",
       "domain": "blockchain",
@@ -1011,7 +1059,7 @@
     },
     "blockchain::IN_WALLET_CREATION_V0": {
       "addresses": {
-        "blockchain": "0x0027"
+        "blockchain": "0x0028"
       },
       "canonical_path": "canonical/blockchain/intents/blockchain__IN_WALLET_CREATION_V0.json",
       "domain": "blockchain",
@@ -1023,7 +1071,7 @@
     },
     "blockchain::RB_IDENTITY_BINDINGS_V0": {
       "addresses": {
-        "blockchain": "0x0028"
+        "blockchain": "0x0029"
       },
       "canonical_path": "canonical/blockchain/runtime_bindings/blockchain__RB_IDENTITY_BINDINGS_V0.json",
       "domain": "blockchain",
@@ -1035,7 +1083,7 @@
     },
     "blockchain::RB_WALLET_BINDINGS_V0": {
       "addresses": {
-        "blockchain": "0x0029"
+        "blockchain": "0x002A"
       },
       "canonical_path": "canonical/blockchain/runtime_bindings/blockchain__RB_WALLET_BINDINGS_V0.json",
       "domain": "blockchain",
@@ -1047,7 +1095,7 @@
     },
     "blockchain::STRUCTURE_BUILD_BLOCKCHAIN_CONFIG_V0": {
       "addresses": {
-        "blockchain": "0x002A"
+        "blockchain": "0x002B"
       },
       "canonical_path": "canonical/blockchain/structures/blockchain__STRUCTURE_BUILD_BLOCKCHAIN_CONFIG_V0.json",
       "domain": "blockchain",
@@ -1059,7 +1107,7 @@
     },
     "blockchain::STRUCTURE_IDENTITY_STORAGE_V0": {
       "addresses": {
-        "blockchain": "0x002B"
+        "blockchain": "0x002C"
       },
       "canonical_path": "canonical/blockchain/structures/blockchain__STRUCTURE_IDENTITY_STORAGE_V0.json",
       "domain": "blockchain",
@@ -1071,7 +1119,7 @@
     },
     "blockchain::STRUCTURE_WALLET_STORAGE_V0": {
       "addresses": {
-        "blockchain": "0x002C"
+        "blockchain": "0x002D"
       },
       "canonical_path": "canonical/blockchain/structures/blockchain__STRUCTURE_WALLET_STORAGE_V0.json",
       "domain": "blockchain",
@@ -1083,7 +1131,7 @@
     },
     "blockchain::TE_ACCEPT_ACTOR_V0": {
       "addresses": {
-        "blockchain": "0x002D"
+        "blockchain": "0x002E"
       },
       "canonical_path": "canonical/blockchain/transport/egress/blockchain__TE_ACCEPT_ACTOR_V0.json",
       "domain": "blockchain",
@@ -1095,7 +1143,7 @@
     },
     "blockchain::TE_REGISTER_ACTOR_V0": {
       "addresses": {
-        "blockchain": "0x002E"
+        "blockchain": "0x002F"
       },
       "canonical_path": "canonical/blockchain/transport/egress/blockchain__TE_REGISTER_ACTOR_V0.json",
       "domain": "blockchain",
@@ -1107,7 +1155,7 @@
     },
     "blockchain::TE_REJECT_ACTOR_V0": {
       "addresses": {
-        "blockchain": "0x002F"
+        "blockchain": "0x0030"
       },
       "canonical_path": "canonical/blockchain/transport/egress/blockchain__TE_REJECT_ACTOR_V0.json",
       "domain": "blockchain",
@@ -1119,7 +1167,7 @@
     },
     "blockchain::TI_ACCEPT_ACTOR_V0": {
       "addresses": {
-        "blockchain": "0x0030"
+        "blockchain": "0x0031"
       },
       "canonical_path": "canonical/blockchain/ingress_intents/blockchain__TI_ACCEPT_ACTOR_V0.json",
       "domain": "blockchain",
@@ -1131,7 +1179,7 @@
     },
     "blockchain::TI_REGISTER_ACTOR_V0": {
       "addresses": {
-        "blockchain": "0x0031"
+        "blockchain": "0x0032"
       },
       "canonical_path": "canonical/blockchain/ingress_intents/blockchain__TI_REGISTER_ACTOR_V0.json",
       "domain": "blockchain",
@@ -1143,7 +1191,7 @@
     },
     "blockchain::TI_REJECT_ACTOR_V0": {
       "addresses": {
-        "blockchain": "0x0032"
+        "blockchain": "0x0033"
       },
       "canonical_path": "canonical/blockchain/ingress_intents/blockchain__TI_REJECT_ACTOR_V0.json",
       "domain": "blockchain",
@@ -1155,7 +1203,7 @@
     },
     "blockchain::VOCAB_WALLET_CLASSIFICATION_V0": {
       "addresses": {
-        "blockchain": "0x0033"
+        "blockchain": "0x0034"
       },
       "canonical_path": "canonical/blockchain/vocabulary/blockchain__VOCAB_WALLET_CLASSIFICATION_V0.json",
       "domain": "blockchain",
@@ -1167,7 +1215,7 @@
     },
     "blockchain::WF_ACCEPT_ACTOR_V0": {
       "addresses": {
-        "blockchain": "0x0034"
+        "blockchain": "0x0035"
       },
       "canonical_path": "canonical/blockchain/workflows/blockchain__WF_ACCEPT_ACTOR_V0.json",
       "domain": "blockchain",
@@ -1179,7 +1227,7 @@
     },
     "blockchain::WF_CREATE_WALLET_V0": {
       "addresses": {
-        "blockchain": "0x0035"
+        "blockchain": "0x0036"
       },
       "canonical_path": "canonical/blockchain/workflows/blockchain__WF_CREATE_WALLET_V0.json",
       "domain": "blockchain",
@@ -1191,7 +1239,7 @@
     },
     "blockchain::WF_RECORD_VERIFICATION_DECISION_V0": {
       "addresses": {
-        "blockchain": "0x0036"
+        "blockchain": "0x0037"
       },
       "canonical_path": "canonical/blockchain/workflows/blockchain__WF_RECORD_VERIFICATION_DECISION_V0.json",
       "domain": "blockchain",
@@ -1203,7 +1251,7 @@
     },
     "blockchain::WF_REGISTER_ACTOR_V0": {
       "addresses": {
-        "blockchain": "0x0037"
+        "blockchain": "0x0038"
       },
       "canonical_path": "canonical/blockchain/workflows/blockchain__WF_REGISTER_ACTOR_V0.json",
       "domain": "blockchain",
@@ -1215,7 +1263,7 @@
     },
     "blockchain::WF_REJECT_ACTOR_V0": {
       "addresses": {
-        "blockchain": "0x0038"
+        "blockchain": "0x0039"
       },
       "canonical_path": "canonical/blockchain/workflows/blockchain__WF_REJECT_ACTOR_V0.json",
       "domain": "blockchain",
@@ -1227,7 +1275,7 @@
     },
     "book_library_mgmt::AC_LIBRARY_STAFF_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0010"
+        "book_library_mgmt": "0x0011"
       },
       "canonical_path": "canonical/book_library_mgmt/actors/book_library_mgmt__AC_LIBRARY_STAFF_V0.json",
       "domain": "book_library_mgmt",
@@ -1239,7 +1287,7 @@
     },
     "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0011"
+        "book_library_mgmt": "0x0012"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_APPEND_CATALOG_OPERATION_V0.json",
       "domain": "book_library_mgmt",
@@ -1251,7 +1299,7 @@
     },
     "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0012"
+        "book_library_mgmt": "0x0013"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_ASSEMBLE_BOOK_DETAILS_V0.json",
       "domain": "book_library_mgmt",
@@ -1263,7 +1311,7 @@
     },
     "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0013"
+        "book_library_mgmt": "0x0014"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_CLAIM_BOOK_IDENTITY_V0.json",
       "domain": "book_library_mgmt",
@@ -1275,7 +1323,7 @@
     },
     "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0014"
+        "book_library_mgmt": "0x0015"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_CLAIM_COPY_BARCODE_V0.json",
       "domain": "book_library_mgmt",
@@ -1287,7 +1335,7 @@
     },
     "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0015"
+        "book_library_mgmt": "0x0016"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_CLAIM_WORK_IDENTITY_V0.json",
       "domain": "book_library_mgmt",
@@ -1299,7 +1347,7 @@
     },
     "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0016"
+        "book_library_mgmt": "0x0017"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_CONFIRM_STAFF_AUTHORIZED_V0.json",
       "domain": "book_library_mgmt",
@@ -1311,7 +1359,7 @@
     },
     "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0017"
+        "book_library_mgmt": "0x0018"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_REGISTER_ADDITIONAL_EDITION_V0.json",
       "domain": "book_library_mgmt",
@@ -1323,7 +1371,7 @@
     },
     "book_library_mgmt::CC_REGISTER_BOOK_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0018"
+        "book_library_mgmt": "0x0019"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_REGISTER_BOOK_V0.json",
       "domain": "book_library_mgmt",
@@ -1335,7 +1383,7 @@
     },
     "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0019"
+        "book_library_mgmt": "0x001A"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_REGISTER_PHYSICAL_COPY_V0.json",
       "domain": "book_library_mgmt",
@@ -1347,7 +1395,7 @@
     },
     "book_library_mgmt::CC_REINSTATE_BOOK_RECORD_V0": {
       "addresses": {
-        "book_library_mgmt": "0x001A"
+        "book_library_mgmt": "0x001B"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_REINSTATE_BOOK_RECORD_V0.json",
       "domain": "book_library_mgmt",
@@ -1359,7 +1407,7 @@
     },
     "book_library_mgmt::CC_REINSTATE_PHYSICAL_COPY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x001B"
+        "book_library_mgmt": "0x001C"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_REINSTATE_PHYSICAL_COPY_V0.json",
       "domain": "book_library_mgmt",
@@ -1371,7 +1419,7 @@
     },
     "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x001C"
+        "book_library_mgmt": "0x001D"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_RESOLVE_BOOK_IDENTITY_V0.json",
       "domain": "book_library_mgmt",
@@ -1383,7 +1431,7 @@
     },
     "book_library_mgmt::CC_RESOLVE_WORK_V0": {
       "addresses": {
-        "book_library_mgmt": "0x001D"
+        "book_library_mgmt": "0x001E"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_RESOLVE_WORK_V0.json",
       "domain": "book_library_mgmt",
@@ -1395,7 +1443,7 @@
     },
     "book_library_mgmt::CC_RETIRE_BOOK_RECORD_V0": {
       "addresses": {
-        "book_library_mgmt": "0x001E"
+        "book_library_mgmt": "0x001F"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_RETIRE_BOOK_RECORD_V0.json",
       "domain": "book_library_mgmt",
@@ -1407,7 +1455,7 @@
     },
     "book_library_mgmt::CC_RETIRE_PHYSICAL_COPY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x001F"
+        "book_library_mgmt": "0x0020"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_RETIRE_PHYSICAL_COPY_V0.json",
       "domain": "book_library_mgmt",
@@ -1419,7 +1467,7 @@
     },
     "book_library_mgmt::CC_SEARCH_CATALOG_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0020"
+        "book_library_mgmt": "0x0021"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_SEARCH_CATALOG_V0.json",
       "domain": "book_library_mgmt",
@@ -1431,7 +1479,7 @@
     },
     "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0021"
+        "book_library_mgmt": "0x0022"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0.json",
       "domain": "book_library_mgmt",
@@ -1443,7 +1491,7 @@
     },
     "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0022"
+        "book_library_mgmt": "0x0023"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_contracts/book_library_mgmt__CC_VALIDATE_BOOK_SUBMISSION_V0.json",
       "domain": "book_library_mgmt",
@@ -1455,7 +1503,7 @@
     },
     "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0023"
+        "book_library_mgmt": "0x0024"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_transforms/book_library_mgmt__CT_PURE_FORM_BOOK_IDENTITY_KEY_V0.json",
       "domain": "book_library_mgmt",
@@ -1467,7 +1515,7 @@
     },
     "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0024"
+        "book_library_mgmt": "0x0025"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_transforms/book_library_mgmt__CT_PURE_FORM_WORK_IDENTITY_KEY_V0.json",
       "domain": "book_library_mgmt",
@@ -1479,7 +1527,7 @@
     },
     "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0025"
+        "book_library_mgmt": "0x0026"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_transforms/book_library_mgmt__CT_PURE_GROUP_RECORDS_V0.json",
       "domain": "book_library_mgmt",
@@ -1491,7 +1539,7 @@
     },
     "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0026"
+        "book_library_mgmt": "0x0027"
       },
       "canonical_path": "canonical/book_library_mgmt/capability_transforms/book_library_mgmt__CT_PURE_SELECT_RECORDS_V0.json",
       "domain": "book_library_mgmt",
@@ -1503,7 +1551,7 @@
     },
     "book_library_mgmt::EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0027"
+        "book_library_mgmt": "0x0028"
       },
       "canonical_path": "canonical/book_library_mgmt/events/book_library_mgmt__EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0.json",
       "domain": "book_library_mgmt",
@@ -1515,7 +1563,7 @@
     },
     "book_library_mgmt::EV_BOOK_REGISTERED_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0028"
+        "book_library_mgmt": "0x0029"
       },
       "canonical_path": "canonical/book_library_mgmt/events/book_library_mgmt__EV_BOOK_REGISTERED_V0.json",
       "domain": "book_library_mgmt",
@@ -1527,7 +1575,7 @@
     },
     "book_library_mgmt::EV_BOOK_RETIRED_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0029"
+        "book_library_mgmt": "0x002A"
       },
       "canonical_path": "canonical/book_library_mgmt/events/book_library_mgmt__EV_BOOK_RETIRED_V0.json",
       "domain": "book_library_mgmt",
@@ -1539,7 +1587,7 @@
     },
     "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0": {
       "addresses": {
-        "book_library_mgmt": "0x002A"
+        "book_library_mgmt": "0x002B"
       },
       "canonical_path": "canonical/book_library_mgmt/events/book_library_mgmt__EV_PHYSICAL_COPY_REGISTERED_V0.json",
       "domain": "book_library_mgmt",
@@ -1551,7 +1599,7 @@
     },
     "book_library_mgmt::EV_PHYSICAL_COPY_RETIRED_V0": {
       "addresses": {
-        "book_library_mgmt": "0x002B"
+        "book_library_mgmt": "0x002C"
       },
       "canonical_path": "canonical/book_library_mgmt/events/book_library_mgmt__EV_PHYSICAL_COPY_RETIRED_V0.json",
       "domain": "book_library_mgmt",
@@ -1563,7 +1611,7 @@
     },
     "book_library_mgmt::EV_WORK_REGISTERED_V0": {
       "addresses": {
-        "book_library_mgmt": "0x002C"
+        "book_library_mgmt": "0x002D"
       },
       "canonical_path": "canonical/book_library_mgmt/events/book_library_mgmt__EV_WORK_REGISTERED_V0.json",
       "domain": "book_library_mgmt",
@@ -1575,7 +1623,7 @@
     },
     "book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0": {
       "addresses": {
-        "book_library_mgmt": "0x002D"
+        "book_library_mgmt": "0x002E"
       },
       "canonical_path": "canonical/book_library_mgmt/intents/book_library_mgmt__IN_REGISTER_ADDITIONAL_EDITION_V0.json",
       "domain": "book_library_mgmt",
@@ -1587,7 +1635,7 @@
     },
     "book_library_mgmt::IN_REGISTER_BOOK_V0": {
       "addresses": {
-        "book_library_mgmt": "0x002E"
+        "book_library_mgmt": "0x002F"
       },
       "canonical_path": "canonical/book_library_mgmt/intents/book_library_mgmt__IN_REGISTER_BOOK_V0.json",
       "domain": "book_library_mgmt",
@@ -1599,7 +1647,7 @@
     },
     "book_library_mgmt::IN_REGISTER_PHYSICAL_COPY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x002F"
+        "book_library_mgmt": "0x0030"
       },
       "canonical_path": "canonical/book_library_mgmt/intents/book_library_mgmt__IN_REGISTER_PHYSICAL_COPY_V0.json",
       "domain": "book_library_mgmt",
@@ -1611,7 +1659,7 @@
     },
     "book_library_mgmt::IN_REINSTATE_BOOK_RECORD_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0030"
+        "book_library_mgmt": "0x0031"
       },
       "canonical_path": "canonical/book_library_mgmt/intents/book_library_mgmt__IN_REINSTATE_BOOK_RECORD_V0.json",
       "domain": "book_library_mgmt",
@@ -1623,7 +1671,7 @@
     },
     "book_library_mgmt::IN_REINSTATE_PHYSICAL_COPY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0031"
+        "book_library_mgmt": "0x0032"
       },
       "canonical_path": "canonical/book_library_mgmt/intents/book_library_mgmt__IN_REINSTATE_PHYSICAL_COPY_V0.json",
       "domain": "book_library_mgmt",
@@ -1635,7 +1683,7 @@
     },
     "book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0032"
+        "book_library_mgmt": "0x0033"
       },
       "canonical_path": "canonical/book_library_mgmt/intents/book_library_mgmt__IN_RETIRE_BOOK_RECORD_V0.json",
       "domain": "book_library_mgmt",
@@ -1647,7 +1695,7 @@
     },
     "book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0033"
+        "book_library_mgmt": "0x0034"
       },
       "canonical_path": "canonical/book_library_mgmt/intents/book_library_mgmt__IN_RETIRE_PHYSICAL_COPY_V0.json",
       "domain": "book_library_mgmt",
@@ -1659,7 +1707,7 @@
     },
     "book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0034"
+        "book_library_mgmt": "0x0035"
       },
       "canonical_path": "canonical/book_library_mgmt/intents/book_library_mgmt__IN_RETRIEVE_BOOK_DETAILS_V0.json",
       "domain": "book_library_mgmt",
@@ -1671,7 +1719,7 @@
     },
     "book_library_mgmt::IN_SEARCH_CATALOG_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0035"
+        "book_library_mgmt": "0x0036"
       },
       "canonical_path": "canonical/book_library_mgmt/intents/book_library_mgmt__IN_SEARCH_CATALOG_V0.json",
       "domain": "book_library_mgmt",
@@ -1683,7 +1731,7 @@
     },
     "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0036"
+        "book_library_mgmt": "0x0037"
       },
       "canonical_path": "canonical/book_library_mgmt/intents/book_library_mgmt__IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0.json",
       "domain": "book_library_mgmt",
@@ -1695,7 +1743,7 @@
     },
     "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1": {
       "addresses": {
-        "book_library_mgmt": "0x0037"
+        "book_library_mgmt": "0x0038"
       },
       "canonical_path": "canonical/book_library_mgmt/intents/book_library_mgmt__IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1.json",
       "domain": "book_library_mgmt",
@@ -1707,7 +1755,7 @@
     },
     "book_library_mgmt::RB_CATALOG_BINDINGS_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0038"
+        "book_library_mgmt": "0x0039"
       },
       "canonical_path": "canonical/book_library_mgmt/runtime_bindings/book_library_mgmt__RB_CATALOG_BINDINGS_V0.json",
       "domain": "book_library_mgmt",
@@ -1719,7 +1767,7 @@
     },
     "book_library_mgmt::STRUCTURE_BUILD_BOOK_LIBRARY_MGMT_CONFIG_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0039"
+        "book_library_mgmt": "0x003A"
       },
       "canonical_path": "canonical/book_library_mgmt/structures/book_library_mgmt__STRUCTURE_BUILD_BOOK_LIBRARY_MGMT_CONFIG_V0.json",
       "domain": "book_library_mgmt",
@@ -1731,7 +1779,7 @@
     },
     "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0": {
       "addresses": {
-        "book_library_mgmt": "0x003A"
+        "book_library_mgmt": "0x003B"
       },
       "canonical_path": "canonical/book_library_mgmt/structures/book_library_mgmt__STRUCTURE_CATALOG_STORAGE_V0.json",
       "domain": "book_library_mgmt",
@@ -1743,7 +1791,7 @@
     },
     "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0": {
       "addresses": {
-        "book_library_mgmt": "0x003B"
+        "book_library_mgmt": "0x003C"
       },
       "canonical_path": "canonical/book_library_mgmt/workflows/book_library_mgmt__WF_REGISTER_ADDITIONAL_EDITION_V0.json",
       "domain": "book_library_mgmt",
@@ -1755,7 +1803,7 @@
     },
     "book_library_mgmt::WF_REGISTER_BOOK_V0": {
       "addresses": {
-        "book_library_mgmt": "0x003C"
+        "book_library_mgmt": "0x003D"
       },
       "canonical_path": "canonical/book_library_mgmt/workflows/book_library_mgmt__WF_REGISTER_BOOK_V0.json",
       "domain": "book_library_mgmt",
@@ -1767,7 +1815,7 @@
     },
     "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x003D"
+        "book_library_mgmt": "0x003E"
       },
       "canonical_path": "canonical/book_library_mgmt/workflows/book_library_mgmt__WF_REGISTER_PHYSICAL_COPY_V0.json",
       "domain": "book_library_mgmt",
@@ -1779,7 +1827,7 @@
     },
     "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0": {
       "addresses": {
-        "book_library_mgmt": "0x003E"
+        "book_library_mgmt": "0x003F"
       },
       "canonical_path": "canonical/book_library_mgmt/workflows/book_library_mgmt__WF_REINSTATE_BOOK_RECORD_V0.json",
       "domain": "book_library_mgmt",
@@ -1791,7 +1839,7 @@
     },
     "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x003F"
+        "book_library_mgmt": "0x0040"
       },
       "canonical_path": "canonical/book_library_mgmt/workflows/book_library_mgmt__WF_REINSTATE_PHYSICAL_COPY_V0.json",
       "domain": "book_library_mgmt",
@@ -1803,7 +1851,7 @@
     },
     "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0040"
+        "book_library_mgmt": "0x0041"
       },
       "canonical_path": "canonical/book_library_mgmt/workflows/book_library_mgmt__WF_RETIRE_BOOK_RECORD_V0.json",
       "domain": "book_library_mgmt",
@@ -1815,7 +1863,7 @@
     },
     "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0041"
+        "book_library_mgmt": "0x0042"
       },
       "canonical_path": "canonical/book_library_mgmt/workflows/book_library_mgmt__WF_RETIRE_PHYSICAL_COPY_V0.json",
       "domain": "book_library_mgmt",
@@ -1827,7 +1875,7 @@
     },
     "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0042"
+        "book_library_mgmt": "0x0043"
       },
       "canonical_path": "canonical/book_library_mgmt/workflows/book_library_mgmt__WF_RETRIEVE_BOOK_DETAILS_V0.json",
       "domain": "book_library_mgmt",
@@ -1839,7 +1887,7 @@
     },
     "book_library_mgmt::WF_SEARCH_CATALOG_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0043"
+        "book_library_mgmt": "0x0044"
       },
       "canonical_path": "canonical/book_library_mgmt/workflows/book_library_mgmt__WF_SEARCH_CATALOG_V0.json",
       "domain": "book_library_mgmt",
@@ -1851,7 +1899,7 @@
     },
     "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0044"
+        "book_library_mgmt": "0x0045"
       },
       "canonical_path": "canonical/book_library_mgmt/workflows/book_library_mgmt__WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0.json",
       "domain": "book_library_mgmt",
@@ -1863,7 +1911,7 @@
     },
     "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1": {
       "addresses": {
-        "book_library_mgmt": "0x0045"
+        "book_library_mgmt": "0x0046"
       },
       "canonical_path": "canonical/book_library_mgmt/workflows/book_library_mgmt__WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1.json",
       "domain": "book_library_mgmt",
@@ -1875,7 +1923,7 @@
     },
     "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0": {
       "addresses": {
-        "platform": "0x0012"
+        "platform": "0x0013"
       },
       "canonical_path": "canonical/platform/concerns/capability_contracts__CONSTITUTION_CAPABILITY_CONTRACT_V0.json",
       "domain": "capability_contracts",
@@ -1887,7 +1935,7 @@
     },
     "capability_contracts::INVARIANT_CC_CAPABILITY_BINDING_VALID_V0": {
       "addresses": {
-        "platform": "0x0013"
+        "platform": "0x0014"
       },
       "canonical_path": "canonical/platform/invariants/capability_contracts__INVARIANT_CC_CAPABILITY_BINDING_VALID_V0.json",
       "domain": "capability_contracts",
@@ -1899,7 +1947,7 @@
     },
     "capability_contracts::INVARIANT_CC_INPUTS_SATISFIED_V0": {
       "addresses": {
-        "platform": "0x0014"
+        "platform": "0x0015"
       },
       "canonical_path": "canonical/platform/invariants/capability_contracts__INVARIANT_CC_INPUTS_SATISFIED_V0.json",
       "domain": "capability_contracts",
@@ -1911,7 +1959,7 @@
     },
     "capability_contracts::INVARIANT_CC_NO_IMPLICIT_CHAINING_V0": {
       "addresses": {
-        "platform": "0x0015"
+        "platform": "0x0016"
       },
       "canonical_path": "canonical/platform/invariants/capability_contracts__INVARIANT_CC_NO_IMPLICIT_CHAINING_V0.json",
       "domain": "capability_contracts",
@@ -1923,7 +1971,7 @@
     },
     "capability_contracts::INVARIANT_CC_NO_MISSING_DEPENDENCIES_V0": {
       "addresses": {
-        "platform": "0x0016"
+        "platform": "0x0017"
       },
       "canonical_path": "canonical/platform/invariants/capability_contracts__INVARIANT_CC_NO_MISSING_DEPENDENCIES_V0.json",
       "domain": "capability_contracts",
@@ -1935,7 +1983,7 @@
     },
     "capability_contracts::INVARIANT_CC_NO_UNUSED_OUTPUTS_V0": {
       "addresses": {
-        "platform": "0x0017"
+        "platform": "0x0018"
       },
       "canonical_path": "canonical/platform/invariants/capability_contracts__INVARIANT_CC_NO_UNUSED_OUTPUTS_V0.json",
       "domain": "capability_contracts",
@@ -1947,7 +1995,7 @@
     },
     "capability_contracts::INVARIANT_CC_STORAGE_OP_CONFORMANCE_V0": {
       "addresses": {
-        "platform": "0x0018"
+        "platform": "0x0019"
       },
       "canonical_path": "canonical/platform/invariants/capability_contracts__INVARIANT_CC_STORAGE_OP_CONFORMANCE_V0.json",
       "domain": "capability_contracts",
@@ -1959,7 +2007,7 @@
     },
     "capability_contracts::INVARIANT_TOPOLOGY_CAPABILITY_REFERENCE_UNIQUE_V0": {
       "addresses": {
-        "platform": "0x0019"
+        "platform": "0x001A"
       },
       "canonical_path": "canonical/platform/invariants/capability_contracts__INVARIANT_TOPOLOGY_CAPABILITY_REFERENCE_UNIQUE_V0.json",
       "domain": "capability_contracts",
@@ -1971,7 +2019,7 @@
     },
     "capability_contracts::INVARIANT_TOPOLOGY_INPUT_REFERENCE_DECLARED_V0": {
       "addresses": {
-        "platform": "0x001A"
+        "platform": "0x001B"
       },
       "canonical_path": "canonical/platform/invariants/capability_contracts__INVARIANT_TOPOLOGY_INPUT_REFERENCE_DECLARED_V0.json",
       "domain": "capability_contracts",
@@ -1983,7 +2031,7 @@
     },
     "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0": {
       "addresses": {
-        "platform": "0x001B"
+        "platform": "0x001C"
       },
       "canonical_path": "canonical/platform/concerns/capability_side_effects__CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0.json",
       "domain": "capability_side_effects",
@@ -1995,10 +2043,11 @@
     },
     "capability_side_effects::CS_APPENDONLY_JSONL_V0": {
       "addresses": {
-        "ai_governance": "0x0043",
-        "blockchain": "0x0041",
-        "book_library_mgmt": "0x004E",
-        "platform": "0x001C"
+        "ai_governance": "0x0047",
+        "blockchain": "0x0042",
+        "book_library_mgmt": "0x004F",
+        "causal_language_model": "0x0019",
+        "platform": "0x001D"
       },
       "canonical_path": "canonical/platform/capability_side_effects/capability_side_effects__CS_APPENDONLY_JSONL_V0.json",
       "domain": "capability_side_effects",
@@ -2006,6 +2055,7 @@
         "ai_governance": "evidence/ai_governance/evidence_graph.json",
         "blockchain": "evidence/blockchain/evidence_graph.json",
         "book_library_mgmt": "evidence/book_library_mgmt/evidence_graph.json",
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json",
         "platform": "evidence/platform/evidence_graph.json"
       },
       "kind": "CS",
@@ -2013,9 +2063,9 @@
     },
     "capability_side_effects::CS_CLOCK_V0": {
       "addresses": {
-        "ai_governance": "0x0044",
-        "blockchain": "0x0042",
-        "platform": "0x001D"
+        "ai_governance": "0x0048",
+        "blockchain": "0x0043",
+        "platform": "0x001E"
       },
       "canonical_path": "canonical/platform/capability_side_effects/capability_side_effects__CS_CLOCK_V0.json",
       "domain": "capability_side_effects",
@@ -2027,13 +2077,26 @@
       "kind": "CS",
       "owner_subdomain": "capability_side_effects"
     },
+    "capability_side_effects::CS_EVIDENCE_EXPIRY_V0": {
+      "addresses": {
+        "platform": "0x001F"
+      },
+      "canonical_path": "canonical/platform/capability_side_effects/capability_side_effects__CS_EVIDENCE_EXPIRY_V0.json",
+      "domain": "capability_side_effects",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "CS",
+      "owner_subdomain": "capability_side_effects"
+    },
     "capability_side_effects::CS_MUTABLE_JSON_V0": {
       "addresses": {
-        "ai_governance": "0x0045",
-        "blockchain": "0x0043",
-        "book_library_mgmt": "0x004F",
-        "platform": "0x001E",
-        "workload": "0x0018"
+        "ai_governance": "0x0049",
+        "blockchain": "0x0044",
+        "book_library_mgmt": "0x0050",
+        "causal_language_model": "0x001A",
+        "platform": "0x0020",
+        "workload": "0x0019"
       },
       "canonical_path": "canonical/platform/capability_side_effects/capability_side_effects__CS_MUTABLE_JSON_V0.json",
       "domain": "capability_side_effects",
@@ -2041,6 +2104,7 @@
         "ai_governance": "evidence/ai_governance/evidence_graph.json",
         "blockchain": "evidence/blockchain/evidence_graph.json",
         "book_library_mgmt": "evidence/book_library_mgmt/evidence_graph.json",
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json",
         "platform": "evidence/platform/evidence_graph.json",
         "workload": "evidence/workload/evidence_graph.json"
       },
@@ -2049,10 +2113,11 @@
     },
     "capability_side_effects::CS_REGISTRY_V0": {
       "addresses": {
-        "ai_governance": "0x0046",
-        "blockchain": "0x0044",
-        "book_library_mgmt": "0x0050",
-        "platform": "0x001F"
+        "ai_governance": "0x004A",
+        "blockchain": "0x0045",
+        "book_library_mgmt": "0x0051",
+        "causal_language_model": "0x001B",
+        "platform": "0x0021"
       },
       "canonical_path": "canonical/platform/capability_side_effects/capability_side_effects__CS_REGISTRY_V0.json",
       "domain": "capability_side_effects",
@@ -2060,6 +2125,7 @@
         "ai_governance": "evidence/ai_governance/evidence_graph.json",
         "blockchain": "evidence/blockchain/evidence_graph.json",
         "book_library_mgmt": "evidence/book_library_mgmt/evidence_graph.json",
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json",
         "platform": "evidence/platform/evidence_graph.json"
       },
       "kind": "CS",
@@ -2067,8 +2133,8 @@
     },
     "capability_side_effects::CS_SNAPSHOT_QUERY_V0": {
       "addresses": {
-        "platform": "0x0020",
-        "transformation": "0x0018"
+        "platform": "0x0022",
+        "transformation": "0x0019"
       },
       "canonical_path": "canonical/platform/capability_side_effects/capability_side_effects__CS_SNAPSHOT_QUERY_V0.json",
       "domain": "capability_side_effects",
@@ -2081,8 +2147,8 @@
     },
     "capability_side_effects::CS_TEXT_ARTIFACT_V0": {
       "addresses": {
-        "platform": "0x0021",
-        "transformation": "0x0019"
+        "platform": "0x0023",
+        "transformation": "0x001A"
       },
       "canonical_path": "canonical/platform/capability_side_effects/capability_side_effects__CS_TEXT_ARTIFACT_V0.json",
       "domain": "capability_side_effects",
@@ -2095,7 +2161,7 @@
     },
     "capability_side_effects::INVARIANT_CS_ISOLATED_EXECUTION_V0": {
       "addresses": {
-        "platform": "0x0022"
+        "platform": "0x0024"
       },
       "canonical_path": "canonical/platform/invariants/capability_side_effects__INVARIANT_CS_ISOLATED_EXECUTION_V0.json",
       "domain": "capability_side_effects",
@@ -2107,7 +2173,7 @@
     },
     "capability_side_effects::INVARIANT_CS_SURFACE_CLOSED_V1": {
       "addresses": {
-        "platform": "0x0023"
+        "platform": "0x0025"
       },
       "canonical_path": "canonical/platform/invariants/capability_side_effects__INVARIANT_CS_SURFACE_CLOSED_V1.json",
       "domain": "capability_side_effects",
@@ -2119,7 +2185,7 @@
     },
     "capability_side_effects::INVARIANT_CS_TRACEABLE_V0": {
       "addresses": {
-        "platform": "0x0024"
+        "platform": "0x0026"
       },
       "canonical_path": "canonical/platform/invariants/capability_side_effects__INVARIANT_CS_TRACEABLE_V0.json",
       "domain": "capability_side_effects",
@@ -2131,7 +2197,7 @@
     },
     "capability_side_effects::INVARIANT_INSPECTION_CAPABILITY_READ_ONLY_V0": {
       "addresses": {
-        "platform": "0x0025"
+        "platform": "0x0027"
       },
       "canonical_path": "canonical/platform/invariants/capability_side_effects__INVARIANT_INSPECTION_CAPABILITY_READ_ONLY_V0.json",
       "domain": "capability_side_effects",
@@ -2141,11 +2207,47 @@
       "kind": "INVARIANT",
       "owner_subdomain": "capability_side_effects"
     },
-    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0": {
+    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V1": {
       "addresses": {
-        "platform": "0x0026"
+        "platform": "0x0028"
       },
-      "canonical_path": "canonical/platform/concerns/capability_transforms__CONSTITUTION_CAPABILITY_TRANSFORMS_V0.json",
+      "canonical_path": "canonical/platform/concerns/capability_transforms__CONSTITUTION_CAPABILITY_TRANSFORMS_V1.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "CONSTITUTION",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0": {
+      "addresses": {
+        "platform": "0x0029"
+      },
+      "canonical_path": "canonical/platform/concerns/capability_transforms__CONSTITUTION_DETERMINISTIC_ATOMS_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "CONSTITUTION",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::CONSTITUTION_MOLECULES_V0": {
+      "addresses": {
+        "platform": "0x002A"
+      },
+      "canonical_path": "canonical/platform/concerns/capability_transforms__CONSTITUTION_MOLECULES_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "CONSTITUTION",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0": {
+      "addresses": {
+        "platform": "0x002B"
+      },
+      "canonical_path": "canonical/platform/concerns/capability_transforms__CONSTITUTION_NONDETERMINISTIC_ATOMS_V0.json",
       "domain": "capability_transforms",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -2155,7 +2257,7 @@
     },
     "capability_transforms::CT_EXEC_EMIT_V0": {
       "addresses": {
-        "platform": "0x0027"
+        "platform": "0x002C"
       },
       "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_EXEC_EMIT_V0.json",
       "domain": "capability_transforms",
@@ -2167,11 +2269,29 @@
     },
     "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0": {
       "addresses": {
-        "blockchain": "0x0048",
-        "book_library_mgmt": "0x0054",
-        "platform": "0x0028"
+        "blockchain": "0x0049",
+        "book_library_mgmt": "0x0055",
+        "causal_language_model": "0x001F",
+        "platform": "0x002D"
       },
       "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_ASSEMBLE_RECORD_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "blockchain": "evidence/blockchain/evidence_graph.json",
+        "book_library_mgmt": "evidence/book_library_mgmt/evidence_graph.json",
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json",
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "CT",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::CT_PURE_COMPARE_EQUAL_V0": {
+      "addresses": {
+        "blockchain": "0x004A",
+        "book_library_mgmt": "0x0056",
+        "platform": "0x002E"
+      },
+      "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_COMPARE_EQUAL_V0.json",
       "domain": "capability_transforms",
       "evidence_paths": {
         "blockchain": "evidence/blockchain/evidence_graph.json",
@@ -2181,24 +2301,10 @@
       "kind": "CT",
       "owner_subdomain": "capability_transforms"
     },
-    "capability_transforms::CT_PURE_COMPARE_EQUAL_V0": {
-      "addresses": {
-        "book_library_mgmt": "0x0055",
-        "platform": "0x0029"
-      },
-      "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_COMPARE_EQUAL_V0.json",
-      "domain": "capability_transforms",
-      "evidence_paths": {
-        "book_library_mgmt": "evidence/book_library_mgmt/evidence_graph.json",
-        "platform": "evidence/platform/evidence_graph.json"
-      },
-      "kind": "CT",
-      "owner_subdomain": "capability_transforms"
-    },
     "capability_transforms::CT_PURE_EXTRACT_V0": {
       "addresses": {
-        "blockchain": "0x0049",
-        "platform": "0x002A"
+        "blockchain": "0x004B",
+        "platform": "0x002F"
       },
       "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_EXTRACT_V0.json",
       "domain": "capability_transforms",
@@ -2211,13 +2317,15 @@
     },
     "capability_transforms::CT_PURE_FILTER_RECORDS_V0": {
       "addresses": {
-        "book_library_mgmt": "0x0056",
-        "platform": "0x002B"
+        "book_library_mgmt": "0x0057",
+        "causal_language_model": "0x0020",
+        "platform": "0x0030"
       },
       "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_FILTER_RECORDS_V0.json",
       "domain": "capability_transforms",
       "evidence_paths": {
         "book_library_mgmt": "evidence/book_library_mgmt/evidence_graph.json",
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json",
         "platform": "evidence/platform/evidence_graph.json"
       },
       "kind": "CT",
@@ -2225,9 +2333,9 @@
     },
     "capability_transforms::CT_PURE_GENERATE_ID_V0": {
       "addresses": {
-        "ai_governance": "0x004A",
-        "blockchain": "0x004A",
-        "platform": "0x002C"
+        "ai_governance": "0x004E",
+        "blockchain": "0x004C",
+        "platform": "0x0031"
       },
       "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_GENERATE_ID_V0.json",
       "domain": "capability_transforms",
@@ -2241,8 +2349,8 @@
     },
     "capability_transforms::CT_PURE_LOOKUP_V0": {
       "addresses": {
-        "ai_governance": "0x004B",
-        "platform": "0x002D"
+        "ai_governance": "0x004F",
+        "platform": "0x0032"
       },
       "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_LOOKUP_V0.json",
       "domain": "capability_transforms",
@@ -2255,7 +2363,7 @@
     },
     "capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0": {
       "addresses": {
-        "platform": "0x002E"
+        "platform": "0x0033"
       },
       "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_MAP_RESULT_TO_HTTP_V0.json",
       "domain": "capability_transforms",
@@ -2267,7 +2375,7 @@
     },
     "capability_transforms::CT_PURE_PASSTHROUGH_V0": {
       "addresses": {
-        "platform": "0x002F"
+        "platform": "0x0034"
       },
       "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_PASSTHROUGH_V0.json",
       "domain": "capability_transforms",
@@ -2279,10 +2387,11 @@
     },
     "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0": {
       "addresses": {
-        "ai_governance": "0x004C",
-        "blockchain": "0x004B",
-        "book_library_mgmt": "0x0057",
-        "platform": "0x0030"
+        "ai_governance": "0x0050",
+        "blockchain": "0x004D",
+        "book_library_mgmt": "0x0058",
+        "causal_language_model": "0x0021",
+        "platform": "0x0035"
       },
       "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_VALIDATE_PARAMETER_RULES_V0.json",
       "domain": "capability_transforms",
@@ -2290,6 +2399,7 @@
         "ai_governance": "evidence/ai_governance/evidence_graph.json",
         "blockchain": "evidence/blockchain/evidence_graph.json",
         "book_library_mgmt": "evidence/book_library_mgmt/evidence_graph.json",
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json",
         "platform": "evidence/platform/evidence_graph.json"
       },
       "kind": "CT",
@@ -2297,15 +2407,17 @@
     },
     "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0": {
       "addresses": {
-        "blockchain": "0x004C",
-        "book_library_mgmt": "0x0058",
-        "platform": "0x0031"
+        "blockchain": "0x004E",
+        "book_library_mgmt": "0x0059",
+        "causal_language_model": "0x0022",
+        "platform": "0x0036"
       },
       "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_VALIDATE_RECORD_STRUCTURE_V0.json",
       "domain": "capability_transforms",
       "evidence_paths": {
         "blockchain": "evidence/blockchain/evidence_graph.json",
         "book_library_mgmt": "evidence/book_library_mgmt/evidence_graph.json",
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json",
         "platform": "evidence/platform/evidence_graph.json"
       },
       "kind": "CT",
@@ -2313,15 +2425,17 @@
     },
     "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0": {
       "addresses": {
-        "ai_governance": "0x004D",
-        "blockchain": "0x004D",
-        "platform": "0x0032"
+        "ai_governance": "0x0051",
+        "blockchain": "0x004F",
+        "causal_language_model": "0x0023",
+        "platform": "0x0037"
       },
       "canonical_path": "canonical/platform/capability_transforms/capability_transforms__CT_PURE_VALIDATE_SET_MEMBERSHIP_V0.json",
       "domain": "capability_transforms",
       "evidence_paths": {
         "ai_governance": "evidence/ai_governance/evidence_graph.json",
         "blockchain": "evidence/blockchain/evidence_graph.json",
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json",
         "platform": "evidence/platform/evidence_graph.json"
       },
       "kind": "CT",
@@ -2329,7 +2443,7 @@
     },
     "capability_transforms::INVARIANT_ATOM_OUTPUT_PURITY_V0": {
       "addresses": {
-        "platform": "0x0033"
+        "platform": "0x0038"
       },
       "canonical_path": "canonical/platform/invariants/capability_transforms__INVARIANT_ATOM_OUTPUT_PURITY_V0.json",
       "domain": "capability_transforms",
@@ -2339,9 +2453,21 @@
       "kind": "INVARIANT",
       "owner_subdomain": "capability_transforms"
     },
+    "capability_transforms::INVARIANT_CT_GOVERNED_BY_KIND_V0": {
+      "addresses": {
+        "platform": "0x0039"
+      },
+      "canonical_path": "canonical/platform/invariants/capability_transforms__INVARIANT_CT_GOVERNED_BY_KIND_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "INVARIANT",
+      "owner_subdomain": "capability_transforms"
+    },
     "capability_transforms::INVARIANT_CT_OUTPUT_CONTRACT_MATCH_V0": {
       "addresses": {
-        "platform": "0x0034"
+        "platform": "0x003A"
       },
       "canonical_path": "canonical/platform/invariants/capability_transforms__INVARIANT_CT_OUTPUT_CONTRACT_MATCH_V0.json",
       "domain": "capability_transforms",
@@ -2353,7 +2479,7 @@
     },
     "capability_transforms::INVARIANT_CT_SURFACE_CLOSED_V1": {
       "addresses": {
-        "platform": "0x0035"
+        "platform": "0x003B"
       },
       "canonical_path": "canonical/platform/invariants/capability_transforms__INVARIANT_CT_SURFACE_CLOSED_V1.json",
       "domain": "capability_transforms",
@@ -2363,11 +2489,11 @@
       "kind": "INVARIANT",
       "owner_subdomain": "capability_transforms"
     },
-    "capability_transforms::INVARIANT_CT_SURFACE_DERIVED_CLOSED_V0": {
+    "capability_transforms::INVARIANT_CT_SURFACE_DERIVED_CLOSED_V1": {
       "addresses": {
-        "platform": "0x0036"
+        "platform": "0x003C"
       },
-      "canonical_path": "canonical/platform/invariants/capability_transforms__INVARIANT_CT_SURFACE_DERIVED_CLOSED_V0.json",
+      "canonical_path": "canonical/platform/invariants/capability_transforms__INVARIANT_CT_SURFACE_DERIVED_CLOSED_V1.json",
       "domain": "capability_transforms",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -2377,7 +2503,7 @@
     },
     "capability_transforms::INVARIANT_CT_TEST_DATA_OUTCOME_DECLARED_V0": {
       "addresses": {
-        "platform": "0x0037"
+        "platform": "0x003D"
       },
       "canonical_path": "canonical/platform/invariants/capability_transforms__INVARIANT_CT_TEST_DATA_OUTCOME_DECLARED_V0.json",
       "domain": "capability_transforms",
@@ -2387,9 +2513,45 @@
       "kind": "INVARIANT",
       "owner_subdomain": "capability_transforms"
     },
+    "capability_transforms::INVARIANT_MOLECULE_PURITY_CONSISTENT_V0": {
+      "addresses": {
+        "platform": "0x003E"
+      },
+      "canonical_path": "canonical/platform/invariants/capability_transforms__INVARIANT_MOLECULE_PURITY_CONSISTENT_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "INVARIANT",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::INVARIANT_MOLECULE_RUNNABLE_V0": {
+      "addresses": {
+        "platform": "0x003F"
+      },
+      "canonical_path": "canonical/platform/invariants/capability_transforms__INVARIANT_MOLECULE_RUNNABLE_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "INVARIANT",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::INVARIANT_NONDETERMINISM_NOT_ROUTED_V0": {
+      "addresses": {
+        "platform": "0x0040"
+      },
+      "canonical_path": "canonical/platform/invariants/capability_transforms__INVARIANT_NONDETERMINISM_NOT_ROUTED_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "INVARIANT",
+      "owner_subdomain": "capability_transforms"
+    },
     "capability_transforms::STRUCTURE_CT_IR_CONTRACT_V0": {
       "addresses": {
-        "platform": "0x0038"
+        "platform": "0x0041"
       },
       "canonical_path": "canonical/platform/structures/capability_transforms__STRUCTURE_CT_IR_CONTRACT_V0.json",
       "domain": "capability_transforms",
@@ -2399,9 +2561,969 @@
       "kind": "STRUCTURE",
       "owner_subdomain": "capability_transforms"
     },
+    "capability_transforms::TEST_DATA_CT_EXEC_EMIT_V0": {
+      "addresses": {
+        "platform": "0x0042"
+      },
+      "canonical_path": "canonical/platform/test_data/capability_transforms__TEST_DATA_CT_EXEC_EMIT_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0": {
+      "addresses": {
+        "platform": "0x0043"
+      },
+      "canonical_path": "canonical/platform/test_data/capability_transforms__TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::TEST_DATA_CT_PURE_EXTRACT_V0": {
+      "addresses": {
+        "platform": "0x0044"
+      },
+      "canonical_path": "canonical/platform/test_data/capability_transforms__TEST_DATA_CT_PURE_EXTRACT_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::TEST_DATA_CT_PURE_FILTER_RECORDS_V0": {
+      "addresses": {
+        "platform": "0x0045"
+      },
+      "canonical_path": "canonical/platform/test_data/capability_transforms__TEST_DATA_CT_PURE_FILTER_RECORDS_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::TEST_DATA_CT_PURE_GENERATE_ID_V0": {
+      "addresses": {
+        "platform": "0x0046"
+      },
+      "canonical_path": "canonical/platform/test_data/capability_transforms__TEST_DATA_CT_PURE_GENERATE_ID_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::TEST_DATA_CT_PURE_LOOKUP_V0": {
+      "addresses": {
+        "platform": "0x0047"
+      },
+      "canonical_path": "canonical/platform/test_data/capability_transforms__TEST_DATA_CT_PURE_LOOKUP_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::TEST_DATA_CT_PURE_MAP_RESULT_TO_HTTP_V0": {
+      "addresses": {
+        "platform": "0x0048"
+      },
+      "canonical_path": "canonical/platform/test_data/capability_transforms__TEST_DATA_CT_PURE_MAP_RESULT_TO_HTTP_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::TEST_DATA_CT_PURE_PASSTHROUGH_V0": {
+      "addresses": {
+        "platform": "0x0049"
+      },
+      "canonical_path": "canonical/platform/test_data/capability_transforms__TEST_DATA_CT_PURE_PASSTHROUGH_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::TEST_DATA_CT_PURE_VALIDATE_PARAMETER_RULES_V0": {
+      "addresses": {
+        "platform": "0x004A"
+      },
+      "canonical_path": "canonical/platform/test_data/capability_transforms__TEST_DATA_CT_PURE_VALIDATE_PARAMETER_RULES_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::TEST_DATA_CT_PURE_VALIDATE_RECORD_STRUCTURE_V0": {
+      "addresses": {
+        "platform": "0x004B"
+      },
+      "canonical_path": "canonical/platform/test_data/capability_transforms__TEST_DATA_CT_PURE_VALIDATE_RECORD_STRUCTURE_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "capability_transforms"
+    },
+    "capability_transforms::TEST_DATA_CT_PURE_VALIDATE_SET_MEMBERSHIP_V0": {
+      "addresses": {
+        "platform": "0x004C"
+      },
+      "canonical_path": "canonical/platform/test_data/capability_transforms__TEST_DATA_CT_PURE_VALIDATE_SET_MEMBERSHIP_V0.json",
+      "domain": "capability_transforms",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "capability_transforms"
+    },
+    "causal_language_model::AC_MODEL_HOST_V0": {
+      "addresses": {
+        "causal_language_model": "0x002C"
+      },
+      "canonical_path": "canonical/causal_language_model/actors/causal_language_model__AC_MODEL_HOST_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "AC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::AC_MODEL_STAFF_V0": {
+      "addresses": {
+        "causal_language_model": "0x002D"
+      },
+      "canonical_path": "canonical/causal_language_model/actors/causal_language_model__AC_MODEL_STAFF_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "AC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::AC_REQUESTER_V0": {
+      "addresses": {
+        "causal_language_model": "0x002E"
+      },
+      "canonical_path": "canonical/causal_language_model/actors/causal_language_model__AC_REQUESTER_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "AC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_ADMIT_USER_PROMPT_V0": {
+      "addresses": {
+        "causal_language_model": "0x002F"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_ADMIT_USER_PROMPT_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_APPEND_MODEL_OPERATION_V0": {
+      "addresses": {
+        "causal_language_model": "0x0030"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_APPEND_MODEL_OPERATION_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_CHOOSE_PERMITTED_TOKEN_V0": {
+      "addresses": {
+        "causal_language_model": "0x0031"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_CHOOSE_PERMITTED_TOKEN_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_CLAIM_MODEL_IDENTITY_V0": {
+      "addresses": {
+        "causal_language_model": "0x0032"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_CLAIM_MODEL_IDENTITY_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_CLAIM_USER_PROMPT_IDENTITY_V0": {
+      "addresses": {
+        "causal_language_model": "0x0033"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_CLAIM_USER_PROMPT_IDENTITY_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_CONFIRM_HOSTED_READING_FITS_V0": {
+      "addresses": {
+        "causal_language_model": "0x0034"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_CONFIRM_HOSTED_READING_FITS_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+      "addresses": {
+        "causal_language_model": "0x0035"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_CONFIRM_OFFER_FOR_MODEL_V0": {
+      "addresses": {
+        "causal_language_model": "0x0036"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_CONFIRM_OFFER_FOR_MODEL_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_CONFIRM_READING_FITS_V0": {
+      "addresses": {
+        "causal_language_model": "0x0037"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_CONFIRM_READING_FITS_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0": {
+      "addresses": {
+        "causal_language_model": "0x0038"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0": {
+      "addresses": {
+        "causal_language_model": "0x0039"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_CONFIRM_RESPONSE_RELEASABLE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0": {
+      "addresses": {
+        "causal_language_model": "0x003A"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_CONFIRM_WITHIN_CEILING_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_OPEN_HOSTED_RECORD_V0": {
+      "addresses": {
+        "causal_language_model": "0x003B"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_OPEN_HOSTED_RECORD_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0": {
+      "addresses": {
+        "causal_language_model": "0x003C"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_PLACE_MODEL_IN_SERVICE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_READ_HOSTED_STATE_V0": {
+      "addresses": {
+        "causal_language_model": "0x003D"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_READ_HOSTED_STATE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_RECORD_HOSTED_STEP_V0": {
+      "addresses": {
+        "causal_language_model": "0x003E"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_RECORD_HOSTED_STEP_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_RECORD_USER_PROMPT_V0": {
+      "addresses": {
+        "causal_language_model": "0x003F"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_RECORD_USER_PROMPT_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_REGISTER_MODEL_V0": {
+      "addresses": {
+        "causal_language_model": "0x0040"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_REGISTER_MODEL_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_RETRIEVE_USER_PROMPT_RECORD_V0": {
+      "addresses": {
+        "causal_language_model": "0x0041"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_RETRIEVE_USER_PROMPT_RECORD_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_WITHDRAW_MODEL_FROM_SERVICE_V0": {
+      "addresses": {
+        "causal_language_model": "0x0042"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_WITHDRAW_MODEL_FROM_SERVICE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CC_WRITE_MODEL_RESPONSE_V0": {
+      "addresses": {
+        "causal_language_model": "0x0043"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_contracts/causal_language_model__CC_WRITE_MODEL_RESPONSE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CC",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0": {
+      "addresses": {
+        "causal_language_model": "0x0044"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_transforms/causal_language_model__CT_IMPURE_OFFER_NEXT_WORDS_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CT",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0": {
+      "addresses": {
+        "causal_language_model": "0x0045"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_transforms/causal_language_model__CT_PURE_ASSEMBLE_MODEL_READING_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CT",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0": {
+      "addresses": {
+        "causal_language_model": "0x0046"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_transforms/causal_language_model__CT_PURE_CHOOSE_PERMITTED_TOKEN_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CT",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0": {
+      "addresses": {
+        "causal_language_model": "0x0047"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_transforms/causal_language_model__CT_PURE_CHOOSE_PERMITTED_WORD_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CT",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0": {
+      "addresses": {
+        "causal_language_model": "0x0048"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_transforms/causal_language_model__CT_PURE_COMPARE_SENSITIVITY_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CT",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0": {
+      "addresses": {
+        "causal_language_model": "0x0049"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_transforms/causal_language_model__CT_PURE_FORM_MODEL_IDENTITY_KEY_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CT",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0": {
+      "addresses": {
+        "causal_language_model": "0x004A"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_transforms/causal_language_model__CT_PURE_FORM_RESPONSE_RULES_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CT",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0": {
+      "addresses": {
+        "causal_language_model": "0x004B"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_transforms/causal_language_model__CT_PURE_READ_HOSTED_STATE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CT",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CT_WRITE_NEXT_WORD_V0": {
+      "addresses": {
+        "causal_language_model": "0x004C"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_transforms/causal_language_model__CT_WRITE_NEXT_WORD_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CT",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::CT_WRITE_RESPONSE_V0": {
+      "addresses": {
+        "causal_language_model": "0x004D"
+      },
+      "canonical_path": "canonical/causal_language_model/capability_transforms/causal_language_model__CT_WRITE_RESPONSE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "CT",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::EV_MODEL_REGISTERED_V0": {
+      "addresses": {
+        "causal_language_model": "0x004E"
+      },
+      "canonical_path": "canonical/causal_language_model/events/causal_language_model__EV_MODEL_REGISTERED_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "EV",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::EV_MODEL_SERVICE_ENDED_V0": {
+      "addresses": {
+        "causal_language_model": "0x004F"
+      },
+      "canonical_path": "canonical/causal_language_model/events/causal_language_model__EV_MODEL_SERVICE_ENDED_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "EV",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::EV_MODEL_SERVICE_STARTED_V0": {
+      "addresses": {
+        "causal_language_model": "0x0050"
+      },
+      "canonical_path": "canonical/causal_language_model/events/causal_language_model__EV_MODEL_SERVICE_STARTED_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "EV",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::EV_USER_PROMPT_REFUSED_V0": {
+      "addresses": {
+        "causal_language_model": "0x0051"
+      },
+      "canonical_path": "canonical/causal_language_model/events/causal_language_model__EV_USER_PROMPT_REFUSED_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "EV",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::EV_USER_PROMPT_RESPONDED_V0": {
+      "addresses": {
+        "causal_language_model": "0x0052"
+      },
+      "canonical_path": "canonical/causal_language_model/events/causal_language_model__EV_USER_PROMPT_RESPONDED_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "EV",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::IN_BEGIN_HOSTED_RESPONSE_V0": {
+      "addresses": {
+        "causal_language_model": "0x0053"
+      },
+      "canonical_path": "canonical/causal_language_model/intents/causal_language_model__IN_BEGIN_HOSTED_RESPONSE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "IN",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::IN_OFFER_NEXT_TOKENS_V0": {
+      "addresses": {
+        "causal_language_model": "0x0054"
+      },
+      "canonical_path": "canonical/causal_language_model/intents/causal_language_model__IN_OFFER_NEXT_TOKENS_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "IN",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::IN_PLACE_MODEL_IN_SERVICE_V0": {
+      "addresses": {
+        "causal_language_model": "0x0055"
+      },
+      "canonical_path": "canonical/causal_language_model/intents/causal_language_model__IN_PLACE_MODEL_IN_SERVICE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "IN",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::IN_REGISTER_MODEL_V0": {
+      "addresses": {
+        "causal_language_model": "0x0056"
+      },
+      "canonical_path": "canonical/causal_language_model/intents/causal_language_model__IN_REGISTER_MODEL_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "IN",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::IN_RELEASE_HOSTED_RESPONSE_V0": {
+      "addresses": {
+        "causal_language_model": "0x0057"
+      },
+      "canonical_path": "canonical/causal_language_model/intents/causal_language_model__IN_RELEASE_HOSTED_RESPONSE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "IN",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::IN_RETRIEVE_USER_PROMPT_RECORD_V0": {
+      "addresses": {
+        "causal_language_model": "0x0058"
+      },
+      "canonical_path": "canonical/causal_language_model/intents/causal_language_model__IN_RETRIEVE_USER_PROMPT_RECORD_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "IN",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::IN_SUBMIT_USER_PROMPT_V0": {
+      "addresses": {
+        "causal_language_model": "0x0059"
+      },
+      "canonical_path": "canonical/causal_language_model/intents/causal_language_model__IN_SUBMIT_USER_PROMPT_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "IN",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::IN_WITHDRAW_MODEL_FROM_SERVICE_V0": {
+      "addresses": {
+        "causal_language_model": "0x005A"
+      },
+      "canonical_path": "canonical/causal_language_model/intents/causal_language_model__IN_WITHDRAW_MODEL_FROM_SERVICE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "IN",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0": {
+      "addresses": {
+        "causal_language_model": "0x005B"
+      },
+      "canonical_path": "canonical/causal_language_model/runtime_bindings/causal_language_model__RB_MODEL_RESPONSE_BINDINGS_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "RB",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::STRUCTURE_BUILD_CAUSAL_LANGUAGE_MODEL_CONFIG_V0": {
+      "addresses": {
+        "causal_language_model": "0x005C"
+      },
+      "canonical_path": "canonical/causal_language_model/structures/causal_language_model__STRUCTURE_BUILD_CAUSAL_LANGUAGE_MODEL_CONFIG_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "STRUCTURE",
+      "owner_subdomain": "causal_language_model"
+    },
+    "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0": {
+      "addresses": {
+        "causal_language_model": "0x005D"
+      },
+      "canonical_path": "canonical/causal_language_model/structures/causal_language_model__STRUCTURE_MODEL_RESPONSE_STORAGE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "STRUCTURE",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::TEST_DATA_CT_IMPURE_OFFER_NEXT_WORDS_V0": {
+      "addresses": {
+        "causal_language_model": "0x005E"
+      },
+      "canonical_path": "canonical/causal_language_model/test_data/causal_language_model__TEST_DATA_CT_IMPURE_OFFER_NEXT_WORDS_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::TEST_DATA_CT_PURE_ASSEMBLE_MODEL_READING_V0": {
+      "addresses": {
+        "causal_language_model": "0x005F"
+      },
+      "canonical_path": "canonical/causal_language_model/test_data/causal_language_model__TEST_DATA_CT_PURE_ASSEMBLE_MODEL_READING_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_TOKEN_V0": {
+      "addresses": {
+        "causal_language_model": "0x0060"
+      },
+      "canonical_path": "canonical/causal_language_model/test_data/causal_language_model__TEST_DATA_CT_PURE_CHOOSE_PERMITTED_TOKEN_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_WORD_V0": {
+      "addresses": {
+        "causal_language_model": "0x0061"
+      },
+      "canonical_path": "canonical/causal_language_model/test_data/causal_language_model__TEST_DATA_CT_PURE_CHOOSE_PERMITTED_WORD_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::TEST_DATA_CT_PURE_COMPARE_SENSITIVITY_V0": {
+      "addresses": {
+        "causal_language_model": "0x0062"
+      },
+      "canonical_path": "canonical/causal_language_model/test_data/causal_language_model__TEST_DATA_CT_PURE_COMPARE_SENSITIVITY_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::TEST_DATA_CT_PURE_FORM_MODEL_IDENTITY_KEY_V0": {
+      "addresses": {
+        "causal_language_model": "0x0063"
+      },
+      "canonical_path": "canonical/causal_language_model/test_data/causal_language_model__TEST_DATA_CT_PURE_FORM_MODEL_IDENTITY_KEY_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::TEST_DATA_CT_PURE_FORM_RESPONSE_RULES_V0": {
+      "addresses": {
+        "causal_language_model": "0x0064"
+      },
+      "canonical_path": "canonical/causal_language_model/test_data/causal_language_model__TEST_DATA_CT_PURE_FORM_RESPONSE_RULES_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::TEST_DATA_CT_PURE_READ_HOSTED_STATE_V0": {
+      "addresses": {
+        "causal_language_model": "0x0065"
+      },
+      "canonical_path": "canonical/causal_language_model/test_data/causal_language_model__TEST_DATA_CT_PURE_READ_HOSTED_STATE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::TEST_DATA_CT_WRITE_NEXT_WORD_V0": {
+      "addresses": {
+        "causal_language_model": "0x0066"
+      },
+      "canonical_path": "canonical/causal_language_model/test_data/causal_language_model__TEST_DATA_CT_WRITE_NEXT_WORD_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::TEST_DATA_CT_WRITE_RESPONSE_V0": {
+      "addresses": {
+        "causal_language_model": "0x0067"
+      },
+      "canonical_path": "canonical/causal_language_model/test_data/causal_language_model__TEST_DATA_CT_WRITE_RESPONSE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "TEST_DATA",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::VOCAB_KIND_OF_INFORMATION_V0": {
+      "addresses": {
+        "causal_language_model": "0x0068"
+      },
+      "canonical_path": "canonical/causal_language_model/vocabulary/causal_language_model__VOCAB_KIND_OF_INFORMATION_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "VOCAB",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0": {
+      "addresses": {
+        "causal_language_model": "0x0069"
+      },
+      "canonical_path": "canonical/causal_language_model/workflows/causal_language_model__WF_BEGIN_HOSTED_RESPONSE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "WF",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::WF_OFFER_NEXT_TOKENS_V0": {
+      "addresses": {
+        "causal_language_model": "0x006A"
+      },
+      "canonical_path": "canonical/causal_language_model/workflows/causal_language_model__WF_OFFER_NEXT_TOKENS_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "WF",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::WF_PLACE_MODEL_IN_SERVICE_V0": {
+      "addresses": {
+        "causal_language_model": "0x006B"
+      },
+      "canonical_path": "canonical/causal_language_model/workflows/causal_language_model__WF_PLACE_MODEL_IN_SERVICE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "WF",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::WF_REGISTER_MODEL_V0": {
+      "addresses": {
+        "causal_language_model": "0x006C"
+      },
+      "canonical_path": "canonical/causal_language_model/workflows/causal_language_model__WF_REGISTER_MODEL_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "WF",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0": {
+      "addresses": {
+        "causal_language_model": "0x006D"
+      },
+      "canonical_path": "canonical/causal_language_model/workflows/causal_language_model__WF_RELEASE_HOSTED_RESPONSE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "WF",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::WF_RETRIEVE_USER_PROMPT_RECORD_V0": {
+      "addresses": {
+        "causal_language_model": "0x006E"
+      },
+      "canonical_path": "canonical/causal_language_model/workflows/causal_language_model__WF_RETRIEVE_USER_PROMPT_RECORD_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "WF",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::WF_SUBMIT_USER_PROMPT_V0": {
+      "addresses": {
+        "causal_language_model": "0x006F"
+      },
+      "canonical_path": "canonical/causal_language_model/workflows/causal_language_model__WF_SUBMIT_USER_PROMPT_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "WF",
+      "owner_subdomain": "model_response"
+    },
+    "causal_language_model::WF_WITHDRAW_MODEL_FROM_SERVICE_V0": {
+      "addresses": {
+        "causal_language_model": "0x0070"
+      },
+      "canonical_path": "canonical/causal_language_model/workflows/causal_language_model__WF_WITHDRAW_MODEL_FROM_SERVICE_V0.json",
+      "domain": "causal_language_model",
+      "evidence_paths": {
+        "causal_language_model": "evidence/causal_language_model/evidence_graph.json"
+      },
+      "kind": "WF",
+      "owner_subdomain": "model_response"
+    },
     "compiler::CONSTITUTION_COMPILER_V0": {
       "addresses": {
-        "platform": "0x0039"
+        "platform": "0x004D"
       },
       "canonical_path": "canonical/platform/concerns/compiler__CONSTITUTION_COMPILER_V0.json",
       "domain": "compiler",
@@ -2413,7 +3535,7 @@
     },
     "compiler::INVARIANT_ARTIFACT_CONTENT_HASH_DECLARED_V0": {
       "addresses": {
-        "platform": "0x003A"
+        "platform": "0x004E"
       },
       "canonical_path": "canonical/platform/invariants/compiler__INVARIANT_ARTIFACT_CONTENT_HASH_DECLARED_V0.json",
       "domain": "compiler",
@@ -2425,7 +3547,7 @@
     },
     "compiler::INVARIANT_COMPILER_GOVERNANCE_DECLARED_V0": {
       "addresses": {
-        "platform": "0x003B"
+        "platform": "0x004F"
       },
       "canonical_path": "canonical/platform/invariants/compiler__INVARIANT_COMPILER_GOVERNANCE_DECLARED_V0.json",
       "domain": "compiler",
@@ -2437,7 +3559,7 @@
     },
     "compiler::INVARIANT_COMPILER_NO_EXECUTION_V0": {
       "addresses": {
-        "platform": "0x003C"
+        "platform": "0x0050"
       },
       "canonical_path": "canonical/platform/invariants/compiler__INVARIANT_COMPILER_NO_EXECUTION_V0.json",
       "domain": "compiler",
@@ -2449,7 +3571,7 @@
     },
     "compiler::INVARIANT_HANDLER_REGISTRY_CLOSED_V0": {
       "addresses": {
-        "platform": "0x003D"
+        "platform": "0x0051"
       },
       "canonical_path": "canonical/platform/invariants/compiler__INVARIANT_HANDLER_REGISTRY_CLOSED_V0.json",
       "domain": "compiler",
@@ -2461,7 +3583,7 @@
     },
     "conformance::CONSTITUTION_ASSERT_V0": {
       "addresses": {
-        "platform": "0x003E"
+        "platform": "0x0052"
       },
       "canonical_path": "canonical/platform/concerns/conformance__CONSTITUTION_ASSERT_V0.json",
       "domain": "conformance",
@@ -2471,11 +3593,11 @@
       "kind": "CONSTITUTION",
       "owner_subdomain": "conformance"
     },
-    "conformance::CONSTITUTION_TEST_DATA_V0": {
+    "conformance::CONSTITUTION_TEST_DATA_V2": {
       "addresses": {
-        "platform": "0x003F"
+        "platform": "0x0053"
       },
-      "canonical_path": "canonical/platform/concerns/conformance__CONSTITUTION_TEST_DATA_V0.json",
+      "canonical_path": "canonical/platform/concerns/conformance__CONSTITUTION_TEST_DATA_V2.json",
       "domain": "conformance",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -2485,7 +3607,7 @@
     },
     "conformance::INVARIANT_ASSERT_CAPABLE_OF_REFUSING_V0": {
       "addresses": {
-        "platform": "0x0040"
+        "platform": "0x0054"
       },
       "canonical_path": "canonical/platform/invariants/conformance__INVARIANT_ASSERT_CAPABLE_OF_REFUSING_V0.json",
       "domain": "conformance",
@@ -2497,7 +3619,7 @@
     },
     "conformance::INVARIANT_ASSERT_NOT_RUNTIME_REFERENCED_V0": {
       "addresses": {
-        "platform": "0x0041"
+        "platform": "0x0055"
       },
       "canonical_path": "canonical/platform/invariants/conformance__INVARIANT_ASSERT_NOT_RUNTIME_REFERENCED_V0.json",
       "domain": "conformance",
@@ -2509,7 +3631,7 @@
     },
     "conformance::INVARIANT_ASSERT_PARITY_V0": {
       "addresses": {
-        "platform": "0x0042"
+        "platform": "0x0056"
       },
       "canonical_path": "canonical/platform/invariants/conformance__INVARIANT_ASSERT_PARITY_V0.json",
       "domain": "conformance",
@@ -2519,11 +3641,11 @@
       "kind": "INVARIANT",
       "owner_subdomain": "conformance"
     },
-    "conformance::INVARIANT_CONFORMANCE_ASSERTION_MODE_VALID_V0": {
+    "conformance::INVARIANT_CONFORMANCE_ASSERTION_MODE_VALID_V1": {
       "addresses": {
-        "platform": "0x0043"
+        "platform": "0x0057"
       },
-      "canonical_path": "canonical/platform/invariants/conformance__INVARIANT_CONFORMANCE_ASSERTION_MODE_VALID_V0.json",
+      "canonical_path": "canonical/platform/invariants/conformance__INVARIANT_CONFORMANCE_ASSERTION_MODE_VALID_V1.json",
       "domain": "conformance",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -2533,7 +3655,7 @@
     },
     "conformance::INVARIANT_TEST_DATA_MATCH_CT_OUTPUT_V0": {
       "addresses": {
-        "platform": "0x0044"
+        "platform": "0x0058"
       },
       "canonical_path": "canonical/platform/invariants/conformance__INVARIANT_TEST_DATA_MATCH_CT_OUTPUT_V0.json",
       "domain": "conformance",
@@ -2543,9 +3665,21 @@
       "kind": "INVARIANT",
       "owner_subdomain": "conformance"
     },
+    "conformance::INVARIANT_TEST_DATA_RECORDS_MATCH_PURITY_V0": {
+      "addresses": {
+        "platform": "0x0059"
+      },
+      "canonical_path": "canonical/platform/invariants/conformance__INVARIANT_TEST_DATA_RECORDS_MATCH_PURITY_V0.json",
+      "domain": "conformance",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "INVARIANT",
+      "owner_subdomain": "conformance"
+    },
     "conformance::STRUCTURE_CONFORMANCE_POLICY_V0": {
       "addresses": {
-        "platform": "0x0045"
+        "platform": "0x005A"
       },
       "canonical_path": "canonical/platform/structures/conformance__STRUCTURE_CONFORMANCE_POLICY_V0.json",
       "domain": "conformance",
@@ -2557,7 +3691,7 @@
     },
     "conformance::VOCAB_ENFORCEMENT_STATUS_V0": {
       "addresses": {
-        "platform": "0x0046"
+        "platform": "0x005B"
       },
       "canonical_path": "canonical/platform/vocabulary/conformance__VOCAB_ENFORCEMENT_STATUS_V0.json",
       "domain": "conformance",
@@ -2567,11 +3701,11 @@
       "kind": "VOCAB",
       "owner_subdomain": "conformance"
     },
-    "cryptographic_trust::CONSTITUTION_CRYPTOGRAPHIC_TRUST_V0": {
+    "cryptographic_trust::CONSTITUTION_CRYPTOGRAPHIC_TRUST_V1": {
       "addresses": {
-        "platform": "0x0047"
+        "platform": "0x005C"
       },
-      "canonical_path": "canonical/platform/concerns/cryptographic_trust__CONSTITUTION_CRYPTOGRAPHIC_TRUST_V0.json",
+      "canonical_path": "canonical/platform/concerns/cryptographic_trust__CONSTITUTION_CRYPTOGRAPHIC_TRUST_V1.json",
       "domain": "cryptographic_trust",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -2579,11 +3713,11 @@
       "kind": "CONSTITUTION",
       "owner_subdomain": "cryptographic_trust"
     },
-    "cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V0": {
+    "cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V1": {
       "addresses": {
-        "platform": "0x0048"
+        "platform": "0x005D"
       },
-      "canonical_path": "canonical/platform/invariants/cryptographic_trust__INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V0.json",
+      "canonical_path": "canonical/platform/invariants/cryptographic_trust__INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V1.json",
       "domain": "cryptographic_trust",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -2591,11 +3725,11 @@
       "kind": "INVARIANT",
       "owner_subdomain": "cryptographic_trust"
     },
-    "cryptographic_trust::STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V0": {
+    "cryptographic_trust::STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V1": {
       "addresses": {
-        "platform": "0x0049"
+        "platform": "0x005E"
       },
-      "canonical_path": "canonical/platform/structures/cryptographic_trust__STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V0.json",
+      "canonical_path": "canonical/platform/structures/cryptographic_trust__STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V1.json",
       "domain": "cryptographic_trust",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -2605,7 +3739,7 @@
     },
     "event::CONSTITUTION_EVENT_V0": {
       "addresses": {
-        "platform": "0x004A"
+        "platform": "0x005F"
       },
       "canonical_path": "canonical/platform/concerns/event__CONSTITUTION_EVENT_V0.json",
       "domain": "event",
@@ -2617,7 +3751,7 @@
     },
     "event::INVARIANT_EV_APPEND_ONLY_V0": {
       "addresses": {
-        "platform": "0x004B"
+        "platform": "0x0060"
       },
       "canonical_path": "canonical/platform/invariants/event__INVARIANT_EV_APPEND_ONLY_V0.json",
       "domain": "event",
@@ -2629,7 +3763,7 @@
     },
     "event::INVARIANT_EV_SCHEMA_REQUIRED_V0": {
       "addresses": {
-        "platform": "0x004C"
+        "platform": "0x0061"
       },
       "canonical_path": "canonical/platform/invariants/event__INVARIANT_EV_SCHEMA_REQUIRED_V0.json",
       "domain": "event",
@@ -2641,7 +3775,7 @@
     },
     "execution::CONSTITUTION_EXECUTION_POLICY_V0": {
       "addresses": {
-        "platform": "0x004D"
+        "platform": "0x0062"
       },
       "canonical_path": "canonical/platform/concerns/execution__CONSTITUTION_EXECUTION_POLICY_V0.json",
       "domain": "execution",
@@ -2653,7 +3787,7 @@
     },
     "execution::CONSTITUTION_EXECUTION_V0": {
       "addresses": {
-        "platform": "0x004E"
+        "platform": "0x0063"
       },
       "canonical_path": "canonical/platform/concerns/execution__CONSTITUTION_EXECUTION_V0.json",
       "domain": "execution",
@@ -2665,7 +3799,7 @@
     },
     "execution::INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0": {
       "addresses": {
-        "platform": "0x004F"
+        "platform": "0x0064"
       },
       "canonical_path": "canonical/platform/invariants/execution__INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0.json",
       "domain": "execution",
@@ -2677,7 +3811,7 @@
     },
     "execution::INVARIANT_NO_SMART_EXECUTION_V0": {
       "addresses": {
-        "platform": "0x0050"
+        "platform": "0x0065"
       },
       "canonical_path": "canonical/platform/invariants/execution__INVARIANT_NO_SMART_EXECUTION_V0.json",
       "domain": "execution",
@@ -2689,7 +3823,7 @@
     },
     "execution::INVARIANT_RUNTIME_INVARIANT_WIRED_V0": {
       "addresses": {
-        "platform": "0x0051"
+        "platform": "0x0066"
       },
       "canonical_path": "canonical/platform/invariants/execution__INVARIANT_RUNTIME_INVARIANT_WIRED_V0.json",
       "domain": "execution",
@@ -2701,7 +3835,7 @@
     },
     "execution::STRUCTURE_RUNTIME_EXECUTION_V0": {
       "addresses": {
-        "platform": "0x0052"
+        "platform": "0x0067"
       },
       "canonical_path": "canonical/platform/structures/execution__STRUCTURE_RUNTIME_EXECUTION_V0.json",
       "domain": "execution",
@@ -2711,11 +3845,11 @@
       "kind": "STRUCTURE",
       "owner_subdomain": "execution"
     },
-    "execution_placement::CONSTITUTION_EXECUTION_PLACEMENT_V0": {
+    "execution_placement::CONSTITUTION_EXECUTION_PLACEMENT_V1": {
       "addresses": {
-        "platform": "0x0053"
+        "platform": "0x0068"
       },
-      "canonical_path": "canonical/platform/concerns/execution_placement__CONSTITUTION_EXECUTION_PLACEMENT_V0.json",
+      "canonical_path": "canonical/platform/concerns/execution_placement__CONSTITUTION_EXECUTION_PLACEMENT_V1.json",
       "domain": "execution_placement",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -2723,11 +3857,11 @@
       "kind": "CONSTITUTION",
       "owner_subdomain": "execution_placement"
     },
-    "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0": {
+    "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V1": {
       "addresses": {
-        "platform": "0x0054"
+        "platform": "0x0069"
       },
-      "canonical_path": "canonical/platform/invariants/execution_placement__INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0.json",
+      "canonical_path": "canonical/platform/invariants/execution_placement__INVARIANT_EXECUTION_PLACEMENT_DECLARED_V1.json",
       "domain": "execution_placement",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -2735,11 +3869,11 @@
       "kind": "INVARIANT",
       "owner_subdomain": "execution_placement"
     },
-    "execution_placement::STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V0": {
+    "execution_placement::STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V1": {
       "addresses": {
-        "platform": "0x0055"
+        "platform": "0x006A"
       },
-      "canonical_path": "canonical/platform/structures/execution_placement__STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V0.json",
+      "canonical_path": "canonical/platform/structures/execution_placement__STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V1.json",
       "domain": "execution_placement",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -2749,7 +3883,7 @@
     },
     "execution_scheduling::CONSTITUTION_EXECUTION_SCHEDULING_V0": {
       "addresses": {
-        "platform": "0x0056"
+        "platform": "0x006B"
       },
       "canonical_path": "canonical/platform/concerns/execution_scheduling__CONSTITUTION_EXECUTION_SCHEDULING_V0.json",
       "domain": "execution_scheduling",
@@ -2761,7 +3895,7 @@
     },
     "execution_scheduling::INVARIANT_EXECUTION_SCHEDULING_DECLARED_V0": {
       "addresses": {
-        "platform": "0x0057"
+        "platform": "0x006C"
       },
       "canonical_path": "canonical/platform/invariants/execution_scheduling__INVARIANT_EXECUTION_SCHEDULING_DECLARED_V0.json",
       "domain": "execution_scheduling",
@@ -2773,7 +3907,7 @@
     },
     "execution_scheduling::STRUCTURE_EXECUTION_SCHEDULING_SERIAL_SINGLE_WORKER_V0": {
       "addresses": {
-        "platform": "0x0058"
+        "platform": "0x006D"
       },
       "canonical_path": "canonical/platform/structures/execution_scheduling__STRUCTURE_EXECUTION_SCHEDULING_SERIAL_SINGLE_WORKER_V0.json",
       "domain": "execution_scheduling",
@@ -2785,7 +3919,7 @@
     },
     "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0": {
       "addresses": {
-        "platform": "0x0059"
+        "platform": "0x006E"
       },
       "canonical_path": "canonical/platform/concerns/execution_topology__CONSTITUTION_EXECUTION_TOPOLOGY_V0.json",
       "domain": "execution_topology",
@@ -2797,7 +3931,7 @@
     },
     "execution_topology::INVARIANT_NO_RUNTIME_TOPOLOGY_SYNTHESIS_V0": {
       "addresses": {
-        "platform": "0x005A"
+        "platform": "0x006F"
       },
       "canonical_path": "canonical/platform/invariants/execution_topology__INVARIANT_NO_RUNTIME_TOPOLOGY_SYNTHESIS_V0.json",
       "domain": "execution_topology",
@@ -2809,7 +3943,7 @@
     },
     "execution_topology::INVARIANT_TOPOLOGY_ACYCLIC_V0": {
       "addresses": {
-        "platform": "0x005B"
+        "platform": "0x0070"
       },
       "canonical_path": "canonical/platform/invariants/execution_topology__INVARIANT_TOPOLOGY_ACYCLIC_V0.json",
       "domain": "execution_topology",
@@ -2821,7 +3955,7 @@
     },
     "execution_topology::INVARIANT_TOPOLOGY_AUTHORITY_ORTHOGONAL_V0": {
       "addresses": {
-        "platform": "0x005C"
+        "platform": "0x0071"
       },
       "canonical_path": "canonical/platform/invariants/execution_topology__INVARIANT_TOPOLOGY_AUTHORITY_ORTHOGONAL_V0.json",
       "domain": "execution_topology",
@@ -2833,7 +3967,7 @@
     },
     "execution_topology::INVARIANT_TOPOLOGY_CONTRACT_CLOSED_V0": {
       "addresses": {
-        "platform": "0x005D"
+        "platform": "0x0072"
       },
       "canonical_path": "canonical/platform/invariants/execution_topology__INVARIANT_TOPOLOGY_CONTRACT_CLOSED_V0.json",
       "domain": "execution_topology",
@@ -2845,7 +3979,7 @@
     },
     "execution_topology::INVARIANT_TOPOLOGY_IMMUTABLE_AFTER_COMPILATION_V0": {
       "addresses": {
-        "platform": "0x005E"
+        "platform": "0x0073"
       },
       "canonical_path": "canonical/platform/invariants/execution_topology__INVARIANT_TOPOLOGY_IMMUTABLE_AFTER_COMPILATION_V0.json",
       "domain": "execution_topology",
@@ -2857,7 +3991,7 @@
     },
     "execution_topology::INVARIANT_TOPOLOGY_ROUTING_COMPLETE_V0": {
       "addresses": {
-        "platform": "0x005F"
+        "platform": "0x0074"
       },
       "canonical_path": "canonical/platform/invariants/execution_topology__INVARIANT_TOPOLOGY_ROUTING_COMPLETE_V0.json",
       "domain": "execution_topology",
@@ -2869,7 +4003,7 @@
     },
     "execution_topology::INVARIANT_TOPOLOGY_STEP_DECLARED_V0": {
       "addresses": {
-        "platform": "0x0060"
+        "platform": "0x0075"
       },
       "canonical_path": "canonical/platform/invariants/execution_topology__INVARIANT_TOPOLOGY_STEP_DECLARED_V0.json",
       "domain": "execution_topology",
@@ -2881,7 +4015,7 @@
     },
     "execution_topology::INVARIANT_TOPOLOGY_STEP_ID_UNIQUE_V0": {
       "addresses": {
-        "platform": "0x0061"
+        "platform": "0x0076"
       },
       "canonical_path": "canonical/platform/invariants/execution_topology__INVARIANT_TOPOLOGY_STEP_ID_UNIQUE_V0.json",
       "domain": "execution_topology",
@@ -2893,7 +4027,7 @@
     },
     "execution_topology::INVARIANT_TOPOLOGY_SURFACE_CANONICAL_V0": {
       "addresses": {
-        "platform": "0x0062"
+        "platform": "0x0077"
       },
       "canonical_path": "canonical/platform/invariants/execution_topology__INVARIANT_TOPOLOGY_SURFACE_CANONICAL_V0.json",
       "domain": "execution_topology",
@@ -2905,7 +4039,7 @@
     },
     "execution_topology::INVARIANT_TOPOLOGY_TRANSPORT_ORTHOGONAL_V0": {
       "addresses": {
-        "platform": "0x0063"
+        "platform": "0x0078"
       },
       "canonical_path": "canonical/platform/invariants/execution_topology__INVARIANT_TOPOLOGY_TRANSPORT_ORTHOGONAL_V0.json",
       "domain": "execution_topology",
@@ -2917,7 +4051,7 @@
     },
     "federation::CONSTITUTION_FEDERATION_BOUNDARY_V0": {
       "addresses": {
-        "platform": "0x0064"
+        "platform": "0x0079"
       },
       "canonical_path": "canonical/platform/concerns/federation__CONSTITUTION_FEDERATION_BOUNDARY_V0.json",
       "domain": "federation",
@@ -2929,7 +4063,7 @@
     },
     "federation::INVARIANT_AUTHORITY_CONSTITUTED_V0": {
       "addresses": {
-        "platform": "0x0065"
+        "platform": "0x007A"
       },
       "canonical_path": "canonical/platform/invariants/federation__INVARIANT_AUTHORITY_CONSTITUTED_V0.json",
       "domain": "federation",
@@ -2941,7 +4075,7 @@
     },
     "federation::INVARIANT_CONCERN_NOT_AUTHORITY_V0": {
       "addresses": {
-        "platform": "0x0066"
+        "platform": "0x007B"
       },
       "canonical_path": "canonical/platform/invariants/federation__INVARIANT_CONCERN_NOT_AUTHORITY_V0.json",
       "domain": "federation",
@@ -2953,7 +4087,7 @@
     },
     "governance::CONSTITUTION_GOVERNANCE_V0": {
       "addresses": {
-        "platform": "0x0067"
+        "platform": "0x007C"
       },
       "canonical_path": "canonical/platform/concerns/governance__CONSTITUTION_GOVERNANCE_V0.json",
       "domain": "governance",
@@ -2965,7 +4099,7 @@
     },
     "governance::CONSTITUTION_INVARIANTS_V0": {
       "addresses": {
-        "platform": "0x0068"
+        "platform": "0x007D"
       },
       "canonical_path": "canonical/platform/concerns/governance__CONSTITUTION_INVARIANTS_V0.json",
       "domain": "governance",
@@ -2977,7 +4111,7 @@
     },
     "governance::INVARIANT_GOVERNANCE_DECLARATION_RESOLVES_V0": {
       "addresses": {
-        "platform": "0x0069"
+        "platform": "0x007E"
       },
       "canonical_path": "canonical/platform/invariants/governance__INVARIANT_GOVERNANCE_DECLARATION_RESOLVES_V0.json",
       "domain": "governance",
@@ -2989,7 +4123,7 @@
     },
     "inspection::STRUCTURE_BUILD_INSPECTION_CONFIG_V0": {
       "addresses": {
-        "inspection": "0x0031"
+        "inspection": "0x0038"
       },
       "canonical_path": "canonical/inspection/structures/inspection__STRUCTURE_BUILD_INSPECTION_CONFIG_V0.json",
       "domain": "inspection",
@@ -3001,7 +4135,7 @@
     },
     "inspection::TE_SI_ARTIFACT_INDEXED_V0": {
       "addresses": {
-        "inspection": "0x0032"
+        "inspection": "0x0039"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_ARTIFACT_INDEXED_V0.json",
       "domain": "inspection",
@@ -3013,7 +4147,7 @@
     },
     "inspection::TE_SI_ARTIFACT_LIST_V0": {
       "addresses": {
-        "inspection": "0x0033"
+        "inspection": "0x003A"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_ARTIFACT_LIST_V0.json",
       "domain": "inspection",
@@ -3025,7 +4159,7 @@
     },
     "inspection::TE_SI_ARTIFACT_REFS_V0": {
       "addresses": {
-        "inspection": "0x0034"
+        "inspection": "0x003B"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_ARTIFACT_REFS_V0.json",
       "domain": "inspection",
@@ -3037,7 +4171,7 @@
     },
     "inspection::TE_SI_ARTIFACT_SHOW_V0": {
       "addresses": {
-        "inspection": "0x0035"
+        "inspection": "0x003C"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_ARTIFACT_SHOW_V0.json",
       "domain": "inspection",
@@ -3049,7 +4183,7 @@
     },
     "inspection::TE_SI_BEHAVIOR_LOGIC_LIST_V0": {
       "addresses": {
-        "inspection": "0x0036"
+        "inspection": "0x003D"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_BEHAVIOR_LOGIC_LIST_V0.json",
       "domain": "inspection",
@@ -3061,7 +4195,7 @@
     },
     "inspection::TE_SI_BEHAVIOR_LOGIC_SHOW_V0": {
       "addresses": {
-        "inspection": "0x0037"
+        "inspection": "0x003E"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_BEHAVIOR_LOGIC_SHOW_V0.json",
       "domain": "inspection",
@@ -3073,7 +4207,7 @@
     },
     "inspection::TE_SI_CAPABILITY_SURFACE_V0": {
       "addresses": {
-        "inspection": "0x0038"
+        "inspection": "0x003F"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_CAPABILITY_SURFACE_V0.json",
       "domain": "inspection",
@@ -3085,7 +4219,7 @@
     },
     "inspection::TE_SI_CATALOG_V0": {
       "addresses": {
-        "inspection": "0x0039"
+        "inspection": "0x0040"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_CATALOG_V0.json",
       "domain": "inspection",
@@ -3095,9 +4229,21 @@
       "kind": "TE",
       "owner_subdomain": "inspection"
     },
+    "inspection::TE_SI_EXECUTION_EXPLAIN_V0": {
+      "addresses": {
+        "inspection": "0x0041"
+      },
+      "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_EXECUTION_EXPLAIN_V0.json",
+      "domain": "inspection",
+      "evidence_paths": {
+        "inspection": "evidence/inspection/evidence_graph.json"
+      },
+      "kind": "TE",
+      "owner_subdomain": "inspection"
+    },
     "inspection::TE_SI_RULE_SET_LIST_V0": {
       "addresses": {
-        "inspection": "0x003A"
+        "inspection": "0x0042"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_RULE_SET_LIST_V0.json",
       "domain": "inspection",
@@ -3109,7 +4255,7 @@
     },
     "inspection::TE_SI_SNAPSHOT_SUMMARY_V0": {
       "addresses": {
-        "inspection": "0x003B"
+        "inspection": "0x0043"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_SNAPSHOT_SUMMARY_V0.json",
       "domain": "inspection",
@@ -3121,7 +4267,7 @@
     },
     "inspection::TE_SI_SNAPSHOT_TOPOLOGY_V0": {
       "addresses": {
-        "inspection": "0x003C"
+        "inspection": "0x0044"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_SNAPSHOT_TOPOLOGY_V0.json",
       "domain": "inspection",
@@ -3133,7 +4279,7 @@
     },
     "inspection::TE_SI_SNAPSHOT_VALIDATE_V0": {
       "addresses": {
-        "inspection": "0x003D"
+        "inspection": "0x0045"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_SNAPSHOT_VALIDATE_V0.json",
       "domain": "inspection",
@@ -3145,7 +4291,7 @@
     },
     "inspection::TE_SI_STORE_CONSUMERS_V0": {
       "addresses": {
-        "inspection": "0x003E"
+        "inspection": "0x0046"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_STORE_CONSUMERS_V0.json",
       "domain": "inspection",
@@ -3157,7 +4303,7 @@
     },
     "inspection::TE_SI_STORE_LIST_V0": {
       "addresses": {
-        "inspection": "0x003F"
+        "inspection": "0x0047"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_STORE_LIST_V0.json",
       "domain": "inspection",
@@ -3169,7 +4315,7 @@
     },
     "inspection::TE_SI_STORE_SHOW_V0": {
       "addresses": {
-        "inspection": "0x0040"
+        "inspection": "0x0048"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_STORE_SHOW_V0.json",
       "domain": "inspection",
@@ -3181,7 +4327,7 @@
     },
     "inspection::TE_SI_TOPOLOGY_IMPACT_V0": {
       "addresses": {
-        "inspection": "0x0041"
+        "inspection": "0x0049"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_TOPOLOGY_IMPACT_V0.json",
       "domain": "inspection",
@@ -3193,7 +4339,7 @@
     },
     "inspection::TE_SI_VOCAB_RESOLVE_V0": {
       "addresses": {
-        "inspection": "0x0042"
+        "inspection": "0x004A"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_VOCAB_RESOLVE_V0.json",
       "domain": "inspection",
@@ -3205,7 +4351,7 @@
     },
     "inspection::TE_SI_VOCAB_SEARCH_V0": {
       "addresses": {
-        "inspection": "0x0043"
+        "inspection": "0x004B"
       },
       "canonical_path": "canonical/inspection/transport/egress/inspection__TE_SI_VOCAB_SEARCH_V0.json",
       "domain": "inspection",
@@ -3217,7 +4363,7 @@
     },
     "inspection::TI_SI_ARTIFACT_INDEXED_V0": {
       "addresses": {
-        "inspection": "0x0044"
+        "inspection": "0x004C"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_ARTIFACT_INDEXED_V0.json",
       "domain": "inspection",
@@ -3229,7 +4375,7 @@
     },
     "inspection::TI_SI_ARTIFACT_LIST_V0": {
       "addresses": {
-        "inspection": "0x0045"
+        "inspection": "0x004D"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_ARTIFACT_LIST_V0.json",
       "domain": "inspection",
@@ -3241,7 +4387,7 @@
     },
     "inspection::TI_SI_ARTIFACT_REFS_V0": {
       "addresses": {
-        "inspection": "0x0046"
+        "inspection": "0x004E"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_ARTIFACT_REFS_V0.json",
       "domain": "inspection",
@@ -3253,7 +4399,7 @@
     },
     "inspection::TI_SI_ARTIFACT_SHOW_V0": {
       "addresses": {
-        "inspection": "0x0047"
+        "inspection": "0x004F"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_ARTIFACT_SHOW_V0.json",
       "domain": "inspection",
@@ -3265,7 +4411,7 @@
     },
     "inspection::TI_SI_BEHAVIOR_LOGIC_LIST_V0": {
       "addresses": {
-        "inspection": "0x0048"
+        "inspection": "0x0050"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_BEHAVIOR_LOGIC_LIST_V0.json",
       "domain": "inspection",
@@ -3277,7 +4423,7 @@
     },
     "inspection::TI_SI_BEHAVIOR_LOGIC_SHOW_V0": {
       "addresses": {
-        "inspection": "0x0049"
+        "inspection": "0x0051"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_BEHAVIOR_LOGIC_SHOW_V0.json",
       "domain": "inspection",
@@ -3289,7 +4435,7 @@
     },
     "inspection::TI_SI_CAPABILITY_SURFACE_V0": {
       "addresses": {
-        "inspection": "0x004A"
+        "inspection": "0x0052"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_CAPABILITY_SURFACE_V0.json",
       "domain": "inspection",
@@ -3301,7 +4447,7 @@
     },
     "inspection::TI_SI_CATALOG_V0": {
       "addresses": {
-        "inspection": "0x004B"
+        "inspection": "0x0053"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_CATALOG_V0.json",
       "domain": "inspection",
@@ -3311,9 +4457,21 @@
       "kind": "TI",
       "owner_subdomain": "inspection"
     },
+    "inspection::TI_SI_EXECUTION_EXPLAIN_V0": {
+      "addresses": {
+        "inspection": "0x0054"
+      },
+      "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_EXECUTION_EXPLAIN_V0.json",
+      "domain": "inspection",
+      "evidence_paths": {
+        "inspection": "evidence/inspection/evidence_graph.json"
+      },
+      "kind": "TI",
+      "owner_subdomain": "inspection"
+    },
     "inspection::TI_SI_RULE_SET_LIST_V0": {
       "addresses": {
-        "inspection": "0x004C"
+        "inspection": "0x0055"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_RULE_SET_LIST_V0.json",
       "domain": "inspection",
@@ -3325,7 +4483,7 @@
     },
     "inspection::TI_SI_SNAPSHOT_SUMMARY_V0": {
       "addresses": {
-        "inspection": "0x004D"
+        "inspection": "0x0056"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_SNAPSHOT_SUMMARY_V0.json",
       "domain": "inspection",
@@ -3337,7 +4495,7 @@
     },
     "inspection::TI_SI_SNAPSHOT_TOPOLOGY_V0": {
       "addresses": {
-        "inspection": "0x004E"
+        "inspection": "0x0057"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_SNAPSHOT_TOPOLOGY_V0.json",
       "domain": "inspection",
@@ -3349,7 +4507,7 @@
     },
     "inspection::TI_SI_SNAPSHOT_VALIDATE_V0": {
       "addresses": {
-        "inspection": "0x004F"
+        "inspection": "0x0058"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_SNAPSHOT_VALIDATE_V0.json",
       "domain": "inspection",
@@ -3361,7 +4519,7 @@
     },
     "inspection::TI_SI_STORE_CONSUMERS_V0": {
       "addresses": {
-        "inspection": "0x0050"
+        "inspection": "0x0059"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_STORE_CONSUMERS_V0.json",
       "domain": "inspection",
@@ -3373,7 +4531,7 @@
     },
     "inspection::TI_SI_STORE_LIST_V0": {
       "addresses": {
-        "inspection": "0x0051"
+        "inspection": "0x005A"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_STORE_LIST_V0.json",
       "domain": "inspection",
@@ -3385,7 +4543,7 @@
     },
     "inspection::TI_SI_STORE_SHOW_V0": {
       "addresses": {
-        "inspection": "0x0052"
+        "inspection": "0x005B"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_STORE_SHOW_V0.json",
       "domain": "inspection",
@@ -3397,7 +4555,7 @@
     },
     "inspection::TI_SI_TOPOLOGY_IMPACT_V0": {
       "addresses": {
-        "inspection": "0x0053"
+        "inspection": "0x005C"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_TOPOLOGY_IMPACT_V0.json",
       "domain": "inspection",
@@ -3409,7 +4567,7 @@
     },
     "inspection::TI_SI_VOCAB_RESOLVE_V0": {
       "addresses": {
-        "inspection": "0x0054"
+        "inspection": "0x005D"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_VOCAB_RESOLVE_V0.json",
       "domain": "inspection",
@@ -3421,7 +4579,7 @@
     },
     "inspection::TI_SI_VOCAB_SEARCH_V0": {
       "addresses": {
-        "inspection": "0x0055"
+        "inspection": "0x005E"
       },
       "canonical_path": "canonical/inspection/ingress_intents/inspection__TI_SI_VOCAB_SEARCH_V0.json",
       "domain": "inspection",
@@ -3433,7 +4591,7 @@
     },
     "intent::CONSTITUTION_INTENT_V0": {
       "addresses": {
-        "platform": "0x006A"
+        "platform": "0x007F"
       },
       "canonical_path": "canonical/platform/concerns/intent__CONSTITUTION_INTENT_V0.json",
       "domain": "intent",
@@ -3445,7 +4603,7 @@
     },
     "intent::INVARIANT_IN_NO_EXECUTION_LOGIC_V0": {
       "addresses": {
-        "platform": "0x006B"
+        "platform": "0x0080"
       },
       "canonical_path": "canonical/platform/invariants/intent__INVARIANT_IN_NO_EXECUTION_LOGIC_V0.json",
       "domain": "intent",
@@ -3457,7 +4615,7 @@
     },
     "intent::INVARIANT_IN_SCHEMA_REQUIRED_V0": {
       "addresses": {
-        "platform": "0x006C"
+        "platform": "0x0081"
       },
       "canonical_path": "canonical/platform/invariants/intent__INVARIANT_IN_SCHEMA_REQUIRED_V0.json",
       "domain": "intent",
@@ -3469,7 +4627,7 @@
     },
     "intent::INVARIANT_IN_WORKFLOW_BINDING_V0": {
       "addresses": {
-        "platform": "0x006D"
+        "platform": "0x0082"
       },
       "canonical_path": "canonical/platform/invariants/intent__INVARIANT_IN_WORKFLOW_BINDING_V0.json",
       "domain": "intent",
@@ -3481,7 +4639,7 @@
     },
     "lifecycle::CONSTITUTION_CHANGE_MGMT_V0": {
       "addresses": {
-        "platform": "0x006E"
+        "platform": "0x0083"
       },
       "canonical_path": "canonical/platform/concerns/lifecycle__CONSTITUTION_CHANGE_MGMT_V0.json",
       "domain": "lifecycle",
@@ -3493,7 +4651,7 @@
     },
     "lifecycle::CONSTITUTION_CONSTRUCTION_V0": {
       "addresses": {
-        "platform": "0x006F"
+        "platform": "0x0084"
       },
       "canonical_path": "canonical/platform/concerns/lifecycle__CONSTITUTION_CONSTRUCTION_V0.json",
       "domain": "lifecycle",
@@ -3505,7 +4663,7 @@
     },
     "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0": {
       "addresses": {
-        "platform": "0x0070"
+        "platform": "0x0085"
       },
       "canonical_path": "canonical/platform/concerns/runtime_binding__CONSTITUTION_RUNTIME_BINDING_V0.json",
       "domain": "runtime_binding",
@@ -3517,7 +4675,7 @@
     },
     "runtime_binding::INVARIANT_BINDING_INTEGRITY_V0": {
       "addresses": {
-        "platform": "0x0071"
+        "platform": "0x0086"
       },
       "canonical_path": "canonical/platform/invariants/runtime_binding__INVARIANT_BINDING_INTEGRITY_V0.json",
       "domain": "runtime_binding",
@@ -3529,7 +4687,7 @@
     },
     "runtime_binding::INVARIANT_BINDING_SURFACE_CLOSED_V0": {
       "addresses": {
-        "platform": "0x0072"
+        "platform": "0x0087"
       },
       "canonical_path": "canonical/platform/invariants/runtime_binding__INVARIANT_BINDING_SURFACE_CLOSED_V0.json",
       "domain": "runtime_binding",
@@ -3541,7 +4699,7 @@
     },
     "runtime_binding::INVARIANT_RB_BINDING_POLICY_CONFORMANCE_V0": {
       "addresses": {
-        "platform": "0x0073"
+        "platform": "0x0088"
       },
       "canonical_path": "canonical/platform/invariants/runtime_binding__INVARIANT_RB_BINDING_POLICY_CONFORMANCE_V0.json",
       "domain": "runtime_binding",
@@ -3553,7 +4711,7 @@
     },
     "runtime_binding::INVARIANT_RB_CS_ONLY_V0": {
       "addresses": {
-        "platform": "0x0074"
+        "platform": "0x0089"
       },
       "canonical_path": "canonical/platform/invariants/runtime_binding__INVARIANT_RB_CS_ONLY_V0.json",
       "domain": "runtime_binding",
@@ -3565,7 +4723,7 @@
     },
     "runtime_binding::INVARIANT_RB_NO_LOGIC_V0": {
       "addresses": {
-        "platform": "0x0075"
+        "platform": "0x008A"
       },
       "canonical_path": "canonical/platform/invariants/runtime_binding__INVARIANT_RB_NO_LOGIC_V0.json",
       "domain": "runtime_binding",
@@ -3577,7 +4735,7 @@
     },
     "runtime_binding::INVARIANT_RB_PARAMETERS_DECLARED_V0": {
       "addresses": {
-        "platform": "0x0076"
+        "platform": "0x008B"
       },
       "canonical_path": "canonical/platform/invariants/runtime_binding__INVARIANT_RB_PARAMETERS_DECLARED_V0.json",
       "domain": "runtime_binding",
@@ -3589,7 +4747,7 @@
     },
     "runtime_binding::INVARIANT_RB_STORAGE_SUBDOMAIN_OWNED_V0": {
       "addresses": {
-        "platform": "0x0077"
+        "platform": "0x008C"
       },
       "canonical_path": "canonical/platform/invariants/runtime_binding__INVARIANT_RB_STORAGE_SUBDOMAIN_OWNED_V0.json",
       "domain": "runtime_binding",
@@ -3601,7 +4759,7 @@
     },
     "security_domain::CONSTITUTION_SECURITY_DOMAIN_V0": {
       "addresses": {
-        "platform": "0x0078"
+        "platform": "0x008D"
       },
       "canonical_path": "canonical/platform/concerns/security_domain__CONSTITUTION_SECURITY_DOMAIN_V0.json",
       "domain": "security_domain",
@@ -3613,7 +4771,7 @@
     },
     "security_domain::INVARIANT_SECURITY_DOMAIN_DECLARED_V0": {
       "addresses": {
-        "platform": "0x0079"
+        "platform": "0x008E"
       },
       "canonical_path": "canonical/platform/invariants/security_domain__INVARIANT_SECURITY_DOMAIN_DECLARED_V0.json",
       "domain": "security_domain",
@@ -3625,7 +4783,7 @@
     },
     "security_domain::STRUCTURE_SECURITY_DOMAIN_UNCLASSIFIED_LOCAL_V0": {
       "addresses": {
-        "platform": "0x007A"
+        "platform": "0x008F"
       },
       "canonical_path": "canonical/platform/structures/security_domain__STRUCTURE_SECURITY_DOMAIN_UNCLASSIFIED_LOCAL_V0.json",
       "domain": "security_domain",
@@ -3637,7 +4795,7 @@
     },
     "structure::CONSTITUTION_STRUCTURE_V0": {
       "addresses": {
-        "platform": "0x007B"
+        "platform": "0x0090"
       },
       "canonical_path": "canonical/platform/concerns/structure__CONSTITUTION_STRUCTURE_V0.json",
       "domain": "structure",
@@ -3649,7 +4807,7 @@
     },
     "structure::INVARIANT_SCHEMA_DESCRIPTION_WELL_FORMED_V0": {
       "addresses": {
-        "platform": "0x007C"
+        "platform": "0x0091"
       },
       "canonical_path": "canonical/platform/invariants/structure__INVARIANT_SCHEMA_DESCRIPTION_WELL_FORMED_V0.json",
       "domain": "structure",
@@ -3661,7 +4819,7 @@
     },
     "structure::INVARIANT_STRUCTURE_PATHS_WELL_FORMED_V0": {
       "addresses": {
-        "platform": "0x007D"
+        "platform": "0x0092"
       },
       "canonical_path": "canonical/platform/invariants/structure__INVARIANT_STRUCTURE_PATHS_WELL_FORMED_V0.json",
       "domain": "structure",
@@ -3673,7 +4831,7 @@
     },
     "structure::STRUCTURE_ARTIFACT_IDENTITY_V0": {
       "addresses": {
-        "platform": "0x007E"
+        "platform": "0x0093"
       },
       "canonical_path": "canonical/platform/structures/structure__STRUCTURE_ARTIFACT_IDENTITY_V0.json",
       "domain": "structure",
@@ -3683,11 +4841,11 @@
       "kind": "STRUCTURE",
       "owner_subdomain": "structure"
     },
-    "structure::STRUCTURE_BUILD_PLATFORM_CONFIG_V0": {
+    "structure::STRUCTURE_BOUNDARY_SELECTION_V0": {
       "addresses": {
-        "platform": "0x007F"
+        "platform": "0x0094"
       },
-      "canonical_path": "canonical/platform/structures/structure__STRUCTURE_BUILD_PLATFORM_CONFIG_V0.json",
+      "canonical_path": "canonical/platform/structures/structure__STRUCTURE_BOUNDARY_SELECTION_V0.json",
       "domain": "structure",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -3695,11 +4853,35 @@
       "kind": "STRUCTURE",
       "owner_subdomain": "structure"
     },
-    "structure::STRUCTURE_BUILD_PLATFORM_CONFIG_V1": {
+    "structure::STRUCTURE_BUILD_PLATFORM_CONFIG_V2": {
       "addresses": {
-        "platform": "0x0080"
+        "platform": "0x0095"
       },
-      "canonical_path": "canonical/platform/structures/structure__STRUCTURE_BUILD_PLATFORM_CONFIG_V1.json",
+      "canonical_path": "canonical/platform/structures/structure__STRUCTURE_BUILD_PLATFORM_CONFIG_V2.json",
+      "domain": "structure",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "STRUCTURE",
+      "owner_subdomain": "structure"
+    },
+    "structure::STRUCTURE_BUILD_PLATFORM_FEDERATED_CONFIG_V2": {
+      "addresses": {
+        "platform": "0x0096"
+      },
+      "canonical_path": "canonical/platform/structures/structure__STRUCTURE_BUILD_PLATFORM_FEDERATED_CONFIG_V2.json",
+      "domain": "structure",
+      "evidence_paths": {
+        "platform": "evidence/platform/evidence_graph.json"
+      },
+      "kind": "STRUCTURE",
+      "owner_subdomain": "structure"
+    },
+    "structure::STRUCTURE_BUILD_PLATFORM_MULTIWORKER_CONFIG_V2": {
+      "addresses": {
+        "platform": "0x0097"
+      },
+      "canonical_path": "canonical/platform/structures/structure__STRUCTURE_BUILD_PLATFORM_MULTIWORKER_CONFIG_V2.json",
       "domain": "structure",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -3709,7 +4891,7 @@
     },
     "structure::STRUCTURE_DISCOVERY_V0": {
       "addresses": {
-        "platform": "0x0081"
+        "platform": "0x0098"
       },
       "canonical_path": "canonical/platform/structures/structure__STRUCTURE_DISCOVERY_V0.json",
       "domain": "structure",
@@ -3721,7 +4903,7 @@
     },
     "structure::STRUCTURE_FQDN_TREE_V0": {
       "addresses": {
-        "platform": "0x0082"
+        "platform": "0x0099"
       },
       "canonical_path": "canonical/platform/structures/structure__STRUCTURE_FQDN_TREE_V0.json",
       "domain": "structure",
@@ -3733,7 +4915,7 @@
     },
     "structure::STRUCTURE_IDENTITY_V0": {
       "addresses": {
-        "platform": "0x0083"
+        "platform": "0x009A"
       },
       "canonical_path": "canonical/platform/structures/structure__STRUCTURE_IDENTITY_V0.json",
       "domain": "structure",
@@ -3745,7 +4927,7 @@
     },
     "structure::STRUCTURE_MODULE_DATA_ROOTS_V0": {
       "addresses": {
-        "platform": "0x0084"
+        "platform": "0x009B"
       },
       "canonical_path": "canonical/platform/structures/structure__STRUCTURE_MODULE_DATA_ROOTS_V0.json",
       "domain": "structure",
@@ -3757,7 +4939,7 @@
     },
     "structure::STRUCTURE_REGISTRY_LOCATION_GOVERNANCE_V0": {
       "addresses": {
-        "platform": "0x0085"
+        "platform": "0x009C"
       },
       "canonical_path": "canonical/platform/structures/structure__STRUCTURE_REGISTRY_LOCATION_GOVERNANCE_V0.json",
       "domain": "structure",
@@ -3769,7 +4951,7 @@
     },
     "structure::STRUCTURE_REGISTRY_LOCATION_REUSABLE_SIDE_EFFECTS_V0": {
       "addresses": {
-        "platform": "0x0086"
+        "platform": "0x009D"
       },
       "canonical_path": "canonical/platform/structures/structure__STRUCTURE_REGISTRY_LOCATION_REUSABLE_SIDE_EFFECTS_V0.json",
       "domain": "structure",
@@ -3781,7 +4963,7 @@
     },
     "structure::STRUCTURE_REGISTRY_LOCATION_REUSABLE_TRANSFORMS_V0": {
       "addresses": {
-        "platform": "0x0087"
+        "platform": "0x009E"
       },
       "canonical_path": "canonical/platform/structures/structure__STRUCTURE_REGISTRY_LOCATION_REUSABLE_TRANSFORMS_V0.json",
       "domain": "structure",
@@ -3793,7 +4975,7 @@
     },
     "structure::STRUCTURE_SCHEMA_DISPATCH_V0": {
       "addresses": {
-        "platform": "0x0088"
+        "platform": "0x009F"
       },
       "canonical_path": "canonical/platform/structures/structure__STRUCTURE_SCHEMA_DISPATCH_V0.json",
       "domain": "structure",
@@ -3805,7 +4987,7 @@
     },
     "structure::VOCAB_SCHEMA_DISPOSITION_V0": {
       "addresses": {
-        "platform": "0x0089"
+        "platform": "0x00A0"
       },
       "canonical_path": "canonical/platform/vocabulary/structure__VOCAB_SCHEMA_DISPOSITION_V0.json",
       "domain": "structure",
@@ -3817,7 +4999,7 @@
     },
     "surface_contract::INVARIANT_NO_UNDECLARED_BEHAVIOR_SURFACE_V0": {
       "addresses": {
-        "platform": "0x008A"
+        "platform": "0x00A1"
       },
       "canonical_path": "canonical/platform/invariants/surface_contract__INVARIANT_NO_UNDECLARED_BEHAVIOR_SURFACE_V0.json",
       "domain": "surface_contract",
@@ -3829,7 +5011,7 @@
     },
     "surface_contract::INVARIANT_PROTOCOL_SURFACE_CLOSED_V0": {
       "addresses": {
-        "platform": "0x008B"
+        "platform": "0x00A2"
       },
       "canonical_path": "canonical/platform/invariants/surface_contract__INVARIANT_PROTOCOL_SURFACE_CLOSED_V0.json",
       "domain": "surface_contract",
@@ -3841,7 +5023,7 @@
     },
     "surface_contract::SURFACE_CONTRACT_CT_PURE_V0": {
       "addresses": {
-        "platform": "0x008C"
+        "platform": "0x00A3"
       },
       "canonical_path": "canonical/platform/surface_contracts/surface_contract__SURFACE_CONTRACT_CT_PURE_V0.json",
       "domain": "surface_contract",
@@ -3853,7 +5035,7 @@
     },
     "surface_contract::SURFACE_CONTRACT_REGISTRY_COUNT_V0": {
       "addresses": {
-        "platform": "0x008D"
+        "platform": "0x00A4"
       },
       "canonical_path": "canonical/platform/surface_contracts/surface_contract__SURFACE_CONTRACT_REGISTRY_COUNT_V0.json",
       "domain": "surface_contract",
@@ -3865,7 +5047,7 @@
     },
     "surface_contract::SURFACE_CONTRACT_REGISTRY_DEREGISTER_V0": {
       "addresses": {
-        "platform": "0x008E"
+        "platform": "0x00A5"
       },
       "canonical_path": "canonical/platform/surface_contracts/surface_contract__SURFACE_CONTRACT_REGISTRY_DEREGISTER_V0.json",
       "domain": "surface_contract",
@@ -3877,7 +5059,7 @@
     },
     "surface_contract::SURFACE_CONTRACT_REGISTRY_REGISTER_V0": {
       "addresses": {
-        "platform": "0x008F"
+        "platform": "0x00A6"
       },
       "canonical_path": "canonical/platform/surface_contracts/surface_contract__SURFACE_CONTRACT_REGISTRY_REGISTER_V0.json",
       "domain": "surface_contract",
@@ -3889,7 +5071,7 @@
     },
     "surface_contract::SURFACE_CONTRACT_REGISTRY_RESOLVE_V0": {
       "addresses": {
-        "platform": "0x0090"
+        "platform": "0x00A7"
       },
       "canonical_path": "canonical/platform/surface_contracts/surface_contract__SURFACE_CONTRACT_REGISTRY_RESOLVE_V0.json",
       "domain": "surface_contract",
@@ -3901,7 +5083,7 @@
     },
     "surface_contract::SURFACE_CONTRACT_STORAGE_APPENDONLY_APPEND_V0": {
       "addresses": {
-        "platform": "0x0091"
+        "platform": "0x00A8"
       },
       "canonical_path": "canonical/platform/surface_contracts/surface_contract__SURFACE_CONTRACT_STORAGE_APPENDONLY_APPEND_V0.json",
       "domain": "surface_contract",
@@ -3913,7 +5095,7 @@
     },
     "surface_contract::SURFACE_CONTRACT_STORAGE_READ_V0": {
       "addresses": {
-        "platform": "0x0092"
+        "platform": "0x00A9"
       },
       "canonical_path": "canonical/platform/surface_contracts/surface_contract__SURFACE_CONTRACT_STORAGE_READ_V0.json",
       "domain": "surface_contract",
@@ -3925,7 +5107,7 @@
     },
     "surface_contract::SURFACE_CONTRACT_STORAGE_WRITE_V0": {
       "addresses": {
-        "platform": "0x0093"
+        "platform": "0x00AA"
       },
       "canonical_path": "canonical/platform/surface_contracts/surface_contract__SURFACE_CONTRACT_STORAGE_WRITE_V0.json",
       "domain": "surface_contract",
@@ -3937,7 +5119,7 @@
     },
     "trace::CONSTITUTION_TRACE_EXECUTION_V0": {
       "addresses": {
-        "platform": "0x0094"
+        "platform": "0x00AB"
       },
       "canonical_path": "canonical/platform/concerns/trace__CONSTITUTION_TRACE_EXECUTION_V0.json",
       "domain": "trace",
@@ -3949,7 +5131,7 @@
     },
     "transformation::AC_GATE_REVIEWER_V0": {
       "addresses": {
-        "transformation": "0x0040"
+        "transformation": "0x0047"
       },
       "canonical_path": "canonical/transformation/actors/transformation__AC_GATE_REVIEWER_V0.json",
       "domain": "transformation",
@@ -3961,7 +5143,7 @@
     },
     "transformation::AC_REGISTER_AUTHOR_V0": {
       "addresses": {
-        "transformation": "0x0041"
+        "transformation": "0x0048"
       },
       "canonical_path": "canonical/transformation/actors/transformation__AC_REGISTER_AUTHOR_V0.json",
       "domain": "transformation",
@@ -3973,7 +5155,7 @@
     },
     "transformation::AC_SEED_AUTHOR_V0": {
       "addresses": {
-        "transformation": "0x0042"
+        "transformation": "0x0049"
       },
       "canonical_path": "canonical/transformation/actors/transformation__AC_SEED_AUTHOR_V0.json",
       "domain": "transformation",
@@ -3985,7 +5167,7 @@
     },
     "transformation::CC_CONSTRUCT_ARTIFACTS_V0": {
       "addresses": {
-        "transformation": "0x0043"
+        "transformation": "0x004A"
       },
       "canonical_path": "canonical/transformation/capability_contracts/transformation__CC_CONSTRUCT_ARTIFACTS_V0.json",
       "domain": "transformation",
@@ -3997,7 +5179,7 @@
     },
     "transformation::CC_JUDGE_AGAINST_COMPOSITION_V0": {
       "addresses": {
-        "transformation": "0x0044"
+        "transformation": "0x004B"
       },
       "canonical_path": "canonical/transformation/capability_contracts/transformation__CC_JUDGE_AGAINST_COMPOSITION_V0.json",
       "domain": "transformation",
@@ -4009,7 +5191,7 @@
     },
     "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0": {
       "addresses": {
-        "transformation": "0x0045"
+        "transformation": "0x004C"
       },
       "canonical_path": "canonical/transformation/capability_contracts/transformation__CC_JUDGE_AGAINST_SNAPSHOT_V0.json",
       "domain": "transformation",
@@ -4021,7 +5203,7 @@
     },
     "transformation::CC_JUDGE_DOCUMENT_V0": {
       "addresses": {
-        "transformation": "0x0046"
+        "transformation": "0x004D"
       },
       "canonical_path": "canonical/transformation/capability_contracts/transformation__CC_JUDGE_DOCUMENT_V0.json",
       "domain": "transformation",
@@ -4033,7 +5215,7 @@
     },
     "transformation::CC_PERSIST_ARTIFACTS_V0": {
       "addresses": {
-        "transformation": "0x0047"
+        "transformation": "0x004E"
       },
       "canonical_path": "canonical/transformation/capability_contracts/transformation__CC_PERSIST_ARTIFACTS_V0.json",
       "domain": "transformation",
@@ -4045,7 +5227,7 @@
     },
     "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0": {
       "addresses": {
-        "transformation": "0x0048"
+        "transformation": "0x004F"
       },
       "canonical_path": "canonical/transformation/capability_transforms/transformation__CT_PURE_ATTRIBUTE_PROVENANCE_V0.json",
       "domain": "transformation",
@@ -4057,7 +5239,7 @@
     },
     "transformation::CT_PURE_EVALUATE_RULES_V0": {
       "addresses": {
-        "transformation": "0x0049"
+        "transformation": "0x0050"
       },
       "canonical_path": "canonical/transformation/capability_transforms/transformation__CT_PURE_EVALUATE_RULES_V0.json",
       "domain": "transformation",
@@ -4069,7 +5251,7 @@
     },
     "transformation::CT_PURE_MEASURE_COMPLETENESS_V0": {
       "addresses": {
-        "transformation": "0x004A"
+        "transformation": "0x0051"
       },
       "canonical_path": "canonical/transformation/capability_transforms/transformation__CT_PURE_MEASURE_COMPLETENESS_V0.json",
       "domain": "transformation",
@@ -4081,7 +5263,7 @@
     },
     "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0": {
       "addresses": {
-        "transformation": "0x004B"
+        "transformation": "0x0052"
       },
       "canonical_path": "canonical/transformation/capability_transforms/transformation__CT_PURE_PARSE_PRIOR_PHASES_V0.json",
       "domain": "transformation",
@@ -4093,7 +5275,7 @@
     },
     "transformation::CT_PURE_PARSE_REGISTERS_V0": {
       "addresses": {
-        "transformation": "0x004C"
+        "transformation": "0x0053"
       },
       "canonical_path": "canonical/transformation/capability_transforms/transformation__CT_PURE_PARSE_REGISTERS_V0.json",
       "domain": "transformation",
@@ -4105,7 +5287,7 @@
     },
     "transformation::CT_PURE_RENDER_ARTIFACTS_V0": {
       "addresses": {
-        "transformation": "0x004D"
+        "transformation": "0x0054"
       },
       "canonical_path": "canonical/transformation/capability_transforms/transformation__CT_PURE_RENDER_ARTIFACTS_V0.json",
       "domain": "transformation",
@@ -4117,7 +5299,7 @@
     },
     "transformation::IN_ANALYSIS_LOOP_SUBMITTED_V0": {
       "addresses": {
-        "transformation": "0x004E"
+        "transformation": "0x0055"
       },
       "canonical_path": "canonical/transformation/intents/transformation__IN_ANALYSIS_LOOP_SUBMITTED_V0.json",
       "domain": "transformation",
@@ -4129,7 +5311,7 @@
     },
     "transformation::IN_AUTHORING_MANDATE_SUBMITTED_V0": {
       "addresses": {
-        "transformation": "0x004F"
+        "transformation": "0x0056"
       },
       "canonical_path": "canonical/transformation/intents/transformation__IN_AUTHORING_MANDATE_SUBMITTED_V0.json",
       "domain": "transformation",
@@ -4141,7 +5323,7 @@
     },
     "transformation::IN_BUSINESS_INTENT_SUBMITTED_V0": {
       "addresses": {
-        "transformation": "0x0050"
+        "transformation": "0x0057"
       },
       "canonical_path": "canonical/transformation/intents/transformation__IN_BUSINESS_INTENT_SUBMITTED_V0.json",
       "domain": "transformation",
@@ -4153,7 +5335,7 @@
     },
     "transformation::IN_BUSINESS_MODEL_SUBMITTED_V0": {
       "addresses": {
-        "transformation": "0x0051"
+        "transformation": "0x0058"
       },
       "canonical_path": "canonical/transformation/intents/transformation__IN_BUSINESS_MODEL_SUBMITTED_V0.json",
       "domain": "transformation",
@@ -4165,7 +5347,7 @@
     },
     "transformation::IN_CHANGE_REQUEST_SUBMITTED_V0": {
       "addresses": {
-        "transformation": "0x0052"
+        "transformation": "0x0059"
       },
       "canonical_path": "canonical/transformation/intents/transformation__IN_CHANGE_REQUEST_SUBMITTED_V0.json",
       "domain": "transformation",
@@ -4177,7 +5359,7 @@
     },
     "transformation::IN_CONSTRUCTION_REQUESTED_V0": {
       "addresses": {
-        "transformation": "0x0053"
+        "transformation": "0x005A"
       },
       "canonical_path": "canonical/transformation/intents/transformation__IN_CONSTRUCTION_REQUESTED_V0.json",
       "domain": "transformation",
@@ -4189,7 +5371,7 @@
     },
     "transformation::IN_DESIGN_INTENT_SUBMITTED_V0": {
       "addresses": {
-        "transformation": "0x0054"
+        "transformation": "0x005B"
       },
       "canonical_path": "canonical/transformation/intents/transformation__IN_DESIGN_INTENT_SUBMITTED_V0.json",
       "domain": "transformation",
@@ -4201,7 +5383,7 @@
     },
     "transformation::IN_DOMAIN_MODEL_SUBMITTED_V0": {
       "addresses": {
-        "transformation": "0x0055"
+        "transformation": "0x005C"
       },
       "canonical_path": "canonical/transformation/intents/transformation__IN_DOMAIN_MODEL_SUBMITTED_V0.json",
       "domain": "transformation",
@@ -4213,7 +5395,7 @@
     },
     "transformation::IN_GOVERNANCE_INTENT_SUBMITTED_V0": {
       "addresses": {
-        "transformation": "0x0056"
+        "transformation": "0x005D"
       },
       "canonical_path": "canonical/transformation/intents/transformation__IN_GOVERNANCE_INTENT_SUBMITTED_V0.json",
       "domain": "transformation",
@@ -4225,7 +5407,7 @@
     },
     "transformation::IN_SEED_SUBMITTED_V0": {
       "addresses": {
-        "transformation": "0x0057"
+        "transformation": "0x005E"
       },
       "canonical_path": "canonical/transformation/intents/transformation__IN_SEED_SUBMITTED_V0.json",
       "domain": "transformation",
@@ -4237,7 +5419,7 @@
     },
     "transformation::RB_CONSTRUCTION_BINDINGS_V0": {
       "addresses": {
-        "transformation": "0x0058"
+        "transformation": "0x005F"
       },
       "canonical_path": "canonical/transformation/runtime_bindings/transformation__RB_CONSTRUCTION_BINDINGS_V0.json",
       "domain": "transformation",
@@ -4249,7 +5431,7 @@
     },
     "transformation::RB_TRANSFORMATION_BINDINGS_V0": {
       "addresses": {
-        "transformation": "0x0059"
+        "transformation": "0x0060"
       },
       "canonical_path": "canonical/transformation/runtime_bindings/transformation__RB_TRANSFORMATION_BINDINGS_V0.json",
       "domain": "transformation",
@@ -4261,7 +5443,7 @@
     },
     "transformation::STRUCTURE_BUILD_TRANSFORMATION_CONFIG_V0": {
       "addresses": {
-        "transformation": "0x005A"
+        "transformation": "0x0061"
       },
       "canonical_path": "canonical/transformation/structures/transformation__STRUCTURE_BUILD_TRANSFORMATION_CONFIG_V0.json",
       "domain": "transformation",
@@ -4273,7 +5455,7 @@
     },
     "transformation::STRUCTURE_FIGURE_OF_MERIT_POLICY_V0": {
       "addresses": {
-        "transformation": "0x005B"
+        "transformation": "0x0062"
       },
       "canonical_path": "canonical/transformation/structures/transformation__STRUCTURE_FIGURE_OF_MERIT_POLICY_V0.json",
       "domain": "transformation",
@@ -4285,7 +5467,7 @@
     },
     "transformation::STRUCTURE_FIGURE_OF_MERIT_POLICY_V1": {
       "addresses": {
-        "transformation": "0x005C"
+        "transformation": "0x0063"
       },
       "canonical_path": "canonical/transformation/structures/transformation__STRUCTURE_FIGURE_OF_MERIT_POLICY_V1.json",
       "domain": "transformation",
@@ -4297,7 +5479,7 @@
     },
     "transformation::WF_CONSTRUCT_ARTIFACTS_V0": {
       "addresses": {
-        "transformation": "0x005D"
+        "transformation": "0x0064"
       },
       "canonical_path": "canonical/transformation/workflows/transformation__WF_CONSTRUCT_ARTIFACTS_V0.json",
       "domain": "transformation",
@@ -4309,7 +5491,7 @@
     },
     "transformation::WF_P0_SEED_ADMISSIBILITY_V0": {
       "addresses": {
-        "transformation": "0x005E"
+        "transformation": "0x0065"
       },
       "canonical_path": "canonical/transformation/workflows/transformation__WF_P0_SEED_ADMISSIBILITY_V0.json",
       "domain": "transformation",
@@ -4321,7 +5503,7 @@
     },
     "transformation::WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0": {
       "addresses": {
-        "transformation": "0x005F"
+        "transformation": "0x0066"
       },
       "canonical_path": "canonical/transformation/workflows/transformation__WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0.json",
       "domain": "transformation",
@@ -4333,7 +5515,7 @@
     },
     "transformation::WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0": {
       "addresses": {
-        "transformation": "0x0060"
+        "transformation": "0x0067"
       },
       "canonical_path": "canonical/transformation/workflows/transformation__WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0.json",
       "domain": "transformation",
@@ -4345,7 +5527,7 @@
     },
     "transformation::WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0": {
       "addresses": {
-        "transformation": "0x0061"
+        "transformation": "0x0068"
       },
       "canonical_path": "canonical/transformation/workflows/transformation__WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0.json",
       "domain": "transformation",
@@ -4357,7 +5539,7 @@
     },
     "transformation::WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0": {
       "addresses": {
-        "transformation": "0x0062"
+        "transformation": "0x0069"
       },
       "canonical_path": "canonical/transformation/workflows/transformation__WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0.json",
       "domain": "transformation",
@@ -4369,7 +5551,7 @@
     },
     "transformation::WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0": {
       "addresses": {
-        "transformation": "0x0063"
+        "transformation": "0x006A"
       },
       "canonical_path": "canonical/transformation/workflows/transformation__WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0.json",
       "domain": "transformation",
@@ -4381,7 +5563,7 @@
     },
     "transformation::WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0": {
       "addresses": {
-        "transformation": "0x0064"
+        "transformation": "0x006B"
       },
       "canonical_path": "canonical/transformation/workflows/transformation__WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0.json",
       "domain": "transformation",
@@ -4393,7 +5575,7 @@
     },
     "transformation::WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0": {
       "addresses": {
-        "transformation": "0x0065"
+        "transformation": "0x006C"
       },
       "canonical_path": "canonical/transformation/workflows/transformation__WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0.json",
       "domain": "transformation",
@@ -4405,7 +5587,7 @@
     },
     "transformation::WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0": {
       "addresses": {
-        "transformation": "0x0066"
+        "transformation": "0x006D"
       },
       "canonical_path": "canonical/transformation/workflows/transformation__WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0.json",
       "domain": "transformation",
@@ -4417,7 +5599,7 @@
     },
     "transport::CONSTITUTION_ADMISSION_V0": {
       "addresses": {
-        "platform": "0x0095"
+        "platform": "0x00AC"
       },
       "canonical_path": "canonical/platform/concerns/transport__CONSTITUTION_ADMISSION_V0.json",
       "domain": "transport",
@@ -4429,7 +5611,7 @@
     },
     "transport::CONSTITUTION_TRANSPORT_EGRESS_V0": {
       "addresses": {
-        "platform": "0x0096"
+        "platform": "0x00AD"
       },
       "canonical_path": "canonical/platform/concerns/transport__CONSTITUTION_TRANSPORT_EGRESS_V0.json",
       "domain": "transport",
@@ -4441,7 +5623,7 @@
     },
     "transport::CONSTITUTION_TRANSPORT_ENVELOPE_V0": {
       "addresses": {
-        "platform": "0x0097"
+        "platform": "0x00AE"
       },
       "canonical_path": "canonical/platform/concerns/transport__CONSTITUTION_TRANSPORT_ENVELOPE_V0.json",
       "domain": "transport",
@@ -4453,7 +5635,7 @@
     },
     "transport::CONSTITUTION_TRANSPORT_INGRESS_V0": {
       "addresses": {
-        "platform": "0x0098"
+        "platform": "0x00AF"
       },
       "canonical_path": "canonical/platform/concerns/transport__CONSTITUTION_TRANSPORT_INGRESS_V0.json",
       "domain": "transport",
@@ -4465,7 +5647,7 @@
     },
     "transport::INVARIANT_INSPECTION_BOUNDARY_COMPOSED_V0": {
       "addresses": {
-        "platform": "0x0099"
+        "platform": "0x00B0"
       },
       "canonical_path": "canonical/platform/invariants/transport__INVARIANT_INSPECTION_BOUNDARY_COMPOSED_V0.json",
       "domain": "transport",
@@ -4477,7 +5659,7 @@
     },
     "transport::INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0": {
       "addresses": {
-        "platform": "0x009A"
+        "platform": "0x00B1"
       },
       "canonical_path": "canonical/platform/invariants/transport__INVARIANT_TRANSPORT_CANONICAL_NORMALIZATION_V0.json",
       "domain": "transport",
@@ -4489,7 +5671,7 @@
     },
     "transport::INVARIANT_TRANSPORT_NO_DYNAMIC_ROUTING_V0": {
       "addresses": {
-        "platform": "0x009B"
+        "platform": "0x00B2"
       },
       "canonical_path": "canonical/platform/invariants/transport__INVARIANT_TRANSPORT_NO_DYNAMIC_ROUTING_V0.json",
       "domain": "transport",
@@ -4501,7 +5683,7 @@
     },
     "transport::INVARIANT_TRANSPORT_NO_WORKFLOW_SEMANTICS_V0": {
       "addresses": {
-        "platform": "0x009C"
+        "platform": "0x00B3"
       },
       "canonical_path": "canonical/platform/invariants/transport__INVARIANT_TRANSPORT_NO_WORKFLOW_SEMANTICS_V0.json",
       "domain": "transport",
@@ -4513,7 +5695,7 @@
     },
     "transport::INVARIANT_TRANSPORT_OPERATION_IDENTITY_INDEPENDENCE_V0": {
       "addresses": {
-        "platform": "0x009D"
+        "platform": "0x00B4"
       },
       "canonical_path": "canonical/platform/invariants/transport__INVARIANT_TRANSPORT_OPERATION_IDENTITY_INDEPENDENCE_V0.json",
       "domain": "transport",
@@ -4525,7 +5707,7 @@
     },
     "transport::INVARIANT_TRANSPORT_RESPONSE_PROJECTION_EXTERNAL_V0": {
       "addresses": {
-        "platform": "0x009E"
+        "platform": "0x00B5"
       },
       "canonical_path": "canonical/platform/invariants/transport__INVARIANT_TRANSPORT_RESPONSE_PROJECTION_EXTERNAL_V0.json",
       "domain": "transport",
@@ -4537,7 +5719,7 @@
     },
     "transport::INVARIANT_TRANSPORT_RESULT_CLASS_PROTOCOL_INDEPENDENCE_V0": {
       "addresses": {
-        "platform": "0x009F"
+        "platform": "0x00B6"
       },
       "canonical_path": "canonical/platform/invariants/transport__INVARIANT_TRANSPORT_RESULT_CLASS_PROTOCOL_INDEPENDENCE_V0.json",
       "domain": "transport",
@@ -4549,7 +5731,7 @@
     },
     "transport::INVARIANT_TRANSPORT_TARGET_EXISTS_V0": {
       "addresses": {
-        "platform": "0x00A0"
+        "platform": "0x00B7"
       },
       "canonical_path": "canonical/platform/invariants/transport__INVARIANT_TRANSPORT_TARGET_EXISTS_V0.json",
       "domain": "transport",
@@ -4561,7 +5743,7 @@
     },
     "vocabulary::CONSTITUTION_VOCABULARY_V0": {
       "addresses": {
-        "platform": "0x00A1"
+        "platform": "0x00B8"
       },
       "canonical_path": "canonical/platform/concerns/vocabulary__CONSTITUTION_VOCABULARY_V0.json",
       "domain": "vocabulary",
@@ -4573,7 +5755,7 @@
     },
     "vocabulary::INVARIANT_VOCABULARY_SYMBOLS_WELL_FORMED_V0": {
       "addresses": {
-        "platform": "0x00A2"
+        "platform": "0x00B9"
       },
       "canonical_path": "canonical/platform/invariants/vocabulary__INVARIANT_VOCABULARY_SYMBOLS_WELL_FORMED_V0.json",
       "domain": "vocabulary",
@@ -4585,7 +5767,7 @@
     },
     "vocabulary::STRUCTURE_BUILD_VOCABULARY_AGGREGATE_V0": {
       "addresses": {
-        "platform": "0x00A3"
+        "platform": "0x00BA"
       },
       "canonical_path": "canonical/platform/structures/vocabulary__STRUCTURE_BUILD_VOCABULARY_AGGREGATE_V0.json",
       "domain": "vocabulary",
@@ -4595,11 +5777,11 @@
       "kind": "STRUCTURE",
       "owner_subdomain": "vocabulary"
     },
-    "vocabulary::VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V0": {
+    "vocabulary::VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V1": {
       "addresses": {
-        "platform": "0x00A4"
+        "platform": "0x00BB"
       },
-      "canonical_path": "canonical/platform/vocabulary/vocabulary__VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V0.json",
+      "canonical_path": "canonical/platform/vocabulary/vocabulary__VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V1.json",
       "domain": "vocabulary",
       "evidence_paths": {
         "platform": "evidence/platform/evidence_graph.json"
@@ -4609,7 +5791,7 @@
     },
     "vocabulary::VOCAB_EXECUTION_STATES_V0": {
       "addresses": {
-        "platform": "0x00A5"
+        "platform": "0x00BC"
       },
       "canonical_path": "canonical/platform/vocabulary/vocabulary__VOCAB_EXECUTION_STATES_V0.json",
       "domain": "vocabulary",
@@ -4621,7 +5803,7 @@
     },
     "vocabulary::VOCAB_HUMAN_BLOCK_CONSTRAINTS_V0": {
       "addresses": {
-        "platform": "0x00A6"
+        "platform": "0x00BD"
       },
       "canonical_path": "canonical/platform/vocabulary/vocabulary__VOCAB_HUMAN_BLOCK_CONSTRAINTS_V0.json",
       "domain": "vocabulary",
@@ -4633,7 +5815,7 @@
     },
     "vocabulary::VOCAB_LANGUAGE_CONSTRAINTS_V0": {
       "addresses": {
-        "platform": "0x00A7"
+        "platform": "0x00BE"
       },
       "canonical_path": "canonical/platform/vocabulary/vocabulary__VOCAB_LANGUAGE_CONSTRAINTS_V0.json",
       "domain": "vocabulary",
@@ -4645,7 +5827,7 @@
     },
     "vocabulary::VOCAB_PROTOCOL_KINDS_V0": {
       "addresses": {
-        "platform": "0x00A8"
+        "platform": "0x00BF"
       },
       "canonical_path": "canonical/platform/vocabulary/vocabulary__VOCAB_PROTOCOL_KINDS_V0.json",
       "domain": "vocabulary",
@@ -4657,7 +5839,7 @@
     },
     "workflow::CONSTITUTION_WORKFLOW_V0": {
       "addresses": {
-        "platform": "0x00A9"
+        "platform": "0x00C0"
       },
       "canonical_path": "canonical/platform/concerns/workflow__CONSTITUTION_WORKFLOW_V0.json",
       "domain": "workflow",
@@ -4669,7 +5851,7 @@
     },
     "workflow::INVARIANT_WF_ANNOUNCEMENT_DISTINCT_V0": {
       "addresses": {
-        "platform": "0x00AA"
+        "platform": "0x00C1"
       },
       "canonical_path": "canonical/platform/invariants/workflow__INVARIANT_WF_ANNOUNCEMENT_DISTINCT_V0.json",
       "domain": "workflow",
@@ -4681,7 +5863,7 @@
     },
     "workflow::INVARIANT_WF_CC_ONLY_NODES_V0": {
       "addresses": {
-        "platform": "0x00AB"
+        "platform": "0x00C2"
       },
       "canonical_path": "canonical/platform/invariants/workflow__INVARIANT_WF_CC_ONLY_NODES_V0.json",
       "domain": "workflow",
@@ -4693,7 +5875,7 @@
     },
     "workflow::INVARIANT_WF_ENTRY_INTENT_V0": {
       "addresses": {
-        "platform": "0x00AC"
+        "platform": "0x00C3"
       },
       "canonical_path": "canonical/platform/invariants/workflow__INVARIANT_WF_ENTRY_INTENT_V0.json",
       "domain": "workflow",
@@ -4705,7 +5887,7 @@
     },
     "workflow::INVARIANT_WF_EXECUTION_PATH_VALID_V0": {
       "addresses": {
-        "platform": "0x00AD"
+        "platform": "0x00C4"
       },
       "canonical_path": "canonical/platform/invariants/workflow__INVARIANT_WF_EXECUTION_PATH_VALID_V0.json",
       "domain": "workflow",
@@ -4717,7 +5899,7 @@
     },
     "workflow::INVARIANT_WF_NODE_KEY_BINDING_UNIQUE_V0": {
       "addresses": {
-        "platform": "0x00AE"
+        "platform": "0x00C5"
       },
       "canonical_path": "canonical/platform/invariants/workflow__INVARIANT_WF_NODE_KEY_BINDING_UNIQUE_V0.json",
       "domain": "workflow",
@@ -4729,7 +5911,7 @@
     },
     "workload::AC_REFERENCE_ACTOR_V0": {
       "addresses": {
-        "workload": "0x0051"
+        "workload": "0x0058"
       },
       "canonical_path": "canonical/workload/actors/workload__AC_REFERENCE_ACTOR_V0.json",
       "domain": "workload",
@@ -4741,7 +5923,7 @@
     },
     "workload::CC_COMPUTE_SEQUENCES_V0": {
       "addresses": {
-        "workload": "0x0052"
+        "workload": "0x0059"
       },
       "canonical_path": "canonical/workload/capability_contracts/workload__CC_COMPUTE_SEQUENCES_V0.json",
       "domain": "workload",
@@ -4753,7 +5935,7 @@
     },
     "workload::CC_STORE_RESULTS_V0": {
       "addresses": {
-        "workload": "0x0053"
+        "workload": "0x005A"
       },
       "canonical_path": "canonical/workload/capability_contracts/workload__CC_STORE_RESULTS_V0.json",
       "domain": "workload",
@@ -4765,7 +5947,7 @@
     },
     "workload::CC_VERIFY_TERMINATION_V0": {
       "addresses": {
-        "workload": "0x0054"
+        "workload": "0x005B"
       },
       "canonical_path": "canonical/workload/capability_contracts/workload__CC_VERIFY_TERMINATION_V0.json",
       "domain": "workload",
@@ -4777,7 +5959,7 @@
     },
     "workload::CT_PURE_COLLATZ_STEP_V0": {
       "addresses": {
-        "workload": "0x0055"
+        "workload": "0x005C"
       },
       "canonical_path": "canonical/workload/capability_transforms/workload__CT_PURE_COLLATZ_STEP_V0.json",
       "domain": "workload",
@@ -4789,7 +5971,7 @@
     },
     "workload::CT_PURE_TERMINATION_CHECK_V0": {
       "addresses": {
-        "workload": "0x0056"
+        "workload": "0x005D"
       },
       "canonical_path": "canonical/workload/capability_transforms/workload__CT_PURE_TERMINATION_CHECK_V0.json",
       "domain": "workload",
@@ -4801,7 +5983,7 @@
     },
     "workload::EV_CONJECTURE_EVALUATED_V0": {
       "addresses": {
-        "workload": "0x0057"
+        "workload": "0x005E"
       },
       "canonical_path": "canonical/workload/events/workload__EV_CONJECTURE_EVALUATED_V0.json",
       "domain": "workload",
@@ -4813,7 +5995,7 @@
     },
     "workload::IN_COLLATZ_INPUT_VALIDATED_V0": {
       "addresses": {
-        "workload": "0x0058"
+        "workload": "0x005F"
       },
       "canonical_path": "canonical/workload/intents/workload__IN_COLLATZ_INPUT_VALIDATED_V0.json",
       "domain": "workload",
@@ -4825,7 +6007,7 @@
     },
     "workload::RB_COLLATZ_V0": {
       "addresses": {
-        "workload": "0x0059"
+        "workload": "0x0060"
       },
       "canonical_path": "canonical/workload/runtime_bindings/workload__RB_COLLATZ_V0.json",
       "domain": "workload",
@@ -4837,7 +6019,7 @@
     },
     "workload::STRUCTURE_BUILD_WORKLOAD_CONFIG_V0": {
       "addresses": {
-        "workload": "0x005A"
+        "workload": "0x0061"
       },
       "canonical_path": "canonical/workload/structures/workload__STRUCTURE_BUILD_WORKLOAD_CONFIG_V0.json",
       "domain": "workload",
@@ -4849,7 +6031,7 @@
     },
     "workload::STRUCTURE_COLLATZ_STORAGE_V0": {
       "addresses": {
-        "workload": "0x005B"
+        "workload": "0x0062"
       },
       "canonical_path": "canonical/workload/structures/workload__STRUCTURE_COLLATZ_STORAGE_V0.json",
       "domain": "workload",
@@ -4861,7 +6043,7 @@
     },
     "workload::TE_COLLATZ_COMPUTE_V0": {
       "addresses": {
-        "workload": "0x005C"
+        "workload": "0x0063"
       },
       "canonical_path": "canonical/workload/transport/egress/workload__TE_COLLATZ_COMPUTE_V0.json",
       "domain": "workload",
@@ -4873,7 +6055,7 @@
     },
     "workload::TI_COLLATZ_COMPUTE_V0": {
       "addresses": {
-        "workload": "0x005D"
+        "workload": "0x0064"
       },
       "canonical_path": "canonical/workload/ingress_intents/workload__TI_COLLATZ_COMPUTE_V0.json",
       "domain": "workload",
@@ -4885,7 +6067,7 @@
     },
     "workload::WF_COLLATZ_CONJECTURE_V0": {
       "addresses": {
-        "workload": "0x005E"
+        "workload": "0x0065"
       },
       "canonical_path": "canonical/workload/workflows/workload__WF_COLLATZ_CONJECTURE_V0.json",
       "domain": "workload",

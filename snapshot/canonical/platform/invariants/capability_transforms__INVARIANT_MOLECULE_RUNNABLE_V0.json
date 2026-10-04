@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_MOLECULE_RUNNABLE_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_MOLECULE_RUNNABLE_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::INVARIANT_MOLECULE_RUNNABLE_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - CT\n```\n\n## Summary\n\nEvery molecule in a composition can be run: each step and each loop body resolves to a transform the runtime can run, and no molecule contains itself.\n\n## What this realizes\nFor every `CT` artifact declaring `ct_kind: molecule`:\n\n1. It MUST declare a non-empty `atom_stream` and an `emit`.\n2. Every step MUST be of kind `atom`, `molecule` or `loop`.\n3. An `atom` step MUST name a transform declaring `ct_kind: atom`; a `molecule` step and a `loop`\n   body MUST name a transform declaring `ct_kind: molecule`.\n4. A `loop` step MUST state the collection it runs over.\n5. No molecule MAY reach itself through its steps, directly or through others.\n6. `emit` MUST name a step the molecule declares.\n\n## Why this is checked here rather than trusted\n\nA molecule that cannot be run is a declaration nothing can keep, and a molecule reaching itself is repetition with no stated bound. Both are knowable when the composition is built, so neither is left to fail when an act runs.\n",
+  "content_hash": "c41a0967587049971b9a555f97461843eb80138689e80865ce6f35fc482c792c",
+  "fqdn_id": "capability_transforms::INVARIANT_MOLECULE_RUNNABLE_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CT"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_transforms::INVARIANT_MOLECULE_RUNNABLE_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

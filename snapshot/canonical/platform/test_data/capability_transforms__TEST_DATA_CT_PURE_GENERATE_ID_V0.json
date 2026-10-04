@@ -1,0 +1,74 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_GENERATE_ID_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_GENERATE_ID_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_GENERATE_ID_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_GENERATE_ID_V0\ntarget: capability_transforms::CT_PURE_GENERATE_ID_V0\ncases:\n- case_id: generate_id_string_data\n  expected_outcome: SUCCESS\n  bindings:\n    prefix: AC\n    data: test_account\n  expected:\n    id: AC_ac8cc683f338b84f\n- case_id: generate_id_object_data\n  expected_outcome: SUCCESS\n  bindings:\n    prefix: WF\n    data:\n      workflow: build\n      version: v1\n  expected:\n    id: WF_75382b9a6ab93c66\n- case_id: generate_id_numeric_data\n  expected_outcome: SUCCESS\n  bindings:\n    prefix: TX\n    data: 12345\n  expected:\n    id: TX_d3ff95909dfb2231\n- case_id: generate_id_deterministic\n  expected_outcome: SUCCESS\n  bindings:\n    prefix: IN\n    data: consistent\n  expected:\n    id: IN_c918e775137f8254\n```\n\n## Intent\n\nTest deterministic ID generation using Keccak-256 hashing.\n",
+  "content_hash": "1eb55a583fbe3b3a1db6c1af1cc38899b0a70bd8f595224b4f676fc420aa8f21",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_GENERATE_ID_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "data": "test_account",
+          "prefix": "AC"
+        },
+        "case_id": "generate_id_string_data",
+        "expected": {
+          "id": "AC_ac8cc683f338b84f"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "data": {
+            "version": "v1",
+            "workflow": "build"
+          },
+          "prefix": "WF"
+        },
+        "case_id": "generate_id_object_data",
+        "expected": {
+          "id": "WF_75382b9a6ab93c66"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "data": 12345,
+          "prefix": "TX"
+        },
+        "case_id": "generate_id_numeric_data",
+        "expected": {
+          "id": "TX_d3ff95909dfb2231"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "data": "consistent",
+          "prefix": "IN"
+        },
+        "case_id": "generate_id_deterministic",
+        "expected": {
+          "id": "IN_c918e775137f8254"
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_GENERATE_ID_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_GENERATE_ID_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

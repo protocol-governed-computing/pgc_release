@@ -79,8 +79,7 @@
         "steps": [
           {
             "bindings": {
-              "parameters": "in.staff_credentials",
-              "rules": "in.authorization_rules"
+              "parameters": "in.staff_credentials"
             },
             "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
             "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
@@ -99,7 +98,6 @@
       "input_bindings": {
         "type": "wf_boundary",
         "bindings": {
-          "authorization_rules": "IN.authorization_rules",
           "staff_credentials": "IN.staff_credentials"
         }
       }

@@ -1,0 +1,50 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_ASSEMBLE_MODEL_READING_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "question": "$.inputs.question",
+          "reading_capacity": "$.inputs.reading_capacity",
+          "supporting_material": "$.inputs.supporting_material",
+          "system_prompt": "$.inputs.system_prompt"
+        },
+        "atom": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_assemble_model_reading_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0",
+    "input_types": {
+      "question": "string",
+      "reading_capacity": "integer",
+      "supporting_material": "string",
+      "system_prompt": "string"
+    },
+    "inputs": {
+      "question": "What is my balance?",
+      "reading_capacity": 5,
+      "supporting_material": "Account 12345678 balance 40.",
+      "system_prompt": "Answer briefly."
+    },
+    "outputs": {
+      "reading": {
+        "from": "__atom_result__"
+      },
+      "reading_length": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {},
+  "expected_outcome": "VIOLATION",
+  "fqdn": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0::refuses_reading_too_long",
+  "test_data_source": "causal_language_model::TEST_DATA_CT_PURE_ASSEMBLE_MODEL_READING_V0"
+}

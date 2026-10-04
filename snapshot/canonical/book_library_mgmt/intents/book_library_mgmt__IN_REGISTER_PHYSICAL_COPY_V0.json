@@ -1,8 +1,8 @@
 {
   "artifact_code": "IN_REGISTER_PHYSICAL_COPY_V0",
   "artifact_type": "IN",
-  "content": "# IN_REGISTER_PHYSICAL_COPY_V0\n\n## 1. Intent\n\nA request to register a further copy against a registered book\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_REGISTER_PHYSICAL_COPY_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to register a further copy against a registered book\n  workflow: WF_REGISTER_PHYSICAL_COPY_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    authorization_rules:\n      type: array\n      required: true\n    identity_key:\n      type: string\n      required: true\n    barcode:\n      type: string\n      required: true\n    copy_fields:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n",
-  "content_hash": "15fdac07564c1297e5fa262e041369e46109a12cf6bcf3e0b031bc7df51012a2",
+  "content": "# IN_REGISTER_PHYSICAL_COPY_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_REGISTER_PHYSICAL_COPY_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to register a further copy against a registered book\n  workflow: WF_REGISTER_PHYSICAL_COPY_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    identity_key:\n      type: string\n      required: true\n    barcode:\n      type: string\n      required: true\n    copy_fields:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to register a further copy against a registered book\n",
+  "content_hash": "2acfb06559e1334410f6581270ea447b9ece1807b80a5bc1eeffc23eb8ffb5db",
   "fqdn_id": "book_library_mgmt::IN_REGISTER_PHYSICAL_COPY_V0",
   "frontmatter": {
     "artifact_kind": "INTENT",
@@ -10,10 +10,6 @@
     "concern": "catalog",
     "core": {
       "inputs": {
-        "authorization_rules": {
-          "required": true,
-          "type": "array"
-        },
         "barcode": {
           "required": true,
           "type": "string"

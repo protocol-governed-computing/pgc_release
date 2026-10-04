@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_NONDETERMINISM_NOT_ROUTED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_NONDETERMINISM_NOT_ROUTED_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::INVARIANT_NONDETERMINISM_NOT_ROUTED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - CT\n  - CC\n```\n\n## Summary\n\nA non-deterministic atom's results are offered, never decided: a deterministic step consumes them before anything routes on them.\n\n## What this realizes\n1. No `CC` pipeline step MAY invoke, as its transform, an atom declaring `ct_impure`.\n2. For every molecule, the step named by `emit` MUST NOT be an atom declaring `ct_impure`.\n\n## Why this is checked here rather than trusted\n\nA capability contract routes on the outcome of its steps. If a non-deterministic atom were a step, the contract would route on what the atom said, and governance would reduce to recording it. Placing a deterministic step between the atom and every route keeps each decision where the composition can see and replay it.\n",
+  "content_hash": "945aa6f7283aa53ca446e9f791707b0e26d4816352da1c49409262d2a0cc0e63",
+  "fqdn_id": "capability_transforms::INVARIANT_NONDETERMINISM_NOT_ROUTED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CT",
+        "CC"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_transforms::INVARIANT_NONDETERMINISM_NOT_ROUTED_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

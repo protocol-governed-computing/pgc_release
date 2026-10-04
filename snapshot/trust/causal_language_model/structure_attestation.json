@@ -1,0 +1,25 @@
+{
+  "attestation_hash": "650354c37d5b98e918c64eb7e3b8f18d4975efbbcb58e7f76a697263736abd3c",
+  "attestation_version": "V0",
+  "imported_capabilities": [
+    "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
+  "imported_governance": {
+    "closure_member_count": 87,
+    "governance_closure_hash": "6d8eea38b83351ccaaf20a6c6637cb108c3da062161593f893c22b78de4db560",
+    "import_domain": "platform"
+  },
+  "public_key_ref": "STUB",
+  "signature": "STUB_NOT_CRYPTOGRAPHICALLY_SIGNED",
+  "signed_at": "2026-10-04T01:14:09.199269+00:00",
+  "signing_algorithm": "STUB",
+  "structure_id": "causal_language_model",
+  "tokenized_projection_hash": "f02d8165e45401ca6da1b47cbbea54b80ed6935a438fdf99c0d1fa6c7dc9607a"
+}

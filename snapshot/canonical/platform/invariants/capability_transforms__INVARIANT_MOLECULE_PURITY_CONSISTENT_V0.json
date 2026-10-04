@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_MOLECULE_PURITY_CONSISTENT_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_MOLECULE_PURITY_CONSISTENT_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::INVARIANT_MOLECULE_PURITY_CONSISTENT_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - CT\n```\n\n## Summary\n\nA molecule's declared purity agrees with its steps: a molecule declared deterministic contains only deterministic steps.\n\n## What this realizes\nFor every `CT` artifact declaring `ct_kind: molecule` and `ct_purity: ct_pure`:\n\n1. Every transform reachable through its steps and loop bodies MUST declare `ct_pure` or `ct_exec`.\n2. A molecule reaching a step declaring `ct_impure` MUST itself declare `ct_impure`.\n\n## Why this is checked here rather than trusted\n\nThe declaration is what a reader relies on to see where determinism ends. A molecule claiming determinism while containing a step that is not would hide the one place the reader most needs to see.\n",
+  "content_hash": "f061db1a083eaa48d2e1d29d122b8ad35ed0246b2a5e843d23640b7edd2c79ce",
+  "fqdn_id": "capability_transforms::INVARIANT_MOLECULE_PURITY_CONSISTENT_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CT"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_transforms::INVARIANT_MOLECULE_PURITY_CONSISTENT_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

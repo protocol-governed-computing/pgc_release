@@ -1,0 +1,45 @@
+{
+  "artifact_code": "CONSTITUTION_TEST_DATA_V2",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_TEST_DATA_V2\n\n## Machine\n```yaml\nfqdn: conformance::CONSTITUTION_TEST_DATA_V2\nartifact_kind: CONSTITUTION\nversion: V2\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: conformance\ncore:\n  enforcement_model: compiler_enforced\n  governs:\n  - TEST_DATA\nrules:\n- applies_to: TEST_DATA\n  enforced_by: conformance::INVARIANT_TEST_DATA_MATCH_CT_OUTPUT_V0\n- applies_to: TEST_DATA\n  enforced_by: artifact::INVARIANT_FQDN_ONLY_REFERENCES_V0\n- applies_to: TEST_DATA\n  enforced_by: conformance::INVARIANT_CONFORMANCE_ASSERTION_MODE_VALID_V1\n- applies_to: TEST_DATA\n  enforced_by: conformance::INVARIANT_TEST_DATA_RECORDS_MATCH_PURITY_V0\n```\n\n---\n\n## 1. Purpose\n\nThis constitution governs the **test vector** (`TEST_DATA`): the declaration that proves a capability\ntransform does what its declaration says. A transform's implementation lives outside the composition;\nthe composition vouches for the declaration and cannot vouch for the code. A vector closes that gap:\nstated inputs, and what the transform must produce from them, run against the transform exactly as the\ncomposition sealed it.\n\nIt replaces `conformance::CONSTITUTION_TEST_DATA_V1`, which placed every vector in a domain's build,\nnever in the platform's, and required every vector to come from a design. The platform supplies\ntransforms of its own, authored as the rest of its surface is, and V1 left them provable nowhere.\n\n---\n\n## 2. What a vector is\n\n- A vector names **one transform**, by its identity, and carries one or more **cases**.\n- A case states the **bindings** the transform is handed, the **outcome** expected \u2014 `SUCCESS`, or\n  `VIOLATION` for a transform expected to refuse \u2014 and what the result must be: **expected** values,\n  field by field, or **assertions** on the form of a field whose value cannot be stated.\n- Cases are governed content and live in the Machine block. Prose around a vector declares nothing.\n\n---\n\n## 3. What a vector proves\n\n- **As sealed.** A case runs against the transform exactly as the composition sealed it, never against\n  a copy or a reconstruction.\n- **A molecule whole.** A vector for a molecule runs the whole molecule \u2014 every step, every pass of\n  every loop \u2014 and proves what it yields.\n- **Recorded results, exactly.** A case for a molecule states the **recorded** result of each of its\n  non-deterministic steps, addressed by the path the runtime gives that step. The run substitutes the\n  recorded result and never runs the step, so the expected result is exact, and the case is also a\n  proof that a replay uses the record. A case supplies a recorded result for every non-deterministic\n  step the molecule runs and for no deterministic one; a case for an atom supplies none.\n- **Shape, for a step that is not deterministic.** A vector for a non-deterministic atom on its own\n  asserts the form of what it yields and never its values. Its values are proven where it is used, in\n  the molecule that consumes it.\n\n---\n\n## 4. Where vectors run, and what counts as proven\n\n- **In the supplier's build.** A transform's vectors belong to whoever supplies its implementation,\n  because what a vector proves is that supplier's code. A domain's transforms are proven in that\n  domain's build. The platform's own transforms are proven in the platform's build \u2014 every platform\n  build, since each composition is sealed on its own and states what it proved. The platform's build\n  never proves a domain's transforms: it does not own their implementations.\n- **After the compile, on every build.** Vectors run once the build compiles and before it is\n  assembled. The composition seals a transform's declaration and not its code, so only running the\n  vectors shows the code still does what the declaration says. No earlier result stands for a later\n  build.\n- **Own and carried.** A build carries a platform transform it uses and does not supply. What a build\n  carried is a fact its compile records; a transform is never taken as a build's own, or as carried,\n  by its name.\n- **Refused.** A build with a failed case is not admitted to any composition, whoever supplies the\n  transform the case tests.\n- **Proven or unproven, never passing by default.** A transform whose every case ran and passed is\n  **proven**. A transform no vector tests is **unproven**, and is named as such; it is never counted as\n  passing. A result that reports success over nothing is a result about nothing.\n\n---\n\n## 5. Where vectors come from\n\nA vector comes the way its transform does. A domain's transform is authored in the design of the\nchange that authors or amends it, and so is its vector: rendered by construction like every other\ndeclaration, and the design language refuses a transform authored or amended without one. The\nplatform's transforms are authored by hand under the dossier that gates them, as the rest of the\ngovernance surface is, and so are their vectors. Either way a vector is gated; a vector written beside\nthe code and gated by nobody proves nothing.\n\n---\n\n## 6. What became of V1\n\n**V1 was deleted, not superseded.** A superseded version stays compiled, and V1 would have kept \"never\nin the platform's own build\" in the surface beside a version that says the opposite. Nothing compiled\nnamed V1: no vector existed under it. Its declaration remains in this repository's history and in every\ncomposition deposited under it. V0 was deleted before it, with the invariant that claimed enforcement\nby a compiler phase that does not exist.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs test vectors \u2014 what a vector is, what it proves, where it runs, and what counts as proven\nrules:\n- rule_id: TD_ONE_TARGET\n  constraint: a vector MUST name exactly one transform, by identity\n- rule_id: TD_CT_OUTPUT_MATCH\n  constraint: a case's expected outputs MUST be outputs its transform declares\n- rule_id: TD_ASSERTION_FORMS_CLOSED\n  constraint: a case's assertions MUST use a declared mode and type\n- rule_id: TD_RECORDED_RESULTS_MATCH_PURITY\n  constraint: a case MUST supply a recorded result for every non-deterministic step of what it tests and for no deterministic one\n- rule_id: TD_RUN_AS_SEALED\n  constraint: a case MUST run against its transform exactly as the composition sealed it\n- rule_id: TD_RUN_EVERY_BUILD\n  constraint: every vector MUST run in its supplier's build, on every build\n- rule_id: TD_FAILURE_REFUSES\n  constraint: a build with a failed case MUST NOT be admitted to a composition, whoever supplies the transform the case tests\n- rule_id: TD_UNPROVEN_NAMED\n  constraint: a transform no vector tests MUST be reported unproven, and MUST NOT be counted as passing\n```\n",
+  "content_hash": "842612c6c2cedbfede91f58d900aa08fa0341314dfa85084b6cf7ffdf4dc7bac",
+  "fqdn_id": "conformance::CONSTITUTION_TEST_DATA_V2",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "conformance",
+    "core": {
+      "enforcement_model": "compiler_enforced",
+      "governs": [
+        "TEST_DATA"
+      ]
+    },
+    "fqdn": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "rules": [
+      {
+        "applies_to": "TEST_DATA",
+        "enforced_by": "conformance::INVARIANT_TEST_DATA_MATCH_CT_OUTPUT_V0"
+      },
+      {
+        "applies_to": "TEST_DATA",
+        "enforced_by": "artifact::INVARIANT_FQDN_ONLY_REFERENCES_V0"
+      },
+      {
+        "applies_to": "TEST_DATA",
+        "enforced_by": "conformance::INVARIANT_CONFORMANCE_ASSERTION_MODE_VALID_V1"
+      },
+      {
+        "applies_to": "TEST_DATA",
+        "enforced_by": "conformance::INVARIANT_TEST_DATA_RECORDS_MATCH_PURITY_V0"
+      }
+    ],
+    "version": "V2"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "conformance",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "2"
+}

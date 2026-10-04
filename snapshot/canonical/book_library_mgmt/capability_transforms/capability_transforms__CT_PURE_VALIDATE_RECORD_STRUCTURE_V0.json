@@ -2,7 +2,7 @@
   "artifact_code": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
   "artifact_type": "CT",
   "content": "",
-  "content_hash": "31e7514541fc5e88c604e0f331a61181253dd45502da8728779e9143941019cd",
+  "content_hash": "646c89d5d0832514fa20cd30982402f1e594de62d47a64e823389cf370b475c3",
   "ct_ir": {
     "artifact_code": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
     "atom_stream": [
@@ -16,7 +16,8 @@
           "callable": "execute",
           "module": "capability_transforms.implementation.ct_pure_validate_record_structure_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -69,7 +70,7 @@
       "summary": "Validate record structure"
     },
     "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",

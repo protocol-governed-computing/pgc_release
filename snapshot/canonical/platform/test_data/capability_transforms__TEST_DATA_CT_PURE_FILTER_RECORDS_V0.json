@@ -1,0 +1,173 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_FILTER_RECORDS_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_FILTER_RECORDS_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_FILTER_RECORDS_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_FILTER_RECORDS_V0\ntarget: capability_transforms::CT_PURE_FILTER_RECORDS_V0\ncases:\n- case_id: filter_by_exact_value\n  expected_outcome: SUCCESS\n  bindings:\n    source:\n    - actor_id: AC_aaa\n      enrollment_status: ACTIVE\n      stake: '32000000000'\n    - actor_id: AC_bbb\n      enrollment_status: INACTIVE\n      stake: '32000000000'\n    - actor_id: AC_ccc\n      enrollment_status: ACTIVE\n      stake: '16000000000'\n    filter:\n      enrollment_status: ACTIVE\n  expected:\n    extracted:\n    - actor_id: AC_aaa\n      enrollment_status: ACTIVE\n      stake: '32000000000'\n    - actor_id: AC_ccc\n      enrollment_status: ACTIVE\n      stake: '16000000000'\n- case_id: filter_by_field_presence\n  expected_outcome: SUCCESS\n  bindings:\n    source:\n    - tx_id: TX_001\n      status: PENDING\n    - tx_id: TX_002\n    - tx_id: TX_003\n      status: PENDING\n    filter:\n      status: present\n  expected:\n    extracted:\n    - tx_id: TX_001\n      status: PENDING\n    - tx_id: TX_003\n      status: PENDING\n- case_id: filter_multi_criteria\n  expected_outcome: SUCCESS\n  bindings:\n    source:\n    - actor_id: AC_aaa\n      enrollment_status: ACTIVE\n      stake: '32000000000'\n    - actor_id: AC_bbb\n      enrollment_status: ACTIVE\n      stake: '16000000000'\n    - actor_id: AC_ccc\n      enrollment_status: INACTIVE\n      stake: '32000000000'\n    filter:\n      enrollment_status: ACTIVE\n      stake: '32000000000'\n  expected:\n    extracted:\n    - actor_id: AC_aaa\n      enrollment_status: ACTIVE\n      stake: '32000000000'\n- case_id: filter_single_match\n  expected_outcome: SUCCESS\n  bindings:\n    source:\n    - id: R1\n      type: validator\n      active: true\n    - id: R2\n      type: observer\n      active: true\n    - id: R3\n      type: validator\n      active: false\n    filter:\n      type: validator\n      active: true\n  expected:\n    extracted:\n    - id: R1\n      type: validator\n      active: true\n```\n\n## Intent\n\nTest array filtering by exact-value match, field-presence check, and multi-criterion AND logic.\n",
+  "content_hash": "66b8be078c4c009b8949b1fdceed6e4cc9efe5e3aaf555bdebabf12e4c3b2c03",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_FILTER_RECORDS_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "filter": {
+            "enrollment_status": "ACTIVE"
+          },
+          "source": [
+            {
+              "actor_id": "AC_aaa",
+              "enrollment_status": "ACTIVE",
+              "stake": "32000000000"
+            },
+            {
+              "actor_id": "AC_bbb",
+              "enrollment_status": "INACTIVE",
+              "stake": "32000000000"
+            },
+            {
+              "actor_id": "AC_ccc",
+              "enrollment_status": "ACTIVE",
+              "stake": "16000000000"
+            }
+          ]
+        },
+        "case_id": "filter_by_exact_value",
+        "expected": {
+          "extracted": [
+            {
+              "actor_id": "AC_aaa",
+              "enrollment_status": "ACTIVE",
+              "stake": "32000000000"
+            },
+            {
+              "actor_id": "AC_ccc",
+              "enrollment_status": "ACTIVE",
+              "stake": "16000000000"
+            }
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "filter": {
+            "status": "present"
+          },
+          "source": [
+            {
+              "status": "PENDING",
+              "tx_id": "TX_001"
+            },
+            {
+              "tx_id": "TX_002"
+            },
+            {
+              "status": "PENDING",
+              "tx_id": "TX_003"
+            }
+          ]
+        },
+        "case_id": "filter_by_field_presence",
+        "expected": {
+          "extracted": [
+            {
+              "status": "PENDING",
+              "tx_id": "TX_001"
+            },
+            {
+              "status": "PENDING",
+              "tx_id": "TX_003"
+            }
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "filter": {
+            "enrollment_status": "ACTIVE",
+            "stake": "32000000000"
+          },
+          "source": [
+            {
+              "actor_id": "AC_aaa",
+              "enrollment_status": "ACTIVE",
+              "stake": "32000000000"
+            },
+            {
+              "actor_id": "AC_bbb",
+              "enrollment_status": "ACTIVE",
+              "stake": "16000000000"
+            },
+            {
+              "actor_id": "AC_ccc",
+              "enrollment_status": "INACTIVE",
+              "stake": "32000000000"
+            }
+          ]
+        },
+        "case_id": "filter_multi_criteria",
+        "expected": {
+          "extracted": [
+            {
+              "actor_id": "AC_aaa",
+              "enrollment_status": "ACTIVE",
+              "stake": "32000000000"
+            }
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "filter": {
+            "active": true,
+            "type": "validator"
+          },
+          "source": [
+            {
+              "active": true,
+              "id": "R1",
+              "type": "validator"
+            },
+            {
+              "active": true,
+              "id": "R2",
+              "type": "observer"
+            },
+            {
+              "active": false,
+              "id": "R3",
+              "type": "validator"
+            }
+          ]
+        },
+        "case_id": "filter_single_match",
+        "expected": {
+          "extracted": [
+            {
+              "active": true,
+              "id": "R1",
+              "type": "validator"
+            }
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_FILTER_RECORDS_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_FILTER_RECORDS_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

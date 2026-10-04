@@ -1,0 +1,95 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_LOOKUP_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_LOOKUP_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_LOOKUP_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_LOOKUP_V0\ntarget: capability_transforms::CT_PURE_LOOKUP_V0\ncases:\n- case_id: lookup_string_value\n  expected_outcome: SUCCESS\n  bindings:\n    key: status\n    map:\n      status: active\n      priority: high\n  expected:\n    result: active\n- case_id: lookup_numeric_value\n  expected_outcome: SUCCESS\n  bindings:\n    key: count\n    map:\n      count: 100\n      limit: 500\n  expected:\n    result: 100\n- case_id: lookup_object_value\n  expected_outcome: SUCCESS\n  bindings:\n    key: config\n    map:\n      config:\n        timeout: 30\n        retries: 3\n      enabled: true\n  expected:\n    result:\n      timeout: 30\n      retries: 3\n- case_id: lookup_array_value\n  expected_outcome: SUCCESS\n  bindings:\n    key: tags\n    map:\n      tags:\n      - important\n      - urgent\n      archived: false\n  expected:\n    result:\n    - important\n    - urgent\n```\n\n## Intent\n\nTest key-value lookup in mapping objects.\n",
+  "content_hash": "b988786d737a1ae568af7ec48df3094e8d43c0734f009e99ecc1e3745a313080",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_LOOKUP_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "key": "status",
+          "map": {
+            "priority": "high",
+            "status": "active"
+          }
+        },
+        "case_id": "lookup_string_value",
+        "expected": {
+          "result": "active"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "key": "count",
+          "map": {
+            "count": 100,
+            "limit": 500
+          }
+        },
+        "case_id": "lookup_numeric_value",
+        "expected": {
+          "result": 100
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "key": "config",
+          "map": {
+            "config": {
+              "retries": 3,
+              "timeout": 30
+            },
+            "enabled": true
+          }
+        },
+        "case_id": "lookup_object_value",
+        "expected": {
+          "result": {
+            "retries": 3,
+            "timeout": 30
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "key": "tags",
+          "map": {
+            "archived": false,
+            "tags": [
+              "important",
+              "urgent"
+            ]
+          }
+        },
+        "case_id": "lookup_array_value",
+        "expected": {
+          "result": [
+            "important",
+            "urgent"
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_LOOKUP_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_LOOKUP_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "capability_transforms::CT_PURE_LOOKUP_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

@@ -84,7 +84,7 @@ one is being read.
 protocol_runtime boot --snapshot $PWD/snapshot
 ```
 
-Expect seven domains resident and hash-verified.
+Expect eight domains resident and hash-verified.
 
 **4. Inspect it.**
 

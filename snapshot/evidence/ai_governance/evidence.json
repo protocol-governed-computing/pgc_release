@@ -30,7 +30,7 @@
       },
       "source_address": 7,
       "source_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0",
-      "target_address": 67,
+      "target_address": 71,
       "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
     },
     {
@@ -52,7 +52,7 @@
       },
       "source_address": 7,
       "source_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0",
-      "target_address": 68,
+      "target_address": 72,
       "target_fqdn": "capability_side_effects::CS_CLOCK_V0"
     },
     {
@@ -60,6 +60,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "VIOLATION",
+        "source_key": "CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
+        "target_key": "CC_AUDIT_UNAUTHORIZED_TOOL",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
       "source_address": 8,
@@ -72,6 +74,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
+        "source_key": "CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
+        "target_key": "CC_VALIDATE_TOOL_PARAMETERS_V0",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
       "source_address": 8,
@@ -112,7 +116,7 @@
       },
       "source_address": 8,
       "source_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
-      "target_address": 75,
+      "target_address": 79,
       "target_fqdn": "capability_transforms::CT_PURE_LOOKUP_V0"
     },
     {
@@ -136,7 +140,7 @@
       },
       "source_address": 8,
       "source_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
-      "target_address": 77,
+      "target_address": 81,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
     },
     {
@@ -144,6 +148,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "VIOLATION",
+        "source_key": "CC_CHECK_TOOL_DECLARED_V0",
+        "target_key": "CC_AUDIT_UNDECLARED_TOOL",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
       "source_address": 9,
@@ -156,6 +162,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
+        "source_key": "CC_CHECK_TOOL_DECLARED_V0",
+        "target_key": "CC_RESOLVE_LICENSE_TIER_V0",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
       "source_address": 9,
@@ -187,7 +195,7 @@
       },
       "source_address": 9,
       "source_fqdn": "ai_governance::CC_CHECK_TOOL_DECLARED_V0",
-      "target_address": 77,
+      "target_address": 81,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
     },
     {
@@ -209,7 +217,7 @@
       },
       "source_address": 10,
       "source_fqdn": "ai_governance::CC_ENFORCE_LICENSE_CAP_V0",
-      "target_address": 70,
+      "target_address": 74,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
     },
     {
@@ -217,6 +225,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
+        "source_key": "CC_NORMALIZE_AGENT_REQUEST_V0",
+        "target_key": "CC_CHECK_TOOL_DECLARED_V0",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
       "source_address": 11,
@@ -248,7 +258,7 @@
       },
       "source_address": 11,
       "source_fqdn": "ai_governance::CC_NORMALIZE_AGENT_REQUEST_V0",
-      "target_address": 74,
+      "target_address": 78,
       "target_fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0"
     },
     {
@@ -256,6 +266,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
+        "source_key": "CC_PROVISION_LICENSE_V0",
+        "target_key": "CC_APPEND_AUDIT_EVENT_SUCCESS",
         "wf_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0"
       },
       "source_address": 12,
@@ -288,7 +300,7 @@
       },
       "source_address": 12,
       "source_fqdn": "ai_governance::CC_PROVISION_LICENSE_V0",
-      "target_address": 70,
+      "target_address": 74,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
     },
     {
@@ -296,6 +308,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
+        "source_key": "CC_RECLAIM_UNUSED_LICENSE_V0",
+        "target_key": "CC_APPEND_AUDIT_EVENT_RECLAIMED",
         "wf_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0"
       },
       "source_address": 13,
@@ -350,7 +364,7 @@
       },
       "source_address": 13,
       "source_fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0",
-      "target_address": 70,
+      "target_address": 74,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
     },
     {
@@ -384,7 +398,7 @@
       },
       "source_address": 14,
       "source_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0",
-      "target_address": 67,
+      "target_address": 71,
       "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
     },
     {
@@ -406,7 +420,7 @@
       },
       "source_address": 14,
       "source_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0",
-      "target_address": 68,
+      "target_address": 72,
       "target_fqdn": "capability_side_effects::CS_CLOCK_V0"
     },
     {
@@ -433,7 +447,7 @@
       },
       "source_address": 14,
       "source_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0",
-      "target_address": 74,
+      "target_address": 78,
       "target_fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0"
     },
     {
@@ -468,7 +482,7 @@
       },
       "source_address": 15,
       "source_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
-      "target_address": 67,
+      "target_address": 71,
       "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
     },
     {
@@ -490,7 +504,7 @@
       },
       "source_address": 15,
       "source_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
-      "target_address": 68,
+      "target_address": 72,
       "target_fqdn": "capability_side_effects::CS_CLOCK_V0"
     },
     {
@@ -525,7 +539,7 @@
       },
       "source_address": 15,
       "source_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
-      "target_address": 70,
+      "target_address": 74,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
     },
     {
@@ -552,7 +566,7 @@
       },
       "source_address": 15,
       "source_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
-      "target_address": 74,
+      "target_address": 78,
       "target_fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0"
     },
     {
@@ -560,6 +574,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
+        "source_key": "CC_RESOLVE_LICENSE_TIER_V0",
+        "target_key": "CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
       "source_address": 16,
@@ -572,6 +588,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "NOT_FOUND",
+        "source_key": "CC_RESOLVE_LICENSE_TIER_V0",
+        "target_key": "CC_AUDIT_UNAUTHORIZED_ACTOR",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
       "source_address": 16,
@@ -584,6 +602,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "VIOLATION",
+        "source_key": "CC_RESOLVE_LICENSE_TIER_V0",
+        "target_key": "CC_AUDIT_UNAUTHORIZED_ACTOR",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
       "source_address": 16,
@@ -616,7 +636,7 @@
       },
       "source_address": 16,
       "source_fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0",
-      "target_address": 69,
+      "target_address": 73,
       "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
     },
     {
@@ -644,7 +664,7 @@
       },
       "source_address": 16,
       "source_fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0",
-      "target_address": 77,
+      "target_address": 81,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
     },
     {
@@ -652,6 +672,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "VIOLATION",
+        "source_key": "CC_VALIDATE_ELIGIBILITY_V0",
+        "target_key": "CC_APPEND_AUDIT_EVENT_DENIED",
         "wf_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0"
       },
       "source_address": 17,
@@ -664,6 +686,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
+        "source_key": "CC_VALIDATE_ELIGIBILITY_V0",
+        "target_key": "CC_PROVISION_LICENSE_V0",
         "wf_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0"
       },
       "source_address": 17,
@@ -721,6 +745,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "VIOLATION",
+        "source_key": "CC_VALIDATE_TOOL_PARAMETERS_V0",
+        "target_key": "CC_AUDIT_PARAMETER_VIOLATION",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
       "source_address": 18,
@@ -733,6 +759,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
+        "source_key": "CC_VALIDATE_TOOL_PARAMETERS_V0",
+        "target_key": "CC_RECORD_GOVERNED_ACTION_V0",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
       "source_address": 18,
@@ -799,7 +827,7 @@
       },
       "source_address": 18,
       "source_fqdn": "ai_governance::CC_VALIDATE_TOOL_PARAMETERS_V0",
-      "target_address": 75,
+      "target_address": 79,
       "target_fqdn": "capability_transforms::CT_PURE_LOOKUP_V0"
     },
     {
@@ -823,7 +851,7 @@
       },
       "source_address": 18,
       "source_fqdn": "ai_governance::CC_VALIDATE_TOOL_PARAMETERS_V0",
-      "target_address": 76,
+      "target_address": 80,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
     },
     {
@@ -831,6 +859,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "ACK",
+        "source_key": "IN_AGENT_ACTION_REQUESTED_V0",
+        "target_key": "CC_NORMALIZE_AGENT_REQUEST_V0",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
       "source_address": 31,
@@ -843,6 +873,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "ACK",
+        "source_key": "IN_DENY_PROVISION_V0",
+        "target_key": "CC_APPEND_AUDIT_EVENT_V0",
         "wf_fqdn": "ai_governance::WF_DENY_PROVISION_V0"
       },
       "source_address": 32,
@@ -855,6 +887,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "ACK",
+        "source_key": "IN_PROVISION_AI_LICENSE_V0",
+        "target_key": "CC_VALIDATE_ELIGIBILITY_V0",
         "wf_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0"
       },
       "source_address": 33,
@@ -867,6 +901,8 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "ACK",
+        "source_key": "IN_RECLAIM_LICENSE_V0",
+        "target_key": "CC_RECLAIM_UNUSED_LICENSE_V0",
         "wf_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0"
       },
       "source_address": 34,
@@ -882,7 +918,7 @@
       },
       "source_address": 35,
       "source_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-      "target_address": 67,
+      "target_address": 71,
       "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
     },
     {
@@ -893,7 +929,7 @@
       },
       "source_address": 35,
       "source_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-      "target_address": 68,
+      "target_address": 72,
       "target_fqdn": "capability_side_effects::CS_CLOCK_V0"
     },
     {
@@ -904,7 +940,7 @@
       },
       "source_address": 35,
       "source_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-      "target_address": 69,
+      "target_address": 73,
       "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
     },
     {
@@ -915,7 +951,7 @@
       },
       "source_address": 35,
       "source_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-      "target_address": 70,
+      "target_address": 74,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
     },
     {
@@ -926,7 +962,7 @@
       },
       "source_address": 36,
       "source_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
-      "target_address": 67,
+      "target_address": 71,
       "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
     },
     {
@@ -937,7 +973,7 @@
       },
       "source_address": 36,
       "source_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
-      "target_address": 68,
+      "target_address": 72,
       "target_fqdn": "capability_side_effects::CS_CLOCK_V0"
     },
     {
@@ -948,14 +984,14 @@
       },
       "source_address": 36,
       "source_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
-      "target_address": 70,
+      "target_address": 74,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 41,
+      "source_address": 44,
       "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
@@ -964,7 +1000,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 41,
+      "source_address": 44,
       "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
       "target_address": 13,
       "target_fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0"
@@ -973,7 +1009,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 41,
+      "source_address": 44,
       "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
       "target_address": 34,
       "target_fqdn": "ai_governance::IN_RECLAIM_LICENSE_V0"
@@ -982,7 +1018,7 @@
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 41,
+      "source_address": 44,
       "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
       "target_address": 34,
       "target_fqdn": "ai_governance::IN_RECLAIM_LICENSE_V0"
@@ -991,7 +1027,7 @@
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 41,
+      "source_address": 44,
       "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
       "target_address": 36,
       "target_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0"
@@ -1000,7 +1036,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 42,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
@@ -1009,7 +1045,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 42,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
       "target_address": 32,
       "target_fqdn": "ai_governance::IN_DENY_PROVISION_V0"
@@ -1018,7 +1054,7 @@
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 42,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
       "target_address": 32,
       "target_fqdn": "ai_governance::IN_DENY_PROVISION_V0"
@@ -1027,7 +1063,7 @@
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 42,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
       "target_address": 36,
       "target_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0"
@@ -1036,7 +1072,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 8,
       "target_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0"
@@ -1045,7 +1081,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 9,
       "target_fqdn": "ai_governance::CC_CHECK_TOOL_DECLARED_V0"
@@ -1054,7 +1090,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 11,
       "target_fqdn": "ai_governance::CC_NORMALIZE_AGENT_REQUEST_V0"
@@ -1063,7 +1099,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 14,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
@@ -1072,7 +1108,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 14,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
@@ -1081,7 +1117,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 14,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
@@ -1090,7 +1126,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 14,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
@@ -1099,7 +1135,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 15,
       "target_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0"
@@ -1108,7 +1144,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 16,
       "target_fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0"
@@ -1117,7 +1153,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 18,
       "target_fqdn": "ai_governance::CC_VALIDATE_TOOL_PARAMETERS_V0"
@@ -1126,7 +1162,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 31,
       "target_fqdn": "ai_governance::IN_AGENT_ACTION_REQUESTED_V0"
@@ -1135,7 +1171,7 @@
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 31,
       "target_fqdn": "ai_governance::IN_AGENT_ACTION_REQUESTED_V0"
@@ -1144,7 +1180,7 @@
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 43,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 35,
       "target_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0"
@@ -1153,7 +1189,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 47,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
@@ -1162,7 +1198,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 47,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
@@ -1171,7 +1207,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 47,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "target_address": 12,
       "target_fqdn": "ai_governance::CC_PROVISION_LICENSE_V0"
@@ -1180,7 +1216,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 47,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "target_address": 17,
       "target_fqdn": "ai_governance::CC_VALIDATE_ELIGIBILITY_V0"
@@ -1189,7 +1225,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 47,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "target_address": 33,
       "target_fqdn": "ai_governance::IN_PROVISION_AI_LICENSE_V0"
@@ -1198,7 +1234,7 @@
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 47,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "target_address": 33,
       "target_fqdn": "ai_governance::IN_PROVISION_AI_LICENSE_V0"
@@ -1207,7 +1243,7 @@
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 47,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "target_address": 36,
       "target_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0"
@@ -1650,78 +1686,96 @@
     },
     {
       "address": 40,
+      "fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 41,
+      "fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 42,
+      "fqdn": "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 43,
       "fqdn": "ai_governance::VOCAB_AI_LICENSING_STATES_V0",
       "kind": "GOVERNANCE",
       "kind_address": 16646
     },
     {
-      "address": 41,
+      "address": 44,
       "fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
       "kind": "WF",
       "kind_address": 16652
     },
     {
-      "address": 42,
+      "address": 45,
       "fqdn": "ai_governance::WF_DENY_PROVISION_V0",
       "kind": "WF",
       "kind_address": 16652
     },
     {
-      "address": 43,
+      "address": 46,
       "fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "kind": "WF",
       "kind_address": 16652
     },
     {
-      "address": 44,
+      "address": 47,
       "fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "kind": "WF",
       "kind_address": 16652
     },
     {
-      "address": 67,
+      "address": 71,
       "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
       "kind": "CS",
       "kind_address": 16643
     },
     {
-      "address": 68,
+      "address": 72,
       "fqdn": "capability_side_effects::CS_CLOCK_V0",
       "kind": "CS",
       "kind_address": 16643
     },
     {
-      "address": 69,
+      "address": 73,
       "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
       "kind": "CS",
       "kind_address": 16643
     },
     {
-      "address": 70,
+      "address": 74,
       "fqdn": "capability_side_effects::CS_REGISTRY_V0",
       "kind": "CS",
       "kind_address": 16643
     },
     {
-      "address": 74,
+      "address": 78,
       "fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 75,
+      "address": 79,
       "fqdn": "capability_transforms::CT_PURE_LOOKUP_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 76,
+      "address": 80,
       "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 77,
+      "address": 81,
       "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
       "kind": "CT",
       "kind_address": 16644

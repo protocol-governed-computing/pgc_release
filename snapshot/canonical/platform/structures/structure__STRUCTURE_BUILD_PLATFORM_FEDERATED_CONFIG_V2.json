@@ -1,0 +1,136 @@
+{
+  "artifact_code": "STRUCTURE_BUILD_PLATFORM_FEDERATED_CONFIG_V2",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_BUILD_PLATFORM_FEDERATED_CONFIG_V2\n\nThe same governance surface, composed for a node group.\n\nThis is the composition an environment profile requiring separately addressable nodes can be\nmet under. `LOCAL_MULTI_WORKER` cannot meet such a profile at any host count: workers in\nprocesses are not addressable, and the mode forbids cross-node dispatch outright. The\ndifference between the two configurations is reachability, and it is one line.\n\nEverything else is deliberately identical to `STRUCTURE_BUILD_PLATFORM_CONFIG_V2`. Where they\ndiverge in anything but placement, that divergence is a defect.\n\nThe same governance surface, composed for multi-worker placement.\n\nA build configuration names exactly one arrangement per selectable boundary, so two\ncompositions differing in placement are two configurations. That is the shape rather than a\nduplication to be factored away: a configuration *is* the definition of a composition, and the\nsurface it draws from is identical \u2014 what differs is one named mode, visible on one line.\n\nEverything else here is deliberately the same as `STRUCTURE_BUILD_PLATFORM_CONFIG_V2`. Where the\ntwo diverge in anything but placement, that divergence is a defect: it would mean two\ncompositions claiming one surface and drawing different artifacts from it.\n\n**Artifact Type**: STRUCTURE\n**Version**: V2\n**Status**: CANONICAL\n**Governed By**: structure::CONSTITUTION_STRUCTURE_V0\n\n---\n\n## Purpose\n\nDefines artifact discovery and output paths for **PGC normative-platform** compilation.\n\nThis STRUCTURE governs:\n\n* Where the compiler discovers artifacts\n* Which artifact types are in scope\n* Where compiled artifacts are written\n\n**Scope**: PGC normative platform surface only.\n\n**Change from V0 (first PGC normative divergence from the faithful RI-0 harvest):**\nV0 encoded RI-0's platform scope, which is wider than the PGC platform. V1 narrows it to\nthe PGC normative surface by removing concerns that are **not** platform-owned:\n\n* `CAPABILITIES` layer \u2014 the `name_service` registry is a **domain** capability (`pgs::`),\n  excluded from the PGC platform (the 150). Returns later as a `pgs::` domain extension.\n* `TEST_DATA` layer + `conformance_generate` / `conformance_execute` phases \u2014 **implementation-\n  layer conformance**. Per the capability-ownership decision, capability *implementations*\n  (and therefore conformance against them) are not platform-owned; they are enforced where\n  the implementations live, not in the normative-surface compile.\n\n\n**Change from V1:** V1 kept all implementation-layer conformance out of the platform's build, on\nthe ground that capability implementations are not platform-owned. That holds for a domain's\nimplementations and not for the platform's own transforms, which the platform supplies. V2 compiles\nthe platform's test vectors (`TEST_DATA`) and declares where their runnable cases are written, so the\nplatform's build proves its own transforms (`conformance::CONSTITUTION_TEST_DATA_V2` \u00a74). It never\nproves a domain's.\n\n---\n\n## Core\n\nBuild-time STRUCTURE configuration.\n\nThis artifact is the **single source of truth** for:\n\n* discovery scope\n* artifact inclusion\n* output location\n\nNo fallback or implicit behavior is permitted.\n\n---\n\n## Machine\n\n```yaml\nfqdn: structure::STRUCTURE_BUILD_PLATFORM_FEDERATED_CONFIG_V2\nartifact_kind: STRUCTURE\nversion: V2\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: structure\nstructure_scope: platform\nreuse_visibility: substrate\ncore:\n  summary: Build-time STRUCTURE configuration, federated-node placement (PGC normative-platform scope)\n  description: 'Defines artifact discovery and output paths for PGC normative-platform compilation. Domain\n    layers and conformance against a domain''s implementations are out of scope; the platform''s\n    own transforms are proven against their vectors.\n\n    '\nplacement_mode: FEDERATED_NODE\nscheduling_mode: SERIAL_SINGLE_WORKER\nsecurity_domain: UNCLASSIFIED_LOCAL\ntrust_mode: SIGNED_SNAPSHOT\nartifact_discovery:\n  search_layers:\n  - GOVERNANCE\n  - REUSABLE_TRANSFORMS\n  - REUSABLE_SIDE_EFFECTS\n  artifact_types:\n  - VOCAB\n  - CONSTITUTION\n  - INVARIANT\n  - ASSERT\n  - SCHEMA\n  - STRUCTURE\n  - EXECUTION_POLICY\n  - WF\n  - IN\n  - TI\n  - TE\n  - CC\n  - CT\n  - TEST_DATA\n  - CS\n  - EV\n  - RB\n  - SURFACE\noutput_configuration:\n  root: snapshot_fed\n  artifacts:\n    layer: PROTOCOL_BUILD_ROOT\n    subpath: compiled/canonical\n  conformance:\n    layer: GOVERNANCE\n    subpath: compiled/transform_conformance\n  vocabulary_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/vocabulary\n  tokenized_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/tokenized\n  evidence_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/evidence\n  trust_attestation_path:\n    layer: GOVERNANCE\n    subpath: compiled/trust\n  visualization_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/visualization\n  layer_outputs:\n    GOVERNANCE:\n      layer: GOVERNANCE\n      subpath: compiled/canonical\n    REUSABLE_TRANSFORMS:\n      layer: REUSABLE_TRANSFORMS\n      subpath: compiled/canonical\n    REUSABLE_SIDE_EFFECTS:\n      layer: REUSABLE_SIDE_EFFECTS\n      subpath: compiled/canonical\n  bootstrap_search_roots:\n  - layer: GOVERNANCE\n    subpath: structure/structures\nbuild_phases:\n- phase: discover\n  description: Discover artifacts via STRUCTURE\n- phase: parse\n  description: Parse artifacts into canonical machine form\n- phase: normalize\n  description: Resolve references to FQDN with deterministic binding\n- phase: validate\n  description: Validate artifacts using compiler schema rules\n- phase: assert\n  description: Evaluate cross-artifact invariants (surface closure)\n- phase: materialize\n  description: Emit deterministic compiled artifacts\n  target: compiled/artifacts/\n```\n\n",
+  "content_hash": "b5dd6268e8f345b66bc3879d88627d66f5563981290cc89dbf049810128acb05",
+  "fqdn_id": "structure::STRUCTURE_BUILD_PLATFORM_FEDERATED_CONFIG_V2",
+  "frontmatter": {
+    "artifact_discovery": {
+      "artifact_types": [
+        "VOCAB",
+        "CONSTITUTION",
+        "INVARIANT",
+        "ASSERT",
+        "SCHEMA",
+        "STRUCTURE",
+        "EXECUTION_POLICY",
+        "WF",
+        "IN",
+        "TI",
+        "TE",
+        "CC",
+        "CT",
+        "TEST_DATA",
+        "CS",
+        "EV",
+        "RB",
+        "SURFACE"
+      ],
+      "search_layers": [
+        "GOVERNANCE",
+        "REUSABLE_TRANSFORMS",
+        "REUSABLE_SIDE_EFFECTS"
+      ]
+    },
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "build_phases": [
+      {
+        "description": "Discover artifacts via STRUCTURE",
+        "phase": "discover"
+      },
+      {
+        "description": "Parse artifacts into canonical machine form",
+        "phase": "parse"
+      },
+      {
+        "description": "Resolve references to FQDN with deterministic binding",
+        "phase": "normalize"
+      },
+      {
+        "description": "Validate artifacts using compiler schema rules",
+        "phase": "validate"
+      },
+      {
+        "description": "Evaluate cross-artifact invariants (surface closure)",
+        "phase": "assert"
+      },
+      {
+        "description": "Emit deterministic compiled artifacts",
+        "phase": "materialize",
+        "target": "compiled/artifacts/"
+      }
+    ],
+    "concern": "structure",
+    "core": {
+      "description": "Defines artifact discovery and output paths for PGC normative-platform compilation. Domain layers and conformance against a domain's implementations are out of scope; the platform's own transforms are proven against their vectors.\n",
+      "summary": "Build-time STRUCTURE configuration, federated-node placement (PGC normative-platform scope)"
+    },
+    "fqdn": "structure::STRUCTURE_BUILD_PLATFORM_FEDERATED_CONFIG_V2",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "output_configuration": {
+      "artifacts": {
+        "layer": "PROTOCOL_BUILD_ROOT",
+        "subpath": "compiled/canonical"
+      },
+      "bootstrap_search_roots": [
+        {
+          "layer": "GOVERNANCE",
+          "subpath": "structure/structures"
+        }
+      ],
+      "conformance": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/transform_conformance"
+      },
+      "evidence_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/evidence"
+      },
+      "layer_outputs": {
+        "GOVERNANCE": {
+          "layer": "GOVERNANCE",
+          "subpath": "compiled/canonical"
+        },
+        "REUSABLE_SIDE_EFFECTS": {
+          "layer": "REUSABLE_SIDE_EFFECTS",
+          "subpath": "compiled/canonical"
+        },
+        "REUSABLE_TRANSFORMS": {
+          "layer": "REUSABLE_TRANSFORMS",
+          "subpath": "compiled/canonical"
+        }
+      },
+      "root": "snapshot_fed",
+      "tokenized_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/tokenized"
+      },
+      "trust_attestation_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/trust"
+      },
+      "visualization_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/visualization"
+      },
+      "vocabulary_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/vocabulary"
+      }
+    },
+    "placement_mode": "FEDERATED_NODE",
+    "reuse_visibility": "substrate",
+    "scheduling_mode": "SERIAL_SINGLE_WORKER",
+    "security_domain": "UNCLASSIFIED_LOCAL",
+    "structure_scope": "platform",
+    "trust_mode": "SIGNED_SNAPSHOT",
+    "version": "V2"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "2"
+}

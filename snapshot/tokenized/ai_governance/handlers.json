@@ -1,6 +1,6 @@
 {
   "cs": {
-    "67": {
+    "71": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -56,7 +56,7 @@
         "module": "capability_side_effects.implementation.CS_APPENDONLY_JSONL_V0.runtime"
       }
     },
-    "68": {
+    "72": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -88,7 +88,7 @@
         "module": "capability_side_effects.implementation.CS_CLOCK_V0.runtime"
       }
     },
-    "69": {
+    "73": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -275,7 +275,7 @@
         "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
       }
     },
-    "70": {
+    "74": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -404,7 +404,8 @@
               "callable": "execute",
               "module": "ai_governance.implementation.capability_transforms.atoms.ct_pure_check_quota_available_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -444,7 +445,8 @@
               "callable": "execute",
               "module": "ai_governance.implementation.capability_transforms.atoms.ct_pure_check_training_status_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -478,7 +480,8 @@
               "callable": "execute",
               "module": "ai_governance.implementation.capability_transforms.atoms.ct_pure_evaluate_inactivity_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -510,7 +513,7 @@
         }
       }
     },
-    "74": {
+    "78": {
       "ct_ir": {
         "artifact_code": "CT_PURE_GENERATE_ID_V0",
         "atom_stream": [
@@ -524,7 +527,8 @@
               "callable": "execute",
               "module": "capability_transforms.implementation.ct_pure_generate_id_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -548,7 +552,7 @@
         }
       }
     },
-    "75": {
+    "79": {
       "ct_ir": {
         "artifact_code": "CT_PURE_LOOKUP_V0",
         "atom_stream": [
@@ -562,7 +566,8 @@
               "callable": "execute",
               "module": "capability_transforms.implementation.ct_pure_lookup_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -586,7 +591,7 @@
         }
       }
     },
-    "76": {
+    "80": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
         "atom_stream": [
@@ -600,7 +605,8 @@
               "callable": "execute",
               "module": "capability_transforms.implementation.ct_pure_validate_parameter_rules_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -627,7 +633,7 @@
         }
       }
     },
-    "77": {
+    "81": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
         "atom_stream": [
@@ -641,7 +647,8 @@
               "callable": "execute",
               "module": "capability_transforms.implementation.ct_pure_validate_set_membership_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -669,7 +676,7 @@
   "projection_class": "machine_projection",
   "rb_policy": {
     "35": {
-      "67": {
+      "71": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -718,7 +725,7 @@
           }
         }
       },
-      "68": {
+      "72": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "precision": "seconds",
@@ -768,7 +775,7 @@
           }
         }
       },
-      "69": {
+      "73": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -817,7 +824,7 @@
           }
         }
       },
-      "70": {
+      "74": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "path": "{{module_data_root}}/ai_governance/agent_governance/governance_actions.json",
@@ -870,7 +877,7 @@
       }
     },
     "36": {
-      "67": {
+      "71": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -924,7 +931,7 @@
           }
         }
       },
-      "68": {
+      "72": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "precision": "seconds",
@@ -979,7 +986,7 @@
           }
         }
       },
-      "70": {
+      "74": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "path": "{{module_data_root}}/ai_governance/ai_licensing/license_registry.json",

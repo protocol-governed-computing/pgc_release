@@ -21,8 +21,7 @@
       },
       {
         "bindings": {
-          "record": "in.book_fields",
-          "schema": "in.book_schema"
+          "record": "in.book_fields"
         },
         "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
         "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
@@ -33,6 +32,20 @@
         "kind": "CT",
         "outputs": [
           "violations"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
         ]
       },
       {
@@ -65,8 +78,8 @@
       }
     ]
   },
-  "content": "# CC_REGISTER_BOOK_V0\n\n## 1. Intent\n\nValidates, assembles and writes an edition record against the work it belongs to\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_REGISTER_BOOK_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Validates, assembles and writes an edition record against the work it belongs to\n  inputs:\n    book_fields:\n      type: object\n      required: true\n    identity_key:\n      type: string\n      required: true\n    book_schema:\n      type: object\n      required: true\n  outputs:\n    book_record:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: form_work_key\n    transform: book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0\n    inputs:\n      title: $.inputs.book_fields.title\n      author: $.inputs.book_fields.author\n    outputs:\n      work_key: $.capability_result.work_key\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: validate_book_fields\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.book_fields\n      schema: $.inputs.book_schema\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: assemble_book_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        identity_key: $.inputs.identity_key\n        title: $.inputs.book_fields.title\n        author: $.inputs.book_fields.author\n        publication_year: $.inputs.book_fields.publication_year\n        subject: $.inputs.book_fields.subject\n        state: $.inputs.book_fields.state\n        work_key: $.results.form_work_key.work_key\n    outputs:\n      book_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_book_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n      value: $.results.assemble_book_record.book_record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n",
-  "content_hash": "46cd159e101011bc2ffc80e51d67ece4f0b8610fcf709d169fdce431b515da85",
+  "content": "# CC_REGISTER_BOOK_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_REGISTER_BOOK_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Validates, assembles and writes an edition record against the work it belongs to\n  inputs:\n    book_fields:\n      type: object\n      required: true\n    identity_key:\n      type: string\n      required: true\n  outputs:\n    book_record:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: form_work_key\n    transform: book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0\n    inputs:\n      title: $.inputs.book_fields.title\n      author: $.inputs.book_fields.author\n    outputs:\n      work_key: $.capability_result.work_key\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: validate_book_fields\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.book_fields\n      schema:\n        title:\n          required: true\n          type: string\n        author:\n          required: true\n          type: string\n        publication_year:\n          required: true\n          type: integer\n        subject:\n          required: true\n          type: array\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: refuse_incomplete_record\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        violations: $.results.validate_book_fields.violations\n      rules:\n      - field: violations\n        op: eq\n        value: []\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: assemble_book_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        identity_key: $.inputs.identity_key\n        title: $.inputs.book_fields.title\n        author: $.inputs.book_fields.author\n        publication_year: $.inputs.book_fields.publication_year\n        subject: $.inputs.book_fields.subject\n        state: $.inputs.book_fields.state\n        work_key: $.results.form_work_key.work_key\n    outputs:\n      book_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_book_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n      value: $.results.assemble_book_record.book_record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nValidates, assembles and writes an edition record against the work it belongs to\n",
+  "content_hash": "34d5e410ee014678c3ed44c5717e181b5c1064b26dcb387693aef10389eb3c84",
   "fqdn_id": "book_library_mgmt::CC_REGISTER_BOOK_V0",
   "frontmatter": {
     "artifact_kind": "CAPABILITY_CONTRACT",
@@ -75,10 +88,6 @@
     "core": {
       "inputs": {
         "book_fields": {
-          "required": true,
-          "type": "object"
-        },
-        "book_schema": {
           "required": true,
           "type": "object"
         },
@@ -116,7 +125,24 @@
         {
           "inputs": {
             "record": "$.inputs.book_fields",
-            "schema": "$.inputs.book_schema"
+            "schema": {
+              "author": {
+                "required": true,
+                "type": "string"
+              },
+              "publication_year": {
+                "required": true,
+                "type": "integer"
+              },
+              "subject": {
+                "required": true,
+                "type": "array"
+              },
+              "title": {
+                "required": true,
+                "type": "string"
+              }
+            }
           },
           "on_result": {
             "SUCCESS": "continue",
@@ -131,6 +157,33 @@
           ],
           "step": "validate_book_fields",
           "transform": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "violations": "$.results.validate_book_fields.violations"
+            },
+            "rules": [
+              {
+                "field": "violations",
+                "op": "eq",
+                "value": []
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "refuse_incomplete_record",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
         },
         {
           "inputs": {
@@ -202,6 +255,7 @@
     "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
     "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
     "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
     "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
   ],
   "version": "0"

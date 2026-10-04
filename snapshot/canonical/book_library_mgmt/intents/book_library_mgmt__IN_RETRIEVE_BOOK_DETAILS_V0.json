@@ -1,8 +1,8 @@
 {
   "artifact_code": "IN_RETRIEVE_BOOK_DETAILS_V0",
   "artifact_type": "IN",
-  "content": "# IN_RETRIEVE_BOOK_DETAILS_V0\n\n## 1. Intent\n\nA request for a book's complete details with the copies held\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request for a book's complete details with the copies held\n  workflow: WF_RETRIEVE_BOOK_DETAILS_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    authorization_rules:\n      type: array\n      required: true\n    identity_key:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n",
-  "content_hash": "5facdfeb0ff2a0f3c37ecdb477dea1edf907e14d2d0a3ac617b4fa3f81cae81b",
+  "content": "# IN_RETRIEVE_BOOK_DETAILS_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request for a book's complete details with the copies held\n  workflow: WF_RETRIEVE_BOOK_DETAILS_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    identity_key:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request for a book's complete details with the copies held\n",
+  "content_hash": "ba90bca280bcece5e674a32d75445733be214741c107aeb9e26ef63dec2ffddd",
   "fqdn_id": "book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0",
   "frontmatter": {
     "artifact_kind": "INTENT",
@@ -10,10 +10,6 @@
     "concern": "catalog",
     "core": {
       "inputs": {
-        "authorization_rules": {
-          "required": true,
-          "type": "array"
-        },
         "identity_key": {
           "required": true,
           "type": "string"

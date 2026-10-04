@@ -2,7 +2,7 @@
   "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
   "artifact_type": "CT",
   "content": "",
-  "content_hash": "67b6c20d9e882e6da5d7e05aea020e9e654faa5e41526cd7a99573d00131eac6",
+  "content_hash": "14d40789ca700e66f39b0697cbbe85aae2ff76dbf642a88de1a6b46538dd1bd3",
   "ct_ir": {
     "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
     "atom_stream": [
@@ -16,7 +16,8 @@
           "callable": "execute",
           "module": "capability_transforms.implementation.ct_pure_validate_parameter_rules_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -78,7 +79,7 @@
       "summary": "Validate parameters against rules"
     },
     "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",

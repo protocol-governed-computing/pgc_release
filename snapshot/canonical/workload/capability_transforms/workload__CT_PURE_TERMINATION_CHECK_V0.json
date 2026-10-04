@@ -1,8 +1,8 @@
 {
   "artifact_code": "CT_PURE_TERMINATION_CHECK_V0",
   "artifact_type": "CT",
-  "content": "# CT_PURE_TERMINATION_CHECK_V0\n\n## 1. Intent\n\nVerify that every computed Collatz sequence terminates at 1. Pure, deterministic, no side effects.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::CT_PURE_TERMINATION_CHECK_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Verify all Collatz sequences terminate at 1\n  refusal: returns\n  description: Inspects last element of each sequence. Returns all_terminate boolean and list of non-terminating\n    seeds.\n  inputs:\n    sequences:\n      type: object\n      required: true\n      description: Mapping from str(n) to Collatz sequence list\n  outputs:\n    all_terminate:\n      type: boolean\n      required: true\n      description: True if every sequence ends at 1\n    non_terminating:\n      type: array\n      required: true\n      description: List of seeds whose sequences did not end at 1\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_TERMINATION_CHECK\n  implementation:\n    module: workloads.collatz.implementation.capability_transforms.atoms.ct_pure_termination_check_v0\n    callable: execute\n```\n",
-  "content_hash": "636ed4d03c82177a19b100be312fa6de975bdb64e2b79a36b386552df25750be",
+  "content": "# CT_PURE_TERMINATION_CHECK_V0\n\n## 1. Intent\n\nVerify that every computed Collatz sequence terminates at 1. Pure, deterministic, no side effects.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::CT_PURE_TERMINATION_CHECK_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Verify all Collatz sequences terminate at 1\n  refusal: returns\n  description: Inspects last element of each sequence. Returns all_terminate boolean and list of non-terminating\n    seeds.\n  inputs:\n    sequences:\n      type: object\n      required: true\n      description: Mapping from str(n) to Collatz sequence list\n  outputs:\n    all_terminate:\n      type: boolean\n      required: true\n      description: True if every sequence ends at 1\n    non_terminating:\n      type: array\n      required: true\n      description: List of seeds whose sequences did not end at 1\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_TERMINATION_CHECK\n  implementation:\n    module: workloads.collatz.implementation.capability_transforms.atoms.ct_pure_termination_check_v0\n    callable: execute\n```\n",
+  "content_hash": "ffa039674b6693baaabefc254fd8bf207382df1852b4637e0be9982f7d4210e0",
   "ct_ir": {
     "artifact_code": "CT_PURE_TERMINATION_CHECK_V0",
     "atom_stream": [
@@ -15,7 +15,8 @@
           "callable": "execute",
           "module": "workloads.collatz.implementation.capability_transforms.atoms.ct_pure_termination_check_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -66,7 +67,7 @@
       "summary": "Verify all Collatz sequences terminate at 1"
     },
     "fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",
@@ -81,7 +82,7 @@
   "layer_code": "WORKLOAD",
   "namespace": "workload",
   "references": [
-    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
   ],
   "version": "0"
 }

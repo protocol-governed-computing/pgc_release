@@ -1,5 +1,5 @@
 {
-  "compiler_version": "16",
+  "compiler_version": "17",
   "edge_count": 26,
   "edges": [
     {
@@ -395,8 +395,8 @@
     },
     {
       "detail": {
-        "address_hash": "0f8ad9f398389d3303356cb7f40bb5708bf55d7bf8e2223fa514b99f66476380",
-        "address_table_size": 131
+        "address_hash": "68559acbef74117f7accabf9e1fbd4324c602293ca2c9576d8c2e5d485b57cc9",
+        "address_table_size": 138
       },
       "event_id": 20,
       "family": "ADDRESSING",
@@ -408,9 +408,9 @@
     },
     {
       "detail": {
-        "assertions_executed": 73,
-        "assertions_imported": 73,
-        "assertions_passed": 73,
+        "assertions_executed": 79,
+        "assertions_imported": 79,
+        "assertions_passed": 79,
         "errors": 0,
         "warnings": 0
       },
@@ -514,7 +514,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
-      "subject_token": 24
+      "subject_token": 25
     },
     {
       "detail": {
@@ -526,7 +526,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::AC_REFERENCE_ACTOR_V0",
-      "subject_token": 81
+      "subject_token": 88
     },
     {
       "detail": {
@@ -538,7 +538,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
-      "subject_token": 82
+      "subject_token": 89
     },
     {
       "detail": {
@@ -550,7 +550,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::CC_STORE_RESULTS_V0",
-      "subject_token": 83
+      "subject_token": 90
     },
     {
       "detail": {
@@ -562,7 +562,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
-      "subject_token": 84
+      "subject_token": 91
     },
     {
       "detail": {
@@ -574,7 +574,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
-      "subject_token": 85
+      "subject_token": 92
     },
     {
       "detail": {
@@ -586,7 +586,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0",
-      "subject_token": 86
+      "subject_token": 93
     },
     {
       "detail": {
@@ -598,7 +598,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::EV_CONJECTURE_EVALUATED_V0",
-      "subject_token": 87
+      "subject_token": 94
     },
     {
       "detail": {
@@ -610,7 +610,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
-      "subject_token": 88
+      "subject_token": 95
     },
     {
       "detail": {
@@ -622,7 +622,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::RB_COLLATZ_V0",
-      "subject_token": 89
+      "subject_token": 96
     },
     {
       "detail": {
@@ -634,7 +634,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::STRUCTURE_BUILD_WORKLOAD_CONFIG_V0",
-      "subject_token": 90
+      "subject_token": 97
     },
     {
       "detail": {
@@ -646,7 +646,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::STRUCTURE_COLLATZ_STORAGE_V0",
-      "subject_token": 91
+      "subject_token": 98
     },
     {
       "detail": {
@@ -658,7 +658,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::TE_COLLATZ_COMPUTE_V0",
-      "subject_token": 92
+      "subject_token": 99
     },
     {
       "detail": {
@@ -670,7 +670,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::TI_COLLATZ_COMPUTE_V0",
-      "subject_token": 93
+      "subject_token": 100
     },
     {
       "detail": {
@@ -682,12 +682,12 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
-      "subject_token": 94
+      "subject_token": 101
     },
     {
       "detail": {
         "address_count": 51,
-        "projection_hash": "50de48ec457735db8abf434bbc9e14077029b8ce11a5773fe7e1c00bb735b4ff"
+        "projection_hash": "f11b125556a293e3f3ed07b1f372b6eda4de6e8c1150fdb3a687b8587a48694d"
       },
       "event_id": 44,
       "family": "PROJECTION",
@@ -702,7 +702,7 @@
         "adjacency_count": 6,
         "edge_count": 13,
         "node_count": 15,
-        "projection_hash": "356ad9be8005817b85a748f9f733697101316754d15200e71d937e12736eb93e"
+        "projection_hash": "46234698819fe8d0443f0648f607498767295565dccf7e6ceae83e9560f1772f"
       },
       "event_id": 45,
       "family": "PROJECTION",
@@ -717,7 +717,7 @@
         "edge_count": 13,
         "ev_schema_count": 1,
         "node_count": 15,
-        "projection_hash": "5ff0cb2e21d9f9de916616126dcafacd51e6c406834e9b63a68055041f2686f9"
+        "projection_hash": "7b73fb450e43a0a3a9790ec45c06fb8e0a574619fe1bcbd89f440764e1ecdd27"
       },
       "event_id": 46,
       "family": "PROJECTION",
@@ -732,7 +732,7 @@
         "bindings_count": 1,
         "entry_count": 1,
         "pipeline_count": 3,
-        "projection_hash": "90a5755d02115160f20a36626b96eeb6a8182658b08c63e1d0c9c26987d3bb07",
+        "projection_hash": "96ef0a6db12d2828ac37849360efd84655395bcb190ab495323e74427c8b9bb0",
         "routing_count": 1,
         "terminal_count": 6
       },
@@ -748,7 +748,7 @@
       "detail": {
         "cs_count": 1,
         "ct_count": 2,
-        "projection_hash": "75e5b627ef6e55838a2ffbd133a7988155031b06a3df0bc2a8f4d6ea98349aae",
+        "projection_hash": "88a3a25039e8c9b69045fa9a73b3a9cccd06735c85895b09d3720bcc80a841c4",
         "rb_policy_count": 1
       },
       "event_id": 48,
@@ -1019,7 +1019,7 @@
       "subject_token": -1
     }
   ],
-  "evidence_graph_hash": "ff602f06fe42871aaa2f04d0bf3b37eedb74d79755458beb8f389ae607b18ff1",
+  "evidence_graph_hash": "81f50b2f9a5925ff010482fe372547c43a1804167765110d562a6810e37887ef",
   "families": {
     "ADDRESSING": [
       20

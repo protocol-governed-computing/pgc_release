@@ -1,0 +1,103 @@
+{
+  "artifact_code": "CT_IMPURE_OFFER_NEXT_WORDS_V0",
+  "artifact_type": "CT",
+  "content": "# CT_IMPURE_OFFER_NEXT_WORDS_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: 'The model''s step: offers its next words given the response so far; the one step whose result\n    is not determined by its inputs'\n  refusal: never\n  inputs:\n    reading:\n      type: object\n      required: true\n    text:\n      type: string\n      required: true\n    finished:\n      type: boolean\n      required: true\n    stopped_by:\n      type: string\n      required: true\n  outputs:\n    candidates:\n      type: array\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_impure\n  operation: OFFER_NEXT_WORDS\n  implementation:\n    module: causal_language_model.implementation.capability_transforms.atoms.ct_impure_offer_next_words_v0\n    callable: execute\n```\n\n---\n\n## Intent\n\nThe model's step: offers its next words given the response so far; the one step whose result is not determined by its inputs\n",
+  "content_hash": "bbeb1a317220f14d799a7f37796275ca5fa937fb007bd2c8152d14ca689cf8b7",
+  "ct_ir": {
+    "artifact_code": "CT_IMPURE_OFFER_NEXT_WORDS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "finished": "$.inputs.finished",
+          "reading": "$.inputs.reading",
+          "stopped_by": "$.inputs.stopped_by",
+          "text": "$.inputs.text"
+        },
+        "atom": "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "causal_language_model.implementation.capability_transforms.atoms.ct_impure_offer_next_words_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_impure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0",
+    "inputs": {
+      "finished": {
+        "required": true,
+        "type": "boolean"
+      },
+      "reading": {
+        "required": true,
+        "type": "object"
+      },
+      "stopped_by": {
+        "required": true,
+        "type": "string"
+      },
+      "text": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "outputs": {
+      "candidates": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "finished": {
+          "required": true,
+          "type": "boolean"
+        },
+        "reading": {
+          "required": true,
+          "type": "object"
+        },
+        "stopped_by": {
+          "required": true,
+          "type": "string"
+        },
+        "text": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "candidates": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "refusal": "never",
+      "summary": "The model's step: offers its next words given the response so far; the one step whose result is not determined by its inputs"
+    },
+    "fqdn": "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_impure",
+      "implementation": {
+        "callable": "execute",
+        "module": "causal_language_model.implementation.capability_transforms.atoms.ct_impure_offer_next_words_v0"
+      },
+      "operation": "OFFER_NEXT_WORDS"
+    },
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0"
+  ],
+  "version": "0"
+}

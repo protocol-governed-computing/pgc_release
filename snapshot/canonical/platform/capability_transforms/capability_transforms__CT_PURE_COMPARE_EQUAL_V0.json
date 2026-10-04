@@ -1,8 +1,8 @@
 {
   "artifact_code": "CT_PURE_COMPARE_EQUAL_V0",
   "artifact_type": "CT",
-  "content": "# CT_PURE_COMPARE_EQUAL_V0\n\n## 1. Summary\n\nCompare two values for equality.\n\n---\n\n## 2. Inputs\n\n| Field | Type |\n|---|---|\n| left | string |\n| right | string |\n\n---\n\n## 3. Outputs\n\n| Field | Type |\n|---|---|\n| is_equal | boolean |\n\n---\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::CT_PURE_COMPARE_EQUAL_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Compare two values for equality.\n  refusal: returns\n  inputs:\n    left:\n      type: string\n      required: true\n    right:\n      type: string\n      required: true\n  outputs:\n    is_equal:\n      type: boolean\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: COMPUTE\n  implementation:\n    module: capability_transforms.implementation.ct_pure_compare_equal_v0\n    callable: execute\n```\n",
-  "content_hash": "c499bf92dc77d6cb36c8e610e4969a40252dcc856784b41c2af6f060032320f3",
+  "content": "# CT_PURE_COMPARE_EQUAL_V0\n\n## 1. Summary\n\nCompare two values for equality.\n\n---\n\n## 2. Inputs\n\n| Field | Type |\n|---|---|\n| left | string |\n| right | string |\n\n---\n\n## 3. Outputs\n\n| Field | Type |\n|---|---|\n| is_equal | boolean |\n\n---\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::CT_PURE_COMPARE_EQUAL_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Compare two values for equality.\n  refusal: returns\n  inputs:\n    left:\n      type: string\n      required: true\n    right:\n      type: string\n      required: true\n  outputs:\n    is_equal:\n      type: boolean\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: COMPUTE\n  implementation:\n    module: capability_transforms.implementation.ct_pure_compare_equal_v0\n    callable: execute\n```\n",
+  "content_hash": "fba9bff0f110ad2ee918b5314135e7a00bbc0f1c5304c1ec66c69a896c8e2aec",
   "ct_ir": {
     "artifact_code": "CT_PURE_COMPARE_EQUAL_V0",
     "atom_stream": [
@@ -16,7 +16,8 @@
           "callable": "execute",
           "module": "capability_transforms.implementation.ct_pure_compare_equal_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -62,7 +63,7 @@
       "summary": "Compare two values for equality."
     },
     "fqdn": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",
@@ -77,7 +78,7 @@
   "layer_code": "REUSABLE_TRANSFORMS",
   "namespace": "capability_transforms",
   "references": [
-    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
   ],
   "version": "0"
 }

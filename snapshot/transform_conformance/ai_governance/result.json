@@ -1,0 +1,53 @@
+{
+  "carried": [
+    "capability_transforms::CT_PURE_GENERATE_ID_V0",
+    "capability_transforms::CT_PURE_LOOKUP_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
+  "cases": [
+    {
+      "case": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0::available_under_cap",
+      "passed": true
+    },
+    {
+      "case": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0::refuses_at_cap",
+      "passed": true
+    },
+    {
+      "case": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0::eligible_once_trained",
+      "passed": true
+    },
+    {
+      "case": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0::refuses_untrained",
+      "passed": true
+    },
+    {
+      "case": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0::inactive_at_threshold",
+      "passed": true
+    },
+    {
+      "case": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0::inactive_past_threshold",
+      "passed": true
+    },
+    {
+      "case": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0::refuses_recently_used",
+      "passed": true
+    }
+  ],
+  "counts": {
+    "cases": 7,
+    "cases_failed": 0,
+    "proven": 3,
+    "refused": 0,
+    "unproven": 0
+  },
+  "domain": "ai_governance",
+  "proven": [
+    "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+    "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
+    "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0"
+  ],
+  "refused": [],
+  "unproven": []
+}

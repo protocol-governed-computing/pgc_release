@@ -1,36 +1,36 @@
 {
-  "compiler_version": "16",
-  "edge_count": 72,
+  "compiler_version": "17",
+  "edge_count": 75,
   "edges": [
     {
       "kind": "STAGE_SEQUENCE",
-      "source_event_id": 43,
-      "target_event_id": 44
+      "source_event_id": 46,
+      "target_event_id": 47
     },
     {
       "kind": "STAGE_SEQUENCE",
-      "source_event_id": 67,
-      "target_event_id": 68
+      "source_event_id": 70,
+      "target_event_id": 71
     },
     {
       "kind": "STAGE_SEQUENCE",
-      "source_event_id": 68,
-      "target_event_id": 69
+      "source_event_id": 71,
+      "target_event_id": 72
     },
     {
       "kind": "STAGE_SEQUENCE",
-      "source_event_id": 69,
-      "target_event_id": 70
+      "source_event_id": 72,
+      "target_event_id": 73
     },
     {
       "kind": "STAGE_SEQUENCE",
-      "source_event_id": 93,
-      "target_event_id": 94
+      "source_event_id": 96,
+      "target_event_id": 97
     },
     {
       "kind": "STAGE_SEQUENCE",
-      "source_event_id": 149,
-      "target_event_id": 150
+      "source_event_id": 155,
+      "target_event_id": 156
     },
     {
       "kind": "CAUSALITY",
@@ -249,125 +249,140 @@
     },
     {
       "kind": "CAUSALITY",
-      "source_event_id": 70,
-      "target_event_id": 93
+      "source_event_id": 0,
+      "target_event_id": 44
     },
     {
       "kind": "CAUSALITY",
-      "source_event_id": 71,
-      "target_event_id": 93
+      "source_event_id": 0,
+      "target_event_id": 45
     },
     {
       "kind": "CAUSALITY",
-      "source_event_id": 72,
-      "target_event_id": 93
+      "source_event_id": 0,
+      "target_event_id": 46
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 73,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 74,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 75,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 76,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 77,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 78,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 79,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 80,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 81,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 82,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 83,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 84,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 85,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 86,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 87,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 88,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 89,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 90,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 91,
-      "target_event_id": 93
+      "target_event_id": 96
     },
     {
       "kind": "CAUSALITY",
       "source_event_id": 92,
-      "target_event_id": 93
+      "target_event_id": 96
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 93,
+      "target_event_id": 96
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 94,
+      "target_event_id": 96
+    },
+    {
+      "kind": "CAUSALITY",
+      "source_event_id": 95,
+      "target_event_id": 96
     }
   ],
-  "event_count": 205,
+  "event_count": 221,
   "events": [
     {
       "detail": {
-        "artifacts_discovered": 43
+        "artifacts_discovered": 46
       },
       "event_id": 0,
       "family": "DISCOVERY",
@@ -873,7 +888,7 @@
     },
     {
       "detail": {
-        "kind": "GOVERNANCE",
+        "kind": "TEST_DATA",
         "layer_code": "AI_GOVERNANCE"
       },
       "event_id": 39,
@@ -881,12 +896,12 @@
       "operation": "node_created",
       "parent_event_id": -1,
       "stage": "S1_EXTRACT",
-      "subject_fqdn": "ai_governance::VOCAB_AI_LICENSING_STATES_V0",
+      "subject_fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
       "subject_token": -1
     },
     {
       "detail": {
-        "kind": "WF",
+        "kind": "TEST_DATA",
         "layer_code": "AI_GOVERNANCE"
       },
       "event_id": 40,
@@ -894,12 +909,12 @@
       "operation": "node_created",
       "parent_event_id": -1,
       "stage": "S1_EXTRACT",
-      "subject_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
+      "subject_fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0",
       "subject_token": -1
     },
     {
       "detail": {
-        "kind": "WF",
+        "kind": "TEST_DATA",
         "layer_code": "AI_GOVERNANCE"
       },
       "event_id": 41,
@@ -907,12 +922,12 @@
       "operation": "node_created",
       "parent_event_id": -1,
       "stage": "S1_EXTRACT",
-      "subject_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
+      "subject_fqdn": "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0",
       "subject_token": -1
     },
     {
       "detail": {
-        "kind": "WF",
+        "kind": "GOVERNANCE",
         "layer_code": "AI_GOVERNANCE"
       },
       "event_id": 42,
@@ -920,7 +935,7 @@
       "operation": "node_created",
       "parent_event_id": -1,
       "stage": "S1_EXTRACT",
-      "subject_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
+      "subject_fqdn": "ai_governance::VOCAB_AI_LICENSING_STATES_V0",
       "subject_token": -1
     },
     {
@@ -933,6 +948,45 @@
       "operation": "node_created",
       "parent_event_id": -1,
       "stage": "S1_EXTRACT",
+      "subject_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "WF",
+        "layer_code": "AI_GOVERNANCE"
+      },
+      "event_id": 44,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "WF",
+        "layer_code": "AI_GOVERNANCE"
+      },
+      "event_id": 45,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
+      "subject_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "WF",
+        "layer_code": "AI_GOVERNANCE"
+      },
+      "event_id": 46,
+      "family": "DISCOVERY",
+      "operation": "node_created",
+      "parent_event_id": -1,
+      "stage": "S1_EXTRACT",
       "subject_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "subject_token": -1
     },
@@ -941,77 +995,38 @@
         "kind": "CC_BINDS_CT",
         "target": "capability_transforms::CT_PURE_LOOKUP_V0"
       },
-      "event_id": 44,
-      "family": "TOPOLOGY",
-      "operation": "edge_typed",
-      "parent_event_id": -1,
-      "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "kind": "CC_BINDS_CT",
-        "target": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
-      },
-      "event_id": 45,
-      "family": "TOPOLOGY",
-      "operation": "edge_typed",
-      "parent_event_id": -1,
-      "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "kind": "CC_BINDS_CT",
-        "target": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
-      },
-      "event_id": 46,
-      "family": "TOPOLOGY",
-      "operation": "edge_typed",
-      "parent_event_id": -1,
-      "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::CC_CHECK_TOOL_DECLARED_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "kind": "CC_BINDS_CT",
-        "target": "capability_transforms::CT_PURE_GENERATE_ID_V0"
-      },
       "event_id": 47,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
       "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::CC_NORMALIZE_AGENT_REQUEST_V0",
+      "subject_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
       "subject_token": -1
     },
     {
       "detail": {
         "kind": "CC_BINDS_CT",
-        "target": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0"
+        "target": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
       },
       "event_id": 48,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
       "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0",
+      "subject_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
       "subject_token": -1
     },
     {
       "detail": {
         "kind": "CC_BINDS_CT",
-        "target": "capability_transforms::CT_PURE_GENERATE_ID_V0"
+        "target": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
       },
       "event_id": 49,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
       "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0",
+      "subject_fqdn": "ai_governance::CC_CHECK_TOOL_DECLARED_V0",
       "subject_token": -1
     },
     {
@@ -1024,6 +1039,45 @@
       "operation": "edge_typed",
       "parent_event_id": -1,
       "stage": "S2_CANONICALIZE",
+      "subject_fqdn": "ai_governance::CC_NORMALIZE_AGENT_REQUEST_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "CC_BINDS_CT",
+        "target": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0"
+      },
+      "event_id": 51,
+      "family": "TOPOLOGY",
+      "operation": "edge_typed",
+      "parent_event_id": -1,
+      "stage": "S2_CANONICALIZE",
+      "subject_fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "CC_BINDS_CT",
+        "target": "capability_transforms::CT_PURE_GENERATE_ID_V0"
+      },
+      "event_id": 52,
+      "family": "TOPOLOGY",
+      "operation": "edge_typed",
+      "parent_event_id": -1,
+      "stage": "S2_CANONICALIZE",
+      "subject_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "CC_BINDS_CT",
+        "target": "capability_transforms::CT_PURE_GENERATE_ID_V0"
+      },
+      "event_id": 53,
+      "family": "TOPOLOGY",
+      "operation": "edge_typed",
+      "parent_event_id": -1,
+      "stage": "S2_CANONICALIZE",
       "subject_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
       "subject_token": -1
     },
@@ -1032,7 +1086,7 @@
         "kind": "CC_BINDS_CT",
         "target": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
       },
-      "event_id": 51,
+      "event_id": 54,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
@@ -1045,7 +1099,7 @@
         "kind": "CC_BINDS_CT",
         "target": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0"
       },
-      "event_id": 52,
+      "event_id": 55,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
@@ -1058,7 +1112,7 @@
         "kind": "CC_BINDS_CT",
         "target": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0"
       },
-      "event_id": 53,
+      "event_id": 56,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
@@ -1071,7 +1125,7 @@
         "kind": "CC_BINDS_CT",
         "target": "capability_transforms::CT_PURE_LOOKUP_V0"
       },
-      "event_id": 54,
+      "event_id": 57,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
@@ -1084,7 +1138,7 @@
         "kind": "CC_BINDS_CT",
         "target": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
       },
-      "event_id": 55,
+      "event_id": 58,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
@@ -1096,45 +1150,6 @@
       "detail": {
         "kind": "RB_MAPS",
         "target": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
-      },
-      "event_id": 56,
-      "family": "TOPOLOGY",
-      "operation": "edge_typed",
-      "parent_event_id": -1,
-      "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "kind": "RB_MAPS",
-        "target": "capability_side_effects::CS_CLOCK_V0"
-      },
-      "event_id": 57,
-      "family": "TOPOLOGY",
-      "operation": "edge_typed",
-      "parent_event_id": -1,
-      "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "kind": "RB_MAPS",
-        "target": "capability_side_effects::CS_MUTABLE_JSON_V0"
-      },
-      "event_id": 58,
-      "family": "TOPOLOGY",
-      "operation": "edge_typed",
-      "parent_event_id": -1,
-      "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "kind": "RB_MAPS",
-        "target": "capability_side_effects::CS_REGISTRY_V0"
       },
       "event_id": 59,
       "family": "TOPOLOGY",
@@ -1147,27 +1162,27 @@
     {
       "detail": {
         "kind": "RB_MAPS",
-        "target": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
+        "target": "capability_side_effects::CS_CLOCK_V0"
       },
       "event_id": 60,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
       "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
+      "subject_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
       "subject_token": -1
     },
     {
       "detail": {
         "kind": "RB_MAPS",
-        "target": "capability_side_effects::CS_CLOCK_V0"
+        "target": "capability_side_effects::CS_MUTABLE_JSON_V0"
       },
       "event_id": 61,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
       "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
+      "subject_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
       "subject_token": -1
     },
     {
@@ -1180,46 +1195,46 @@
       "operation": "edge_typed",
       "parent_event_id": -1,
       "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
+      "subject_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
       "subject_token": -1
     },
     {
       "detail": {
-        "kind": "WF_BINDS_RB",
-        "target": "ai_governance::RB_LICENSE_BINDINGS_V0"
+        "kind": "RB_MAPS",
+        "target": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
       },
       "event_id": 63,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
       "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
+      "subject_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
       "subject_token": -1
     },
     {
       "detail": {
-        "kind": "WF_BINDS_RB",
-        "target": "ai_governance::RB_LICENSE_BINDINGS_V0"
+        "kind": "RB_MAPS",
+        "target": "capability_side_effects::CS_CLOCK_V0"
       },
       "event_id": 64,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
       "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
+      "subject_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
       "subject_token": -1
     },
     {
       "detail": {
-        "kind": "WF_BINDS_RB",
-        "target": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0"
+        "kind": "RB_MAPS",
+        "target": "capability_side_effects::CS_REGISTRY_V0"
       },
       "event_id": 65,
       "family": "TOPOLOGY",
       "operation": "edge_typed",
       "parent_event_id": -1,
       "stage": "S2_CANONICALIZE",
-      "subject_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
+      "subject_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
       "subject_token": -1
     },
     {
@@ -1232,6 +1247,45 @@
       "operation": "edge_typed",
       "parent_event_id": -1,
       "stage": "S2_CANONICALIZE",
+      "subject_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "WF_BINDS_RB",
+        "target": "ai_governance::RB_LICENSE_BINDINGS_V0"
+      },
+      "event_id": 67,
+      "family": "TOPOLOGY",
+      "operation": "edge_typed",
+      "parent_event_id": -1,
+      "stage": "S2_CANONICALIZE",
+      "subject_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "WF_BINDS_RB",
+        "target": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0"
+      },
+      "event_id": 68,
+      "family": "TOPOLOGY",
+      "operation": "edge_typed",
+      "parent_event_id": -1,
+      "stage": "S2_CANONICALIZE",
+      "subject_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "kind": "WF_BINDS_RB",
+        "target": "ai_governance::RB_LICENSE_BINDINGS_V0"
+      },
+      "event_id": 69,
+      "family": "TOPOLOGY",
+      "operation": "edge_typed",
+      "parent_event_id": -1,
+      "stage": "S2_CANONICALIZE",
       "subject_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "subject_token": -1
     },
@@ -1239,7 +1293,7 @@
       "detail": {
         "count": 19
       },
-      "event_id": 67,
+      "event_id": 70,
       "family": "TOPOLOGY",
       "operation": "bare_duplicate_edges_dropped",
       "parent_event_id": -1,
@@ -1249,10 +1303,10 @@
     },
     {
       "detail": {
-        "address_hash": "92f1390ab2e62204475ca233a30115c46672ffe7ae63d0cef8b45a1027303948",
-        "address_table_size": 172
+        "address_hash": "70bc902acb1e77270dc0802aab05d5b052d9a9aba43fbfe68c7cebb7466ef9f9",
+        "address_table_size": 182
       },
-      "event_id": 68,
+      "event_id": 71,
       "family": "ADDRESSING",
       "operation": "addresses_allocated",
       "parent_event_id": -1,
@@ -1262,13 +1316,13 @@
     },
     {
       "detail": {
-        "assertions_executed": 73,
-        "assertions_imported": 73,
-        "assertions_passed": 73,
+        "assertions_executed": 79,
+        "assertions_imported": 79,
+        "assertions_passed": 79,
         "errors": 0,
         "warnings": 0
       },
-      "event_id": 69,
+      "event_id": 72,
       "family": "GOVERNANCE",
       "operation": "governance_complete",
       "parent_event_id": -1,
@@ -1280,48 +1334,12 @@
       "detail": {
         "atom_stream_length": 1
       },
-      "event_id": 70,
-      "family": "CONSTRUCTION",
-      "operation": "ct_ir_built",
-      "parent_event_id": -1,
-      "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "atom_stream_length": 1
-      },
-      "event_id": 71,
-      "family": "CONSTRUCTION",
-      "operation": "ct_ir_built",
-      "parent_event_id": -1,
-      "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "atom_stream_length": 1
-      },
-      "event_id": 72,
-      "family": "CONSTRUCTION",
-      "operation": "ct_ir_built",
-      "parent_event_id": -1,
-      "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "atom_stream_length": 1
-      },
       "event_id": 73,
       "family": "CONSTRUCTION",
       "operation": "ct_ir_built",
       "parent_event_id": -1,
       "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+      "subject_fqdn": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
       "subject_token": -1
     },
     {
@@ -1333,7 +1351,7 @@
       "operation": "ct_ir_built",
       "parent_event_id": -1,
       "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "capability_transforms::CT_PURE_LOOKUP_V0",
+      "subject_fqdn": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
       "subject_token": -1
     },
     {
@@ -1345,7 +1363,7 @@
       "operation": "ct_ir_built",
       "parent_event_id": -1,
       "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "subject_fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
       "subject_token": -1
     },
     {
@@ -1357,12 +1375,48 @@
       "operation": "ct_ir_built",
       "parent_event_id": -1,
       "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "atom_stream_length": 1
+      },
+      "event_id": 77,
+      "family": "CONSTRUCTION",
+      "operation": "ct_ir_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "capability_transforms::CT_PURE_LOOKUP_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "atom_stream_length": 1
+      },
+      "event_id": 78,
+      "family": "CONSTRUCTION",
+      "operation": "ct_ir_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "atom_stream_length": 1
+      },
+      "event_id": 79,
+      "family": "CONSTRUCTION",
+      "operation": "ct_ir_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
       "subject_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
       "subject_token": -1
     },
     {
       "detail": {},
-      "event_id": 77,
+      "event_id": 80,
       "family": "CONSTRUCTION",
       "operation": "cs_ir_built",
       "parent_event_id": -1,
@@ -1372,7 +1426,7 @@
     },
     {
       "detail": {},
-      "event_id": 78,
+      "event_id": 81,
       "family": "CONSTRUCTION",
       "operation": "cs_ir_built",
       "parent_event_id": -1,
@@ -1382,7 +1436,7 @@
     },
     {
       "detail": {},
-      "event_id": 79,
+      "event_id": 82,
       "family": "CONSTRUCTION",
       "operation": "cs_ir_built",
       "parent_event_id": -1,
@@ -1392,7 +1446,7 @@
     },
     {
       "detail": {},
-      "event_id": 80,
+      "event_id": 83,
       "family": "CONSTRUCTION",
       "operation": "cs_ir_built",
       "parent_event_id": -1,
@@ -1404,7 +1458,7 @@
       "detail": {
         "pipeline_steps": 2
       },
-      "event_id": 81,
+      "event_id": 84,
       "family": "CONSTRUCTION",
       "operation": "cc_projection_built",
       "parent_event_id": -1,
@@ -1416,48 +1470,12 @@
       "detail": {
         "pipeline_steps": 2
       },
-      "event_id": 82,
-      "family": "CONSTRUCTION",
-      "operation": "cc_projection_built",
-      "parent_event_id": -1,
-      "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "pipeline_steps": 1
-      },
-      "event_id": 83,
-      "family": "CONSTRUCTION",
-      "operation": "cc_projection_built",
-      "parent_event_id": -1,
-      "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "ai_governance::CC_CHECK_TOOL_DECLARED_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "pipeline_steps": 1
-      },
-      "event_id": 84,
-      "family": "CONSTRUCTION",
-      "operation": "cc_projection_built",
-      "parent_event_id": -1,
-      "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "ai_governance::CC_ENFORCE_LICENSE_CAP_V0",
-      "subject_token": -1
-    },
-    {
-      "detail": {
-        "pipeline_steps": 1
-      },
       "event_id": 85,
       "family": "CONSTRUCTION",
       "operation": "cc_projection_built",
       "parent_event_id": -1,
       "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "ai_governance::CC_NORMALIZE_AGENT_REQUEST_V0",
+      "subject_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
       "subject_token": -1
     },
     {
@@ -1469,43 +1487,43 @@
       "operation": "cc_projection_built",
       "parent_event_id": -1,
       "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "ai_governance::CC_PROVISION_LICENSE_V0",
+      "subject_fqdn": "ai_governance::CC_CHECK_TOOL_DECLARED_V0",
       "subject_token": -1
     },
     {
       "detail": {
-        "pipeline_steps": 2
+        "pipeline_steps": 1
       },
       "event_id": 87,
       "family": "CONSTRUCTION",
       "operation": "cc_projection_built",
       "parent_event_id": -1,
       "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0",
+      "subject_fqdn": "ai_governance::CC_ENFORCE_LICENSE_CAP_V0",
       "subject_token": -1
     },
     {
       "detail": {
-        "pipeline_steps": 3
+        "pipeline_steps": 1
       },
       "event_id": 88,
       "family": "CONSTRUCTION",
       "operation": "cc_projection_built",
       "parent_event_id": -1,
       "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0",
+      "subject_fqdn": "ai_governance::CC_NORMALIZE_AGENT_REQUEST_V0",
       "subject_token": -1
     },
     {
       "detail": {
-        "pipeline_steps": 4
+        "pipeline_steps": 1
       },
       "event_id": 89,
       "family": "CONSTRUCTION",
       "operation": "cc_projection_built",
       "parent_event_id": -1,
       "stage": "S5_CONSTRUCT",
-      "subject_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
+      "subject_fqdn": "ai_governance::CC_PROVISION_LICENSE_V0",
       "subject_token": -1
     },
     {
@@ -1517,6 +1535,42 @@
       "operation": "cc_projection_built",
       "parent_event_id": -1,
       "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "pipeline_steps": 3
+      },
+      "event_id": 91,
+      "family": "CONSTRUCTION",
+      "operation": "cc_projection_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "pipeline_steps": 4
+      },
+      "event_id": 92,
+      "family": "CONSTRUCTION",
+      "operation": "cc_projection_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
+      "subject_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "pipeline_steps": 2
+      },
+      "event_id": 93,
+      "family": "CONSTRUCTION",
+      "operation": "cc_projection_built",
+      "parent_event_id": -1,
+      "stage": "S5_CONSTRUCT",
       "subject_fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0",
       "subject_token": -1
     },
@@ -1524,7 +1578,7 @@
       "detail": {
         "pipeline_steps": 2
       },
-      "event_id": 91,
+      "event_id": 94,
       "family": "CONSTRUCTION",
       "operation": "cc_projection_built",
       "parent_event_id": -1,
@@ -1536,7 +1590,7 @@
       "detail": {
         "pipeline_steps": 2
       },
-      "event_id": 92,
+      "event_id": 95,
       "family": "CONSTRUCTION",
       "operation": "cc_projection_built",
       "parent_event_id": -1,
@@ -1548,7 +1602,7 @@
       "detail": {
         "ir_count": 23
       },
-      "event_id": 93,
+      "event_id": 96,
       "family": "CONSTRUCTION",
       "operation": "construction_complete",
       "parent_event_id": -1,
@@ -1560,7 +1614,7 @@
       "detail": {
         "artifact_type": "AC"
       },
-      "event_id": 94,
+      "event_id": 97,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1572,7 +1626,7 @@
       "detail": {
         "artifact_type": "AC"
       },
-      "event_id": 95,
+      "event_id": 98,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1584,7 +1638,7 @@
       "detail": {
         "artifact_type": "AC"
       },
-      "event_id": 96,
+      "event_id": 99,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1596,7 +1650,7 @@
       "detail": {
         "artifact_type": "AC"
       },
-      "event_id": 97,
+      "event_id": 100,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1608,7 +1662,7 @@
       "detail": {
         "artifact_type": "AC"
       },
-      "event_id": 98,
+      "event_id": 101,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1620,7 +1674,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 99,
+      "event_id": 102,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1632,7 +1686,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 100,
+      "event_id": 103,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1644,7 +1698,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 101,
+      "event_id": 104,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1656,7 +1710,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 102,
+      "event_id": 105,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1668,7 +1722,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 103,
+      "event_id": 106,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1680,7 +1734,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 104,
+      "event_id": 107,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1692,7 +1746,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 105,
+      "event_id": 108,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1704,7 +1758,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 106,
+      "event_id": 109,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1716,7 +1770,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 107,
+      "event_id": 110,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1728,7 +1782,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 108,
+      "event_id": 111,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1740,7 +1794,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 109,
+      "event_id": 112,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1752,7 +1806,7 @@
       "detail": {
         "artifact_type": "CC"
       },
-      "event_id": 110,
+      "event_id": 113,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1764,7 +1818,7 @@
       "detail": {
         "artifact_type": "CT"
       },
-      "event_id": 111,
+      "event_id": 114,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1776,7 +1830,7 @@
       "detail": {
         "artifact_type": "CT"
       },
-      "event_id": 112,
+      "event_id": 115,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1788,7 +1842,7 @@
       "detail": {
         "artifact_type": "CT"
       },
-      "event_id": 113,
+      "event_id": 116,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1800,7 +1854,7 @@
       "detail": {
         "artifact_type": "EV"
       },
-      "event_id": 114,
+      "event_id": 117,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1812,7 +1866,7 @@
       "detail": {
         "artifact_type": "EV"
       },
-      "event_id": 115,
+      "event_id": 118,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1824,7 +1878,7 @@
       "detail": {
         "artifact_type": "EV"
       },
-      "event_id": 116,
+      "event_id": 119,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1836,7 +1890,7 @@
       "detail": {
         "artifact_type": "EV"
       },
-      "event_id": 117,
+      "event_id": 120,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1848,7 +1902,7 @@
       "detail": {
         "artifact_type": "EV"
       },
-      "event_id": 118,
+      "event_id": 121,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1860,7 +1914,7 @@
       "detail": {
         "artifact_type": "EV"
       },
-      "event_id": 119,
+      "event_id": 122,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1872,7 +1926,7 @@
       "detail": {
         "artifact_type": "EV"
       },
-      "event_id": 120,
+      "event_id": 123,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1884,7 +1938,7 @@
       "detail": {
         "artifact_type": "EV"
       },
-      "event_id": 121,
+      "event_id": 124,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1896,7 +1950,7 @@
       "detail": {
         "artifact_type": "EV"
       },
-      "event_id": 122,
+      "event_id": 125,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1908,7 +1962,7 @@
       "detail": {
         "artifact_type": "IN"
       },
-      "event_id": 123,
+      "event_id": 126,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1920,7 +1974,7 @@
       "detail": {
         "artifact_type": "IN"
       },
-      "event_id": 124,
+      "event_id": 127,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1932,7 +1986,7 @@
       "detail": {
         "artifact_type": "IN"
       },
-      "event_id": 125,
+      "event_id": 128,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1944,7 +1998,7 @@
       "detail": {
         "artifact_type": "IN"
       },
-      "event_id": 126,
+      "event_id": 129,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1956,7 +2010,7 @@
       "detail": {
         "artifact_type": "RB"
       },
-      "event_id": 127,
+      "event_id": 130,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1968,7 +2022,7 @@
       "detail": {
         "artifact_type": "RB"
       },
-      "event_id": 128,
+      "event_id": 131,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1980,7 +2034,7 @@
       "detail": {
         "artifact_type": "GOVERNANCE"
       },
-      "event_id": 129,
+      "event_id": 132,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -1992,7 +2046,7 @@
       "detail": {
         "artifact_type": "GOVERNANCE"
       },
-      "event_id": 130,
+      "event_id": 133,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -2004,7 +2058,7 @@
       "detail": {
         "artifact_type": "GOVERNANCE"
       },
-      "event_id": 131,
+      "event_id": 134,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
@@ -2014,166 +2068,202 @@
     },
     {
       "detail": {
-        "artifact_type": "GOVERNANCE"
-      },
-      "event_id": 132,
-      "family": "PROJECTION",
-      "operation": "artifact_projected",
-      "parent_event_id": -1,
-      "stage": "S6_PROJECT",
-      "subject_fqdn": "ai_governance::VOCAB_AI_LICENSING_STATES_V0",
-      "subject_token": 40
-    },
-    {
-      "detail": {
-        "artifact_type": "WF"
-      },
-      "event_id": 133,
-      "family": "PROJECTION",
-      "operation": "artifact_projected",
-      "parent_event_id": -1,
-      "stage": "S6_PROJECT",
-      "subject_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
-      "subject_token": 41
-    },
-    {
-      "detail": {
-        "artifact_type": "WF"
-      },
-      "event_id": 134,
-      "family": "PROJECTION",
-      "operation": "artifact_projected",
-      "parent_event_id": -1,
-      "stage": "S6_PROJECT",
-      "subject_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
-      "subject_token": 42
-    },
-    {
-      "detail": {
-        "artifact_type": "WF"
+        "artifact_type": "TEST_DATA"
       },
       "event_id": 135,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
-      "subject_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "subject_token": 43
+      "subject_fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+      "subject_token": 40
     },
     {
       "detail": {
-        "artifact_type": "WF"
+        "artifact_type": "TEST_DATA"
       },
       "event_id": 136,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
-      "subject_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
-      "subject_token": 44
+      "subject_fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0",
+      "subject_token": 41
     },
     {
       "detail": {
-        "artifact_type": "CS"
+        "artifact_type": "TEST_DATA"
       },
       "event_id": 137,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
-      "subject_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-      "subject_token": 67
+      "subject_fqdn": "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0",
+      "subject_token": 42
     },
     {
       "detail": {
-        "artifact_type": "CS"
+        "artifact_type": "GOVERNANCE"
       },
       "event_id": 138,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
-      "subject_fqdn": "capability_side_effects::CS_CLOCK_V0",
-      "subject_token": 68
+      "subject_fqdn": "ai_governance::VOCAB_AI_LICENSING_STATES_V0",
+      "subject_token": 43
     },
     {
       "detail": {
-        "artifact_type": "CS"
+        "artifact_type": "WF"
       },
       "event_id": 139,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
-      "subject_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
-      "subject_token": 69
+      "subject_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
+      "subject_token": 44
     },
     {
       "detail": {
-        "artifact_type": "CS"
+        "artifact_type": "WF"
       },
       "event_id": 140,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
-      "subject_fqdn": "capability_side_effects::CS_REGISTRY_V0",
-      "subject_token": 70
+      "subject_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
+      "subject_token": 45
     },
     {
       "detail": {
-        "artifact_type": "CT"
+        "artifact_type": "WF"
       },
       "event_id": 141,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
-      "subject_fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
-      "subject_token": 74
+      "subject_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
+      "subject_token": 46
     },
     {
       "detail": {
-        "artifact_type": "CT"
+        "artifact_type": "WF"
       },
       "event_id": 142,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
-      "subject_fqdn": "capability_transforms::CT_PURE_LOOKUP_V0",
-      "subject_token": 75
+      "subject_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
+      "subject_token": 47
     },
     {
       "detail": {
-        "artifact_type": "CT"
+        "artifact_type": "CS"
       },
       "event_id": 143,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
-      "subject_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
-      "subject_token": 76
+      "subject_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+      "subject_token": 71
     },
     {
       "detail": {
-        "artifact_type": "CT"
+        "artifact_type": "CS"
       },
       "event_id": 144,
       "family": "PROJECTION",
       "operation": "artifact_projected",
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
-      "subject_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
-      "subject_token": 77
+      "subject_fqdn": "capability_side_effects::CS_CLOCK_V0",
+      "subject_token": 72
     },
     {
       "detail": {
-        "address_count": 92,
-        "projection_hash": "d1068ea4b404af87094912e29b82f64fb702a91a82722ef29ac4b57f4a5d1d7c"
+        "artifact_type": "CS"
       },
       "event_id": 145,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "subject_token": 73
+    },
+    {
+      "detail": {
+        "artifact_type": "CS"
+      },
+      "event_id": 146,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "capability_side_effects::CS_REGISTRY_V0",
+      "subject_token": 74
+    },
+    {
+      "detail": {
+        "artifact_type": "CT"
+      },
+      "event_id": 147,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+      "subject_token": 78
+    },
+    {
+      "detail": {
+        "artifact_type": "CT"
+      },
+      "event_id": 148,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "capability_transforms::CT_PURE_LOOKUP_V0",
+      "subject_token": 79
+    },
+    {
+      "detail": {
+        "artifact_type": "CT"
+      },
+      "event_id": 149,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "subject_token": 80
+    },
+    {
+      "detail": {
+        "artifact_type": "CT"
+      },
+      "event_id": 150,
+      "family": "PROJECTION",
+      "operation": "artifact_projected",
+      "parent_event_id": -1,
+      "stage": "S6_PROJECT",
+      "subject_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+      "subject_token": 81
+    },
+    {
+      "detail": {
+        "address_count": 95,
+        "projection_hash": "bf578fdb1b27a94cd69694b884be71fae3ed767d3e9bf2ad2f3432082fb9b97f"
+      },
+      "event_id": 151,
       "family": "PROJECTION",
       "operation": "vocabulary_projected",
       "parent_event_id": -1,
@@ -2185,10 +2275,10 @@
       "detail": {
         "adjacency_count": 22,
         "edge_count": 77,
-        "node_count": 51,
-        "projection_hash": "ae3e91a51e1eaa7ea48a3c0cb27279404b39514142d21ae3877c27915e95dcc7"
+        "node_count": 54,
+        "projection_hash": "4e3a398d9edf00af055df8a04508656b979ecd3ddb391ffdcf102a0c539b53e4"
       },
-      "event_id": 146,
+      "event_id": 152,
       "family": "PROJECTION",
       "operation": "tokenized_projected",
       "parent_event_id": -1,
@@ -2200,10 +2290,10 @@
       "detail": {
         "edge_count": 77,
         "ev_schema_count": 9,
-        "node_count": 51,
-        "projection_hash": "386174873358b5825015f534fd24eb2f1d02251b1c5350e7dfe35563a6cf48c7"
+        "node_count": 54,
+        "projection_hash": "b0eb113242db6b4fe2d75d4710916603f41e32ebe863434d745e8aa9eb5e679f"
       },
-      "event_id": 147,
+      "event_id": 153,
       "family": "PROJECTION",
       "operation": "evidence_projected",
       "parent_event_id": -1,
@@ -2216,11 +2306,11 @@
         "bindings_count": 4,
         "entry_count": 4,
         "pipeline_count": 12,
-        "projection_hash": "7d454eebbcd635402de6d5152dfed5be1c299b08db4741ea995b33d7ae3b7134",
+        "projection_hash": "994272d8782e6f67d1f0ff2fc5d9f71a3c80e76407f29f41b49af26275b87396",
         "routing_count": 4,
-        "terminal_count": 28
+        "terminal_count": 40
       },
-      "event_id": 148,
+      "event_id": 154,
       "family": "PROJECTION",
       "operation": "dispatch_projected",
       "parent_event_id": -1,
@@ -2232,10 +2322,10 @@
       "detail": {
         "cs_count": 4,
         "ct_count": 7,
-        "projection_hash": "26b1f60fdb781cc3b90faf0628bf3d43b31cb2896c73db46a6e8fac8742df9bf",
+        "projection_hash": "31e215eca7b6d2dcb72e6bac4226cacb473807d9c6cab91ae9109389a306cfa0",
         "rb_policy_count": 2
       },
-      "event_id": 149,
+      "event_id": 155,
       "family": "PROJECTION",
       "operation": "handlers_projected",
       "parent_event_id": -1,
@@ -2248,7 +2338,7 @@
         "artifact_type": "AC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/actors/ai_governance__AC_AGENT_V0.json"
       },
-      "event_id": 150,
+      "event_id": 156,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2261,7 +2351,7 @@
         "artifact_type": "AC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/actors/ai_governance__AC_EMPLOYEE_V0.json"
       },
-      "event_id": 151,
+      "event_id": 157,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2274,7 +2364,7 @@
         "artifact_type": "AC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/actors/ai_governance__AC_ENTERPRISE_RUNTIME_V0.json"
       },
-      "event_id": 152,
+      "event_id": 158,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2287,7 +2377,7 @@
         "artifact_type": "AC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/actors/ai_governance__AC_SYSTEM_GOVERNOR_V0.json"
       },
-      "event_id": 153,
+      "event_id": 159,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2300,7 +2390,7 @@
         "artifact_type": "AC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/actors/ai_governance__AC_SYSTEM_V0.json"
       },
-      "event_id": 154,
+      "event_id": 160,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2313,7 +2403,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_APPEND_AUDIT_EVENT_V0.json"
       },
-      "event_id": 155,
+      "event_id": 161,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2326,7 +2416,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_BIND_LICENSE_TO_TOOL_SURFACE_V0.json"
       },
-      "event_id": 156,
+      "event_id": 162,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2339,7 +2429,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_CHECK_TOOL_DECLARED_V0.json"
       },
-      "event_id": 157,
+      "event_id": 163,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2352,7 +2442,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_ENFORCE_LICENSE_CAP_V0.json"
       },
-      "event_id": 158,
+      "event_id": 164,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2365,7 +2455,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_NORMALIZE_AGENT_REQUEST_V0.json"
       },
-      "event_id": 159,
+      "event_id": 165,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2378,7 +2468,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_PROVISION_LICENSE_V0.json"
       },
-      "event_id": 160,
+      "event_id": 166,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2391,7 +2481,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_RECLAIM_UNUSED_LICENSE_V0.json"
       },
-      "event_id": 161,
+      "event_id": 167,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2404,7 +2494,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_RECORD_DENIED_ACTION_V0.json"
       },
-      "event_id": 162,
+      "event_id": 168,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2417,7 +2507,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_RECORD_GOVERNED_ACTION_V0.json"
       },
-      "event_id": 163,
+      "event_id": 169,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2430,7 +2520,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_RESOLVE_LICENSE_TIER_V0.json"
       },
-      "event_id": 164,
+      "event_id": 170,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2443,7 +2533,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_VALIDATE_ELIGIBILITY_V0.json"
       },
-      "event_id": 165,
+      "event_id": 171,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2456,7 +2546,7 @@
         "artifact_type": "CC",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_contracts/ai_governance__CC_VALIDATE_TOOL_PARAMETERS_V0.json"
       },
-      "event_id": 166,
+      "event_id": 172,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2469,7 +2559,7 @@
         "artifact_type": "CT",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_transforms/ai_governance__CT_PURE_CHECK_QUOTA_AVAILABLE_V0.json"
       },
-      "event_id": 167,
+      "event_id": 173,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2482,7 +2572,7 @@
         "artifact_type": "CT",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_transforms/ai_governance__CT_PURE_CHECK_TRAINING_STATUS_V0.json"
       },
-      "event_id": 168,
+      "event_id": 174,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2495,7 +2585,7 @@
         "artifact_type": "CT",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_transforms/ai_governance__CT_PURE_EVALUATE_INACTIVITY_V0.json"
       },
-      "event_id": 169,
+      "event_id": 175,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2508,7 +2598,7 @@
         "artifact_type": "EV",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/events/ai_governance__EV_AGENT_ACTION_AUTHORIZED_V0.json"
       },
-      "event_id": 170,
+      "event_id": 176,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2521,7 +2611,7 @@
         "artifact_type": "EV",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/events/ai_governance__EV_AGENT_ACTION_DENIED_V0.json"
       },
-      "event_id": 171,
+      "event_id": 177,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2534,7 +2624,7 @@
         "artifact_type": "EV",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/events/ai_governance__EV_EMPLOYEE_REGISTERED_V0.json"
       },
-      "event_id": 172,
+      "event_id": 178,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2547,7 +2637,7 @@
         "artifact_type": "EV",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/events/ai_governance__EV_LICENSE_CAP_SET_V0.json"
       },
-      "event_id": 173,
+      "event_id": 179,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2560,7 +2650,7 @@
         "artifact_type": "EV",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/events/ai_governance__EV_LICENSE_PROVISIONED_V0.json"
       },
-      "event_id": 174,
+      "event_id": 180,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2573,7 +2663,7 @@
         "artifact_type": "EV",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/events/ai_governance__EV_LICENSE_REVOKED_V0.json"
       },
-      "event_id": 175,
+      "event_id": 181,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2586,7 +2676,7 @@
         "artifact_type": "EV",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/events/ai_governance__EV_PROVISION_DENIED_V0.json"
       },
-      "event_id": 176,
+      "event_id": 182,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2599,7 +2689,7 @@
         "artifact_type": "EV",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/events/ai_governance__EV_TRAINING_COMPLETED_V0.json"
       },
-      "event_id": 177,
+      "event_id": 183,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2612,7 +2702,7 @@
         "artifact_type": "EV",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/events/ai_governance__EV_USAGE_RECORDED_V0.json"
       },
-      "event_id": 178,
+      "event_id": 184,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2625,7 +2715,7 @@
         "artifact_type": "IN",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/intents/ai_governance__IN_AGENT_ACTION_REQUESTED_V0.json"
       },
-      "event_id": 179,
+      "event_id": 185,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2638,7 +2728,7 @@
         "artifact_type": "IN",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/intents/ai_governance__IN_DENY_PROVISION_V0.json"
       },
-      "event_id": 180,
+      "event_id": 186,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2651,7 +2741,7 @@
         "artifact_type": "IN",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/intents/ai_governance__IN_PROVISION_AI_LICENSE_V0.json"
       },
-      "event_id": 181,
+      "event_id": 187,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2664,7 +2754,7 @@
         "artifact_type": "IN",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/intents/ai_governance__IN_RECLAIM_LICENSE_V0.json"
       },
-      "event_id": 182,
+      "event_id": 188,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2677,7 +2767,7 @@
         "artifact_type": "RB",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/runtime_bindings/ai_governance__RB_AGENT_GOVERNANCE_BINDINGS_V0.json"
       },
-      "event_id": 183,
+      "event_id": 189,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2690,7 +2780,7 @@
         "artifact_type": "RB",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/runtime_bindings/ai_governance__RB_LICENSE_BINDINGS_V0.json"
       },
-      "event_id": 184,
+      "event_id": 190,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2703,7 +2793,7 @@
         "artifact_type": "STRUCTURE",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/structures/ai_governance__STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0.json"
       },
-      "event_id": 185,
+      "event_id": 191,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2716,7 +2806,7 @@
         "artifact_type": "STRUCTURE",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/structures/ai_governance__STRUCTURE_AI_LICENSING_STORAGE_V0.json"
       },
-      "event_id": 186,
+      "event_id": 192,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2729,7 +2819,7 @@
         "artifact_type": "STRUCTURE",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/structures/ai_governance__STRUCTURE_BUILD_AI_GOVERNANCE_CONFIG_V0.json"
       },
-      "event_id": 187,
+      "event_id": 193,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2739,10 +2829,49 @@
     },
     {
       "detail": {
+        "artifact_type": "TEST_DATA",
+        "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/test_data/ai_governance__TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0.json"
+      },
+      "event_id": 194,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "TEST_DATA",
+        "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/test_data/ai_governance__TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0.json"
+      },
+      "event_id": 195,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "artifact_type": "TEST_DATA",
+        "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/test_data/ai_governance__TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0.json"
+      },
+      "event_id": 196,
+      "family": "MATERIALIZATION",
+      "operation": "artifact_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0",
+      "subject_token": -1
+    },
+    {
+      "detail": {
         "artifact_type": "VOCAB",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/vocabulary/ai_governance__VOCAB_AI_LICENSING_STATES_V0.json"
       },
-      "event_id": 188,
+      "event_id": 197,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2755,7 +2884,7 @@
         "artifact_type": "WF",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/workflows/ai_governance__WF_AUTO_RECLAIM_V0.json"
       },
-      "event_id": 189,
+      "event_id": 198,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2768,7 +2897,7 @@
         "artifact_type": "WF",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/workflows/ai_governance__WF_DENY_PROVISION_V0.json"
       },
-      "event_id": 190,
+      "event_id": 199,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2781,7 +2910,7 @@
         "artifact_type": "WF",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/workflows/ai_governance__WF_GOVERN_AGENT_ACTION_V0.json"
       },
-      "event_id": 191,
+      "event_id": 200,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2794,7 +2923,7 @@
         "artifact_type": "WF",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/workflows/ai_governance__WF_PROVISION_AI_LICENSING_V0.json"
       },
-      "event_id": 192,
+      "event_id": 201,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2807,7 +2936,7 @@
         "artifact_type": "CS",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_side_effects/capability_side_effects__CS_APPENDONLY_JSONL_V0.json"
       },
-      "event_id": 193,
+      "event_id": 202,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2820,7 +2949,7 @@
         "artifact_type": "CS",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_side_effects/capability_side_effects__CS_CLOCK_V0.json"
       },
-      "event_id": 194,
+      "event_id": 203,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2833,7 +2962,7 @@
         "artifact_type": "CS",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_side_effects/capability_side_effects__CS_MUTABLE_JSON_V0.json"
       },
-      "event_id": 195,
+      "event_id": 204,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2846,7 +2975,7 @@
         "artifact_type": "CS",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_side_effects/capability_side_effects__CS_REGISTRY_V0.json"
       },
-      "event_id": 196,
+      "event_id": 205,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2859,7 +2988,7 @@
         "artifact_type": "CT",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_transforms/capability_transforms__CT_PURE_GENERATE_ID_V0.json"
       },
-      "event_id": 197,
+      "event_id": 206,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2872,7 +3001,7 @@
         "artifact_type": "CT",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_transforms/capability_transforms__CT_PURE_LOOKUP_V0.json"
       },
-      "event_id": 198,
+      "event_id": 207,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2885,7 +3014,7 @@
         "artifact_type": "CT",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_transforms/capability_transforms__CT_PURE_VALIDATE_PARAMETER_RULES_V0.json"
       },
-      "event_id": 199,
+      "event_id": 208,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2898,7 +3027,7 @@
         "artifact_type": "CT",
         "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/canonical/capability_transforms/capability_transforms__CT_PURE_VALIDATE_SET_MEMBERSHIP_V0.json"
       },
-      "event_id": 200,
+      "event_id": 209,
       "family": "MATERIALIZATION",
       "operation": "artifact_written",
       "parent_event_id": -1,
@@ -2908,11 +3037,102 @@
     },
     {
       "detail": {
+        "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/transform_conformance/ai_governance__CT_PURE_CHECK_QUOTA_AVAILABLE_V0__available_under_cap.json",
+        "test_data_source": "ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0"
+      },
+      "event_id": 210,
+      "family": "MATERIALIZATION",
+      "operation": "conformance_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0::available_under_cap",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/transform_conformance/ai_governance__CT_PURE_CHECK_QUOTA_AVAILABLE_V0__refuses_at_cap.json",
+        "test_data_source": "ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0"
+      },
+      "event_id": 211,
+      "family": "MATERIALIZATION",
+      "operation": "conformance_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0::refuses_at_cap",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/transform_conformance/ai_governance__CT_PURE_CHECK_TRAINING_STATUS_V0__eligible_once_trained.json",
+        "test_data_source": "ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0"
+      },
+      "event_id": 212,
+      "family": "MATERIALIZATION",
+      "operation": "conformance_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0::eligible_once_trained",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/transform_conformance/ai_governance__CT_PURE_CHECK_TRAINING_STATUS_V0__refuses_untrained.json",
+        "test_data_source": "ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0"
+      },
+      "event_id": 213,
+      "family": "MATERIALIZATION",
+      "operation": "conformance_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0::refuses_untrained",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/transform_conformance/ai_governance__CT_PURE_EVALUATE_INACTIVITY_V0__inactive_past_threshold.json",
+        "test_data_source": "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0"
+      },
+      "event_id": 214,
+      "family": "MATERIALIZATION",
+      "operation": "conformance_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0::inactive_past_threshold",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/transform_conformance/ai_governance__CT_PURE_EVALUATE_INACTIVITY_V0__inactive_at_threshold.json",
+        "test_data_source": "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0"
+      },
+      "event_id": 215,
+      "family": "MATERIALIZATION",
+      "operation": "conformance_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0::inactive_at_threshold",
+      "subject_token": -1
+    },
+    {
+      "detail": {
+        "output_path": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/transform_conformance/ai_governance__CT_PURE_EVALUATE_INACTIVITY_V0__refuses_recently_used.json",
+        "test_data_source": "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0"
+      },
+      "event_id": 216,
+      "family": "MATERIALIZATION",
+      "operation": "conformance_written",
+      "parent_event_id": -1,
+      "stage": "S7_MATERIALIZE",
+      "subject_fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0::refuses_recently_used",
+      "subject_token": -1
+    },
+    {
+      "detail": {
         "files_written": 3,
         "output_dir": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/vocabulary/ai_governance",
         "structure_id": "ai_governance"
       },
-      "event_id": 201,
+      "event_id": 217,
       "family": "MATERIALIZATION",
       "operation": "vocabulary_materialized",
       "parent_event_id": -1,
@@ -2924,11 +3144,11 @@
       "detail": {
         "edge_count": 77,
         "files_written": 2,
-        "node_count": 51,
+        "node_count": 54,
         "output_dir": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/tokenized/ai_governance",
         "structure_id": "ai_governance"
       },
-      "event_id": 202,
+      "event_id": 218,
       "family": "MATERIALIZATION",
       "operation": "tokenized_materialized",
       "parent_event_id": -1,
@@ -2945,7 +3165,7 @@
         "output_dir": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/tokenized/ai_governance",
         "structure_id": "ai_governance"
       },
-      "event_id": 203,
+      "event_id": 219,
       "family": "MATERIALIZATION",
       "operation": "dispatch_handlers_materialized",
       "parent_event_id": -1,
@@ -2958,11 +3178,11 @@
         "edge_count": 77,
         "ev_schema_count": 9,
         "files_written": 2,
-        "node_count": 51,
+        "node_count": 54,
         "output_dir": "/Users/bp/protocol-governed-computing/business_domains/ai_governance/snapshot/compiled/evidence/ai_governance",
         "structure_id": "ai_governance"
       },
-      "event_id": 204,
+      "event_id": 220,
       "family": "MATERIALIZATION",
       "operation": "evidence_materialized",
       "parent_event_id": -1,
@@ -2971,16 +3191,13 @@
       "subject_token": -1
     }
   ],
-  "evidence_graph_hash": "462323761cfc0ab3c4b103f282188a018c7a66df1f0d53f050015ce382ddc877",
+  "evidence_graph_hash": "82a39fc64010d44bb0cd09456f883583ce23abc09372cfea6156059a620ff827",
   "families": {
     "ADDRESSING": [
-      68
+      71
     ],
     "ATTESTATION": [],
     "CONSTRUCTION": [
-      70,
-      71,
-      72,
       73,
       74,
       75,
@@ -3001,7 +3218,10 @@
       90,
       91,
       92,
-      93
+      93,
+      94,
+      95,
+      96
     ],
     "DISCOVERY": [
       0,
@@ -3047,18 +3267,15 @@
       40,
       41,
       42,
-      43
+      43,
+      44,
+      45,
+      46
     ],
     "GOVERNANCE": [
-      69
+      72
     ],
     "MATERIALIZATION": [
-      150,
-      151,
-      152,
-      153,
-      154,
-      155,
       156,
       157,
       158,
@@ -3107,12 +3324,25 @@
       201,
       202,
       203,
-      204
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219,
+      220
     ],
     "PROJECTION": [
-      94,
-      95,
-      96,
       97,
       98,
       99,
@@ -3165,12 +3395,15 @@
       146,
       147,
       148,
-      149
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155
     ],
     "TOPOLOGY": [
-      44,
-      45,
-      46,
       47,
       48,
       49,
@@ -3191,7 +3424,10 @@
       64,
       65,
       66,
-      67
+      67,
+      68,
+      69,
+      70
     ],
     "VERIFICATION": []
   },

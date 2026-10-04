@@ -1,0 +1,42 @@
+{
+  "artifact_code": "EV_MODEL_SERVICE_ENDED_V0",
+  "artifact_type": "EV",
+  "content": "# EV_MODEL_SERVICE_ENDED_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::EV_MODEL_SERVICE_ENDED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: The moment a model is withdrawn from service and its time in service ends\n  description: The moment a model is withdrawn from service and its time in service ends\n  subdomain: model_response\n  schema:\n    identity_key:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n\n---\n\n## Intent\n\nThe moment a model is withdrawn from service and its time in service ends\n",
+  "content_hash": "8d444f9f5d34cea7a2b7112c48a8112e7419079c35dac38a56c272cdcff9ed9f",
+  "fqdn_id": "causal_language_model::EV_MODEL_SERVICE_ENDED_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "description": "The moment a model is withdrawn from service and its time in service ends",
+      "schema": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "model_response",
+      "summary": "The moment a model is withdrawn from service and its time in service ends"
+    },
+    "fqdn": "causal_language_model::EV_MODEL_SERVICE_ENDED_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

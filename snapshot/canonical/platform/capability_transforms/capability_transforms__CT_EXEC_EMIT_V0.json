@@ -1,8 +1,8 @@
 {
   "artifact_code": "CT_EXEC_EMIT_V0",
   "artifact_type": "CT",
-  "content": "# CT_EXEC_EMIT_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::CT_EXEC_EMIT_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: V0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Emit terminal value\n  refusal: never\n  description: Mark the explicit termination point of a transform pipeline and return the final result\n    value.\n  inputs:\n    value:\n      type: any\n      required: true\n      description: The value to emit as the result\n  outputs:\n    result:\n      type: any\n      required: true\n      description: The propagated output value\nmachine:\n  ct_kind: atom\n  ct_purity: ct_exec\n  operation: EMIT\n  implementation:\n    module: capability_transforms.implementation.ct_exec_emit_v0\n    callable: execute\n```\n",
-  "content_hash": "b308db5a30f4e9f2a134cccd85188a3021975ea2f82b7024c090cf1fb6847c18",
+  "content": "# CT_EXEC_EMIT_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::CT_EXEC_EMIT_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: V0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Emit terminal value\n  refusal: never\n  description: Mark the explicit termination point of a transform pipeline and return the final result\n    value.\n  inputs:\n    value:\n      type: any\n      required: true\n      description: The value to emit as the result\n  outputs:\n    result:\n      type: any\n      required: true\n      description: The propagated output value\nmachine:\n  ct_kind: atom\n  ct_purity: ct_exec\n  operation: EMIT\n  implementation:\n    module: capability_transforms.implementation.ct_exec_emit_v0\n    callable: execute\n```\n",
+  "content_hash": "2419f42bf30ec1e6437990fe480c0777377bfe25619786bf6a2ec3123e03c420",
   "ct_ir": {
     "artifact_code": "CT_EXEC_EMIT_V0",
     "atom_stream": [
@@ -15,7 +15,8 @@
           "callable": "execute",
           "module": "capability_transforms.implementation.ct_exec_emit_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_exec"
       }
     ],
     "ct_composition_version": "V0",
@@ -58,7 +59,7 @@
       "summary": "Emit terminal value"
     },
     "fqdn": "capability_transforms::CT_EXEC_EMIT_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_exec",
@@ -73,7 +74,7 @@
   "layer_code": "REUSABLE_TRANSFORMS",
   "namespace": "capability_transforms",
   "references": [
-    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
   ],
   "version": "0"
 }

@@ -1,6 +1,6 @@
 {
   "cs": {
-    "78": {
+    "79": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -56,7 +56,7 @@
         "module": "capability_side_effects.implementation.CS_APPENDONLY_JSONL_V0.runtime"
       }
     },
-    "79": {
+    "80": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -243,7 +243,7 @@
         "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
       }
     },
-    "80": {
+    "81": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -358,7 +358,7 @@
     }
   },
   "ct": {
-    "35": {
+    "36": {
       "ct_ir": {
         "artifact_code": "CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
         "atom_stream": [
@@ -373,7 +373,8 @@
               "callable": "execute",
               "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_form_book_identity_key_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -399,7 +400,7 @@
         }
       }
     },
-    "36": {
+    "37": {
       "ct_ir": {
         "artifact_code": "CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
         "atom_stream": [
@@ -413,7 +414,8 @@
               "callable": "execute",
               "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_form_work_identity_key_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -435,7 +437,7 @@
         }
       }
     },
-    "37": {
+    "38": {
       "ct_ir": {
         "artifact_code": "CT_PURE_GROUP_RECORDS_V0",
         "atom_stream": [
@@ -449,7 +451,8 @@
               "callable": "execute",
               "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_group_records_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -471,7 +474,7 @@
         }
       }
     },
-    "38": {
+    "39": {
       "ct_ir": {
         "artifact_code": "CT_PURE_SELECT_RECORDS_V0",
         "atom_stream": [
@@ -485,7 +488,8 @@
               "callable": "execute",
               "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_select_records_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -507,7 +511,7 @@
         }
       }
     },
-    "84": {
+    "85": {
       "ct_ir": {
         "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
         "atom_stream": [
@@ -520,7 +524,8 @@
               "callable": "execute",
               "module": "capability_transforms.implementation.ct_pure_assemble_record_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -539,7 +544,7 @@
         }
       }
     },
-    "85": {
+    "86": {
       "ct_ir": {
         "artifact_code": "CT_PURE_COMPARE_EQUAL_V0",
         "atom_stream": [
@@ -553,7 +558,8 @@
               "callable": "execute",
               "module": "capability_transforms.implementation.ct_pure_compare_equal_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -575,7 +581,7 @@
         }
       }
     },
-    "86": {
+    "87": {
       "ct_ir": {
         "artifact_code": "CT_PURE_FILTER_RECORDS_V0",
         "atom_stream": [
@@ -589,7 +595,8 @@
               "callable": "execute",
               "module": "capability_transforms.implementation.ct_pure_filter_records_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -613,7 +620,7 @@
         }
       }
     },
-    "87": {
+    "88": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
         "atom_stream": [
@@ -627,7 +634,8 @@
               "callable": "execute",
               "module": "capability_transforms.implementation.ct_pure_validate_parameter_rules_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -654,7 +662,7 @@
         }
       }
     },
-    "88": {
+    "89": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
         "atom_stream": [
@@ -668,7 +676,8 @@
               "callable": "execute",
               "module": "capability_transforms.implementation.ct_pure_validate_record_structure_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -695,52 +704,7 @@
   },
   "projection_class": "machine_projection",
   "rb_policy": {
-    "56": {
-      "78": {
-        "policy": {
-          "module_data_root": "{{module_data_root}}",
-          "storage_structure_artifact": {
-            "frontmatter": {
-              "artifact_kind": "STRUCTURE",
-              "authority": "pgc.platform",
-              "concern": "catalog",
-              "core": {
-                "domain": "book_library_mgmt",
-                "entity_stores": {
-                  "BOOKS": {
-                    "path": "book_library_mgmt/catalog/books.json"
-                  },
-                  "BOOK_IDENTITY_REGISTRY": {
-                    "path": "book_library_mgmt/catalog/book_identity_registry.jsonl"
-                  },
-                  "CATALOG_OPERATIONS": {
-                    "path": "book_library_mgmt/catalog/catalog_operations.jsonl"
-                  },
-                  "COPY_BARCODE_REGISTRY": {
-                    "path": "book_library_mgmt/catalog/copy_barcode_registry.jsonl"
-                  },
-                  "PHYSICAL_COPIES": {
-                    "path": "book_library_mgmt/catalog/physical_copies.json"
-                  },
-                  "WORKS": {
-                    "path": "book_library_mgmt/catalog/works.json"
-                  },
-                  "WORK_IDENTITY_REGISTRY": {
-                    "path": "book_library_mgmt/catalog/work_identity_registry.jsonl"
-                  }
-                },
-                "layer": "DOMAINS",
-                "subdomain": "catalog",
-                "summary": "Declares the stores the catalog owns and the paths they occupy"
-              },
-              "fqdn": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0",
-              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
-            }
-          },
-          "structure": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0"
-        }
-      },
+    "57": {
       "79": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
@@ -787,6 +751,51 @@
         }
       },
       "80": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "catalog",
+              "core": {
+                "domain": "book_library_mgmt",
+                "entity_stores": {
+                  "BOOKS": {
+                    "path": "book_library_mgmt/catalog/books.json"
+                  },
+                  "BOOK_IDENTITY_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/book_identity_registry.jsonl"
+                  },
+                  "CATALOG_OPERATIONS": {
+                    "path": "book_library_mgmt/catalog/catalog_operations.jsonl"
+                  },
+                  "COPY_BARCODE_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/copy_barcode_registry.jsonl"
+                  },
+                  "PHYSICAL_COPIES": {
+                    "path": "book_library_mgmt/catalog/physical_copies.json"
+                  },
+                  "WORKS": {
+                    "path": "book_library_mgmt/catalog/works.json"
+                  },
+                  "WORK_IDENTITY_REGISTRY": {
+                    "path": "book_library_mgmt/catalog/work_identity_registry.jsonl"
+                  }
+                },
+                "layer": "DOMAINS",
+                "subdomain": "catalog",
+                "summary": "Declares the stores the catalog owns and the paths they occupy"
+              },
+              "fqdn": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "version": "v0"
+            }
+          },
+          "structure": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0"
+        }
+      },
+      "81": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {

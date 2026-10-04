@@ -1,0 +1,41 @@
+{
+  "artifact_code": "CONSTITUTION_CAPABILITY_TRANSFORMS_V1",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_CAPABILITY_TRANSFORMS_V1\n\n## Machine\n```yaml\nfqdn: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V1\nartifact_kind: CONSTITUTION\nversion: V1\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_model: compiler_enforced\n  governs:\n  - CT\nrules:\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_CT_SURFACE_CLOSED_V1\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_CT_SURFACE_DERIVED_CLOSED_V1\n- applies_to: CT\n  enforced_by: execution::INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0\n```\n\n---\n\n## 1. Purpose\n\nThis constitution carries the rules common to every capability transform, whatever its kind and\npurity. A deterministic atom, a non-deterministic atom and a molecule are all bound by them.\n\nNo transform names this constitution as `governed_by`. Each transform is governed by exactly one of\nthree constitutions, decided by its kind and declared purity\n(`capability_transforms::INVARIANT_CT_GOVERNED_BY_KIND_V0`):\n\n| Transform | Constitution |\n|---|---|\n| an atom whose result is determined by its inputs | `capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0` |\n| an atom declaring `ct_purity: ct_impure` | `capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0` |\n| a molecule, composed of steps and naming no implementation | `capability_transforms::CONSTITUTION_MOLECULES_V0` |\n\nThose three say what each kind of transform is. This one says what every transform owes the\ncomposition it belongs to.\n\n---\n\n## 2. The rules\n\n- **Surface closure** (`INVARIANT_CT_SURFACE_CLOSED_V1`). The platform's transform surface is an\n  enumerated set: every executable transform is declared, every declared transform has a runtime\n  implementation, and no undeclared transform executes.\n- **Closure by derivation** (`INVARIANT_CT_SURFACE_DERIVED_CLOSED_V1`). A domain's surface is closed\n  by derivation rather than by a list: every transform it declares is invoked by one of its\n  contracts, and every transform its contracts invoke is declared where it can be resolved.\n- **Implementation admissibility** (`INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0`). An atom, deterministic\n  or not, declares its implementation with a non-empty module and callable. A molecule names none;\n  what it runs is its steps, and each of those is held to the same rule.\n\n---\n\n## Change from V0\n\n`CONSTITUTION_CAPABILITY_TRANSFORMS_V0` governed every transform, from a time when every transform\nwas a deterministic atom. When non-deterministic atoms and molecules gained constitutions of their\nown, it was renamed `CONSTITUTION_DETERMINISTIC_ATOMS_V0`, and it kept these three rules although\nthey concern all three kinds. This version takes the name back for what the name describes: the\nrules common to every transform, and nothing else. The deterministic atom's own rules stay with\n`CONSTITUTION_DETERMINISTIC_ATOMS_V0`.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Carries the rules common to every capability transform \u2014 surface closure, closure by derivation and implementation admissibility\nrules:\n- rule_id: CT_SURFACE_CLOSED\n  constraint: every executable transform MUST be declared and implemented, and no undeclared transform MAY execute\n- rule_id: CT_SURFACE_DERIVED_CLOSED\n  constraint: every transform a domain declares MUST be invoked by its contracts, and every transform they invoke MUST be declared\n- rule_id: CT_IMPLEMENTATION_ADMISSIBLE\n  constraint: every atom MUST declare an implementation with a non-empty module and callable\n```\n",
+  "content_hash": "1662347d7f833c8bda7d9a032c4af483c74bc8f59abb20832c9b7a9b8f1f99c2",
+  "fqdn_id": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V1",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_model": "compiler_enforced",
+      "governs": [
+        "CT"
+      ]
+    },
+    "fqdn": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V1",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "rules": [
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_CT_SURFACE_CLOSED_V1"
+      },
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_CT_SURFACE_DERIVED_CLOSED_V1"
+      },
+      {
+        "applies_to": "CT",
+        "enforced_by": "execution::INVARIANT_IMPLEMENTATION_ADMISSIBLE_V0"
+      }
+    ],
+    "version": "V1"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "1"
+}

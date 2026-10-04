@@ -78,11 +78,26 @@
         "outputs": [
           "record"
         ]
+      },
+      {
+        "bindings": {
+          "record": "assemble_updated_record.updated_record"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "inputs": [
+          "record",
+          "schema"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "violations"
+        ]
       }
     ]
   },
-  "content": "# CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n\n## 1. Intent\n\nChanges a registered edition's descriptive content and refuses a change that would duplicate another edition\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Changes a registered edition's descriptive content and refuses a change that would duplicate\n    another edition\n  inputs:\n    identity_key:\n      type: string\n      required: true\n    updated_fields:\n      type: object\n      required: true\n  outputs:\n    book_record:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_book_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n    outputs:\n      book_record: $.capability_result.value\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: form_updated_identity_key\n    transform: book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\n    inputs:\n      title: $.inputs.updated_fields.title\n      author: $.inputs.updated_fields.author\n      publication_year: $.inputs.updated_fields.publication_year\n    outputs:\n      updated_identity_key: $.capability_result.identity_key\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: compare_identity\n    transform: capability_transforms::CT_PURE_COMPARE_EQUAL_V0\n    inputs:\n      left: $.inputs.identity_key\n      right: $.results.form_updated_identity_key.updated_identity_key\n    outputs:\n      identity_unchanged: $.capability_result.is_equal\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: require_identity_unchanged\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        identity_unchanged: $.results.compare_identity.identity_unchanged\n      rules:\n      - field: identity_unchanged\n        op: eq\n        value: true\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: assemble_updated_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        identity_key: $.inputs.identity_key\n        title: $.inputs.updated_fields.title\n        author: $.inputs.updated_fields.author\n        publication_year: $.inputs.updated_fields.publication_year\n        subject: $.inputs.updated_fields.subject\n        state: $.inputs.updated_fields.state\n        work_key: $.results.read_book_record.book_record.work_key\n    outputs:\n      updated_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_updated_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n      value: $.results.assemble_updated_record.updated_record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n",
-  "content_hash": "4ec3746ff9e4b045426c1b2b79e484e181a3808898384d2fab7e8e0d793cdd36",
+  "content": "# CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Changes a registered edition's descriptive content and refuses a change that would duplicate\n    another edition\n  inputs:\n    identity_key:\n      type: string\n      required: true\n    updated_fields:\n      type: object\n      required: true\n  outputs:\n    book_record:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_book_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n    outputs:\n      book_record: $.capability_result.value\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: form_updated_identity_key\n    transform: book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\n    inputs:\n      title: $.inputs.updated_fields.title\n      author: $.inputs.updated_fields.author\n      publication_year: $.inputs.updated_fields.publication_year\n    outputs:\n      updated_identity_key: $.capability_result.identity_key\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: compare_identity\n    transform: capability_transforms::CT_PURE_COMPARE_EQUAL_V0\n    inputs:\n      left: $.inputs.identity_key\n      right: $.results.form_updated_identity_key.updated_identity_key\n    outputs:\n      identity_unchanged: $.capability_result.is_equal\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: require_identity_unchanged\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        identity_unchanged: $.results.compare_identity.identity_unchanged\n      rules:\n      - field: identity_unchanged\n        op: eq\n        value: true\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: assemble_updated_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        identity_key: $.inputs.identity_key\n        title: $.inputs.updated_fields.title\n        author: $.inputs.updated_fields.author\n        publication_year: $.inputs.updated_fields.publication_year\n        subject: $.inputs.updated_fields.subject\n        state: $.results.read_book_record.book_record.state\n        work_key: $.results.read_book_record.book_record.work_key\n    outputs:\n      updated_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: check_corrected_record\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.results.assemble_updated_record.updated_record\n      schema:\n        title:\n          required: true\n          type: string\n        author:\n          required: true\n          type: string\n        publication_year:\n          required: true\n          type: integer\n        subject:\n          required: true\n          type: array\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: refuse_incomplete_correction\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        violations: $.results.check_corrected_record.violations\n        subject: $.results.assemble_updated_record.updated_record.subject\n      rules:\n      - field: violations\n        op: eq\n        value: []\n      - field: subject\n        op: neq\n        value: []\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_updated_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n      value: $.results.assemble_updated_record.updated_record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nChanges a registered edition's descriptive content and refuses a change that would duplicate another edition\n",
+  "content_hash": "547de07da1a169868aa5b5bd61e9e7f4408434b036f1d4a45dbb2e4d0ad91f29",
   "fqdn_id": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
   "frontmatter": {
     "artifact_kind": "CAPABILITY_CONTRACT",
@@ -203,7 +218,7 @@
               "author": "$.inputs.updated_fields.author",
               "identity_key": "$.inputs.identity_key",
               "publication_year": "$.inputs.updated_fields.publication_year",
-              "state": "$.inputs.updated_fields.state",
+              "state": "$.results.read_book_record.book_record.state",
               "subject": "$.inputs.updated_fields.subject",
               "title": "$.inputs.updated_fields.title",
               "work_key": "$.results.read_book_record.book_record.work_key"
@@ -222,6 +237,75 @@
           ],
           "step": "assemble_updated_record",
           "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "record": "$.results.assemble_updated_record.updated_record",
+            "schema": {
+              "author": {
+                "required": true,
+                "type": "string"
+              },
+              "publication_year": {
+                "required": true,
+                "type": "integer"
+              },
+              "subject": {
+                "required": true,
+                "type": "array"
+              },
+              "title": {
+                "required": true,
+                "type": "string"
+              }
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "violations": "$.capability_result.violations"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "check_corrected_record",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "subject": "$.results.assemble_updated_record.updated_record.subject",
+              "violations": "$.results.check_corrected_record.violations"
+            },
+            "rules": [
+              {
+                "field": "violations",
+                "op": "eq",
+                "value": []
+              },
+              {
+                "field": "subject",
+                "op": "neq",
+                "value": []
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "refuse_incomplete_correction",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
         },
         {
           "inputs": {
@@ -269,7 +353,8 @@
     "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
     "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
     "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
-    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
   ],
   "version": "0"
 }

@@ -1,0 +1,90 @@
+{
+  "artifact_code": "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "value": "in.offered_fingerprint"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "inputs": [
+          "allowed_set",
+          "value"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "is_member"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CONFIRM_OFFER_FOR_MODEL_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CC_CONFIRM_OFFER_FOR_MODEL_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Refuse an offer naming another model's fingerprint\n  inputs:\n    offered_fingerprint:\n      type: string\n      required: true\n    admitted_fingerprint:\n      type: string\n      required: true\n  outputs:\n    offer_for_model:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: confirm_same_model\n    transform: capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\n    inputs:\n      value: $.inputs.offered_fingerprint\n      allowed_set:\n      - $.inputs.admitted_fingerprint\n    outputs:\n      offer_for_model: $.capability_result.is_member\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuse an offer naming another model's fingerprint\n",
+  "content_hash": "1f4f1e8acda16622189004ce7fe7b92d1d13f3677d8b050fe5ae43ad9be8c3da",
+  "fqdn_id": "causal_language_model::CC_CONFIRM_OFFER_FOR_MODEL_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "admitted_fingerprint": {
+          "required": true,
+          "type": "string"
+        },
+        "offered_fingerprint": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "offer_for_model": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "allowed_set": [
+              "$.inputs.admitted_fingerprint"
+            ],
+            "value": "$.inputs.offered_fingerprint"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "offer_for_model": "$.capability_result.is_member"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "confirm_same_model",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse an offer naming another model's fingerprint"
+    },
+    "fqdn": "causal_language_model::CC_CONFIRM_OFFER_FOR_MODEL_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
+  "version": "0"
+}

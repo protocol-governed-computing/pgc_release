@@ -1,8 +1,8 @@
 {
   "artifact_code": "WF_REGISTER_ACTOR_V0",
   "artifact_type": "WF",
-  "content": "# WF_REGISTER_ACTOR_V0\n\n## 1. Intent\n\nThe governed sequence that admits a person as an unverified actor, and announces that it did\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::WF_REGISTER_ACTOR_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: identity\nruntime_binding: blockchain::RB_IDENTITY_BINDINGS_V0\nsubdomain: identity\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: The governed sequence that admits a person as an unverified actor, and announces that it did\n  actor_context: blockchain::AC_PARTICIPANT_V0\n  start_node: IN_ACTOR_REGISTERED_V0\n  nodes:\n    IN_ACTOR_REGISTERED_V0:\n      type: IN\n      code: IN_ACTOR_REGISTERED_V0\n      next:\n        ACK: CC_VALIDATE_REGISTRATION_V0\n        NACK: EXIT_REJECTED\n    CC_VALIDATE_REGISTRATION_V0:\n      type: CC\n      code: CC_VALIDATE_REGISTRATION_V0\n      inputs:\n        actor_record: $.payload.actor_record\n        registration_schema: $.payload.registration_schema\n      next:\n        SUCCESS: CC_CLAIM_CONTACT_ADDRESS_V0\n        VIOLATION: EXIT_REJECTED\n    CC_CLAIM_CONTACT_ADDRESS_V0:\n      type: CC\n      code: CC_CLAIM_CONTACT_ADDRESS_V0\n      inputs:\n        actor_record: $.payload.actor_record\n        address_path: $.payload.address_path\n        address_type: $.payload.address_type\n      next:\n        SUCCESS: CC_REGISTER_ACTOR_V0\n        ALREADY_EXISTS: CC_APPEND_ACTOR_OCCURRENCE_V0\n        VIOLATION: EXIT_REJECTED\n    CC_REGISTER_ACTOR_V0:\n      type: CC\n      code: CC_REGISTER_ACTOR_V0\n      inputs:\n        actor_fields: $.payload.actor_record\n        contact_address: $.results.CC_CLAIM_CONTACT_ADDRESS_V0.result\n      next:\n        SUCCESS: CC_APPEND_ACTOR_OCCURRENCE_V0\n        VIOLATION: EXIT_REJECTED\n    CC_APPEND_ACTOR_OCCURRENCE_V0:\n      type: CC\n      code: CC_APPEND_ACTOR_OCCURRENCE_V0\n      inputs:\n        occurrence_fields: $.payload.occurrence_fields\n        stream_id: $.payload.stream_id\n        contact_address: $.results.CC_CLAIM_CONTACT_ADDRESS_V0.result\n      next:\n        SUCCESS: EXIT_SUCCESS\n        VIOLATION: EXIT_REJECTED\n    EXIT_SUCCESS:\n      type: EXIT\n      emit: blockchain::EV_ACTOR_REGISTERED_UNVERIFIED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n",
-  "content_hash": "84ffff64afcd4e183ff95e041c802a800ffb4477129b0c9bd6bef5b4f55db7e9",
+  "content": "# WF_REGISTER_ACTOR_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::WF_REGISTER_ACTOR_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: identity\nruntime_binding: blockchain::RB_IDENTITY_BINDINGS_V0\nsubdomain: identity\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: The governed sequence that admits a person as an unverified actor, and announces that it did\n  actor_context: blockchain::AC_PARTICIPANT_V0\n  start_node: IN_ACTOR_REGISTERED_V0\n  nodes:\n    IN_ACTOR_REGISTERED_V0:\n      type: IN\n      code: IN_ACTOR_REGISTERED_V0\n      next:\n        ACK: CC_VALIDATE_REGISTRATION_V0\n        NACK: EXIT_REJECTED\n    CC_VALIDATE_REGISTRATION_V0:\n      type: CC\n      code: CC_VALIDATE_REGISTRATION_V0\n      inputs:\n        actor_record: $.payload.actor_record\n      next:\n        SUCCESS: CC_CLAIM_CONTACT_ADDRESS_V0\n        VIOLATION: EXIT_REJECTED\n    CC_CLAIM_CONTACT_ADDRESS_V0:\n      type: CC\n      code: CC_CLAIM_CONTACT_ADDRESS_V0\n      inputs:\n        actor_record: $.payload.actor_record\n        address_path: $.payload.address_path\n        address_type: $.payload.address_type\n      next:\n        SUCCESS: CC_REGISTER_ACTOR_V0\n        ALREADY_EXISTS: CC_APPEND_ACTOR_OCCURRENCE_V0\n        VIOLATION: EXIT_REJECTED\n    CC_REGISTER_ACTOR_V0:\n      type: CC\n      code: CC_REGISTER_ACTOR_V0\n      inputs:\n        actor_fields:\n          name: $.payload.actor_record.name\n          contact_address: $.payload.actor_record.contact_address\n          state: UNVERIFIED\n          currency_preference: $.payload.actor_record.currency_preference\n          language: $.payload.actor_record.language\n        contact_address: $.results.CC_CLAIM_CONTACT_ADDRESS_V0.result\n      next:\n        SUCCESS: CC_APPEND_ACTOR_OCCURRENCE_V0\n        VIOLATION: EXIT_REJECTED\n    CC_APPEND_ACTOR_OCCURRENCE_V0:\n      type: CC\n      code: CC_APPEND_ACTOR_OCCURRENCE_V0\n      inputs:\n        occurrence_fields: $.payload.occurrence_fields\n        stream_id: $.payload.stream_id\n        contact_address: $.results.CC_CLAIM_CONTACT_ADDRESS_V0.result\n      next:\n        SUCCESS: EXIT_SUCCESS\n        VIOLATION: EXIT_REJECTED\n    EXIT_SUCCESS:\n      type: EXIT\n      emit: blockchain::EV_ACTOR_REGISTERED_UNVERIFIED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n\n---\n\n## Intent\n\nThe governed sequence that admits a person as an unverified actor, and announces that it did\n",
+  "content_hash": "4a2350149773d5ad46ca8b314b8b4b1b6fb9f1e7ce2478afe48e682dcc751071",
   "fqdn_id": "blockchain::WF_REGISTER_ACTOR_V0",
   "frontmatter": {
     "artifact_kind": "WORKFLOW",
@@ -44,7 +44,13 @@
           "code": "CC_REGISTER_ACTOR_V0",
           "fqdn_id": "blockchain::CC_REGISTER_ACTOR_V0",
           "inputs": {
-            "actor_fields": "$.payload.actor_record",
+            "actor_fields": {
+              "contact_address": "$.payload.actor_record.contact_address",
+              "currency_preference": "$.payload.actor_record.currency_preference",
+              "language": "$.payload.actor_record.language",
+              "name": "$.payload.actor_record.name",
+              "state": "UNVERIFIED"
+            },
             "contact_address": "$.results.CC_CLAIM_CONTACT_ADDRESS_V0.result"
           },
           "next": {
@@ -57,8 +63,7 @@
           "code": "CC_VALIDATE_REGISTRATION_V0",
           "fqdn_id": "blockchain::CC_VALIDATE_REGISTRATION_V0",
           "inputs": {
-            "actor_record": "$.payload.actor_record",
-            "registration_schema": "$.payload.registration_schema"
+            "actor_record": "$.payload.actor_record"
           },
           "next": {
             "SUCCESS": "CC_CLAIM_CONTACT_ADDRESS_V0",

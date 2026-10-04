@@ -1,0 +1,3515 @@
+{
+  "edges": [
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "model_record": "$.capability_result.value",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 0,
+        "step_id": "read_model_record",
+        "store": "MODELS"
+      },
+      "source_address": 47,
+      "source_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0",
+      "target_address": 26,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": {
+            "state": "$.results.read_model_record.model_record.state"
+          },
+          "rules": [
+            {
+              "field": "state",
+              "op": "eq",
+              "value": "IN_SERVICE"
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "pipeline_index": 1,
+        "step_id": "require_in_service"
+      },
+      "source_address": 47,
+      "source_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0",
+      "target_address": 33,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_ADMIT_USER_PROMPT_V0",
+        "target_key": "CC_CONFIRM_WITHIN_CEILING_V0",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 47,
+      "source_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0",
+      "target_address": 58,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_ADMIT_USER_PROMPT_V0",
+        "target_key": "CC_CONFIRM_WITHIN_CEILING_V0",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 47,
+      "source_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0",
+      "target_address": 58,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "NOT_FOUND",
+        "source_key": "CC_ADMIT_USER_PROMPT_V0",
+        "target_key": "RECORD_REFUSED_NOT_REGISTERED",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 47,
+      "source_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_ADMIT_USER_PROMPT_V0",
+        "target_key": "RECORD_REFUSED_NOT_IN_SERVICE",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 47,
+      "source_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "NOT_FOUND",
+        "source_key": "CC_ADMIT_USER_PROMPT_V0",
+        "target_key": "RECORD_REFUSED_NOT_REGISTERED",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 47,
+      "source_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_ADMIT_USER_PROMPT_V0",
+        "target_key": "RECORD_REFUSED_NOT_IN_SERVICE",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 47,
+      "source_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "BACKEND_ERROR",
+        "source_key": "CC_ADMIT_USER_PROMPT_V0",
+        "target_key": "RECORD_FAILED_BEFORE_READING",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 47,
+      "source_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "actor_id": "$.inputs.staff_id",
+          "record": "$.inputs.record",
+          "stream_id": "MODEL_OPERATIONS"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "record_id": "$.capability_result.record_id",
+          "sequence_number": "$.capability_result.sequence_number"
+        },
+        "pipeline_index": 0,
+        "step_id": "append_operation",
+        "store": "MODEL_OPERATIONS"
+      },
+      "source_address": 48,
+      "source_fqdn": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0",
+      "target_address": 25,
+      "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_APPEND_MODEL_OPERATION_V0",
+        "target_key": "CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+        "wf_fqdn": "causal_language_model::WF_RETRIEVE_USER_PROMPT_RECORD_V0"
+      },
+      "source_address": 48,
+      "source_fqdn": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0",
+      "target_address": 65,
+      "target_fqdn": "causal_language_model::CC_RETRIEVE_USER_PROMPT_RECORD_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CHOOSE_PERMITTED_TOKEN_V0",
+        "target_key": "CONFIRM_NO_RULE_STOPPED",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 49,
+      "source_fqdn": "causal_language_model::CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "target_address": 57,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "candidates": "$.inputs.candidates",
+          "state": "$.inputs.state"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "finished": "$.capability_result.finished",
+          "step": "$.capability_result.step",
+          "stopped_by": "$.capability_result.stopped_by",
+          "text": "$.capability_result.text",
+          "within_length": "$.capability_result.within_length"
+        },
+        "pipeline_index": 0,
+        "step_id": "choose_token"
+      },
+      "source_address": 49,
+      "source_fqdn": "causal_language_model::CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "target_address": 70,
+      "target_fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.results.form_identity_key.identity_key",
+          "target_cs": "CS_MUTABLE_JSON_V0",
+          "target_ref": "MODELS"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "address": "$.capability_result.address",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 3,
+        "step_id": "claim_identity",
+        "store": "MODEL_IDENTITY_REGISTRY"
+      },
+      "source_address": 50,
+      "source_fqdn": "causal_language_model::CC_CLAIM_MODEL_IDENTITY_V0",
+      "target_address": 27,
+      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": {
+            "violations": "$.results.validate_description.violations"
+          },
+          "rules": [
+            {
+              "field": "violations",
+              "op": "eq",
+              "value": []
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "pipeline_index": 1,
+        "step_id": "require_description_complete"
+      },
+      "source_address": 50,
+      "source_fqdn": "causal_language_model::CC_CLAIM_MODEL_IDENTITY_V0",
+      "target_address": 33,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "record": "$.inputs.description",
+          "schema": "$.inputs.description_schema"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "violations": "$.capability_result.violations"
+        },
+        "pipeline_index": 0,
+        "step_id": "validate_description"
+      },
+      "source_address": 50,
+      "source_fqdn": "causal_language_model::CC_CLAIM_MODEL_IDENTITY_V0",
+      "target_address": 34,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CLAIM_MODEL_IDENTITY_V0",
+        "target_key": "CC_REGISTER_MODEL_V0",
+        "wf_fqdn": "causal_language_model::WF_REGISTER_MODEL_V0"
+      },
+      "source_address": 50,
+      "source_fqdn": "causal_language_model::CC_CLAIM_MODEL_IDENTITY_V0",
+      "target_address": 64,
+      "target_fqdn": "causal_language_model::CC_REGISTER_MODEL_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "description": "$.inputs.description",
+          "fingerprint": "$.inputs.fingerprint"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "identity_key": "$.capability_result.identity_key"
+        },
+        "pipeline_index": 2,
+        "step_id": "form_identity_key"
+      },
+      "source_address": 50,
+      "source_fqdn": "causal_language_model::CC_CLAIM_MODEL_IDENTITY_V0",
+      "target_address": 73,
+      "target_fqdn": "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.user_prompt_id",
+          "target_cs": "CS_APPENDONLY_JSONL_V0",
+          "target_ref": "USER_PROMPT_RECORDS"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "address": "$.capability_result.address",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 0,
+        "step_id": "claim_user_prompt",
+        "store": "USER_PROMPT_REGISTRY"
+      },
+      "source_address": 51,
+      "source_fqdn": "causal_language_model::CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "target_address": 27,
+      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+        "target_key": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 51,
+      "source_fqdn": "causal_language_model::CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "target_address": 56,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+        "target_key": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 51,
+      "source_fqdn": "causal_language_model::CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "target_address": 56,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": {
+            "reported_reading_size": "$.inputs.reported_reading_size"
+          },
+          "rules": [
+            {
+              "field": "reported_reading_size",
+              "op": "lte",
+              "value": "$.inputs.reading_capacity"
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "reading_fits": "$.capability_result.valid"
+        },
+        "pipeline_index": 0,
+        "step_id": "confirm_reported_reading_fits"
+      },
+      "source_address": 52,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "target_address": 33,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_HOSTED_READING_FITS_V0",
+        "target_key": "CC_CHOOSE_PERMITTED_TOKEN_V0",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 52,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "target_address": 49,
+      "target_fqdn": "causal_language_model::CC_CHOOSE_PERMITTED_TOKEN_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_CONFIRM_HOSTED_READING_FITS_V0",
+        "target_key": "RECORD_REFUSED_TOO_LONG_TO_READ",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 52,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": "$.inputs.staff_credentials",
+          "rules": "$.inputs.authorization_rules"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "is_authorized": "$.capability_result.valid"
+        },
+        "pipeline_index": 0,
+        "step_id": "confirm_authorization"
+      },
+      "source_address": 53,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "target_address": 33,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_APPEND_MODEL_OPERATION_V0",
+        "wf_fqdn": "causal_language_model::WF_RETRIEVE_USER_PROMPT_RECORD_V0"
+      },
+      "source_address": 53,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "target_address": 48,
+      "target_fqdn": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_CLAIM_MODEL_IDENTITY_V0",
+        "wf_fqdn": "causal_language_model::WF_REGISTER_MODEL_V0"
+      },
+      "source_address": 53,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "target_address": 50,
+      "target_fqdn": "causal_language_model::CC_CLAIM_MODEL_IDENTITY_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_PLACE_MODEL_IN_SERVICE_V0",
+        "wf_fqdn": "causal_language_model::WF_PLACE_MODEL_IN_SERVICE_V0"
+      },
+      "source_address": 53,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "target_address": 60,
+      "target_fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_WITHDRAW_MODEL_FROM_SERVICE_V0",
+        "wf_fqdn": "causal_language_model::WF_WITHDRAW_MODEL_FROM_SERVICE_V0"
+      },
+      "source_address": 53,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "target_address": 66,
+      "target_fqdn": "causal_language_model::CC_WITHDRAW_MODEL_FROM_SERVICE_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "allowed_set": [
+            "$.inputs.admitted_fingerprint"
+          ],
+          "value": "$.inputs.offered_fingerprint"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "offer_for_model": "$.capability_result.is_member"
+        },
+        "pipeline_index": 0,
+        "step_id": "confirm_same_model"
+      },
+      "source_address": 54,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "target_address": 35,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+        "target_key": "CC_CONFIRM_HOSTED_READING_FITS_V0",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 54,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "target_address": 52,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_HOSTED_READING_FITS_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+        "target_key": "RECORD_REFUSED_OTHER_MODEL",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 54,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_READING_FITS_V0",
+        "target_key": "CC_OPEN_HOSTED_RECORD_V0",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 55,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_READING_FITS_V0",
+      "target_address": 59,
+      "target_fqdn": "causal_language_model::CC_OPEN_HOSTED_RECORD_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_CONFIRM_READING_FITS_V0",
+        "target_key": "RECORD_REFUSED_TOO_LONG_TO_READ",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 55,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_READING_FITS_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_CONFIRM_READING_FITS_V0",
+        "target_key": "RECORD_REFUSED_TOO_LONG_TO_READ",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 55,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_READING_FITS_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_READING_FITS_V0",
+        "target_key": "CC_WRITE_MODEL_RESPONSE_V0",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 55,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_READING_FITS_V0",
+      "target_address": 67,
+      "target_fqdn": "causal_language_model::CC_WRITE_MODEL_RESPONSE_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "question": "$.inputs.question",
+          "reading_capacity": "$.inputs.reading_capacity",
+          "supporting_material": "$.inputs.supporting_material",
+          "system_prompt": "$.inputs.system_prompt"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "reading": "$.capability_result.reading",
+          "reading_length": "$.capability_result.reading_length"
+        },
+        "pipeline_index": 0,
+        "step_id": "assemble_reading"
+      },
+      "source_address": 55,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_READING_FITS_V0",
+      "target_address": 69,
+      "target_fqdn": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "allowed_set": "$.inputs.permitted_customers",
+          "value": "$.inputs.customer_id"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "acts_for_customer": "$.capability_result.is_member"
+        },
+        "pipeline_index": 0,
+        "step_id": "confirm_acts_for_customer"
+      },
+      "source_address": 56,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "target_address": 35,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+        "target_key": "CC_ADMIT_USER_PROMPT_V0",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 56,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "target_address": 47,
+      "target_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+        "target_key": "CC_ADMIT_USER_PROMPT_V0",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 56,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "target_address": 47,
+      "target_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+        "target_key": "RECORD_REFUSED_NOT_PERMITTED",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 56,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+        "target_key": "RECORD_REFUSED_NOT_PERMITTED",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 56,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": "$.inputs.release_facts",
+          "rules": "$.inputs.release_rules"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "releasable": "$.capability_result.valid"
+        },
+        "pipeline_index": 0,
+        "step_id": "confirm_releasable"
+      },
+      "source_address": 57,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "target_address": 33,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CONFIRM_NO_RULE_STOPPED",
+        "target_key": "CONFIRM_WITHIN_LENGTH",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 57,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "target_address": 57,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CONFIRM_NO_RULE_STOPPED",
+        "target_key": "CONFIRM_FINISHED",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 57,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "target_address": 57,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CONFIRM_NO_RULE_STOPPED",
+        "target_key": "RECORD_STOPPED_STEP",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 57,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "target_address": 62,
+      "target_fqdn": "causal_language_model::CC_RECORD_HOSTED_STEP_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CONFIRM_WITHIN_LENGTH",
+        "target_key": "RECORD_STEP",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 57,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "target_address": 62,
+      "target_fqdn": "causal_language_model::CC_RECORD_HOSTED_STEP_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CONFIRM_WITHIN_LENGTH",
+        "target_key": "RECORD_UNFINISHED_STEP",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 57,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "target_address": 62,
+      "target_fqdn": "causal_language_model::CC_RECORD_HOSTED_STEP_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CONFIRM_FINISHED",
+        "target_key": "RECORD_RESPONDED",
+        "wf_fqdn": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 57,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CONFIRM_NO_RULE_STOPPED",
+        "target_key": "RECORD_REFUSED_BY_RULE",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 57,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CONFIRM_FINISHED",
+        "target_key": "RECORD_RESPONDED",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 57,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CONFIRM_FINISHED",
+        "target_key": "RECORD_REFUSED_UNFINISHED",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 57,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.time_in_service_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "result_status": "$.result_status",
+          "time_in_service": "$.capability_result.value"
+        },
+        "pipeline_index": 0,
+        "step_id": "read_time_in_service",
+        "store": "TIMES_IN_SERVICE"
+      },
+      "source_address": 58,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+      "target_address": 26,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "allowed_set": [
+            "public",
+            "internal",
+            "confidential",
+            "restricted"
+          ],
+          "value": "$.inputs.kind"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "kind_declared": "$.capability_result.is_member"
+        },
+        "pipeline_index": 1,
+        "step_id": "confirm_kind_declared"
+      },
+      "source_address": 58,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+      "target_address": 35,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_WITHIN_CEILING_V0",
+        "target_key": "CC_CONFIRM_READING_FITS_V0",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 58,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+      "target_address": 55,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_READING_FITS_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_WITHIN_CEILING_V0",
+        "target_key": "CC_CONFIRM_READING_FITS_V0",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 58,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+      "target_address": 55,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_READING_FITS_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "NOT_FOUND",
+        "source_key": "CC_CONFIRM_WITHIN_CEILING_V0",
+        "target_key": "RECORD_REFUSED_NOT_IN_SERVICE",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 58,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_CONFIRM_WITHIN_CEILING_V0",
+        "target_key": "RECORD_REFUSED_ABOVE_CEILING",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 58,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "NOT_FOUND",
+        "source_key": "CC_CONFIRM_WITHIN_CEILING_V0",
+        "target_key": "RECORD_REFUSED_NOT_IN_SERVICE",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 58,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_CONFIRM_WITHIN_CEILING_V0",
+        "target_key": "RECORD_REFUSED_ABOVE_CEILING",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 58,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "BACKEND_ERROR",
+        "source_key": "CC_CONFIRM_WITHIN_CEILING_V0",
+        "target_key": "RECORD_FAILED_BEFORE_READING",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 58,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "ceiling": "$.results.read_time_in_service.time_in_service.ceiling",
+          "kind": "$.inputs.kind",
+          "kinds": [
+            "public",
+            "internal",
+            "confidential",
+            "restricted"
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "within_ceiling": "$.capability_result.within_ceiling"
+        },
+        "pipeline_index": 2,
+        "step_id": "compare_sensitivity"
+      },
+      "source_address": 58,
+      "source_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+      "target_address": 72,
+      "target_fqdn": "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "actor_id": "$.inputs.requester_id",
+          "record": "$.results.assemble_opening_record.opening_record",
+          "stream_id": "$.inputs.user_prompt_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "record_id": "$.capability_result.record_id",
+          "sequence_number": "$.capability_result.sequence_number"
+        },
+        "pipeline_index": 2,
+        "step_id": "append_opening_record",
+        "store": "USER_PROMPT_RECORDS"
+      },
+      "source_address": 59,
+      "source_fqdn": "causal_language_model::CC_OPEN_HOSTED_RECORD_V0",
+      "target_address": 25,
+      "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "fields": {
+            "customer_id": "$.inputs.customer_id",
+            "fingerprint": "$.inputs.fingerprint",
+            "ground_numbers": "$.inputs.response_rules.ground_numbers",
+            "identity_key": "$.inputs.identity_key",
+            "kind": "$.inputs.kind",
+            "longest_response": "$.inputs.response_rules.longest_response",
+            "maximum_response_length": "$.inputs.maximum_response_length",
+            "outcome": "WRITING",
+            "question": "$.inputs.question",
+            "reading": "$.inputs.reading",
+            "reading_capacity": "$.inputs.reading_capacity",
+            "requester_id": "$.inputs.requester_id",
+            "rules_in_force": "$.results.form_rules_in_force.rules_in_force",
+            "supporting_material": "$.inputs.supporting_material",
+            "time_in_service_id": "$.inputs.time_in_service_id",
+            "user_prompt_id": "$.inputs.user_prompt_id"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "opening_record": "$.capability_result.record"
+        },
+        "pipeline_index": 1,
+        "step_id": "assemble_opening_record"
+      },
+      "source_address": 59,
+      "source_fqdn": "causal_language_model::CC_OPEN_HOSTED_RECORD_V0",
+      "target_address": 31,
+      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "account_numbers": "$.inputs.account_numbers",
+          "response_rules": "$.inputs.response_rules",
+          "seed": "$.inputs.seed"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "positions": "$.capability_result.positions",
+          "rules_in_force": "$.capability_result.rules_in_force"
+        },
+        "pipeline_index": 0,
+        "step_id": "form_rules_in_force"
+      },
+      "source_address": 59,
+      "source_fqdn": "causal_language_model::CC_OPEN_HOSTED_RECORD_V0",
+      "target_address": 74,
+      "target_fqdn": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "model_record": "$.capability_result.value",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 0,
+        "step_id": "read_model_record",
+        "store": "MODELS"
+      },
+      "source_address": 60,
+      "source_fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 26,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "filter": {
+            "identity_key": "$.inputs.identity_key",
+            "state": "REGISTERED"
+          },
+          "updates": {
+            "state": "IN_SERVICE",
+            "time_in_service_id": "$.inputs.time_in_service_id"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "pipeline_index": 4,
+        "step_id": "mark_in_service",
+        "store": "MODELS"
+      },
+      "source_address": 60,
+      "source_fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 26,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.time_in_service_id",
+          "value": "$.results.assemble_time_in_service.time_in_service"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 7,
+        "step_id": "write_time_in_service",
+        "store": "TIMES_IN_SERVICE"
+      },
+      "source_address": 60,
+      "source_fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 26,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.time_in_service_id",
+          "target_cs": "CS_MUTABLE_JSON_V0",
+          "target_ref": "TIMES_IN_SERVICE"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "address": "$.capability_result.address",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 3,
+        "step_id": "claim_time_in_service",
+        "store": "TIME_IN_SERVICE_REGISTRY"
+      },
+      "source_address": 60,
+      "source_fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 27,
+      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "fields": {
+            "ceiling": "$.inputs.ceiling",
+            "identity_key": "$.inputs.identity_key",
+            "response_rules": "$.inputs.response_rules",
+            "state": "OPEN",
+            "system_prompt": "$.inputs.system_prompt",
+            "time_in_service_id": "$.inputs.time_in_service_id"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "time_in_service": "$.capability_result.record"
+        },
+        "pipeline_index": 6,
+        "step_id": "assemble_time_in_service"
+      },
+      "source_address": 60,
+      "source_fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 31,
+      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": {
+            "state": "$.results.read_model_record.model_record.state"
+          },
+          "rules": [
+            {
+              "field": "state",
+              "op": "eq",
+              "value": "REGISTERED"
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "pipeline_index": 1,
+        "step_id": "require_registered"
+      },
+      "source_address": 60,
+      "source_fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 33,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": {
+            "updated_count": "$.results.mark_in_service.updated_count"
+          },
+          "rules": [
+            {
+              "field": "updated_count",
+              "op": "eq",
+              "value": 1
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "pipeline_index": 5,
+        "step_id": "require_transition"
+      },
+      "source_address": 60,
+      "source_fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 33,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "allowed_set": [
+            "public",
+            "internal",
+            "confidential",
+            "restricted"
+          ],
+          "value": "$.inputs.ceiling"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "ceiling_declared": "$.capability_result.is_member"
+        },
+        "pipeline_index": 2,
+        "step_id": "confirm_ceiling_declared"
+      },
+      "source_address": 60,
+      "source_fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 35,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_PLACE_MODEL_IN_SERVICE_V0",
+        "target_key": "CC_APPEND_MODEL_OPERATION_V0",
+        "wf_fqdn": "causal_language_model::WF_PLACE_MODEL_IN_SERVICE_V0"
+      },
+      "source_address": 60,
+      "source_fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 48,
+      "target_fqdn": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "stream_id": "$.inputs.user_prompt_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue"
+        },
+        "op": "GET_ALL",
+        "outputs": {
+          "entries": "$.capability_result.entries",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 0,
+        "step_id": "read_trail",
+        "store": "USER_PROMPT_RECORDS"
+      },
+      "source_address": 61,
+      "source_fqdn": "causal_language_model::CC_READ_HOSTED_STATE_V0",
+      "target_address": 25,
+      "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_READ_HOSTED_STATE_V0",
+        "target_key": "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 61,
+      "source_fqdn": "causal_language_model::CC_READ_HOSTED_STATE_V0",
+      "target_address": 54,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_OFFER_FOR_MODEL_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_READ_HOSTED_STATE_V0",
+        "target_key": "CONFIRM_FINISHED",
+        "wf_fqdn": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 61,
+      "source_fqdn": "causal_language_model::CC_READ_HOSTED_STATE_V0",
+      "target_address": 57,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "entries": "$.results.read_trail.entries"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "state": "$.capability_result.state"
+        },
+        "pipeline_index": 1,
+        "step_id": "reduce_trail"
+      },
+      "source_address": 61,
+      "source_fqdn": "causal_language_model::CC_READ_HOSTED_STATE_V0",
+      "target_address": 75,
+      "target_fqdn": "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "actor_id": "$.inputs.host_id",
+          "record": "$.results.assemble_step_record.step_record",
+          "stream_id": "$.inputs.user_prompt_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "record_id": "$.capability_result.record_id",
+          "sequence_number": "$.capability_result.sequence_number"
+        },
+        "pipeline_index": 1,
+        "step_id": "append_step_record",
+        "store": "USER_PROMPT_RECORDS"
+      },
+      "source_address": 62,
+      "source_fqdn": "causal_language_model::CC_RECORD_HOSTED_STEP_V0",
+      "target_address": 25,
+      "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "fields": {
+            "candidates": "$.inputs.step.candidates",
+            "chosen": "$.inputs.step.chosen",
+            "fingerprint": "$.inputs.fingerprint",
+            "finished": "$.inputs.step.finished",
+            "host_id": "$.inputs.host_id",
+            "outcome": "STEP",
+            "position": "$.inputs.step.position",
+            "reported_reading_size": "$.inputs.reported_reading_size",
+            "stopped": "$.inputs.step.stopped",
+            "stopped_by": "$.inputs.step.stopped_by",
+            "user_prompt_id": "$.inputs.user_prompt_id",
+            "within_length": "$.inputs.step.within_length"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "step_record": "$.capability_result.record"
+        },
+        "pipeline_index": 0,
+        "step_id": "assemble_step_record"
+      },
+      "source_address": 62,
+      "source_fqdn": "causal_language_model::CC_RECORD_HOSTED_STEP_V0",
+      "target_address": 31,
+      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "RECORD_STOPPED_STEP",
+        "target_key": "RECORD_REFUSED_BY_RULE",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 62,
+      "source_fqdn": "causal_language_model::CC_RECORD_HOSTED_STEP_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "RECORD_UNFINISHED_STEP",
+        "target_key": "RECORD_REFUSED_UNFINISHED",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 62,
+      "source_fqdn": "causal_language_model::CC_RECORD_HOSTED_STEP_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "actor_id": "$.inputs.requester_id",
+          "record": "$.results.assemble_user_prompt_record.user_prompt_record",
+          "stream_id": "$.inputs.user_prompt_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "record_id": "$.capability_result.record_id",
+          "sequence_number": "$.capability_result.sequence_number"
+        },
+        "pipeline_index": 1,
+        "step_id": "append_user_prompt_record",
+        "store": "USER_PROMPT_RECORDS"
+      },
+      "source_address": 63,
+      "source_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+      "target_address": 25,
+      "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "fields": {
+            "customer_id": "$.inputs.customer_id",
+            "identity_key": "$.inputs.identity_key",
+            "kind": "$.inputs.kind",
+            "outcome": "$.inputs.outcome",
+            "question": "$.inputs.question",
+            "reading": "$.inputs.reading",
+            "reason": "$.inputs.reason",
+            "requester_id": "$.inputs.requester_id",
+            "response": "$.inputs.response",
+            "rules_in_force": "$.inputs.rules_in_force",
+            "supporting_material": "$.inputs.supporting_material",
+            "time_in_service_id": "$.inputs.time_in_service_id",
+            "user_prompt_id": "$.inputs.user_prompt_id"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "user_prompt_record": "$.capability_result.record"
+        },
+        "pipeline_index": 0,
+        "step_id": "assemble_user_prompt_record"
+      },
+      "source_address": 63,
+      "source_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+      "target_address": 31,
+      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.identity_key",
+          "value": "$.results.assemble_model_record.model_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 1,
+        "step_id": "write_model_record",
+        "store": "MODELS"
+      },
+      "source_address": 64,
+      "source_fqdn": "causal_language_model::CC_REGISTER_MODEL_V0",
+      "target_address": 26,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "fields": {
+            "description": "$.inputs.description",
+            "fingerprint": "$.inputs.fingerprint",
+            "identity_key": "$.inputs.identity_key",
+            "state": "REGISTERED",
+            "time_in_service_id": ""
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "model_record": "$.capability_result.record"
+        },
+        "pipeline_index": 0,
+        "step_id": "assemble_model_record"
+      },
+      "source_address": 64,
+      "source_fqdn": "causal_language_model::CC_REGISTER_MODEL_V0",
+      "target_address": 31,
+      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_REGISTER_MODEL_V0",
+        "target_key": "CC_APPEND_MODEL_OPERATION_V0",
+        "wf_fqdn": "causal_language_model::WF_REGISTER_MODEL_V0"
+      },
+      "source_address": 64,
+      "source_fqdn": "causal_language_model::CC_REGISTER_MODEL_V0",
+      "target_address": 48,
+      "target_fqdn": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "stream_id": "$.inputs.user_prompt_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue"
+        },
+        "op": "GET_ALL",
+        "outputs": {
+          "entries": "$.capability_result.entries",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 0,
+        "step_id": "read_user_prompt_entries",
+        "store": "USER_PROMPT_RECORDS"
+      },
+      "source_address": 65,
+      "source_fqdn": "causal_language_model::CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "target_address": 25,
+      "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "filter": {
+            "stream_id": "$.inputs.user_prompt_id"
+          },
+          "source": "$.results.read_user_prompt_entries.entries"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "user_prompt_record": "$.capability_result.extracted"
+        },
+        "pipeline_index": 1,
+        "step_id": "select_user_prompt_record"
+      },
+      "source_address": 65,
+      "source_fqdn": "causal_language_model::CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "target_address": 32,
+      "target_fqdn": "capability_transforms::CT_PURE_FILTER_RECORDS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "model_record": "$.capability_result.value",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 0,
+        "step_id": "read_model_record",
+        "store": "MODELS"
+      },
+      "source_address": 66,
+      "source_fqdn": "causal_language_model::CC_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 26,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "filter": {
+            "identity_key": "$.inputs.identity_key",
+            "state": "IN_SERVICE"
+          },
+          "updates": {
+            "state": "REGISTERED",
+            "time_in_service_id": ""
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "pipeline_index": 2,
+        "step_id": "mark_registered",
+        "store": "MODELS"
+      },
+      "source_address": 66,
+      "source_fqdn": "causal_language_model::CC_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 26,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.results.read_model_record.model_record.time_in_service_id",
+          "updates": {
+            "state": "CLOSED"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 4,
+        "step_id": "close_time_in_service",
+        "store": "TIMES_IN_SERVICE"
+      },
+      "source_address": 66,
+      "source_fqdn": "causal_language_model::CC_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 26,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": {
+            "state": "$.results.read_model_record.model_record.state"
+          },
+          "rules": [
+            {
+              "field": "state",
+              "op": "eq",
+              "value": "IN_SERVICE"
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "pipeline_index": 1,
+        "step_id": "require_in_service"
+      },
+      "source_address": 66,
+      "source_fqdn": "causal_language_model::CC_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 33,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": {
+            "updated_count": "$.results.mark_registered.updated_count"
+          },
+          "rules": [
+            {
+              "field": "updated_count",
+              "op": "eq",
+              "value": 1
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "pipeline_index": 3,
+        "step_id": "require_transition"
+      },
+      "source_address": 66,
+      "source_fqdn": "causal_language_model::CC_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 33,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_WITHDRAW_MODEL_FROM_SERVICE_V0",
+        "target_key": "CC_APPEND_MODEL_OPERATION_V0",
+        "wf_fqdn": "causal_language_model::WF_WITHDRAW_MODEL_FROM_SERVICE_V0"
+      },
+      "source_address": 66,
+      "source_fqdn": "causal_language_model::CC_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 48,
+      "target_fqdn": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_WRITE_MODEL_RESPONSE_V0",
+        "target_key": "CONFIRM_NO_RULE_STOPPED",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 67,
+      "source_fqdn": "causal_language_model::CC_WRITE_MODEL_RESPONSE_V0",
+      "target_address": 57,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_WRITE_MODEL_RESPONSE_V0",
+        "target_key": "RECORD_FAILED_WHILE_WRITING",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 67,
+      "source_fqdn": "causal_language_model::CC_WRITE_MODEL_RESPONSE_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "account_numbers": "$.inputs.account_numbers",
+          "response_rules": "$.inputs.response_rules",
+          "seed": "$.inputs.seed"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "positions": "$.capability_result.positions",
+          "rules_in_force": "$.capability_result.rules_in_force"
+        },
+        "pipeline_index": 0,
+        "step_id": "form_rules_in_force"
+      },
+      "source_address": 67,
+      "source_fqdn": "causal_language_model::CC_WRITE_MODEL_RESPONSE_V0",
+      "target_address": 74,
+      "target_fqdn": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "positions": "$.results.form_rules_in_force.positions",
+          "reading": "$.inputs.reading",
+          "rules_in_force": "$.results.form_rules_in_force.rules_in_force"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "written_response": "$.capability_result.result"
+        },
+        "pipeline_index": 1,
+        "step_id": "write_response"
+      },
+      "source_address": 67,
+      "source_fqdn": "causal_language_model::CC_WRITE_MODEL_RESPONSE_V0",
+      "target_address": 77,
+      "target_fqdn": "causal_language_model::CT_WRITE_RESPONSE_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "source_key": "IN_BEGIN_HOSTED_RESPONSE_V0",
+        "target_key": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+        "wf_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 83,
+      "source_fqdn": "causal_language_model::IN_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 51,
+      "target_fqdn": "causal_language_model::CC_CLAIM_USER_PROMPT_IDENTITY_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "source_key": "IN_OFFER_NEXT_TOKENS_V0",
+        "target_key": "CC_READ_HOSTED_STATE_V0",
+        "wf_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0"
+      },
+      "source_address": 84,
+      "source_fqdn": "causal_language_model::IN_OFFER_NEXT_TOKENS_V0",
+      "target_address": 61,
+      "target_fqdn": "causal_language_model::CC_READ_HOSTED_STATE_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "source_key": "IN_PLACE_MODEL_IN_SERVICE_V0",
+        "target_key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+        "wf_fqdn": "causal_language_model::WF_PLACE_MODEL_IN_SERVICE_V0"
+      },
+      "source_address": 85,
+      "source_fqdn": "causal_language_model::IN_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 53,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "source_key": "IN_REGISTER_MODEL_V0",
+        "target_key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+        "wf_fqdn": "causal_language_model::WF_REGISTER_MODEL_V0"
+      },
+      "source_address": 86,
+      "source_fqdn": "causal_language_model::IN_REGISTER_MODEL_V0",
+      "target_address": 53,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "source_key": "IN_RELEASE_HOSTED_RESPONSE_V0",
+        "target_key": "CC_READ_HOSTED_STATE_V0",
+        "wf_fqdn": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0"
+      },
+      "source_address": 87,
+      "source_fqdn": "causal_language_model::IN_RELEASE_HOSTED_RESPONSE_V0",
+      "target_address": 61,
+      "target_fqdn": "causal_language_model::CC_READ_HOSTED_STATE_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "source_key": "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+        "target_key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+        "wf_fqdn": "causal_language_model::WF_RETRIEVE_USER_PROMPT_RECORD_V0"
+      },
+      "source_address": 88,
+      "source_fqdn": "causal_language_model::IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "target_address": 53,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "source_key": "IN_SUBMIT_USER_PROMPT_V0",
+        "target_key": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+        "wf_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+      },
+      "source_address": 89,
+      "source_fqdn": "causal_language_model::IN_SUBMIT_USER_PROMPT_V0",
+      "target_address": 51,
+      "target_fqdn": "causal_language_model::CC_CLAIM_USER_PROMPT_IDENTITY_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ACK",
+        "source_key": "IN_WITHDRAW_MODEL_FROM_SERVICE_V0",
+        "target_key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+        "wf_fqdn": "causal_language_model::WF_WITHDRAW_MODEL_FROM_SERVICE_V0"
+      },
+      "source_address": 90,
+      "source_fqdn": "causal_language_model::IN_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 53,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "RB_MAPS",
+      "kind_address": 16392,
+      "metadata": {
+        "handler_ref": ""
+      },
+      "source_address": 91,
+      "source_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
+      "target_address": 25,
+      "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
+    },
+    {
+      "kind": "RB_MAPS",
+      "kind_address": 16392,
+      "metadata": {
+        "handler_ref": ""
+      },
+      "source_address": 91,
+      "source_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
+      "target_address": 26,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "RB_MAPS",
+      "kind_address": 16392,
+      "metadata": {
+        "handler_ref": ""
+      },
+      "source_address": 91,
+      "source_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
+      "target_address": 27,
+      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
+    },
+    {
+      "kind": "GOVERNED_BY",
+      "kind_address": 16388,
+      "metadata": {},
+      "source_address": 91,
+      "source_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
+      "target_address": 93,
+      "target_fqdn": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 47,
+      "target_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 51,
+      "target_fqdn": "causal_language_model::CC_CLAIM_USER_PROMPT_IDENTITY_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 55,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_READING_FITS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 56,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 58,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 59,
+      "target_fqdn": "causal_language_model::CC_OPEN_HOSTED_RECORD_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 83,
+      "target_fqdn": "causal_language_model::IN_BEGIN_HOSTED_RESPONSE_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 83,
+      "target_fqdn": "causal_language_model::IN_BEGIN_HOSTED_RESPONSE_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 105,
+      "source_fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "target_address": 91,
+      "target_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 49,
+      "target_fqdn": "causal_language_model::CC_CHOOSE_PERMITTED_TOKEN_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 52,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_HOSTED_READING_FITS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 54,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_OFFER_FOR_MODEL_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 57,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 57,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 61,
+      "target_fqdn": "causal_language_model::CC_READ_HOSTED_STATE_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 62,
+      "target_fqdn": "causal_language_model::CC_RECORD_HOSTED_STEP_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 62,
+      "target_fqdn": "causal_language_model::CC_RECORD_HOSTED_STEP_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 62,
+      "target_fqdn": "causal_language_model::CC_RECORD_HOSTED_STEP_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 84,
+      "target_fqdn": "causal_language_model::IN_OFFER_NEXT_TOKENS_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 84,
+      "target_fqdn": "causal_language_model::IN_OFFER_NEXT_TOKENS_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 106,
+      "source_fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "target_address": 91,
+      "target_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 107,
+      "source_fqdn": "causal_language_model::WF_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 48,
+      "target_fqdn": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 107,
+      "source_fqdn": "causal_language_model::WF_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 53,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 107,
+      "source_fqdn": "causal_language_model::WF_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 60,
+      "target_fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 107,
+      "source_fqdn": "causal_language_model::WF_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 85,
+      "target_fqdn": "causal_language_model::IN_PLACE_MODEL_IN_SERVICE_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 107,
+      "source_fqdn": "causal_language_model::WF_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 85,
+      "target_fqdn": "causal_language_model::IN_PLACE_MODEL_IN_SERVICE_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 107,
+      "source_fqdn": "causal_language_model::WF_PLACE_MODEL_IN_SERVICE_V0",
+      "target_address": 91,
+      "target_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 108,
+      "source_fqdn": "causal_language_model::WF_REGISTER_MODEL_V0",
+      "target_address": 48,
+      "target_fqdn": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 108,
+      "source_fqdn": "causal_language_model::WF_REGISTER_MODEL_V0",
+      "target_address": 50,
+      "target_fqdn": "causal_language_model::CC_CLAIM_MODEL_IDENTITY_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 108,
+      "source_fqdn": "causal_language_model::WF_REGISTER_MODEL_V0",
+      "target_address": 53,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 108,
+      "source_fqdn": "causal_language_model::WF_REGISTER_MODEL_V0",
+      "target_address": 64,
+      "target_fqdn": "causal_language_model::CC_REGISTER_MODEL_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 108,
+      "source_fqdn": "causal_language_model::WF_REGISTER_MODEL_V0",
+      "target_address": 86,
+      "target_fqdn": "causal_language_model::IN_REGISTER_MODEL_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 108,
+      "source_fqdn": "causal_language_model::WF_REGISTER_MODEL_V0",
+      "target_address": 86,
+      "target_fqdn": "causal_language_model::IN_REGISTER_MODEL_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 108,
+      "source_fqdn": "causal_language_model::WF_REGISTER_MODEL_V0",
+      "target_address": 91,
+      "target_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 109,
+      "source_fqdn": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0",
+      "target_address": 57,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 109,
+      "source_fqdn": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0",
+      "target_address": 61,
+      "target_fqdn": "causal_language_model::CC_READ_HOSTED_STATE_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 109,
+      "source_fqdn": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 109,
+      "source_fqdn": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0",
+      "target_address": 87,
+      "target_fqdn": "causal_language_model::IN_RELEASE_HOSTED_RESPONSE_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 109,
+      "source_fqdn": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0",
+      "target_address": 87,
+      "target_fqdn": "causal_language_model::IN_RELEASE_HOSTED_RESPONSE_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 109,
+      "source_fqdn": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0",
+      "target_address": 91,
+      "target_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 110,
+      "source_fqdn": "causal_language_model::WF_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "target_address": 48,
+      "target_fqdn": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 110,
+      "source_fqdn": "causal_language_model::WF_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "target_address": 53,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 110,
+      "source_fqdn": "causal_language_model::WF_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "target_address": 65,
+      "target_fqdn": "causal_language_model::CC_RETRIEVE_USER_PROMPT_RECORD_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 110,
+      "source_fqdn": "causal_language_model::WF_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "target_address": 88,
+      "target_fqdn": "causal_language_model::IN_RETRIEVE_USER_PROMPT_RECORD_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 110,
+      "source_fqdn": "causal_language_model::WF_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "target_address": 88,
+      "target_fqdn": "causal_language_model::IN_RETRIEVE_USER_PROMPT_RECORD_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 110,
+      "source_fqdn": "causal_language_model::WF_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "target_address": 91,
+      "target_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 47,
+      "target_fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 51,
+      "target_fqdn": "causal_language_model::CC_CLAIM_USER_PROMPT_IDENTITY_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 55,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_READING_FITS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 56,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 57,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 57,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 58,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 63,
+      "target_fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 67,
+      "target_fqdn": "causal_language_model::CC_WRITE_MODEL_RESPONSE_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 89,
+      "target_fqdn": "causal_language_model::IN_SUBMIT_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 89,
+      "target_fqdn": "causal_language_model::IN_SUBMIT_USER_PROMPT_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 111,
+      "source_fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "target_address": 91,
+      "target_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 112,
+      "source_fqdn": "causal_language_model::WF_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 48,
+      "target_fqdn": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 112,
+      "source_fqdn": "causal_language_model::WF_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 53,
+      "target_fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 112,
+      "source_fqdn": "causal_language_model::WF_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 66,
+      "target_fqdn": "causal_language_model::CC_WITHDRAW_MODEL_FROM_SERVICE_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 112,
+      "source_fqdn": "causal_language_model::WF_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 90,
+      "target_fqdn": "causal_language_model::IN_WITHDRAW_MODEL_FROM_SERVICE_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 112,
+      "source_fqdn": "causal_language_model::WF_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 90,
+      "target_fqdn": "causal_language_model::IN_WITHDRAW_MODEL_FROM_SERVICE_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 112,
+      "source_fqdn": "causal_language_model::WF_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "target_address": 91,
+      "target_fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0"
+    }
+  ],
+  "event_catalog": [
+    {
+      "address": 78,
+      "fqdn": "causal_language_model::EV_MODEL_REGISTERED_V0",
+      "kind": "EV",
+      "kind_address": 16645,
+      "schema": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    {
+      "address": 79,
+      "fqdn": "causal_language_model::EV_MODEL_SERVICE_ENDED_V0",
+      "kind": "EV",
+      "kind_address": 16645,
+      "schema": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    {
+      "address": 80,
+      "fqdn": "causal_language_model::EV_MODEL_SERVICE_STARTED_V0",
+      "kind": "EV",
+      "kind_address": 16645,
+      "schema": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "time_in_service_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    {
+      "address": 81,
+      "fqdn": "causal_language_model::EV_USER_PROMPT_REFUSED_V0",
+      "kind": "EV",
+      "kind_address": 16645,
+      "schema": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "requester_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        },
+        "user_prompt_id": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    {
+      "address": 82,
+      "fqdn": "causal_language_model::EV_USER_PROMPT_RESPONDED_V0",
+      "kind": "EV",
+      "kind_address": 16645,
+      "schema": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "requester_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        },
+        "user_prompt_id": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "address": 25,
+      "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+      "kind": "CS",
+      "kind_address": 16643
+    },
+    {
+      "address": 26,
+      "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "kind": "CS",
+      "kind_address": 16643
+    },
+    {
+      "address": 27,
+      "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+      "kind": "CS",
+      "kind_address": 16643
+    },
+    {
+      "address": 31,
+      "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 32,
+      "fqdn": "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 33,
+      "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 34,
+      "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 35,
+      "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 44,
+      "fqdn": "causal_language_model::AC_MODEL_HOST_V0",
+      "kind": "AC",
+      "kind_address": 16640
+    },
+    {
+      "address": 45,
+      "fqdn": "causal_language_model::AC_MODEL_STAFF_V0",
+      "kind": "AC",
+      "kind_address": 16640
+    },
+    {
+      "address": 46,
+      "fqdn": "causal_language_model::AC_REQUESTER_V0",
+      "kind": "AC",
+      "kind_address": 16640
+    },
+    {
+      "address": 47,
+      "fqdn": "causal_language_model::CC_ADMIT_USER_PROMPT_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 48,
+      "fqdn": "causal_language_model::CC_APPEND_MODEL_OPERATION_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 49,
+      "fqdn": "causal_language_model::CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 50,
+      "fqdn": "causal_language_model::CC_CLAIM_MODEL_IDENTITY_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 51,
+      "fqdn": "causal_language_model::CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 52,
+      "fqdn": "causal_language_model::CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 53,
+      "fqdn": "causal_language_model::CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 54,
+      "fqdn": "causal_language_model::CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 55,
+      "fqdn": "causal_language_model::CC_CONFIRM_READING_FITS_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 56,
+      "fqdn": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 57,
+      "fqdn": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 58,
+      "fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 59,
+      "fqdn": "causal_language_model::CC_OPEN_HOSTED_RECORD_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 60,
+      "fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 61,
+      "fqdn": "causal_language_model::CC_READ_HOSTED_STATE_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 62,
+      "fqdn": "causal_language_model::CC_RECORD_HOSTED_STEP_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 63,
+      "fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 64,
+      "fqdn": "causal_language_model::CC_REGISTER_MODEL_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 65,
+      "fqdn": "causal_language_model::CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 66,
+      "fqdn": "causal_language_model::CC_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 67,
+      "fqdn": "causal_language_model::CC_WRITE_MODEL_RESPONSE_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 68,
+      "fqdn": "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 69,
+      "fqdn": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 70,
+      "fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 71,
+      "fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 72,
+      "fqdn": "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 73,
+      "fqdn": "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 74,
+      "fqdn": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 75,
+      "fqdn": "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 76,
+      "fqdn": "causal_language_model::CT_WRITE_NEXT_WORD_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 77,
+      "fqdn": "causal_language_model::CT_WRITE_RESPONSE_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 78,
+      "fqdn": "causal_language_model::EV_MODEL_REGISTERED_V0",
+      "kind": "EV",
+      "kind_address": 16645
+    },
+    {
+      "address": 79,
+      "fqdn": "causal_language_model::EV_MODEL_SERVICE_ENDED_V0",
+      "kind": "EV",
+      "kind_address": 16645
+    },
+    {
+      "address": 80,
+      "fqdn": "causal_language_model::EV_MODEL_SERVICE_STARTED_V0",
+      "kind": "EV",
+      "kind_address": 16645
+    },
+    {
+      "address": 81,
+      "fqdn": "causal_language_model::EV_USER_PROMPT_REFUSED_V0",
+      "kind": "EV",
+      "kind_address": 16645
+    },
+    {
+      "address": 82,
+      "fqdn": "causal_language_model::EV_USER_PROMPT_RESPONDED_V0",
+      "kind": "EV",
+      "kind_address": 16645
+    },
+    {
+      "address": 83,
+      "fqdn": "causal_language_model::IN_BEGIN_HOSTED_RESPONSE_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 84,
+      "fqdn": "causal_language_model::IN_OFFER_NEXT_TOKENS_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 85,
+      "fqdn": "causal_language_model::IN_PLACE_MODEL_IN_SERVICE_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 86,
+      "fqdn": "causal_language_model::IN_REGISTER_MODEL_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 87,
+      "fqdn": "causal_language_model::IN_RELEASE_HOSTED_RESPONSE_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 88,
+      "fqdn": "causal_language_model::IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 89,
+      "fqdn": "causal_language_model::IN_SUBMIT_USER_PROMPT_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 90,
+      "fqdn": "causal_language_model::IN_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "kind": "IN",
+      "kind_address": 16647
+    },
+    {
+      "address": 91,
+      "fqdn": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
+      "kind": "RB",
+      "kind_address": 16648
+    },
+    {
+      "address": 92,
+      "fqdn": "causal_language_model::STRUCTURE_BUILD_CAUSAL_LANGUAGE_MODEL_CONFIG_V0",
+      "kind": "GOVERNANCE",
+      "kind_address": 16646
+    },
+    {
+      "address": 93,
+      "fqdn": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0",
+      "kind": "GOVERNANCE",
+      "kind_address": 16646
+    },
+    {
+      "address": 94,
+      "fqdn": "causal_language_model::TEST_DATA_CT_IMPURE_OFFER_NEXT_WORDS_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 95,
+      "fqdn": "causal_language_model::TEST_DATA_CT_PURE_ASSEMBLE_MODEL_READING_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 96,
+      "fqdn": "causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 97,
+      "fqdn": "causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 98,
+      "fqdn": "causal_language_model::TEST_DATA_CT_PURE_COMPARE_SENSITIVITY_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 99,
+      "fqdn": "causal_language_model::TEST_DATA_CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 100,
+      "fqdn": "causal_language_model::TEST_DATA_CT_PURE_FORM_RESPONSE_RULES_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 101,
+      "fqdn": "causal_language_model::TEST_DATA_CT_PURE_READ_HOSTED_STATE_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 102,
+      "fqdn": "causal_language_model::TEST_DATA_CT_WRITE_NEXT_WORD_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 103,
+      "fqdn": "causal_language_model::TEST_DATA_CT_WRITE_RESPONSE_V0",
+      "kind": "TEST_DATA",
+      "kind_address": 16650
+    },
+    {
+      "address": 104,
+      "fqdn": "causal_language_model::VOCAB_KIND_OF_INFORMATION_V0",
+      "kind": "GOVERNANCE",
+      "kind_address": 16646
+    },
+    {
+      "address": 105,
+      "fqdn": "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 106,
+      "fqdn": "causal_language_model::WF_OFFER_NEXT_TOKENS_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 107,
+      "fqdn": "causal_language_model::WF_PLACE_MODEL_IN_SERVICE_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 108,
+      "fqdn": "causal_language_model::WF_REGISTER_MODEL_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 109,
+      "fqdn": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 110,
+      "fqdn": "causal_language_model::WF_RETRIEVE_USER_PROMPT_RECORD_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 111,
+      "fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 112,
+      "fqdn": "causal_language_model::WF_WITHDRAW_MODEL_FROM_SERVICE_V0",
+      "kind": "WF",
+      "kind_address": 16652
+    }
+  ],
+  "projection_class": "evidence_substrate"
+}

@@ -1,0 +1,67 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_ASSEMBLE_RECORD_V0\ntarget: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\ncases:\n- case_id: assemble_simple_record\n  expected_outcome: SUCCESS\n  bindings:\n    fields:\n      name: Alice\n      age: 30\n      active: true\n  expected:\n    record:\n      name: Alice\n      age: 30\n      active: true\n- case_id: assemble_nested_record\n  expected_outcome: SUCCESS\n  bindings:\n    fields:\n      user_id: '123'\n      profile:\n        email: alice@example.com\n        role: admin\n  expected:\n    record:\n      user_id: '123'\n      profile:\n        email: alice@example.com\n        role: admin\n```\n\n## Intent\n\nTest record assembly from field values.\n",
+  "content_hash": "b8c2e4af1bd1d6ca89e66e847c89cf1b0c79cb3331e76d2749c248ece945a9d4",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "fields": {
+            "active": true,
+            "age": 30,
+            "name": "Alice"
+          }
+        },
+        "case_id": "assemble_simple_record",
+        "expected": {
+          "record": {
+            "active": true,
+            "age": 30,
+            "name": "Alice"
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "fields": {
+            "profile": {
+              "email": "alice@example.com",
+              "role": "admin"
+            },
+            "user_id": "123"
+          }
+        },
+        "case_id": "assemble_nested_record",
+        "expected": {
+          "record": {
+            "profile": {
+              "email": "alice@example.com",
+              "role": "admin"
+            },
+            "user_id": "123"
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_ASSEMBLE_RECORD_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

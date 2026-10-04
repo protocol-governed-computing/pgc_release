@@ -2,7 +2,7 @@
   "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
   "artifact_type": "CT",
   "content": "",
-  "content_hash": "24fc0aa0bf3f4f0481d28f68231b6fb30bfd5cbd0fe65fd3956f91f6828df5c6",
+  "content_hash": "4c9264472dc2b9c2a945a237b5b317c179a6a56977ef8c10ea6028b8329c5cf8",
   "ct_ir": {
     "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
     "atom_stream": [
@@ -15,7 +15,8 @@
           "callable": "execute",
           "module": "capability_transforms.implementation.ct_pure_assemble_record_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -58,7 +59,7 @@
       "summary": "Assemble record object"
     },
     "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",

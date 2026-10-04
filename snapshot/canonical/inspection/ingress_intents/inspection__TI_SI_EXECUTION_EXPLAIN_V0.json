@@ -1,0 +1,45 @@
+{
+  "artifact_code": "TI_SI_EXECUTION_EXPLAIN_V0",
+  "artifact_type": "TI",
+  "content": "# TI_SI_EXECUTION_EXPLAIN_V0\n\n**Kind:** Transport Ingress Contract (Transport Standard V0 \u00a76)\n**Operation Identity:** `si.execution.explain`\n\nDeclares `si.execution.explain` in full: what it admits, how it is presented, and which implementation\nanswers it. This artifact is the **authority** \u2014 `inspector.catalog` reads the operation set from\nthe compiled contracts, and `inspector.registry` holds implementations and no metadata. Adding,\nrenaming or re-pointing an operation is an authoring act here, sealed into the snapshot and\nattested; it cannot happen silently in code.\n\n`handler.kind: SNAPSHOT_QUERY` selects the inspector's static entry point rather than the runtime's.\nThe engine routes by KIND and stops there \u2014 the inspector resolves the declared implementation\ninternally. No resolver or adapter code interprets the operation string; one that did would be a\nhidden RPC router.\n\n`handler.implementation` is the same binding a capability transform declares: the artifact names\n`{module, callable}` and the inspector resolves it against a closed, statically imported\nregistry. An implementation the registry does not import cannot be named here.\n\nEach `si.` operation carries its own TI/TE pair. The family shares one HTTP route, but sharing a\nroute is a protocol convenience; sharing a governed identity would leave the boundary unable to\nadmit one operation and refuse another.\n\n## Machine\n\n```yaml\nfqdn: inspection::TI_SI_EXECUTION_EXPLAIN_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: inspection\noperation: si.execution.explain\n\n# Input contract \u2014 declared and enforced at the boundary before the handler is reached.\n# A parameter declared `type: boolean` is what a client renders as a switch; `flags` is derived\n# from the contract, never stated twice.\ninput_contract:\n  trace:\n    type: string\n    required: true\n\n# Presentation \u2014 the published catalog a client builds its menu from.\ncatalog:\n  category: BEHAVIOR\n  label: Explain run\n  summary: One run's path, why each route was taken as far as the trace records it, its captured inputs and artifacts.\n\n# Context requirements \u2014 inert in V0 (AC reserved).\ncontext_requirements: []\n\nhandler:\n  kind: SNAPSHOT_QUERY\n  operation: si.execution.explain\n  implementation:\n    module: inspector.queries.execution_explain\n    callable: execution_explain\n  payload_template:\n    trace: \"${input.trace}\"\n```\n",
+  "content_hash": "8269317084dea848f62658ec8ce60649eb4087c4f8947837268f02684eca26c1",
+  "fqdn_id": "inspection::TI_SI_EXECUTION_EXPLAIN_V0",
+  "frontmatter": {
+    "artifact_kind": "TRANSPORT_INGRESS",
+    "authority": "pgc.platform",
+    "catalog": {
+      "category": "BEHAVIOR",
+      "label": "Explain run",
+      "summary": "One run's path, why each route was taken as far as the trace records it, its captured inputs and artifacts."
+    },
+    "concern": "inspection",
+    "context_requirements": [],
+    "fqdn": "inspection::TI_SI_EXECUTION_EXPLAIN_V0",
+    "governed_by": "transport::CONSTITUTION_TRANSPORT_INGRESS_V0",
+    "handler": {
+      "implementation": {
+        "callable": "execution_explain",
+        "module": "inspector.queries.execution_explain"
+      },
+      "kind": "SNAPSHOT_QUERY",
+      "operation": "si.execution.explain",
+      "payload_template": {
+        "trace": "${input.trace}"
+      }
+    },
+    "input_contract": {
+      "trace": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "operation": "si.execution.explain",
+    "version": "v0"
+  },
+  "layer_code": "INSPECTION_TRANSPORT",
+  "namespace": "inspection",
+  "references": [
+    "transport::CONSTITUTION_TRANSPORT_INGRESS_V0"
+  ],
+  "version": "0"
+}

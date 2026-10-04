@@ -1,0 +1,298 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_CHOOSE_PERMITTED_WORD_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_WORD_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: model_response\ntarget: causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0\ncases:\n- case_id: stops_another_customers_account_and_continues\n  expected_outcome: SUCCESS\n  bindings:\n    candidates:\n    - word: '87654321'\n      likelihood: 0.6\n    - word: Your\n      likelihood: 0.3\n    rules_in_force:\n      forbidden:\n      - rule: no_guarantees\n        pattern: \\bguaranteed\\b\n      - rule: another_customers_account_number\n        pattern: '[0-9](?:[ -]?[0-9]){7}'\n        except:\n        - '12345678'\n      freedom: 0\n      seed: 7\n    position: 1\n    text: ''\n    finished: false\n    stopped_by: none\n    stopped: []\n  expected:\n    text: Your\n    finished: false\n    stopped_by: none\n    stopped:\n    - position: 1\n      word: '87654321'\n      rule: another_customers_account_number\n- case_id: stops_an_account_number_written_across_two_words\n  expected_outcome: SUCCESS\n  bindings:\n    candidates:\n    - word: '4321'\n      likelihood: 0.7\n    - word: is\n      likelihood: 0.2\n    rules_in_force:\n      forbidden:\n      - rule: no_guarantees\n        pattern: \\bguaranteed\\b\n      - rule: another_customers_account_number\n        pattern: '[0-9](?:[ -]?[0-9]){7}'\n        except:\n        - '12345678'\n      freedom: 0\n      seed: 7\n    position: 3\n    text: Account 8765\n    finished: false\n    stopped_by: none\n    stopped: []\n  expected:\n    text: Account 8765 is\n    finished: false\n    stopped_by: none\n    stopped:\n    - position: 3\n      word: '4321'\n      rule: another_customers_account_number\n- case_id: writes_the_customers_own_account_across_two_words\n  expected_outcome: SUCCESS\n  bindings:\n    candidates:\n    - word: '5678'\n      likelihood: 0.8\n    rules_in_force:\n      forbidden:\n      - rule: no_guarantees\n        pattern: \\bguaranteed\\b\n      - rule: another_customers_account_number\n        pattern: '[0-9](?:[ -]?[0-9]){7}'\n        except:\n        - '12345678'\n      freedom: 0\n      seed: 7\n    position: 3\n    text: Account 1234\n    finished: false\n    stopped_by: none\n    stopped: []\n  expected:\n    text: Account 1234 5678\n    finished: false\n    stopped_by: none\n    stopped: []\n- case_id: names_the_rule_when_no_permitted_word_remains\n  expected_outcome: SUCCESS\n  bindings:\n    candidates:\n    - word: '87654321'\n      likelihood: 0.9\n    rules_in_force:\n      forbidden:\n      - rule: no_guarantees\n        pattern: \\bguaranteed\\b\n      - rule: another_customers_account_number\n        pattern: '[0-9](?:[ -]?[0-9]){7}'\n        except:\n        - '12345678'\n      freedom: 0\n      seed: 7\n    position: 1\n    text: ''\n    finished: false\n    stopped_by: none\n    stopped: []\n  expected:\n    text: ''\n    finished: false\n    stopped_by: another_customers_account_number\n    stopped:\n    - position: 1\n      word: '87654321'\n      rule: another_customers_account_number\n- case_id: draws_an_adventurous_word_from_the_seed\n  expected_outcome: SUCCESS\n  bindings:\n    candidates:\n    - word: balance\n      likelihood: 0.6\n    - word: savings\n      likelihood: 0.3\n    - word: loan\n      likelihood: 0.1\n    rules_in_force:\n      forbidden:\n      - rule: no_guarantees\n        pattern: \\bguaranteed\\b\n      - rule: another_customers_account_number\n        pattern: '[0-9](?:[ -]?[0-9]){7}'\n        except:\n        - '12345678'\n      freedom: 1\n      seed: 7\n    position: 2\n    text: Your\n    finished: false\n    stopped_by: none\n    stopped: []\n  expected:\n    text: Your savings\n    finished: false\n    stopped_by: none\n    stopped: []\n- case_id: finishes_on_the_end_of_the_response\n  expected_outcome: SUCCESS\n  bindings:\n    candidates:\n    - word: <end>\n      likelihood: 0.9\n    rules_in_force:\n      forbidden:\n      - rule: no_guarantees\n        pattern: \\bguaranteed\\b\n      - rule: another_customers_account_number\n        pattern: '[0-9](?:[ -]?[0-9]){7}'\n        except:\n        - '12345678'\n      freedom: 0\n      seed: 7\n    position: 3\n    text: Your balance\n    finished: false\n    stopped_by: none\n    stopped: []\n  expected:\n    text: Your balance\n    finished: true\n    stopped_by: none\n    stopped: []\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "dcb97e5cfec61d454dad947f4162824938c7234f521207ebe979e359d486ce82",
+  "fqdn_id": "causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.6,
+              "word": "87654321"
+            },
+            {
+              "likelihood": 0.3,
+              "word": "Your"
+            }
+          ],
+          "finished": false,
+          "position": 1,
+          "rules_in_force": {
+            "forbidden": [
+              {
+                "pattern": "\\bguaranteed\\b",
+                "rule": "no_guarantees"
+              },
+              {
+                "except": [
+                  "12345678"
+                ],
+                "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                "rule": "another_customers_account_number"
+              }
+            ],
+            "freedom": 0,
+            "seed": 7
+          },
+          "stopped": [],
+          "stopped_by": "none",
+          "text": ""
+        },
+        "case_id": "stops_another_customers_account_and_continues",
+        "expected": {
+          "finished": false,
+          "stopped": [
+            {
+              "position": 1,
+              "rule": "another_customers_account_number",
+              "word": "87654321"
+            }
+          ],
+          "stopped_by": "none",
+          "text": "Your"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.7,
+              "word": "4321"
+            },
+            {
+              "likelihood": 0.2,
+              "word": "is"
+            }
+          ],
+          "finished": false,
+          "position": 3,
+          "rules_in_force": {
+            "forbidden": [
+              {
+                "pattern": "\\bguaranteed\\b",
+                "rule": "no_guarantees"
+              },
+              {
+                "except": [
+                  "12345678"
+                ],
+                "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                "rule": "another_customers_account_number"
+              }
+            ],
+            "freedom": 0,
+            "seed": 7
+          },
+          "stopped": [],
+          "stopped_by": "none",
+          "text": "Account 8765"
+        },
+        "case_id": "stops_an_account_number_written_across_two_words",
+        "expected": {
+          "finished": false,
+          "stopped": [
+            {
+              "position": 3,
+              "rule": "another_customers_account_number",
+              "word": "4321"
+            }
+          ],
+          "stopped_by": "none",
+          "text": "Account 8765 is"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.8,
+              "word": "5678"
+            }
+          ],
+          "finished": false,
+          "position": 3,
+          "rules_in_force": {
+            "forbidden": [
+              {
+                "pattern": "\\bguaranteed\\b",
+                "rule": "no_guarantees"
+              },
+              {
+                "except": [
+                  "12345678"
+                ],
+                "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                "rule": "another_customers_account_number"
+              }
+            ],
+            "freedom": 0,
+            "seed": 7
+          },
+          "stopped": [],
+          "stopped_by": "none",
+          "text": "Account 1234"
+        },
+        "case_id": "writes_the_customers_own_account_across_two_words",
+        "expected": {
+          "finished": false,
+          "stopped": [],
+          "stopped_by": "none",
+          "text": "Account 1234 5678"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.9,
+              "word": "87654321"
+            }
+          ],
+          "finished": false,
+          "position": 1,
+          "rules_in_force": {
+            "forbidden": [
+              {
+                "pattern": "\\bguaranteed\\b",
+                "rule": "no_guarantees"
+              },
+              {
+                "except": [
+                  "12345678"
+                ],
+                "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                "rule": "another_customers_account_number"
+              }
+            ],
+            "freedom": 0,
+            "seed": 7
+          },
+          "stopped": [],
+          "stopped_by": "none",
+          "text": ""
+        },
+        "case_id": "names_the_rule_when_no_permitted_word_remains",
+        "expected": {
+          "finished": false,
+          "stopped": [
+            {
+              "position": 1,
+              "rule": "another_customers_account_number",
+              "word": "87654321"
+            }
+          ],
+          "stopped_by": "another_customers_account_number",
+          "text": ""
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.6,
+              "word": "balance"
+            },
+            {
+              "likelihood": 0.3,
+              "word": "savings"
+            },
+            {
+              "likelihood": 0.1,
+              "word": "loan"
+            }
+          ],
+          "finished": false,
+          "position": 2,
+          "rules_in_force": {
+            "forbidden": [
+              {
+                "pattern": "\\bguaranteed\\b",
+                "rule": "no_guarantees"
+              },
+              {
+                "except": [
+                  "12345678"
+                ],
+                "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                "rule": "another_customers_account_number"
+              }
+            ],
+            "freedom": 1,
+            "seed": 7
+          },
+          "stopped": [],
+          "stopped_by": "none",
+          "text": "Your"
+        },
+        "case_id": "draws_an_adventurous_word_from_the_seed",
+        "expected": {
+          "finished": false,
+          "stopped": [],
+          "stopped_by": "none",
+          "text": "Your savings"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.9,
+              "word": "<end>"
+            }
+          ],
+          "finished": false,
+          "position": 3,
+          "rules_in_force": {
+            "forbidden": [
+              {
+                "pattern": "\\bguaranteed\\b",
+                "rule": "no_guarantees"
+              },
+              {
+                "except": [
+                  "12345678"
+                ],
+                "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                "rule": "another_customers_account_number"
+              }
+            ],
+            "freedom": 0,
+            "seed": 7
+          },
+          "stopped": [],
+          "stopped_by": "none",
+          "text": "Your balance"
+        },
+        "case_id": "finishes_on_the_end_of_the_response",
+        "expected": {
+          "finished": true,
+          "stopped": [],
+          "stopped_by": "none",
+          "text": "Your balance"
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "model_response",
+    "fqdn": "causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+    "version": "V0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

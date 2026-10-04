@@ -1,15 +1,25 @@
 {
-  "attestation_hash": "97a1671655ac59bec8ac43266a7bb6a57f3f04527df1fb16bbabc384c94f9f54",
+  "attestation_hash": "7efdd43e11a11639683b173bfd34e0bf2cf8e58eb60d37cebaed546997267871",
   "attestation_version": "V0",
+  "imported_capabilities": [
+    "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+    "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+  ],
   "imported_governance": {
-    "closure_member_count": 80,
-    "governance_closure_hash": "392dd260d3febce88aed8723a3f9687a7bab8be7028fa1423ad753bf674ef040",
+    "closure_member_count": 87,
+    "governance_closure_hash": "6d8eea38b83351ccaaf20a6c6637cb108c3da062161593f893c22b78de4db560",
     "import_domain": "platform"
   },
   "public_key_ref": "STUB",
   "signature": "STUB_NOT_CRYPTOGRAPHICALLY_SIGNED",
-  "signed_at": "2026-09-11T21:05:06.909151+00:00",
+  "signed_at": "2026-10-04T01:14:06.419261+00:00",
   "signing_algorithm": "STUB",
   "structure_id": "book_library_mgmt",
-  "tokenized_projection_hash": "ec8fa24450955f4a7024db3757600795fceb9a4283393b2f5ecb38f2bb7ac8b7"
+  "tokenized_projection_hash": "63a6fe2551ea5c07203e310f1c17a69f8434b860084c7a2ba6a0133c958fd7ee"
 }

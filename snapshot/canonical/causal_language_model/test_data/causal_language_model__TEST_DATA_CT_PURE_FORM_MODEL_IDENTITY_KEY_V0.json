@@ -1,0 +1,49 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_FORM_MODEL_IDENTITY_KEY_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::TEST_DATA_CT_PURE_FORM_MODEL_IDENTITY_KEY_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: model_response\ntarget: causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0\ncases:\n- case_id: forms_key_from_description_and_fingerprint\n  expected_outcome: SUCCESS\n  bindings:\n    description:\n      reading_capacity: 64\n      layers: 2\n    fingerprint: sha256:ab12\n  expected:\n    identity_key: '{\"layers\":2,\"reading_capacity\":64}|sha256:ab12'\n- case_id: refuses_blank_fingerprint\n  expected_outcome: VIOLATION\n  bindings:\n    description:\n      reading_capacity: 64\n      layers: 2\n    fingerprint: ' '\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "b38d4feb7d96c444b88d787ddd134590d5dffb60b1ed20c82cc077b8a8e31d95",
+  "fqdn_id": "causal_language_model::TEST_DATA_CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "description": {
+            "layers": 2,
+            "reading_capacity": 64
+          },
+          "fingerprint": "sha256:ab12"
+        },
+        "case_id": "forms_key_from_description_and_fingerprint",
+        "expected": {
+          "identity_key": "{\"layers\":2,\"reading_capacity\":64}|sha256:ab12"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "description": {
+            "layers": 2,
+            "reading_capacity": 64
+          },
+          "fingerprint": " "
+        },
+        "case_id": "refuses_blank_fingerprint",
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "model_response",
+    "fqdn": "causal_language_model::TEST_DATA_CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+    "version": "V0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,47 @@
+{
+  "artifact_code": "IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+  "artifact_type": "IN",
+  "content": "# IN_RETRIEVE_USER_PROMPT_RECORD_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::IN_RETRIEVE_USER_PROMPT_RECORD_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: A request to retrieve the record of a user prompt\n  workflow: WF_RETRIEVE_USER_PROMPT_RECORD_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n    user_prompt_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to retrieve the record of a user prompt\n",
+  "content_hash": "541a1669ee13c72f94ad1ef50d5a4f978b68ee45bf591c92a589ed590189069d",
+  "fqdn_id": "causal_language_model::IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "staff_credentials": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "user_prompt_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to retrieve the record of a user prompt",
+      "workflow": "WF_RETRIEVE_USER_PROMPT_RECORD_V0"
+    },
+    "fqdn": "causal_language_model::IN_RETRIEVE_USER_PROMPT_RECORD_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

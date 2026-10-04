@@ -1,8 +1,8 @@
 {
   "artifact_code": "CT_PURE_SELECT_RECORDS_V0",
   "artifact_type": "CT",
-  "content": "# CT_PURE_SELECT_RECORDS_V0\n\n## 1. Intent\n\nSelects the records matching stated criteria and returns none when none match\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CT_PURE_SELECT_RECORDS_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Selects the records matching stated criteria and returns none when none match\n  refusal: never\n  inputs:\n    source:\n      type: array\n      required: true\n    filter:\n      type: object\n      required: true\n  outputs:\n    extracted:\n      type: array\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_SELECT_RECORDS\n  implementation:\n    module: book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_select_records_v0\n    callable: execute\n```\n",
-  "content_hash": "1d38adeda6b7a7cdbed61a4491feb281cc4aa0d77140640205f382ca7fa2f6eb",
+  "content": "# CT_PURE_SELECT_RECORDS_V0\n\n## 1. Intent\n\nSelects the records matching stated criteria and returns none when none match\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CT_PURE_SELECT_RECORDS_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Selects the records matching stated criteria and returns none when none match\n  refusal: never\n  inputs:\n    source:\n      type: array\n      required: true\n    filter:\n      type: object\n      required: true\n  outputs:\n    extracted:\n      type: array\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_SELECT_RECORDS\n  implementation:\n    module: book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_select_records_v0\n    callable: execute\n```\n",
+  "content_hash": "fb2aa3d07a46628b008fd5c029e08c46f95056b63e67f2203b5a9bbb18cbacef",
   "ct_ir": {
     "artifact_code": "CT_PURE_SELECT_RECORDS_V0",
     "atom_stream": [
@@ -16,7 +16,8 @@
           "callable": "execute",
           "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_select_records_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -63,7 +64,7 @@
       "summary": "Selects the records matching stated criteria and returns none when none match"
     },
     "fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",
@@ -78,7 +79,7 @@
   "layer_code": "BOOK_LIBRARY_MGMT",
   "namespace": "book_library_mgmt",
   "references": [
-    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
   ],
   "version": "0"
 }

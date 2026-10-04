@@ -1,0 +1,26 @@
+{
+  "carried": [
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+    "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+  ],
+  "cases": [],
+  "counts": {
+    "cases": 0,
+    "cases_failed": 0,
+    "proven": 0,
+    "refused": 0,
+    "unproven": 4
+  },
+  "domain": "book_library_mgmt",
+  "proven": [],
+  "refused": [],
+  "unproven": [
+    "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+    "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+    "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+    "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0"
+  ]
+}

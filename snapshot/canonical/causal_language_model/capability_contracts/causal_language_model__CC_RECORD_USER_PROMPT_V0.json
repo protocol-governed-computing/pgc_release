@@ -1,0 +1,179 @@
+{
+  "artifact_code": "CC_RECORD_USER_PROMPT_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+        "id": "CS_APPENDONLY_JSONL_V0",
+        "kind": "CS",
+        "ops": [
+          "APPEND",
+          "GET_ALL"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_RECORD_USER_PROMPT_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CC_RECORD_USER_PROMPT_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Append the user prompt record with what the model read, the rules in force and the outcome\n  inputs:\n    user_prompt_id:\n      type: string\n      required: true\n    requester_id:\n      type: string\n      required: true\n    customer_id:\n      type: string\n      required: true\n    identity_key:\n      type: string\n      required: true\n    kind:\n      type: string\n      required: true\n    question:\n      type: string\n      required: true\n    supporting_material:\n      type: string\n      required: true\n    outcome:\n      type: string\n      required: true\n    time_in_service_id:\n      type: string\n    reading:\n      type: object\n    rules_in_force:\n      type: object\n    response:\n      type: string\n    reason:\n      type: string\n  outputs:\n    record_id:\n      type: string\n      required: true\n    sequence_number:\n      type: integer\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: assemble_user_prompt_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        user_prompt_id: $.inputs.user_prompt_id\n        requester_id: $.inputs.requester_id\n        customer_id: $.inputs.customer_id\n        identity_key: $.inputs.identity_key\n        kind: $.inputs.kind\n        question: $.inputs.question\n        supporting_material: $.inputs.supporting_material\n        outcome: $.inputs.outcome\n        time_in_service_id: $.inputs.time_in_service_id\n        reading: $.inputs.reading\n        rules_in_force: $.inputs.rules_in_force\n        response: $.inputs.response\n        reason: $.inputs.reason\n    outputs:\n      user_prompt_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: append_user_prompt_record\n    side_effect: capability_side_effects::CS_APPENDONLY_JSONL_V0\n    op: APPEND\n    store: USER_PROMPT_RECORDS\n    inputs:\n      record: $.results.assemble_user_prompt_record.user_prompt_record\n      stream_id: $.inputs.user_prompt_id\n      actor_id: $.inputs.requester_id\n    outputs:\n      record_id: $.capability_result.record_id\n      sequence_number: $.capability_result.sequence_number\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nAppend the user prompt record with what the model read, the rules in force and the outcome\n",
+  "content_hash": "d47a9a7fce4cb2d435b8970d6af0fbc4a2b787a2cc2a7f8bbc22bd08f1918b45",
+  "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "customer_id": {
+          "required": true,
+          "type": "string"
+        },
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "kind": {
+          "required": true,
+          "type": "string"
+        },
+        "outcome": {
+          "required": true,
+          "type": "string"
+        },
+        "question": {
+          "required": true,
+          "type": "string"
+        },
+        "reading": {
+          "type": "object"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "requester_id": {
+          "required": true,
+          "type": "string"
+        },
+        "response": {
+          "type": "string"
+        },
+        "rules_in_force": {
+          "type": "object"
+        },
+        "supporting_material": {
+          "required": true,
+          "type": "string"
+        },
+        "time_in_service_id": {
+          "type": "string"
+        },
+        "user_prompt_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "record_id": {
+          "required": true,
+          "type": "string"
+        },
+        "sequence_number": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "fields": {
+              "customer_id": "$.inputs.customer_id",
+              "identity_key": "$.inputs.identity_key",
+              "kind": "$.inputs.kind",
+              "outcome": "$.inputs.outcome",
+              "question": "$.inputs.question",
+              "reading": "$.inputs.reading",
+              "reason": "$.inputs.reason",
+              "requester_id": "$.inputs.requester_id",
+              "response": "$.inputs.response",
+              "rules_in_force": "$.inputs.rules_in_force",
+              "supporting_material": "$.inputs.supporting_material",
+              "time_in_service_id": "$.inputs.time_in_service_id",
+              "user_prompt_id": "$.inputs.user_prompt_id"
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "user_prompt_record": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_user_prompt_record",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "actor_id": "$.inputs.requester_id",
+            "record": "$.results.assemble_user_prompt_record.user_prompt_record",
+            "stream_id": "$.inputs.user_prompt_id"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "APPEND",
+          "outputs": {
+            "record_id": "$.capability_result.record_id",
+            "sequence_number": "$.capability_result.sequence_number"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+          "step": "append_user_prompt_record",
+          "store": "USER_PROMPT_RECORDS"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Append the user prompt record with what the model read, the rules in force and the outcome"
+    },
+    "fqdn": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+  ],
+  "version": "0"
+}

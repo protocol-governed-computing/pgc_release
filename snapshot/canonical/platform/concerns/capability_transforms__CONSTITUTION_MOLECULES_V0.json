@@ -1,0 +1,41 @@
+{
+  "artifact_code": "CONSTITUTION_MOLECULES_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_MOLECULES_V0\n\n## Machine\n```yaml\nfqdn: capability_transforms::CONSTITUTION_MOLECULES_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_model: compiler_enforced\n  governs:\n  - CT\nrules:\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_CT_GOVERNED_BY_KIND_V0\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_MOLECULE_RUNNABLE_V0\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_MOLECULE_PURITY_CONSISTENT_V0\n```\n\n---\n\n## 1. Purpose\n\nThis constitution governs the **molecule**: a capability transform composed of other transforms and\nrun as a stated sequence of steps. A molecule exists so that a computation made of several decisions\nis declared as those decisions, each visible in the composition, rather than hidden inside a single\nimplementation.\n\nIt governs molecules only. Deterministic atoms are governed by\n`capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0`, and atoms that declare their result\nis not determined by their inputs by `capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0`.\nEach transform is governed by exactly one of the three, decided by its kind and declared purity. The rules common to\nall three are carried by `capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V1`.\n\n---\n\n## 2. What a molecule is\n\n- A molecule declares `ct_kind: molecule`, an ordered **atom stream** of steps, and the one value it\n  **emits**.\n- A step is an **atom**, a **molecule**, or a **loop**.\n- A **loop** runs a body \u2014 an atom or a molecule \u2014 once for each member of a stated collection, and\n  carries values from one pass to the next.\n- A molecule declares no implementation of its own. Its steps are its specification.\n\n---\n\n## 3. How a molecule runs\n\n- **Declared order.** A molecule's steps run in the order they are declared, and in no other.\n- **Every pass runs.** A loop runs its body exactly once per member of its collection, every time. A\n  loop whose work is finished carries that fact forward in the values it passes, and the passes that\n  remain change nothing. A loop's length never depends on the data it computes.\n- **Bounded.** No molecule contains itself, directly or through others. A molecule that did would be\n  repetition with no stated bound.\n- **Runnable.** Every step and every loop body resolves to a transform the runtime can run.\n- **Observable.** Every step a molecule runs leaves one evidence record, naming its results and not\n  their values, in the same form as the step of a governed operation.\n\n---\n\n## 4. Purity\n\nA molecule declares its purity, and the declaration is checked against its steps. A molecule declared\ndeterministic contains only deterministic steps. A molecule containing a step that is not\ndeterministic declares itself so, and is then subject to what\n`capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0` requires of that step's results.\n\nNo molecule has side effects, whatever its purity. Side effects are the business of capability side\neffects.\n\n---\n\n## 5. Acts stay acyclic\n\nAn act \u2014 a workflow \u2014 is acyclic under `workflow::CONSTITUTION_WORKFLOW_V0`. Repetition belongs in a\nmolecule's loop, where it is bounded by a collection the composition can see.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs molecules \u2014 composed capability transforms, their steps, loops and purity\nrules:\n- rule_id: MOLECULE_GOVERNED_HERE\n  constraint: a transform declaring ct_kind molecule MUST be governed by this constitution\n- rule_id: MOLECULE_DECLARED_ORDER\n  constraint: a molecule's steps MUST run in their declared order\n- rule_id: MOLECULE_EVERY_PASS\n  constraint: a loop MUST run its body exactly once per member of its stated collection\n- rule_id: MOLECULE_NO_SELF_CONTAINMENT\n  constraint: no molecule MAY contain itself, directly or through others\n- rule_id: MOLECULE_RUNNABLE\n  constraint: every step and loop body MUST resolve to a transform the runtime can run\n- rule_id: MOLECULE_PURITY_CONSISTENT\n  constraint: a molecule declared deterministic MUST contain only deterministic steps\n- rule_id: MOLECULE_STEP_EVIDENCE\n  constraint: every step a molecule runs MUST leave one evidence record naming its results\n- rule_id: MOLECULE_NO_SIDE_EFFECTS\n  constraint: a molecule MUST NOT produce side effects\n```\n",
+  "content_hash": "33f3498348afbf334aa83d5cacd7ec3573f92fec45d3573eb06599d4ad8edf22",
+  "fqdn_id": "capability_transforms::CONSTITUTION_MOLECULES_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_model": "compiler_enforced",
+      "governs": [
+        "CT"
+      ]
+    },
+    "fqdn": "capability_transforms::CONSTITUTION_MOLECULES_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "rules": [
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_CT_GOVERNED_BY_KIND_V0"
+      },
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_MOLECULE_RUNNABLE_V0"
+      },
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_MOLECULE_PURITY_CONSISTENT_V0"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

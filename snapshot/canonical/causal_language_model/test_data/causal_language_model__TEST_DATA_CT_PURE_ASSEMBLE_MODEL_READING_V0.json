@@ -1,0 +1,52 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_ASSEMBLE_MODEL_READING_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_ASSEMBLE_MODEL_READING_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::TEST_DATA_CT_PURE_ASSEMBLE_MODEL_READING_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: model_response\ntarget: causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0\ncases:\n- case_id: assembles_what_fits\n  expected_outcome: SUCCESS\n  bindings:\n    system_prompt: Answer briefly.\n    question: What is my balance?\n    supporting_material: Account 12345678 balance 40.\n    reading_capacity: 20\n  expected:\n    reading:\n      system_prompt: Answer briefly.\n      question: What is my balance?\n      supporting_material: Account 12345678 balance 40.\n    reading_length: 10\n- case_id: refuses_reading_too_long\n  expected_outcome: VIOLATION\n  bindings:\n    system_prompt: Answer briefly.\n    question: What is my balance?\n    supporting_material: Account 12345678 balance 40.\n    reading_capacity: 5\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "4340a530061037ce84d1051fd85758f07cb6666b6a2c5ba5e0406af52e2a44b7",
+  "fqdn_id": "causal_language_model::TEST_DATA_CT_PURE_ASSEMBLE_MODEL_READING_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "question": "What is my balance?",
+          "reading_capacity": 20,
+          "supporting_material": "Account 12345678 balance 40.",
+          "system_prompt": "Answer briefly."
+        },
+        "case_id": "assembles_what_fits",
+        "expected": {
+          "reading": {
+            "question": "What is my balance?",
+            "supporting_material": "Account 12345678 balance 40.",
+            "system_prompt": "Answer briefly."
+          },
+          "reading_length": 10
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "question": "What is my balance?",
+          "reading_capacity": 5,
+          "supporting_material": "Account 12345678 balance 40.",
+          "system_prompt": "Answer briefly."
+        },
+        "case_id": "refuses_reading_too_long",
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "model_response",
+    "fqdn": "causal_language_model::TEST_DATA_CT_PURE_ASSEMBLE_MODEL_READING_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0",
+    "version": "V0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

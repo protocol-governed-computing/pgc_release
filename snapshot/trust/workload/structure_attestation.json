@@ -1,15 +1,18 @@
 {
-  "attestation_hash": "c853ed470ff6d954690255117cb5854f7d4ebb886a060f2be6d0a18398d56132",
+  "attestation_hash": "d32cdf1f3ed6560bf7c91049ab7c6654bcd603ebeaff872dfddb1dd0a0475c0a",
   "attestation_version": "V0",
+  "imported_capabilities": [
+    "capability_side_effects::CS_MUTABLE_JSON_V0"
+  ],
   "imported_governance": {
-    "closure_member_count": 80,
-    "governance_closure_hash": "392dd260d3febce88aed8723a3f9687a7bab8be7028fa1423ad753bf674ef040",
+    "closure_member_count": 87,
+    "governance_closure_hash": "6d8eea38b83351ccaaf20a6c6637cb108c3da062161593f893c22b78de4db560",
     "import_domain": "platform"
   },
   "public_key_ref": "STUB",
   "signature": "STUB_NOT_CRYPTOGRAPHICALLY_SIGNED",
-  "signed_at": "2026-09-11T21:05:00.673600+00:00",
+  "signed_at": "2026-10-04T01:14:00.418340+00:00",
   "signing_algorithm": "STUB",
   "structure_id": "workload",
-  "tokenized_projection_hash": "356ad9be8005817b85a748f9f733697101316754d15200e71d937e12736eb93e"
+  "tokenized_projection_hash": "46234698819fe8d0443f0648f607498767295565dccf7e6ceae83e9560f1772f"
 }

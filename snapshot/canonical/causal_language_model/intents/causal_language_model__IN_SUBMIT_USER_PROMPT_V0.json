@@ -1,0 +1,75 @@
+{
+  "artifact_code": "IN_SUBMIT_USER_PROMPT_V0",
+  "artifact_type": "IN",
+  "content": "# IN_SUBMIT_USER_PROMPT_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::IN_SUBMIT_USER_PROMPT_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: A user prompt submitted on behalf of a customer\n  workflow: WF_SUBMIT_USER_PROMPT_V0\n  inputs:\n    user_prompt_id:\n      type: string\n      required: true\n    requester_id:\n      type: string\n      required: true\n    permitted_customers:\n      type: array\n      required: true\n    customer_id:\n      type: string\n      required: true\n    account_numbers:\n      type: array\n      required: true\n    identity_key:\n      type: string\n      required: true\n    kind:\n      type: string\n      required: true\n    question:\n      type: string\n      required: true\n    supporting_material:\n      type: string\n      required: true\n    seed:\n      type: integer\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA user prompt submitted on behalf of a customer\n",
+  "content_hash": "4ee0a8fdbbc043156ef3ccdc20efd3a160a95e1358d84cc20776af59144c74a7",
+  "fqdn_id": "causal_language_model::IN_SUBMIT_USER_PROMPT_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "account_numbers": {
+          "required": true,
+          "type": "array"
+        },
+        "customer_id": {
+          "required": true,
+          "type": "string"
+        },
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "kind": {
+          "required": true,
+          "type": "string"
+        },
+        "permitted_customers": {
+          "required": true,
+          "type": "array"
+        },
+        "question": {
+          "required": true,
+          "type": "string"
+        },
+        "requester_id": {
+          "required": true,
+          "type": "string"
+        },
+        "seed": {
+          "required": true,
+          "type": "integer"
+        },
+        "supporting_material": {
+          "required": true,
+          "type": "string"
+        },
+        "user_prompt_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A user prompt submitted on behalf of a customer",
+      "workflow": "WF_SUBMIT_USER_PROMPT_V0"
+    },
+    "fqdn": "causal_language_model::IN_SUBMIT_USER_PROMPT_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

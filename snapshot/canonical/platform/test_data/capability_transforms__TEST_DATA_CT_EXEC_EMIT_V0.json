@@ -1,0 +1,409 @@
+{
+  "artifact_code": "TEST_DATA_CT_EXEC_EMIT_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_EXEC_EMIT_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_EXEC_EMIT_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_EXEC_EMIT_V0\ntarget: capability_transforms::CT_EXEC_EMIT_V0\ncases:\n- case_id: emit_string\n  expected_outcome: SUCCESS\n  bindings:\n    value: Hello, World!\n  expected:\n    result: Hello, World!\n- case_id: emit_integer\n  expected_outcome: SUCCESS\n  bindings:\n    value: 42\n  expected:\n    result: 42\n- case_id: emit_boolean_true\n  expected_outcome: SUCCESS\n  bindings:\n    value: true\n  expected:\n    result: true\n- case_id: emit_boolean_false\n  expected_outcome: SUCCESS\n  bindings:\n    value: false\n  expected:\n    result: false\n- case_id: emit_null\n  expected_outcome: SUCCESS\n  bindings:\n    value: null\n  expected:\n    result: null\n- case_id: emit_simple_object\n  expected_outcome: SUCCESS\n  bindings:\n    value:\n      status: success\n      count: 10\n      enabled: true\n  expected:\n    result:\n      status: success\n      count: 10\n      enabled: true\n- case_id: emit_nested_object\n  expected_outcome: SUCCESS\n  bindings:\n    value:\n      transaction:\n        id: tx_abc123\n        type: transfer\n        amount: 100\n        from:\n          address: 0x1234...\n          balance: 500\n        to:\n          address: 0x5678...\n          balance: 200\n        metadata:\n          timestamp: '2026-04-02T10:00:00Z'\n          confirmations: 12\n          gas:\n            used: 21000\n            price: 20\n  expected:\n    result:\n      transaction:\n        id: tx_abc123\n        type: transfer\n        amount: 100\n        from:\n          address: 0x1234...\n          balance: 500\n        to:\n          address: 0x5678...\n          balance: 200\n        metadata:\n          timestamp: '2026-04-02T10:00:00Z'\n          confirmations: 12\n          gas:\n            used: 21000\n            price: 20\n- case_id: emit_array_primitives\n  expected_outcome: SUCCESS\n  bindings:\n    value:\n    - alice\n    - bob\n    - charlie\n    - david\n  expected:\n    result:\n    - alice\n    - bob\n    - charlie\n    - david\n- case_id: emit_array_objects\n  expected_outcome: SUCCESS\n  bindings:\n    value:\n    - id: user_1\n      name: Alice\n      role: admin\n    - id: user_2\n      name: Bob\n      role: user\n    - id: user_3\n      name: Charlie\n      role: moderator\n  expected:\n    result:\n    - id: user_1\n      name: Alice\n      role: admin\n    - id: user_2\n      name: Bob\n      role: user\n    - id: user_3\n      name: Charlie\n      role: moderator\n- case_id: emit_empty_object\n  expected_outcome: SUCCESS\n  bindings:\n    value: {}\n  expected:\n    result: {}\n- case_id: emit_empty_array\n  expected_outcome: SUCCESS\n  bindings:\n    value: []\n  expected:\n    result: []\n- case_id: emit_mixed_array\n  expected_outcome: SUCCESS\n  bindings:\n    value:\n    - string\n    - 42\n    - true\n    - null\n    - id: obj_1\n      data: value\n    - - nested\n      - array\n  expected:\n    result:\n    - string\n    - 42\n    - true\n    - null\n    - id: obj_1\n      data: value\n    - - nested\n      - array\n- case_id: emit_workflow_result\n  expected_outcome: SUCCESS\n  bindings:\n    value:\n      workflow_id: wf_build_platform_v0\n      execution_id: exec_20260402_100000\n      status: SUCCESS\n      duration_ms: 137\n      phases:\n        discover:\n          status: COMPLETED\n          artifacts: 66\n        validate:\n          status: COMPLETED\n          errors: 0\n        materialize:\n          status: COMPLETED\n          written: 66\n      outputs:\n        artifacts_path: /path/to/compiled/artifacts\n        summary:\n          total: 66\n          by_type:\n            CT: 25\n            CS: 7\n            CC: 3\n  expected:\n    result:\n      workflow_id: wf_build_platform_v0\n      execution_id: exec_20260402_100000\n      status: SUCCESS\n      duration_ms: 137\n      phases:\n        discover:\n          status: COMPLETED\n          artifacts: 66\n        validate:\n          status: COMPLETED\n          errors: 0\n        materialize:\n          status: COMPLETED\n          written: 66\n      outputs:\n        artifacts_path: /path/to/compiled/artifacts\n        summary:\n          total: 66\n          by_type:\n            CT: 25\n            CS: 7\n            CC: 3\n- case_id: emit_large_array\n  expected_outcome: SUCCESS\n  bindings:\n    value:\n    - id: 0\n      value: item_0\n    - id: 1\n      value: item_1\n    - id: 2\n      value: item_2\n    - id: 3\n      value: item_3\n    - id: 4\n      value: item_4\n  expected:\n    result:\n    - id: 0\n      value: item_0\n    - id: 1\n      value: item_1\n    - id: 2\n      value: item_2\n    - id: 3\n      value: item_3\n    - id: 4\n      value: item_4\n- case_id: emit_unicode_strings\n  expected_outcome: SUCCESS\n  bindings:\n    value:\n      greeting: \u4f60\u597d\u4e16\u754c\n      emoji: \ud83d\udd25 \ud83d\ude80 \u2705\n      math: \u03c0 \u2248 3.14159\n      currency: \u20ac100 \u2260 $100\n  expected:\n    result:\n      greeting: \u4f60\u597d\u4e16\u754c\n      emoji: \ud83d\udd25 \ud83d\ude80 \u2705\n      math: \u03c0 \u2248 3.14159\n      currency: \u20ac100 \u2260 $100\n```\n\n## Intent\n\nValidates terminal emit operation for transform pipelines.\n\nTests cover:\n- Primitive types (string, integer, boolean, null)\n- Complex objects (nested structures)\n- Arrays (primitive and complex)\n- Large payloads\n- Empty structures\n- Mixed type arrays\n\n**Note:** CT_EXEC_EMIT is a terminal operation that propagates the final result value unchanged.\n\n---\n",
+  "content_hash": "e72003fb807491478c3e451893e7acc941bb4b667cdb0519150f80e4657b0797",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_EXEC_EMIT_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "value": "Hello, World!"
+        },
+        "case_id": "emit_string",
+        "expected": {
+          "result": "Hello, World!"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": 42
+        },
+        "case_id": "emit_integer",
+        "expected": {
+          "result": 42
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": true
+        },
+        "case_id": "emit_boolean_true",
+        "expected": {
+          "result": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": false
+        },
+        "case_id": "emit_boolean_false",
+        "expected": {
+          "result": false
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": null
+        },
+        "case_id": "emit_null",
+        "expected": {
+          "result": null
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": {
+            "count": 10,
+            "enabled": true,
+            "status": "success"
+          }
+        },
+        "case_id": "emit_simple_object",
+        "expected": {
+          "result": {
+            "count": 10,
+            "enabled": true,
+            "status": "success"
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": {
+            "transaction": {
+              "amount": 100,
+              "from": {
+                "address": "0x1234...",
+                "balance": 500
+              },
+              "id": "tx_abc123",
+              "metadata": {
+                "confirmations": 12,
+                "gas": {
+                  "price": 20,
+                  "used": 21000
+                },
+                "timestamp": "2026-04-02T10:00:00Z"
+              },
+              "to": {
+                "address": "0x5678...",
+                "balance": 200
+              },
+              "type": "transfer"
+            }
+          }
+        },
+        "case_id": "emit_nested_object",
+        "expected": {
+          "result": {
+            "transaction": {
+              "amount": 100,
+              "from": {
+                "address": "0x1234...",
+                "balance": 500
+              },
+              "id": "tx_abc123",
+              "metadata": {
+                "confirmations": 12,
+                "gas": {
+                  "price": 20,
+                  "used": 21000
+                },
+                "timestamp": "2026-04-02T10:00:00Z"
+              },
+              "to": {
+                "address": "0x5678...",
+                "balance": 200
+              },
+              "type": "transfer"
+            }
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": [
+            "alice",
+            "bob",
+            "charlie",
+            "david"
+          ]
+        },
+        "case_id": "emit_array_primitives",
+        "expected": {
+          "result": [
+            "alice",
+            "bob",
+            "charlie",
+            "david"
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": [
+            {
+              "id": "user_1",
+              "name": "Alice",
+              "role": "admin"
+            },
+            {
+              "id": "user_2",
+              "name": "Bob",
+              "role": "user"
+            },
+            {
+              "id": "user_3",
+              "name": "Charlie",
+              "role": "moderator"
+            }
+          ]
+        },
+        "case_id": "emit_array_objects",
+        "expected": {
+          "result": [
+            {
+              "id": "user_1",
+              "name": "Alice",
+              "role": "admin"
+            },
+            {
+              "id": "user_2",
+              "name": "Bob",
+              "role": "user"
+            },
+            {
+              "id": "user_3",
+              "name": "Charlie",
+              "role": "moderator"
+            }
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": {}
+        },
+        "case_id": "emit_empty_object",
+        "expected": {
+          "result": {}
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": []
+        },
+        "case_id": "emit_empty_array",
+        "expected": {
+          "result": []
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": [
+            "string",
+            42,
+            true,
+            null,
+            {
+              "data": "value",
+              "id": "obj_1"
+            },
+            [
+              "nested",
+              "array"
+            ]
+          ]
+        },
+        "case_id": "emit_mixed_array",
+        "expected": {
+          "result": [
+            "string",
+            42,
+            true,
+            null,
+            {
+              "data": "value",
+              "id": "obj_1"
+            },
+            [
+              "nested",
+              "array"
+            ]
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": {
+            "duration_ms": 137,
+            "execution_id": "exec_20260402_100000",
+            "outputs": {
+              "artifacts_path": "/path/to/compiled/artifacts",
+              "summary": {
+                "by_type": {
+                  "CC": 3,
+                  "CS": 7,
+                  "CT": 25
+                },
+                "total": 66
+              }
+            },
+            "phases": {
+              "discover": {
+                "artifacts": 66,
+                "status": "COMPLETED"
+              },
+              "materialize": {
+                "status": "COMPLETED",
+                "written": 66
+              },
+              "validate": {
+                "errors": 0,
+                "status": "COMPLETED"
+              }
+            },
+            "status": "SUCCESS",
+            "workflow_id": "wf_build_platform_v0"
+          }
+        },
+        "case_id": "emit_workflow_result",
+        "expected": {
+          "result": {
+            "duration_ms": 137,
+            "execution_id": "exec_20260402_100000",
+            "outputs": {
+              "artifacts_path": "/path/to/compiled/artifacts",
+              "summary": {
+                "by_type": {
+                  "CC": 3,
+                  "CS": 7,
+                  "CT": 25
+                },
+                "total": 66
+              }
+            },
+            "phases": {
+              "discover": {
+                "artifacts": 66,
+                "status": "COMPLETED"
+              },
+              "materialize": {
+                "status": "COMPLETED",
+                "written": 66
+              },
+              "validate": {
+                "errors": 0,
+                "status": "COMPLETED"
+              }
+            },
+            "status": "SUCCESS",
+            "workflow_id": "wf_build_platform_v0"
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": [
+            {
+              "id": 0,
+              "value": "item_0"
+            },
+            {
+              "id": 1,
+              "value": "item_1"
+            },
+            {
+              "id": 2,
+              "value": "item_2"
+            },
+            {
+              "id": 3,
+              "value": "item_3"
+            },
+            {
+              "id": 4,
+              "value": "item_4"
+            }
+          ]
+        },
+        "case_id": "emit_large_array",
+        "expected": {
+          "result": [
+            {
+              "id": 0,
+              "value": "item_0"
+            },
+            {
+              "id": 1,
+              "value": "item_1"
+            },
+            {
+              "id": 2,
+              "value": "item_2"
+            },
+            {
+              "id": 3,
+              "value": "item_3"
+            },
+            {
+              "id": 4,
+              "value": "item_4"
+            }
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": {
+            "currency": "\u20ac100 \u2260 $100",
+            "emoji": "\ud83d\udd25 \ud83d\ude80 \u2705",
+            "greeting": "\u4f60\u597d\u4e16\u754c",
+            "math": "\u03c0 \u2248 3.14159"
+          }
+        },
+        "case_id": "emit_unicode_strings",
+        "expected": {
+          "result": {
+            "currency": "\u20ac100 \u2260 $100",
+            "emoji": "\ud83d\udd25 \ud83d\ude80 \u2705",
+            "greeting": "\u4f60\u597d\u4e16\u754c",
+            "math": "\u03c0 \u2248 3.14159"
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_EXEC_EMIT_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_EXEC_EMIT_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "capability_transforms::CT_EXEC_EMIT_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

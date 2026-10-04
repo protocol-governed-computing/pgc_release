@@ -1,0 +1,41 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: ai_licensing\ntarget: ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0\ncases:\n- case_id: eligible_once_trained\n  expected_outcome: SUCCESS\n  bindings:\n    training_completed: true\n  expected:\n    training_eligible: true\n- case_id: refuses_untrained\n  expected_outcome: VIOLATION\n  bindings:\n    training_completed: false\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "b7af5d9de0f36f6dcc0e4e2f939b3da23e340b1f0a781319452de65f7ae58bde",
+  "fqdn_id": "ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "training_completed": true
+        },
+        "case_id": "eligible_once_trained",
+        "expected": {
+          "training_eligible": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "training_completed": false
+        },
+        "case_id": "refuses_untrained",
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "ai_licensing",
+    "fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
+    "version": "V0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

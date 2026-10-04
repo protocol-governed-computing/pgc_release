@@ -1,0 +1,882 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_CHOOSE_PERMITTED_TOKEN_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_TOKEN_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: model_response\ntarget: causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0\ncases:\n- case_id: stops_an_account_number_split_across_tokens\n  expected_outcome: SUCCESS\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n      position: 1\n      text: Account 8765\n      finished: false\n      limit: 3\n    candidates:\n    - token: '4321'\n      likelihood: 0.7\n    - token: ' is'\n      likelihood: 0.2\n  expected:\n    text: Account 8765 is\n    finished: false\n    stopped_by: none\n    within_length: true\n    step:\n      position: 2\n      candidates:\n      - token: '4321'\n        likelihood: 0.7\n      - token: ' is'\n        likelihood: 0.2\n      chosen: ' is'\n      stopped:\n      - token: '4321'\n        rule: another_customers_account_number\n      stopped_by: none\n      finished: false\n      within_length: true\n- case_id: writes_the_customers_own_account_across_tokens\n  expected_outcome: SUCCESS\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n      position: 1\n      text: Account 1234\n      finished: false\n      limit: 3\n    candidates:\n    - token: '5678'\n      likelihood: 0.8\n  expected:\n    text: Account 12345678\n    stopped_by: none\n    step:\n      position: 2\n      candidates:\n      - token: '5678'\n        likelihood: 0.8\n      chosen: '5678'\n      stopped: []\n      stopped_by: none\n      finished: false\n      within_length: true\n    finished: false\n    within_length: true\n- case_id: names_the_rule_when_no_permitted_token_remains\n  expected_outcome: SUCCESS\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n      position: 0\n      text: ''\n      finished: false\n      limit: 3\n    candidates:\n    - token: '87654321'\n      likelihood: 0.9\n  expected:\n    text: ''\n    stopped_by: another_customers_account_number\n    finished: false\n    step:\n      position: 1\n      candidates:\n      - token: '87654321'\n        likelihood: 0.9\n      chosen: null\n      stopped:\n      - token: '87654321'\n        rule: another_customers_account_number\n      stopped_by: another_customers_account_number\n      finished: false\n      within_length: true\n    within_length: true\n- case_id: passes_the_permitted_length_unfinished\n  expected_outcome: SUCCESS\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n      position: 3\n      text: Your balance is\n      finished: false\n      limit: 3\n    candidates:\n    - token: ' today'\n      likelihood: 0.9\n  expected:\n    text: Your balance is today\n    within_length: false\n    finished: false\n    step:\n      position: 4\n      candidates:\n      - token: ' today'\n        likelihood: 0.9\n      chosen: ' today'\n      stopped: []\n      stopped_by: none\n      finished: false\n      within_length: false\n    stopped_by: none\n- case_id: finishes_on_the_end_of_the_response\n  expected_outcome: SUCCESS\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n      position: 2\n      text: Your balance\n      finished: false\n      limit: 3\n    candidates:\n    - token: <end>\n      likelihood: 0.9\n  expected:\n    text: Your balance\n    finished: true\n    within_length: true\n    step:\n      position: 3\n      candidates:\n      - token: <end>\n        likelihood: 0.9\n      chosen: <end>\n      stopped: []\n      stopped_by: none\n      finished: true\n      within_length: true\n    stopped_by: none\n- case_id: judges_a_lookalike_digit_as_the_digit\n  expected_outcome: SUCCESS\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n      position: 2\n      text: Spouse account 8765432\n      finished: false\n      limit: 3\n    candidates:\n    - token: \u2081\n      likelihood: 0.8\n    - token: .\n      likelihood: 0.1\n  expected:\n    text: Spouse account 8765432.\n    stopped_by: none\n    step:\n      position: 3\n      candidates:\n      - token: \u2081\n        likelihood: 0.8\n      - token: .\n        likelihood: 0.1\n      chosen: .\n      stopped:\n      - token: \u2081\n        rule: another_customers_account_number\n      stopped_by: none\n      finished: false\n      within_length: true\n    finished: false\n    within_length: true\n- case_id: does_not_begin_a_forbidden_number_the_model_read\n  expected_outcome: SUCCESS\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n      position: 2\n      text: 'Spouse account '\n      finished: false\n      limit: 3\n    candidates:\n    - token: '8'\n      likelihood: 0.8\n    - token: withheld\n      likelihood: 0.1\n  expected:\n    text: Spouse account withheld\n    stopped_by: none\n    step:\n      position: 3\n      candidates:\n      - token: '8'\n        likelihood: 0.8\n      - token: withheld\n        likelihood: 0.1\n      chosen: withheld\n      stopped:\n      - token: '8'\n        rule: another_customers_account_number\n      stopped_by: none\n      finished: false\n      within_length: true\n    finished: false\n    within_length: true\n- case_id: begins_a_number_the_model_read_that_is_permitted\n  expected_outcome: SUCCESS\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n      position: 2\n      text: 'Balance '\n      finished: false\n      limit: 3\n    candidates:\n    - token: '4'\n      likelihood: 0.8\n  expected:\n    text: Balance 4\n    stopped_by: none\n    step:\n      position: 3\n      candidates:\n      - token: '4'\n        likelihood: 0.8\n      chosen: '4'\n      stopped: []\n      stopped_by: none\n      finished: false\n      within_length: true\n    finished: false\n    within_length: true\n- case_id: grounded_writes_a_number_it_read\n  expected_outcome: SUCCESS\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: true\n        maximum_response_length: 3\n        longest_response: 5\n      position: 2\n      text: Balance 4\n      finished: false\n      limit: 3\n    candidates:\n    - token: '9'\n      likelihood: 0.8\n    - token: '0'\n      likelihood: 0.1\n  expected:\n    text: Balance 40\n    stopped_by: none\n    step:\n      position: 3\n      candidates:\n      - token: '9'\n        likelihood: 0.8\n      - token: '0'\n        likelihood: 0.1\n      chosen: '0'\n      stopped:\n      - token: '9'\n        rule: numbers_from_the_reading\n      stopped_by: none\n      finished: false\n      within_length: true\n    finished: false\n    within_length: true\n- case_id: grounded_does_not_change_a_value_it_read\n  expected_outcome: SUCCESS\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: true\n        maximum_response_length: 3\n        longest_response: 5\n      position: 2\n      text: Balance 4\n      finished: false\n      limit: 3\n    candidates:\n    - token: ' dollars'\n      likelihood: 0.8\n    - token: <end>\n      likelihood: 0.1\n  expected:\n    text: Balance 4\n    stopped_by: numbers_from_the_reading\n    step:\n      position: 3\n      candidates:\n      - token: ' dollars'\n        likelihood: 0.8\n      - token: <end>\n        likelihood: 0.1\n      chosen: null\n      stopped:\n      - token: ' dollars'\n        rule: numbers_from_the_reading\n      - token: <end>\n        rule: numbers_from_the_reading\n      stopped_by: numbers_from_the_reading\n      finished: false\n      within_length: true\n    finished: false\n    within_length: true\n- case_id: ungrounded_writes_a_number_it_did_not_read\n  expected_outcome: SUCCESS\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n      position: 2\n      text: 'Balance '\n      finished: false\n      limit: 3\n    candidates:\n    - token: '9'\n      likelihood: 0.8\n  expected:\n    text: Balance 9\n    stopped_by: none\n    step:\n      position: 3\n      candidates:\n      - token: '9'\n        likelihood: 0.8\n      chosen: '9'\n      stopped: []\n      stopped_by: none\n      finished: false\n      within_length: true\n    finished: false\n    within_length: true\n- case_id: refuses_an_offer_for_a_complete_response\n  expected_outcome: VIOLATION\n  bindings:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n      position: 2\n      text: Your balance\n      finished: true\n      limit: 3\n    candidates:\n    - token: ' more'\n      likelihood: 0.9\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "33017067f0268d6a31cd0bac95794744cd80b42075e40626915aa91d3dabf727",
+  "fqdn_id": "causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.7,
+              "token": "4321"
+            },
+            {
+              "likelihood": 0.2,
+              "token": " is"
+            }
+          ],
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": false,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 1,
+            "text": "Account 8765"
+          }
+        },
+        "case_id": "stops_an_account_number_split_across_tokens",
+        "expected": {
+          "finished": false,
+          "step": {
+            "candidates": [
+              {
+                "likelihood": 0.7,
+                "token": "4321"
+              },
+              {
+                "likelihood": 0.2,
+                "token": " is"
+              }
+            ],
+            "chosen": " is",
+            "finished": false,
+            "position": 2,
+            "stopped": [
+              {
+                "rule": "another_customers_account_number",
+                "token": "4321"
+              }
+            ],
+            "stopped_by": "none",
+            "within_length": true
+          },
+          "stopped_by": "none",
+          "text": "Account 8765 is",
+          "within_length": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.8,
+              "token": "5678"
+            }
+          ],
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": false,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 1,
+            "text": "Account 1234"
+          }
+        },
+        "case_id": "writes_the_customers_own_account_across_tokens",
+        "expected": {
+          "finished": false,
+          "step": {
+            "candidates": [
+              {
+                "likelihood": 0.8,
+                "token": "5678"
+              }
+            ],
+            "chosen": "5678",
+            "finished": false,
+            "position": 2,
+            "stopped": [],
+            "stopped_by": "none",
+            "within_length": true
+          },
+          "stopped_by": "none",
+          "text": "Account 12345678",
+          "within_length": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.9,
+              "token": "87654321"
+            }
+          ],
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": false,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 0,
+            "text": ""
+          }
+        },
+        "case_id": "names_the_rule_when_no_permitted_token_remains",
+        "expected": {
+          "finished": false,
+          "step": {
+            "candidates": [
+              {
+                "likelihood": 0.9,
+                "token": "87654321"
+              }
+            ],
+            "chosen": null,
+            "finished": false,
+            "position": 1,
+            "stopped": [
+              {
+                "rule": "another_customers_account_number",
+                "token": "87654321"
+              }
+            ],
+            "stopped_by": "another_customers_account_number",
+            "within_length": true
+          },
+          "stopped_by": "another_customers_account_number",
+          "text": "",
+          "within_length": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.9,
+              "token": " today"
+            }
+          ],
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": false,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 3,
+            "text": "Your balance is"
+          }
+        },
+        "case_id": "passes_the_permitted_length_unfinished",
+        "expected": {
+          "finished": false,
+          "step": {
+            "candidates": [
+              {
+                "likelihood": 0.9,
+                "token": " today"
+              }
+            ],
+            "chosen": " today",
+            "finished": false,
+            "position": 4,
+            "stopped": [],
+            "stopped_by": "none",
+            "within_length": false
+          },
+          "stopped_by": "none",
+          "text": "Your balance is today",
+          "within_length": false
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.9,
+              "token": "<end>"
+            }
+          ],
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": false,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 2,
+            "text": "Your balance"
+          }
+        },
+        "case_id": "finishes_on_the_end_of_the_response",
+        "expected": {
+          "finished": true,
+          "step": {
+            "candidates": [
+              {
+                "likelihood": 0.9,
+                "token": "<end>"
+              }
+            ],
+            "chosen": "<end>",
+            "finished": true,
+            "position": 3,
+            "stopped": [],
+            "stopped_by": "none",
+            "within_length": true
+          },
+          "stopped_by": "none",
+          "text": "Your balance",
+          "within_length": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.8,
+              "token": "\u2081"
+            },
+            {
+              "likelihood": 0.1,
+              "token": "."
+            }
+          ],
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": false,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 2,
+            "text": "Spouse account 8765432"
+          }
+        },
+        "case_id": "judges_a_lookalike_digit_as_the_digit",
+        "expected": {
+          "finished": false,
+          "step": {
+            "candidates": [
+              {
+                "likelihood": 0.8,
+                "token": "\u2081"
+              },
+              {
+                "likelihood": 0.1,
+                "token": "."
+              }
+            ],
+            "chosen": ".",
+            "finished": false,
+            "position": 3,
+            "stopped": [
+              {
+                "rule": "another_customers_account_number",
+                "token": "\u2081"
+              }
+            ],
+            "stopped_by": "none",
+            "within_length": true
+          },
+          "stopped_by": "none",
+          "text": "Spouse account 8765432.",
+          "within_length": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.8,
+              "token": "8"
+            },
+            {
+              "likelihood": 0.1,
+              "token": "withheld"
+            }
+          ],
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": false,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 2,
+            "text": "Spouse account "
+          }
+        },
+        "case_id": "does_not_begin_a_forbidden_number_the_model_read",
+        "expected": {
+          "finished": false,
+          "step": {
+            "candidates": [
+              {
+                "likelihood": 0.8,
+                "token": "8"
+              },
+              {
+                "likelihood": 0.1,
+                "token": "withheld"
+              }
+            ],
+            "chosen": "withheld",
+            "finished": false,
+            "position": 3,
+            "stopped": [
+              {
+                "rule": "another_customers_account_number",
+                "token": "8"
+              }
+            ],
+            "stopped_by": "none",
+            "within_length": true
+          },
+          "stopped_by": "none",
+          "text": "Spouse account withheld",
+          "within_length": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.8,
+              "token": "4"
+            }
+          ],
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": false,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 2,
+            "text": "Balance "
+          }
+        },
+        "case_id": "begins_a_number_the_model_read_that_is_permitted",
+        "expected": {
+          "finished": false,
+          "step": {
+            "candidates": [
+              {
+                "likelihood": 0.8,
+                "token": "4"
+              }
+            ],
+            "chosen": "4",
+            "finished": false,
+            "position": 3,
+            "stopped": [],
+            "stopped_by": "none",
+            "within_length": true
+          },
+          "stopped_by": "none",
+          "text": "Balance 4",
+          "within_length": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.8,
+              "token": "9"
+            },
+            {
+              "likelihood": 0.1,
+              "token": "0"
+            }
+          ],
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": true,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 2,
+            "text": "Balance 4"
+          }
+        },
+        "case_id": "grounded_writes_a_number_it_read",
+        "expected": {
+          "finished": false,
+          "step": {
+            "candidates": [
+              {
+                "likelihood": 0.8,
+                "token": "9"
+              },
+              {
+                "likelihood": 0.1,
+                "token": "0"
+              }
+            ],
+            "chosen": "0",
+            "finished": false,
+            "position": 3,
+            "stopped": [
+              {
+                "rule": "numbers_from_the_reading",
+                "token": "9"
+              }
+            ],
+            "stopped_by": "none",
+            "within_length": true
+          },
+          "stopped_by": "none",
+          "text": "Balance 40",
+          "within_length": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.8,
+              "token": " dollars"
+            },
+            {
+              "likelihood": 0.1,
+              "token": "<end>"
+            }
+          ],
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": true,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 2,
+            "text": "Balance 4"
+          }
+        },
+        "case_id": "grounded_does_not_change_a_value_it_read",
+        "expected": {
+          "finished": false,
+          "step": {
+            "candidates": [
+              {
+                "likelihood": 0.8,
+                "token": " dollars"
+              },
+              {
+                "likelihood": 0.1,
+                "token": "<end>"
+              }
+            ],
+            "chosen": null,
+            "finished": false,
+            "position": 3,
+            "stopped": [
+              {
+                "rule": "numbers_from_the_reading",
+                "token": " dollars"
+              },
+              {
+                "rule": "numbers_from_the_reading",
+                "token": "<end>"
+              }
+            ],
+            "stopped_by": "numbers_from_the_reading",
+            "within_length": true
+          },
+          "stopped_by": "numbers_from_the_reading",
+          "text": "Balance 4",
+          "within_length": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.8,
+              "token": "9"
+            }
+          ],
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": false,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 2,
+            "text": "Balance "
+          }
+        },
+        "case_id": "ungrounded_writes_a_number_it_did_not_read",
+        "expected": {
+          "finished": false,
+          "step": {
+            "candidates": [
+              {
+                "likelihood": 0.8,
+                "token": "9"
+              }
+            ],
+            "chosen": "9",
+            "finished": false,
+            "position": 3,
+            "stopped": [],
+            "stopped_by": "none",
+            "within_length": true
+          },
+          "stopped_by": "none",
+          "text": "Balance 9",
+          "within_length": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "candidates": [
+            {
+              "likelihood": 0.9,
+              "token": " more"
+            }
+          ],
+          "state": {
+            "finished": true,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": false,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 2,
+            "text": "Your balance"
+          }
+        },
+        "case_id": "refuses_an_offer_for_a_complete_response",
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "model_response",
+    "fqdn": "causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+    "version": "V0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

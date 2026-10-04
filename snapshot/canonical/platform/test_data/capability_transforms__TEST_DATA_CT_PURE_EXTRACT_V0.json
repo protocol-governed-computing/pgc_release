@@ -1,0 +1,76 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_EXTRACT_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_EXTRACT_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_EXTRACT_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_EXTRACT_V0\ntarget: capability_transforms::CT_PURE_EXTRACT_V0\ncases:\n- case_id: extract_top_level_field\n  expected_outcome: SUCCESS\n  bindings:\n    from:\n      name: Alice\n      age: 30\n    path: name\n    type: string\n  expected:\n    result: Alice\n- case_id: extract_nested_field\n  expected_outcome: SUCCESS\n  bindings:\n    from:\n      user:\n        id: '123'\n        role: admin\n    path: user.role\n    type: string\n  expected:\n    result: admin\n- case_id: extract_nested_numeric\n  expected_outcome: SUCCESS\n  bindings:\n    from:\n      config:\n        timeout: 30\n        retries: 3\n    path: config.timeout\n    type: number\n  expected:\n    result: 30\n```\n\n## Intent\n\nTest JSONPath-based value extraction from structured data.\n",
+  "content_hash": "a41ea39c573644c637a47e97cea719b6ba0f83ba4dc75647ac6d2ba69ec28a82",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_EXTRACT_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "from": {
+            "age": 30,
+            "name": "Alice"
+          },
+          "path": "name",
+          "type": "string"
+        },
+        "case_id": "extract_top_level_field",
+        "expected": {
+          "result": "Alice"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "from": {
+            "user": {
+              "id": "123",
+              "role": "admin"
+            }
+          },
+          "path": "user.role",
+          "type": "string"
+        },
+        "case_id": "extract_nested_field",
+        "expected": {
+          "result": "admin"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "from": {
+            "config": {
+              "retries": 3,
+              "timeout": 30
+            }
+          },
+          "path": "config.timeout",
+          "type": "number"
+        },
+        "case_id": "extract_nested_numeric",
+        "expected": {
+          "result": 30
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_EXTRACT_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_EXTRACT_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "capability_transforms::CT_PURE_EXTRACT_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

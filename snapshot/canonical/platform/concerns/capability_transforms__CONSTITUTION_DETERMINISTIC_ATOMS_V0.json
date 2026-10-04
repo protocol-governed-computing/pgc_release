@@ -1,0 +1,37 @@
+{
+  "artifact_code": "CONSTITUTION_DETERMINISTIC_ATOMS_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_DETERMINISTIC_ATOMS_V0\n\n## Machine\n```yaml\nfqdn: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_model: compiler_enforced\n  governs:\n  - CT\nrules:\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_ATOM_OUTPUT_PURITY_V0\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_ATOM_OUTPUT_PURITY_V0\n```\n\n---\n\n## 1. Purpose\n\nThis constitution governs the **deterministic atom**: a Capability Transform (CT) that names one\nimplementation and whose result is determined by its inputs. Deterministic atoms are the primary\nmechanism for logic in the system.\n\nIt governs such atoms only. Each transform is governed by exactly one of three constitutions,\ndecided by its kind and declared purity (`capability_transforms::INVARIANT_CT_GOVERNED_BY_KIND_V0`):\n\n| Transform | Constitution |\n|---|---|\n| an atom whose result is determined by its inputs | this one |\n| an atom declaring `ct_purity: ct_impure` | `capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0` |\n| a molecule, composed of steps and naming no implementation | `capability_transforms::CONSTITUTION_MOLECULES_V0` |\n\nThe rules common to every transform \u2014 surface closure, closure by derivation and implementation\nadmissibility \u2014 are carried by `capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V1`.\n\n---\n\n## 2. Core Principles\n\n- **Purity:** A deterministic atom MUST be a pure function.\n- **Determinism:** Given the same input, a deterministic atom MUST always produce the same output.\n- **Side-Effect Free:** No transform, of any kind, has side effects. Side effects are delegated to Capability Side Effects (CS).\n- **Explicit Inputs/Outputs:** All data required by a transform must be passed as explicit inputs. All results must be returned as explicit outputs.\n\n---\n\n## 3. Required Fields\n\n- `artifact_code`: Unique identifier for the transform.\n- `version`: Version of the transform.\n- `governed_by`: `capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0`.\n- `core`: Metadata and description.\n- `inputs`: Definition of input parameters.\n- `outputs`: Definition of output parameters.\n- `logic`: Reference to the implementation.\n\n---\n\n## How it is checked\n- CT implementations must be discoverable.\n- Input and output types must match the capability contract.\n- Implementation must adhere to the purity principle.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs deterministic atoms \u2014 purity, determinism, and explicit IO\nrules:\n- rule_id: CT_PURITY\n  constraint: a deterministic atom MUST be a pure function; same inputs MUST always produce same outputs\n- rule_id: CT_NO_SIDE_EFFECTS\n  constraint: CT MUST NOT produce side effects; side effects belong in CS\n- rule_id: CT_IMPLEMENTATION_DECLARED\n  constraint: atom CT MUST declare machine.implementation with non-empty module and callable\n- rule_id: CT_EXPLICIT_IO\n  constraint: all CT inputs and outputs MUST be explicitly declared\n```\n",
+  "content_hash": "81582c6951bfc69b839148b92ecde388492e77b233f7f9729cb396b70777bd41",
+  "fqdn_id": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_model": "compiler_enforced",
+      "governs": [
+        "CT"
+      ]
+    },
+    "fqdn": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "rules": [
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_ATOM_OUTPUT_PURITY_V0"
+      },
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_ATOM_OUTPUT_PURITY_V0"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

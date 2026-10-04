@@ -1,0 +1,89 @@
+{
+  "artifact_code": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "allowed_set": "in.permitted_customers",
+          "value": "in.customer_id"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "inputs": [
+          "allowed_set",
+          "value"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "is_member"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Confirm the requester may act for the customer the user prompt is for\n  inputs:\n    customer_id:\n      type: string\n      required: true\n    permitted_customers:\n      type: array\n      required: true\n  outputs:\n    acts_for_customer:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: confirm_acts_for_customer\n    transform: capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\n    inputs:\n      value: $.inputs.customer_id\n      allowed_set: $.inputs.permitted_customers\n    outputs:\n      acts_for_customer: $.capability_result.is_member\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nConfirm the requester may act for the customer the user prompt is for\n",
+  "content_hash": "86ea7773a41212114c6e6a24213448ec66bb124616d46896edeb4f23116c2783",
+  "fqdn_id": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "customer_id": {
+          "required": true,
+          "type": "string"
+        },
+        "permitted_customers": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "acts_for_customer": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "allowed_set": "$.inputs.permitted_customers",
+            "value": "$.inputs.customer_id"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "acts_for_customer": "$.capability_result.is_member"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "confirm_acts_for_customer",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Confirm the requester may act for the customer the user prompt is for"
+    },
+    "fqdn": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
+  "version": "0"
+}

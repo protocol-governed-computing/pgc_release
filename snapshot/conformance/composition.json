@@ -1,42 +1,43 @@
 {
   "conformance_version": "v0",
-  "assembler_version": "16",
+  "assembler_version": "17",
   "phase": "composition_conformance",
-  "snapshot_id": "d92b447fd39eaf926bb2f4330f9efbb19d744ecfbc3fe9a214ae52945918905d",
+  "snapshot_id": "f8356d9c8938aea16ab7850d7bda964d8d16c42c64e5db9056d5fe58040ec1d0",
   "domains": [
     "ai_governance",
     "blockchain",
     "book_library_mgmt",
+    "causal_language_model",
     "inspection",
     "platform",
     "transformation",
     "workload"
   ],
-  "artifacts_examined": 410,
+  "artifacts_examined": 515,
   "rules_evaluated": 5,
   "status": "PASSED",
   "findings": [
     {
-      "invariant": "cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V0",
-      "subject": "active cryptographic trust contract",
+      "invariant": "cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V1",
+      "subject": "cryptographic trust structure carried by the composition",
       "rule": "exactly_one",
       "status": "PASSED",
       "examined": 1,
       "matched": [
-        "cryptographic_trust::STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V0"
+        "cryptographic_trust::STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V1"
       ],
-      "message": "exactly_one: found 1 active cryptographic trust contract"
+      "message": "exactly_one: found 1 cryptographic trust structure carried by the composition"
     },
     {
-      "invariant": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0",
-      "subject": "active execution placement contract",
+      "invariant": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V1",
+      "subject": "execution placement structure carried by the composition",
       "rule": "exactly_one",
       "status": "PASSED",
       "examined": 1,
       "matched": [
-        "execution_placement::STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V0"
+        "execution_placement::STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V1"
       ],
-      "message": "exactly_one: found 1 active execution placement contract"
+      "message": "exactly_one: found 1 execution placement structure carried by the composition"
     },
     {
       "invariant": "execution_scheduling::INVARIANT_EXECUTION_SCHEDULING_DECLARED_V0",
@@ -86,5 +87,5 @@
       "message": "at_least_one: found 15 composed inspection boundary contract"
     }
   ],
-  "checked_at": "2026-09-11T21:05:08Z"
+  "checked_at": "2026-10-04T01:14:13Z"
 }

@@ -1,6 +1,6 @@
 {
   "cs": {
-    "24": {
+    "25": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -189,7 +189,7 @@
     }
   },
   "ct": {
-    "85": {
+    "92": {
       "ct_ir": {
         "artifact_code": "CT_PURE_COLLATZ_STEP_V0",
         "atom_stream": [
@@ -202,7 +202,8 @@
               "callable": "execute",
               "module": "workloads.collatz.implementation.capability_transforms.atoms.ct_pure_collatz_step_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -221,7 +222,7 @@
         }
       }
     },
-    "86": {
+    "93": {
       "ct_ir": {
         "artifact_code": "CT_PURE_TERMINATION_CHECK_V0",
         "atom_stream": [
@@ -234,7 +235,8 @@
               "callable": "execute",
               "module": "workloads.collatz.implementation.capability_transforms.atoms.ct_pure_termination_check_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -259,8 +261,8 @@
   },
   "projection_class": "machine_projection",
   "rb_policy": {
-    "89": {
-      "24": {
+    "96": {
+      "25": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {

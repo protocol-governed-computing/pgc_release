@@ -5,8 +5,7 @@
     "steps": [
       {
         "bindings": {
-          "record": "in.edition_fields",
-          "schema": "in.edition_schema"
+          "record": "in.edition_fields"
         },
         "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
         "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
@@ -17,6 +16,20 @@
         "kind": "CT",
         "outputs": [
           "violations"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
         ]
       },
       {
@@ -51,8 +64,8 @@
       }
     ]
   },
-  "content": "# CC_REGISTER_ADDITIONAL_EDITION_V0\n\n## 1. Intent\n\nAssembles the edition record against a resolved work and writes it\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Assembles the edition record against a resolved work and writes it\n  inputs:\n    identity_key:\n      type: string\n      required: true\n    edition_fields:\n      type: object\n      required: true\n    edition_schema:\n      type: object\n      required: true\n  outputs:\n    edition_record:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: validate_edition_fields\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.edition_fields\n      schema: $.inputs.edition_schema\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: assemble_edition_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields: $.inputs.edition_fields\n    outputs:\n      edition_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_edition_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n      value: $.results.assemble_edition_record.edition_record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n",
-  "content_hash": "fa7c8e725ce57211c5c2672ebd06c7e8a5fed97ed3189ed56f0acdf5d0dc2b68",
+  "content": "# CC_REGISTER_ADDITIONAL_EDITION_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Assembles the edition record against a resolved work and writes it\n  inputs:\n    identity_key:\n      type: string\n      required: true\n    edition_fields:\n      type: object\n      required: true\n  outputs:\n    edition_record:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: validate_edition_fields\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.edition_fields\n      schema:\n        title:\n          required: true\n          type: string\n        author:\n          required: true\n          type: string\n        publication_year:\n          required: true\n          type: integer\n        subject:\n          required: true\n          type: array\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: refuse_incomplete_record\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        violations: $.results.validate_edition_fields.violations\n      rules:\n      - field: violations\n        op: eq\n        value: []\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: assemble_edition_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields: $.inputs.edition_fields\n    outputs:\n      edition_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_edition_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n      value: $.results.assemble_edition_record.edition_record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nAssembles the edition record against a resolved work and writes it\n",
+  "content_hash": "d10c7f0845e8855ceb5c48f168d7a315f1866207c60904fd638b8d158efe1f19",
   "fqdn_id": "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0",
   "frontmatter": {
     "artifact_kind": "CAPABILITY_CONTRACT",
@@ -61,10 +74,6 @@
     "core": {
       "inputs": {
         "edition_fields": {
-          "required": true,
-          "type": "object"
-        },
-        "edition_schema": {
           "required": true,
           "type": "object"
         },
@@ -83,7 +92,24 @@
         {
           "inputs": {
             "record": "$.inputs.edition_fields",
-            "schema": "$.inputs.edition_schema"
+            "schema": {
+              "author": {
+                "required": true,
+                "type": "string"
+              },
+              "publication_year": {
+                "required": true,
+                "type": "integer"
+              },
+              "subject": {
+                "required": true,
+                "type": "array"
+              },
+              "title": {
+                "required": true,
+                "type": "string"
+              }
+            }
           },
           "on_result": {
             "SUCCESS": "continue",
@@ -98,6 +124,33 @@
           ],
           "step": "validate_edition_fields",
           "transform": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "violations": "$.results.validate_edition_fields.violations"
+            },
+            "rules": [
+              {
+                "field": "violations",
+                "op": "eq",
+                "value": []
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "refuse_incomplete_record",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
         },
         {
           "inputs": {
@@ -160,6 +213,7 @@
   "references": [
     "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
     "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
     "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
   ],
   "version": "0"

@@ -1,8 +1,8 @@
 {
   "artifact_code": "CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
   "artifact_type": "CT",
-  "content": "# CT_PURE_CHECK_QUOTA_AVAILABLE_V0\n\n## 1. Intent\n\nCompare assigned license count against the declared cap. Pure comparison \u2014 the cap itself is a\ndeclared policy input, never read from storage by this transform.\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: ai_licensing\ncore:\n  summary: Evaluate whether license quota remains available under the declared cap\n  refusal: raises\n  description: |\n    Signals VIOLATION by raising CTExecutionError; the runtime maps any CT exception to\n    VIOLATION. A false predicate is never returned as a value \u2014 a plain return is SUCCESS\n    and would let the consuming pipeline continue past a failed gate.\n  inputs:\n    assigned_count:\n      type: integer\n      required: true\n      description: Number of licenses currently assigned\n    quota:\n      type: integer\n      required: true\n      description: Declared license cap\n  outputs:\n    quota_available:\n      type: boolean\n      required: true\n      description: True when at least one license remains under the cap\n    remaining:\n      type: integer\n      required: true\n      description: Licenses remaining under the cap, floored at zero\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_CHECK_QUOTA_AVAILABLE\n  implementation:\n    module: ai_governance.implementation.capability_transforms.atoms.ct_pure_check_quota_available_v0\n    callable: execute\n```\n",
-  "content_hash": "5596ea0e86833752ebcf42df034dca50d9b2b3acae3b58bc4a1b6b2abfa3aff6",
+  "content": "# CT_PURE_CHECK_QUOTA_AVAILABLE_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: ai_licensing\ncore:\n  summary: Evaluate whether license quota remains available under the declared cap\n  refusal: raises\n  inputs:\n    assigned_count:\n      type: integer\n      required: true\n      description: Number of licenses currently assigned\n    quota:\n      type: integer\n      required: true\n      description: Declared license cap\n  outputs:\n    quota_available:\n      type: boolean\n      required: true\n      description: True when at least one license remains under the cap\n    remaining:\n      type: integer\n      required: true\n      description: Licenses remaining under the cap, floored at zero\n  description: 'Signals VIOLATION by raising CTExecutionError; the runtime maps any CT exception to\n\n    VIOLATION. A false predicate is never returned as a value \u2014 a plain return is SUCCESS\n\n    and would let the consuming pipeline continue past a failed gate.\n\n    '\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_CHECK_QUOTA_AVAILABLE\n  implementation:\n    module: ai_governance.implementation.capability_transforms.atoms.ct_pure_check_quota_available_v0\n    callable: execute\n```\n\n---\n\n## Intent\n\nEvaluate whether license quota remains available under the declared cap\n",
+  "content_hash": "d884d858c172ca1684e15b4eb0a6411ca641d57c67b4f5d6dfa1c070cea02460",
   "ct_ir": {
     "artifact_code": "CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
     "atom_stream": [
@@ -16,7 +16,8 @@
           "callable": "execute",
           "module": "ai_governance.implementation.capability_transforms.atoms.ct_pure_check_quota_available_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -77,7 +78,7 @@
       "summary": "Evaluate whether license quota remains available under the declared cap"
     },
     "fqdn": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",
@@ -92,7 +93,7 @@
   "layer_code": "AI_GOVERNANCE",
   "namespace": "ai_governance",
   "references": [
-    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
   ],
   "version": "0"
 }

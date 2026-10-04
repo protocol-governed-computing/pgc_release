@@ -1,0 +1,187 @@
+{
+  "artifact_code": "CS_EVIDENCE_EXPIRY_V0",
+  "artifact_type": "CS",
+  "content": "# CS_EVIDENCE_EXPIRY_V0\n\n## 1. Intent\n\nEnd the retention of evidence whose declared window has closed, and record that it was ended.\n\nRetention has a governed consequence: the period over which a determination can be established is\nthe period over which its evidence is retained. A platform that lets evidence lapse without a\ndeclared act has discarded evidence by omission \u2014 the determination becomes unestablishable and\nnothing says when, by what, or under which rule.\n\nThis capability makes that act declared. It does not decide *whether* evidence should expire; a\nprofile decides that, and this capability carries out what the profile declared.\n\n---\n\n## 2. Rationale\n\nA system that discards evidence has not made past determinations ungoverned \u2014 they were governed\nwhen they were made. It has made them **unestablishable**, and a claim about them can no longer be\nchecked. Whether that is acceptable is a profile's question.\n\nWhat is not a profile's question is whether the ending is an act. Expiry that happens by a cleanup\nscript, a log rotation, or a disk filling up is a governed consequence reached by an ungoverned\nroute. The window is declared here rather than supplied by the environment, so that a party reading\na sealed snapshot can read off that same snapshot how long its evidence lives. A window living\noutside the snapshot is one no signature over the snapshot covers.\n\n---\n\n## 3. Applicability & Non-Applicability\n\n### Valid Use Cases\n- Ending retention of evidence whose declared window has closed\n- Ending an attestation together with the evidence it attests to\n- Establishing, at any moment, what is within its window and what is past it\n\n### Invalid Use Cases\n- Deleting evidence that is still within its window \u2014 the window is the authority, not the caller\n- Deleting evidence to reclaim space, or on an operator's judgement\n- Deleting the record of a deletion (see \u00a76)\n- Shortening a window at execution time \u2014 the window is declared and changing it is a recompile\n\n---\n\n## 4. Side-Effect Category\n\n- **Category:** Retention\n- **Side-Effect Type:** persistent, subtractive\n- **Append Semantics:** NO\n- **Overwrite Semantics:** NO \u2014 this capability removes; it never rewrites\n\n---\n\n## 5. Where the window comes from\n\nThe window is declared in `configuration.retention_window_days` and is therefore part of what a\nsnapshot carries and a signature over that snapshot covers. It is not read from the environment, and\nthis capability has no operation that changes it.\n\nChanging the window is a change to the declarations: a recompile, a new snapshot identity, and a\ndeclared supersession. That is the cost of the window being checkable by a party who holds only the\nsnapshot.\n\n---\n\n## 6. Why the deletion record cannot expire\n\nThe record of an expiry is written through an append-only capability, which by its own declaration\nadmits no deletion at all. The exemption is therefore **structural rather than a rule**: no flag\ngrants it and no caller can clear it, because the store holding the record has no operation that\ncould remove one.\n\nWithout that, a platform reaches a state where evidence is absent and nothing distinguishes evidence\nthat was deleted under a declared window from evidence that was never written. The first is a\nplatform doing what it declared. The second is a platform that lost something. A party checking the\nevidence could not tell which, and the difference is exactly what retention is supposed to make\nanswerable.\n\n---\n\n## 7. Why an attestation ends with its subject\n\nAn attestation asserts something about a record. When the record is gone the attestation asserts\nsomething about nothing, while continuing to look like evidence and carrying a signature that still\nverifies.\n\nAn attestation is a claim rather than a proof, and retaining one after its subject leaves the\nplatform holding the most persuasive form of the thing a reader is most likely to mistake for the\nevidence itself. It ends with what it attests to.\n\n---\n\n## 8. Properties\n\n| Property | Value | Description |\n|----------|-------|-------------|\n| durability | persistent | What is removed does not return |\n| reversibility | none | Expiry has no inverse; this is the point, not a limitation |\n| determinism | conditional | Given the same store and the same instant, the same set expires |\n| authority | declared | The window governs; the caller supplies neither it nor an exception |\n\n---\n\n## Machine\n\n```yaml\nfqdn: capability_side_effects::CS_EVIDENCE_EXPIRY_V0\nartifact_kind: CAPABILITY_SIDE_EFFECT\nversion: v0\ngoverned_by: capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0\nauthority: pgc.platform\nconcern: capability_side_effects\ncore:\n  summary: Ends retention of evidence whose declared window has closed, and records that it ended\n  category: storage\n  policy:\n    operations:\n    - SURVEY\n    - EXPIRE\n  field_types:\n    store_path: string\n    as_of: string\n    window_days: integer\n    examined: integer\n    within_window: integer\n    past_window: integer\n    expired: integer\n    subjects: array\n    record_id: string\n    result_status: string\n  operations:\n    SURVEY:\n      summary: What is within its window and what is past it, removing nothing\n      handler: survey\n      effect: read\n      input:\n      - store_path\n      - as_of\n      output:\n      - result_status\n      - examined\n      - within_window\n      - past_window\n      - subjects\n      idempotent: true\n      result_status_values:\n      - SUCCESS\n      - VIOLATION\n      - BACKEND_ERROR\n    EXPIRE:\n      summary: End retention of evidence past its window, with its attestations, and record it\n      handler: expire\n      effect: write\n      input:\n      - store_path\n      - as_of\n      output:\n      - result_status\n      - examined\n      - expired\n      - subjects\n      - record_id\n      idempotent: false\n      result_status_values:\n      - SUCCESS\n      - VIOLATION\n      - BACKEND_ERROR\n  configuration:\n    retention_window_days:\n      type: integer\n      required: true\n      description: >\n        Days a determination's evidence is retained, measured from the close of the trace it\n        belongs to. Declared here so a party holding the snapshot can read the rule governing\n        its evidence off the snapshot itself. No operation changes it.\n    deletion_record_stream:\n      type: string\n      required: true\n      description: >\n        Append-only stream the record of each expiry is written to. Append-only by requirement,\n        not by convention \u2014 a store able to delete could delete this.\n  failure_modes:\n  - 'VIOLATION: as_of was not supplied by the governed clock, or precedes a record it would expire'\n  - 'VIOLATION: the deletion-record stream admits deletion, so a record written there could be removed'\n  - 'BACKEND_ERROR: the evidence store or the deletion-record stream could not be reached'\n  architecture:\n    role: Retention authority over evidence\n    purpose: Makes the end of retention a declared act rather than an absence nobody recorded\n    bindings:\n      as_of: instant the window is measured against, from the governed clock and not a host\n      subjects: identities whose evidence was examined or ended\n  use_cases:\n  - 'Retention: end evidence past a declared window, leaving a record that says so'\n  - 'Audit: establish what is still within its window without changing anything'\nimplementation:\n  module: capability_side_effects.implementation.CS_EVIDENCE_EXPIRY_V0.runtime\n  callable: EvidenceExpiryRuntime\nextensions:\n  cs_kind: retention\n```\n",
+  "content_hash": "0ef798a3bcc9b514ed266b7e7f8178aedc04d44ca48660632705e6bb73f99876",
+  "cs_ir": {
+    "cs_metadata": {
+      "capability": {
+        "supported_operation_specs": [
+          "SURVEY",
+          "EXPIRE"
+        ]
+      },
+      "operations": {
+        "operations": {
+          "EXPIRE": {
+            "effect": "write",
+            "handler": "expire",
+            "idempotent": false,
+            "input": [
+              "store_path",
+              "as_of"
+            ],
+            "output": [
+              "result_status",
+              "examined",
+              "expired",
+              "subjects",
+              "record_id"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "End retention of evidence past its window, with its attestations, and record it"
+          },
+          "SURVEY": {
+            "effect": "read",
+            "handler": "survey",
+            "idempotent": true,
+            "input": [
+              "store_path",
+              "as_of"
+            ],
+            "output": [
+              "result_status",
+              "examined",
+              "within_window",
+              "past_window",
+              "subjects"
+            ],
+            "result_status_values": [
+              "SUCCESS",
+              "VIOLATION",
+              "BACKEND_ERROR"
+            ],
+            "summary": "What is within its window and what is past it, removing nothing"
+          }
+        }
+      }
+    },
+    "handler_ref": {
+      "callable": "EvidenceExpiryRuntime",
+      "module": "capability_side_effects.implementation.CS_EVIDENCE_EXPIRY_V0.runtime"
+    }
+  },
+  "fqdn_id": "capability_side_effects::CS_EVIDENCE_EXPIRY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_SIDE_EFFECT",
+    "authority": "pgc.platform",
+    "concern": "capability_side_effects",
+    "core": {
+      "architecture": {
+        "bindings": {
+          "as_of": "instant the window is measured against, from the governed clock and not a host",
+          "subjects": "identities whose evidence was examined or ended"
+        },
+        "purpose": "Makes the end of retention a declared act rather than an absence nobody recorded",
+        "role": "Retention authority over evidence"
+      },
+      "category": "storage",
+      "configuration": {
+        "deletion_record_stream": {
+          "description": "Append-only stream the record of each expiry is written to. Append-only by requirement, not by convention \u2014 a store able to delete could delete this.\n",
+          "required": true,
+          "type": "string"
+        },
+        "retention_window_days": {
+          "description": "Days a determination's evidence is retained, measured from the close of the trace it belongs to. Declared here so a party holding the snapshot can read the rule governing its evidence off the snapshot itself. No operation changes it.\n",
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "failure_modes": [
+        "VIOLATION: as_of was not supplied by the governed clock, or precedes a record it would expire",
+        "VIOLATION: the deletion-record stream admits deletion, so a record written there could be removed",
+        "BACKEND_ERROR: the evidence store or the deletion-record stream could not be reached"
+      ],
+      "field_types": {
+        "as_of": "string",
+        "examined": "integer",
+        "expired": "integer",
+        "past_window": "integer",
+        "record_id": "string",
+        "result_status": "string",
+        "store_path": "string",
+        "subjects": "array",
+        "window_days": "integer",
+        "within_window": "integer"
+      },
+      "operations": {
+        "EXPIRE": {
+          "effect": "write",
+          "handler": "expire",
+          "idempotent": false,
+          "input": [
+            "store_path",
+            "as_of"
+          ],
+          "output": [
+            "result_status",
+            "examined",
+            "expired",
+            "subjects",
+            "record_id"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "End retention of evidence past its window, with its attestations, and record it"
+        },
+        "SURVEY": {
+          "effect": "read",
+          "handler": "survey",
+          "idempotent": true,
+          "input": [
+            "store_path",
+            "as_of"
+          ],
+          "output": [
+            "result_status",
+            "examined",
+            "within_window",
+            "past_window",
+            "subjects"
+          ],
+          "result_status_values": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "summary": "What is within its window and what is past it, removing nothing"
+        }
+      },
+      "policy": {
+        "operations": [
+          "SURVEY",
+          "EXPIRE"
+        ]
+      },
+      "summary": "Ends retention of evidence whose declared window has closed, and records that it ended",
+      "use_cases": [
+        "Retention: end evidence past a declared window, leaving a record that says so",
+        "Audit: establish what is still within its window without changing anything"
+      ]
+    },
+    "extensions": {
+      "cs_kind": "retention"
+    },
+    "fqdn": "capability_side_effects::CS_EVIDENCE_EXPIRY_V0",
+    "governed_by": "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0",
+    "implementation": {
+      "callable": "EvidenceExpiryRuntime",
+      "module": "capability_side_effects.implementation.CS_EVIDENCE_EXPIRY_V0.runtime"
+    },
+    "version": "v0"
+  },
+  "layer_code": "REUSABLE_SIDE_EFFECTS",
+  "namespace": "capability_side_effects",
+  "references": [
+    "capability_side_effects::CONSTITUTION_CAPABILITY_SIDE_EFFECTS_V0"
+  ],
+  "version": "0"
+}

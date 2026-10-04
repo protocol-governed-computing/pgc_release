@@ -1,0 +1,161 @@
+{
+  "carried": [
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
+  "cases": [
+    {
+      "case": "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0::offers_candidates",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0::assembles_what_fits",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0::refuses_reading_too_long",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::begins_a_number_the_model_read_that_is_permitted",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::does_not_begin_a_forbidden_number_the_model_read",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::finishes_on_the_end_of_the_response",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::grounded_does_not_change_a_value_it_read",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::grounded_writes_a_number_it_read",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::judges_a_lookalike_digit_as_the_digit",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::names_the_rule_when_no_permitted_token_remains",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::passes_the_permitted_length_unfinished",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::refuses_an_offer_for_a_complete_response",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::stops_an_account_number_split_across_tokens",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::ungrounded_writes_a_number_it_did_not_read",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::writes_the_customers_own_account_across_tokens",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0::draws_an_adventurous_word_from_the_seed",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0::finishes_on_the_end_of_the_response",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0::names_the_rule_when_no_permitted_word_remains",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0::stops_an_account_number_written_across_two_words",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0::stops_another_customers_account_and_continues",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0::writes_the_customers_own_account_across_two_words",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0::admits_kind_within_ceiling",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0::refuses_kind_above_ceiling",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0::forms_key_from_description_and_fingerprint",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0::refuses_blank_fingerprint",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0::adds_the_account_rule_and_positions",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0::reduces_the_trail_to_the_response_as_built",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0::refuses_a_closed_request",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0::refuses_a_request_never_admitted",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_WRITE_NEXT_WORD_V0::writes_one_permitted_word_from_a_recorded_offer",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_WRITE_RESPONSE_V0::stops_unfinished_at_the_longest_response",
+      "passed": true
+    },
+    {
+      "case": "causal_language_model::CT_WRITE_RESPONSE_V0::writes_a_finished_response_and_offers_nothing_after",
+      "passed": true
+    }
+  ],
+  "counts": {
+    "cases": 32,
+    "cases_failed": 0,
+    "proven": 10,
+    "refused": 0,
+    "unproven": 0
+  },
+  "domain": "causal_language_model",
+  "proven": [
+    "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0",
+    "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0",
+    "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+    "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+    "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0",
+    "causal_language_model::CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
+    "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0",
+    "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0",
+    "causal_language_model::CT_WRITE_NEXT_WORD_V0",
+    "causal_language_model::CT_WRITE_RESPONSE_V0"
+  ],
+  "refused": [],
+  "unproven": []
+}

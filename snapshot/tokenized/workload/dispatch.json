@@ -1,6 +1,6 @@
 {
   "admission": {
-    "88": {
+    "95": {
       "numbers": {
         "required": true,
         "type": "array"
@@ -8,28 +8,28 @@
     }
   },
   "bindings": {
-    "94": {
+    "101": {
       "CC_COMPUTE_SEQUENCES_V0": {
         "numbers": "$.payload.numbers"
       },
       "CC_STORE_RESULTS_V0": {
-        "all_terminate": "$.results.84.all_terminate",
-        "non_terminating": "$.results.84.non_terminating",
-        "sequences": "$.results.82.sequences"
+        "all_terminate": "$.results.91.all_terminate",
+        "non_terminating": "$.results.91.non_terminating",
+        "sequences": "$.results.89.sequences"
       },
       "CC_VERIFY_TERMINATION_V0": {
-        "sequences": "$.results.82.sequences"
+        "sequences": "$.results.89.sequences"
       }
     }
   },
   "emits": {
-    "94": {
-      "83": {
+    "101": {
+      "CC_STORE_RESULTS_V0": {
         "SUCCESS": [
           "workload::EV_CONJECTURE_EVALUATED_V0"
         ]
       },
-      "84": {
+      "CC_VERIFY_TERMINATION_V0": {
         "VIOLATION": [
           "workload::EV_CONJECTURE_EVALUATED_V0"
         ]
@@ -37,17 +37,17 @@
     }
   },
   "entry": {
-    "94": {
+    "101": {
       "actor": "workload::AC_REFERENCE_ACTOR_V0",
-      "rb": 89,
-      "start": 88,
+      "rb": 96,
+      "start": 95,
       "start_key": "IN_COLLATZ_INPUT_VALIDATED_V0"
     }
   },
   "pipeline": {
-    "82": [
+    "89": [
       {
-        "addr": 85,
+        "addr": 92,
         "inputs": {
           "numbers": "$.inputs.numbers"
         },
@@ -62,9 +62,9 @@
         "step_id": "compute_sequences"
       }
     ],
-    "83": [
+    "90": [
       {
-        "addr": 24,
+        "addr": 25,
         "inputs": {
           "__store__": "COLLATZ_RESULTS",
           "key": "collatz_results",
@@ -86,9 +86,9 @@
         "step_id": "store_results"
       }
     ],
-    "84": [
+    "91": [
       {
-        "addr": 86,
+        "addr": 93,
         "inputs": {
           "sequences": "$.inputs.sequences"
         },
@@ -107,36 +107,36 @@
   },
   "projection_class": "machine_projection",
   "routing": {
-    "94": {
-      "82": {
+    "101": {
+      "CC_COMPUTE_SEQUENCES_V0": {
         "24579": {
-          "addr": 84,
+          "addr": 91,
           "key": "CC_VERIFY_TERMINATION_V0"
         }
       },
-      "84": {
+      "CC_VERIFY_TERMINATION_V0": {
         "24579": {
-          "addr": 83,
+          "addr": 90,
           "key": "CC_STORE_RESULTS_V0"
         }
       },
-      "88": {
+      "IN_COLLATZ_INPUT_VALIDATED_V0": {
         "24576": {
-          "addr": 82,
+          "addr": 89,
           "key": "CC_COMPUTE_SEQUENCES_V0"
         }
       }
     }
   },
   "terminal": {
-    "94": {
-      "82": {
+    "101": {
+      "CC_COMPUTE_SEQUENCES_V0": {
         "24580": {
           "exit": "EXIT_ERROR",
           "type": "EXIT"
         }
       },
-      "83": {
+      "CC_STORE_RESULTS_V0": {
         "24577": {
           "exit": "EXIT_ERROR",
           "type": "EXIT"
@@ -150,13 +150,13 @@
           "type": "EXIT"
         }
       },
-      "84": {
+      "CC_VERIFY_TERMINATION_V0": {
         "24580": {
           "exit": "EXIT_CONJECTURE_VIOLATED",
           "type": "EXIT"
         }
       },
-      "88": {
+      "IN_COLLATZ_INPUT_VALIDATED_V0": {
         "24578": {
           "exit": "EXIT_REJECTED",
           "type": "EXIT"

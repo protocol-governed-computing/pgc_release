@@ -1,0 +1,44 @@
+{
+  "artifact_code": "INVARIANT_EXECUTION_PLACEMENT_DECLARED_V1",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_EXECUTION_PLACEMENT_DECLARED_V1\n\n## Machine\n\n```yaml\nfqdn: execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V1\nartifact_kind: INVARIANT\nversion: V1\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: execution_placement\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  enforcement:\n    scope: ALL_ARTIFACTS\n  applies_to_kinds:\n  - SNAPSHOT\n  composition_check:\n    rule: exactly_one\n    subject: execution placement structure carried by the composition\n    selector:\n      namespace: execution_placement\n      artifact_type: STRUCTURE\n      artifact_code_prefix: STRUCTURE_EXECUTION_PLACEMENT_\n```\n\n---\n\n## Purpose\n\nA composition carries exactly one execution placement structure, and therefore records exactly one\nplacement mode.\n\n## Where the selection is checked, and why not here\n\nA composition check is a cardinality rule over the artifacts a snapshot carries. It cannot reach a\nbuild configuration, and should not: what a build named is a fact about the build, established when\nthe build ran, and a snapshot that carried every available mode so an invariant could pick between\nthem would be carrying permissions it was not granted.\n\nSo the selection is enforced where it happens. The compiler reads the mode its build configuration\nnames, refuses where none or more than one is named or where the named mode is unauthorized\n(`CONSTITUTION_EXECUTION_PLACEMENT_V1` \u00a73), and materializes **only the structure it selected**.\n\nThis invariant is what makes that mechanical rather than trusted: whatever the compiler intended,\na composition reaching acceptance with two placement structures, or none, is refused. The surface\nmay declare every authorized mode; the composition may carry one.\n\n## What this refuses\n\n- **No placement structure.** A composition with no placement records no mode, and an arrangement\n  nobody declared is not a default.\n- **More than one.** Two structures are two answers to where execution runs. Under V0 this meant a\n  malformed surface; under V1 it means a compiler that materialized more than it selected, which is\n  the more dangerous of the two because the configuration would look correct.\n\n## What changed from V0\n\nV0 selected by `status: active` on the artifact, which made placement a property of the surface's\ninventory. One surface serving two compositions cannot hold one answer for both, and the check would\nrefuse the surface rather than the build \u2014 reporting as a defect in what was declared what is\nactually a question about what is being built.\n\nV1 drops the `status` clause entirely. Availability is declared by the surface, activity is named by\na build, and this checks the result. The difference is visible in what each version refuses: V0\nrefused a surface declaring two modes, V1 refuses a composition carrying two.\n",
+  "content_hash": "7510ce6b2d2f5f4ebabd316e130df2b58612df97000e5f3bdb20e73f3933d6c9",
+  "fqdn_id": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V1",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "SNAPSHOT"
+      ],
+      "composition_check": {
+        "rule": "exactly_one",
+        "selector": {
+          "artifact_code_prefix": "STRUCTURE_EXECUTION_PLACEMENT_",
+          "artifact_type": "STRUCTURE",
+          "namespace": "execution_placement"
+        },
+        "subject": "execution placement structure carried by the composition"
+      },
+      "enforcement": {
+        "scope": "ALL_ARTIFACTS"
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "execution_placement",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V1",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V1"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "execution_placement",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "1"
+}

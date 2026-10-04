@@ -1,0 +1,95 @@
+{
+  "artifact_code": "CC_CONFIRM_HOSTED_READING_FITS_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CONFIRM_HOSTED_READING_FITS_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CC_CONFIRM_HOSTED_READING_FITS_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Refuse an offer whose reported reading size exceeds the model's capacity\n  inputs:\n    reported_reading_size:\n      type: integer\n      required: true\n    reading_capacity:\n      type: integer\n      required: true\n  outputs:\n    reading_fits:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: confirm_reported_reading_fits\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        reported_reading_size: $.inputs.reported_reading_size\n      rules:\n      - field: reported_reading_size\n        op: lte\n        value: $.inputs.reading_capacity\n    outputs:\n      reading_fits: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuse an offer whose reported reading size exceeds the model's capacity\n",
+  "content_hash": "0b34faa13c5817ce4ae2664bbfee763e2efcc90b0a03bdf6e847c1890278ca9d",
+  "fqdn_id": "causal_language_model::CC_CONFIRM_HOSTED_READING_FITS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "reading_capacity": {
+          "required": true,
+          "type": "integer"
+        },
+        "reported_reading_size": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "outputs": {
+        "reading_fits": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "parameters": {
+              "reported_reading_size": "$.inputs.reported_reading_size"
+            },
+            "rules": [
+              {
+                "field": "reported_reading_size",
+                "op": "lte",
+                "value": "$.inputs.reading_capacity"
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "reading_fits": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "confirm_reported_reading_fits",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse an offer whose reported reading size exceeds the model's capacity"
+    },
+    "fqdn": "causal_language_model::CC_CONFIRM_HOSTED_READING_FITS_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+  ],
+  "version": "0"
+}

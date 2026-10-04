@@ -1,0 +1,176 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_READ_HOSTED_STATE_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_READ_HOSTED_STATE_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::TEST_DATA_CT_PURE_READ_HOSTED_STATE_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: model_response\ntarget: causal_language_model::CT_PURE_READ_HOSTED_STATE_V0\ncases:\n- case_id: reduces_the_trail_to_the_response_as_built\n  expected_outcome: SUCCESS\n  bindings:\n    entries:\n    - sequence_number: 1\n      record:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n    - sequence_number: 2\n      record:\n        outcome: STEP\n        chosen: Your\n    - sequence_number: 3\n      record:\n        outcome: STEP\n        chosen: ' balance'\n  expected:\n    state:\n      opening:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n      position: 2\n      text: Your balance\n      finished: false\n      limit: 3\n- case_id: refuses_a_request_never_admitted\n  expected_outcome: VIOLATION\n  bindings:\n    entries:\n    - sequence_number: 1\n      record:\n        outcome: REFUSED\n        reason: model_not_registered\n- case_id: refuses_a_closed_request\n  expected_outcome: VIOLATION\n  bindings:\n    entries:\n    - sequence_number: 1\n      record:\n        outcome: WRITING\n        fingerprint: fp-host\n        reading:\n          system_prompt: Answer only from the supporting material.\n          question: What is my balance?\n          supporting_material: Account 12345678 balance 40. Spouse account 87654321.\n        rules_in_force:\n          forbidden:\n          - rule: no_guarantees\n            pattern: \\bguaranteed\\b\n          - rule: another_customers_account_number\n            pattern: '[0-9](?:[ -]?[0-9]){7}'\n            except:\n            - '12345678'\n          freedom: 0\n          seed: 7\n        ground_numbers: false\n        maximum_response_length: 3\n        longest_response: 5\n    - sequence_number: 2\n      record:\n        outcome: RESPONDED\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "dea47bfab1eff72fc3cc2de0ad56ef2d5a88fc004124a8536865b7dd83cf1332",
+  "fqdn_id": "causal_language_model::TEST_DATA_CT_PURE_READ_HOSTED_STATE_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "entries": [
+            {
+              "record": {
+                "fingerprint": "fp-host",
+                "ground_numbers": false,
+                "longest_response": 5,
+                "maximum_response_length": 3,
+                "outcome": "WRITING",
+                "reading": {
+                  "question": "What is my balance?",
+                  "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                  "system_prompt": "Answer only from the supporting material."
+                },
+                "rules_in_force": {
+                  "forbidden": [
+                    {
+                      "pattern": "\\bguaranteed\\b",
+                      "rule": "no_guarantees"
+                    },
+                    {
+                      "except": [
+                        "12345678"
+                      ],
+                      "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                      "rule": "another_customers_account_number"
+                    }
+                  ],
+                  "freedom": 0,
+                  "seed": 7
+                }
+              },
+              "sequence_number": 1
+            },
+            {
+              "record": {
+                "chosen": "Your",
+                "outcome": "STEP"
+              },
+              "sequence_number": 2
+            },
+            {
+              "record": {
+                "chosen": " balance",
+                "outcome": "STEP"
+              },
+              "sequence_number": 3
+            }
+          ]
+        },
+        "case_id": "reduces_the_trail_to_the_response_as_built",
+        "expected": {
+          "state": {
+            "finished": false,
+            "limit": 3,
+            "opening": {
+              "fingerprint": "fp-host",
+              "ground_numbers": false,
+              "longest_response": 5,
+              "maximum_response_length": 3,
+              "outcome": "WRITING",
+              "reading": {
+                "question": "What is my balance?",
+                "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                "system_prompt": "Answer only from the supporting material."
+              },
+              "rules_in_force": {
+                "forbidden": [
+                  {
+                    "pattern": "\\bguaranteed\\b",
+                    "rule": "no_guarantees"
+                  },
+                  {
+                    "except": [
+                      "12345678"
+                    ],
+                    "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                    "rule": "another_customers_account_number"
+                  }
+                ],
+                "freedom": 0,
+                "seed": 7
+              }
+            },
+            "position": 2,
+            "text": "Your balance"
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "entries": [
+            {
+              "record": {
+                "outcome": "REFUSED",
+                "reason": "model_not_registered"
+              },
+              "sequence_number": 1
+            }
+          ]
+        },
+        "case_id": "refuses_a_request_never_admitted",
+        "expected_outcome": "VIOLATION"
+      },
+      {
+        "bindings": {
+          "entries": [
+            {
+              "record": {
+                "fingerprint": "fp-host",
+                "ground_numbers": false,
+                "longest_response": 5,
+                "maximum_response_length": 3,
+                "outcome": "WRITING",
+                "reading": {
+                  "question": "What is my balance?",
+                  "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+                  "system_prompt": "Answer only from the supporting material."
+                },
+                "rules_in_force": {
+                  "forbidden": [
+                    {
+                      "pattern": "\\bguaranteed\\b",
+                      "rule": "no_guarantees"
+                    },
+                    {
+                      "except": [
+                        "12345678"
+                      ],
+                      "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                      "rule": "another_customers_account_number"
+                    }
+                  ],
+                  "freedom": 0,
+                  "seed": 7
+                }
+              },
+              "sequence_number": 1
+            },
+            {
+              "record": {
+                "outcome": "RESPONDED"
+              },
+              "sequence_number": 2
+            }
+          ]
+        },
+        "case_id": "refuses_a_closed_request",
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "model_response",
+    "fqdn": "causal_language_model::TEST_DATA_CT_PURE_READ_HOSTED_STATE_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0",
+    "version": "V0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

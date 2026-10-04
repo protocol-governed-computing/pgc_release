@@ -1,0 +1,42 @@
+{
+  "artifact_code": "EV_MODEL_REGISTERED_V0",
+  "artifact_type": "EV",
+  "content": "# EV_MODEL_REGISTERED_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::EV_MODEL_REGISTERED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: The moment the business records a model\n  description: The moment the business records a model\n  subdomain: model_response\n  schema:\n    identity_key:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n\n---\n\n## Intent\n\nThe moment the business records a model\n",
+  "content_hash": "cf6698a649b0b66438e2fac0774977a9cfdd9d222f97b4ec6acb10e4920fb4fa",
+  "fqdn_id": "causal_language_model::EV_MODEL_REGISTERED_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "description": "The moment the business records a model",
+      "schema": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "model_response",
+      "summary": "The moment the business records a model"
+    },
+    "fqdn": "causal_language_model::EV_MODEL_REGISTERED_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

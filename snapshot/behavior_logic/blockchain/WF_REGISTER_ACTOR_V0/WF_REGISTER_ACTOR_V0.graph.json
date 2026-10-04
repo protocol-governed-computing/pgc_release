@@ -151,7 +151,13 @@
       "input_bindings": {
         "type": "wf_boundary",
         "bindings": {
-          "actor_fields": "IN.actor_record",
+          "actor_fields": {
+            "contact_address": "$.payload.actor_record.contact_address",
+            "currency_preference": "$.payload.actor_record.currency_preference",
+            "language": "$.payload.actor_record.language",
+            "name": "$.payload.actor_record.name",
+            "state": "UNVERIFIED"
+          },
           "contact_address": "CC_CLAIM_CONTACT_ADDRESS_V0.result"
         }
       }
@@ -166,8 +172,7 @@
         "steps": [
           {
             "bindings": {
-              "record": "in.actor_record",
-              "schema": "in.registration_schema"
+              "record": "in.actor_record"
             },
             "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
             "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
@@ -179,14 +184,27 @@
             "outputs": [
               "violations"
             ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
           }
         ]
       },
       "input_bindings": {
         "type": "wf_boundary",
         "bindings": {
-          "actor_record": "IN.actor_record",
-          "registration_schema": "IN.registration_schema"
+          "actor_record": "IN.actor_record"
         }
       }
     },

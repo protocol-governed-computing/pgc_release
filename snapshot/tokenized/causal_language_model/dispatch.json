@@ -1,0 +1,2848 @@
+{
+  "admission": {
+    "83": {
+      "account_numbers": {
+        "required": true,
+        "type": "array"
+      },
+      "customer_id": {
+        "required": true,
+        "type": "string"
+      },
+      "identity_key": {
+        "required": true,
+        "type": "string"
+      },
+      "kind": {
+        "required": true,
+        "type": "string"
+      },
+      "permitted_customers": {
+        "required": true,
+        "type": "array"
+      },
+      "question": {
+        "required": true,
+        "type": "string"
+      },
+      "requester_id": {
+        "required": true,
+        "type": "string"
+      },
+      "seed": {
+        "required": true,
+        "type": "integer"
+      },
+      "supporting_material": {
+        "required": true,
+        "type": "string"
+      },
+      "user_prompt_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "84": {
+      "candidates": {
+        "required": true,
+        "type": "array"
+      },
+      "fingerprint": {
+        "required": true,
+        "type": "string"
+      },
+      "host_id": {
+        "required": true,
+        "type": "string"
+      },
+      "reported_reading_size": {
+        "required": true,
+        "type": "integer"
+      },
+      "user_prompt_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "85": {
+      "ceiling": {
+        "required": true,
+        "type": "string"
+      },
+      "identity_key": {
+        "required": true,
+        "type": "string"
+      },
+      "response_rules": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      },
+      "system_prompt": {
+        "required": true,
+        "type": "string"
+      },
+      "time_in_service_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "86": {
+      "description": {
+        "required": true,
+        "type": "object"
+      },
+      "fingerprint": {
+        "required": true,
+        "type": "string"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "87": {
+      "host_id": {
+        "required": true,
+        "type": "string"
+      },
+      "user_prompt_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "88": {
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      },
+      "user_prompt_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "89": {
+      "account_numbers": {
+        "required": true,
+        "type": "array"
+      },
+      "customer_id": {
+        "required": true,
+        "type": "string"
+      },
+      "identity_key": {
+        "required": true,
+        "type": "string"
+      },
+      "kind": {
+        "required": true,
+        "type": "string"
+      },
+      "permitted_customers": {
+        "required": true,
+        "type": "array"
+      },
+      "question": {
+        "required": true,
+        "type": "string"
+      },
+      "requester_id": {
+        "required": true,
+        "type": "string"
+      },
+      "seed": {
+        "required": true,
+        "type": "integer"
+      },
+      "supporting_material": {
+        "required": true,
+        "type": "string"
+      },
+      "user_prompt_id": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "90": {
+      "identity_key": {
+        "required": true,
+        "type": "string"
+      },
+      "staff_credentials": {
+        "required": true,
+        "type": "object"
+      },
+      "staff_id": {
+        "required": true,
+        "type": "string"
+      }
+    }
+  },
+  "bindings": {
+    "105": {
+      "CC_ADMIT_USER_PROMPT_V0": {
+        "identity_key": "$.payload.identity_key"
+      },
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0": {
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "CC_CONFIRM_READING_FITS_V0": {
+        "question": "$.payload.question",
+        "reading_capacity": "$.results.47.model_record.description.reading_capacity",
+        "supporting_material": "$.payload.supporting_material",
+        "system_prompt": "$.results.58.time_in_service.system_prompt"
+      },
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0": {
+        "customer_id": "$.payload.customer_id",
+        "permitted_customers": "$.payload.permitted_customers"
+      },
+      "CC_CONFIRM_WITHIN_CEILING_V0": {
+        "kind": "$.payload.kind",
+        "time_in_service_id": "$.results.47.model_record.time_in_service_id"
+      },
+      "CC_OPEN_HOSTED_RECORD_V0": {
+        "account_numbers": "$.payload.account_numbers",
+        "customer_id": "$.payload.customer_id",
+        "fingerprint": "$.results.47.model_record.fingerprint",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "maximum_response_length": "$.results.47.model_record.description.maximum_response_length",
+        "question": "$.payload.question",
+        "reading": "$.results.55.reading",
+        "reading_capacity": "$.results.47.model_record.description.reading_capacity",
+        "requester_id": "$.payload.requester_id",
+        "response_rules": "$.results.58.time_in_service.response_rules",
+        "seed": "$.payload.seed",
+        "supporting_material": "$.payload.supporting_material",
+        "time_in_service_id": "$.results.47.model_record.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_ABOVE_CEILING": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reason": "kind_above_sensitivity_ceiling",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "time_in_service_id": "$.results.47.model_record.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_NOT_IN_SERVICE": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reason": "model_not_in_service",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_NOT_PERMITTED": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reason": "requester_not_permitted_for_customer",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_NOT_REGISTERED": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reason": "model_not_registered",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_TOO_LONG_TO_READ": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reason": "reading_longer_than_model_can_read",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "time_in_service_id": "$.results.47.model_record.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      }
+    },
+    "106": {
+      "CC_CHOOSE_PERMITTED_TOKEN_V0": {
+        "candidates": "$.payload.candidates",
+        "state": "$.results.61.state"
+      },
+      "CC_CONFIRM_HOSTED_READING_FITS_V0": {
+        "reading_capacity": "$.results.61.state.opening.reading_capacity",
+        "reported_reading_size": "$.payload.reported_reading_size"
+      },
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0": {
+        "admitted_fingerprint": "$.results.61.state.opening.fingerprint",
+        "offered_fingerprint": "$.payload.fingerprint"
+      },
+      "CC_READ_HOSTED_STATE_V0": {
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "CONFIRM_NO_RULE_STOPPED": {
+        "release_facts": {
+          "stopped_by": "$.results.49.stopped_by"
+        },
+        "release_rules": [
+          {
+            "field": "stopped_by",
+            "op": "eq",
+            "value": "none"
+          }
+        ]
+      },
+      "CONFIRM_WITHIN_LENGTH": {
+        "release_facts": {
+          "within_length": "$.results.49.within_length"
+        },
+        "release_rules": [
+          {
+            "field": "within_length",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "RECORD_REFUSED_BY_RULE": {
+        "customer_id": "$.results.61.state.opening.customer_id",
+        "identity_key": "$.results.61.state.opening.identity_key",
+        "kind": "$.results.61.state.opening.kind",
+        "outcome": "REFUSED",
+        "question": "$.results.61.state.opening.question",
+        "reading": "$.results.61.state.opening.reading",
+        "reason": "$.results.49.stopped_by",
+        "requester_id": "$.results.61.state.opening.requester_id",
+        "rules_in_force": "$.results.61.state.opening.rules_in_force",
+        "supporting_material": "$.results.61.state.opening.supporting_material",
+        "time_in_service_id": "$.results.61.state.opening.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_OTHER_MODEL": {
+        "customer_id": "$.results.61.state.opening.customer_id",
+        "identity_key": "$.results.61.state.opening.identity_key",
+        "kind": "$.results.61.state.opening.kind",
+        "outcome": "REFUSED",
+        "question": "$.results.61.state.opening.question",
+        "reading": "$.results.61.state.opening.reading",
+        "reason": "offer_for_another_model",
+        "requester_id": "$.results.61.state.opening.requester_id",
+        "rules_in_force": "$.results.61.state.opening.rules_in_force",
+        "supporting_material": "$.results.61.state.opening.supporting_material",
+        "time_in_service_id": "$.results.61.state.opening.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_TOO_LONG_TO_READ": {
+        "customer_id": "$.results.61.state.opening.customer_id",
+        "identity_key": "$.results.61.state.opening.identity_key",
+        "kind": "$.results.61.state.opening.kind",
+        "outcome": "REFUSED",
+        "question": "$.results.61.state.opening.question",
+        "reading": "$.results.61.state.opening.reading",
+        "reason": "reading_longer_than_model_can_read",
+        "requester_id": "$.results.61.state.opening.requester_id",
+        "rules_in_force": "$.results.61.state.opening.rules_in_force",
+        "supporting_material": "$.results.61.state.opening.supporting_material",
+        "time_in_service_id": "$.results.61.state.opening.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_UNFINISHED": {
+        "customer_id": "$.results.61.state.opening.customer_id",
+        "identity_key": "$.results.61.state.opening.identity_key",
+        "kind": "$.results.61.state.opening.kind",
+        "outcome": "REFUSED",
+        "question": "$.results.61.state.opening.question",
+        "reading": "$.results.61.state.opening.reading",
+        "reason": "longest_response_reached",
+        "requester_id": "$.results.61.state.opening.requester_id",
+        "rules_in_force": "$.results.61.state.opening.rules_in_force",
+        "supporting_material": "$.results.61.state.opening.supporting_material",
+        "time_in_service_id": "$.results.61.state.opening.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_STEP": {
+        "fingerprint": "$.payload.fingerprint",
+        "host_id": "$.payload.host_id",
+        "reported_reading_size": "$.payload.reported_reading_size",
+        "step": "$.results.49.step",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_STOPPED_STEP": {
+        "fingerprint": "$.payload.fingerprint",
+        "host_id": "$.payload.host_id",
+        "reported_reading_size": "$.payload.reported_reading_size",
+        "step": "$.results.49.step",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_UNFINISHED_STEP": {
+        "fingerprint": "$.payload.fingerprint",
+        "host_id": "$.payload.host_id",
+        "reported_reading_size": "$.payload.reported_reading_size",
+        "step": "$.results.49.step",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      }
+    },
+    "107": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "operation": "PLACE_MODEL_IN_SERVICE",
+        "record": {
+          "operation": "PLACE_MODEL_IN_SERVICE",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.identity_key"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": [
+          {
+            "field": "role",
+            "op": "eq",
+            "value": "model_staff"
+          }
+        ],
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_PLACE_MODEL_IN_SERVICE_V0": {
+        "ceiling": "$.payload.ceiling",
+        "identity_key": "$.payload.identity_key",
+        "response_rules": "$.payload.response_rules",
+        "system_prompt": "$.payload.system_prompt",
+        "time_in_service_id": "$.payload.time_in_service_id"
+      }
+    },
+    "108": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "operation": "REGISTER_MODEL",
+        "record": {
+          "operation": "REGISTER_MODEL",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.results.50.identity_key"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CLAIM_MODEL_IDENTITY_V0": {
+        "description": "$.payload.description",
+        "description_schema": {
+          "reading_capacity": {
+            "required": true,
+            "type": "integer"
+          }
+        },
+        "fingerprint": "$.payload.fingerprint"
+      },
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": [
+          {
+            "field": "role",
+            "op": "eq",
+            "value": "model_staff"
+          }
+        ],
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_REGISTER_MODEL_V0": {
+        "description": "$.payload.description",
+        "fingerprint": "$.payload.fingerprint",
+        "identity_key": "$.results.50.identity_key"
+      }
+    },
+    "109": {
+      "CC_READ_HOSTED_STATE_V0": {
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "CONFIRM_FINISHED": {
+        "release_facts": {
+          "finished": "$.results.61.state.finished"
+        },
+        "release_rules": [
+          {
+            "field": "finished",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "RECORD_RESPONDED": {
+        "customer_id": "$.results.61.state.opening.customer_id",
+        "identity_key": "$.results.61.state.opening.identity_key",
+        "kind": "$.results.61.state.opening.kind",
+        "outcome": "RESPONDED",
+        "question": "$.results.61.state.opening.question",
+        "reading": "$.results.61.state.opening.reading",
+        "requester_id": "$.results.61.state.opening.requester_id",
+        "response": "$.results.61.state.text",
+        "rules_in_force": "$.results.61.state.opening.rules_in_force",
+        "supporting_material": "$.results.61.state.opening.supporting_material",
+        "time_in_service_id": "$.results.61.state.opening.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      }
+    },
+    "110": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "operation": "RETRIEVE_USER_PROMPT_RECORD",
+        "record": {
+          "operation": "RETRIEVE_USER_PROMPT_RECORD",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.user_prompt_id"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": [
+          {
+            "field": "role",
+            "op": "eq",
+            "value": "model_staff"
+          }
+        ],
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_RETRIEVE_USER_PROMPT_RECORD_V0": {
+        "user_prompt_id": "$.payload.user_prompt_id"
+      }
+    },
+    "111": {
+      "CC_ADMIT_USER_PROMPT_V0": {
+        "identity_key": "$.payload.identity_key"
+      },
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0": {
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "CC_CONFIRM_READING_FITS_V0": {
+        "question": "$.payload.question",
+        "reading_capacity": "$.results.47.model_record.description.reading_capacity",
+        "supporting_material": "$.payload.supporting_material",
+        "system_prompt": "$.results.58.time_in_service.system_prompt"
+      },
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0": {
+        "customer_id": "$.payload.customer_id",
+        "permitted_customers": "$.payload.permitted_customers"
+      },
+      "CC_CONFIRM_WITHIN_CEILING_V0": {
+        "kind": "$.payload.kind",
+        "time_in_service_id": "$.results.47.model_record.time_in_service_id"
+      },
+      "CC_WRITE_MODEL_RESPONSE_V0": {
+        "account_numbers": "$.payload.account_numbers",
+        "reading": "$.results.55.reading",
+        "response_rules": "$.results.58.time_in_service.response_rules",
+        "seed": "$.payload.seed"
+      },
+      "CONFIRM_FINISHED": {
+        "release_facts": {
+          "finished": "$.results.67.written_response.finished"
+        },
+        "release_rules": [
+          {
+            "field": "finished",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "CONFIRM_NO_RULE_STOPPED": {
+        "release_facts": {
+          "stopped_by": "$.results.67.written_response.stopped_by"
+        },
+        "release_rules": [
+          {
+            "field": "stopped_by",
+            "op": "eq",
+            "value": "none"
+          }
+        ]
+      },
+      "RECORD_FAILED_BEFORE_READING": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "FAILED",
+        "question": "$.payload.question",
+        "reason": "store_failed_before_the_model_read",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_FAILED_WHILE_WRITING": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "FAILED",
+        "question": "$.payload.question",
+        "reading": "$.results.55.reading",
+        "reason": "writing_failed",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "time_in_service_id": "$.results.47.model_record.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_ABOVE_CEILING": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reason": "kind_above_sensitivity_ceiling",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "time_in_service_id": "$.results.47.model_record.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_BY_RULE": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reading": "$.results.55.reading",
+        "reason": "$.results.67.written_response.stopped_by",
+        "requester_id": "$.payload.requester_id",
+        "rules_in_force": "$.results.67.rules_in_force",
+        "supporting_material": "$.payload.supporting_material",
+        "time_in_service_id": "$.results.47.model_record.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_NOT_IN_SERVICE": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reason": "model_not_in_service",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_NOT_PERMITTED": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reason": "requester_not_permitted_for_customer",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_NOT_REGISTERED": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reason": "model_not_registered",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_TOO_LONG_TO_READ": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reason": "reading_longer_than_model_can_read",
+        "requester_id": "$.payload.requester_id",
+        "supporting_material": "$.payload.supporting_material",
+        "time_in_service_id": "$.results.47.model_record.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_REFUSED_UNFINISHED": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "REFUSED",
+        "question": "$.payload.question",
+        "reading": "$.results.55.reading",
+        "reason": "longest_response_reached",
+        "requester_id": "$.payload.requester_id",
+        "rules_in_force": "$.results.67.rules_in_force",
+        "supporting_material": "$.payload.supporting_material",
+        "time_in_service_id": "$.results.47.model_record.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      },
+      "RECORD_RESPONDED": {
+        "customer_id": "$.payload.customer_id",
+        "identity_key": "$.payload.identity_key",
+        "kind": "$.payload.kind",
+        "outcome": "RESPONDED",
+        "question": "$.payload.question",
+        "reading": "$.results.55.reading",
+        "requester_id": "$.payload.requester_id",
+        "response": "$.results.67.written_response.text",
+        "rules_in_force": "$.results.67.rules_in_force",
+        "supporting_material": "$.payload.supporting_material",
+        "time_in_service_id": "$.results.47.model_record.time_in_service_id",
+        "user_prompt_id": "$.payload.user_prompt_id"
+      }
+    },
+    "112": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "operation": "WITHDRAW_MODEL_FROM_SERVICE",
+        "record": {
+          "operation": "WITHDRAW_MODEL_FROM_SERVICE",
+          "staff_id": "$.payload.staff_id",
+          "subject": "$.payload.identity_key"
+        },
+        "staff_id": "$.payload.staff_id"
+      },
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "authorization_rules": [
+          {
+            "field": "role",
+            "op": "eq",
+            "value": "model_staff"
+          }
+        ],
+        "staff_credentials": "$.payload.staff_credentials"
+      },
+      "CC_WITHDRAW_MODEL_FROM_SERVICE_V0": {
+        "identity_key": "$.payload.identity_key"
+      }
+    }
+  },
+  "emits": {
+    "105": {
+      "RECORD_REFUSED_ABOVE_CEILING": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_NOT_IN_SERVICE": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_NOT_PERMITTED": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_NOT_REGISTERED": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_TOO_LONG_TO_READ": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      }
+    },
+    "106": {
+      "RECORD_REFUSED_BY_RULE": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_OTHER_MODEL": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_TOO_LONG_TO_READ": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_UNFINISHED": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      }
+    },
+    "107": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "SUCCESS": [
+          "causal_language_model::EV_MODEL_SERVICE_STARTED_V0"
+        ]
+      }
+    },
+    "108": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "SUCCESS": [
+          "causal_language_model::EV_MODEL_REGISTERED_V0"
+        ]
+      }
+    },
+    "109": {
+      "RECORD_RESPONDED": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_RESPONDED_V0"
+        ]
+      }
+    },
+    "111": {
+      "RECORD_REFUSED_ABOVE_CEILING": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_BY_RULE": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_NOT_IN_SERVICE": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_NOT_PERMITTED": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_NOT_REGISTERED": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_TOO_LONG_TO_READ": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_REFUSED_UNFINISHED": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_REFUSED_V0"
+        ]
+      },
+      "RECORD_RESPONDED": {
+        "SUCCESS": [
+          "causal_language_model::EV_USER_PROMPT_RESPONDED_V0"
+        ]
+      }
+    },
+    "112": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "SUCCESS": [
+          "causal_language_model::EV_MODEL_SERVICE_ENDED_V0"
+        ]
+      }
+    }
+  },
+  "entry": {
+    "105": {
+      "actor": "causal_language_model::AC_MODEL_HOST_V0",
+      "rb": 91,
+      "start": 83,
+      "start_key": "IN_BEGIN_HOSTED_RESPONSE_V0"
+    },
+    "106": {
+      "actor": "causal_language_model::AC_MODEL_HOST_V0",
+      "rb": 91,
+      "start": 84,
+      "start_key": "IN_OFFER_NEXT_TOKENS_V0"
+    },
+    "107": {
+      "actor": "causal_language_model::AC_MODEL_STAFF_V0",
+      "rb": 91,
+      "start": 85,
+      "start_key": "IN_PLACE_MODEL_IN_SERVICE_V0"
+    },
+    "108": {
+      "actor": "causal_language_model::AC_MODEL_STAFF_V0",
+      "rb": 91,
+      "start": 86,
+      "start_key": "IN_REGISTER_MODEL_V0"
+    },
+    "109": {
+      "actor": "causal_language_model::AC_MODEL_HOST_V0",
+      "rb": 91,
+      "start": 87,
+      "start_key": "IN_RELEASE_HOSTED_RESPONSE_V0"
+    },
+    "110": {
+      "actor": "causal_language_model::AC_MODEL_STAFF_V0",
+      "rb": 91,
+      "start": 88,
+      "start_key": "IN_RETRIEVE_USER_PROMPT_RECORD_V0"
+    },
+    "111": {
+      "actor": "causal_language_model::AC_MODEL_STAFF_V0",
+      "rb": 91,
+      "start": 89,
+      "start_key": "IN_SUBMIT_USER_PROMPT_V0"
+    },
+    "112": {
+      "actor": "causal_language_model::AC_MODEL_STAFF_V0",
+      "rb": 91,
+      "start": 90,
+      "start_key": "IN_WITHDRAW_MODEL_FROM_SERVICE_V0"
+    }
+  },
+  "pipeline": {
+    "47": [
+      {
+        "addr": 26,
+        "inputs": {
+          "__store__": "MODELS",
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "model_record": "$.capability_result.value",
+          "result_status": "$.result_status"
+        },
+        "step_id": "read_model_record"
+      },
+      {
+        "addr": 33,
+        "inputs": {
+          "parameters": {
+            "state": "$.results.read_model_record.model_record.state"
+          },
+          "rules": [
+            {
+              "field": "state",
+              "op": "eq",
+              "value": "IN_SERVICE"
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "step_id": "require_in_service"
+      }
+    ],
+    "48": [
+      {
+        "addr": 25,
+        "inputs": {
+          "__store__": "MODEL_OPERATIONS",
+          "actor_id": "$.inputs.staff_id",
+          "record": "$.inputs.record",
+          "stream_id": "MODEL_OPERATIONS"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "record_id": "$.capability_result.record_id",
+          "sequence_number": "$.capability_result.sequence_number"
+        },
+        "step_id": "append_operation"
+      }
+    ],
+    "49": [
+      {
+        "addr": 70,
+        "inputs": {
+          "candidates": "$.inputs.candidates",
+          "state": "$.inputs.state"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "finished": "$.capability_result.finished",
+          "step": "$.capability_result.step",
+          "stopped_by": "$.capability_result.stopped_by",
+          "text": "$.capability_result.text",
+          "within_length": "$.capability_result.within_length"
+        },
+        "step_id": "choose_token"
+      }
+    ],
+    "50": [
+      {
+        "addr": 34,
+        "inputs": {
+          "record": "$.inputs.description",
+          "schema": "$.inputs.description_schema"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "violations": "$.capability_result.violations"
+        },
+        "step_id": "validate_description"
+      },
+      {
+        "addr": 33,
+        "inputs": {
+          "parameters": {
+            "violations": "$.results.validate_description.violations"
+          },
+          "rules": [
+            {
+              "field": "violations",
+              "op": "eq",
+              "value": []
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "step_id": "require_description_complete"
+      },
+      {
+        "addr": 73,
+        "inputs": {
+          "description": "$.inputs.description",
+          "fingerprint": "$.inputs.fingerprint"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "identity_key": "$.capability_result.identity_key"
+        },
+        "step_id": "form_identity_key"
+      },
+      {
+        "addr": 27,
+        "inputs": {
+          "__store__": "MODEL_IDENTITY_REGISTRY",
+          "key": "$.results.form_identity_key.identity_key",
+          "target_cs": "CS_MUTABLE_JSON_V0",
+          "target_ref": "MODELS"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "address": "$.capability_result.address",
+          "result_status": "$.result_status"
+        },
+        "step_id": "claim_identity"
+      }
+    ],
+    "51": [
+      {
+        "addr": 27,
+        "inputs": {
+          "__store__": "USER_PROMPT_REGISTRY",
+          "key": "$.inputs.user_prompt_id",
+          "target_cs": "CS_APPENDONLY_JSONL_V0",
+          "target_ref": "USER_PROMPT_RECORDS"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "address": "$.capability_result.address",
+          "result_status": "$.result_status"
+        },
+        "step_id": "claim_user_prompt"
+      }
+    ],
+    "52": [
+      {
+        "addr": 33,
+        "inputs": {
+          "parameters": {
+            "reported_reading_size": "$.inputs.reported_reading_size"
+          },
+          "rules": [
+            {
+              "field": "reported_reading_size",
+              "op": "lte",
+              "value": "$.inputs.reading_capacity"
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "reading_fits": "$.capability_result.valid"
+        },
+        "step_id": "confirm_reported_reading_fits"
+      }
+    ],
+    "53": [
+      {
+        "addr": 33,
+        "inputs": {
+          "parameters": "$.inputs.staff_credentials",
+          "rules": "$.inputs.authorization_rules"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "is_authorized": "$.capability_result.valid"
+        },
+        "step_id": "confirm_authorization"
+      }
+    ],
+    "54": [
+      {
+        "addr": 35,
+        "inputs": {
+          "allowed_set": [
+            "$.inputs.admitted_fingerprint"
+          ],
+          "value": "$.inputs.offered_fingerprint"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "offer_for_model": "$.capability_result.is_member"
+        },
+        "step_id": "confirm_same_model"
+      }
+    ],
+    "55": [
+      {
+        "addr": 69,
+        "inputs": {
+          "question": "$.inputs.question",
+          "reading_capacity": "$.inputs.reading_capacity",
+          "supporting_material": "$.inputs.supporting_material",
+          "system_prompt": "$.inputs.system_prompt"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "reading": "$.capability_result.reading",
+          "reading_length": "$.capability_result.reading_length"
+        },
+        "step_id": "assemble_reading"
+      }
+    ],
+    "56": [
+      {
+        "addr": 35,
+        "inputs": {
+          "allowed_set": "$.inputs.permitted_customers",
+          "value": "$.inputs.customer_id"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "acts_for_customer": "$.capability_result.is_member"
+        },
+        "step_id": "confirm_acts_for_customer"
+      }
+    ],
+    "57": [
+      {
+        "addr": 33,
+        "inputs": {
+          "parameters": "$.inputs.release_facts",
+          "rules": "$.inputs.release_rules"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "releasable": "$.capability_result.valid"
+        },
+        "step_id": "confirm_releasable"
+      }
+    ],
+    "58": [
+      {
+        "addr": 26,
+        "inputs": {
+          "__store__": "TIMES_IN_SERVICE",
+          "key": "$.inputs.time_in_service_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "result_status": "$.result_status",
+          "time_in_service": "$.capability_result.value"
+        },
+        "step_id": "read_time_in_service"
+      },
+      {
+        "addr": 35,
+        "inputs": {
+          "allowed_set": [
+            "public",
+            "internal",
+            "confidential",
+            "restricted"
+          ],
+          "value": "$.inputs.kind"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "kind_declared": "$.capability_result.is_member"
+        },
+        "step_id": "confirm_kind_declared"
+      },
+      {
+        "addr": 72,
+        "inputs": {
+          "ceiling": "$.results.read_time_in_service.time_in_service.ceiling",
+          "kind": "$.inputs.kind",
+          "kinds": [
+            "public",
+            "internal",
+            "confidential",
+            "restricted"
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "within_ceiling": "$.capability_result.within_ceiling"
+        },
+        "step_id": "compare_sensitivity"
+      }
+    ],
+    "59": [
+      {
+        "addr": 74,
+        "inputs": {
+          "account_numbers": "$.inputs.account_numbers",
+          "response_rules": "$.inputs.response_rules",
+          "seed": "$.inputs.seed"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "positions": "$.capability_result.positions",
+          "rules_in_force": "$.capability_result.rules_in_force"
+        },
+        "step_id": "form_rules_in_force"
+      },
+      {
+        "addr": 31,
+        "inputs": {
+          "fields": {
+            "customer_id": "$.inputs.customer_id",
+            "fingerprint": "$.inputs.fingerprint",
+            "ground_numbers": "$.inputs.response_rules.ground_numbers",
+            "identity_key": "$.inputs.identity_key",
+            "kind": "$.inputs.kind",
+            "longest_response": "$.inputs.response_rules.longest_response",
+            "maximum_response_length": "$.inputs.maximum_response_length",
+            "outcome": "WRITING",
+            "question": "$.inputs.question",
+            "reading": "$.inputs.reading",
+            "reading_capacity": "$.inputs.reading_capacity",
+            "requester_id": "$.inputs.requester_id",
+            "rules_in_force": "$.results.form_rules_in_force.rules_in_force",
+            "supporting_material": "$.inputs.supporting_material",
+            "time_in_service_id": "$.inputs.time_in_service_id",
+            "user_prompt_id": "$.inputs.user_prompt_id"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "opening_record": "$.capability_result.record"
+        },
+        "step_id": "assemble_opening_record"
+      },
+      {
+        "addr": 25,
+        "inputs": {
+          "__store__": "USER_PROMPT_RECORDS",
+          "actor_id": "$.inputs.requester_id",
+          "record": "$.results.assemble_opening_record.opening_record",
+          "stream_id": "$.inputs.user_prompt_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "record_id": "$.capability_result.record_id",
+          "sequence_number": "$.capability_result.sequence_number"
+        },
+        "step_id": "append_opening_record"
+      }
+    ],
+    "60": [
+      {
+        "addr": 26,
+        "inputs": {
+          "__store__": "MODELS",
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "model_record": "$.capability_result.value",
+          "result_status": "$.result_status"
+        },
+        "step_id": "read_model_record"
+      },
+      {
+        "addr": 33,
+        "inputs": {
+          "parameters": {
+            "state": "$.results.read_model_record.model_record.state"
+          },
+          "rules": [
+            {
+              "field": "state",
+              "op": "eq",
+              "value": "REGISTERED"
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "step_id": "require_registered"
+      },
+      {
+        "addr": 35,
+        "inputs": {
+          "allowed_set": [
+            "public",
+            "internal",
+            "confidential",
+            "restricted"
+          ],
+          "value": "$.inputs.ceiling"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "ceiling_declared": "$.capability_result.is_member"
+        },
+        "step_id": "confirm_ceiling_declared"
+      },
+      {
+        "addr": 27,
+        "inputs": {
+          "__store__": "TIME_IN_SERVICE_REGISTRY",
+          "key": "$.inputs.time_in_service_id",
+          "target_cs": "CS_MUTABLE_JSON_V0",
+          "target_ref": "TIMES_IN_SERVICE"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "address": "$.capability_result.address",
+          "result_status": "$.result_status"
+        },
+        "step_id": "claim_time_in_service"
+      },
+      {
+        "addr": 26,
+        "inputs": {
+          "__store__": "MODELS",
+          "filter": {
+            "identity_key": "$.inputs.identity_key",
+            "state": "REGISTERED"
+          },
+          "updates": {
+            "state": "IN_SERVICE",
+            "time_in_service_id": "$.inputs.time_in_service_id"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "step_id": "mark_in_service"
+      },
+      {
+        "addr": 33,
+        "inputs": {
+          "parameters": {
+            "updated_count": "$.results.mark_in_service.updated_count"
+          },
+          "rules": [
+            {
+              "field": "updated_count",
+              "op": "eq",
+              "value": 1
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "step_id": "require_transition"
+      },
+      {
+        "addr": 31,
+        "inputs": {
+          "fields": {
+            "ceiling": "$.inputs.ceiling",
+            "identity_key": "$.inputs.identity_key",
+            "response_rules": "$.inputs.response_rules",
+            "state": "OPEN",
+            "system_prompt": "$.inputs.system_prompt",
+            "time_in_service_id": "$.inputs.time_in_service_id"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "time_in_service": "$.capability_result.record"
+        },
+        "step_id": "assemble_time_in_service"
+      },
+      {
+        "addr": 26,
+        "inputs": {
+          "__store__": "TIMES_IN_SERVICE",
+          "key": "$.inputs.time_in_service_id",
+          "value": "$.results.assemble_time_in_service.time_in_service"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "step_id": "write_time_in_service"
+      }
+    ],
+    "61": [
+      {
+        "addr": 25,
+        "inputs": {
+          "__store__": "USER_PROMPT_RECORDS",
+          "stream_id": "$.inputs.user_prompt_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue"
+        },
+        "op": "GET_ALL",
+        "outputs": {
+          "entries": "$.capability_result.entries",
+          "result_status": "$.result_status"
+        },
+        "step_id": "read_trail"
+      },
+      {
+        "addr": 75,
+        "inputs": {
+          "entries": "$.results.read_trail.entries"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "state": "$.capability_result.state"
+        },
+        "step_id": "reduce_trail"
+      }
+    ],
+    "62": [
+      {
+        "addr": 31,
+        "inputs": {
+          "fields": {
+            "candidates": "$.inputs.step.candidates",
+            "chosen": "$.inputs.step.chosen",
+            "fingerprint": "$.inputs.fingerprint",
+            "finished": "$.inputs.step.finished",
+            "host_id": "$.inputs.host_id",
+            "outcome": "STEP",
+            "position": "$.inputs.step.position",
+            "reported_reading_size": "$.inputs.reported_reading_size",
+            "stopped": "$.inputs.step.stopped",
+            "stopped_by": "$.inputs.step.stopped_by",
+            "user_prompt_id": "$.inputs.user_prompt_id",
+            "within_length": "$.inputs.step.within_length"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "step_record": "$.capability_result.record"
+        },
+        "step_id": "assemble_step_record"
+      },
+      {
+        "addr": 25,
+        "inputs": {
+          "__store__": "USER_PROMPT_RECORDS",
+          "actor_id": "$.inputs.host_id",
+          "record": "$.results.assemble_step_record.step_record",
+          "stream_id": "$.inputs.user_prompt_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "record_id": "$.capability_result.record_id",
+          "sequence_number": "$.capability_result.sequence_number"
+        },
+        "step_id": "append_step_record"
+      }
+    ],
+    "63": [
+      {
+        "addr": 31,
+        "inputs": {
+          "fields": {
+            "customer_id": "$.inputs.customer_id",
+            "identity_key": "$.inputs.identity_key",
+            "kind": "$.inputs.kind",
+            "outcome": "$.inputs.outcome",
+            "question": "$.inputs.question",
+            "reading": "$.inputs.reading",
+            "reason": "$.inputs.reason",
+            "requester_id": "$.inputs.requester_id",
+            "response": "$.inputs.response",
+            "rules_in_force": "$.inputs.rules_in_force",
+            "supporting_material": "$.inputs.supporting_material",
+            "time_in_service_id": "$.inputs.time_in_service_id",
+            "user_prompt_id": "$.inputs.user_prompt_id"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "user_prompt_record": "$.capability_result.record"
+        },
+        "step_id": "assemble_user_prompt_record"
+      },
+      {
+        "addr": 25,
+        "inputs": {
+          "__store__": "USER_PROMPT_RECORDS",
+          "actor_id": "$.inputs.requester_id",
+          "record": "$.results.assemble_user_prompt_record.user_prompt_record",
+          "stream_id": "$.inputs.user_prompt_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "record_id": "$.capability_result.record_id",
+          "sequence_number": "$.capability_result.sequence_number"
+        },
+        "step_id": "append_user_prompt_record"
+      }
+    ],
+    "64": [
+      {
+        "addr": 31,
+        "inputs": {
+          "fields": {
+            "description": "$.inputs.description",
+            "fingerprint": "$.inputs.fingerprint",
+            "identity_key": "$.inputs.identity_key",
+            "state": "REGISTERED",
+            "time_in_service_id": ""
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "model_record": "$.capability_result.record"
+        },
+        "step_id": "assemble_model_record"
+      },
+      {
+        "addr": 26,
+        "inputs": {
+          "__store__": "MODELS",
+          "key": "$.inputs.identity_key",
+          "value": "$.results.assemble_model_record.model_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "step_id": "write_model_record"
+      }
+    ],
+    "65": [
+      {
+        "addr": 25,
+        "inputs": {
+          "__store__": "USER_PROMPT_RECORDS",
+          "stream_id": "$.inputs.user_prompt_id"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue"
+        },
+        "op": "GET_ALL",
+        "outputs": {
+          "entries": "$.capability_result.entries",
+          "result_status": "$.result_status"
+        },
+        "step_id": "read_user_prompt_entries"
+      },
+      {
+        "addr": 32,
+        "inputs": {
+          "filter": {
+            "stream_id": "$.inputs.user_prompt_id"
+          },
+          "source": "$.results.read_user_prompt_entries.entries"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "user_prompt_record": "$.capability_result.extracted"
+        },
+        "step_id": "select_user_prompt_record"
+      }
+    ],
+    "66": [
+      {
+        "addr": 26,
+        "inputs": {
+          "__store__": "MODELS",
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "model_record": "$.capability_result.value",
+          "result_status": "$.result_status"
+        },
+        "step_id": "read_model_record"
+      },
+      {
+        "addr": 33,
+        "inputs": {
+          "parameters": {
+            "state": "$.results.read_model_record.model_record.state"
+          },
+          "rules": [
+            {
+              "field": "state",
+              "op": "eq",
+              "value": "IN_SERVICE"
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "step_id": "require_in_service"
+      },
+      {
+        "addr": 26,
+        "inputs": {
+          "__store__": "MODELS",
+          "filter": {
+            "identity_key": "$.inputs.identity_key",
+            "state": "IN_SERVICE"
+          },
+          "updates": {
+            "state": "REGISTERED",
+            "time_in_service_id": ""
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "step_id": "mark_registered"
+      },
+      {
+        "addr": 33,
+        "inputs": {
+          "parameters": {
+            "updated_count": "$.results.mark_registered.updated_count"
+          },
+          "rules": [
+            {
+              "field": "updated_count",
+              "op": "eq",
+              "value": 1
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "step_id": "require_transition"
+      },
+      {
+        "addr": 26,
+        "inputs": {
+          "__store__": "TIMES_IN_SERVICE",
+          "key": "$.results.read_model_record.model_record.time_in_service_id",
+          "updates": {
+            "state": "CLOSED"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "step_id": "close_time_in_service"
+      }
+    ],
+    "67": [
+      {
+        "addr": 74,
+        "inputs": {
+          "account_numbers": "$.inputs.account_numbers",
+          "response_rules": "$.inputs.response_rules",
+          "seed": "$.inputs.seed"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "positions": "$.capability_result.positions",
+          "rules_in_force": "$.capability_result.rules_in_force"
+        },
+        "step_id": "form_rules_in_force"
+      },
+      {
+        "addr": 77,
+        "inputs": {
+          "positions": "$.results.form_rules_in_force.positions",
+          "reading": "$.inputs.reading",
+          "rules_in_force": "$.results.form_rules_in_force.rules_in_force"
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "written_response": "$.capability_result.result"
+        },
+        "step_id": "write_response"
+      }
+    ]
+  },
+  "projection_class": "machine_projection",
+  "routing": {
+    "105": {
+      "CC_ADMIT_USER_PROMPT_V0": {
+        "24580": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_NOT_REGISTERED"
+        },
+        "24581": {
+          "addr": 58,
+          "key": "CC_CONFIRM_WITHIN_CEILING_V0"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_NOT_IN_SERVICE"
+        }
+      },
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0": {
+        "24581": {
+          "addr": 56,
+          "key": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0"
+        }
+      },
+      "CC_CONFIRM_READING_FITS_V0": {
+        "24581": {
+          "addr": 59,
+          "key": "CC_OPEN_HOSTED_RECORD_V0"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_TOO_LONG_TO_READ"
+        }
+      },
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0": {
+        "24581": {
+          "addr": 47,
+          "key": "CC_ADMIT_USER_PROMPT_V0"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_NOT_PERMITTED"
+        }
+      },
+      "CC_CONFIRM_WITHIN_CEILING_V0": {
+        "24580": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_NOT_IN_SERVICE"
+        },
+        "24581": {
+          "addr": 55,
+          "key": "CC_CONFIRM_READING_FITS_V0"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_ABOVE_CEILING"
+        }
+      },
+      "IN_BEGIN_HOSTED_RESPONSE_V0": {
+        "24576": {
+          "addr": 51,
+          "key": "CC_CLAIM_USER_PROMPT_IDENTITY_V0"
+        }
+      }
+    },
+    "106": {
+      "CC_CHOOSE_PERMITTED_TOKEN_V0": {
+        "24581": {
+          "addr": 57,
+          "key": "CONFIRM_NO_RULE_STOPPED"
+        }
+      },
+      "CC_CONFIRM_HOSTED_READING_FITS_V0": {
+        "24581": {
+          "addr": 49,
+          "key": "CC_CHOOSE_PERMITTED_TOKEN_V0"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_TOO_LONG_TO_READ"
+        }
+      },
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0": {
+        "24581": {
+          "addr": 52,
+          "key": "CC_CONFIRM_HOSTED_READING_FITS_V0"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_OTHER_MODEL"
+        }
+      },
+      "CC_READ_HOSTED_STATE_V0": {
+        "24581": {
+          "addr": 54,
+          "key": "CC_CONFIRM_OFFER_FOR_MODEL_V0"
+        }
+      },
+      "CONFIRM_NO_RULE_STOPPED": {
+        "24581": {
+          "addr": 57,
+          "key": "CONFIRM_WITHIN_LENGTH"
+        },
+        "24582": {
+          "addr": 62,
+          "key": "RECORD_STOPPED_STEP"
+        }
+      },
+      "CONFIRM_WITHIN_LENGTH": {
+        "24581": {
+          "addr": 62,
+          "key": "RECORD_STEP"
+        },
+        "24582": {
+          "addr": 62,
+          "key": "RECORD_UNFINISHED_STEP"
+        }
+      },
+      "IN_OFFER_NEXT_TOKENS_V0": {
+        "24576": {
+          "addr": 61,
+          "key": "CC_READ_HOSTED_STATE_V0"
+        }
+      },
+      "RECORD_STOPPED_STEP": {
+        "24581": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_BY_RULE"
+        }
+      },
+      "RECORD_UNFINISHED_STEP": {
+        "24581": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_UNFINISHED"
+        }
+      }
+    },
+    "107": {
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "24581": {
+          "addr": 60,
+          "key": "CC_PLACE_MODEL_IN_SERVICE_V0"
+        }
+      },
+      "CC_PLACE_MODEL_IN_SERVICE_V0": {
+        "24581": {
+          "addr": 48,
+          "key": "CC_APPEND_MODEL_OPERATION_V0"
+        }
+      },
+      "IN_PLACE_MODEL_IN_SERVICE_V0": {
+        "24576": {
+          "addr": 53,
+          "key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "108": {
+      "CC_CLAIM_MODEL_IDENTITY_V0": {
+        "24581": {
+          "addr": 64,
+          "key": "CC_REGISTER_MODEL_V0"
+        }
+      },
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "24581": {
+          "addr": 50,
+          "key": "CC_CLAIM_MODEL_IDENTITY_V0"
+        }
+      },
+      "CC_REGISTER_MODEL_V0": {
+        "24581": {
+          "addr": 48,
+          "key": "CC_APPEND_MODEL_OPERATION_V0"
+        }
+      },
+      "IN_REGISTER_MODEL_V0": {
+        "24576": {
+          "addr": 53,
+          "key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "109": {
+      "CC_READ_HOSTED_STATE_V0": {
+        "24581": {
+          "addr": 57,
+          "key": "CONFIRM_FINISHED"
+        }
+      },
+      "CONFIRM_FINISHED": {
+        "24581": {
+          "addr": 63,
+          "key": "RECORD_RESPONDED"
+        }
+      },
+      "IN_RELEASE_HOSTED_RESPONSE_V0": {
+        "24576": {
+          "addr": 61,
+          "key": "CC_READ_HOSTED_STATE_V0"
+        }
+      }
+    },
+    "110": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "24581": {
+          "addr": 65,
+          "key": "CC_RETRIEVE_USER_PROMPT_RECORD_V0"
+        }
+      },
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "24581": {
+          "addr": 48,
+          "key": "CC_APPEND_MODEL_OPERATION_V0"
+        }
+      },
+      "IN_RETRIEVE_USER_PROMPT_RECORD_V0": {
+        "24576": {
+          "addr": 53,
+          "key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+        }
+      }
+    },
+    "111": {
+      "CC_ADMIT_USER_PROMPT_V0": {
+        "24578": {
+          "addr": 63,
+          "key": "RECORD_FAILED_BEFORE_READING"
+        },
+        "24580": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_NOT_REGISTERED"
+        },
+        "24581": {
+          "addr": 58,
+          "key": "CC_CONFIRM_WITHIN_CEILING_V0"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_NOT_IN_SERVICE"
+        }
+      },
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0": {
+        "24581": {
+          "addr": 56,
+          "key": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0"
+        }
+      },
+      "CC_CONFIRM_READING_FITS_V0": {
+        "24581": {
+          "addr": 67,
+          "key": "CC_WRITE_MODEL_RESPONSE_V0"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_TOO_LONG_TO_READ"
+        }
+      },
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0": {
+        "24581": {
+          "addr": 47,
+          "key": "CC_ADMIT_USER_PROMPT_V0"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_NOT_PERMITTED"
+        }
+      },
+      "CC_CONFIRM_WITHIN_CEILING_V0": {
+        "24578": {
+          "addr": 63,
+          "key": "RECORD_FAILED_BEFORE_READING"
+        },
+        "24580": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_NOT_IN_SERVICE"
+        },
+        "24581": {
+          "addr": 55,
+          "key": "CC_CONFIRM_READING_FITS_V0"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_ABOVE_CEILING"
+        }
+      },
+      "CC_WRITE_MODEL_RESPONSE_V0": {
+        "24581": {
+          "addr": 57,
+          "key": "CONFIRM_NO_RULE_STOPPED"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_FAILED_WHILE_WRITING"
+        }
+      },
+      "CONFIRM_FINISHED": {
+        "24581": {
+          "addr": 63,
+          "key": "RECORD_RESPONDED"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_UNFINISHED"
+        }
+      },
+      "CONFIRM_NO_RULE_STOPPED": {
+        "24581": {
+          "addr": 57,
+          "key": "CONFIRM_FINISHED"
+        },
+        "24582": {
+          "addr": 63,
+          "key": "RECORD_REFUSED_BY_RULE"
+        }
+      },
+      "IN_SUBMIT_USER_PROMPT_V0": {
+        "24576": {
+          "addr": 51,
+          "key": "CC_CLAIM_USER_PROMPT_IDENTITY_V0"
+        }
+      }
+    },
+    "112": {
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "24581": {
+          "addr": 66,
+          "key": "CC_WITHDRAW_MODEL_FROM_SERVICE_V0"
+        }
+      },
+      "CC_WITHDRAW_MODEL_FROM_SERVICE_V0": {
+        "24581": {
+          "addr": 48,
+          "key": "CC_APPEND_MODEL_OPERATION_V0"
+        }
+      },
+      "IN_WITHDRAW_MODEL_FROM_SERVICE_V0": {
+        "24576": {
+          "addr": 53,
+          "key": "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0"
+        }
+      }
+    }
+  },
+  "terminal": {
+    "105": {
+      "CC_ADMIT_USER_PROMPT_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0": {
+        "24577": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_CONFIRM_WITHIN_CEILING_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_OPEN_HOSTED_RECORD_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_WRITING",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "IN_BEGIN_HOSTED_RESPONSE_V0": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_ABOVE_CEILING": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_NOT_IN_SERVICE": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_NOT_PERMITTED": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_NOT_REGISTERED": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_TOO_LONG_TO_READ": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "106": {
+      "CC_CHOOSE_PERMITTED_TOKEN_V0": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_READ_HOSTED_STATE_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "IN_OFFER_NEXT_TOKENS_V0": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_BY_RULE": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_OTHER_MODEL": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_TOO_LONG_TO_READ": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_UNFINISHED": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_STEP": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_CHOSEN",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_STOPPED_STEP": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_UNFINISHED_STEP": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "107": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_PLACED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_PLACE_MODEL_IN_SERVICE_V0": {
+        "24577": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24580": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "IN_PLACE_MODEL_IN_SERVICE_V0": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "108": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REGISTERED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_CLAIM_MODEL_IDENTITY_V0": {
+        "24577": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_REGISTER_MODEL_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "IN_REGISTER_MODEL_V0": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "109": {
+      "CC_READ_HOSTED_STATE_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CONFIRM_FINISHED": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "IN_RELEASE_HOSTED_RESPONSE_V0": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_RESPONDED": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_RESPONDED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "110": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_RETRIEVE_USER_PROMPT_RECORD_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_RETRIEVED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "IN_RETRIEVE_USER_PROMPT_RECORD_V0": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "111": {
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0": {
+        "24577": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "IN_SUBMIT_USER_PROMPT_V0": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_FAILED_BEFORE_READING": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_FAILED_WHILE_WRITING": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_ABOVE_CEILING": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_BY_RULE": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_NOT_IN_SERVICE": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_NOT_PERMITTED": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_NOT_REGISTERED": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_TOO_LONG_TO_READ": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_REFUSED_UNFINISHED": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_REFUSED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "RECORD_RESPONDED": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_RESPONDED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    },
+    "112": {
+      "CC_APPEND_MODEL_OPERATION_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24581": {
+          "exit": "EXIT_WITHDRAWN",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_CONFIRM_MODEL_STAFF_AUTHORIZED_V0": {
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "CC_WITHDRAW_MODEL_FROM_SERVICE_V0": {
+        "24578": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24580": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        },
+        "24582": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      },
+      "IN_WITHDRAW_MODEL_FROM_SERVICE_V0": {
+        "24579": {
+          "exit": "EXIT_REJECTED",
+          "type": "EXIT"
+        }
+      }
+    }
+  }
+}

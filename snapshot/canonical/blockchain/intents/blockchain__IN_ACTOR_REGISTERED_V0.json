@@ -1,8 +1,8 @@
 {
   "artifact_code": "IN_ACTOR_REGISTERED_V0",
   "artifact_type": "IN",
-  "content": "# IN_ACTOR_REGISTERED_V0\n\n## 1. Intent\n\nA request to admit a person as an actor\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::IN_ACTOR_REGISTERED_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: A request to admit a person as an actor\n  workflow: WF_REGISTER_ACTOR_V0\n  inputs:\n    actor_record:\n      type: object\n      required: true\n    registration_schema:\n      type: object\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n",
-  "content_hash": "b8cf8bec6c418bbd70b281880ffee5e7fbcab47781972505f0a276067a0a3f37",
+  "content": "# IN_ACTOR_REGISTERED_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::IN_ACTOR_REGISTERED_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: A request to admit a person as an actor\n  workflow: WF_REGISTER_ACTOR_V0\n  inputs:\n    actor_record:\n      type: object\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to admit a person as an actor\n",
+  "content_hash": "f3cce6a8951143b0a01e1555c690576f7587c53350eee928da4652493d95ae05",
   "fqdn_id": "blockchain::IN_ACTOR_REGISTERED_V0",
   "frontmatter": {
     "artifact_kind": "INTENT",
@@ -11,10 +11,6 @@
     "core": {
       "inputs": {
         "actor_record": {
-          "required": true,
-          "type": "object"
-        },
-        "registration_schema": {
           "required": true,
           "type": "object"
         }

@@ -1,0 +1,91 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_PASSTHROUGH_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_PASSTHROUGH_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_PASSTHROUGH_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_PASSTHROUGH_V0\ntarget: capability_transforms::CT_PURE_PASSTHROUGH_V0\ncases:\n- case_id: passthrough_string\n  expected_outcome: SUCCESS\n  bindings:\n    value: hello world\n  expected:\n    value: hello world\n- case_id: passthrough_number\n  expected_outcome: SUCCESS\n  bindings:\n    value: 42\n  expected:\n    value: 42\n- case_id: passthrough_object\n  expected_outcome: SUCCESS\n  bindings:\n    value:\n      key: test\n      count: 123\n  expected:\n    value:\n      key: test\n      count: 123\n- case_id: passthrough_array\n  expected_outcome: SUCCESS\n  bindings:\n    value:\n    - 1\n    - 2\n    - 3\n  expected:\n    value:\n    - 1\n    - 2\n    - 3\n- case_id: passthrough_boolean\n  expected_outcome: SUCCESS\n  bindings:\n    value: true\n  expected:\n    value: true\n```\n\n## Intent\n\nTest that PASSTHROUGH returns input value unchanged for various data types.\n",
+  "content_hash": "ead87314f5d761daa328aa45c55f7754f59bb696004b0ebf674b771a8e06cb5c",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_PASSTHROUGH_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "value": "hello world"
+        },
+        "case_id": "passthrough_string",
+        "expected": {
+          "value": "hello world"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": 42
+        },
+        "case_id": "passthrough_number",
+        "expected": {
+          "value": 42
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": {
+            "count": 123,
+            "key": "test"
+          }
+        },
+        "case_id": "passthrough_object",
+        "expected": {
+          "value": {
+            "count": 123,
+            "key": "test"
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": [
+            1,
+            2,
+            3
+          ]
+        },
+        "case_id": "passthrough_array",
+        "expected": {
+          "value": [
+            1,
+            2,
+            3
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": true
+        },
+        "case_id": "passthrough_boolean",
+        "expected": {
+          "value": true
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_PASSTHROUGH_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_PASSTHROUGH_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "capability_transforms::CT_PURE_PASSTHROUGH_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

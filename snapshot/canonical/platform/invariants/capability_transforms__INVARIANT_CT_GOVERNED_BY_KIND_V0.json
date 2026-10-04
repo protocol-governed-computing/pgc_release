@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_CT_GOVERNED_BY_KIND_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_CT_GOVERNED_BY_KIND_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::INVARIANT_CT_GOVERNED_BY_KIND_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - CT\n```\n\n## Summary\n\nEvery transform is governed by exactly one of the three constitutions that govern transforms, decided by what it declares: its kind and its purity.\n\n## What this realizes\nFor every `CT` artifact:\n\n1. An atom declaring `ct_pure` or `ct_exec` MUST be governed by\n   `capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0`.\n2. An atom declaring `ct_impure` MUST be governed by\n   `capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0`.\n3. A molecule MUST be governed by `capability_transforms::CONSTITUTION_MOLECULES_V0`.\n4. A transform declaring no kind or no purity is refused: what it is cannot be placed.\n\n## Why this is checked here rather than trusted\n\nThree constitutions govern transforms. A transform naming the wrong one would escape the rules of the one that describes it \u2014 a non-deterministic atom claiming the deterministic constitution would never have its results recorded. Placement follows from the declaration, so it is checked against the declaration.\n",
+  "content_hash": "d12a2eb9925a756c67d2efb893feaf830fce15f61b256abed732e5fb5dc7fdaa",
+  "fqdn_id": "capability_transforms::INVARIANT_CT_GOVERNED_BY_KIND_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CT"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_transforms::INVARIANT_CT_GOVERNED_BY_KIND_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

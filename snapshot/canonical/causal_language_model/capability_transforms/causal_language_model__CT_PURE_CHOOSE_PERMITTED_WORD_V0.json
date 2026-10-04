@@ -1,0 +1,151 @@
+{
+  "artifact_code": "CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_CHOOSE_PERMITTED_WORD_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Stops forbidden words among those offered and chooses one permitted word under the freedom\n    of word choice and a stated seed\n  refusal: returns\n  inputs:\n    candidates:\n      type: array\n      required: true\n    rules_in_force:\n      type: object\n      required: true\n    position:\n      type: integer\n      required: true\n    text:\n      type: string\n      required: true\n    finished:\n      type: boolean\n      required: true\n    stopped_by:\n      type: string\n      required: true\n    stopped:\n      type: array\n      required: true\n  outputs:\n    text:\n      type: string\n      required: true\n    finished:\n      type: boolean\n      required: true\n    stopped_by:\n      type: string\n      required: true\n    stopped:\n      type: array\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: CHOOSE_PERMITTED_WORD\n  implementation:\n    module: causal_language_model.implementation.capability_transforms.atoms.ct_pure_choose_permitted_word_v0\n    callable: execute\n```\n\n---\n\n## Intent\n\nStops forbidden words among those offered and chooses one permitted word under the freedom of word choice and a stated seed\n",
+  "content_hash": "cef74f9e0f9cec3b9de5c6a75559c56fcd74a9bd84ec56e9650d92741e2dcfe5",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "candidates": "$.inputs.candidates",
+          "finished": "$.inputs.finished",
+          "position": "$.inputs.position",
+          "rules_in_force": "$.inputs.rules_in_force",
+          "stopped": "$.inputs.stopped",
+          "stopped_by": "$.inputs.stopped_by",
+          "text": "$.inputs.text"
+        },
+        "atom": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_choose_permitted_word_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+    "inputs": {
+      "candidates": {
+        "required": true,
+        "type": "array"
+      },
+      "finished": {
+        "required": true,
+        "type": "boolean"
+      },
+      "position": {
+        "required": true,
+        "type": "integer"
+      },
+      "rules_in_force": {
+        "required": true,
+        "type": "object"
+      },
+      "stopped": {
+        "required": true,
+        "type": "array"
+      },
+      "stopped_by": {
+        "required": true,
+        "type": "string"
+      },
+      "text": {
+        "required": true,
+        "type": "string"
+      }
+    },
+    "outputs": {
+      "finished": {
+        "from": "__atom_result__"
+      },
+      "stopped": {
+        "from": "__atom_result__"
+      },
+      "stopped_by": {
+        "from": "__atom_result__"
+      },
+      "text": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "candidates": {
+          "required": true,
+          "type": "array"
+        },
+        "finished": {
+          "required": true,
+          "type": "boolean"
+        },
+        "position": {
+          "required": true,
+          "type": "integer"
+        },
+        "rules_in_force": {
+          "required": true,
+          "type": "object"
+        },
+        "stopped": {
+          "required": true,
+          "type": "array"
+        },
+        "stopped_by": {
+          "required": true,
+          "type": "string"
+        },
+        "text": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "finished": {
+          "required": true,
+          "type": "boolean"
+        },
+        "stopped": {
+          "required": true,
+          "type": "array"
+        },
+        "stopped_by": {
+          "required": true,
+          "type": "string"
+        },
+        "text": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "refusal": "returns",
+      "summary": "Stops forbidden words among those offered and chooses one permitted word under the freedom of word choice and a stated seed"
+    },
+    "fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_choose_permitted_word_v0"
+      },
+      "operation": "CHOOSE_PERMITTED_WORD"
+    },
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
+  ],
+  "version": "0"
+}

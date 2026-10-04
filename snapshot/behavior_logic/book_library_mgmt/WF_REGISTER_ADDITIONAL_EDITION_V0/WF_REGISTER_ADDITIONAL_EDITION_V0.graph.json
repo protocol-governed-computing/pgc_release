@@ -99,8 +99,7 @@
         "steps": [
           {
             "bindings": {
-              "parameters": "in.staff_credentials",
-              "rules": "in.authorization_rules"
+              "parameters": "in.staff_credentials"
             },
             "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
             "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
@@ -119,7 +118,6 @@
       "input_bindings": {
         "type": "wf_boundary",
         "bindings": {
-          "authorization_rules": "IN.authorization_rules",
           "staff_credentials": "IN.staff_credentials"
         }
       }
@@ -134,8 +132,7 @@
         "steps": [
           {
             "bindings": {
-              "record": "in.edition_fields",
-              "schema": "in.edition_schema"
+              "record": "in.edition_fields"
             },
             "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
             "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
@@ -146,6 +143,20 @@
             "kind": "CT",
             "outputs": [
               "violations"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
             ]
           },
           {
@@ -192,7 +203,6 @@
             "title": "$.payload.title",
             "work_key": "$.results.CC_RESOLVE_WORK_V0.work_key"
           },
-          "edition_schema": "IN.edition_schema",
           "identity_key": "CC_CLAIM_BOOK_IDENTITY_V0.identity_key"
         }
       }
@@ -272,8 +282,7 @@
         "steps": [
           {
             "bindings": {
-              "record": "in.book_fields",
-              "schema": "in.book_schema"
+              "record": "in.book_fields"
             },
             "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
             "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
@@ -305,10 +314,16 @@
       "input_bindings": {
         "type": "wf_boundary",
         "bindings": {
-          "book_fields": "IN.edition_fields",
-          "book_schema": "IN.edition_schema",
-          "work_fields": "IN.work_fields",
-          "work_schema": "IN.work_schema"
+          "book_fields": {
+            "author": "$.payload.author",
+            "publication_year": "$.payload.publication_year",
+            "subject": "$.payload.subject",
+            "title": "$.payload.title"
+          },
+          "work_fields": {
+            "author": "$.payload.author",
+            "title": "$.payload.title"
+          }
         }
       }
     },

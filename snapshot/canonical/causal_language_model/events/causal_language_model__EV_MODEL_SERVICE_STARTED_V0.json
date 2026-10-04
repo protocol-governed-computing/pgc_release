@@ -1,0 +1,46 @@
+{
+  "artifact_code": "EV_MODEL_SERVICE_STARTED_V0",
+  "artifact_type": "EV",
+  "content": "# EV_MODEL_SERVICE_STARTED_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::EV_MODEL_SERVICE_STARTED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: The moment a model is placed in service and a time in service begins\n  description: The moment a model is placed in service and a time in service begins\n  subdomain: model_response\n  schema:\n    identity_key:\n      type: string\n      required: true\n    time_in_service_id:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n\n---\n\n## Intent\n\nThe moment a model is placed in service and a time in service begins\n",
+  "content_hash": "570672788f787f0304af83e5171fbbf0c98bcf2ff2a9411445fac4616d58fb7c",
+  "fqdn_id": "causal_language_model::EV_MODEL_SERVICE_STARTED_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "description": "The moment a model is placed in service and a time in service begins",
+      "schema": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "time_in_service_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "model_response",
+      "summary": "The moment a model is placed in service and a time in service begins"
+    },
+    "fqdn": "causal_language_model::EV_MODEL_SERVICE_STARTED_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

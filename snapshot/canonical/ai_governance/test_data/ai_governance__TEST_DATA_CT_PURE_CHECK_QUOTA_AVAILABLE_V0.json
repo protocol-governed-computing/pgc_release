@@ -1,0 +1,44 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: ai_licensing\ntarget: ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0\ncases:\n- case_id: available_under_cap\n  expected_outcome: SUCCESS\n  bindings:\n    assigned_count: 5\n    quota: 10\n  expected:\n    quota_available: true\n    remaining: 5\n- case_id: refuses_at_cap\n  expected_outcome: VIOLATION\n  bindings:\n    assigned_count: 10\n    quota: 10\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "c6d1f8aa7a2e7b56a6282a9c9aea02867b9e2a42aee87555d05ef86ceb5fe4e7",
+  "fqdn_id": "ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "assigned_count": 5,
+          "quota": 10
+        },
+        "case_id": "available_under_cap",
+        "expected": {
+          "quota_available": true,
+          "remaining": 5
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "assigned_count": 10,
+          "quota": 10
+        },
+        "case_id": "refuses_at_cap",
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "ai_licensing",
+    "fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+    "version": "V0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

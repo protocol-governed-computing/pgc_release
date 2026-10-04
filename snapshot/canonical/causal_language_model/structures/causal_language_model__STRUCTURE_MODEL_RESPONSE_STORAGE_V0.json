@@ -1,0 +1,50 @@
+{
+  "artifact_code": "STRUCTURE_MODEL_RESPONSE_STORAGE_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_MODEL_RESPONSE_STORAGE_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0\nartifact_kind: STRUCTURE\nversion: v0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Declares the seven stores the subdomain owns and the paths they occupy\n  layer: DOMAINS\n  domain: causal_language_model\n  subdomain: model_response\n  entity_stores:\n    MODELS:\n      path: causal_language_model/model_response/models.json\n    MODEL_IDENTITY_REGISTRY:\n      path: causal_language_model/model_response/model_identity_registry.jsonl\n    TIME_IN_SERVICE_REGISTRY:\n      path: causal_language_model/model_response/time_in_service_registry.jsonl\n    USER_PROMPT_REGISTRY:\n      path: causal_language_model/model_response/user_prompt_registry.jsonl\n    TIMES_IN_SERVICE:\n      path: causal_language_model/model_response/times_in_service.json\n    USER_PROMPT_RECORDS:\n      path: causal_language_model/model_response/user_prompt_records.jsonl\n    MODEL_OPERATIONS:\n      path: causal_language_model/model_response/model_operations.jsonl\n```\n\n---\n\n## Intent\n\nDeclares the seven stores the subdomain owns and the paths they occupy\n",
+  "content_hash": "c313dbbc8ba7bbc07a182f87c274e320f5d70133bf9c20830a979d8dab6c6144",
+  "fqdn_id": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "domain": "causal_language_model",
+      "entity_stores": {
+        "MODELS": {
+          "path": "causal_language_model/model_response/models.json"
+        },
+        "MODEL_IDENTITY_REGISTRY": {
+          "path": "causal_language_model/model_response/model_identity_registry.jsonl"
+        },
+        "MODEL_OPERATIONS": {
+          "path": "causal_language_model/model_response/model_operations.jsonl"
+        },
+        "TIMES_IN_SERVICE": {
+          "path": "causal_language_model/model_response/times_in_service.json"
+        },
+        "TIME_IN_SERVICE_REGISTRY": {
+          "path": "causal_language_model/model_response/time_in_service_registry.jsonl"
+        },
+        "USER_PROMPT_RECORDS": {
+          "path": "causal_language_model/model_response/user_prompt_records.jsonl"
+        },
+        "USER_PROMPT_REGISTRY": {
+          "path": "causal_language_model/model_response/user_prompt_registry.jsonl"
+        }
+      },
+      "layer": "DOMAINS",
+      "subdomain": "model_response",
+      "summary": "Declares the seven stores the subdomain owns and the paths they occupy"
+    },
+    "fqdn": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

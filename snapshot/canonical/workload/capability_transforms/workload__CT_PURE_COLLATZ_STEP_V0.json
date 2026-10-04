@@ -1,8 +1,8 @@
 {
   "artifact_code": "CT_PURE_COLLATZ_STEP_V0",
   "artifact_type": "CT",
-  "content": "# CT_PURE_COLLATZ_STEP_V0\n\n## 1. Intent\n\nCompute the full Collatz sequence for each input number. Pure, deterministic, no side effects.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::CT_PURE_COLLATZ_STEP_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Compute full Collatz sequence for each input number\n  refusal: never\n  description: For each n in numbers, iterates the Collatz rule until reaching 1. Returns mapping of n\n    \u2192 sequence.\n  inputs:\n    numbers:\n      type: array\n      required: true\n      description: List of positive integers for which to compute sequences\n  outputs:\n    sequences:\n      type: object\n      required: true\n      description: Mapping from str(n) to full Collatz sequence as list of integers\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_COLLATZ_STEP\n  implementation:\n    module: workloads.collatz.implementation.capability_transforms.atoms.ct_pure_collatz_step_v0\n    callable: execute\n```\n",
-  "content_hash": "ce0ea053bb8f4a45f5d372cb9c172d2d13a5125031edd841d74cf1c1891211f3",
+  "content": "# CT_PURE_COLLATZ_STEP_V0\n\n## 1. Intent\n\nCompute the full Collatz sequence for each input number. Pure, deterministic, no side effects.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::CT_PURE_COLLATZ_STEP_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Compute full Collatz sequence for each input number\n  refusal: never\n  description: For each n in numbers, iterates the Collatz rule until reaching 1. Returns mapping of n\n    \u2192 sequence.\n  inputs:\n    numbers:\n      type: array\n      required: true\n      description: List of positive integers for which to compute sequences\n  outputs:\n    sequences:\n      type: object\n      required: true\n      description: Mapping from str(n) to full Collatz sequence as list of integers\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_COLLATZ_STEP\n  implementation:\n    module: workloads.collatz.implementation.capability_transforms.atoms.ct_pure_collatz_step_v0\n    callable: execute\n```\n",
+  "content_hash": "d59a40dffec31fc39d96c7e039d8bb6db77af280de438f726780f5717b506180",
   "ct_ir": {
     "artifact_code": "CT_PURE_COLLATZ_STEP_V0",
     "atom_stream": [
@@ -15,7 +15,8 @@
           "callable": "execute",
           "module": "workloads.collatz.implementation.capability_transforms.atoms.ct_pure_collatz_step_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -58,7 +59,7 @@
       "summary": "Compute full Collatz sequence for each input number"
     },
     "fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",
@@ -73,7 +74,7 @@
   "layer_code": "WORKLOAD",
   "namespace": "workload",
   "references": [
-    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
   ],
   "version": "0"
 }

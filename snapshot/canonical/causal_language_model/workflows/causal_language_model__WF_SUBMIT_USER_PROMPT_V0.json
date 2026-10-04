@@ -1,0 +1,404 @@
+{
+  "artifact_code": "WF_SUBMIT_USER_PROMPT_V0",
+  "artifact_type": "WF",
+  "content": "# WF_SUBMIT_USER_PROMPT_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::WF_SUBMIT_USER_PROMPT_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: model_response\nruntime_binding: causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0\nsubdomain: model_response\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: Admitting a user prompt, writing the response under the rules, releasing or refusing it, and\n    recording it\n  actor_context: causal_language_model::AC_MODEL_STAFF_V0\n  start_node: IN_SUBMIT_USER_PROMPT_V0\n  nodes:\n    IN_SUBMIT_USER_PROMPT_V0:\n      type: IN\n      code: IN_SUBMIT_USER_PROMPT_V0\n      next:\n        ACK: CC_CLAIM_USER_PROMPT_IDENTITY_V0\n        NACK: EXIT_REJECTED\n    CC_CLAIM_USER_PROMPT_IDENTITY_V0:\n      type: CC\n      code: CC_CLAIM_USER_PROMPT_IDENTITY_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n      next:\n        SUCCESS: CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0\n        ALREADY_EXISTS: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0:\n      type: CC\n      code: CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0\n      inputs:\n        customer_id: $.payload.customer_id\n        permitted_customers: $.payload.permitted_customers\n      next:\n        SUCCESS: CC_ADMIT_USER_PROMPT_V0\n        VIOLATION: RECORD_REFUSED_NOT_PERMITTED\n    CC_ADMIT_USER_PROMPT_V0:\n      type: CC\n      code: CC_ADMIT_USER_PROMPT_V0\n      inputs:\n        identity_key: $.payload.identity_key\n      next:\n        SUCCESS: CC_CONFIRM_WITHIN_CEILING_V0\n        NOT_FOUND: RECORD_REFUSED_NOT_REGISTERED\n        VIOLATION: RECORD_REFUSED_NOT_IN_SERVICE\n        BACKEND_ERROR: RECORD_FAILED_BEFORE_READING\n    CC_CONFIRM_WITHIN_CEILING_V0:\n      type: CC\n      code: CC_CONFIRM_WITHIN_CEILING_V0\n      inputs:\n        time_in_service_id: $.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id\n        kind: $.payload.kind\n      next:\n        SUCCESS: CC_CONFIRM_READING_FITS_V0\n        NOT_FOUND: RECORD_REFUSED_NOT_IN_SERVICE\n        VIOLATION: RECORD_REFUSED_ABOVE_CEILING\n        BACKEND_ERROR: RECORD_FAILED_BEFORE_READING\n    CC_CONFIRM_READING_FITS_V0:\n      type: CC\n      code: CC_CONFIRM_READING_FITS_V0\n      inputs:\n        system_prompt: $.results.CC_CONFIRM_WITHIN_CEILING_V0.time_in_service.system_prompt\n        question: $.payload.question\n        supporting_material: $.payload.supporting_material\n        reading_capacity: $.results.CC_ADMIT_USER_PROMPT_V0.model_record.description.reading_capacity\n      next:\n        SUCCESS: CC_WRITE_MODEL_RESPONSE_V0\n        VIOLATION: RECORD_REFUSED_TOO_LONG_TO_READ\n    CC_WRITE_MODEL_RESPONSE_V0:\n      type: CC\n      code: CC_WRITE_MODEL_RESPONSE_V0\n      inputs:\n        response_rules: $.results.CC_CONFIRM_WITHIN_CEILING_V0.time_in_service.response_rules\n        account_numbers: $.payload.account_numbers\n        seed: $.payload.seed\n        reading: $.results.CC_CONFIRM_READING_FITS_V0.reading\n      next:\n        SUCCESS: CONFIRM_NO_RULE_STOPPED\n        VIOLATION: RECORD_FAILED_WHILE_WRITING\n    CONFIRM_NO_RULE_STOPPED:\n      type: CC\n      code: CC_CONFIRM_RESPONSE_RELEASABLE_V0\n      inputs:\n        release_facts:\n          stopped_by: $.results.CC_WRITE_MODEL_RESPONSE_V0.written_response.stopped_by\n        release_rules:\n        - field: stopped_by\n          op: eq\n          value: none\n      next:\n        SUCCESS: CONFIRM_FINISHED\n        VIOLATION: RECORD_REFUSED_BY_RULE\n    CONFIRM_FINISHED:\n      type: CC\n      code: CC_CONFIRM_RESPONSE_RELEASABLE_V0\n      inputs:\n        release_facts:\n          finished: $.results.CC_WRITE_MODEL_RESPONSE_V0.written_response.finished\n        release_rules:\n        - field: finished\n          op: eq\n          value: true\n      next:\n        SUCCESS: RECORD_RESPONDED\n        VIOLATION: RECORD_REFUSED_UNFINISHED\n    RECORD_RESPONDED:\n      type: CC\n      code: CC_RECORD_USER_PROMPT_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n        requester_id: $.payload.requester_id\n        customer_id: $.payload.customer_id\n        identity_key: $.payload.identity_key\n        kind: $.payload.kind\n        question: $.payload.question\n        supporting_material: $.payload.supporting_material\n        time_in_service_id: $.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id\n        reading: $.results.CC_CONFIRM_READING_FITS_V0.reading\n        rules_in_force: $.results.CC_WRITE_MODEL_RESPONSE_V0.rules_in_force\n        response: $.results.CC_WRITE_MODEL_RESPONSE_V0.written_response.text\n        outcome: RESPONDED\n      next:\n        SUCCESS: EXIT_RESPONDED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    RECORD_REFUSED_NOT_PERMITTED:\n      type: CC\n      code: CC_RECORD_USER_PROMPT_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n        requester_id: $.payload.requester_id\n        customer_id: $.payload.customer_id\n        identity_key: $.payload.identity_key\n        kind: $.payload.kind\n        question: $.payload.question\n        supporting_material: $.payload.supporting_material\n        outcome: REFUSED\n        reason: requester_not_permitted_for_customer\n      next:\n        SUCCESS: EXIT_REFUSED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    RECORD_REFUSED_NOT_REGISTERED:\n      type: CC\n      code: CC_RECORD_USER_PROMPT_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n        requester_id: $.payload.requester_id\n        customer_id: $.payload.customer_id\n        identity_key: $.payload.identity_key\n        kind: $.payload.kind\n        question: $.payload.question\n        supporting_material: $.payload.supporting_material\n        outcome: REFUSED\n        reason: model_not_registered\n      next:\n        SUCCESS: EXIT_REFUSED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    RECORD_REFUSED_NOT_IN_SERVICE:\n      type: CC\n      code: CC_RECORD_USER_PROMPT_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n        requester_id: $.payload.requester_id\n        customer_id: $.payload.customer_id\n        identity_key: $.payload.identity_key\n        kind: $.payload.kind\n        question: $.payload.question\n        supporting_material: $.payload.supporting_material\n        outcome: REFUSED\n        reason: model_not_in_service\n      next:\n        SUCCESS: EXIT_REFUSED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    RECORD_REFUSED_ABOVE_CEILING:\n      type: CC\n      code: CC_RECORD_USER_PROMPT_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n        requester_id: $.payload.requester_id\n        customer_id: $.payload.customer_id\n        identity_key: $.payload.identity_key\n        kind: $.payload.kind\n        question: $.payload.question\n        supporting_material: $.payload.supporting_material\n        time_in_service_id: $.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id\n        outcome: REFUSED\n        reason: kind_above_sensitivity_ceiling\n      next:\n        SUCCESS: EXIT_REFUSED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    RECORD_REFUSED_TOO_LONG_TO_READ:\n      type: CC\n      code: CC_RECORD_USER_PROMPT_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n        requester_id: $.payload.requester_id\n        customer_id: $.payload.customer_id\n        identity_key: $.payload.identity_key\n        kind: $.payload.kind\n        question: $.payload.question\n        supporting_material: $.payload.supporting_material\n        time_in_service_id: $.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id\n        outcome: REFUSED\n        reason: reading_longer_than_model_can_read\n      next:\n        SUCCESS: EXIT_REFUSED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    RECORD_REFUSED_BY_RULE:\n      type: CC\n      code: CC_RECORD_USER_PROMPT_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n        requester_id: $.payload.requester_id\n        customer_id: $.payload.customer_id\n        identity_key: $.payload.identity_key\n        kind: $.payload.kind\n        question: $.payload.question\n        supporting_material: $.payload.supporting_material\n        time_in_service_id: $.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id\n        reading: $.results.CC_CONFIRM_READING_FITS_V0.reading\n        rules_in_force: $.results.CC_WRITE_MODEL_RESPONSE_V0.rules_in_force\n        outcome: REFUSED\n        reason: $.results.CC_WRITE_MODEL_RESPONSE_V0.written_response.stopped_by\n      next:\n        SUCCESS: EXIT_REFUSED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    RECORD_REFUSED_UNFINISHED:\n      type: CC\n      code: CC_RECORD_USER_PROMPT_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n        requester_id: $.payload.requester_id\n        customer_id: $.payload.customer_id\n        identity_key: $.payload.identity_key\n        kind: $.payload.kind\n        question: $.payload.question\n        supporting_material: $.payload.supporting_material\n        time_in_service_id: $.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id\n        reading: $.results.CC_CONFIRM_READING_FITS_V0.reading\n        rules_in_force: $.results.CC_WRITE_MODEL_RESPONSE_V0.rules_in_force\n        outcome: REFUSED\n        reason: longest_response_reached\n      next:\n        SUCCESS: EXIT_REFUSED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    RECORD_FAILED_BEFORE_READING:\n      type: CC\n      code: CC_RECORD_USER_PROMPT_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n        requester_id: $.payload.requester_id\n        customer_id: $.payload.customer_id\n        identity_key: $.payload.identity_key\n        kind: $.payload.kind\n        question: $.payload.question\n        supporting_material: $.payload.supporting_material\n        outcome: FAILED\n        reason: store_failed_before_the_model_read\n      next:\n        SUCCESS: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    RECORD_FAILED_WHILE_WRITING:\n      type: CC\n      code: CC_RECORD_USER_PROMPT_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n        requester_id: $.payload.requester_id\n        customer_id: $.payload.customer_id\n        identity_key: $.payload.identity_key\n        kind: $.payload.kind\n        question: $.payload.question\n        supporting_material: $.payload.supporting_material\n        time_in_service_id: $.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id\n        reading: $.results.CC_CONFIRM_READING_FITS_V0.reading\n        outcome: FAILED\n        reason: writing_failed\n      next:\n        SUCCESS: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_RESPONDED:\n      type: EXIT\n      emit: causal_language_model::EV_USER_PROMPT_RESPONDED_V0\n    EXIT_REFUSED:\n      type: EXIT\n      emit: causal_language_model::EV_USER_PROMPT_REFUSED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n\n---\n\n## Intent\n\nAdmitting a user prompt, writing the response under the rules, releasing or refusing it, and recording it\n",
+  "content_hash": "95e1e60dddc1cb7e87bc08061c9557d0611e19ec7f83373c26db5f6dbb0ce128",
+  "fqdn_id": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "actor_context": "causal_language_model::AC_MODEL_STAFF_V0",
+      "nodes": {
+        "CC_ADMIT_USER_PROMPT_V0": {
+          "code": "CC_ADMIT_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_ADMIT_USER_PROMPT_V0",
+          "inputs": {
+            "identity_key": "$.payload.identity_key"
+          },
+          "next": {
+            "BACKEND_ERROR": "RECORD_FAILED_BEFORE_READING",
+            "NOT_FOUND": "RECORD_REFUSED_NOT_REGISTERED",
+            "SUCCESS": "CC_CONFIRM_WITHIN_CEILING_V0",
+            "VIOLATION": "RECORD_REFUSED_NOT_IN_SERVICE"
+          },
+          "type": "CC"
+        },
+        "CC_CLAIM_USER_PROMPT_IDENTITY_V0": {
+          "code": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+          "fqdn_id": "causal_language_model::CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+          "inputs": {
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "ALREADY_EXISTS": "EXIT_REJECTED",
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CONFIRM_READING_FITS_V0": {
+          "code": "CC_CONFIRM_READING_FITS_V0",
+          "fqdn_id": "causal_language_model::CC_CONFIRM_READING_FITS_V0",
+          "inputs": {
+            "question": "$.payload.question",
+            "reading_capacity": "$.results.CC_ADMIT_USER_PROMPT_V0.model_record.description.reading_capacity",
+            "supporting_material": "$.payload.supporting_material",
+            "system_prompt": "$.results.CC_CONFIRM_WITHIN_CEILING_V0.time_in_service.system_prompt"
+          },
+          "next": {
+            "SUCCESS": "CC_WRITE_MODEL_RESPONSE_V0",
+            "VIOLATION": "RECORD_REFUSED_TOO_LONG_TO_READ"
+          },
+          "type": "CC"
+        },
+        "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0": {
+          "code": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+          "fqdn_id": "causal_language_model::CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+          "inputs": {
+            "customer_id": "$.payload.customer_id",
+            "permitted_customers": "$.payload.permitted_customers"
+          },
+          "next": {
+            "SUCCESS": "CC_ADMIT_USER_PROMPT_V0",
+            "VIOLATION": "RECORD_REFUSED_NOT_PERMITTED"
+          },
+          "type": "CC"
+        },
+        "CC_CONFIRM_WITHIN_CEILING_V0": {
+          "code": "CC_CONFIRM_WITHIN_CEILING_V0",
+          "fqdn_id": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+          "inputs": {
+            "kind": "$.payload.kind",
+            "time_in_service_id": "$.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "RECORD_FAILED_BEFORE_READING",
+            "NOT_FOUND": "RECORD_REFUSED_NOT_IN_SERVICE",
+            "SUCCESS": "CC_CONFIRM_READING_FITS_V0",
+            "VIOLATION": "RECORD_REFUSED_ABOVE_CEILING"
+          },
+          "type": "CC"
+        },
+        "CC_WRITE_MODEL_RESPONSE_V0": {
+          "code": "CC_WRITE_MODEL_RESPONSE_V0",
+          "fqdn_id": "causal_language_model::CC_WRITE_MODEL_RESPONSE_V0",
+          "inputs": {
+            "account_numbers": "$.payload.account_numbers",
+            "reading": "$.results.CC_CONFIRM_READING_FITS_V0.reading",
+            "response_rules": "$.results.CC_CONFIRM_WITHIN_CEILING_V0.time_in_service.response_rules",
+            "seed": "$.payload.seed"
+          },
+          "next": {
+            "SUCCESS": "CONFIRM_NO_RULE_STOPPED",
+            "VIOLATION": "RECORD_FAILED_WHILE_WRITING"
+          },
+          "type": "CC"
+        },
+        "CONFIRM_FINISHED": {
+          "code": "CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+          "fqdn_id": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+          "inputs": {
+            "release_facts": {
+              "finished": "$.results.CC_WRITE_MODEL_RESPONSE_V0.written_response.finished"
+            },
+            "release_rules": [
+              {
+                "field": "finished",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          "next": {
+            "SUCCESS": "RECORD_RESPONDED",
+            "VIOLATION": "RECORD_REFUSED_UNFINISHED"
+          },
+          "type": "CC"
+        },
+        "CONFIRM_NO_RULE_STOPPED": {
+          "code": "CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+          "fqdn_id": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+          "inputs": {
+            "release_facts": {
+              "stopped_by": "$.results.CC_WRITE_MODEL_RESPONSE_V0.written_response.stopped_by"
+            },
+            "release_rules": [
+              {
+                "field": "stopped_by",
+                "op": "eq",
+                "value": "none"
+              }
+            ]
+          },
+          "next": {
+            "SUCCESS": "CONFIRM_FINISHED",
+            "VIOLATION": "RECORD_REFUSED_BY_RULE"
+          },
+          "type": "CC"
+        },
+        "EXIT_REFUSED": {
+          "emit": "causal_language_model::EV_USER_PROMPT_REFUSED_V0",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "EXIT_RESPONDED": {
+          "emit": "causal_language_model::EV_USER_PROMPT_RESPONDED_V0",
+          "type": "EXIT"
+        },
+        "IN_SUBMIT_USER_PROMPT_V0": {
+          "code": "IN_SUBMIT_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::IN_SUBMIT_USER_PROMPT_V0",
+          "next": {
+            "ACK": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        },
+        "RECORD_FAILED_BEFORE_READING": {
+          "code": "CC_RECORD_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+          "inputs": {
+            "customer_id": "$.payload.customer_id",
+            "identity_key": "$.payload.identity_key",
+            "kind": "$.payload.kind",
+            "outcome": "FAILED",
+            "question": "$.payload.question",
+            "reason": "store_failed_before_the_model_read",
+            "requester_id": "$.payload.requester_id",
+            "supporting_material": "$.payload.supporting_material",
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_REJECTED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "RECORD_FAILED_WHILE_WRITING": {
+          "code": "CC_RECORD_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+          "inputs": {
+            "customer_id": "$.payload.customer_id",
+            "identity_key": "$.payload.identity_key",
+            "kind": "$.payload.kind",
+            "outcome": "FAILED",
+            "question": "$.payload.question",
+            "reading": "$.results.CC_CONFIRM_READING_FITS_V0.reading",
+            "reason": "writing_failed",
+            "requester_id": "$.payload.requester_id",
+            "supporting_material": "$.payload.supporting_material",
+            "time_in_service_id": "$.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id",
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_REJECTED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "RECORD_REFUSED_ABOVE_CEILING": {
+          "code": "CC_RECORD_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+          "inputs": {
+            "customer_id": "$.payload.customer_id",
+            "identity_key": "$.payload.identity_key",
+            "kind": "$.payload.kind",
+            "outcome": "REFUSED",
+            "question": "$.payload.question",
+            "reason": "kind_above_sensitivity_ceiling",
+            "requester_id": "$.payload.requester_id",
+            "supporting_material": "$.payload.supporting_material",
+            "time_in_service_id": "$.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id",
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_REFUSED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "RECORD_REFUSED_BY_RULE": {
+          "code": "CC_RECORD_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+          "inputs": {
+            "customer_id": "$.payload.customer_id",
+            "identity_key": "$.payload.identity_key",
+            "kind": "$.payload.kind",
+            "outcome": "REFUSED",
+            "question": "$.payload.question",
+            "reading": "$.results.CC_CONFIRM_READING_FITS_V0.reading",
+            "reason": "$.results.CC_WRITE_MODEL_RESPONSE_V0.written_response.stopped_by",
+            "requester_id": "$.payload.requester_id",
+            "rules_in_force": "$.results.CC_WRITE_MODEL_RESPONSE_V0.rules_in_force",
+            "supporting_material": "$.payload.supporting_material",
+            "time_in_service_id": "$.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id",
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_REFUSED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "RECORD_REFUSED_NOT_IN_SERVICE": {
+          "code": "CC_RECORD_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+          "inputs": {
+            "customer_id": "$.payload.customer_id",
+            "identity_key": "$.payload.identity_key",
+            "kind": "$.payload.kind",
+            "outcome": "REFUSED",
+            "question": "$.payload.question",
+            "reason": "model_not_in_service",
+            "requester_id": "$.payload.requester_id",
+            "supporting_material": "$.payload.supporting_material",
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_REFUSED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "RECORD_REFUSED_NOT_PERMITTED": {
+          "code": "CC_RECORD_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+          "inputs": {
+            "customer_id": "$.payload.customer_id",
+            "identity_key": "$.payload.identity_key",
+            "kind": "$.payload.kind",
+            "outcome": "REFUSED",
+            "question": "$.payload.question",
+            "reason": "requester_not_permitted_for_customer",
+            "requester_id": "$.payload.requester_id",
+            "supporting_material": "$.payload.supporting_material",
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_REFUSED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "RECORD_REFUSED_NOT_REGISTERED": {
+          "code": "CC_RECORD_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+          "inputs": {
+            "customer_id": "$.payload.customer_id",
+            "identity_key": "$.payload.identity_key",
+            "kind": "$.payload.kind",
+            "outcome": "REFUSED",
+            "question": "$.payload.question",
+            "reason": "model_not_registered",
+            "requester_id": "$.payload.requester_id",
+            "supporting_material": "$.payload.supporting_material",
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_REFUSED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "RECORD_REFUSED_TOO_LONG_TO_READ": {
+          "code": "CC_RECORD_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+          "inputs": {
+            "customer_id": "$.payload.customer_id",
+            "identity_key": "$.payload.identity_key",
+            "kind": "$.payload.kind",
+            "outcome": "REFUSED",
+            "question": "$.payload.question",
+            "reason": "reading_longer_than_model_can_read",
+            "requester_id": "$.payload.requester_id",
+            "supporting_material": "$.payload.supporting_material",
+            "time_in_service_id": "$.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id",
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_REFUSED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "RECORD_REFUSED_UNFINISHED": {
+          "code": "CC_RECORD_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+          "inputs": {
+            "customer_id": "$.payload.customer_id",
+            "identity_key": "$.payload.identity_key",
+            "kind": "$.payload.kind",
+            "outcome": "REFUSED",
+            "question": "$.payload.question",
+            "reading": "$.results.CC_CONFIRM_READING_FITS_V0.reading",
+            "reason": "longest_response_reached",
+            "requester_id": "$.payload.requester_id",
+            "rules_in_force": "$.results.CC_WRITE_MODEL_RESPONSE_V0.rules_in_force",
+            "supporting_material": "$.payload.supporting_material",
+            "time_in_service_id": "$.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id",
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_REFUSED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "RECORD_RESPONDED": {
+          "code": "CC_RECORD_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+          "inputs": {
+            "customer_id": "$.payload.customer_id",
+            "identity_key": "$.payload.identity_key",
+            "kind": "$.payload.kind",
+            "outcome": "RESPONDED",
+            "question": "$.payload.question",
+            "reading": "$.results.CC_CONFIRM_READING_FITS_V0.reading",
+            "requester_id": "$.payload.requester_id",
+            "response": "$.results.CC_WRITE_MODEL_RESPONSE_V0.written_response.text",
+            "rules_in_force": "$.results.CC_WRITE_MODEL_RESPONSE_V0.rules_in_force",
+            "supporting_material": "$.payload.supporting_material",
+            "time_in_service_id": "$.results.CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id",
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_RESPONDED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        }
+      },
+      "start_node": "IN_SUBMIT_USER_PROMPT_V0",
+      "summary": "Admitting a user prompt, writing the response under the rules, releasing or refusing it, and recording it"
+    },
+    "fqdn": "causal_language_model::WF_SUBMIT_USER_PROMPT_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "model_response",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

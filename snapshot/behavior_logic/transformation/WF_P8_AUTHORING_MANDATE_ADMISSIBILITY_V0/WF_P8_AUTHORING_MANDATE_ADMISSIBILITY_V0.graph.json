@@ -288,7 +288,7 @@
               "params": {
                 "column": "Code",
                 "detail": "build code {value!r} must be a binding FQDN copied verbatim from Stage 7",
-                "pattern": "^[a-z][a-z0-9_.]*::(?:STRUCTURE|VOCAB|AC|IN|WF|CC|CT|CS|RB|EV|TI|TE)_[A-Z0-9_]+_V\\d+$"
+                "pattern": "^[a-z][a-z0-9_.]*::(?:STRUCTURE|TEST_DATA|VOCAB|AC|IN|WF|CC|CT|CS|RB|EV|TI|TE)_[A-Z0-9_]+_V\\d+$"
               },
               "register": "build_order"
             },

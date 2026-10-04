@@ -2,7 +2,7 @@
   "artifact_code": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
   "artifact_type": "CT",
   "content": "",
-  "content_hash": "3f3c267eaded9a3f0c042b8a545de7410212e8118a9ecdda321e3d323ded3ea7",
+  "content_hash": "13cf2898e3397f0c3b6cad8740562193f9c126e3d8b2ab59c851d165edd410f3",
   "ct_ir": {
     "artifact_code": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
     "atom_stream": [
@@ -16,7 +16,8 @@
           "callable": "execute",
           "module": "capability_transforms.implementation.ct_pure_validate_set_membership_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -69,7 +70,7 @@
       "summary": "Validate set membership"
     },
     "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",

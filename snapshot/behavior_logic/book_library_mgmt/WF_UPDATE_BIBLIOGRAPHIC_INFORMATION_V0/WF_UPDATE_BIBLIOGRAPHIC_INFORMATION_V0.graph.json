@@ -47,8 +47,7 @@
         "steps": [
           {
             "bindings": {
-              "parameters": "in.staff_credentials",
-              "rules": "in.authorization_rules"
+              "parameters": "in.staff_credentials"
             },
             "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
             "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
@@ -186,6 +185,21 @@
             "kind": "CT",
             "outputs": [
               "record"
+            ]
+          },
+          {
+            "bindings": {
+              "record": "assemble_updated_record.updated_record"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "inputs": [
+              "record",
+              "schema"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "violations"
             ]
           }
         ]

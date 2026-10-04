@@ -1,0 +1,107 @@
+{
+  "artifact_code": "WF_RELEASE_HOSTED_RESPONSE_V0",
+  "artifact_type": "WF",
+  "content": "# WF_RELEASE_HOSTED_RESPONSE_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: model_response\nruntime_binding: causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0\nsubdomain: model_response\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: Releasing a completed hosted response from the record\n  actor_context: causal_language_model::AC_MODEL_HOST_V0\n  start_node: IN_RELEASE_HOSTED_RESPONSE_V0\n  nodes:\n    IN_RELEASE_HOSTED_RESPONSE_V0:\n      type: IN\n      code: IN_RELEASE_HOSTED_RESPONSE_V0\n      next:\n        ACK: CC_READ_HOSTED_STATE_V0\n        NACK: EXIT_REJECTED\n    CC_READ_HOSTED_STATE_V0:\n      type: CC\n      code: CC_READ_HOSTED_STATE_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n      next:\n        SUCCESS: CONFIRM_FINISHED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CONFIRM_FINISHED:\n      type: CC\n      code: CC_CONFIRM_RESPONSE_RELEASABLE_V0\n      inputs:\n        release_facts:\n          finished: $.results.CC_READ_HOSTED_STATE_V0.state.finished\n        release_rules:\n        - field: finished\n          op: eq\n          value: true\n      next:\n        SUCCESS: RECORD_RESPONDED\n        VIOLATION: EXIT_REJECTED\n    RECORD_RESPONDED:\n      type: CC\n      code: CC_RECORD_USER_PROMPT_V0\n      inputs:\n        user_prompt_id: $.payload.user_prompt_id\n        requester_id: $.results.CC_READ_HOSTED_STATE_V0.state.opening.requester_id\n        customer_id: $.results.CC_READ_HOSTED_STATE_V0.state.opening.customer_id\n        identity_key: $.results.CC_READ_HOSTED_STATE_V0.state.opening.identity_key\n        kind: $.results.CC_READ_HOSTED_STATE_V0.state.opening.kind\n        question: $.results.CC_READ_HOSTED_STATE_V0.state.opening.question\n        supporting_material: $.results.CC_READ_HOSTED_STATE_V0.state.opening.supporting_material\n        time_in_service_id: $.results.CC_READ_HOSTED_STATE_V0.state.opening.time_in_service_id\n        reading: $.results.CC_READ_HOSTED_STATE_V0.state.opening.reading\n        rules_in_force: $.results.CC_READ_HOSTED_STATE_V0.state.opening.rules_in_force\n        outcome: RESPONDED\n        response: $.results.CC_READ_HOSTED_STATE_V0.state.text\n      next:\n        SUCCESS: EXIT_RESPONDED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_RESPONDED:\n      type: EXIT\n      emit: causal_language_model::EV_USER_PROMPT_RESPONDED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n\n---\n\n## Intent\n\nReleasing a completed hosted response from the record\n",
+  "content_hash": "9a4ecf8276eed471f4744613fe0685d3a113b2cd1845285d8b17f393fb64857d",
+  "fqdn_id": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "actor_context": "causal_language_model::AC_MODEL_HOST_V0",
+      "nodes": {
+        "CC_READ_HOSTED_STATE_V0": {
+          "code": "CC_READ_HOSTED_STATE_V0",
+          "fqdn_id": "causal_language_model::CC_READ_HOSTED_STATE_V0",
+          "inputs": {
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CONFIRM_FINISHED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CONFIRM_FINISHED": {
+          "code": "CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+          "fqdn_id": "causal_language_model::CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+          "inputs": {
+            "release_facts": {
+              "finished": "$.results.CC_READ_HOSTED_STATE_V0.state.finished"
+            },
+            "release_rules": [
+              {
+                "field": "finished",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          "next": {
+            "SUCCESS": "RECORD_RESPONDED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "EXIT_RESPONDED": {
+          "emit": "causal_language_model::EV_USER_PROMPT_RESPONDED_V0",
+          "type": "EXIT"
+        },
+        "IN_RELEASE_HOSTED_RESPONSE_V0": {
+          "code": "IN_RELEASE_HOSTED_RESPONSE_V0",
+          "fqdn_id": "causal_language_model::IN_RELEASE_HOSTED_RESPONSE_V0",
+          "next": {
+            "ACK": "CC_READ_HOSTED_STATE_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        },
+        "RECORD_RESPONDED": {
+          "code": "CC_RECORD_USER_PROMPT_V0",
+          "fqdn_id": "causal_language_model::CC_RECORD_USER_PROMPT_V0",
+          "inputs": {
+            "customer_id": "$.results.CC_READ_HOSTED_STATE_V0.state.opening.customer_id",
+            "identity_key": "$.results.CC_READ_HOSTED_STATE_V0.state.opening.identity_key",
+            "kind": "$.results.CC_READ_HOSTED_STATE_V0.state.opening.kind",
+            "outcome": "RESPONDED",
+            "question": "$.results.CC_READ_HOSTED_STATE_V0.state.opening.question",
+            "reading": "$.results.CC_READ_HOSTED_STATE_V0.state.opening.reading",
+            "requester_id": "$.results.CC_READ_HOSTED_STATE_V0.state.opening.requester_id",
+            "response": "$.results.CC_READ_HOSTED_STATE_V0.state.text",
+            "rules_in_force": "$.results.CC_READ_HOSTED_STATE_V0.state.opening.rules_in_force",
+            "supporting_material": "$.results.CC_READ_HOSTED_STATE_V0.state.opening.supporting_material",
+            "time_in_service_id": "$.results.CC_READ_HOSTED_STATE_V0.state.opening.time_in_service_id",
+            "user_prompt_id": "$.payload.user_prompt_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_RESPONDED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        }
+      },
+      "start_node": "IN_RELEASE_HOSTED_RESPONSE_V0",
+      "summary": "Releasing a completed hosted response from the record"
+    },
+    "fqdn": "causal_language_model::WF_RELEASE_HOSTED_RESPONSE_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "model_response",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

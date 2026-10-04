@@ -2,7 +2,7 @@
   "artifact_code": "CT_PURE_COMPARE_EQUAL_V0",
   "artifact_type": "CT",
   "content": "",
-  "content_hash": "c499bf92dc77d6cb36c8e610e4969a40252dcc856784b41c2af6f060032320f3",
+  "content_hash": "fba9bff0f110ad2ee918b5314135e7a00bbc0f1c5304c1ec66c69a896c8e2aec",
   "ct_ir": {
     "artifact_code": "CT_PURE_COMPARE_EQUAL_V0",
     "atom_stream": [
@@ -16,7 +16,8 @@
           "callable": "execute",
           "module": "capability_transforms.implementation.ct_pure_compare_equal_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -62,7 +63,7 @@
       "summary": "Compare two values for equality."
     },
     "fqdn": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",

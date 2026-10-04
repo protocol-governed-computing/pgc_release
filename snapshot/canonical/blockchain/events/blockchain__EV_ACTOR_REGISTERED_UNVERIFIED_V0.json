@@ -1,8 +1,8 @@
 {
   "artifact_code": "EV_ACTOR_REGISTERED_UNVERIFIED_V0",
   "artifact_type": "EV",
-  "content": "# EV_ACTOR_REGISTERED_UNVERIFIED_V0\n\n## 1. Intent\n\nThe moment a person is admitted and trusted with nothing\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_ACTOR_REGISTERED_UNVERIFIED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: The moment a person is admitted and trusted with nothing\n  description: The moment a person is admitted and trusted with nothing\n  subdomain: identity\n  schema:\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
-  "content_hash": "88521dbed3cda0cf599778ca23f66e8d97dec19126dafee76b1428f735f3dc6e",
+  "content": "# EV_ACTOR_REGISTERED_UNVERIFIED_V0\n\n## 1. Intent\n\nThe moment a person is admitted and trusted with nothing\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_ACTOR_REGISTERED_UNVERIFIED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: The moment a person is admitted and trusted with nothing\n  description: The moment a person is admitted and trusted with nothing\n  subdomain: identity\n  schema:\n    contact_address:\n      type: string\n      required: true\n    occurred_at:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
+  "content_hash": "22d63138ea1aeeeafb70dbc2d52e8b0e773c17e0c1fecff7e3b1590c21c9c248",
   "fqdn_id": "blockchain::EV_ACTOR_REGISTERED_UNVERIFIED_V0",
   "frontmatter": {
     "artifact_kind": "EVENT",
@@ -11,6 +11,14 @@
     "core": {
       "description": "The moment a person is admitted and trusted with nothing",
       "schema": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "occurred_at": {
+          "required": true,
+          "type": "string"
+        },
         "timestamp": {
           "description": "When the moment occurred",
           "format": "date-time",

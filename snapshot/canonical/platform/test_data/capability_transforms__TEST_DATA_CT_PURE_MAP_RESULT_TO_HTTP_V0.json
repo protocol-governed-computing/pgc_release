@@ -1,0 +1,243 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_MAP_RESULT_TO_HTTP_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_MAP_RESULT_TO_HTTP_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_MAP_RESULT_TO_HTTP_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_MAP_RESULT_TO_HTTP_V0\ntarget: capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0\ncases:\n- case_id: success_with_data\n  expected_outcome: SUCCESS\n  bindings:\n    execution_result:\n      status: SUCCESS\n      exit_reason_code: null\n      trace_id: null\n      result_payload:\n        user_id: usr_123\n        action: created\n        timestamp: '2026-04-02T10:00:00Z'\n    mapping:\n      SUCCESS: 200\n      FAILURE: 400\n      ERROR: 500\n  expected:\n    http_status: 200\n    response_body:\n      status: SUCCESS\n      exit_reason_code: null\n      trace_id: null\n      result_payload:\n        user_id: usr_123\n        action: created\n        timestamp: '2026-04-02T10:00:00Z'\n    result_status: SUCCESS\n- case_id: failure_with_error\n  expected_outcome: SUCCESS\n  bindings:\n    execution_result:\n      status: FAILED\n      exit_reason_code: EXIT_VIOLATION\n      trace_id: null\n      result_payload: {}\n      error_code: VALIDATION_ERROR\n      message: Invalid email format\n    mapping:\n      SUCCESS: 200\n      VIOLATION: 400\n      BACKEND_ERROR: 500\n  expected:\n    http_status: 400\n    response_body:\n      status: FAILED\n      exit_reason_code: EXIT_VIOLATION\n      trace_id: null\n      result_payload: {}\n      error_code: VALIDATION_ERROR\n      message: Invalid email format\n    result_status: VIOLATION\n- case_id: error_with_custom_mapping\n  expected_outcome: SUCCESS\n  bindings:\n    execution_result:\n      status: FAILED\n      exit_reason_code: EXIT_BACKEND_ERROR\n      trace_id: null\n      result_payload: {}\n      error_code: INTERNAL_ERROR\n      message: Database connection failed\n    mapping:\n      SUCCESS: 200\n      VIOLATION: 400\n      BACKEND_ERROR: 503\n  expected:\n    http_status: 503\n    response_body:\n      status: FAILED\n      exit_reason_code: EXIT_BACKEND_ERROR\n      trace_id: null\n      result_payload: {}\n      error_code: INTERNAL_ERROR\n      message: Database connection failed\n    result_status: BACKEND_ERROR\n- case_id: success_empty_value\n  expected_outcome: SUCCESS\n  bindings:\n    execution_result:\n      status: SUCCESS\n      exit_reason_code: null\n      trace_id: null\n      result_payload: {}\n    mapping:\n      SUCCESS: 204\n      FAILURE: 400\n      ERROR: 500\n  expected:\n    http_status: 204\n    response_body:\n      status: SUCCESS\n      exit_reason_code: null\n      trace_id: null\n      result_payload: {}\n    result_status: SUCCESS\n- case_id: success_complex_nested\n  expected_outcome: SUCCESS\n  bindings:\n    execution_result:\n      status: SUCCESS\n      exit_reason_code: null\n      trace_id: null\n      result_payload:\n        transaction:\n          id: tx_abc123\n          type: transfer\n          from:\n            address: 0x1234...\n            balance: 100\n          to:\n            address: 0x5678...\n            balance: 200\n          metadata:\n            gas_used: 21000\n            confirmations: 12\n    mapping:\n      SUCCESS: 200\n      FAILURE: 400\n      ERROR: 500\n  expected:\n    http_status: 200\n    response_body:\n      status: SUCCESS\n      exit_reason_code: null\n      trace_id: null\n      result_payload:\n        transaction:\n          id: tx_abc123\n          type: transfer\n          from:\n            address: 0x1234...\n            balance: 100\n          to:\n            address: 0x5678...\n            balance: 200\n          metadata:\n            gas_used: 21000\n            confirmations: 12\n    result_status: SUCCESS\n- case_id: failure_validation_array\n  expected_outcome: SUCCESS\n  bindings:\n    execution_result:\n      status: FAILED\n      exit_reason_code: EXIT_VIOLATION\n      trace_id: null\n      result_payload: {}\n      error_code: VALIDATION_ERROR\n      message: Multiple validation errors\n    mapping:\n      SUCCESS: 200\n      VIOLATION: 422\n      BACKEND_ERROR: 500\n  expected:\n    http_status: 422\n    response_body:\n      status: FAILED\n      exit_reason_code: EXIT_VIOLATION\n      trace_id: null\n      result_payload: {}\n      error_code: VALIDATION_ERROR\n      message: Multiple validation errors\n    result_status: VIOLATION\n```\n\n## Intent\n\nValidates HTTP response mapping for various execution result statuses.\n\nTests cover:\n- SUCCESS with data payload\n- FAILURE with error message\n- Custom status codes via mapping\n- Empty result handling\n- Complex nested data structures\n\n---\n",
+  "content_hash": "cc897ce80f91cc32ebc7dafa3430707500a89b35e55c061f2e65ace44f7f547c",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_MAP_RESULT_TO_HTTP_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "execution_result": {
+            "exit_reason_code": null,
+            "result_payload": {
+              "action": "created",
+              "timestamp": "2026-04-02T10:00:00Z",
+              "user_id": "usr_123"
+            },
+            "status": "SUCCESS",
+            "trace_id": null
+          },
+          "mapping": {
+            "ERROR": 500,
+            "FAILURE": 400,
+            "SUCCESS": 200
+          }
+        },
+        "case_id": "success_with_data",
+        "expected": {
+          "http_status": 200,
+          "response_body": {
+            "exit_reason_code": null,
+            "result_payload": {
+              "action": "created",
+              "timestamp": "2026-04-02T10:00:00Z",
+              "user_id": "usr_123"
+            },
+            "status": "SUCCESS",
+            "trace_id": null
+          },
+          "result_status": "SUCCESS"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "execution_result": {
+            "error_code": "VALIDATION_ERROR",
+            "exit_reason_code": "EXIT_VIOLATION",
+            "message": "Invalid email format",
+            "result_payload": {},
+            "status": "FAILED",
+            "trace_id": null
+          },
+          "mapping": {
+            "BACKEND_ERROR": 500,
+            "SUCCESS": 200,
+            "VIOLATION": 400
+          }
+        },
+        "case_id": "failure_with_error",
+        "expected": {
+          "http_status": 400,
+          "response_body": {
+            "error_code": "VALIDATION_ERROR",
+            "exit_reason_code": "EXIT_VIOLATION",
+            "message": "Invalid email format",
+            "result_payload": {},
+            "status": "FAILED",
+            "trace_id": null
+          },
+          "result_status": "VIOLATION"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "execution_result": {
+            "error_code": "INTERNAL_ERROR",
+            "exit_reason_code": "EXIT_BACKEND_ERROR",
+            "message": "Database connection failed",
+            "result_payload": {},
+            "status": "FAILED",
+            "trace_id": null
+          },
+          "mapping": {
+            "BACKEND_ERROR": 503,
+            "SUCCESS": 200,
+            "VIOLATION": 400
+          }
+        },
+        "case_id": "error_with_custom_mapping",
+        "expected": {
+          "http_status": 503,
+          "response_body": {
+            "error_code": "INTERNAL_ERROR",
+            "exit_reason_code": "EXIT_BACKEND_ERROR",
+            "message": "Database connection failed",
+            "result_payload": {},
+            "status": "FAILED",
+            "trace_id": null
+          },
+          "result_status": "BACKEND_ERROR"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "execution_result": {
+            "exit_reason_code": null,
+            "result_payload": {},
+            "status": "SUCCESS",
+            "trace_id": null
+          },
+          "mapping": {
+            "ERROR": 500,
+            "FAILURE": 400,
+            "SUCCESS": 204
+          }
+        },
+        "case_id": "success_empty_value",
+        "expected": {
+          "http_status": 204,
+          "response_body": {
+            "exit_reason_code": null,
+            "result_payload": {},
+            "status": "SUCCESS",
+            "trace_id": null
+          },
+          "result_status": "SUCCESS"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "execution_result": {
+            "exit_reason_code": null,
+            "result_payload": {
+              "transaction": {
+                "from": {
+                  "address": "0x1234...",
+                  "balance": 100
+                },
+                "id": "tx_abc123",
+                "metadata": {
+                  "confirmations": 12,
+                  "gas_used": 21000
+                },
+                "to": {
+                  "address": "0x5678...",
+                  "balance": 200
+                },
+                "type": "transfer"
+              }
+            },
+            "status": "SUCCESS",
+            "trace_id": null
+          },
+          "mapping": {
+            "ERROR": 500,
+            "FAILURE": 400,
+            "SUCCESS": 200
+          }
+        },
+        "case_id": "success_complex_nested",
+        "expected": {
+          "http_status": 200,
+          "response_body": {
+            "exit_reason_code": null,
+            "result_payload": {
+              "transaction": {
+                "from": {
+                  "address": "0x1234...",
+                  "balance": 100
+                },
+                "id": "tx_abc123",
+                "metadata": {
+                  "confirmations": 12,
+                  "gas_used": 21000
+                },
+                "to": {
+                  "address": "0x5678...",
+                  "balance": 200
+                },
+                "type": "transfer"
+              }
+            },
+            "status": "SUCCESS",
+            "trace_id": null
+          },
+          "result_status": "SUCCESS"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "execution_result": {
+            "error_code": "VALIDATION_ERROR",
+            "exit_reason_code": "EXIT_VIOLATION",
+            "message": "Multiple validation errors",
+            "result_payload": {},
+            "status": "FAILED",
+            "trace_id": null
+          },
+          "mapping": {
+            "BACKEND_ERROR": 500,
+            "SUCCESS": 200,
+            "VIOLATION": 422
+          }
+        },
+        "case_id": "failure_validation_array",
+        "expected": {
+          "http_status": 422,
+          "response_body": {
+            "error_code": "VALIDATION_ERROR",
+            "exit_reason_code": "EXIT_VIOLATION",
+            "message": "Multiple validation errors",
+            "result_payload": {},
+            "status": "FAILED",
+            "trace_id": null
+          },
+          "result_status": "VIOLATION"
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_MAP_RESULT_TO_HTTP_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_MAP_RESULT_TO_HTTP_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

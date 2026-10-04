@@ -1,0 +1,352 @@
+{
+  "artifact_code": "CC_PLACE_MODEL_IN_SERVICE_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      },
+      {
+        "bindings": {
+          "value": "in.ceiling"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "inputs": [
+          "allowed_set",
+          "value"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "is_member"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+        "id": "CS_REGISTRY_V0",
+        "kind": "CS",
+        "ops": [
+          "REGISTER",
+          "RESOLVE",
+          "EXISTS",
+          "DEREGISTER",
+          "COUNT"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_PLACE_MODEL_IN_SERVICE_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Open a time in service with its ceiling, system prompt and response rules, and mark the model\n    in service\n  inputs:\n    identity_key:\n      type: string\n      required: true\n    time_in_service_id:\n      type: string\n      required: true\n    ceiling:\n      type: string\n      required: true\n    system_prompt:\n      type: string\n      required: true\n    response_rules:\n      type: object\n      required: true\n  outputs:\n    time_in_service:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    - ALREADY_EXISTS\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_model_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: MODELS\n    inputs:\n      key: $.inputs.identity_key\n    outputs:\n      model_record: $.capability_result.value\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: require_registered\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        state: $.results.read_model_record.model_record.state\n      rules:\n      - field: state\n        op: eq\n        value: REGISTERED\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: confirm_ceiling_declared\n    transform: capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\n    inputs:\n      value: $.inputs.ceiling\n      allowed_set:\n      - public\n      - internal\n      - confidential\n      - restricted\n    outputs:\n      ceiling_declared: $.capability_result.is_member\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: claim_time_in_service\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: REGISTER\n    store: TIME_IN_SERVICE_REGISTRY\n    inputs:\n      key: $.inputs.time_in_service_id\n      target_cs: CS_MUTABLE_JSON_V0\n      target_ref: TIMES_IN_SERVICE\n    outputs:\n      address: $.capability_result.address\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - ALREADY_EXISTS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      ALREADY_EXISTS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: mark_in_service\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: UPDATE_WHERE\n    store: MODELS\n    inputs:\n      filter:\n        identity_key: $.inputs.identity_key\n        state: REGISTERED\n      updates:\n        state: IN_SERVICE\n        time_in_service_id: $.inputs.time_in_service_id\n    outputs:\n      matched_keys: $.capability_result.matched_keys\n      updated_count: $.capability_result.updated_count\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: require_transition\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        updated_count: $.results.mark_in_service.updated_count\n      rules:\n      - field: updated_count\n        op: eq\n        value: 1\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: assemble_time_in_service\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        time_in_service_id: $.inputs.time_in_service_id\n        identity_key: $.inputs.identity_key\n        ceiling: $.inputs.ceiling\n        system_prompt: $.inputs.system_prompt\n        response_rules: $.inputs.response_rules\n        state: OPEN\n    outputs:\n      time_in_service: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_time_in_service\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: TIMES_IN_SERVICE\n    inputs:\n      key: $.inputs.time_in_service_id\n      value: $.results.assemble_time_in_service.time_in_service\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nOpen a time in service with its ceiling, system prompt and response rules, and mark the model in service\n",
+  "content_hash": "5bb9992fcd6da6545430c92fde99da0c2a5fc131ba3b35d2e94a650f74d094a3",
+  "fqdn_id": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "ceiling": {
+          "required": true,
+          "type": "string"
+        },
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "response_rules": {
+          "required": true,
+          "type": "object"
+        },
+        "system_prompt": {
+          "required": true,
+          "type": "string"
+        },
+        "time_in_service_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "time_in_service": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key": "$.inputs.identity_key"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "READ",
+          "outputs": {
+            "model_record": "$.capability_result.value",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "read_model_record",
+          "store": "MODELS"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "state": "$.results.read_model_record.model_record.state"
+            },
+            "rules": [
+              {
+                "field": "state",
+                "op": "eq",
+                "value": "REGISTERED"
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_registered",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        },
+        {
+          "inputs": {
+            "allowed_set": [
+              "public",
+              "internal",
+              "confidential",
+              "restricted"
+            ],
+            "value": "$.inputs.ceiling"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "ceiling_declared": "$.capability_result.is_member"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "confirm_ceiling_declared",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+        },
+        {
+          "inputs": {
+            "key": "$.inputs.time_in_service_id",
+            "target_cs": "CS_MUTABLE_JSON_V0",
+            "target_ref": "TIMES_IN_SERVICE"
+          },
+          "on_result": {
+            "ALREADY_EXISTS": "exit",
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "REGISTER",
+          "outputs": {
+            "address": "$.capability_result.address",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "ALREADY_EXISTS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_REGISTRY_V0",
+          "step": "claim_time_in_service",
+          "store": "TIME_IN_SERVICE_REGISTRY"
+        },
+        {
+          "inputs": {
+            "filter": {
+              "identity_key": "$.inputs.identity_key",
+              "state": "REGISTERED"
+            },
+            "updates": {
+              "state": "IN_SERVICE",
+              "time_in_service_id": "$.inputs.time_in_service_id"
+            }
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "UPDATE_WHERE",
+          "outputs": {
+            "matched_keys": "$.capability_result.matched_keys",
+            "result_status": "$.result_status",
+            "updated_count": "$.capability_result.updated_count"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "mark_in_service",
+          "store": "MODELS"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "updated_count": "$.results.mark_in_service.updated_count"
+            },
+            "rules": [
+              {
+                "field": "updated_count",
+                "op": "eq",
+                "value": 1
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_transition",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        },
+        {
+          "inputs": {
+            "fields": {
+              "ceiling": "$.inputs.ceiling",
+              "identity_key": "$.inputs.identity_key",
+              "response_rules": "$.inputs.response_rules",
+              "state": "OPEN",
+              "system_prompt": "$.inputs.system_prompt",
+              "time_in_service_id": "$.inputs.time_in_service_id"
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "time_in_service": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_time_in_service",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "key": "$.inputs.time_in_service_id",
+            "value": "$.results.assemble_time_in_service.time_in_service"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "WRITE",
+          "outputs": {
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "write_time_in_service",
+          "store": "TIMES_IN_SERVICE"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR",
+          "ALREADY_EXISTS",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Open a time in service with its ceiling, system prompt and response rules, and mark the model in service"
+    },
+    "fqdn": "causal_language_model::CC_PLACE_MODEL_IN_SERVICE_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
+  "version": "0"
+}

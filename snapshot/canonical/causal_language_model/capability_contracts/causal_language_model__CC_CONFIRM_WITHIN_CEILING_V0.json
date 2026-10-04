@@ -1,0 +1,179 @@
+{
+  "artifact_code": "CC_CONFIRM_WITHIN_CEILING_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {
+          "value": "in.kind"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "inputs": [
+          "allowed_set",
+          "value"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "is_member"
+        ]
+      },
+      {
+        "bindings": {
+          "ceiling": "read_time_in_service.time_in_service.ceiling",
+          "kind": "in.kind"
+        },
+        "fqdn": "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0",
+        "id": "CT_PURE_COMPARE_SENSITIVITY_V0",
+        "inputs": [
+          "kind",
+          "ceiling",
+          "kinds"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "within_ceiling"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CONFIRM_WITHIN_CEILING_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Refuse a user prompt before the model sees it when it states a kind more sensitive than the\n    ceiling\n  inputs:\n    time_in_service_id:\n      type: string\n      required: true\n    kind:\n      type: string\n      required: true\n  outputs:\n    time_in_service:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_time_in_service\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: TIMES_IN_SERVICE\n    inputs:\n      key: $.inputs.time_in_service_id\n    outputs:\n      time_in_service: $.capability_result.value\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: confirm_kind_declared\n    transform: capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\n    inputs:\n      value: $.inputs.kind\n      allowed_set:\n      - public\n      - internal\n      - confidential\n      - restricted\n    outputs:\n      kind_declared: $.capability_result.is_member\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: compare_sensitivity\n    transform: causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0\n    inputs:\n      kind: $.inputs.kind\n      ceiling: $.results.read_time_in_service.time_in_service.ceiling\n      kinds:\n      - public\n      - internal\n      - confidential\n      - restricted\n    outputs:\n      within_ceiling: $.capability_result.within_ceiling\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuse a user prompt before the model sees it when it states a kind more sensitive than the ceiling\n",
+  "content_hash": "c3f2182cd85d03dcefe48c7fc2b4650123ea3af9212ebb9d3190326bd499a27a",
+  "fqdn_id": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "kind": {
+          "required": true,
+          "type": "string"
+        },
+        "time_in_service_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "time_in_service": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key": "$.inputs.time_in_service_id"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "READ",
+          "outputs": {
+            "result_status": "$.result_status",
+            "time_in_service": "$.capability_result.value"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "read_time_in_service",
+          "store": "TIMES_IN_SERVICE"
+        },
+        {
+          "inputs": {
+            "allowed_set": [
+              "public",
+              "internal",
+              "confidential",
+              "restricted"
+            ],
+            "value": "$.inputs.kind"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "kind_declared": "$.capability_result.is_member"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "confirm_kind_declared",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+        },
+        {
+          "inputs": {
+            "ceiling": "$.results.read_time_in_service.time_in_service.ceiling",
+            "kind": "$.inputs.kind",
+            "kinds": [
+              "public",
+              "internal",
+              "confidential",
+              "restricted"
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "within_ceiling": "$.capability_result.within_ceiling"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "compare_sensitivity",
+          "transform": "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse a user prompt before the model sees it when it states a kind more sensitive than the ceiling"
+    },
+    "fqdn": "causal_language_model::CC_CONFIRM_WITHIN_CEILING_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+    "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0"
+  ],
+  "version": "0"
+}

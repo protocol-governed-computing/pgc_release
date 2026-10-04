@@ -1,0 +1,116 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "candidates": "$.inputs.candidates",
+          "state": "$.inputs.state"
+        },
+        "atom": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "causal_language_model.implementation.capability_transforms.atoms.ct_pure_choose_permitted_token_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+    "input_types": {
+      "candidates": "array",
+      "state": "object"
+    },
+    "inputs": {
+      "candidates": [
+        {
+          "likelihood": 0.9,
+          "token": "87654321"
+        }
+      ],
+      "state": {
+        "finished": false,
+        "limit": 3,
+        "opening": {
+          "fingerprint": "fp-host",
+          "ground_numbers": false,
+          "longest_response": 5,
+          "maximum_response_length": 3,
+          "outcome": "WRITING",
+          "reading": {
+            "question": "What is my balance?",
+            "supporting_material": "Account 12345678 balance 40. Spouse account 87654321.",
+            "system_prompt": "Answer only from the supporting material."
+          },
+          "rules_in_force": {
+            "forbidden": [
+              {
+                "pattern": "\\bguaranteed\\b",
+                "rule": "no_guarantees"
+              },
+              {
+                "except": [
+                  "12345678"
+                ],
+                "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                "rule": "another_customers_account_number"
+              }
+            ],
+            "freedom": 0,
+            "seed": 7
+          }
+        },
+        "position": 0,
+        "text": ""
+      }
+    },
+    "outputs": {
+      "finished": {
+        "from": "__atom_result__"
+      },
+      "step": {
+        "from": "__atom_result__"
+      },
+      "stopped_by": {
+        "from": "__atom_result__"
+      },
+      "text": {
+        "from": "__atom_result__"
+      },
+      "within_length": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "finished": false,
+    "step": {
+      "candidates": [
+        {
+          "likelihood": 0.9,
+          "token": "87654321"
+        }
+      ],
+      "chosen": null,
+      "finished": false,
+      "position": 1,
+      "stopped": [
+        {
+          "rule": "another_customers_account_number",
+          "token": "87654321"
+        }
+      ],
+      "stopped_by": "another_customers_account_number",
+      "within_length": true
+    },
+    "stopped_by": "another_customers_account_number",
+    "text": "",
+    "within_length": true
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0::names_the_rule_when_no_permitted_token_remains",
+  "test_data_source": "causal_language_model::TEST_DATA_CT_PURE_CHOOSE_PERMITTED_TOKEN_V0"
+}

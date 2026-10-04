@@ -1,0 +1,113 @@
+{
+  "artifact_code": "CC_CHOOSE_PERMITTED_TOKEN_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "candidates": "in.candidates",
+          "state": "in.state"
+        },
+        "fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+        "id": "CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+        "inputs": [
+          "state",
+          "candidates"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "step",
+          "text",
+          "finished",
+          "stopped_by",
+          "within_length"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CHOOSE_PERMITTED_TOKEN_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CC_CHOOSE_PERMITTED_TOKEN_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Choose a permitted token from an offer under the rules in force\n  inputs:\n    state:\n      type: object\n      required: true\n    candidates:\n      type: array\n      required: true\n  outputs:\n    step:\n      type: object\n      required: true\n    text:\n      type: string\n      required: true\n    finished:\n      type: boolean\n      required: true\n    stopped_by:\n      type: string\n      required: true\n    within_length:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: choose_token\n    transform: causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0\n    inputs:\n      state: $.inputs.state\n      candidates: $.inputs.candidates\n    outputs:\n      step: $.capability_result.step\n      text: $.capability_result.text\n      finished: $.capability_result.finished\n      stopped_by: $.capability_result.stopped_by\n      within_length: $.capability_result.within_length\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nChoose a permitted token from an offer under the rules in force\n",
+  "content_hash": "3daa7fa2521abd220aa63b1fe1132cf0853f17d4e7bc143e8bcd1254fe676302",
+  "fqdn_id": "causal_language_model::CC_CHOOSE_PERMITTED_TOKEN_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "candidates": {
+          "required": true,
+          "type": "array"
+        },
+        "state": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "finished": {
+          "required": true,
+          "type": "boolean"
+        },
+        "step": {
+          "required": true,
+          "type": "object"
+        },
+        "stopped_by": {
+          "required": true,
+          "type": "string"
+        },
+        "text": {
+          "required": true,
+          "type": "string"
+        },
+        "within_length": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "candidates": "$.inputs.candidates",
+            "state": "$.inputs.state"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "finished": "$.capability_result.finished",
+            "step": "$.capability_result.step",
+            "stopped_by": "$.capability_result.stopped_by",
+            "text": "$.capability_result.text",
+            "within_length": "$.capability_result.within_length"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "choose_token",
+          "transform": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Choose a permitted token from an offer under the rules in force"
+    },
+    "fqdn": "causal_language_model::CC_CHOOSE_PERMITTED_TOKEN_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0"
+  ],
+  "version": "0"
+}

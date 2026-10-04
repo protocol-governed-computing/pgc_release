@@ -1,0 +1,47 @@
+{
+  "artifact_code": "EV_USER_PROMPT_REFUSED_V0",
+  "artifact_type": "EV",
+  "content": "# EV_USER_PROMPT_REFUSED_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::EV_USER_PROMPT_REFUSED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: The moment a user prompt yields no response\n  description: The moment a user prompt yields no response\n  subdomain: model_response\n  schema:\n    user_prompt_id:\n      type: string\n      required: true\n    identity_key:\n      type: string\n      required: true\n    requester_id:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n  moment: refusal\n```\n\n---\n\n## Intent\n\nThe moment a user prompt yields no response\n",
+  "content_hash": "3d946340b21869c236c105953d7a9c68bacdfa404e32766c8dfafa4180d33183",
+  "fqdn_id": "causal_language_model::EV_USER_PROMPT_REFUSED_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "description": "The moment a user prompt yields no response",
+      "moment": "refusal",
+      "schema": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "requester_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        },
+        "user_prompt_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "model_response",
+      "summary": "The moment a user prompt yields no response"
+    },
+    "fqdn": "causal_language_model::EV_USER_PROMPT_REFUSED_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

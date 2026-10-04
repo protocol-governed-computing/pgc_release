@@ -5,8 +5,7 @@
     "steps": [
       {
         "bindings": {
-          "record": "in.actor_record",
-          "schema": "in.registration_schema"
+          "record": "in.actor_record"
         },
         "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
         "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
@@ -18,11 +17,25 @@
         "outputs": [
           "violations"
         ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
       }
     ]
   },
-  "content": "# CC_VALIDATE_REGISTRATION_V0\n\n## 1. Intent\n\nConfirms a registration carries a name and an address of the form asked for\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_VALIDATE_REGISTRATION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Confirms a registration carries a name and an address of the form asked for\n  inputs:\n    actor_record:\n      type: object\n      required: true\n    registration_schema:\n      type: object\n      required: true\n  outputs:\n    violations:\n      type: array\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_registration\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.actor_record\n      schema: $.inputs.registration_schema\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n```\n",
-  "content_hash": "050a7e6f8ba63f49dcd9ad5e388fbd3dc3df4a81f248b7173a266fae2e36fc39",
+  "content": "# CC_VALIDATE_REGISTRATION_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_VALIDATE_REGISTRATION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Refuses a registration lacking the person's name or their address\n  inputs:\n    actor_record:\n      type: object\n      required: true\n  outputs:\n    violations:\n      type: array\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_registration\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.actor_record\n      schema:\n        name:\n          type: string\n          required: true\n        contact_address:\n          type: string\n          required: true\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: refuse_incomplete_registration\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        violations: $.results.read_registration.violations\n      rules:\n      - field: violations\n        op: eq\n        value: []\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuses a registration lacking the person's name or their address\n",
+  "content_hash": "1eb8c8d113c9741257ddb2d2b13d9af67c0a9c3a149664769e8e22cf2613c914",
   "fqdn_id": "blockchain::CC_VALIDATE_REGISTRATION_V0",
   "frontmatter": {
     "artifact_kind": "CAPABILITY_CONTRACT",
@@ -31,10 +44,6 @@
     "core": {
       "inputs": {
         "actor_record": {
-          "required": true,
-          "type": "object"
-        },
-        "registration_schema": {
           "required": true,
           "type": "object"
         }
@@ -49,7 +58,16 @@
         {
           "inputs": {
             "record": "$.inputs.actor_record",
-            "schema": "$.inputs.registration_schema"
+            "schema": {
+              "contact_address": {
+                "required": true,
+                "type": "string"
+              },
+              "name": {
+                "required": true,
+                "type": "string"
+              }
+            }
           },
           "on_result": {
             "SUCCESS": "continue",
@@ -64,16 +82,43 @@
           ],
           "step": "read_registration",
           "transform": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "violations": "$.results.read_registration.violations"
+            },
+            "rules": [
+              {
+                "field": "violations",
+                "op": "eq",
+                "value": []
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "refuse_incomplete_registration",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
         }
       ],
       "result_status_contract": {
         "allowed": [
-          "SUCCESS",
-          "VIOLATION"
+          "VIOLATION",
+          "SUCCESS"
         ],
         "on_input_failure": "VIOLATION"
       },
-      "summary": "Confirms a registration carries a name and an address of the form asked for"
+      "summary": "Refuses a registration lacking the person's name or their address"
     },
     "fqdn": "blockchain::CC_VALIDATE_REGISTRATION_V0",
     "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
@@ -83,6 +128,7 @@
   "namespace": "blockchain",
   "references": [
     "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
     "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
   ],
   "version": "0"

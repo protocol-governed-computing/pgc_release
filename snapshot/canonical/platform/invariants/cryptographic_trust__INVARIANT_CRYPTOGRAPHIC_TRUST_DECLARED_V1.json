@@ -1,0 +1,44 @@
+{
+  "artifact_code": "INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V1",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V1\n\n## Machine\n\n```yaml\nfqdn: cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V1\nartifact_kind: INVARIANT\nversion: V1\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: cryptographic_trust\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  enforcement:\n    scope: ALL_ARTIFACTS\n  applies_to_kinds:\n  - SNAPSHOT\n  composition_check:\n    rule: exactly_one\n    subject: cryptographic trust structure carried by the composition\n    selector:\n      namespace: cryptographic_trust\n      artifact_type: STRUCTURE\n      artifact_code_prefix: STRUCTURE_CRYPTOGRAPHIC_TRUST_\n```\n\n---\n\n## Purpose\n\nTrust posture is declared for every composition, even one built for unsigned local development.\n`LOCAL_DEV_UNSIGNED` is not an absence of trust governance. It states that no cryptographic\nverification is required of this composition, and a reader can see that it says so.\n\nThe surface may declare every trust mode its constitution authorizes. A build configuration names\none in `trust_mode`, the compiler materializes only the structure declaring it, and this invariant\ncounts what the composition carries.\n\n## What this realizes\nFor every compiled snapshot:\n1. The composition MUST carry exactly one cryptographic trust structure.\n2. That structure's `trust_mode` is the composition's trust mode.\n3. Compile MUST fail if the composition carries none, or more than one.\n\n## Anti-Patterns\n\n- `no_trust_structure`: a composition carrying no trust structure, so declaring no trust mode\n- `several_trust_structures`: a composition carrying more than one, so declaring two answers\n- `runtime_trust_negotiation`: a runtime selecting or upgrading the trust mode at execution time\n\n## Change from V0\n\nV0 selected the trust contract by `status: active` on the structure, so the trust mode was a\nproperty of the surface's inventory. A surface declaring two modes was malformed, even when two\ncompositions built from it each wanted one. V1 counts what the composition carries, the same change\n`INVARIANT_EXECUTION_PLACEMENT_DECLARED_V1` made for placement.\n\n## Enforcement\n\n- **Stage:** compiler_validation\n- **Failure Mode:** FAIL_COMPILE \u2014 no snapshot is produced if violated\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: 'A composition MUST carry exactly one cryptographic trust structure. None is a missing\n    declaration; more than one is an ambiguity.\n\n    '\n  summary: Every composition carries exactly one cryptographic trust structure, and so declares one trust mode\nassert_projection:\n  enforcement:\n    failure_mode: HARD_FAIL\n```\n",
+  "content_hash": "f8022c4f63c987ecbbf2de6c56d1aacf6998df6462eb09b32bbfefb95edbe724",
+  "fqdn_id": "cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V1",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "SNAPSHOT"
+      ],
+      "composition_check": {
+        "rule": "exactly_one",
+        "selector": {
+          "artifact_code_prefix": "STRUCTURE_CRYPTOGRAPHIC_TRUST_",
+          "artifact_type": "STRUCTURE",
+          "namespace": "cryptographic_trust"
+        },
+        "subject": "cryptographic trust structure carried by the composition"
+      },
+      "enforcement": {
+        "scope": "ALL_ARTIFACTS"
+      }
+    },
+    "authority": "pgc.platform",
+    "concern": "cryptographic_trust",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V1",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V1"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "cryptographic_trust",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "1"
+}

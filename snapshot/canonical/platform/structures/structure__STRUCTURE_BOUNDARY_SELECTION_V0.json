@@ -1,0 +1,50 @@
+{
+  "artifact_code": "STRUCTURE_BOUNDARY_SELECTION_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_BOUNDARY_SELECTION_V0\n\n## Machine\n\n```yaml\nfqdn: structure::STRUCTURE_BOUNDARY_SELECTION_V0\nartifact_code: STRUCTURE_BOUNDARY_SELECTION_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: structure\ncontract:\n  selectable_boundaries:\n  - namespace: execution_placement\n    names_mode_in: placement_mode\n    declared_by_prefix: STRUCTURE_EXECUTION_PLACEMENT_\n    declares_mode_in: placement_mode\n  - namespace: execution_scheduling\n    names_mode_in: scheduling_mode\n    declared_by_prefix: STRUCTURE_EXECUTION_SCHEDULING_\n    declares_mode_in: scheduling_mode\n  - namespace: security_domain\n    names_mode_in: security_domain\n    declared_by_prefix: STRUCTURE_SECURITY_DOMAIN_\n    declares_mode_in: security_domain\n  - namespace: cryptographic_trust\n    names_mode_in: trust_mode\n    declared_by_prefix: STRUCTURE_CRYPTOGRAPHIC_TRUST_\n    declares_mode_in: trust_mode\n```\n\n---\n\n## Purpose\n\nNames the boundaries whose mode a build selects, and where each side of that selection is written.\n\nA **selectable boundary** is one where the governance surface declares several arrangements and a\ncomposition may have only one. Placement is the worked example: a surface declares that single-node\nand multi-worker execution are both available, and a build says which it is. Scheduling, security\ndomain and cryptographic trust have the same shape.\n\n## Why this is declared and not coded\n\nThe compiler needs to know, for each such boundary, which build-configuration field names the mode\nand which artifacts declare one. Holding that in the compiler would make the set of selectable\nboundaries a property of a build tool \u2014 unversioned, unreadable from a composition, and extendable\nby editing Python. The same argument the family makes about rule sets applies: a table that decides\nwhat a build may choose is governance.\n\nIt is loaded the way `STRUCTURE_DISCOVERY_V0` and `STRUCTURE_IDENTITY_V0` are, and for the same\nreason: the compiler is pointed at its own configuration rather than carrying it.\n\n## What this does not decide\n\n**Which modes are authorized.** That is each boundary's constitution, and nothing here may widen it.\nA mode no structure declares resolves to nothing and the build refuses \u2014 which is how an\nunauthorized mode fails, because a surface carries a structure only for a mode its constitution\nadmits.\n\n**Which mode is active.** That is the build configuration, per build.\n\n**Whether the composition ended up with one.** That is each boundary's own invariant, checked over\nthe composition after selection has run. Selection and verification are deliberately separate: the\nfirst is what the compiler intended, the second is what the composition carries, and a mechanism\nthat only intended correctly would be trusted rather than checked.\n",
+  "content_hash": "20a9b2c868840198dec993c69bb9171d2aa5269eed9e31ea02e1d3eb29d9e0a7",
+  "fqdn_id": "structure::STRUCTURE_BOUNDARY_SELECTION_V0",
+  "frontmatter": {
+    "artifact_code": "STRUCTURE_BOUNDARY_SELECTION_V0",
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "structure",
+    "contract": {
+      "selectable_boundaries": [
+        {
+          "declared_by_prefix": "STRUCTURE_EXECUTION_PLACEMENT_",
+          "declares_mode_in": "placement_mode",
+          "names_mode_in": "placement_mode",
+          "namespace": "execution_placement"
+        },
+        {
+          "declared_by_prefix": "STRUCTURE_EXECUTION_SCHEDULING_",
+          "declares_mode_in": "scheduling_mode",
+          "names_mode_in": "scheduling_mode",
+          "namespace": "execution_scheduling"
+        },
+        {
+          "declared_by_prefix": "STRUCTURE_SECURITY_DOMAIN_",
+          "declares_mode_in": "security_domain",
+          "names_mode_in": "security_domain",
+          "namespace": "security_domain"
+        },
+        {
+          "declared_by_prefix": "STRUCTURE_CRYPTOGRAPHIC_TRUST_",
+          "declares_mode_in": "trust_mode",
+          "names_mode_in": "trust_mode",
+          "namespace": "cryptographic_trust"
+        }
+      ]
+    },
+    "fqdn": "structure::STRUCTURE_BOUNDARY_SELECTION_V0",
+    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "structure",
+  "references": [
+    "governance::CONSTITUTION_GOVERNANCE_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,51 @@
+{
+  "artifact_code": "VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V1",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V1\n\n## Machine\n\n```yaml\nfqdn: vocabulary::VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V1\nartifact_kind: VOCABULARY\nversion: v1\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: vocabulary\ndeterminative_fields:\n  casing: lower_snake\n  domain_extensible: false\n  entries:\n  - trace_schema_version\n  - event_type\n  - domain\n  - wf_addr\n  - cc_addr\n  - step_addr\n  - step_op\n  - result_status\n  - detail\nobservational_fields:\n  casing: lower_snake\n  domain_extensible: false\n  entries:\n  - trace_id\n  - ts_ns\nobservational_keys:\n  casing: lower_snake\n  domain_extensible: false\n  entries:\n  - record_id\n```\n\n---\n\n## Intent\n\nWhich content of an execution trace is **determinative** and which is **observational**, declared so\nthat a checker can compare the first and disregard the second.\n\n`3e` \u00a75 settles what earlier documents left open, and EV-5 requires the distinction be *declared\nrather than inferred*. Without it, replay comparison is impossible in both directions: a checker\ncomparing everything fails on every timestamp and learns nothing; one comparing nothing established\nnothing; one guessing which fields look stable is deciding for itself what governance meant.\n\n**Determinative content MUST be identical** for the same state, proposal and closure (EV-6). It is\nwhat establishes the path taken and the outcome reached: which act, which contract, which step, what\nthat step reported.\n\n**Observational content MAY differ** between two executions of the same transition, and **MUST NOT\nparticipate in any determination** (EV-7). `ts_ns` is a monotonic reading; `trace_id` carries a\ntimestamp prefix and is documented as \"not purely deterministic\".\n\n**Observational keys are observational wherever they appear**, including inside a determinative\nfield. A determinative field such as `detail` carries values a caller returned, and some of those\nare assigned by a store at the moment it writes: the identity an append-only store gives a record is\nread from the clock. Two faithful executions of one transition differ on it, and it determines\nnothing about the path or the outcome. Declaring the key here, rather than leaving each checker to\nskip it, is EV-5 applied inside a field.\n\n---\n\n## Where this is read\n\n`protocol_runtime/runtime/evidence.py` reads both sets from the sealed composition and writes a\n`trace_classification` header as the first record of every trace. The trace therefore carries the\nclassification it was written under, so a party holding the trace and the snapshot can compare\ndeterminative content **without access to the producing system** (EV-16, AI-16).\n\n`.github/process/evidence_determinism.py` executes one workflow twice and asserts that determinative\ncontent is identical and that observational content is what differs.\n\n---\n\n## What is not claimed\n\n**That a field classified determinative carries only determinative content.** `detail` is\ncaller-filled: a step that put a duration or a hostname in it would place observational content on\nthe determinative side, and no check here would see it. The rule is that observational content goes\nin a declared observational field, or is named by a declared observational key; the rule is stated\nand is not enforced per value. A new store-assigned value is a new key here, never a checker's\nexception.\n\n**That the classification is complete for evidence other than execution traces.** Construction\nproduces no evidence record at all today, so it has none to classify \u2014 a separate finding, and this\nartifact does not pretend to cover it.\n\n---\n\n## Change from V0\n\nV0 classified trace content by top-level field only, so a store-assigned value inside `detail` was\ndeterminative by default. A replay of any act that appends a record disagreed with its original on\nthat one value. The only way to accept such a replay was a checker that skipped the value by name:\nan exception held in a test, not in the composition. V1 adds `observational_keys`. The runtime\nwrites the keys into each trace's classification header, and a replay comparison removes them from\ndeterminative content, reading them from the trace itself.\n\n",
+  "content_hash": "e7d9f35973310acd71c7d0a4b95571282ce31df3397d18abf7c557f60ff26ed6",
+  "fqdn_id": "vocabulary::VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V1",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "authority": "pgc.platform",
+    "concern": "vocabulary",
+    "determinative_fields": {
+      "casing": "lower_snake",
+      "domain_extensible": false,
+      "entries": [
+        "trace_schema_version",
+        "event_type",
+        "domain",
+        "wf_addr",
+        "cc_addr",
+        "step_addr",
+        "step_op",
+        "result_status",
+        "detail"
+      ]
+    },
+    "fqdn": "vocabulary::VOCAB_EVIDENCE_CONTENT_CLASSIFICATION_V1",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "observational_fields": {
+      "casing": "lower_snake",
+      "domain_extensible": false,
+      "entries": [
+        "trace_id",
+        "ts_ns"
+      ]
+    },
+    "observational_keys": {
+      "casing": "lower_snake",
+      "domain_extensible": false,
+      "entries": [
+        "record_id"
+      ]
+    },
+    "version": "v1"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "vocabulary",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "1"
+}

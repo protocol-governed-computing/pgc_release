@@ -1,0 +1,992 @@
+{
+  "wf_id": "WF_OFFER_NEXT_TOKENS_V0",
+  "entry": "IN_OFFER_NEXT_TOKENS_V0",
+  "nodes": [
+    {
+      "id": "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "type": "CC",
+      "cc_code": "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "capability": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "candidates": "in.candidates",
+              "state": "in.state"
+            },
+            "fqdn": "causal_language_model::CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+            "id": "CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
+            "inputs": [
+              "state",
+              "candidates"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "step",
+              "text",
+              "finished",
+              "stopped_by",
+              "within_length"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "candidates": "IN.candidates",
+          "state": "CC_READ_HOSTED_STATE_V0.state"
+        }
+      }
+    },
+    {
+      "id": "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "reading_capacity": "CC_READ_HOSTED_STATE_V0.state.opening.reading_capacity",
+          "reported_reading_size": "IN.reported_reading_size"
+        }
+      }
+    },
+    {
+      "id": "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "value": "in.offered_fingerprint"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "inputs": [
+              "allowed_set",
+              "value"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "is_member"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "admitted_fingerprint": "CC_READ_HOSTED_STATE_V0.state.opening.fingerprint",
+          "offered_fingerprint": "IN.fingerprint"
+        }
+      }
+    },
+    {
+      "id": "CC_READ_HOSTED_STATE_V0",
+      "type": "CC",
+      "cc_code": "CC_READ_HOSTED_STATE_V0",
+      "capability": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {
+              "entries": "read_trail.entries"
+            },
+            "fqdn": "causal_language_model::CT_PURE_READ_HOSTED_STATE_V0",
+            "id": "CT_PURE_READ_HOSTED_STATE_V0",
+            "inputs": [
+              "entries"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "state"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "CONFIRM_NO_RULE_STOPPED",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "parameters": "in.release_facts",
+              "rules": "in.release_rules"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "release_facts": {
+            "stopped_by": "$.results.CC_CHOOSE_PERMITTED_TOKEN_V0.stopped_by"
+          },
+          "release_rules": [
+            {
+              "field": "stopped_by",
+              "op": "eq",
+              "value": "none"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "CONFIRM_WITHIN_LENGTH",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_RESPONSE_RELEASABLE_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "parameters": "in.release_facts",
+              "rules": "in.release_rules"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "release_facts": {
+            "within_length": "$.results.CC_CHOOSE_PERMITTED_TOKEN_V0.within_length"
+          },
+          "release_rules": [
+            {
+              "field": "within_length",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EXIT_CHOSEN",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REFUSED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_OFFER_NEXT_TOKENS_V0",
+      "type": "IN"
+    },
+    {
+      "id": "RECORD_REFUSED_BY_RULE",
+      "type": "CC",
+      "cc_code": "CC_RECORD_USER_PROMPT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "customer_id": "CC_READ_HOSTED_STATE_V0.state.opening.customer_id",
+          "identity_key": "CC_READ_HOSTED_STATE_V0.state.opening.identity_key",
+          "kind": "CC_READ_HOSTED_STATE_V0.state.opening.kind",
+          "outcome": "REFUSED",
+          "question": "CC_READ_HOSTED_STATE_V0.state.opening.question",
+          "reading": "CC_READ_HOSTED_STATE_V0.state.opening.reading",
+          "reason": "CC_CHOOSE_PERMITTED_TOKEN_V0.stopped_by",
+          "requester_id": "CC_READ_HOSTED_STATE_V0.state.opening.requester_id",
+          "rules_in_force": "CC_READ_HOSTED_STATE_V0.state.opening.rules_in_force",
+          "supporting_material": "CC_READ_HOSTED_STATE_V0.state.opening.supporting_material",
+          "time_in_service_id": "CC_READ_HOSTED_STATE_V0.state.opening.time_in_service_id",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "RECORD_REFUSED_OTHER_MODEL",
+      "type": "CC",
+      "cc_code": "CC_RECORD_USER_PROMPT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "customer_id": "CC_READ_HOSTED_STATE_V0.state.opening.customer_id",
+          "identity_key": "CC_READ_HOSTED_STATE_V0.state.opening.identity_key",
+          "kind": "CC_READ_HOSTED_STATE_V0.state.opening.kind",
+          "outcome": "REFUSED",
+          "question": "CC_READ_HOSTED_STATE_V0.state.opening.question",
+          "reading": "CC_READ_HOSTED_STATE_V0.state.opening.reading",
+          "reason": "offer_for_another_model",
+          "requester_id": "CC_READ_HOSTED_STATE_V0.state.opening.requester_id",
+          "rules_in_force": "CC_READ_HOSTED_STATE_V0.state.opening.rules_in_force",
+          "supporting_material": "CC_READ_HOSTED_STATE_V0.state.opening.supporting_material",
+          "time_in_service_id": "CC_READ_HOSTED_STATE_V0.state.opening.time_in_service_id",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "type": "CC",
+      "cc_code": "CC_RECORD_USER_PROMPT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "customer_id": "CC_READ_HOSTED_STATE_V0.state.opening.customer_id",
+          "identity_key": "CC_READ_HOSTED_STATE_V0.state.opening.identity_key",
+          "kind": "CC_READ_HOSTED_STATE_V0.state.opening.kind",
+          "outcome": "REFUSED",
+          "question": "CC_READ_HOSTED_STATE_V0.state.opening.question",
+          "reading": "CC_READ_HOSTED_STATE_V0.state.opening.reading",
+          "reason": "reading_longer_than_model_can_read",
+          "requester_id": "CC_READ_HOSTED_STATE_V0.state.opening.requester_id",
+          "rules_in_force": "CC_READ_HOSTED_STATE_V0.state.opening.rules_in_force",
+          "supporting_material": "CC_READ_HOSTED_STATE_V0.state.opening.supporting_material",
+          "time_in_service_id": "CC_READ_HOSTED_STATE_V0.state.opening.time_in_service_id",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "RECORD_REFUSED_UNFINISHED",
+      "type": "CC",
+      "cc_code": "CC_RECORD_USER_PROMPT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "customer_id": "CC_READ_HOSTED_STATE_V0.state.opening.customer_id",
+          "identity_key": "CC_READ_HOSTED_STATE_V0.state.opening.identity_key",
+          "kind": "CC_READ_HOSTED_STATE_V0.state.opening.kind",
+          "outcome": "REFUSED",
+          "question": "CC_READ_HOSTED_STATE_V0.state.opening.question",
+          "reading": "CC_READ_HOSTED_STATE_V0.state.opening.reading",
+          "reason": "longest_response_reached",
+          "requester_id": "CC_READ_HOSTED_STATE_V0.state.opening.requester_id",
+          "rules_in_force": "CC_READ_HOSTED_STATE_V0.state.opening.rules_in_force",
+          "supporting_material": "CC_READ_HOSTED_STATE_V0.state.opening.supporting_material",
+          "time_in_service_id": "CC_READ_HOSTED_STATE_V0.state.opening.time_in_service_id",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "RECORD_STEP",
+      "type": "CC",
+      "cc_code": "CC_RECORD_HOSTED_STEP_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "fingerprint": "IN.fingerprint",
+          "host_id": "IN.host_id",
+          "reported_reading_size": "IN.reported_reading_size",
+          "step": "CC_CHOOSE_PERMITTED_TOKEN_V0.step",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "RECORD_STOPPED_STEP",
+      "type": "CC",
+      "cc_code": "CC_RECORD_HOSTED_STEP_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "fingerprint": "IN.fingerprint",
+          "host_id": "IN.host_id",
+          "reported_reading_size": "IN.reported_reading_size",
+          "step": "CC_CHOOSE_PERMITTED_TOKEN_V0.step",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "RECORD_UNFINISHED_STEP",
+      "type": "CC",
+      "cc_code": "CC_RECORD_HOSTED_STEP_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "fingerprint": "IN.fingerprint",
+          "host_id": "IN.host_id",
+          "reported_reading_size": "IN.reported_reading_size",
+          "step": "CC_CHOOSE_PERMITTED_TOKEN_V0.step",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "to": "CONFIRM_NO_RULE_STOPPED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "to": "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "to": "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "to": "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "to": "RECORD_REFUSED_OTHER_MODEL",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_READ_HOSTED_STATE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_READ_HOSTED_STATE_V0",
+      "to": "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_READ_HOSTED_STATE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CONFIRM_NO_RULE_STOPPED",
+      "to": "CONFIRM_WITHIN_LENGTH",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CONFIRM_NO_RULE_STOPPED",
+      "to": "RECORD_STOPPED_STEP",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CONFIRM_WITHIN_LENGTH",
+      "to": "RECORD_STEP",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CONFIRM_WITHIN_LENGTH",
+      "to": "RECORD_UNFINISHED_STEP",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_OFFER_NEXT_TOKENS_V0",
+      "to": "CC_READ_HOSTED_STATE_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_OFFER_NEXT_TOKENS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    },
+    {
+      "from": "RECORD_REFUSED_BY_RULE",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_REFUSED_BY_RULE",
+      "to": "EXIT_REFUSED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_REFUSED_BY_RULE",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "RECORD_REFUSED_OTHER_MODEL",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_REFUSED_OTHER_MODEL",
+      "to": "EXIT_REFUSED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_REFUSED_OTHER_MODEL",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "to": "EXIT_REFUSED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "RECORD_REFUSED_UNFINISHED",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_REFUSED_UNFINISHED",
+      "to": "EXIT_REFUSED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_REFUSED_UNFINISHED",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "RECORD_STEP",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_STEP",
+      "to": "EXIT_CHOSEN",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_STEP",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "RECORD_STOPPED_STEP",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_STOPPED_STEP",
+      "to": "RECORD_REFUSED_BY_RULE",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_STOPPED_STEP",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "RECORD_UNFINISHED_STEP",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_UNFINISHED_STEP",
+      "to": "RECORD_REFUSED_UNFINISHED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_UNFINISHED_STEP",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "CONFIRM_WITHIN_LENGTH",
+      "RECORD_STEP",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "CONFIRM_WITHIN_LENGTH",
+      "RECORD_STEP",
+      "EXIT_CHOSEN"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "CONFIRM_WITHIN_LENGTH",
+      "RECORD_STEP",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "CONFIRM_WITHIN_LENGTH",
+      "RECORD_UNFINISHED_STEP",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "CONFIRM_WITHIN_LENGTH",
+      "RECORD_UNFINISHED_STEP",
+      "RECORD_REFUSED_UNFINISHED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "CONFIRM_WITHIN_LENGTH",
+      "RECORD_UNFINISHED_STEP",
+      "RECORD_REFUSED_UNFINISHED",
+      "EXIT_REFUSED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "CONFIRM_WITHIN_LENGTH",
+      "RECORD_UNFINISHED_STEP",
+      "RECORD_REFUSED_UNFINISHED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "CONFIRM_WITHIN_LENGTH",
+      "RECORD_UNFINISHED_STEP",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "RECORD_STOPPED_STEP",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "RECORD_STOPPED_STEP",
+      "RECORD_REFUSED_BY_RULE",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "RECORD_STOPPED_STEP",
+      "RECORD_REFUSED_BY_RULE",
+      "EXIT_REFUSED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "RECORD_STOPPED_STEP",
+      "RECORD_REFUSED_BY_RULE",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "CONFIRM_NO_RULE_STOPPED",
+      "RECORD_STOPPED_STEP",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "CC_CHOOSE_PERMITTED_TOKEN_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "EXIT_REFUSED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "CC_CONFIRM_HOSTED_READING_FITS_V0",
+      "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "RECORD_REFUSED_OTHER_MODEL",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "RECORD_REFUSED_OTHER_MODEL",
+      "EXIT_REFUSED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "CC_CONFIRM_OFFER_FOR_MODEL_V0",
+      "RECORD_REFUSED_OTHER_MODEL",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "CC_READ_HOSTED_STATE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_OFFER_NEXT_TOKENS_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

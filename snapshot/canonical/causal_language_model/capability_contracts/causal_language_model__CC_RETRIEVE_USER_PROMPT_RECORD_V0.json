@@ -1,0 +1,120 @@
+{
+  "artifact_code": "CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+        "id": "CS_APPENDONLY_JSONL_V0",
+        "kind": "CS",
+        "ops": [
+          "APPEND",
+          "GET_ALL"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {
+          "source": "read_user_prompt_entries.entries"
+        },
+        "fqdn": "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+        "id": "CT_PURE_FILTER_RECORDS_V0",
+        "inputs": [
+          "filter",
+          "source"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "extracted"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_RETRIEVE_USER_PROMPT_RECORD_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::CC_RETRIEVE_USER_PROMPT_RECORD_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: Read the record of a user prompt\n  inputs:\n    user_prompt_id:\n      type: string\n      required: true\n  outputs:\n    user_prompt_record:\n      type: array\n      required: true\n  result_status_contract:\n    allowed:\n    - BACKEND_ERROR\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_user_prompt_entries\n    side_effect: capability_side_effects::CS_APPENDONLY_JSONL_V0\n    op: GET_ALL\n    store: USER_PROMPT_RECORDS\n    inputs:\n      stream_id: $.inputs.user_prompt_id\n    outputs:\n      entries: $.capability_result.entries\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      BACKEND_ERROR: exit\n  - step: select_user_prompt_record\n    transform: capability_transforms::CT_PURE_FILTER_RECORDS_V0\n    inputs:\n      source: $.results.read_user_prompt_entries.entries\n      filter:\n        stream_id: $.inputs.user_prompt_id\n    outputs:\n      user_prompt_record: $.capability_result.extracted\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRead the record of a user prompt\n",
+  "content_hash": "4a7295e714169640ff48462177f641af1d1ec888680a194b53a7206279a9dbd8",
+  "fqdn_id": "causal_language_model::CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "core": {
+      "inputs": {
+        "user_prompt_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "user_prompt_record": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "stream_id": "$.inputs.user_prompt_id"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue"
+          },
+          "op": "GET_ALL",
+          "outputs": {
+            "entries": "$.capability_result.entries",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+          "step": "read_user_prompt_entries",
+          "store": "USER_PROMPT_RECORDS"
+        },
+        {
+          "inputs": {
+            "filter": {
+              "stream_id": "$.inputs.user_prompt_id"
+            },
+            "source": "$.results.read_user_prompt_entries.entries"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "user_prompt_record": "$.capability_result.extracted"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "select_user_prompt_record",
+          "transform": "capability_transforms::CT_PURE_FILTER_RECORDS_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "BACKEND_ERROR",
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Read the record of a user prompt"
+    },
+    "fqdn": "causal_language_model::CC_RETRIEVE_USER_PROMPT_RECORD_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_FILTER_RECORDS_V0"
+  ],
+  "version": "0"
+}

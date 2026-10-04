@@ -1,6 +1,6 @@
 {
   "cs": {
-    "24": {
+    "25": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -53,7 +53,7 @@
         "module": "capability_side_effects.implementation.CS_SNAPSHOT_QUERY_V0.runtime"
       }
     },
-    "25": {
+    "26": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -108,7 +108,7 @@
     }
   },
   "ct": {
-    "72": {
+    "79": {
       "ct_ir": {
         "artifact_code": "CT_PURE_ATTRIBUTE_PROVENANCE_V0",
         "atom_stream": [
@@ -122,7 +122,8 @@
               "callable": "execute",
               "module": "transformation.implementation.capability_transforms.atoms.ct_pure_attribute_provenance_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -147,7 +148,7 @@
         }
       }
     },
-    "73": {
+    "80": {
       "ct_ir": {
         "artifact_code": "CT_PURE_EVALUATE_RULES_V0",
         "atom_stream": [
@@ -166,7 +167,8 @@
               "callable": "execute",
               "module": "transformation.implementation.capability_transforms.atoms.ct_pure_evaluate_rules_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -221,7 +223,7 @@
         }
       }
     },
-    "74": {
+    "81": {
       "ct_ir": {
         "artifact_code": "CT_PURE_MEASURE_COMPLETENESS_V0",
         "atom_stream": [
@@ -237,7 +239,8 @@
               "callable": "execute",
               "module": "transformation.implementation.capability_transforms.atoms.ct_pure_measure_completeness_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -276,7 +279,7 @@
         }
       }
     },
-    "75": {
+    "82": {
       "ct_ir": {
         "artifact_code": "CT_PURE_PARSE_PRIOR_PHASES_V0",
         "atom_stream": [
@@ -289,7 +292,8 @@
               "callable": "execute",
               "module": "transformation.implementation.capability_transforms.atoms.ct_pure_parse_prior_phases_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -308,7 +312,7 @@
         }
       }
     },
-    "76": {
+    "83": {
       "ct_ir": {
         "artifact_code": "CT_PURE_PARSE_REGISTERS_V0",
         "atom_stream": [
@@ -321,7 +325,8 @@
               "callable": "execute",
               "module": "transformation.implementation.capability_transforms.atoms.ct_pure_parse_registers_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -346,7 +351,7 @@
         }
       }
     },
-    "77": {
+    "84": {
       "ct_ir": {
         "artifact_code": "CT_PURE_RENDER_ARTIFACTS_V0",
         "atom_stream": [
@@ -360,7 +365,8 @@
               "callable": "execute",
               "module": "transformation.implementation.capability_transforms.atoms.ct_pure_render_artifacts_v0"
             },
-            "out": "__atom_result__"
+            "out": "__atom_result__",
+            "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
@@ -394,8 +400,8 @@
   },
   "projection_class": "machine_projection",
   "rb_policy": {
-    "88": {
-      "25": {
+    "95": {
+      "26": {
         "host": "TextArtifactRuntime",
         "operation": "WRITE_ALL",
         "policy": {
@@ -404,8 +410,8 @@
         "type": "CS"
       }
     },
-    "89": {
-      "24": {
+    "96": {
+      "25": {
         "host": "SnapshotQueryRuntime",
         "operation": "READ",
         "policy": {

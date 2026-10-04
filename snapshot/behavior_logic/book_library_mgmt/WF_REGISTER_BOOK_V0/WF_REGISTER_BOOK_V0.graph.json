@@ -214,8 +214,7 @@
         "steps": [
           {
             "bindings": {
-              "parameters": "in.staff_credentials",
-              "rules": "in.authorization_rules"
+              "parameters": "in.staff_credentials"
             },
             "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
             "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
@@ -234,7 +233,6 @@
       "input_bindings": {
         "type": "wf_boundary",
         "bindings": {
-          "authorization_rules": "IN.authorization_rules",
           "staff_credentials": "IN.staff_credentials"
         }
       }
@@ -265,8 +263,7 @@
           },
           {
             "bindings": {
-              "record": "in.book_fields",
-              "schema": "in.book_schema"
+              "record": "in.book_fields"
             },
             "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
             "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
@@ -277,6 +274,20 @@
             "kind": "CT",
             "outputs": [
               "violations"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
             ]
           },
           {
@@ -316,10 +327,9 @@
             "author": "$.payload.author",
             "publication_year": "$.payload.publication_year",
             "state": "REGISTERED",
-            "subject": "$.payload.subject",
+            "subject": "$.payload.book_fields.subject",
             "title": "$.payload.title"
           },
-          "book_schema": "IN.book_schema",
           "identity_key": "CC_CLAIM_BOOK_IDENTITY_V0.identity_key"
         }
       }
@@ -381,8 +391,7 @@
         "steps": [
           {
             "bindings": {
-              "record": "in.book_fields",
-              "schema": "in.book_schema"
+              "record": "in.book_fields"
             },
             "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
             "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
@@ -415,17 +424,15 @@
         "type": "wf_boundary",
         "bindings": {
           "barcode": "IN.barcode",
-          "book_fields": "IN.book_fields",
-          "book_schema": "IN.book_schema",
+          "book_fields": {
+            "author": "$.payload.author",
+            "publication_year": "$.payload.publication_year",
+            "subject": "$.payload.book_fields.subject",
+            "title": "$.payload.title"
+          },
           "work_fields": {
             "author": "$.payload.author",
             "title": "$.payload.title"
-          },
-          "work_schema": {
-            "required": [
-              "title",
-              "author"
-            ]
           }
         }
       }

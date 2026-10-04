@@ -1,0 +1,964 @@
+{
+  "wf_id": "WF_BEGIN_HOSTED_RESPONSE_V0",
+  "entry": "IN_BEGIN_HOSTED_RESPONSE_V0",
+  "nodes": [
+    {
+      "id": "CC_ADMIT_USER_PROMPT_V0",
+      "type": "CC",
+      "cc_code": "CC_ADMIT_USER_PROMPT_V0",
+      "capability": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "identity_key": "IN.identity_key"
+        }
+      }
+    },
+    {
+      "id": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "type": "CC",
+      "cc_code": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "capability": "capability_side_effects::CS_REGISTRY_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "CC_CONFIRM_READING_FITS_V0",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_READING_FITS_V0",
+      "capability": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "question": "in.question",
+              "reading_capacity": "in.reading_capacity",
+              "supporting_material": "in.supporting_material",
+              "system_prompt": "in.system_prompt"
+            },
+            "fqdn": "causal_language_model::CT_PURE_ASSEMBLE_MODEL_READING_V0",
+            "id": "CT_PURE_ASSEMBLE_MODEL_READING_V0",
+            "inputs": [
+              "system_prompt",
+              "question",
+              "supporting_material",
+              "reading_capacity"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "reading",
+              "reading_length"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "question": "IN.question",
+          "reading_capacity": "CC_ADMIT_USER_PROMPT_V0.model_record.description.reading_capacity",
+          "supporting_material": "IN.supporting_material",
+          "system_prompt": "CC_CONFIRM_WITHIN_CEILING_V0.time_in_service.system_prompt"
+        }
+      }
+    },
+    {
+      "id": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "allowed_set": "in.permitted_customers",
+              "value": "in.customer_id"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "inputs": [
+              "allowed_set",
+              "value"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "is_member"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "customer_id": "IN.customer_id",
+          "permitted_customers": "IN.permitted_customers"
+        }
+      }
+    },
+    {
+      "id": "CC_CONFIRM_WITHIN_CEILING_V0",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_WITHIN_CEILING_V0",
+      "capability": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {
+              "value": "in.kind"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "inputs": [
+              "allowed_set",
+              "value"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "is_member"
+            ]
+          },
+          {
+            "bindings": {
+              "ceiling": "read_time_in_service.time_in_service.ceiling",
+              "kind": "in.kind"
+            },
+            "fqdn": "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0",
+            "id": "CT_PURE_COMPARE_SENSITIVITY_V0",
+            "inputs": [
+              "kind",
+              "ceiling",
+              "kinds"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "within_ceiling"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "kind": "IN.kind",
+          "time_in_service_id": "CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id"
+        }
+      }
+    },
+    {
+      "id": "CC_OPEN_HOSTED_RECORD_V0",
+      "type": "CC",
+      "cc_code": "CC_OPEN_HOSTED_RECORD_V0",
+      "capability": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "account_numbers": "in.account_numbers",
+              "response_rules": "in.response_rules",
+              "seed": "in.seed"
+            },
+            "fqdn": "causal_language_model::CT_PURE_FORM_RESPONSE_RULES_V0",
+            "id": "CT_PURE_FORM_RESPONSE_RULES_V0",
+            "inputs": [
+              "response_rules",
+              "account_numbers",
+              "seed"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "rules_in_force",
+              "positions"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "account_numbers": "IN.account_numbers",
+          "customer_id": "IN.customer_id",
+          "fingerprint": "CC_ADMIT_USER_PROMPT_V0.model_record.fingerprint",
+          "identity_key": "IN.identity_key",
+          "kind": "IN.kind",
+          "maximum_response_length": "CC_ADMIT_USER_PROMPT_V0.model_record.description.maximum_response_length",
+          "question": "IN.question",
+          "reading": "CC_CONFIRM_READING_FITS_V0.reading",
+          "reading_capacity": "CC_ADMIT_USER_PROMPT_V0.model_record.description.reading_capacity",
+          "requester_id": "IN.requester_id",
+          "response_rules": "CC_CONFIRM_WITHIN_CEILING_V0.time_in_service.response_rules",
+          "seed": "IN.seed",
+          "supporting_material": "IN.supporting_material",
+          "time_in_service_id": "CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "EXIT_REFUSED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_WRITING",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "type": "IN"
+    },
+    {
+      "id": "RECORD_REFUSED_ABOVE_CEILING",
+      "type": "CC",
+      "cc_code": "CC_RECORD_USER_PROMPT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "customer_id": "IN.customer_id",
+          "identity_key": "IN.identity_key",
+          "kind": "IN.kind",
+          "outcome": "REFUSED",
+          "question": "IN.question",
+          "reason": "kind_above_sensitivity_ceiling",
+          "requester_id": "IN.requester_id",
+          "supporting_material": "IN.supporting_material",
+          "time_in_service_id": "CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "RECORD_REFUSED_NOT_IN_SERVICE",
+      "type": "CC",
+      "cc_code": "CC_RECORD_USER_PROMPT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "customer_id": "IN.customer_id",
+          "identity_key": "IN.identity_key",
+          "kind": "IN.kind",
+          "outcome": "REFUSED",
+          "question": "IN.question",
+          "reason": "model_not_in_service",
+          "requester_id": "IN.requester_id",
+          "supporting_material": "IN.supporting_material",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "RECORD_REFUSED_NOT_PERMITTED",
+      "type": "CC",
+      "cc_code": "CC_RECORD_USER_PROMPT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "customer_id": "IN.customer_id",
+          "identity_key": "IN.identity_key",
+          "kind": "IN.kind",
+          "outcome": "REFUSED",
+          "question": "IN.question",
+          "reason": "requester_not_permitted_for_customer",
+          "requester_id": "IN.requester_id",
+          "supporting_material": "IN.supporting_material",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "RECORD_REFUSED_NOT_REGISTERED",
+      "type": "CC",
+      "cc_code": "CC_RECORD_USER_PROMPT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "customer_id": "IN.customer_id",
+          "identity_key": "IN.identity_key",
+          "kind": "IN.kind",
+          "outcome": "REFUSED",
+          "question": "IN.question",
+          "reason": "model_not_registered",
+          "requester_id": "IN.requester_id",
+          "supporting_material": "IN.supporting_material",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    },
+    {
+      "id": "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "type": "CC",
+      "cc_code": "CC_RECORD_USER_PROMPT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "customer_id": "IN.customer_id",
+          "identity_key": "IN.identity_key",
+          "kind": "IN.kind",
+          "outcome": "REFUSED",
+          "question": "IN.question",
+          "reason": "reading_longer_than_model_can_read",
+          "requester_id": "IN.requester_id",
+          "supporting_material": "IN.supporting_material",
+          "time_in_service_id": "CC_ADMIT_USER_PROMPT_V0.model_record.time_in_service_id",
+          "user_prompt_id": "IN.user_prompt_id"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_ADMIT_USER_PROMPT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_ADMIT_USER_PROMPT_V0",
+      "to": "RECORD_REFUSED_NOT_REGISTERED",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_ADMIT_USER_PROMPT_V0",
+      "to": "CC_CONFIRM_WITHIN_CEILING_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_ADMIT_USER_PROMPT_V0",
+      "to": "RECORD_REFUSED_NOT_IN_SERVICE",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "ALREADY_EXISTS"
+    },
+    {
+      "from": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "to": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CONFIRM_READING_FITS_V0",
+      "to": "CC_OPEN_HOSTED_RECORD_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONFIRM_READING_FITS_V0",
+      "to": "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "to": "CC_ADMIT_USER_PROMPT_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "to": "RECORD_REFUSED_NOT_PERMITTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CONFIRM_WITHIN_CEILING_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_CONFIRM_WITHIN_CEILING_V0",
+      "to": "RECORD_REFUSED_NOT_IN_SERVICE",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_CONFIRM_WITHIN_CEILING_V0",
+      "to": "CC_CONFIRM_READING_FITS_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONFIRM_WITHIN_CEILING_V0",
+      "to": "RECORD_REFUSED_ABOVE_CEILING",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_OPEN_HOSTED_RECORD_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_OPEN_HOSTED_RECORD_V0",
+      "to": "EXIT_WRITING",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_OPEN_HOSTED_RECORD_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "to": "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    },
+    {
+      "from": "RECORD_REFUSED_ABOVE_CEILING",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_REFUSED_ABOVE_CEILING",
+      "to": "EXIT_REFUSED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_REFUSED_ABOVE_CEILING",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "RECORD_REFUSED_NOT_IN_SERVICE",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_REFUSED_NOT_IN_SERVICE",
+      "to": "EXIT_REFUSED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_REFUSED_NOT_IN_SERVICE",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "RECORD_REFUSED_NOT_PERMITTED",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_REFUSED_NOT_PERMITTED",
+      "to": "EXIT_REFUSED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_REFUSED_NOT_PERMITTED",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "RECORD_REFUSED_NOT_REGISTERED",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_REFUSED_NOT_REGISTERED",
+      "to": "EXIT_REFUSED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_REFUSED_NOT_REGISTERED",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "to": "EXIT_REFUSED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "RECORD_REFUSED_NOT_REGISTERED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "RECORD_REFUSED_NOT_REGISTERED",
+      "EXIT_REFUSED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "RECORD_REFUSED_NOT_REGISTERED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "RECORD_REFUSED_NOT_IN_SERVICE",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "RECORD_REFUSED_NOT_IN_SERVICE",
+      "EXIT_REFUSED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "RECORD_REFUSED_NOT_IN_SERVICE",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "CC_CONFIRM_READING_FITS_V0",
+      "CC_OPEN_HOSTED_RECORD_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "CC_CONFIRM_READING_FITS_V0",
+      "CC_OPEN_HOSTED_RECORD_V0",
+      "EXIT_WRITING"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "CC_CONFIRM_READING_FITS_V0",
+      "CC_OPEN_HOSTED_RECORD_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "CC_CONFIRM_READING_FITS_V0",
+      "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "CC_CONFIRM_READING_FITS_V0",
+      "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "EXIT_REFUSED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "CC_CONFIRM_READING_FITS_V0",
+      "RECORD_REFUSED_TOO_LONG_TO_READ",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "RECORD_REFUSED_ABOVE_CEILING",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "RECORD_REFUSED_ABOVE_CEILING",
+      "EXIT_REFUSED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "CC_CONFIRM_WITHIN_CEILING_V0",
+      "RECORD_REFUSED_ABOVE_CEILING",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "RECORD_REFUSED_NOT_IN_SERVICE",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "RECORD_REFUSED_NOT_IN_SERVICE",
+      "EXIT_REFUSED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "CC_ADMIT_USER_PROMPT_V0",
+      "RECORD_REFUSED_NOT_IN_SERVICE",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "RECORD_REFUSED_NOT_PERMITTED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "RECORD_REFUSED_NOT_PERMITTED",
+      "EXIT_REFUSED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "CC_CONFIRM_REQUESTER_ACTS_FOR_CUSTOMER_V0",
+      "RECORD_REFUSED_NOT_PERMITTED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "CC_CLAIM_USER_PROMPT_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_BEGIN_HOSTED_RESPONSE_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

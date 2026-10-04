@@ -1,0 +1,27 @@
+{
+  "artifact_code": "STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V1",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V1\n\n## Machine\n\n```yaml\nfqdn: cryptographic_trust::STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V1\nartifact_code: STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V1\nartifact_kind: STRUCTURE\nversion: V1\ngoverned_by: cryptographic_trust::CONSTITUTION_CRYPTOGRAPHIC_TRUST_V1\nauthority: pgc.platform\nconcern: cryptographic_trust\ntrust_mode: LOCAL_DEV_UNSIGNED\nartifact_signing_required: false\npayload_signing_required: false\ntrace_signing_required: false\ntrust_anchor: none\n```\n\n---\n\n## Purpose\n\nDeclares that unsigned local development is an available trust posture.\n\nA composition built under it requires no signature over the snapshot, and none over payloads or\ntraces. Trust is implicit, which is right for local development and a single operator. The\nconstitution confines it there: a composition declaring this mode is not deployed to non-local\nexecution substrates.\n\nThis is the mode V0 declared, and it means the same thing. What changed is how a build reaches it:\nthe structure no longer marks itself active, and a build configuration names it in `trust_mode`.\n\n## Availability is not activity\n\nThis structure carries no `status`. It states that the mode is **available** to a build, never that\nit is **active** in one. Activity is named by a build configuration, and the composition that\nresults carries this structure and no other trust structure\n(`INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V1`).\n",
+  "content_hash": "32bff7971d842e0b7ad4d772f0e3e2c21e90a51dc1f762600716571f0c38ee3e",
+  "fqdn_id": "cryptographic_trust::STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V1",
+  "frontmatter": {
+    "artifact_code": "STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V1",
+    "artifact_kind": "STRUCTURE",
+    "artifact_signing_required": false,
+    "authority": "pgc.platform",
+    "concern": "cryptographic_trust",
+    "fqdn": "cryptographic_trust::STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V1",
+    "governed_by": "cryptographic_trust::CONSTITUTION_CRYPTOGRAPHIC_TRUST_V1",
+    "payload_signing_required": false,
+    "trace_signing_required": false,
+    "trust_anchor": "none",
+    "trust_mode": "LOCAL_DEV_UNSIGNED",
+    "version": "V1"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "cryptographic_trust",
+  "references": [
+    "cryptographic_trust::CONSTITUTION_CRYPTOGRAPHIC_TRUST_V1"
+  ],
+  "version": "1"
+}

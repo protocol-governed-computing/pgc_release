@@ -1,0 +1,85 @@
+{
+  "artifact_code": "TEST_DATA_CT_WRITE_NEXT_WORD_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_WRITE_NEXT_WORD_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::TEST_DATA_CT_WRITE_NEXT_WORD_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: model_response\ntarget: causal_language_model::CT_WRITE_NEXT_WORD_V0\ncases:\n- case_id: writes_one_permitted_word_from_a_recorded_offer\n  expected_outcome: SUCCESS\n  bindings:\n    reading:\n      system_prompt: Answer briefly.\n      question: What is my balance?\n      supporting_material: Account 12345678 balance 40.\n    rules_in_force:\n      forbidden:\n      - rule: no_guarantees\n        pattern: \\bguaranteed\\b\n      - rule: another_customers_account_number\n        pattern: '[0-9](?:[ -]?[0-9]){7}'\n        except:\n        - '12345678'\n      freedom: 0\n      seed: 7\n    position: 1\n    text: ''\n    finished: false\n    stopped_by: none\n    stopped: []\n  expected:\n    result:\n      text: Your\n      finished: false\n      stopped_by: none\n      stopped:\n      - position: 1\n        word: '87654321'\n        rule: another_customers_account_number\n  recorded:\n    offered:\n      candidates:\n      - word: '87654321'\n        likelihood: 0.6\n      - word: Your\n        likelihood: 0.3\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "c92a6f35e89dd17f0f64b365ba18f911497817771b8c4b85399be0a7f743eaad",
+  "fqdn_id": "causal_language_model::TEST_DATA_CT_WRITE_NEXT_WORD_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "finished": false,
+          "position": 1,
+          "reading": {
+            "question": "What is my balance?",
+            "supporting_material": "Account 12345678 balance 40.",
+            "system_prompt": "Answer briefly."
+          },
+          "rules_in_force": {
+            "forbidden": [
+              {
+                "pattern": "\\bguaranteed\\b",
+                "rule": "no_guarantees"
+              },
+              {
+                "except": [
+                  "12345678"
+                ],
+                "pattern": "[0-9](?:[ -]?[0-9]){7}",
+                "rule": "another_customers_account_number"
+              }
+            ],
+            "freedom": 0,
+            "seed": 7
+          },
+          "stopped": [],
+          "stopped_by": "none",
+          "text": ""
+        },
+        "case_id": "writes_one_permitted_word_from_a_recorded_offer",
+        "expected": {
+          "result": {
+            "finished": false,
+            "stopped": [
+              {
+                "position": 1,
+                "rule": "another_customers_account_number",
+                "word": "87654321"
+              }
+            ],
+            "stopped_by": "none",
+            "text": "Your"
+          }
+        },
+        "expected_outcome": "SUCCESS",
+        "recorded": {
+          "offered": {
+            "candidates": [
+              {
+                "likelihood": 0.6,
+                "word": "87654321"
+              },
+              {
+                "likelihood": 0.3,
+                "word": "Your"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "concern": "model_response",
+    "fqdn": "causal_language_model::TEST_DATA_CT_WRITE_NEXT_WORD_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "causal_language_model::CT_WRITE_NEXT_WORD_V0",
+    "version": "V0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

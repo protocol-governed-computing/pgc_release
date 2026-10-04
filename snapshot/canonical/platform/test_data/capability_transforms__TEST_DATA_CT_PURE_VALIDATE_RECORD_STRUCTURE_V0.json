@@ -1,0 +1,78 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\ntarget: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\ncases:\n- case_id: valid_record\n  expected_outcome: SUCCESS\n  bindings:\n    record:\n      name: Alice\n      age: 30\n    schema:\n      name:\n        required: true\n        type: string\n      age:\n        required: true\n        type: integer\n  expected:\n    violations: []\n- case_id: invalid_record_missing_field\n  expected_outcome: SUCCESS\n  bindings:\n    record:\n      name: Bob\n    schema:\n      name:\n        required: true\n        type: string\n      age:\n        required: true\n        type: integer\n  expected:\n    violations:\n    - field: age\n      rule: required\n      message: Field 'age' is required\n```\n\n## Intent\n\nTest record structure validation against schema.\n",
+  "content_hash": "ba4a72fc08a73fe55d7984cc4055a72bf6ade8b317a7bcfb7b1bcf28b1c3affe",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "record": {
+            "age": 30,
+            "name": "Alice"
+          },
+          "schema": {
+            "age": {
+              "required": true,
+              "type": "integer"
+            },
+            "name": {
+              "required": true,
+              "type": "string"
+            }
+          }
+        },
+        "case_id": "valid_record",
+        "expected": {
+          "violations": []
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "record": {
+            "name": "Bob"
+          },
+          "schema": {
+            "age": {
+              "required": true,
+              "type": "integer"
+            },
+            "name": {
+              "required": true,
+              "type": "string"
+            }
+          }
+        },
+        "case_id": "invalid_record_missing_field",
+        "expected": {
+          "violations": [
+            {
+              "field": "age",
+              "message": "Field 'age' is required",
+              "rule": "required"
+            }
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

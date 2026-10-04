@@ -2,7 +2,7 @@
   "artifact_code": "CT_PURE_EXTRACT_V0",
   "artifact_type": "CT",
   "content": "",
-  "content_hash": "bfa9bdcab536d12ce1658ccf449a8fd83ebd83d150035e310350940dd71e28d7",
+  "content_hash": "542747aa87ff0a4a883a7ffc6a77f0727d5fee1c9b5d9bcf5c90428bf3029166",
   "ct_ir": {
     "artifact_code": "CT_PURE_EXTRACT_V0",
     "atom_stream": [
@@ -17,7 +17,8 @@
           "callable": "execute",
           "module": "capability_transforms.implementation.ct_pure_extract_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -79,7 +80,7 @@
       "summary": "Extract a value using JSONPath"
     },
     "fqdn": "capability_transforms::CT_PURE_EXTRACT_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",

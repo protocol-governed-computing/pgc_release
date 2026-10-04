@@ -1,8 +1,8 @@
 {
   "artifact_code": "CT_PURE_RENDER_ARTIFACTS_V0",
   "artifact_type": "CT",
-  "content": "# CT_PURE_RENDER_ARTIFACTS_V0\n\n## Machine\n\n```yaml\nfqdn: transformation::CT_PURE_RENDER_ARTIFACTS_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: build\ncore:\n  summary: Render every artifact a mandate schedules from the design that determines it\n  refusal: raises\n  inputs:\n    design_registers:\n      type: array\n      required: true\n    mandate_registers:\n      type: array\n      required: true\n  outputs:\n    artifacts:\n      type: array\n      required: true\n    documents:\n      type: array\n      required: true\n    artifact_count:\n      type: integer\n      required: true\n    sources:\n      type: object\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_RENDER_ARTIFACTS\n  implementation:\n    module: transformation.implementation.capability_transforms.atoms.ct_pure_render_artifacts_v0\n    callable: execute\n```\n\n---\n\n## Intent\n\nRender every artifact a mandate schedules from the design that determines it\n",
-  "content_hash": "c4465d9ed42ac414265fece2335a2fdd69ade4446f68b6d0b67656e2f2f67fd4",
+  "content": "# CT_PURE_RENDER_ARTIFACTS_V0\n\n## Machine\n\n```yaml\nfqdn: transformation::CT_PURE_RENDER_ARTIFACTS_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: build\ncore:\n  summary: Render every artifact a mandate schedules from the design that determines it\n  refusal: raises\n  inputs:\n    design_registers:\n      type: array\n      required: true\n    mandate_registers:\n      type: array\n      required: true\n  outputs:\n    artifacts:\n      type: array\n      required: true\n    documents:\n      type: array\n      required: true\n    artifact_count:\n      type: integer\n      required: true\n    sources:\n      type: object\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_RENDER_ARTIFACTS\n  implementation:\n    module: transformation.implementation.capability_transforms.atoms.ct_pure_render_artifacts_v0\n    callable: execute\n```\n\n---\n\n## Intent\n\nRender every artifact a mandate schedules from the design that determines it\n",
+  "content_hash": "408eac40df082b67fbfc8af52f1950f55ec379a0634ac62da6ac9a221ceaf043",
   "ct_ir": {
     "artifact_code": "CT_PURE_RENDER_ARTIFACTS_V0",
     "atom_stream": [
@@ -16,7 +16,8 @@
           "callable": "execute",
           "module": "transformation.implementation.capability_transforms.atoms.ct_pure_render_artifacts_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -84,7 +85,7 @@
       "summary": "Render every artifact a mandate schedules from the design that determines it"
     },
     "fqdn": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",
@@ -99,7 +100,7 @@
   "layer_code": "TRANSFORMATION",
   "namespace": "transformation",
   "references": [
-    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
   ],
   "version": "0"
 }

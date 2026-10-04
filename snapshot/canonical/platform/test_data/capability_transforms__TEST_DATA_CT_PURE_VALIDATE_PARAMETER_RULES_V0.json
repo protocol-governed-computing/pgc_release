@@ -1,0 +1,66 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_VALIDATE_PARAMETER_RULES_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_VALIDATE_PARAMETER_RULES_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_VALIDATE_PARAMETER_RULES_V0\ntarget: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\ncases:\n- case_id: all_rules_pass\n  expected_outcome: SUCCESS\n  bindings:\n    parameters:\n      amount: 100\n      type: deposit\n    rules:\n    - field: amount\n      op: gt\n      value: 0\n  expected:\n    valid: true\n    failed_rule: null\n- case_id: rule_fails\n  expected_outcome: VIOLATION\n  bindings:\n    parameters:\n      amount: -50\n      type: deposit\n    rules:\n    - field: amount\n      op: gt\n      value: 0\n  expected: {}\n```\n\n## Intent\n\nTest parameter validation against rules.\n",
+  "content_hash": "ad27b2bfe387a4b214184fa0fdb39fd9fc2e81f1a236401c634c51058592b193",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "parameters": {
+            "amount": 100,
+            "type": "deposit"
+          },
+          "rules": [
+            {
+              "field": "amount",
+              "op": "gt",
+              "value": 0
+            }
+          ]
+        },
+        "case_id": "all_rules_pass",
+        "expected": {
+          "failed_rule": null,
+          "valid": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "parameters": {
+            "amount": -50,
+            "type": "deposit"
+          },
+          "rules": [
+            {
+              "field": "amount",
+              "op": "gt",
+              "value": 0
+            }
+          ]
+        },
+        "case_id": "rule_fails",
+        "expected": {},
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

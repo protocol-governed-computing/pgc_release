@@ -1,0 +1,55 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_COMPARE_SENSITIVITY_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_COMPARE_SENSITIVITY_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::TEST_DATA_CT_PURE_COMPARE_SENSITIVITY_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: model_response\ntarget: causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0\ncases:\n- case_id: admits_kind_within_ceiling\n  expected_outcome: SUCCESS\n  bindings:\n    kind: internal\n    ceiling: confidential\n    kinds:\n    - public\n    - internal\n    - confidential\n    - restricted\n  expected:\n    within_ceiling: true\n- case_id: refuses_kind_above_ceiling\n  expected_outcome: VIOLATION\n  bindings:\n    kind: restricted\n    ceiling: internal\n    kinds:\n    - public\n    - internal\n    - confidential\n    - restricted\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "1f49689ecfb83a5c3d1524a26cca61a7d72961aa7c6a4d6eaf6695bcccfa4c21",
+  "fqdn_id": "causal_language_model::TEST_DATA_CT_PURE_COMPARE_SENSITIVITY_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "ceiling": "confidential",
+          "kind": "internal",
+          "kinds": [
+            "public",
+            "internal",
+            "confidential",
+            "restricted"
+          ]
+        },
+        "case_id": "admits_kind_within_ceiling",
+        "expected": {
+          "within_ceiling": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "ceiling": "internal",
+          "kind": "restricted",
+          "kinds": [
+            "public",
+            "internal",
+            "confidential",
+            "restricted"
+          ]
+        },
+        "case_id": "refuses_kind_above_ceiling",
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "model_response",
+    "fqdn": "causal_language_model::TEST_DATA_CT_PURE_COMPARE_SENSITIVITY_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "target": "causal_language_model::CT_PURE_COMPARE_SENSITIVITY_V0",
+    "version": "V0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V2"
+  ],
+  "version": "0"
+}

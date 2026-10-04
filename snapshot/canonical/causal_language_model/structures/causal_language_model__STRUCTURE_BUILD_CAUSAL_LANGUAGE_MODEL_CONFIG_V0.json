@@ -1,0 +1,133 @@
+{
+  "artifact_code": "STRUCTURE_BUILD_CAUSAL_LANGUAGE_MODEL_CONFIG_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_BUILD_CAUSAL_LANGUAGE_MODEL_CONFIG_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::STRUCTURE_BUILD_CAUSAL_LANGUAGE_MODEL_CONFIG_V0\nartifact_kind: STRUCTURE\nversion: V0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: causal_language_model\nstructure_scope: causal_language_model\nreuse_visibility: business\ncore:\n  summary: Build-time STRUCTURE manifest (causal_language_model business-domain scope)\n  description: 'Compiles the causal_language_model domain''s own artifacts, resolving governance and platform\n    capability references against the imported compiled governance surface. Emits only causal_language_model\n    artifacts. Self-describing: declares its own source layer and namespace rule additively. Subdomains:\n    model_response.'\nlayer_definitions:\n  CAUSAL_LANGUAGE_MODEL:\n    domain_subpath: registry\n    registry_module: causal_language_model.registry\n    implementation_namespace: causal_language_model.implementation.capability_transforms.atoms\n    layer_category: domain\nidentity_rules:\n- match: causal_language_model.registry\n  namespace: causal_language_model\nartifact_discovery:\n  search_layers:\n  - CAUSAL_LANGUAGE_MODEL\n  import_surface:\n    domain: platform\n  artifact_types:\n  - AC\n  - IN\n  - WF\n  - CC\n  - CT\n  - RB\n  - EV\n  - VOCAB\n  - STRUCTURE\n  - TI\n  - TE\n  - TEST_DATA\noutput_configuration:\n  root: snapshot\n  artifacts:\n    layer: PROTOCOL_BUILD_ROOT\n    subpath: compiled/canonical\n  vocabulary_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/vocabulary\n  tokenized_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/tokenized\n  evidence_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/evidence\n  trust_attestation_path:\n    layer: GOVERNANCE\n    subpath: compiled/trust\n  visualization_projection_path:\n    layer: GOVERNANCE\n    subpath: compiled/visualization\n  layer_outputs:\n    CAUSAL_LANGUAGE_MODEL:\n      layer: CAUSAL_LANGUAGE_MODEL\n      subpath: compiled/canonical\n  bootstrap_search_roots:\n  - layer: GOVERNANCE\n    subpath: structure/structures\n  conformance:\n    layer: GOVERNANCE\n    subpath: compiled/transform_conformance\nbuild_phases:\n- phase: discover\n  description: Discover causal_language_model artifacts via STRUCTURE\n- phase: parse\n  description: Parse artifacts into canonical machine form\n- phase: normalize\n  description: Resolve references (causal_language_model + imported governance surface)\n- phase: validate\n  description: Validate artifacts using compiler schema rules\n- phase: assert\n  description: Evaluate cross-artifact invariants\n- phase: materialize\n  description: Emit deterministic compiled artifacts (causal_language_model scope only)\n  target: compiled/artifacts/\n```\n\n---\n\n## Intent\n\nBuild-time STRUCTURE manifest (causal_language_model business-domain scope)\n",
+  "content_hash": "bc25adaa92e93537bdd01988b971c136366045f6a21d47a4886987c534694329",
+  "fqdn_id": "causal_language_model::STRUCTURE_BUILD_CAUSAL_LANGUAGE_MODEL_CONFIG_V0",
+  "frontmatter": {
+    "artifact_discovery": {
+      "artifact_types": [
+        "AC",
+        "IN",
+        "WF",
+        "CC",
+        "CT",
+        "RB",
+        "EV",
+        "VOCAB",
+        "STRUCTURE",
+        "TI",
+        "TE",
+        "TEST_DATA"
+      ],
+      "import_surface": {
+        "domain": "platform"
+      },
+      "search_layers": [
+        "CAUSAL_LANGUAGE_MODEL"
+      ]
+    },
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "build_phases": [
+      {
+        "description": "Discover causal_language_model artifacts via STRUCTURE",
+        "phase": "discover"
+      },
+      {
+        "description": "Parse artifacts into canonical machine form",
+        "phase": "parse"
+      },
+      {
+        "description": "Resolve references (causal_language_model + imported governance surface)",
+        "phase": "normalize"
+      },
+      {
+        "description": "Validate artifacts using compiler schema rules",
+        "phase": "validate"
+      },
+      {
+        "description": "Evaluate cross-artifact invariants",
+        "phase": "assert"
+      },
+      {
+        "description": "Emit deterministic compiled artifacts (causal_language_model scope only)",
+        "phase": "materialize",
+        "target": "compiled/artifacts/"
+      }
+    ],
+    "concern": "causal_language_model",
+    "core": {
+      "description": "Compiles the causal_language_model domain's own artifacts, resolving governance and platform capability references against the imported compiled governance surface. Emits only causal_language_model artifacts. Self-describing: declares its own source layer and namespace rule additively. Subdomains: model_response.",
+      "summary": "Build-time STRUCTURE manifest (causal_language_model business-domain scope)"
+    },
+    "fqdn": "causal_language_model::STRUCTURE_BUILD_CAUSAL_LANGUAGE_MODEL_CONFIG_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "identity_rules": [
+      {
+        "match": "causal_language_model.registry",
+        "namespace": "causal_language_model"
+      }
+    ],
+    "layer_definitions": {
+      "CAUSAL_LANGUAGE_MODEL": {
+        "domain_subpath": "registry",
+        "implementation_namespace": "causal_language_model.implementation.capability_transforms.atoms",
+        "layer_category": "domain",
+        "registry_module": "causal_language_model.registry"
+      }
+    },
+    "output_configuration": {
+      "artifacts": {
+        "layer": "PROTOCOL_BUILD_ROOT",
+        "subpath": "compiled/canonical"
+      },
+      "bootstrap_search_roots": [
+        {
+          "layer": "GOVERNANCE",
+          "subpath": "structure/structures"
+        }
+      ],
+      "conformance": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/transform_conformance"
+      },
+      "evidence_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/evidence"
+      },
+      "layer_outputs": {
+        "CAUSAL_LANGUAGE_MODEL": {
+          "layer": "CAUSAL_LANGUAGE_MODEL",
+          "subpath": "compiled/canonical"
+        }
+      },
+      "root": "snapshot",
+      "tokenized_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/tokenized"
+      },
+      "trust_attestation_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/trust"
+      },
+      "visualization_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/visualization"
+      },
+      "vocabulary_projection_path": {
+        "layer": "GOVERNANCE",
+        "subpath": "compiled/vocabulary"
+      }
+    },
+    "reuse_visibility": "business",
+    "structure_scope": "causal_language_model",
+    "version": "V0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

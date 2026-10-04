@@ -1,8 +1,8 @@
 {
   "artifact_code": "CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
   "artifact_type": "CT",
-  "content": "# CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\n\n## 1. Intent\n\nForms the single key the registry claims from the three identifying attributes\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Forms the single key the registry claims from the three identifying attributes\n  refusal: never\n  inputs:\n    title:\n      type: string\n      required: true\n    author:\n      type: string\n      required: true\n    publication_year:\n      type: integer\n      required: true\n  outputs:\n    identity_key:\n      type: string\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_FORM_BOOK_IDENTITY_KEY\n  implementation:\n    module: book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_form_book_identity_key_v0\n    callable: execute\n```\n",
-  "content_hash": "fd404962ca0025d231ed7c7c10baded271e7a294e7b06ce0ebcff33191214c90",
+  "content": "# CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\n\n## 1. Intent\n\nForms the single key the registry claims from the three identifying attributes\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Forms the single key the registry claims from the three identifying attributes\n  refusal: never\n  inputs:\n    title:\n      type: string\n      required: true\n    author:\n      type: string\n      required: true\n    publication_year:\n      type: integer\n      required: true\n  outputs:\n    identity_key:\n      type: string\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: PURE_FORM_BOOK_IDENTITY_KEY\n  implementation:\n    module: book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_form_book_identity_key_v0\n    callable: execute\n```\n",
+  "content_hash": "a9e2bcd0d59ea478e05621d0fc2b088e7c0e44d1d5cd16fe329dcb00079b1878",
   "ct_ir": {
     "artifact_code": "CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
     "atom_stream": [
@@ -17,7 +17,8 @@
           "callable": "execute",
           "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_form_book_identity_key_v0"
         },
-        "out": "__atom_result__"
+        "out": "__atom_result__",
+        "purity": "ct_pure"
       }
     ],
     "ct_composition_version": "V0",
@@ -72,7 +73,7 @@
       "summary": "Forms the single key the registry claims from the three identifying attributes"
     },
     "fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
-    "governed_by": "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
     "machine": {
       "ct_kind": "atom",
       "ct_purity": "ct_pure",
@@ -87,7 +88,7 @@
   "layer_code": "BOOK_LIBRARY_MGMT",
   "namespace": "book_library_mgmt",
   "references": [
-    "capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V0"
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
   ],
   "version": "0"
 }

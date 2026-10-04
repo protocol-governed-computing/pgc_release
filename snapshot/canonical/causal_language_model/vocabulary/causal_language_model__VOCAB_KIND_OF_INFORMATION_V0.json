@@ -1,0 +1,31 @@
+{
+  "artifact_code": "VOCAB_KIND_OF_INFORMATION_V0",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_KIND_OF_INFORMATION_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::VOCAB_KIND_OF_INFORMATION_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: model_response\nextends: ''\nkind_of_information:\n  casing: lower_snake\n  entries:\n  - public\n  - internal\n  - confidential\n  - restricted\n```\n\n---\n\n## Intent\n\n\n",
+  "content_hash": "073bc4687a11cf2032cf01fe4d41d644db09e798b78260f75334771e5f1ba35f",
+  "fqdn_id": "causal_language_model::VOCAB_KIND_OF_INFORMATION_V0",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "authority": "pgc.platform",
+    "concern": "model_response",
+    "extends": "",
+    "fqdn": "causal_language_model::VOCAB_KIND_OF_INFORMATION_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "kind_of_information": {
+      "casing": "lower_snake",
+      "entries": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ]
+    },
+    "version": "v0"
+  },
+  "layer_code": "CAUSAL_LANGUAGE_MODEL",
+  "namespace": "causal_language_model",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

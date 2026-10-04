@@ -1,0 +1,37 @@
+{
+  "artifact_code": "CONSTITUTION_NONDETERMINISTIC_ATOMS_V0",
+  "artifact_type": "CONSTITUTION",
+  "content": "# CONSTITUTION_NONDETERMINISTIC_ATOMS_V0\n\n## Machine\n```yaml\nfqdn: capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0\nartifact_kind: CONSTITUTION\nversion: V0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_model: compiler_enforced\n  governs:\n  - CT\nrules:\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_CT_GOVERNED_BY_KIND_V0\n- applies_to: CT\n  enforced_by: capability_transforms::INVARIANT_NONDETERMINISM_NOT_ROUTED_V0\n```\n\n---\n\n## 1. Purpose\n\nThis constitution governs the **non-deterministic atom**: an atom that declares its result is not\ndetermined by its inputs. A language model offering the words it might write next is one.\n\nIt governs such atoms only. Deterministic atoms are governed by\n`capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0`; molecules are governed by\n`capability_transforms::CONSTITUTION_MOLECULES_V0`. Each transform is governed by exactly one of the\nthree, decided by its kind and declared purity. The rules common to\nall three are carried by `capability_transforms::CONSTITUTION_CAPABILITY_TRANSFORMS_V1`.\n\n---\n\n## 2. What a non-deterministic atom is\n\n- An atom declaring `ct_purity: ct_impure`: given the same inputs, it may produce a different result.\n- It declares its implementation, like every atom.\n- It has **no side effects**. Its result is its only product; a change outside it is the business of a\n  capability side effect.\n\n---\n\n## 3. Determinism relative to recorded outcomes\n\nThe platform's determination is deterministic: the same governed state, proposal and closure\ndetermine the same result, and replaying a sealed composition reproduces it. A step whose result\nvaries would break both unless what it produced is kept. So:\n\n- **Recorded when produced.** Every result a non-deterministic atom produces is recorded as\n  determining evidence, values included, at the moment it is produced.\n- **Replay substitutes.** A replay uses the recorded result in place of the atom, and never runs a\n  non-deterministic atom.\n- **Determinism holds** for the governed state, the proposal, the closure and the recorded outcomes\n  together. The variation is observed once, recorded, and an input thereafter.\n\nThe platform already admits a value of this kind: the clock, which answers differently every time and\nis recorded where it is used.\n\n---\n\n## 4. Offered, never decided\n\nA non-deterministic atom's results are consumed by a deterministic step before anything routes on\nthem. A capability contract does not invoke a non-deterministic atom as a step of its own, and a\nmolecule's emission does not come from one. Otherwise governance would reduce to recording what the\natom said.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Governs atoms that declare their result is not determined by their inputs\nrules:\n- rule_id: NONDETERMINISTIC_ATOM_GOVERNED_HERE\n  constraint: an atom declaring ct_purity ct_impure MUST be governed by this constitution\n- rule_id: NONDETERMINISTIC_ATOM_NO_SIDE_EFFECTS\n  constraint: a non-deterministic atom MUST NOT produce side effects\n- rule_id: NONDETERMINISTIC_RESULT_RECORDED\n  constraint: every result a non-deterministic atom produces MUST be recorded when produced\n- rule_id: NONDETERMINISTIC_REPLAY_SUBSTITUTES\n  constraint: a replay MUST use the recorded result and MUST NOT run a non-deterministic atom\n- rule_id: NONDETERMINISTIC_OFFERED_NEVER_DECIDED\n  constraint: nothing MAY route on a non-deterministic atom's result before a deterministic step consumes it\n```\n",
+  "content_hash": "450d939a882b475e210bd457098f540146a126eac8f93f5fd357b693c466f08e",
+  "fqdn_id": "capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0",
+  "frontmatter": {
+    "artifact_kind": "CONSTITUTION",
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_model": "compiler_enforced",
+      "governs": [
+        "CT"
+      ]
+    },
+    "fqdn": "capability_transforms::CONSTITUTION_NONDETERMINISTIC_ATOMS_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "rules": [
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_CT_GOVERNED_BY_KIND_V0"
+      },
+      {
+        "applies_to": "CT",
+        "enforced_by": "capability_transforms::INVARIANT_NONDETERMINISM_NOT_ROUTED_V0"
+      }
+    ],
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}
