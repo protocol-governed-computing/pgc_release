@@ -2,6 +2,10 @@
 
 **The composed Protocol-Governed Computing platform — the artifact the paper's claims refer to.**
 
+> **New here?** The [five-minute tour](https://github.com/protocol-governed-computing/pgc_install#five-minutes-install-run-refuse-tamper)
+> installs the toolchain and runs this snapshot. It shows the snapshot boot, run, refuse bad input, and
+> refuse to boot after one byte changes.
+
 A platform is not a repository. It is the composition of a governance surface, workloads, and
 business domains under a conformance profile. This repository holds one such composition, sealed:
 the assembled snapshot for one public identity, together with the manifest naming every component
