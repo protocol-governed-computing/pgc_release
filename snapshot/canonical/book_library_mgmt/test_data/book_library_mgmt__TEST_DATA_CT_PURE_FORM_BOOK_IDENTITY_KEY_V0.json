@@ -1,0 +1,46 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::TEST_DATA_CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: catalog\ntarget: book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\ncases:\n- case_id: forms_normalized_key\n  expected_outcome: SUCCESS\n  bindings:\n    title: THE ODYSSEY\n    author: Homer\n    publication_year: 1614\n  expected:\n    identity_key: the odyssey|homer|1614\n- case_id: refuses_blank_title\n  expected_outcome: VIOLATION\n  bindings:\n    title: ' '\n    author: Homer\n    publication_year: 1614\n```\n\n## Intent\n\nCase does not change which book is meant, and a blank title is refused.\n",
+  "content_hash": "351423d3f296a0f8e9ac7e76ba80a57871ff848e0453d467136be2c70344a8a2",
+  "fqdn_id": "book_library_mgmt::TEST_DATA_CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "author": "Homer",
+          "publication_year": 1614,
+          "title": "THE ODYSSEY"
+        },
+        "case_id": "forms_normalized_key",
+        "expected": {
+          "identity_key": "the odyssey|homer|1614"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "author": "Homer",
+          "publication_year": 1614,
+          "title": " "
+        },
+        "case_id": "refuses_blank_title",
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "catalog",
+    "fqdn": "book_library_mgmt::TEST_DATA_CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+    "version": "V0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+    "conformance::CONSTITUTION_TEST_DATA_V0"
+  ],
+  "version": "0"
+}

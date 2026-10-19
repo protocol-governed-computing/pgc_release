@@ -1,0 +1,79 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_PARSE_PRIOR_PHASES_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_PARSE_PRIOR_PHASES_V0\n\n## 1. Intent\n\nEach prior handed over is read the way the judged document is, keyed by its phase; none handed over reads as none.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::TEST_DATA_CT_PURE_PARSE_PRIOR_PHASES_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: design\ntarget: transformation::CT_PURE_PARSE_PRIOR_PHASES_V0\ncases:\n- case_id: reads_each_prior_by_phase\n  expected_outcome: SUCCESS\n  bindings:\n    prior_texts:\n      p0: \"# Change Seed \u2014 d / s\\n\\n## Machine\\n\\n```yaml\\ndocument:\\n  phase: p0\\n  domain: d\\n  subdomain:\\\n        \\ s\\n  cr: c\\n  rule_set: transformation.schemas.REGISTER_SCHEMA_P0_V0\\nregisters:\\n  out_of_scope:\\n\\\n        \\  - item: Fines\\n    reason: Not in this release.\\n  clarification_requests: null\\n```\\n\\n##\\\n        \\ 12. Out of Scope\\n\\nNothing else.\\n\"\n  expected:\n    priors:\n      p0:\n        header:\n          phase: p0\n          domain: d\n          subdomain: s\n          cr: c\n          rule_set: transformation.schemas.REGISTER_SCHEMA_P0_V0\n        sections:\n        - number: 12\n          title: Out of Scope\n          text: '\n\n            Nothing else.'\n        registers:\n        - id: out_of_scope\n          value:\n          - item: Fines\n            reason: Not in this release.\n        - id: clarification_requests\n          value: null\n- case_id: reads_no_prior_when_none_is_handed_over\n  expected_outcome: SUCCESS\n  bindings:\n    prior_texts: {}\n  expected:\n    priors: {}\n```\n",
+  "content_hash": "907d63411b2551bda9118a366f2679c88bab5867a106370325906df83360de60",
+  "fqdn_id": "transformation::TEST_DATA_CT_PURE_PARSE_PRIOR_PHASES_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "prior_texts": {
+            "p0": "# Change Seed \u2014 d / s\n\n## Machine\n\n```yaml\ndocument:\n  phase: p0\n  domain: d\n  subdomain: s\n  cr: c\n  rule_set: transformation.schemas.REGISTER_SCHEMA_P0_V0\nregisters:\n  out_of_scope:\n  - item: Fines\n    reason: Not in this release.\n  clarification_requests: null\n```\n\n## 12. Out of Scope\n\nNothing else.\n"
+          }
+        },
+        "case_id": "reads_each_prior_by_phase",
+        "expected": {
+          "priors": {
+            "p0": {
+              "header": {
+                "cr": "c",
+                "domain": "d",
+                "phase": "p0",
+                "rule_set": "transformation.schemas.REGISTER_SCHEMA_P0_V0",
+                "subdomain": "s"
+              },
+              "registers": [
+                {
+                  "id": "out_of_scope",
+                  "value": [
+                    {
+                      "item": "Fines",
+                      "reason": "Not in this release."
+                    }
+                  ]
+                },
+                {
+                  "id": "clarification_requests",
+                  "value": null
+                }
+              ],
+              "sections": [
+                {
+                  "number": 12,
+                  "text": "\nNothing else.",
+                  "title": "Out of Scope"
+                }
+              ]
+            }
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "prior_texts": {}
+        },
+        "case_id": "reads_no_prior_when_none_is_handed_over",
+        "expected": {
+          "priors": {}
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "design",
+    "fqdn": "transformation::TEST_DATA_CT_PURE_PARSE_PRIOR_PHASES_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0",
+    "version": "V0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V0",
+    "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0"
+  ],
+  "version": "0"
+}

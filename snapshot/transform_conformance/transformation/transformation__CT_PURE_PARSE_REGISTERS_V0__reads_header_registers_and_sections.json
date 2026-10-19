@@ -1,0 +1,74 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_PARSE_REGISTERS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "document_text": "$.inputs.document_text"
+        },
+        "atom": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "transformation.implementation.capability_transforms.atoms.ct_pure_parse_registers_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
+    "input_types": {
+      "document_text": "string"
+    },
+    "inputs": {
+      "document_text": "# Change Seed \u2014 d / s\n\n## Machine\n\n```yaml\ndocument:\n  phase: p0\n  domain: d\n  subdomain: s\n  cr: c\n  rule_set: transformation.schemas.REGISTER_SCHEMA_P0_V0\nregisters:\n  out_of_scope:\n  - item: Fines\n    reason: Not in this release.\n  clarification_requests: null\n```\n\n## 12. Out of Scope\n\nNothing else.\n"
+    },
+    "outputs": {
+      "header": {
+        "from": "__atom_result__"
+      },
+      "registers": {
+        "from": "__atom_result__"
+      },
+      "sections": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "header": {
+      "cr": "c",
+      "domain": "d",
+      "phase": "p0",
+      "rule_set": "transformation.schemas.REGISTER_SCHEMA_P0_V0",
+      "subdomain": "s"
+    },
+    "registers": [
+      {
+        "id": "out_of_scope",
+        "value": [
+          {
+            "item": "Fines",
+            "reason": "Not in this release."
+          }
+        ]
+      },
+      {
+        "id": "clarification_requests",
+        "value": null
+      }
+    ],
+    "sections": [
+      {
+        "number": 12,
+        "text": "\nNothing else.",
+        "title": "Out of Scope"
+      }
+    ]
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0::reads_header_registers_and_sections",
+  "test_data_source": "transformation::TEST_DATA_CT_PURE_PARSE_REGISTERS_V0"
+}

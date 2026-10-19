@@ -1,18 +1,37 @@
 {
-  "carried": [],
-  "cases": [],
+  "carried": [
+    "capability_transforms::CT_PURE_REQUIRE_TRUE_V0"
+  ],
+  "cases": [
+    {
+      "case": "workload::CT_PURE_COLLATZ_STEP_V0::one_is_its_own_sequence",
+      "passed": true
+    },
+    {
+      "case": "workload::CT_PURE_COLLATZ_STEP_V0::sequences_for_several_numbers",
+      "passed": true
+    },
+    {
+      "case": "workload::CT_PURE_TERMINATION_CHECK_V0::every_sequence_terminates",
+      "passed": true
+    },
+    {
+      "case": "workload::CT_PURE_TERMINATION_CHECK_V0::names_a_sequence_that_does_not_end_at_one",
+      "passed": true
+    }
+  ],
   "counts": {
-    "cases": 0,
+    "cases": 4,
     "cases_failed": 0,
-    "proven": 0,
+    "proven": 2,
     "refused": 0,
-    "unproven": 2
+    "unproven": 0
   },
   "domain": "workload",
-  "proven": [],
-  "refused": [],
-  "unproven": [
+  "proven": [
     "workload::CT_PURE_COLLATZ_STEP_V0",
     "workload::CT_PURE_TERMINATION_CHECK_V0"
-  ]
+  ],
+  "refused": [],
+  "unproven": []
 }

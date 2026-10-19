@@ -212,6 +212,7 @@
   "namespace": "book_library_mgmt",
   "references": [
     "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
     "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
     "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
     "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"

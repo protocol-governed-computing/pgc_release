@@ -1,6 +1,6 @@
 {
   "cs": {
-    "25": {
+    "26": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -53,7 +53,7 @@
         "module": "capability_side_effects.implementation.CS_SNAPSHOT_QUERY_V0.runtime"
       }
     },
-    "26": {
+    "27": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -108,7 +108,7 @@
     }
   },
   "ct": {
-    "79": {
+    "101": {
       "ct_ir": {
         "artifact_code": "CT_PURE_ATTRIBUTE_PROVENANCE_V0",
         "atom_stream": [
@@ -131,7 +131,7 @@
         "inputs": {
           "rendered": {
             "required": true,
-            "type": "object"
+            "type": "array"
           },
           "sources": {
             "required": true,
@@ -148,7 +148,7 @@
         }
       }
     },
-    "80": {
+    "102": {
       "ct_ir": {
         "artifact_code": "CT_PURE_EVALUATE_RULES_V0",
         "atom_stream": [
@@ -180,8 +180,9 @@
             "type": "string"
           },
           "header": {
-            "description": "Header fields as parsed from the document",
+            "description": "The document's header, as parsed",
             "required": true,
+            "structure": "transformation::STRUCTURE_PHASE_HEADER_V0",
             "type": "object"
           },
           "observed": {
@@ -192,11 +193,13 @@
           "priors": {
             "description": "The upstream phase documents this one is judged against, parsed, keyed by phase id. Empty\nfor a phase judged on its own document; a phase that preserves an upstream commitment fills\nit from the priors the caller handed over. A cross-phase rule whose prior is absent reports\nthat the handoff is unchecked rather than passing silently \u2014 an unchecked handoff and a\npreserved one are otherwise indistinguishable.\n",
             "required": true,
+            "structure": "transformation::STRUCTURE_PHASE_PRIORS_V0",
             "type": "object"
           },
           "registers": {
-            "description": "Parsed registers, addressed by marker id \u2014 how a rule locates what it governs",
+            "description": "Parsed registers, addressed by id \u2014 how a rule locates what it governs",
             "required": true,
+            "structure": "transformation::STRUCTURE_PHASE_REGISTERS_V0",
             "type": "array"
           },
           "rule_set": {
@@ -207,6 +210,7 @@
           "sections": {
             "description": "Parsed document sections",
             "required": true,
+            "structure": "transformation::STRUCTURE_PHASE_SECTIONS_V0",
             "type": "array"
           }
         },
@@ -223,7 +227,7 @@
         }
       }
     },
-    "81": {
+    "103": {
       "ct_ir": {
         "artifact_code": "CT_PURE_MEASURE_COMPLETENESS_V0",
         "atom_stream": [
@@ -279,7 +283,7 @@
         }
       }
     },
-    "82": {
+    "104": {
       "ct_ir": {
         "artifact_code": "CT_PURE_PARSE_PRIOR_PHASES_V0",
         "atom_stream": [
@@ -312,7 +316,7 @@
         }
       }
     },
-    "83": {
+    "105": {
       "ct_ir": {
         "artifact_code": "CT_PURE_PARSE_REGISTERS_V0",
         "atom_stream": [
@@ -351,7 +355,7 @@
         }
       }
     },
-    "84": {
+    "106": {
       "ct_ir": {
         "artifact_code": "CT_PURE_RENDER_ARTIFACTS_V0",
         "atom_stream": [
@@ -400,24 +404,18 @@
   },
   "projection_class": "machine_projection",
   "rb_policy": {
-    "95": {
-      "26": {
-        "host": "TextArtifactRuntime",
-        "operation": "WRITE_ALL",
+    "117": {
+      "27": {
         "policy": {
           "root": "{{module_data_root}}/construction"
-        },
-        "type": "CS"
+        }
       }
     },
-    "96": {
-      "25": {
-        "host": "SnapshotQueryRuntime",
-        "operation": "READ",
+    "118": {
+      "26": {
         "policy": {
           "snapshot_root": "{{snapshot_root}}"
-        },
-        "type": "CS"
+        }
       }
     }
   },

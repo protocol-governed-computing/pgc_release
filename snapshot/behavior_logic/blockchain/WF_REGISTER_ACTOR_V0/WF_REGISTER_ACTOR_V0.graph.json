@@ -51,8 +51,10 @@
         "type": "wf_boundary",
         "bindings": {
           "contact_address": "CC_CLAIM_CONTACT_ADDRESS_V0.result",
-          "occurrence_fields": "IN.occurrence_fields",
-          "stream_id": "IN.stream_id"
+          "occurrence_fields": {
+            "occurrence": "ACTOR_REGISTERED_UNVERIFIED"
+          },
+          "stream_id": "ACTOR_OCCURRENCES"
         }
       }
     },
@@ -103,8 +105,8 @@
         "type": "wf_boundary",
         "bindings": {
           "actor_record": "IN.actor_record",
-          "address_path": "IN.address_path",
-          "address_type": "IN.address_type"
+          "address_path": "contact_address",
+          "address_type": "string"
         }
       }
     },
@@ -224,6 +226,11 @@
   "edges": [
     {
       "from": "CC_APPEND_ACTOR_OCCURRENCE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_APPEND_ACTOR_OCCURRENCE_V0",
       "to": "EXIT_SUCCESS",
       "condition": "SUCCESS"
     },
@@ -239,6 +246,11 @@
     },
     {
       "from": "CC_CLAIM_CONTACT_ADDRESS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_CLAIM_CONTACT_ADDRESS_V0",
       "to": "CC_REGISTER_ACTOR_V0",
       "condition": "SUCCESS"
     },
@@ -246,6 +258,11 @@
       "from": "CC_CLAIM_CONTACT_ADDRESS_V0",
       "to": "EXIT_REJECTED",
       "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REGISTER_ACTOR_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
     },
     {
       "from": "CC_REGISTER_ACTOR_V0",
@@ -284,12 +301,40 @@
       "CC_VALIDATE_REGISTRATION_V0",
       "CC_CLAIM_CONTACT_ADDRESS_V0",
       "CC_APPEND_ACTOR_OCCURRENCE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ACTOR_REGISTERED_V0",
+      "CC_VALIDATE_REGISTRATION_V0",
+      "CC_CLAIM_CONTACT_ADDRESS_V0",
+      "CC_APPEND_ACTOR_OCCURRENCE_V0",
       "EXIT_SUCCESS"
     ],
     [
       "IN_ACTOR_REGISTERED_V0",
       "CC_VALIDATE_REGISTRATION_V0",
       "CC_CLAIM_CONTACT_ADDRESS_V0",
+      "CC_APPEND_ACTOR_OCCURRENCE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ACTOR_REGISTERED_V0",
+      "CC_VALIDATE_REGISTRATION_V0",
+      "CC_CLAIM_CONTACT_ADDRESS_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ACTOR_REGISTERED_V0",
+      "CC_VALIDATE_REGISTRATION_V0",
+      "CC_CLAIM_CONTACT_ADDRESS_V0",
+      "CC_REGISTER_ACTOR_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ACTOR_REGISTERED_V0",
+      "CC_VALIDATE_REGISTRATION_V0",
+      "CC_CLAIM_CONTACT_ADDRESS_V0",
+      "CC_REGISTER_ACTOR_V0",
       "CC_APPEND_ACTOR_OCCURRENCE_V0",
       "EXIT_REJECTED"
     ],

@@ -1,8 +1,8 @@
 {
   "artifact_code": "EV_USAGE_RECORDED_V0",
   "artifact_type": "EV",
-  "content": "# EV_USAGE_RECORDED_V0\n\n## 1. Fact\n\nLicense usage activity has been recorded.\n\n---\n\n## 2. Rationale\n\nUsage tracking enables autonomous reclamation:\n- Injected from telemetry system\n- Tracks last active date per license\n- Triggers reclamation when inactivity threshold exceeded\n\n---\n\n## 3. Emitted By\n\n| Source | Description |\n|--------|-------------|\n| Fact Injection | Telemetry system declares usage activity |\n\n---\n\n## 4. Schema\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| license_id | string | true | License being tracked |\n| last_active_date | string (date-time) | true | When license was last used |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::EV_USAGE_RECORDED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: Usage Recorded\n  description: Emitted when license usage activity is recorded\n\n  schema:\n    license_id:\n      type: string\n      required: true\n    last_active_date:\n      type: string\n      format: date-time\n      required: true\n```\n",
-  "content_hash": "4a2bdfeb99939eca86fd6db8747f7fea482c24c51887fa418b2112e696d98b83",
+  "content": "# EV_USAGE_RECORDED_V0\n\n## 1. Fact\n\nLicense usage activity has been recorded.\n\n---\n\n## 2. Rationale\n\nUsage tracking enables autonomous reclamation:\n- Injected from telemetry system\n- Tracks last active date per license\n- Triggers reclamation when inactivity threshold exceeded\n\n---\n\n## 3. Emitted By\n\n| Source | Description |\n|--------|-------------|\n| Fact Injection | Telemetry system declares usage activity |\n\n---\n\n## 4. Schema\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| license_id | string | true | License being tracked |\n| last_active_date | string (date-time) | true | When license was last used |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::EV_USAGE_RECORDED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: Usage Recorded\n  subdomain: ai_licensing\n  description: Emitted when license usage activity is recorded\n\n  schema:\n    license_id:\n      type: string\n      required: true\n    last_active_date:\n      type: string\n      format: date-time\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
+  "content_hash": "c9c6fe46cdff6e17de93e9e64f4e46844bccc4ed6438f08ca6173373d5bb8d75",
   "fqdn_id": "ai_governance::EV_USAGE_RECORDED_V0",
   "frontmatter": {
     "artifact_kind": "EVENT",
@@ -19,8 +19,15 @@
         "license_id": {
           "required": true,
           "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
         }
       },
+      "subdomain": "ai_licensing",
       "summary": "Usage Recorded"
     },
     "fqdn": "ai_governance::EV_USAGE_RECORDED_V0",

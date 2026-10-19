@@ -1,0 +1,141 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_EVALUATE_RULES_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_EVALUATE_RULES_V0\n\n## 1. Intent\n\nA rule set is applied whole: a failed rule is reported with its identity, place, detail and intent, and a document failing none is admissible.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::TEST_DATA_CT_PURE_EVALUATE_RULES_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: design\ntarget: transformation::CT_PURE_EVALUATE_RULES_V0\ncases:\n- case_id: finds_an_absent_register\n  expected_outcome: SUCCESS\n  bindings:\n    header:\n      phase: p0\n      domain: d\n      subdomain: s\n      cr: c\n      rule_set: transformation.schemas.REGISTER_SCHEMA_P0_V0\n    sections:\n    - number: 12\n      title: Out of Scope\n      text: '\n\n        Nothing else.'\n    registers:\n    - id: out_of_scope\n      value:\n      - item: Fines\n        reason: Not in this release.\n    - id: clarification_requests\n      value: null\n    document_text: \"# Change Seed \u2014 d / s\\n\\n## Machine\\n\\n```yaml\\ndocument:\\n  phase: p0\\n  domain:\\\n      \\ d\\n  subdomain: s\\n  cr: c\\n  rule_set: transformation.schemas.REGISTER_SCHEMA_P0_V0\\nregisters:\\n\\\n      \\  out_of_scope:\\n  - item: Fines\\n    reason: Not in this release.\\n  clarification_requests: null\\n\\\n      ```\\n\\n## 12. Out of Scope\\n\\nNothing else.\\n\"\n    rule_set:\n    - id: REGISTER_MISSING\n      identity: transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/cr_type/x-derived/TABLE_PRESENT\n      check: TABLE_PRESENT\n      register: cr_type\n      intent: a declared register must be present and readable as rows\n    observed: {}\n    priors: {}\n  expected:\n    verdict: INADMISSIBLE\n    findings:\n    - code: REGISTER_MISSING\n      rule: transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/cr_type/x-derived/TABLE_PRESENT\n      locator:\n        register: cr_type\n        row: null\n        field: null\n      detail: declared register is absent from the document\n      intent: a declared register must be present and readable as rows\n    rules_evaluated: 1\n- case_id: admits_a_present_register\n  expected_outcome: SUCCESS\n  bindings:\n    header:\n      phase: p0\n      domain: d\n      subdomain: s\n      cr: c\n      rule_set: transformation.schemas.REGISTER_SCHEMA_P0_V0\n    sections:\n    - number: 12\n      title: Out of Scope\n      text: '\n\n        Nothing else.'\n    registers:\n    - id: out_of_scope\n      value:\n      - item: Fines\n        reason: Not in this release.\n    - id: clarification_requests\n      value: null\n    document_text: \"# Change Seed \u2014 d / s\\n\\n## Machine\\n\\n```yaml\\ndocument:\\n  phase: p0\\n  domain:\\\n      \\ d\\n  subdomain: s\\n  cr: c\\n  rule_set: transformation.schemas.REGISTER_SCHEMA_P0_V0\\nregisters:\\n\\\n      \\  out_of_scope:\\n  - item: Fines\\n    reason: Not in this release.\\n  clarification_requests: null\\n\\\n      ```\\n\\n## 12. Out of Scope\\n\\nNothing else.\\n\"\n    rule_set:\n    - id: REGISTER_MISSING\n      identity: transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/out_of_scope/x-derived/TABLE_PRESENT\n      check: TABLE_PRESENT\n      register: out_of_scope\n      intent: a declared register must be present and readable as rows\n    observed: {}\n    priors: {}\n  expected:\n    verdict: ADMISSIBLE\n    findings: []\n    rules_evaluated: 1\n```\n",
+  "content_hash": "044eaa985f02738d6f1276021095ee408b664ff7122e95445841bb164da15546",
+  "fqdn_id": "transformation::TEST_DATA_CT_PURE_EVALUATE_RULES_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "document_text": "# Change Seed \u2014 d / s\n\n## Machine\n\n```yaml\ndocument:\n  phase: p0\n  domain: d\n  subdomain: s\n  cr: c\n  rule_set: transformation.schemas.REGISTER_SCHEMA_P0_V0\nregisters:\n  out_of_scope:\n  - item: Fines\n    reason: Not in this release.\n  clarification_requests: null\n```\n\n## 12. Out of Scope\n\nNothing else.\n",
+          "header": {
+            "cr": "c",
+            "domain": "d",
+            "phase": "p0",
+            "rule_set": "transformation.schemas.REGISTER_SCHEMA_P0_V0",
+            "subdomain": "s"
+          },
+          "observed": {},
+          "priors": {},
+          "registers": [
+            {
+              "id": "out_of_scope",
+              "value": [
+                {
+                  "item": "Fines",
+                  "reason": "Not in this release."
+                }
+              ]
+            },
+            {
+              "id": "clarification_requests",
+              "value": null
+            }
+          ],
+          "rule_set": [
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/cr_type/x-derived/TABLE_PRESENT",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "cr_type"
+            }
+          ],
+          "sections": [
+            {
+              "number": 12,
+              "text": "\nNothing else.",
+              "title": "Out of Scope"
+            }
+          ]
+        },
+        "case_id": "finds_an_absent_register",
+        "expected": {
+          "findings": [
+            {
+              "code": "REGISTER_MISSING",
+              "detail": "declared register is absent from the document",
+              "intent": "a declared register must be present and readable as rows",
+              "locator": {
+                "field": null,
+                "register": "cr_type",
+                "row": null
+              },
+              "rule": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/cr_type/x-derived/TABLE_PRESENT"
+            }
+          ],
+          "rules_evaluated": 1,
+          "verdict": "INADMISSIBLE"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "document_text": "# Change Seed \u2014 d / s\n\n## Machine\n\n```yaml\ndocument:\n  phase: p0\n  domain: d\n  subdomain: s\n  cr: c\n  rule_set: transformation.schemas.REGISTER_SCHEMA_P0_V0\nregisters:\n  out_of_scope:\n  - item: Fines\n    reason: Not in this release.\n  clarification_requests: null\n```\n\n## 12. Out of Scope\n\nNothing else.\n",
+          "header": {
+            "cr": "c",
+            "domain": "d",
+            "phase": "p0",
+            "rule_set": "transformation.schemas.REGISTER_SCHEMA_P0_V0",
+            "subdomain": "s"
+          },
+          "observed": {},
+          "priors": {},
+          "registers": [
+            {
+              "id": "out_of_scope",
+              "value": [
+                {
+                  "item": "Fines",
+                  "reason": "Not in this release."
+                }
+              ]
+            },
+            {
+              "id": "clarification_requests",
+              "value": null
+            }
+          ],
+          "rule_set": [
+            {
+              "check": "TABLE_PRESENT",
+              "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/out_of_scope/x-derived/TABLE_PRESENT",
+              "intent": "a declared register must be present and readable as rows",
+              "register": "out_of_scope"
+            }
+          ],
+          "sections": [
+            {
+              "number": 12,
+              "text": "\nNothing else.",
+              "title": "Out of Scope"
+            }
+          ]
+        },
+        "case_id": "admits_a_present_register",
+        "expected": {
+          "findings": [],
+          "rules_evaluated": 1,
+          "verdict": "ADMISSIBLE"
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "design",
+    "fqdn": "transformation::TEST_DATA_CT_PURE_EVALUATE_RULES_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "transformation::CT_PURE_EVALUATE_RULES_V0",
+    "version": "V0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V0",
+    "transformation::CT_PURE_EVALUATE_RULES_V0"
+  ],
+  "version": "0"
+}

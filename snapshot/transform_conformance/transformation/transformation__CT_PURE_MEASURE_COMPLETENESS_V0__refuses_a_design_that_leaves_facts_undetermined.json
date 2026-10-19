@@ -1,0 +1,106 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_MEASURE_COMPLETENESS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "design_registers": "$.inputs.design_registers",
+          "mandate_registers": "$.inputs.mandate_registers",
+          "provenance": "$.inputs.provenance",
+          "threshold": "$.inputs.threshold"
+        },
+        "atom": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "transformation.implementation.capability_transforms.atoms.ct_pure_measure_completeness_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
+    "input_types": {
+      "design_registers": "array",
+      "mandate_registers": "array",
+      "provenance": "object",
+      "threshold": "number"
+    },
+    "inputs": {
+      "design_registers": [
+        {
+          "id": "new_artifacts",
+          "value": [
+            {
+              "capability": "Storage",
+              "code": "STRUCTURE_S_STORAGE_V0",
+              "family": "STRUCTURE",
+              "owner_subdomain": "s",
+              "source_finding": {
+                "source": "human"
+              },
+              "status": "NEW",
+              "summary": "The stores the subdomain owns"
+            }
+          ]
+        },
+        {
+          "id": "structure_stores",
+          "value": []
+        },
+        {
+          "id": "artifact_properties",
+          "value": [
+            {
+              "artifact": "STRUCTURE_S_STORAGE_V0",
+              "property": "layer",
+              "value": "DOMAINS"
+            }
+          ]
+        }
+      ],
+      "mandate_registers": [
+        {
+          "id": "build_order",
+          "value": [
+            {
+              "code": "STRUCTURE_S_STORAGE_V0",
+              "wave": "1"
+            }
+          ]
+        },
+        {
+          "id": "field_declarations",
+          "value": [
+            {
+              "code": "STRUCTURE_S_STORAGE_V0",
+              "subdomain_field": "s"
+            }
+          ]
+        }
+      ],
+      "provenance": {},
+      "threshold": 100.0
+    },
+    "outputs": {
+      "completeness": {
+        "from": "__atom_result__"
+      },
+      "determined": {
+        "from": "__atom_result__"
+      },
+      "required": {
+        "from": "__atom_result__"
+      },
+      "undetermined": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {},
+  "expected_outcome": "VIOLATION",
+  "fqdn": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0::refuses_a_design_that_leaves_facts_undetermined",
+  "test_data_source": "transformation::TEST_DATA_CT_PURE_MEASURE_COMPLETENESS_V0"
+}

@@ -1,6 +1,6 @@
 {
   "cs": {
-    "25": {
+    "26": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -56,7 +56,7 @@
         "module": "capability_side_effects.implementation.CS_APPENDONLY_JSONL_V0.runtime"
       }
     },
-    "26": {
+    "27": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -243,7 +243,7 @@
         "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
       }
     },
-    "27": {
+    "28": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -358,7 +358,7 @@
     }
   },
   "ct": {
-    "31": {
+    "32": {
       "ct_ir": {
         "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
         "atom_stream": [
@@ -391,7 +391,7 @@
         }
       }
     },
-    "32": {
+    "33": {
       "ct_ir": {
         "artifact_code": "CT_PURE_FILTER_RECORDS_V0",
         "atom_stream": [
@@ -430,7 +430,7 @@
         }
       }
     },
-    "33": {
+    "34": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
         "atom_stream": [
@@ -472,7 +472,7 @@
         }
       }
     },
-    "34": {
+    "35": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
         "atom_stream": [
@@ -511,7 +511,7 @@
         }
       }
     },
-    "35": {
+    "36": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
         "atom_stream": [
@@ -550,7 +550,7 @@
         }
       }
     },
-    "68": {
+    "70": {
       "ct_ir": {
         "artifact_code": "CT_IMPURE_OFFER_NEXT_WORDS_V0",
         "atom_stream": [
@@ -597,7 +597,7 @@
         }
       }
     },
-    "69": {
+    "71": {
       "ct_ir": {
         "artifact_code": "CT_PURE_ASSEMBLE_MODEL_READING_V0",
         "atom_stream": [
@@ -647,7 +647,7 @@
         }
       }
     },
-    "70": {
+    "72": {
       "ct_ir": {
         "artifact_code": "CT_PURE_CHOOSE_PERMITTED_TOKEN_V0",
         "atom_stream": [
@@ -696,7 +696,7 @@
         }
       }
     },
-    "71": {
+    "73": {
       "ct_ir": {
         "artifact_code": "CT_PURE_CHOOSE_PERMITTED_WORD_V0",
         "atom_stream": [
@@ -767,7 +767,7 @@
         }
       }
     },
-    "72": {
+    "74": {
       "ct_ir": {
         "artifact_code": "CT_PURE_COMPARE_SENSITIVITY_V0",
         "atom_stream": [
@@ -809,7 +809,7 @@
         }
       }
     },
-    "73": {
+    "75": {
       "ct_ir": {
         "artifact_code": "CT_PURE_FORM_MODEL_IDENTITY_KEY_V0",
         "atom_stream": [
@@ -846,7 +846,7 @@
         }
       }
     },
-    "74": {
+    "76": {
       "ct_ir": {
         "artifact_code": "CT_PURE_FORM_RESPONSE_RULES_V0",
         "atom_stream": [
@@ -891,7 +891,7 @@
         }
       }
     },
-    "75": {
+    "77": {
       "ct_ir": {
         "artifact_code": "CT_PURE_READ_HOSTED_STATE_V0",
         "atom_stream": [
@@ -923,7 +923,7 @@
         }
       }
     },
-    "76": {
+    "78": {
       "ct_ir": {
         "artifact_code": "CT_WRITE_NEXT_WORD_V0",
         "atom_stream": [
@@ -1015,7 +1015,7 @@
         }
       }
     },
-    "77": {
+    "79": {
       "ct_ir": {
         "artifact_code": "CT_WRITE_RESPONSE_V0",
         "atom_stream": [
@@ -1142,52 +1142,7 @@
   },
   "projection_class": "machine_projection",
   "rb_policy": {
-    "91": {
-      "25": {
-        "policy": {
-          "module_data_root": "{{module_data_root}}",
-          "storage_structure_artifact": {
-            "frontmatter": {
-              "artifact_kind": "STRUCTURE",
-              "authority": "pgc.platform",
-              "concern": "model_response",
-              "core": {
-                "domain": "causal_language_model",
-                "entity_stores": {
-                  "MODELS": {
-                    "path": "causal_language_model/model_response/models.json"
-                  },
-                  "MODEL_IDENTITY_REGISTRY": {
-                    "path": "causal_language_model/model_response/model_identity_registry.jsonl"
-                  },
-                  "MODEL_OPERATIONS": {
-                    "path": "causal_language_model/model_response/model_operations.jsonl"
-                  },
-                  "TIMES_IN_SERVICE": {
-                    "path": "causal_language_model/model_response/times_in_service.json"
-                  },
-                  "TIME_IN_SERVICE_REGISTRY": {
-                    "path": "causal_language_model/model_response/time_in_service_registry.jsonl"
-                  },
-                  "USER_PROMPT_RECORDS": {
-                    "path": "causal_language_model/model_response/user_prompt_records.jsonl"
-                  },
-                  "USER_PROMPT_REGISTRY": {
-                    "path": "causal_language_model/model_response/user_prompt_registry.jsonl"
-                  }
-                },
-                "layer": "DOMAINS",
-                "subdomain": "model_response",
-                "summary": "Declares the seven stores the subdomain owns and the paths they occupy"
-              },
-              "fqdn": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0",
-              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
-            }
-          },
-          "structure": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0"
-        }
-      },
+    "93": {
       "26": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
@@ -1234,6 +1189,51 @@
         }
       },
       "27": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "model_response",
+              "core": {
+                "domain": "causal_language_model",
+                "entity_stores": {
+                  "MODELS": {
+                    "path": "causal_language_model/model_response/models.json"
+                  },
+                  "MODEL_IDENTITY_REGISTRY": {
+                    "path": "causal_language_model/model_response/model_identity_registry.jsonl"
+                  },
+                  "MODEL_OPERATIONS": {
+                    "path": "causal_language_model/model_response/model_operations.jsonl"
+                  },
+                  "TIMES_IN_SERVICE": {
+                    "path": "causal_language_model/model_response/times_in_service.json"
+                  },
+                  "TIME_IN_SERVICE_REGISTRY": {
+                    "path": "causal_language_model/model_response/time_in_service_registry.jsonl"
+                  },
+                  "USER_PROMPT_RECORDS": {
+                    "path": "causal_language_model/model_response/user_prompt_records.jsonl"
+                  },
+                  "USER_PROMPT_REGISTRY": {
+                    "path": "causal_language_model/model_response/user_prompt_registry.jsonl"
+                  }
+                },
+                "layer": "DOMAINS",
+                "subdomain": "model_response",
+                "summary": "Declares the seven stores the subdomain owns and the paths they occupy"
+              },
+              "fqdn": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "version": "v0"
+            }
+          },
+          "structure": "causal_language_model::STRUCTURE_MODEL_RESPONSE_STORAGE_V0"
+        }
+      },
+      "28": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {

@@ -1,6 +1,6 @@
 {
   "cs": {
-    "29": {
+    "30": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -56,7 +56,7 @@
         "module": "capability_side_effects.implementation.CS_APPENDONLY_JSONL_V0.runtime"
       }
     },
-    "30": {
+    "31": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -88,7 +88,7 @@
         "module": "capability_side_effects.implementation.CS_CLOCK_V0.runtime"
       }
     },
-    "31": {
+    "32": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -150,7 +150,7 @@
         "module": "capability_side_effects.implementation.CS_EVIDENCE_EXPIRY_V0.runtime"
       }
     },
-    "32": {
+    "33": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -337,7 +337,7 @@
         "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
       }
     },
-    "33": {
+    "34": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -450,7 +450,7 @@
         "module": "capability_side_effects.implementation.CS_REGISTRY_V0.runtime"
       }
     },
-    "34": {
+    "35": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -503,7 +503,7 @@
         "module": "capability_side_effects.implementation.CS_SNAPSHOT_QUERY_V0.runtime"
       }
     },
-    "35": {
+    "36": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -558,7 +558,7 @@
     }
   },
   "ct": {
-    "44": {
+    "45": {
       "ct_ir": {
         "artifact_code": "CT_EXEC_EMIT_V0",
         "atom_stream": [
@@ -591,7 +591,7 @@
         }
       }
     },
-    "45": {
+    "46": {
       "ct_ir": {
         "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
         "atom_stream": [
@@ -624,7 +624,7 @@
         }
       }
     },
-    "46": {
+    "47": {
       "ct_ir": {
         "artifact_code": "CT_PURE_COMPARE_EQUAL_V0",
         "atom_stream": [
@@ -661,7 +661,7 @@
         }
       }
     },
-    "47": {
+    "48": {
       "ct_ir": {
         "artifact_code": "CT_PURE_EXTRACT_V0",
         "atom_stream": [
@@ -706,7 +706,7 @@
         }
       }
     },
-    "48": {
+    "49": {
       "ct_ir": {
         "artifact_code": "CT_PURE_FILTER_RECORDS_V0",
         "atom_stream": [
@@ -745,7 +745,7 @@
         }
       }
     },
-    "49": {
+    "50": {
       "ct_ir": {
         "artifact_code": "CT_PURE_GENERATE_ID_V0",
         "atom_stream": [
@@ -784,7 +784,7 @@
         }
       }
     },
-    "50": {
+    "51": {
       "ct_ir": {
         "artifact_code": "CT_PURE_LOOKUP_V0",
         "atom_stream": [
@@ -823,7 +823,7 @@
         }
       }
     },
-    "51": {
+    "52": {
       "ct_ir": {
         "artifact_code": "CT_PURE_MAP_RESULT_TO_HTTP_V0",
         "atom_stream": [
@@ -868,7 +868,7 @@
         }
       }
     },
-    "52": {
+    "53": {
       "ct_ir": {
         "artifact_code": "CT_PURE_PASSTHROUGH_V0",
         "atom_stream": [
@@ -901,7 +901,40 @@
         }
       }
     },
-    "53": {
+    "54": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_REQUIRE_TRUE_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "value": "$.inputs.value"
+            },
+            "atom": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_require_true_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
+        "inputs": {
+          "value": {
+            "description": "The value that must be true",
+            "required": true,
+            "type": "boolean"
+          }
+        },
+        "outputs": {
+          "held": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "55": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
         "atom_stream": [
@@ -943,7 +976,7 @@
         }
       }
     },
-    "54": {
+    "56": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
         "atom_stream": [
@@ -982,7 +1015,7 @@
         }
       }
     },
-    "55": {
+    "57": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
         "atom_stream": [

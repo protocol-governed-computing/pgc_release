@@ -1,0 +1,79 @@
+{
+  "artifact_code": "CT_PURE_REQUIRE_TRUE_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_REQUIRE_TRUE_V0\n\n## 1. Intent\n\nRefuse unless a boolean is true.\n\n---\n\n## 2. Rationale\n\nA check that reports what it found does not decide. A capability decides, and answers with an\noutcome. This atom turns a reported boolean into that decision:\n- Succeeds when the value is true\n- Refuses when the value is false\n- Domain-agnostic \u2014 the value is provided as input\n\n---\n\n## 3. Purity\n\n| Property | Value |\n|----------|-------|\n| Purity | ct_pure |\n| Kind | atom |\n\n---\n\n## 4. Inputs\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| value | boolean | true | Value that must be true |\n\n---\n\n## 5. Outputs\n\n| Field | Type | Description |\n|-------|------|-------------|\n| held | boolean | True when the value was true |\n\n---\n\n## 6. Result Status\n\n| Status | Condition |\n|--------|-----------|\n| SUCCESS | The value is true (held=true) |\n| VIOLATION | The value is false, or is not a boolean |\n\n---\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::CT_PURE_REQUIRE_TRUE_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Refuse unless a boolean is true\n  refusal: raises\n  description: Succeeds when the given boolean is true and refuses when it is false.\n  inputs:\n    value:\n      type: boolean\n      required: true\n      description: The value that must be true\n  outputs:\n    held:\n      type: boolean\n      required: true\n      description: True when the value was true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  implementation:\n    module: capability_transforms.implementation.ct_pure_require_true_v0\n    callable: execute\n```\n",
+  "content_hash": "b44f86a4a784562d7677884e51d5ca3c80f87f33ed36403e796e249faf430c16",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_REQUIRE_TRUE_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "value": "$.inputs.value"
+        },
+        "atom": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "capability_transforms.implementation.ct_pure_require_true_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
+    "inputs": {
+      "value": {
+        "description": "The value that must be true",
+        "required": true,
+        "type": "boolean"
+      }
+    },
+    "outputs": {
+      "held": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "description": "Succeeds when the given boolean is true and refuses when it is false.",
+      "inputs": {
+        "value": {
+          "description": "The value that must be true",
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "outputs": {
+        "held": {
+          "description": "True when the value was true",
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "refusal": "raises",
+      "summary": "Refuse unless a boolean is true"
+    },
+    "fqdn": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "capability_transforms.implementation.ct_pure_require_true_v0"
+      }
+    },
+    "version": "v0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
+  ],
+  "version": "0"
+}

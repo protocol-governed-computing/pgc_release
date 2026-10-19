@@ -36,8 +36,8 @@
       }
     ]
   },
-  "content": "# CC_RESOLVE_ACTOR_V0\n\n## 1. Intent\n\nAnswers which actor a contact address denotes, and reports when none does\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_RESOLVE_ACTOR_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Answers which actor a contact address denotes, and reports when none does\n  inputs:\n    contact_address:\n      type: string\n      required: true\n  outputs:\n    value:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - NOT_FOUND\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: resolve_address\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: RESOLVE\n    store: CONTACT_ADDRESS_REGISTRY\n    inputs:\n      key_or_address: $.inputs.contact_address\n    outputs:\n      target_ref: $.capability_result.target_ref\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n  - step: read_actor\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: ACTORS\n    inputs:\n      key: $.inputs.contact_address\n    outputs:\n      value: $.capability_result.value\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n```\n",
-  "content_hash": "9a431166be5f3e322b7564f7b1cb8aefb3e9883476d5a30e4a1f390d94845cf8",
+  "content": "# CC_RESOLVE_ACTOR_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_RESOLVE_ACTOR_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Answers which actor a contact address denotes, and reports when none does\n  inputs:\n    contact_address:\n      type: string\n      required: true\n  outputs:\n    value:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: resolve_address\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: RESOLVE\n    store: CONTACT_ADDRESS_REGISTRY\n    inputs:\n      key_or_address: $.inputs.contact_address\n    outputs:\n      target_ref: $.capability_result.target_ref\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: read_actor\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: ACTORS\n    inputs:\n      key: $.inputs.contact_address\n    outputs:\n      value: $.capability_result.value\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nAnswers which actor a contact address denotes, and reports when none does\n",
+  "content_hash": "a12a4705daf1bd4929d4704a53a2158b4021f287352b16787be78ae9402a2c70",
   "fqdn_id": "blockchain::CC_RESOLVE_ACTOR_V0",
   "frontmatter": {
     "artifact_kind": "CAPABILITY_CONTRACT",
@@ -62,6 +62,7 @@
             "key_or_address": "$.inputs.contact_address"
           },
           "on_result": {
+            "BACKEND_ERROR": "exit",
             "NOT_FOUND": "exit",
             "SUCCESS": "continue",
             "VIOLATION": "exit"
@@ -73,7 +74,8 @@
           "result_surface": [
             "SUCCESS",
             "NOT_FOUND",
-            "VIOLATION"
+            "VIOLATION",
+            "BACKEND_ERROR"
           ],
           "side_effect": "capability_side_effects::CS_REGISTRY_V0",
           "step": "resolve_address",
@@ -84,6 +86,7 @@
             "key": "$.inputs.contact_address"
           },
           "on_result": {
+            "BACKEND_ERROR": "exit",
             "NOT_FOUND": "exit",
             "SUCCESS": "continue",
             "VIOLATION": "exit"
@@ -95,7 +98,8 @@
           "result_surface": [
             "SUCCESS",
             "NOT_FOUND",
-            "VIOLATION"
+            "VIOLATION",
+            "BACKEND_ERROR"
           ],
           "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
           "step": "read_actor",
@@ -106,6 +110,7 @@
         "allowed": [
           "NOT_FOUND",
           "VIOLATION",
+          "BACKEND_ERROR",
           "SUCCESS"
         ],
         "on_input_failure": "VIOLATION"
@@ -119,7 +124,9 @@
   "layer_code": "BLOCKCHAIN",
   "namespace": "blockchain",
   "references": [
-    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0"
   ],
   "version": "0"
 }

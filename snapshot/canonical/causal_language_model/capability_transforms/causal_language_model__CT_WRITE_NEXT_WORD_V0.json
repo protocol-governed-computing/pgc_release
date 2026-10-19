@@ -180,7 +180,9 @@
   "layer_code": "CAUSAL_LANGUAGE_MODEL",
   "namespace": "causal_language_model",
   "references": [
-    "capability_transforms::CONSTITUTION_MOLECULES_V0"
+    "capability_transforms::CONSTITUTION_MOLECULES_V0",
+    "causal_language_model::CT_IMPURE_OFFER_NEXT_WORDS_V0",
+    "causal_language_model::CT_PURE_CHOOSE_PERMITTED_WORD_V0"
   ],
   "version": "0"
 }

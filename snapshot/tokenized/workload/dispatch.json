@@ -1,6 +1,6 @@
 {
   "admission": {
-    "95": {
+    "119": {
       "numbers": {
         "required": true,
         "type": "array"
@@ -8,22 +8,22 @@
     }
   },
   "bindings": {
-    "101": {
+    "127": {
       "CC_COMPUTE_SEQUENCES_V0": {
         "numbers": "$.payload.numbers"
       },
       "CC_STORE_RESULTS_V0": {
-        "all_terminate": "$.results.91.all_terminate",
-        "non_terminating": "$.results.91.non_terminating",
-        "sequences": "$.results.89.sequences"
+        "all_terminate": "$.results.115.all_terminate",
+        "non_terminating": "$.results.115.non_terminating",
+        "sequences": "$.results.113.sequences"
       },
       "CC_VERIFY_TERMINATION_V0": {
-        "sequences": "$.results.89.sequences"
+        "sequences": "$.results.113.sequences"
       }
     }
   },
   "emits": {
-    "101": {
+    "127": {
       "CC_STORE_RESULTS_V0": {
         "SUCCESS": [
           "workload::EV_CONJECTURE_EVALUATED_V0"
@@ -37,17 +37,17 @@
     }
   },
   "entry": {
-    "101": {
+    "127": {
       "actor": "workload::AC_REFERENCE_ACTOR_V0",
-      "rb": 96,
-      "start": 95,
+      "rb": 120,
+      "start": 119,
       "start_key": "IN_COLLATZ_INPUT_VALIDATED_V0"
     }
   },
   "pipeline": {
-    "89": [
+    "113": [
       {
-        "addr": 92,
+        "addr": 116,
         "inputs": {
           "numbers": "$.inputs.numbers"
         },
@@ -62,9 +62,9 @@
         "step_id": "compute_sequences"
       }
     ],
-    "90": [
+    "114": [
       {
-        "addr": 25,
+        "addr": 26,
         "inputs": {
           "__store__": "COLLATZ_RESULTS",
           "key": "collatz_results",
@@ -86,14 +86,14 @@
         "step_id": "store_results"
       }
     ],
-    "91": [
+    "115": [
       {
-        "addr": 93,
+        "addr": 117,
         "inputs": {
           "sequences": "$.inputs.sequences"
         },
         "on_result": {
-          "SUCCESS": "evaluate_conjecture",
+          "SUCCESS": "continue",
           "VIOLATION": "exit"
         },
         "op": null,
@@ -102,34 +102,49 @@
           "non_terminating": "$.capability_result.non_terminating"
         },
         "step_id": "check_termination"
+      },
+      {
+        "addr": 30,
+        "inputs": {
+          "value": "$.results.check_termination.all_terminate"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": null,
+        "outputs": {
+          "conjecture_holds": "$.capability_result.held"
+        },
+        "step_id": "require_every_sequence_terminated"
       }
     ]
   },
   "projection_class": "machine_projection",
   "routing": {
-    "101": {
+    "127": {
       "CC_COMPUTE_SEQUENCES_V0": {
         "24579": {
-          "addr": 91,
+          "addr": 115,
           "key": "CC_VERIFY_TERMINATION_V0"
         }
       },
       "CC_VERIFY_TERMINATION_V0": {
         "24579": {
-          "addr": 90,
+          "addr": 114,
           "key": "CC_STORE_RESULTS_V0"
         }
       },
       "IN_COLLATZ_INPUT_VALIDATED_V0": {
         "24576": {
-          "addr": 89,
+          "addr": 113,
           "key": "CC_COMPUTE_SEQUENCES_V0"
         }
       }
     }
   },
   "terminal": {
-    "101": {
+    "127": {
       "CC_COMPUTE_SEQUENCES_V0": {
         "24580": {
           "exit": "EXIT_ERROR",

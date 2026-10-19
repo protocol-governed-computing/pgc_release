@@ -1,8 +1,8 @@
 {
   "artifact_code": "CT_PURE_ATTRIBUTE_PROVENANCE_V0",
   "artifact_type": "CT",
-  "content": "# CT_PURE_ATTRIBUTE_PROVENANCE_V0\n\n## Machine\n\n```yaml\nfqdn: transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: build\ncore:\n  summary: Report, for each leaf of a rendered artifact, whether the design stated it, a constitution\n    governs it, or the renderer supplied it\n  refusal: returns\n  inputs:\n    rendered:\n      type: object\n      required: true\n    sources:\n      type: object\n      required: true\n  outputs:\n    provenance:\n      type: object\n      required: true\n    governing_artifacts:\n      type: object\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: ATTRIBUTE_PROVENANCE\n  implementation:\n    module: transformation.implementation.capability_transforms.atoms.ct_pure_attribute_provenance_v0\n    callable: execute\n```\n\n---\n\n## Intent\n\nReport, for each leaf of a rendered artifact, whether the design stated it, a constitution governs it, or the renderer supplied it\n",
-  "content_hash": "edbfdfc02a29dfce9850d05cd3ec63f94d212c310380a0655babc5810e6188aa",
+  "content": "# CT_PURE_ATTRIBUTE_PROVENANCE_V0\n\n## 1. Intent\n\nReport, for each leaf of every rendered artifact, where its value came from: the design stated it,\nan artifact named in its governance fixes it, it was carried from the predecessor, or the renderer\nsupplied it. Only the renderer knows, because it put the value there, so this reads the renderer's\nown record of what it supplied and attributes every other leaf to the design.\n\n`rendered` is the list of artifacts the renderer produced, which is what the construction contract\nhands it.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: build\ncore:\n  summary: Report, for each leaf of a rendered artifact, whether the design stated it, a constitution\n    governs it, or the renderer supplied it\n  refusal: returns\n  inputs:\n    rendered:\n      type: array\n      required: true\n    sources:\n      type: object\n      required: true\n  outputs:\n    provenance:\n      type: object\n      required: true\n    governing_artifacts:\n      type: object\n      required: true\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: ATTRIBUTE_PROVENANCE\n  implementation:\n    module: transformation.implementation.capability_transforms.atoms.ct_pure_attribute_provenance_v0\n    callable: execute\n```\n\n---\n\n## Intent\n\nReport, for each leaf of a rendered artifact, whether the design stated it, a constitution governs it, or the renderer supplied it\n",
+  "content_hash": "58282070bfd954297bd87f95357522f07922028a61769d9b6bf7be13e906db0d",
   "ct_ir": {
     "artifact_code": "CT_PURE_ATTRIBUTE_PROVENANCE_V0",
     "atom_stream": [
@@ -25,7 +25,7 @@
     "inputs": {
       "rendered": {
         "required": true,
-        "type": "object"
+        "type": "array"
       },
       "sources": {
         "required": true,
@@ -50,7 +50,7 @@
       "inputs": {
         "rendered": {
           "required": true,
-          "type": "object"
+          "type": "array"
         },
         "sources": {
           "required": true,

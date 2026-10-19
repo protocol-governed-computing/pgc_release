@@ -1,7 +1,7 @@
 {
   "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
   "artifact_type": "CT",
-  "content": "",
+  "content": "# CT_PURE_ASSEMBLE_RECORD_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: V0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Assemble record object\n  refusal: never\n  description: Combines multiple input values into a single structured record object.\n  inputs:\n    fields:\n      type: object\n      required: true\n      description: Key-value map of fields to include in the record\n  outputs:\n    record:\n      type: object\n      required: true\n      description: The assembled record object\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: ASSEMBLE_RECORD\n  implementation:\n    module: capability_transforms.implementation.ct_pure_assemble_record_v0\n    callable: execute\n```\n",
   "content_hash": "4c9264472dc2b9c2a945a237b5b317c179a6a56977ef8c10ea6028b8329c5cf8",
   "ct_ir": {
     "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
@@ -71,8 +71,10 @@
     },
     "version": "V0"
   },
-  "layer_code": "BOOK_LIBRARY_MGMT",
+  "layer_code": "REUSABLE_TRANSFORMS",
   "namespace": "capability_transforms",
-  "references": [],
-  "version": "V0"
+  "references": [
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
+  ],
+  "version": "0"
 }

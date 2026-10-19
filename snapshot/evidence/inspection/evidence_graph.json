@@ -1,5 +1,5 @@
 {
-  "compiler_version": "17",
+  "compiler_version": "18",
   "edge_count": 44,
   "edges": [
     {
@@ -746,8 +746,8 @@
     },
     {
       "detail": {
-        "address_hash": "fceedb73972c88a00e3380d2bb899f1c360369c772d4b847b3721d864e845be3",
-        "address_table_size": 154
+        "address_hash": "ca1ed12896a102f89eb67ef923f5e25b78ee6b490c3f190fb17aeb3cf110791a",
+        "address_table_size": 177
       },
       "event_id": 40,
       "family": "ADDRESSING",
@@ -759,9 +759,9 @@
     },
     {
       "detail": {
-        "assertions_executed": 79,
-        "assertions_imported": 79,
-        "assertions_passed": 79,
+        "assertions_executed": 78,
+        "assertions_imported": 78,
+        "assertions_passed": 78,
         "errors": 0,
         "warnings": 0
       },
@@ -795,7 +795,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::STRUCTURE_BUILD_INSPECTION_CONFIG_V0",
-      "subject_token": 56
+      "subject_token": 58
     },
     {
       "detail": {
@@ -807,7 +807,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_ARTIFACT_INDEXED_V0",
-      "subject_token": 57
+      "subject_token": 59
     },
     {
       "detail": {
@@ -819,7 +819,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_ARTIFACT_LIST_V0",
-      "subject_token": 58
+      "subject_token": 60
     },
     {
       "detail": {
@@ -831,7 +831,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_ARTIFACT_REFS_V0",
-      "subject_token": 59
+      "subject_token": 61
     },
     {
       "detail": {
@@ -843,7 +843,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_ARTIFACT_SHOW_V0",
-      "subject_token": 60
+      "subject_token": 62
     },
     {
       "detail": {
@@ -855,7 +855,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_BEHAVIOR_LOGIC_LIST_V0",
-      "subject_token": 61
+      "subject_token": 63
     },
     {
       "detail": {
@@ -867,7 +867,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_BEHAVIOR_LOGIC_SHOW_V0",
-      "subject_token": 62
+      "subject_token": 64
     },
     {
       "detail": {
@@ -879,7 +879,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_CAPABILITY_SURFACE_V0",
-      "subject_token": 63
+      "subject_token": 65
     },
     {
       "detail": {
@@ -891,7 +891,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_CATALOG_V0",
-      "subject_token": 64
+      "subject_token": 66
     },
     {
       "detail": {
@@ -903,7 +903,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_EXECUTION_EXPLAIN_V0",
-      "subject_token": 65
+      "subject_token": 67
     },
     {
       "detail": {
@@ -915,7 +915,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_RULE_SET_LIST_V0",
-      "subject_token": 66
+      "subject_token": 68
     },
     {
       "detail": {
@@ -927,7 +927,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_SNAPSHOT_SUMMARY_V0",
-      "subject_token": 67
+      "subject_token": 69
     },
     {
       "detail": {
@@ -939,7 +939,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_SNAPSHOT_TOPOLOGY_V0",
-      "subject_token": 68
+      "subject_token": 70
     },
     {
       "detail": {
@@ -951,7 +951,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_SNAPSHOT_VALIDATE_V0",
-      "subject_token": 69
+      "subject_token": 71
     },
     {
       "detail": {
@@ -963,7 +963,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_STORE_CONSUMERS_V0",
-      "subject_token": 70
+      "subject_token": 72
     },
     {
       "detail": {
@@ -975,7 +975,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_STORE_LIST_V0",
-      "subject_token": 71
+      "subject_token": 73
     },
     {
       "detail": {
@@ -987,7 +987,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_STORE_SHOW_V0",
-      "subject_token": 72
+      "subject_token": 74
     },
     {
       "detail": {
@@ -999,7 +999,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_TOPOLOGY_IMPACT_V0",
-      "subject_token": 73
+      "subject_token": 75
     },
     {
       "detail": {
@@ -1011,7 +1011,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_VOCAB_RESOLVE_V0",
-      "subject_token": 74
+      "subject_token": 76
     },
     {
       "detail": {
@@ -1023,7 +1023,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TE_SI_VOCAB_SEARCH_V0",
-      "subject_token": 75
+      "subject_token": 77
     },
     {
       "detail": {
@@ -1035,7 +1035,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_ARTIFACT_INDEXED_V0",
-      "subject_token": 76
+      "subject_token": 78
     },
     {
       "detail": {
@@ -1047,7 +1047,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_ARTIFACT_LIST_V0",
-      "subject_token": 77
+      "subject_token": 79
     },
     {
       "detail": {
@@ -1059,7 +1059,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_ARTIFACT_REFS_V0",
-      "subject_token": 78
+      "subject_token": 80
     },
     {
       "detail": {
@@ -1071,7 +1071,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_ARTIFACT_SHOW_V0",
-      "subject_token": 79
+      "subject_token": 81
     },
     {
       "detail": {
@@ -1083,7 +1083,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_BEHAVIOR_LOGIC_LIST_V0",
-      "subject_token": 80
+      "subject_token": 82
     },
     {
       "detail": {
@@ -1095,7 +1095,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_BEHAVIOR_LOGIC_SHOW_V0",
-      "subject_token": 81
+      "subject_token": 83
     },
     {
       "detail": {
@@ -1107,7 +1107,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_CAPABILITY_SURFACE_V0",
-      "subject_token": 82
+      "subject_token": 84
     },
     {
       "detail": {
@@ -1119,7 +1119,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_CATALOG_V0",
-      "subject_token": 83
+      "subject_token": 85
     },
     {
       "detail": {
@@ -1131,7 +1131,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_EXECUTION_EXPLAIN_V0",
-      "subject_token": 84
+      "subject_token": 86
     },
     {
       "detail": {
@@ -1143,7 +1143,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_RULE_SET_LIST_V0",
-      "subject_token": 85
+      "subject_token": 87
     },
     {
       "detail": {
@@ -1155,7 +1155,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_SNAPSHOT_SUMMARY_V0",
-      "subject_token": 86
+      "subject_token": 88
     },
     {
       "detail": {
@@ -1167,7 +1167,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_SNAPSHOT_TOPOLOGY_V0",
-      "subject_token": 87
+      "subject_token": 89
     },
     {
       "detail": {
@@ -1179,7 +1179,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_SNAPSHOT_VALIDATE_V0",
-      "subject_token": 88
+      "subject_token": 90
     },
     {
       "detail": {
@@ -1191,7 +1191,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_STORE_CONSUMERS_V0",
-      "subject_token": 89
+      "subject_token": 91
     },
     {
       "detail": {
@@ -1203,7 +1203,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_STORE_LIST_V0",
-      "subject_token": 90
+      "subject_token": 92
     },
     {
       "detail": {
@@ -1215,7 +1215,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_STORE_SHOW_V0",
-      "subject_token": 91
+      "subject_token": 93
     },
     {
       "detail": {
@@ -1227,7 +1227,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_TOPOLOGY_IMPACT_V0",
-      "subject_token": 92
+      "subject_token": 94
     },
     {
       "detail": {
@@ -1239,7 +1239,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_VOCAB_RESOLVE_V0",
-      "subject_token": 93
+      "subject_token": 95
     },
     {
       "detail": {
@@ -1251,12 +1251,12 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "inspection::TI_SI_VOCAB_SEARCH_V0",
-      "subject_token": 94
+      "subject_token": 96
     },
     {
       "detail": {
         "address_count": 67,
-        "projection_hash": "eb3c3f66f53da56adb4a0408d19c9947b1fb3efef00e404f5471a8baf0e35e67"
+        "projection_hash": "63e60d32f6278d1272d139fc6f47902ad0587d63c4b65d56920e2ab34467329c"
       },
       "event_id": 82,
       "family": "PROJECTION",
@@ -1271,7 +1271,7 @@
         "adjacency_count": 0,
         "edge_count": 0,
         "node_count": 39,
-        "projection_hash": "703e59f40850b0d39eeb5339f6adcb7e08b04a6ed0c0a82bcc9b970e382aa889"
+        "projection_hash": "9747171c2f5b8e010bd269d97d7f1025a936a1cab52c47165dd828826fbc83f5"
       },
       "event_id": 83,
       "family": "PROJECTION",
@@ -1286,7 +1286,7 @@
         "edge_count": 0,
         "ev_schema_count": 0,
         "node_count": 39,
-        "projection_hash": "4f36a572a304baf7e7616b36f7d98211c3ba322beab37ef1a79f1c9ce3603b01"
+        "projection_hash": "ec5f4788661c97074d25994fdb5e4f69ff838ea8b0d257d9adbdfa4354e97e9b"
       },
       "event_id": 84,
       "family": "PROJECTION",
@@ -1331,7 +1331,7 @@
     {
       "detail": {
         "artifact_type": "STRUCTURE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/structures/inspection__STRUCTURE_BUILD_INSPECTION_CONFIG_V0.json"
+        "output_path": "compiled/canonical/structures/inspection__STRUCTURE_BUILD_INSPECTION_CONFIG_V0.json"
       },
       "event_id": 87,
       "family": "MATERIALIZATION",
@@ -1344,7 +1344,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_ARTIFACT_INDEXED_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_ARTIFACT_INDEXED_V0.json"
       },
       "event_id": 88,
       "family": "MATERIALIZATION",
@@ -1357,7 +1357,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_ARTIFACT_LIST_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_ARTIFACT_LIST_V0.json"
       },
       "event_id": 89,
       "family": "MATERIALIZATION",
@@ -1370,7 +1370,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_ARTIFACT_REFS_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_ARTIFACT_REFS_V0.json"
       },
       "event_id": 90,
       "family": "MATERIALIZATION",
@@ -1383,7 +1383,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_ARTIFACT_SHOW_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_ARTIFACT_SHOW_V0.json"
       },
       "event_id": 91,
       "family": "MATERIALIZATION",
@@ -1396,7 +1396,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_BEHAVIOR_LOGIC_LIST_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_BEHAVIOR_LOGIC_LIST_V0.json"
       },
       "event_id": 92,
       "family": "MATERIALIZATION",
@@ -1409,7 +1409,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_BEHAVIOR_LOGIC_SHOW_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_BEHAVIOR_LOGIC_SHOW_V0.json"
       },
       "event_id": 93,
       "family": "MATERIALIZATION",
@@ -1422,7 +1422,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_CAPABILITY_SURFACE_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_CAPABILITY_SURFACE_V0.json"
       },
       "event_id": 94,
       "family": "MATERIALIZATION",
@@ -1435,7 +1435,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_CATALOG_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_CATALOG_V0.json"
       },
       "event_id": 95,
       "family": "MATERIALIZATION",
@@ -1448,7 +1448,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_EXECUTION_EXPLAIN_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_EXECUTION_EXPLAIN_V0.json"
       },
       "event_id": 96,
       "family": "MATERIALIZATION",
@@ -1461,7 +1461,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_RULE_SET_LIST_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_RULE_SET_LIST_V0.json"
       },
       "event_id": 97,
       "family": "MATERIALIZATION",
@@ -1474,7 +1474,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_SNAPSHOT_SUMMARY_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_SNAPSHOT_SUMMARY_V0.json"
       },
       "event_id": 98,
       "family": "MATERIALIZATION",
@@ -1487,7 +1487,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_SNAPSHOT_TOPOLOGY_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_SNAPSHOT_TOPOLOGY_V0.json"
       },
       "event_id": 99,
       "family": "MATERIALIZATION",
@@ -1500,7 +1500,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_SNAPSHOT_VALIDATE_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_SNAPSHOT_VALIDATE_V0.json"
       },
       "event_id": 100,
       "family": "MATERIALIZATION",
@@ -1513,7 +1513,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_STORE_CONSUMERS_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_STORE_CONSUMERS_V0.json"
       },
       "event_id": 101,
       "family": "MATERIALIZATION",
@@ -1526,7 +1526,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_STORE_LIST_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_STORE_LIST_V0.json"
       },
       "event_id": 102,
       "family": "MATERIALIZATION",
@@ -1539,7 +1539,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_STORE_SHOW_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_STORE_SHOW_V0.json"
       },
       "event_id": 103,
       "family": "MATERIALIZATION",
@@ -1552,7 +1552,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_TOPOLOGY_IMPACT_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_TOPOLOGY_IMPACT_V0.json"
       },
       "event_id": 104,
       "family": "MATERIALIZATION",
@@ -1565,7 +1565,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_VOCAB_RESOLVE_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_VOCAB_RESOLVE_V0.json"
       },
       "event_id": 105,
       "family": "MATERIALIZATION",
@@ -1578,7 +1578,7 @@
     {
       "detail": {
         "artifact_type": "TE",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/transport/egress/inspection__TE_SI_VOCAB_SEARCH_V0.json"
+        "output_path": "compiled/canonical/transport/egress/inspection__TE_SI_VOCAB_SEARCH_V0.json"
       },
       "event_id": 106,
       "family": "MATERIALIZATION",
@@ -1591,7 +1591,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_ARTIFACT_INDEXED_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_ARTIFACT_INDEXED_V0.json"
       },
       "event_id": 107,
       "family": "MATERIALIZATION",
@@ -1604,7 +1604,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_ARTIFACT_LIST_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_ARTIFACT_LIST_V0.json"
       },
       "event_id": 108,
       "family": "MATERIALIZATION",
@@ -1617,7 +1617,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_ARTIFACT_REFS_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_ARTIFACT_REFS_V0.json"
       },
       "event_id": 109,
       "family": "MATERIALIZATION",
@@ -1630,7 +1630,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_ARTIFACT_SHOW_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_ARTIFACT_SHOW_V0.json"
       },
       "event_id": 110,
       "family": "MATERIALIZATION",
@@ -1643,7 +1643,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_BEHAVIOR_LOGIC_LIST_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_BEHAVIOR_LOGIC_LIST_V0.json"
       },
       "event_id": 111,
       "family": "MATERIALIZATION",
@@ -1656,7 +1656,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_BEHAVIOR_LOGIC_SHOW_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_BEHAVIOR_LOGIC_SHOW_V0.json"
       },
       "event_id": 112,
       "family": "MATERIALIZATION",
@@ -1669,7 +1669,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_CAPABILITY_SURFACE_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_CAPABILITY_SURFACE_V0.json"
       },
       "event_id": 113,
       "family": "MATERIALIZATION",
@@ -1682,7 +1682,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_CATALOG_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_CATALOG_V0.json"
       },
       "event_id": 114,
       "family": "MATERIALIZATION",
@@ -1695,7 +1695,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_EXECUTION_EXPLAIN_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_EXECUTION_EXPLAIN_V0.json"
       },
       "event_id": 115,
       "family": "MATERIALIZATION",
@@ -1708,7 +1708,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_RULE_SET_LIST_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_RULE_SET_LIST_V0.json"
       },
       "event_id": 116,
       "family": "MATERIALIZATION",
@@ -1721,7 +1721,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_SNAPSHOT_SUMMARY_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_SNAPSHOT_SUMMARY_V0.json"
       },
       "event_id": 117,
       "family": "MATERIALIZATION",
@@ -1734,7 +1734,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_SNAPSHOT_TOPOLOGY_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_SNAPSHOT_TOPOLOGY_V0.json"
       },
       "event_id": 118,
       "family": "MATERIALIZATION",
@@ -1747,7 +1747,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_SNAPSHOT_VALIDATE_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_SNAPSHOT_VALIDATE_V0.json"
       },
       "event_id": 119,
       "family": "MATERIALIZATION",
@@ -1760,7 +1760,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_STORE_CONSUMERS_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_STORE_CONSUMERS_V0.json"
       },
       "event_id": 120,
       "family": "MATERIALIZATION",
@@ -1773,7 +1773,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_STORE_LIST_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_STORE_LIST_V0.json"
       },
       "event_id": 121,
       "family": "MATERIALIZATION",
@@ -1786,7 +1786,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_STORE_SHOW_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_STORE_SHOW_V0.json"
       },
       "event_id": 122,
       "family": "MATERIALIZATION",
@@ -1799,7 +1799,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_TOPOLOGY_IMPACT_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_TOPOLOGY_IMPACT_V0.json"
       },
       "event_id": 123,
       "family": "MATERIALIZATION",
@@ -1812,7 +1812,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_VOCAB_RESOLVE_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_VOCAB_RESOLVE_V0.json"
       },
       "event_id": 124,
       "family": "MATERIALIZATION",
@@ -1825,7 +1825,7 @@
     {
       "detail": {
         "artifact_type": "TI",
-        "output_path": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/canonical/ingress_intents/inspection__TI_SI_VOCAB_SEARCH_V0.json"
+        "output_path": "compiled/canonical/ingress_intents/inspection__TI_SI_VOCAB_SEARCH_V0.json"
       },
       "event_id": 125,
       "family": "MATERIALIZATION",
@@ -1838,7 +1838,7 @@
     {
       "detail": {
         "files_written": 3,
-        "output_dir": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/vocabulary/inspection",
+        "output_dir": "compiled/vocabulary/inspection",
         "structure_id": "inspection"
       },
       "event_id": 126,
@@ -1854,7 +1854,7 @@
         "edge_count": 0,
         "files_written": 2,
         "node_count": 39,
-        "output_dir": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/tokenized/inspection",
+        "output_dir": "compiled/tokenized/inspection",
         "structure_id": "inspection"
       },
       "event_id": 127,
@@ -1868,10 +1868,10 @@
     {
       "detail": {
         "files_written": [
-          "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/tokenized/inspection/dispatch.json",
-          "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/tokenized/inspection/handlers.json"
+          "compiled/tokenized/inspection/dispatch.json",
+          "compiled/tokenized/inspection/handlers.json"
         ],
-        "output_dir": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/tokenized/inspection",
+        "output_dir": "compiled/tokenized/inspection",
         "structure_id": "inspection"
       },
       "event_id": 128,
@@ -1888,7 +1888,7 @@
         "ev_schema_count": 0,
         "files_written": 2,
         "node_count": 39,
-        "output_dir": "/Users/bp/protocol-governed-computing/snapshot_inspector/snapshot/compiled/evidence/inspection",
+        "output_dir": "compiled/evidence/inspection",
         "structure_id": "inspection"
       },
       "event_id": 129,
@@ -1900,7 +1900,7 @@
       "subject_token": -1
     }
   ],
-  "evidence_graph_hash": "8c5967e13eed84f93b07641a69284e03a1c2208b825d213547524f84a69e2637",
+  "evidence_graph_hash": "6dd160e4267708b56774b680f6da736938ea5e8411b9780971f7d670ea6e78ca",
   "families": {
     "ADDRESSING": [
       40

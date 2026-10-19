@@ -86,14 +86,136 @@
           "prior_texts": "IN.prior_texts",
           "rule_set": [
             {
+              "check": "HEADER_FIELD_PRESENT",
+              "id": "HEADER_FIELD_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/document/required",
+              "intent": "a phase document states its phase, its domain and subdomain, its change, and the rule set it was authored under",
+              "params": {
+                "fields": [
+                  "phase",
+                  "domain",
+                  "subdomain",
+                  "cr",
+                  "rule_set"
+                ]
+              }
+            },
+            {
+              "check": "HEADER_FIELD_MATCHES",
+              "id": "HEADER_FIELD_MISMATCH",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/document/properties/phase/const",
+              "intent": "a document's phase is the phase whose rules judge it",
+              "params": {
+                "fields": [
+                  "phase"
+                ],
+                "pattern": "^p8$"
+              }
+            },
+            {
+              "check": "HEADER_FIELD_OF_TYPE",
+              "id": "HEADER_FIELD_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/document/properties/domain",
+              "intent": "a document's domain takes its declared form",
+              "params": {
+                "field": "domain",
+                "type": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "check": "HEADER_FIELD_OF_TYPE",
+              "id": "HEADER_FIELD_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/document/properties/subdomain",
+              "intent": "a document's subdomain takes its declared form",
+              "params": {
+                "field": "subdomain",
+                "type": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "minLength": 1,
+                  "type": [
+                    "string",
+                    "array"
+                  ]
+                }
+              }
+            },
+            {
+              "check": "HEADER_FIELD_OF_TYPE",
+              "id": "HEADER_FIELD_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/document/properties/cr",
+              "intent": "a document's cr takes its declared form",
+              "params": {
+                "field": "cr",
+                "type": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "check": "HEADER_FIELD_MATCHES",
+              "id": "HEADER_FIELD_MISMATCH",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/document/properties/rule_set/pattern",
+              "intent": "a document's rule_set names a rule set of its own phase",
+              "params": {
+                "fields": [
+                  "rule_set"
+                ],
+                "pattern": "^transformation\\.schemas\\.REGISTER_SCHEMA_P8_V[0-9]+$"
+              }
+            },
+            {
+              "check": "HEADER_FIELD_OF_TYPE",
+              "id": "HEADER_FIELD_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/document/properties/approval",
+              "intent": "a document's approval takes its declared form",
+              "params": {
+                "field": "approval",
+                "type": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "gate": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "rule_set": {
+                      "pattern": "^transformation\\.schemas\\.REGISTER_SCHEMA_P8_V[0-9]+$",
+                      "type": "string"
+                    },
+                    "state": {
+                      "enum": [
+                        "APPROVED",
+                        "MIGRATED",
+                        "RECONFIRMED"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "gate",
+                    "rule_set",
+                    "state"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/build_order/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "build_order"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/build_order/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -110,6 +232,7 @@
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/build_order/items/properties/action/x-vocab",
               "intent": "Action is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Action",
@@ -122,14 +245,35 @@
               "register": "build_order"
             },
             {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/build_order/items/properties/depends_on/x-derived/CELL_OF_TYPE",
+              "intent": "Depends On carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Depends On",
+                "type": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": [
+                    "array",
+                    "null"
+                  ]
+                }
+              },
+              "register": "build_order"
+            },
+            {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/critical_path/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "critical_path"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/critical_path/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -142,12 +286,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/mandate_artifact_summary/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "mandate_artifact_summary"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/mandate_artifact_summary/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -161,12 +307,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/mandate_artifact_summary/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "mandate_artifact_summary"
             },
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/mandate_artifact_summary/items/properties/action/x-vocab",
               "intent": "Action is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Action",
@@ -181,12 +329,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/field_declarations/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "field_declarations"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/field_declarations/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -199,18 +349,21 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/field_declarations/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "field_declarations"
             },
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/new_capabilities/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "new_capabilities"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/new_capabilities/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -225,12 +378,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/new_intents/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "new_intents"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/new_intents/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -245,12 +400,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/cross_subdomain_notes/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "cross_subdomain_notes"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/properties/registers/properties/cross_subdomain_notes/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -263,6 +420,7 @@
             {
               "check": "COLUMN_SEQUENCE_CONTIGUOUS",
               "id": "BUILD_STEPS_NOT_CONTIGUOUS",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/0",
               "intent": "the build sequence is total and gapless, because a gap is a dropped artifact",
               "params": {
                 "column": "Step",
@@ -273,6 +431,7 @@
             {
               "check": "DEPENDENCY_PRECEDES",
               "id": "DEPENDENCY_SCHEDULED_LATER",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/1",
               "intent": "everything a step depends on is built before it \u2014 this is what makes it a sort",
               "params": {
                 "column": "Code",
@@ -284,6 +443,7 @@
             {
               "check": "CELL_MATCHES",
               "id": "BUILD_CODE_MALFORMED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/2",
               "intent": "a mandate orders binding identities, never re-typed approximations",
               "params": {
                 "column": "Code",
@@ -295,6 +455,7 @@
             {
               "check": "CITED_ARTIFACTS_ABSENT",
               "id": "BUILD_CODE_ALREADY_EXISTS",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/3",
               "intent": "an artifact mandated for authoring must not already be in the composition",
               "params": {
                 "column": "Code",
@@ -306,6 +467,7 @@
             {
               "check": "CELL_RESOLVES_IN_REGISTER",
               "id": "CRITICAL_PATH_NOT_IN_BUILD_ORDER",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/4",
               "intent": "the critical path is a path through this build order",
               "params": {
                 "column": "Code",
@@ -318,6 +480,7 @@
             {
               "check": "COLUMN_SEQUENCE_CONTIGUOUS",
               "id": "CRITICAL_PATH_NOT_CONTIGUOUS",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/5",
               "intent": "a path is an ordered chain, not an unordered set of steps",
               "params": {
                 "column": "Position",
@@ -328,6 +491,7 @@
             {
               "check": "CELL_NOT_EMPTY",
               "id": "CAPABILITY_WITHOUT_PURPOSE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/6",
               "intent": "a mandated capability says what it is for",
               "params": {
                 "column": "Purpose",
@@ -338,6 +502,7 @@
             {
               "check": "CELL_NOT_EMPTY",
               "id": "INTENT_WITHOUT_WORKFLOW",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/7",
               "intent": "every mandated intent names the workflow it starts",
               "params": {
                 "column": "Workflow",
@@ -348,6 +513,7 @@
             {
               "check": "PRIOR_IDENTITIES_COVERED",
               "id": "DESIGNED_ARTIFACT_NOT_SCHEDULED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/8",
               "intent": "an artifact the design declared and the mandate never schedules is not deferred, it is lost",
               "params": {
                 "column": "Code",
@@ -361,6 +527,7 @@
             {
               "check": "PRIOR_IDENTITIES_COVERED",
               "id": "SCHEDULED_ARTIFACT_NOT_DESIGNED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/9",
               "intent": "a mandate orders the build; it does not get to add to it",
               "params": {
                 "column": "Code",
@@ -374,6 +541,7 @@
             {
               "check": "REGISTER_COVERS_REGISTER",
               "id": "SCHEDULED_ARTIFACT_UNPLACED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/10",
               "intent": "every artifact the mandate schedules declares the subdomain it is built into",
               "params": {
                 "column": "Code",
@@ -385,6 +553,7 @@
             {
               "check": "PRIOR_IDENTITIES_COVERED",
               "id": "AMENDED_ARTIFACT_UNPLACED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/11",
               "intent": "an artifact this change amends declares the subdomain it is placed in, as a scheduled one does",
               "params": {
                 "column": "Code",
@@ -415,34 +584,11 @@
             {
               "check": "UNRESOLVED_MARKER_ABSENT",
               "id": "REGISTER_CELL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P8_V0#/allOf/12",
               "intent": "an unanswered question left in a register reads as decided to every later phase",
               "params": {
                 "detail": "{column!r} declares the question unanswered ({marker}) rather than answering it \u2014 ask it as a clarification, do not hedge it in a register",
                 "exempt": []
-              }
-            },
-            {
-              "check": "HEADER_FIELD_PRESENT",
-              "id": "HEADER_FIELD_MISSING",
-              "intent": "a dossier document states its phase, its CR, its lifecycle state, and what it feeds",
-              "params": {
-                "fields": [
-                  "Stage",
-                  "CR",
-                  "Status",
-                  "Feeds"
-                ]
-              }
-            },
-            {
-              "check": "HEADER_FIELD_MATCHES",
-              "id": "LIFECYCLE_STATE_NOT_IN_VOCABULARY",
-              "intent": "the lifecycle axis is a controlled vocabulary, not free text",
-              "params": {
-                "fields": [
-                  "Status"
-                ],
-                "pattern": "^(DRAFT|CONSTRUCTION_COMPLETE|ADMITTED_UNVALIDATED|EXECUTION_VALIDATED|PROMOTED)\\b"
               }
             }
           ]
@@ -470,6 +616,11 @@
     },
     {
       "from": "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_JUDGE_AGAINST_SNAPSHOT_V0",
       "to": "EXIT_JUDGED",
       "condition": "SUCCESS"
     },
@@ -490,6 +641,11 @@
     }
   ],
   "execution_paths": [
+    [
+      "IN_AUTHORING_MANDATE_SUBMITTED_V0",
+      "CC_JUDGE_AGAINST_SNAPSHOT_V0",
+      "EXIT_REJECTED"
+    ],
     [
       "IN_AUTHORING_MANDATE_SUBMITTED_V0",
       "CC_JUDGE_AGAINST_SNAPSHOT_V0",

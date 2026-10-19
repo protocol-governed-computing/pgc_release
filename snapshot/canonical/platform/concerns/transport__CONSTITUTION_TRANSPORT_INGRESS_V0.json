@@ -43,7 +43,11 @@
   "layer_code": "GOVERNANCE",
   "namespace": "transport",
   "references": [
-    "governance::CONSTITUTION_GOVERNANCE_V0"
+    "governance::CONSTITUTION_GOVERNANCE_V0",
+    "transport::INVARIANT_TRANSPORT_NO_DYNAMIC_ROUTING_V0",
+    "transport::INVARIANT_TRANSPORT_NO_WORKFLOW_SEMANTICS_V0",
+    "transport::INVARIANT_TRANSPORT_OPERATION_IDENTITY_INDEPENDENCE_V0",
+    "transport::INVARIANT_TRANSPORT_TARGET_EXISTS_V0"
   ],
   "version": "0"
 }

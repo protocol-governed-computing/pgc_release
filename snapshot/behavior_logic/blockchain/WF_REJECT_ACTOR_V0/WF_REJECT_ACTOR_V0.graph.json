@@ -51,8 +51,12 @@
         "type": "wf_boundary",
         "bindings": {
           "contact_address": "IN.contact_address",
-          "occurrence_fields": "IN.occurrence_fields",
-          "stream_id": "IN.stream_id"
+          "occurrence_fields": {
+            "grounds": "$.payload.grounds",
+            "occurrence": "ACTOR_REJECTED",
+            "verifying_authority": "$.payload.verifying_authority"
+          },
+          "stream_id": "ACTOR_OCCURRENCES"
         }
       }
     },
@@ -245,6 +249,11 @@
   "edges": [
     {
       "from": "CC_APPEND_ACTOR_OCCURRENCE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_APPEND_ACTOR_OCCURRENCE_V0",
       "to": "EXIT_SUCCESS",
       "condition": "SUCCESS"
     },
@@ -252,6 +261,11 @@
       "from": "CC_APPEND_ACTOR_OCCURRENCE_V0",
       "to": "EXIT_REJECTED",
       "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RECORD_VERIFICATION_DECISION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
     },
     {
       "from": "CC_RECORD_VERIFICATION_DECISION_V0",
@@ -272,6 +286,11 @@
       "from": "CC_REQUIRE_REJECTION_GROUNDS_V0",
       "to": "EXIT_REJECTED",
       "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RESOLVE_ACTOR_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
     },
     {
       "from": "CC_RESOLVE_ACTOR_V0",
@@ -304,6 +323,27 @@
       "IN_ACTOR_REJECTION_V0",
       "CC_REQUIRE_REJECTION_GROUNDS_V0",
       "CC_RESOLVE_ACTOR_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ACTOR_REJECTION_V0",
+      "CC_REQUIRE_REJECTION_GROUNDS_V0",
+      "CC_RESOLVE_ACTOR_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ACTOR_REJECTION_V0",
+      "CC_REQUIRE_REJECTION_GROUNDS_V0",
+      "CC_RESOLVE_ACTOR_V0",
+      "CC_RECORD_VERIFICATION_DECISION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_ACTOR_REJECTION_V0",
+      "CC_REQUIRE_REJECTION_GROUNDS_V0",
+      "CC_RESOLVE_ACTOR_V0",
+      "CC_RECORD_VERIFICATION_DECISION_V0",
+      "CC_APPEND_ACTOR_OCCURRENCE_V0",
       "EXIT_REJECTED"
     ],
     [

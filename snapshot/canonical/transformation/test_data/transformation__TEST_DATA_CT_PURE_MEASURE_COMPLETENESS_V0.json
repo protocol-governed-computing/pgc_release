@@ -1,0 +1,239 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_MEASURE_COMPLETENESS_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_MEASURE_COMPLETENESS_V0\n\n## 1. Intent\n\nA design determining every fact its artifacts need is admitted; one leaving facts undetermined is refused.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::TEST_DATA_CT_PURE_MEASURE_COMPLETENESS_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: build\ntarget: transformation::CT_PURE_MEASURE_COMPLETENESS_V0\ncases:\n- case_id: admits_a_design_that_determines_its_artifact\n  expected_outcome: SUCCESS\n  bindings:\n    design_registers:\n    - id: new_artifacts\n      value:\n      - capability: Reader\n        family: AC\n        code: AC_READER_V0\n        summary: A reader of the catalog\n        owner_subdomain: s\n        status: NEW\n        source_finding:\n          source: human\n    - id: artifact_properties\n      value:\n      - artifact: AC_READER_V0\n        property: type\n        value: human\n        source_finding:\n          source: human\n    - id: interface_fields\n      value:\n      - artifact: AC_READER_V0\n        direction: ATTRIBUTE\n        field: role\n        type: string\n        required: 'YES'\n        default: null\n        meaning: What the reader does\n    mandate_registers:\n    - id: build_order\n      value:\n      - wave: '1'\n        code: AC_READER_V0\n    - id: field_declarations\n      value:\n      - code: AC_READER_V0\n        subdomain_field: s\n    threshold: 100.0\n    provenance: {}\n  expected:\n    completeness: 100.0\n    determined: 10\n    required: 10\n    undetermined: []\n- case_id: refuses_a_design_that_leaves_facts_undetermined\n  expected_outcome: VIOLATION\n  bindings:\n    design_registers:\n    - id: new_artifacts\n      value:\n      - capability: Storage\n        family: STRUCTURE\n        code: STRUCTURE_S_STORAGE_V0\n        summary: The stores the subdomain owns\n        owner_subdomain: s\n        status: NEW\n        source_finding:\n          source: human\n    - id: structure_stores\n      value: []\n    - id: artifact_properties\n      value:\n      - artifact: STRUCTURE_S_STORAGE_V0\n        property: layer\n        value: DOMAINS\n    mandate_registers:\n    - id: build_order\n      value:\n      - wave: '1'\n        code: STRUCTURE_S_STORAGE_V0\n    - id: field_declarations\n      value:\n      - code: STRUCTURE_S_STORAGE_V0\n        subdomain_field: s\n    threshold: 100.0\n    provenance: {}\n- case_id: refuses_a_value_its_provenance_attributes_to_the_renderer\n  expected_outcome: VIOLATION\n  bindings:\n    design_registers:\n    - id: new_artifacts\n      value:\n      - capability: Reader\n        family: AC\n        code: AC_READER_V0\n        summary: A reader of the catalog\n        owner_subdomain: s\n        status: NEW\n        source_finding:\n          source: human\n    - id: artifact_properties\n      value:\n      - artifact: AC_READER_V0\n        property: type\n        value: human\n        source_finding:\n          source: human\n    - id: interface_fields\n      value:\n      - artifact: AC_READER_V0\n        direction: ATTRIBUTE\n        field: role\n        type: string\n        required: 'YES'\n        default: null\n        meaning: What the reader does\n    mandate_registers:\n    - id: build_order\n      value:\n      - wave: '1'\n        code: AC_READER_V0\n    - id: field_declarations\n      value:\n      - code: AC_READER_V0\n        subdomain_field: s\n    threshold: 100.0\n    provenance:\n      AC_READER_V0.core.type: supplied_by_renderer\n```\n",
+  "content_hash": "7a58186c46831e6e580767a3cb98aa858835fe6033bef690e206e5ef2967a943",
+  "fqdn_id": "transformation::TEST_DATA_CT_PURE_MEASURE_COMPLETENESS_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "design_registers": [
+            {
+              "id": "new_artifacts",
+              "value": [
+                {
+                  "capability": "Reader",
+                  "code": "AC_READER_V0",
+                  "family": "AC",
+                  "owner_subdomain": "s",
+                  "source_finding": {
+                    "source": "human"
+                  },
+                  "status": "NEW",
+                  "summary": "A reader of the catalog"
+                }
+              ]
+            },
+            {
+              "id": "artifact_properties",
+              "value": [
+                {
+                  "artifact": "AC_READER_V0",
+                  "property": "type",
+                  "source_finding": {
+                    "source": "human"
+                  },
+                  "value": "human"
+                }
+              ]
+            },
+            {
+              "id": "interface_fields",
+              "value": [
+                {
+                  "artifact": "AC_READER_V0",
+                  "default": null,
+                  "direction": "ATTRIBUTE",
+                  "field": "role",
+                  "meaning": "What the reader does",
+                  "required": "YES",
+                  "type": "string"
+                }
+              ]
+            }
+          ],
+          "mandate_registers": [
+            {
+              "id": "build_order",
+              "value": [
+                {
+                  "code": "AC_READER_V0",
+                  "wave": "1"
+                }
+              ]
+            },
+            {
+              "id": "field_declarations",
+              "value": [
+                {
+                  "code": "AC_READER_V0",
+                  "subdomain_field": "s"
+                }
+              ]
+            }
+          ],
+          "provenance": {},
+          "threshold": 100.0
+        },
+        "case_id": "admits_a_design_that_determines_its_artifact",
+        "expected": {
+          "completeness": 100.0,
+          "determined": 10,
+          "required": 10,
+          "undetermined": []
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "design_registers": [
+            {
+              "id": "new_artifacts",
+              "value": [
+                {
+                  "capability": "Storage",
+                  "code": "STRUCTURE_S_STORAGE_V0",
+                  "family": "STRUCTURE",
+                  "owner_subdomain": "s",
+                  "source_finding": {
+                    "source": "human"
+                  },
+                  "status": "NEW",
+                  "summary": "The stores the subdomain owns"
+                }
+              ]
+            },
+            {
+              "id": "structure_stores",
+              "value": []
+            },
+            {
+              "id": "artifact_properties",
+              "value": [
+                {
+                  "artifact": "STRUCTURE_S_STORAGE_V0",
+                  "property": "layer",
+                  "value": "DOMAINS"
+                }
+              ]
+            }
+          ],
+          "mandate_registers": [
+            {
+              "id": "build_order",
+              "value": [
+                {
+                  "code": "STRUCTURE_S_STORAGE_V0",
+                  "wave": "1"
+                }
+              ]
+            },
+            {
+              "id": "field_declarations",
+              "value": [
+                {
+                  "code": "STRUCTURE_S_STORAGE_V0",
+                  "subdomain_field": "s"
+                }
+              ]
+            }
+          ],
+          "provenance": {},
+          "threshold": 100.0
+        },
+        "case_id": "refuses_a_design_that_leaves_facts_undetermined",
+        "expected_outcome": "VIOLATION"
+      },
+      {
+        "bindings": {
+          "design_registers": [
+            {
+              "id": "new_artifacts",
+              "value": [
+                {
+                  "capability": "Reader",
+                  "code": "AC_READER_V0",
+                  "family": "AC",
+                  "owner_subdomain": "s",
+                  "source_finding": {
+                    "source": "human"
+                  },
+                  "status": "NEW",
+                  "summary": "A reader of the catalog"
+                }
+              ]
+            },
+            {
+              "id": "artifact_properties",
+              "value": [
+                {
+                  "artifact": "AC_READER_V0",
+                  "property": "type",
+                  "source_finding": {
+                    "source": "human"
+                  },
+                  "value": "human"
+                }
+              ]
+            },
+            {
+              "id": "interface_fields",
+              "value": [
+                {
+                  "artifact": "AC_READER_V0",
+                  "default": null,
+                  "direction": "ATTRIBUTE",
+                  "field": "role",
+                  "meaning": "What the reader does",
+                  "required": "YES",
+                  "type": "string"
+                }
+              ]
+            }
+          ],
+          "mandate_registers": [
+            {
+              "id": "build_order",
+              "value": [
+                {
+                  "code": "AC_READER_V0",
+                  "wave": "1"
+                }
+              ]
+            },
+            {
+              "id": "field_declarations",
+              "value": [
+                {
+                  "code": "AC_READER_V0",
+                  "subdomain_field": "s"
+                }
+              ]
+            }
+          ],
+          "provenance": {
+            "AC_READER_V0.core.type": "supplied_by_renderer"
+          },
+          "threshold": 100.0
+        },
+        "case_id": "refuses_a_value_its_provenance_attributes_to_the_renderer",
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "build",
+    "fqdn": "transformation::TEST_DATA_CT_PURE_MEASURE_COMPLETENESS_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
+    "version": "V0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V0",
+    "transformation::CT_PURE_MEASURE_COMPLETENESS_V0"
+  ],
+  "version": "0"
+}

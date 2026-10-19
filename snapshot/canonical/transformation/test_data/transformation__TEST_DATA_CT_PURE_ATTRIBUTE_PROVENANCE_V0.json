@@ -1,0 +1,76 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_ATTRIBUTE_PROVENANCE_V0\n\n## 1. Intent\n\nA leaf the renderer supplied is attributed to the renderer, and every other leaf to the design.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::TEST_DATA_CT_PURE_ATTRIBUTE_PROVENANCE_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: build\ntarget: transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0\ncases:\n- case_id: attributes_a_supplied_layer_to_the_renderer\n  expected_outcome: SUCCESS\n  bindings:\n    rendered:\n    - path: registry/s/layers/STRUCTURE_S_STORAGE_V0.md\n      domain: STRUCTURE_S_STORAGE_V0\n      machine:\n        fqdn: STRUCTURE_S_STORAGE_V0\n        artifact_kind: STRUCTURE\n        version: v0\n        governed_by: structure::CONSTITUTION_STRUCTURE_V0\n        authority: pgc.platform\n        concern: s\n        core:\n          summary: The stores the subdomain owns\n          layer: DOMAINS\n          domain: STRUCTURE_S_STORAGE_V0\n          subdomain: s\n          entity_stores: {}\n    sources:\n      STRUCTURE_S_STORAGE_V0:\n        core.layer:\n        - supplied_by_renderer\n        - ''\n  expected:\n    provenance:\n      STRUCTURE_S_STORAGE_V0.fqdn: stated_by_design\n      STRUCTURE_S_STORAGE_V0.artifact_kind: stated_by_design\n      STRUCTURE_S_STORAGE_V0.version: stated_by_design\n      STRUCTURE_S_STORAGE_V0.governed_by: stated_by_design\n      STRUCTURE_S_STORAGE_V0.authority: stated_by_design\n      STRUCTURE_S_STORAGE_V0.concern: stated_by_design\n      STRUCTURE_S_STORAGE_V0.core.summary: stated_by_design\n      STRUCTURE_S_STORAGE_V0.core.layer: supplied_by_renderer\n      STRUCTURE_S_STORAGE_V0.core.domain: stated_by_design\n      STRUCTURE_S_STORAGE_V0.core.subdomain: stated_by_design\n      STRUCTURE_S_STORAGE_V0.core.entity_stores: stated_by_design\n    governing_artifacts: {}\n```\n",
+  "content_hash": "cbbc0f0d8a6feb9cca924399cb89f489ed1d0574c1152389228073285d19cb41",
+  "fqdn_id": "transformation::TEST_DATA_CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "rendered": [
+            {
+              "domain": "STRUCTURE_S_STORAGE_V0",
+              "machine": {
+                "artifact_kind": "STRUCTURE",
+                "authority": "pgc.platform",
+                "concern": "s",
+                "core": {
+                  "domain": "STRUCTURE_S_STORAGE_V0",
+                  "entity_stores": {},
+                  "layer": "DOMAINS",
+                  "subdomain": "s",
+                  "summary": "The stores the subdomain owns"
+                },
+                "fqdn": "STRUCTURE_S_STORAGE_V0",
+                "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+                "version": "v0"
+              },
+              "path": "registry/s/layers/STRUCTURE_S_STORAGE_V0.md"
+            }
+          ],
+          "sources": {
+            "STRUCTURE_S_STORAGE_V0": {
+              "core.layer": [
+                "supplied_by_renderer",
+                ""
+              ]
+            }
+          }
+        },
+        "case_id": "attributes_a_supplied_layer_to_the_renderer",
+        "expected": {
+          "governing_artifacts": {},
+          "provenance": {
+            "STRUCTURE_S_STORAGE_V0.artifact_kind": "stated_by_design",
+            "STRUCTURE_S_STORAGE_V0.authority": "stated_by_design",
+            "STRUCTURE_S_STORAGE_V0.concern": "stated_by_design",
+            "STRUCTURE_S_STORAGE_V0.core.domain": "stated_by_design",
+            "STRUCTURE_S_STORAGE_V0.core.entity_stores": "stated_by_design",
+            "STRUCTURE_S_STORAGE_V0.core.layer": "supplied_by_renderer",
+            "STRUCTURE_S_STORAGE_V0.core.subdomain": "stated_by_design",
+            "STRUCTURE_S_STORAGE_V0.core.summary": "stated_by_design",
+            "STRUCTURE_S_STORAGE_V0.fqdn": "stated_by_design",
+            "STRUCTURE_S_STORAGE_V0.governed_by": "stated_by_design",
+            "STRUCTURE_S_STORAGE_V0.version": "stated_by_design"
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "build",
+    "fqdn": "transformation::TEST_DATA_CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+    "version": "V0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V0",
+    "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0"
+  ],
+  "version": "0"
+}

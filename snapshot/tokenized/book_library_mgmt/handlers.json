@@ -1,6 +1,6 @@
 {
   "cs": {
-    "79": {
+    "82": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -56,7 +56,7 @@
         "module": "capability_side_effects.implementation.CS_APPENDONLY_JSONL_V0.runtime"
       }
     },
-    "80": {
+    "83": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -243,7 +243,7 @@
         "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
       }
     },
-    "81": {
+    "84": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -358,7 +358,7 @@
     }
   },
   "ct": {
-    "36": {
+    "37": {
       "ct_ir": {
         "artifact_code": "CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
         "atom_stream": [
@@ -400,7 +400,7 @@
         }
       }
     },
-    "37": {
+    "38": {
       "ct_ir": {
         "artifact_code": "CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
         "atom_stream": [
@@ -437,7 +437,7 @@
         }
       }
     },
-    "38": {
+    "39": {
       "ct_ir": {
         "artifact_code": "CT_PURE_GROUP_RECORDS_V0",
         "atom_stream": [
@@ -474,7 +474,7 @@
         }
       }
     },
-    "39": {
+    "40": {
       "ct_ir": {
         "artifact_code": "CT_PURE_SELECT_RECORDS_V0",
         "atom_stream": [
@@ -511,7 +511,7 @@
         }
       }
     },
-    "85": {
+    "88": {
       "ct_ir": {
         "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
         "atom_stream": [
@@ -544,7 +544,7 @@
         }
       }
     },
-    "86": {
+    "89": {
       "ct_ir": {
         "artifact_code": "CT_PURE_COMPARE_EQUAL_V0",
         "atom_stream": [
@@ -581,7 +581,7 @@
         }
       }
     },
-    "87": {
+    "90": {
       "ct_ir": {
         "artifact_code": "CT_PURE_FILTER_RECORDS_V0",
         "atom_stream": [
@@ -620,7 +620,7 @@
         }
       }
     },
-    "88": {
+    "91": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
         "atom_stream": [
@@ -662,7 +662,7 @@
         }
       }
     },
-    "89": {
+    "92": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
         "atom_stream": [
@@ -705,7 +705,7 @@
   "projection_class": "machine_projection",
   "rb_policy": {
     "57": {
-      "79": {
+      "82": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -750,7 +750,7 @@
           "structure": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0"
         }
       },
-      "80": {
+      "83": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -795,7 +795,7 @@
           "structure": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0"
         }
       },
-      "81": {
+      "84": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {

@@ -47,6 +47,9 @@
   "layer_code": "GOVERNANCE",
   "namespace": "actor",
   "references": [
+    "actor::INVARIANT_AC_DECLARATION_WELL_FORMED_V0",
+    "actor::INVARIANT_IDENTITY_AUTHORITY_SEPARATION_V0",
+    "authority::INVARIANT_ACTOR_AUTHORITY_SEPARATION_V0",
     "governance::CONSTITUTION_GOVERNANCE_V0"
   ],
   "version": "0"

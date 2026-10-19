@@ -1,0 +1,84 @@
+{
+  "artifact_code": "STRUCTURE_PHASE_FINDINGS_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_PHASE_FINDINGS_V0\n\n## 1. Intent\n\nOne finding per failed rule. `code` names the kind of failure. `rule` is the failed rule's identity,\nits register schema's `$id` and the JSON Pointer of the declaration, so the rule can be read where it\nis declared. `locator` places the failure: the register, the row and the field, each `null` where the\nrule is about something wider. `detail` says what was found, and `intent` why the rule exists.\n\n## 2. How it is read\n\n`core.json_schema` is a JSON Schema. A capability transform's field names this structure\nwith `structure`, and the field's value conforms to the schema. `$id` is the structure's own\nidentity.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::STRUCTURE_PHASE_FINDINGS_V0\nartifact_kind: STRUCTURE\nversion: v0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: transformation\ncore:\n  summary: 'The rules a phase document failed: each one''s code, identity, place, detail and intent'\n  json_schema:\n    $schema: https://json-schema.org/draft/2020-12/schema\n    $id: transformation::STRUCTURE_PHASE_FINDINGS_V0\n    type: array\n    items:\n      type: object\n      additionalProperties: false\n      required:\n      - code\n      - rule\n      - locator\n      - detail\n      - intent\n      properties:\n        code:\n          type: string\n        rule:\n          type: string\n        locator:\n          type: object\n          additionalProperties: false\n          required:\n          - register\n          - row\n          - field\n          properties:\n            register:\n              type:\n              - string\n              - 'null'\n            row:\n              type:\n              - integer\n              - string\n              - 'null'\n            field:\n              type:\n              - string\n              - 'null'\n        detail:\n          type: string\n        intent:\n          type: string\n```\n",
+  "content_hash": "be71a049ee41850099e28efa433835b5fdb23cfaf81c3683ff139d7ea56e9db8",
+  "fqdn_id": "transformation::STRUCTURE_PHASE_FINDINGS_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "transformation",
+    "core": {
+      "json_schema": {
+        "$id": "transformation::STRUCTURE_PHASE_FINDINGS_V0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "detail": {
+              "type": "string"
+            },
+            "intent": {
+              "type": "string"
+            },
+            "locator": {
+              "additionalProperties": false,
+              "properties": {
+                "field": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "register": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "row": {
+                  "type": [
+                    "integer",
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "register",
+                "row",
+                "field"
+              ],
+              "type": "object"
+            },
+            "rule": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "rule",
+            "locator",
+            "detail",
+            "intent"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "summary": "The rules a phase document failed: each one's code, identity, place, detail and intent"
+    },
+    "fqdn": "transformation::STRUCTURE_PHASE_FINDINGS_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

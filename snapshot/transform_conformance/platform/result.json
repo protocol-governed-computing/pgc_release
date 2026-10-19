@@ -70,6 +70,14 @@
       "passed": true
     },
     {
+      "case": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0::different_values_return_false",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0::equal_values",
+      "passed": true
+    },
+    {
       "case": "capability_transforms::CT_PURE_EXTRACT_V0::extract_nested_field",
       "passed": true
     },
@@ -174,6 +182,14 @@
       "passed": true
     },
     {
+      "case": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0::value_false",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0::value_true",
+      "passed": true
+    },
+    {
       "case": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0::all_rules_pass",
       "passed": true
     },
@@ -199,28 +215,28 @@
     }
   ],
   "counts": {
-    "cases": 49,
+    "cases": 53,
     "cases_failed": 0,
-    "proven": 11,
+    "proven": 13,
     "refused": 0,
-    "unproven": 1
+    "unproven": 0
   },
   "domain": "platform",
   "proven": [
     "capability_transforms::CT_EXEC_EMIT_V0",
     "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
     "capability_transforms::CT_PURE_EXTRACT_V0",
     "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
     "capability_transforms::CT_PURE_GENERATE_ID_V0",
     "capability_transforms::CT_PURE_LOOKUP_V0",
     "capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0",
     "capability_transforms::CT_PURE_PASSTHROUGH_V0",
+    "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
     "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
     "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
     "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
   ],
   "refused": [],
-  "unproven": [
-    "capability_transforms::CT_PURE_COMPARE_EQUAL_V0"
-  ]
+  "unproven": []
 }

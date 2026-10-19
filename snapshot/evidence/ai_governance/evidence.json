@@ -66,7 +66,7 @@
       },
       "source_address": 8,
       "source_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
-      "target_address": 14,
+      "target_address": 13,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
     },
     {
@@ -80,7 +80,7 @@
       },
       "source_address": 8,
       "source_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
-      "target_address": 18,
+      "target_address": 17,
       "target_fqdn": "ai_governance::CC_VALIDATE_TOOL_PARAMETERS_V0"
     },
     {
@@ -154,7 +154,7 @@
       },
       "source_address": 9,
       "source_fqdn": "ai_governance::CC_CHECK_TOOL_DECLARED_V0",
-      "target_address": 14,
+      "target_address": 13,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
     },
     {
@@ -168,7 +168,7 @@
       },
       "source_address": 9,
       "source_fqdn": "ai_governance::CC_CHECK_TOOL_DECLARED_V0",
-      "target_address": 16,
+      "target_address": 15,
       "target_fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0"
     },
     {
@@ -199,28 +199,6 @@
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
     },
     {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {},
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "evaluate_cap"
-        },
-        "op": "COUNT",
-        "outputs": {
-          "count": "$.assigned_count"
-        },
-        "pipeline_index": 0,
-        "step_id": "count_licenses",
-        "store": ""
-      },
-      "source_address": 10,
-      "source_fqdn": "ai_governance::CC_ENFORCE_LICENSE_CAP_V0",
-      "target_address": 74,
-      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
-    },
-    {
       "kind": "NODE_NEXT",
       "kind_address": 16391,
       "metadata": {
@@ -229,7 +207,7 @@
         "target_key": "CC_CHECK_TOOL_DECLARED_V0",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
-      "source_address": 11,
+      "source_address": 10,
       "source_fqdn": "ai_governance::CC_NORMALIZE_AGENT_REQUEST_V0",
       "target_address": 9,
       "target_fqdn": "ai_governance::CC_CHECK_TOOL_DECLARED_V0"
@@ -256,7 +234,7 @@
         "pipeline_index": 0,
         "step_id": "generate_intent_hash"
       },
-      "source_address": 11,
+      "source_address": 10,
       "source_fqdn": "ai_governance::CC_NORMALIZE_AGENT_REQUEST_V0",
       "target_address": 78,
       "target_fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0"
@@ -270,7 +248,7 @@
         "target_key": "CC_APPEND_AUDIT_EVENT_SUCCESS",
         "wf_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0"
       },
-      "source_address": 12,
+      "source_address": 11,
       "source_fqdn": "ai_governance::CC_PROVISION_LICENSE_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
@@ -298,7 +276,7 @@
         "step_id": "register_license",
         "store": ""
       },
-      "source_address": 12,
+      "source_address": 11,
       "source_fqdn": "ai_governance::CC_PROVISION_LICENSE_V0",
       "target_address": 74,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
@@ -312,7 +290,7 @@
         "target_key": "CC_APPEND_AUDIT_EVENT_RECLAIMED",
         "wf_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0"
       },
-      "source_address": 13,
+      "source_address": 12,
       "source_fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
@@ -337,9 +315,9 @@
         "pipeline_index": 0,
         "step_id": "evaluate_inactivity"
       },
-      "source_address": 13,
+      "source_address": 12,
       "source_fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0",
-      "target_address": 21,
+      "target_address": 20,
       "target_fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0"
     },
     {
@@ -352,7 +330,8 @@
         "on_result": {
           "BACKEND_ERROR": "exit",
           "NOT_FOUND": "exit",
-          "SUCCESS": "exit"
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
         },
         "op": "DEREGISTER",
         "outputs": {
@@ -360,9 +339,9 @@
         },
         "pipeline_index": 1,
         "step_id": "deregister_license",
-        "store": ""
+        "store": "LICENSE_REGISTRY"
       },
-      "source_address": 13,
+      "source_address": 12,
       "source_fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0",
       "target_address": 74,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
@@ -396,7 +375,7 @@
         "step_id": "append_denial_record",
         "store": "GOVERNANCE_AUDIT"
       },
-      "source_address": 14,
+      "source_address": 13,
       "source_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0",
       "target_address": 71,
       "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
@@ -418,7 +397,7 @@
         "step_id": "read_now",
         "store": ""
       },
-      "source_address": 14,
+      "source_address": 13,
       "source_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0",
       "target_address": 72,
       "target_fqdn": "capability_side_effects::CS_CLOCK_V0"
@@ -445,7 +424,7 @@
         "pipeline_index": 1,
         "step_id": "generate_action_id"
       },
-      "source_address": 14,
+      "source_address": 13,
       "source_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0",
       "target_address": 78,
       "target_fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0"
@@ -480,7 +459,7 @@
         "step_id": "append_audit_record",
         "store": "GOVERNANCE_AUDIT"
       },
-      "source_address": 15,
+      "source_address": 14,
       "source_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
       "target_address": 71,
       "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
@@ -502,7 +481,7 @@
         "step_id": "read_now",
         "store": ""
       },
-      "source_address": 15,
+      "source_address": 14,
       "source_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
       "target_address": 72,
       "target_fqdn": "capability_side_effects::CS_CLOCK_V0"
@@ -537,7 +516,7 @@
         "step_id": "register_action",
         "store": ""
       },
-      "source_address": 15,
+      "source_address": 14,
       "source_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
       "target_address": 74,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
@@ -564,7 +543,7 @@
         "pipeline_index": 1,
         "step_id": "generate_action_id"
       },
-      "source_address": 15,
+      "source_address": 14,
       "source_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
       "target_address": 78,
       "target_fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0"
@@ -578,7 +557,7 @@
         "target_key": "CC_BIND_LICENSE_TO_TOOL_SURFACE_V0",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
-      "source_address": 16,
+      "source_address": 15,
       "source_fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0",
       "target_address": 8,
       "target_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0"
@@ -592,9 +571,9 @@
         "target_key": "CC_AUDIT_UNAUTHORIZED_ACTOR",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
-      "source_address": 16,
+      "source_address": 15,
       "source_fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0",
-      "target_address": 14,
+      "target_address": 13,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
     },
     {
@@ -606,9 +585,9 @@
         "target_key": "CC_AUDIT_UNAUTHORIZED_ACTOR",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
-      "source_address": 16,
+      "source_address": 15,
       "source_fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0",
-      "target_address": 14,
+      "target_address": 13,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
     },
     {
@@ -634,7 +613,7 @@
         "step_id": "read_license_record",
         "store": "LICENSE_FACTS"
       },
-      "source_address": 16,
+      "source_address": 15,
       "source_fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0",
       "target_address": 73,
       "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
@@ -662,7 +641,7 @@
         "pipeline_index": 1,
         "step_id": "validate_active_status"
       },
-      "source_address": 16,
+      "source_address": 15,
       "source_fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0",
       "target_address": 81,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
@@ -676,7 +655,7 @@
         "target_key": "CC_APPEND_AUDIT_EVENT_DENIED",
         "wf_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0"
       },
-      "source_address": 17,
+      "source_address": 16,
       "source_fqdn": "ai_governance::CC_VALIDATE_ELIGIBILITY_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
@@ -690,9 +669,9 @@
         "target_key": "CC_PROVISION_LICENSE_V0",
         "wf_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0"
       },
-      "source_address": 17,
+      "source_address": 16,
       "source_fqdn": "ai_governance::CC_VALIDATE_ELIGIBILITY_V0",
-      "target_address": 12,
+      "target_address": 11,
       "target_fqdn": "ai_governance::CC_PROVISION_LICENSE_V0"
     },
     {
@@ -713,9 +692,9 @@
         "pipeline_index": 1,
         "step_id": "check_quota_available"
       },
-      "source_address": 17,
+      "source_address": 16,
       "source_fqdn": "ai_governance::CC_VALIDATE_ELIGIBILITY_V0",
-      "target_address": 19,
+      "target_address": 18,
       "target_fqdn": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0"
     },
     {
@@ -735,9 +714,9 @@
         "pipeline_index": 0,
         "step_id": "check_training_status"
       },
-      "source_address": 17,
+      "source_address": 16,
       "source_fqdn": "ai_governance::CC_VALIDATE_ELIGIBILITY_V0",
-      "target_address": 20,
+      "target_address": 19,
       "target_fqdn": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0"
     },
     {
@@ -749,9 +728,9 @@
         "target_key": "CC_AUDIT_PARAMETER_VIOLATION",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
-      "source_address": 18,
+      "source_address": 17,
       "source_fqdn": "ai_governance::CC_VALIDATE_TOOL_PARAMETERS_V0",
-      "target_address": 14,
+      "target_address": 13,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
     },
     {
@@ -763,9 +742,9 @@
         "target_key": "CC_RECORD_GOVERNED_ACTION_V0",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
-      "source_address": 18,
+      "source_address": 17,
       "source_fqdn": "ai_governance::CC_VALIDATE_TOOL_PARAMETERS_V0",
-      "target_address": 15,
+      "target_address": 14,
       "target_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0"
     },
     {
@@ -825,7 +804,7 @@
         "pipeline_index": 0,
         "step_id": "lookup_parameter_rules"
       },
-      "source_address": 18,
+      "source_address": 17,
       "source_fqdn": "ai_governance::CC_VALIDATE_TOOL_PARAMETERS_V0",
       "target_address": 79,
       "target_fqdn": "capability_transforms::CT_PURE_LOOKUP_V0"
@@ -843,13 +822,12 @@
           "VIOLATION": "exit"
         },
         "outputs": {
-          "rules": "$.results.lookup_parameter_rules.rules",
-          "validation_result": "$.capability_result.value"
+          "validation_result": "$.capability_result.valid"
         },
         "pipeline_index": 1,
         "step_id": "validate_parameters"
       },
-      "source_address": 18,
+      "source_address": 17,
       "source_fqdn": "ai_governance::CC_VALIDATE_TOOL_PARAMETERS_V0",
       "target_address": 80,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
@@ -863,9 +841,9 @@
         "target_key": "CC_NORMALIZE_AGENT_REQUEST_V0",
         "wf_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
       },
-      "source_address": 31,
+      "source_address": 30,
       "source_fqdn": "ai_governance::IN_AGENT_ACTION_REQUESTED_V0",
-      "target_address": 11,
+      "target_address": 10,
       "target_fqdn": "ai_governance::CC_NORMALIZE_AGENT_REQUEST_V0"
     },
     {
@@ -877,7 +855,7 @@
         "target_key": "CC_APPEND_AUDIT_EVENT_V0",
         "wf_fqdn": "ai_governance::WF_DENY_PROVISION_V0"
       },
-      "source_address": 32,
+      "source_address": 31,
       "source_fqdn": "ai_governance::IN_DENY_PROVISION_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
@@ -891,9 +869,9 @@
         "target_key": "CC_VALIDATE_ELIGIBILITY_V0",
         "wf_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0"
       },
-      "source_address": 33,
+      "source_address": 32,
       "source_fqdn": "ai_governance::IN_PROVISION_AI_LICENSE_V0",
-      "target_address": 17,
+      "target_address": 16,
       "target_fqdn": "ai_governance::CC_VALIDATE_ELIGIBILITY_V0"
     },
     {
@@ -905,10 +883,19 @@
         "target_key": "CC_RECLAIM_UNUSED_LICENSE_V0",
         "wf_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0"
       },
-      "source_address": 34,
+      "source_address": 33,
       "source_fqdn": "ai_governance::IN_RECLAIM_LICENSE_V0",
-      "target_address": 13,
+      "target_address": 12,
       "target_fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0"
+    },
+    {
+      "kind": "GOVERNED_BY",
+      "kind_address": 16388,
+      "metadata": {},
+      "source_address": 34,
+      "source_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
+      "target_address": 36,
+      "target_fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0"
     },
     {
       "kind": "RB_MAPS",
@@ -916,7 +903,7 @@
       "metadata": {
         "handler_ref": ""
       },
-      "source_address": 35,
+      "source_address": 34,
       "source_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
       "target_address": 71,
       "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
@@ -927,7 +914,7 @@
       "metadata": {
         "handler_ref": ""
       },
-      "source_address": 35,
+      "source_address": 34,
       "source_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
       "target_address": 72,
       "target_fqdn": "capability_side_effects::CS_CLOCK_V0"
@@ -938,7 +925,7 @@
       "metadata": {
         "handler_ref": ""
       },
-      "source_address": 35,
+      "source_address": 34,
       "source_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
       "target_address": 73,
       "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
@@ -949,10 +936,19 @@
       "metadata": {
         "handler_ref": ""
       },
-      "source_address": 35,
+      "source_address": 34,
       "source_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
       "target_address": 74,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
+    },
+    {
+      "kind": "GOVERNED_BY",
+      "kind_address": 16388,
+      "metadata": {},
+      "source_address": 35,
+      "source_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
+      "target_address": 37,
+      "target_fqdn": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0"
     },
     {
       "kind": "RB_MAPS",
@@ -960,7 +956,7 @@
       "metadata": {
         "handler_ref": ""
       },
-      "source_address": 36,
+      "source_address": 35,
       "source_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
       "target_address": 71,
       "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
@@ -971,7 +967,7 @@
       "metadata": {
         "handler_ref": ""
       },
-      "source_address": 36,
+      "source_address": 35,
       "source_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
       "target_address": 72,
       "target_fqdn": "capability_side_effects::CS_CLOCK_V0"
@@ -982,16 +978,52 @@
       "metadata": {
         "handler_ref": ""
       },
-      "source_address": 36,
+      "source_address": 35,
       "source_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
       "target_address": 74,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
     },
     {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 39,
+      "source_fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+      "target_address": 18,
+      "target_fqdn": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 40,
+      "source_fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0",
+      "target_address": 19,
+      "target_fqdn": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 41,
+      "source_fqdn": "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0",
+      "target_address": 20,
+      "target_fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 43,
+      "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
+      "target_address": 6,
+      "target_fqdn": "ai_governance::AC_SYSTEM_V0"
+    },
+    {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 43,
       "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
@@ -1000,79 +1032,115 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 43,
       "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
-      "target_address": 13,
+      "target_address": 12,
       "target_fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0"
     },
     {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 43,
+      "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
+      "target_address": 26,
+      "target_fqdn": "ai_governance::EV_LICENSE_REVOKED_V0"
+    },
+    {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 43,
       "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
-      "target_address": 34,
+      "target_address": 33,
       "target_fqdn": "ai_governance::IN_RECLAIM_LICENSE_V0"
     },
     {
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 43,
       "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
-      "target_address": 34,
+      "target_address": 33,
       "target_fqdn": "ai_governance::IN_RECLAIM_LICENSE_V0"
     },
     {
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 44,
+      "source_address": 43,
       "source_fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
-      "target_address": 36,
+      "target_address": 35,
       "target_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 44,
+      "source_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
+      "target_address": 6,
+      "target_fqdn": "ai_governance::AC_SYSTEM_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 45,
+      "source_address": 44,
       "source_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
     },
     {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 44,
+      "source_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
+      "target_address": 27,
+      "target_fqdn": "ai_governance::EV_PROVISION_DENIED_V0"
+    },
+    {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 45,
+      "source_address": 44,
       "source_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
-      "target_address": 32,
+      "target_address": 31,
       "target_fqdn": "ai_governance::IN_DENY_PROVISION_V0"
     },
     {
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 45,
+      "source_address": 44,
       "source_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
-      "target_address": 32,
+      "target_address": 31,
       "target_fqdn": "ai_governance::IN_DENY_PROVISION_V0"
     },
     {
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 45,
+      "source_address": 44,
       "source_fqdn": "ai_governance::WF_DENY_PROVISION_V0",
-      "target_address": 36,
+      "target_address": 35,
       "target_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 45,
+      "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
+      "target_address": 5,
+      "target_fqdn": "ai_governance::AC_SYSTEM_GOVERNOR_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 8,
       "target_fqdn": "ai_governance::CC_BIND_LICENSE_TO_TOOL_SURFACE_V0"
@@ -1081,7 +1149,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "target_address": 9,
       "target_fqdn": "ai_governance::CC_CHECK_TOOL_DECLARED_V0"
@@ -1090,106 +1158,133 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "target_address": 11,
+      "target_address": 10,
       "target_fqdn": "ai_governance::CC_NORMALIZE_AGENT_REQUEST_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "target_address": 14,
+      "target_address": 13,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "target_address": 14,
+      "target_address": 13,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "target_address": 14,
+      "target_address": 13,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "target_address": 14,
+      "target_address": 13,
       "target_fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "target_address": 15,
+      "target_address": 14,
       "target_fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "target_address": 16,
+      "target_address": 15,
       "target_fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "target_address": 18,
+      "target_address": 17,
       "target_fqdn": "ai_governance::CC_VALIDATE_TOOL_PARAMETERS_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 45,
+      "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
+      "target_address": 21,
+      "target_fqdn": "ai_governance::EV_AGENT_ACTION_AUTHORIZED_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 45,
+      "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
+      "target_address": 22,
+      "target_fqdn": "ai_governance::EV_AGENT_ACTION_DENIED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "target_address": 31,
+      "target_address": 30,
       "target_fqdn": "ai_governance::IN_AGENT_ACTION_REQUESTED_V0"
     },
     {
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "target_address": 31,
+      "target_address": 30,
       "target_fqdn": "ai_governance::IN_AGENT_ACTION_REQUESTED_V0"
     },
     {
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 46,
+      "source_address": 45,
       "source_fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
-      "target_address": 35,
+      "target_address": 34,
       "target_fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0"
     },
     {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 46,
+      "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
+      "target_address": 3,
+      "target_fqdn": "ai_governance::AC_EMPLOYEE_V0"
+    },
+    {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 47,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
@@ -1198,7 +1293,7 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 47,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "target_address": 7,
       "target_fqdn": "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
@@ -1207,51 +1302,69 @@
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 47,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
-      "target_address": 12,
+      "target_address": 11,
       "target_fqdn": "ai_governance::CC_PROVISION_LICENSE_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 47,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
-      "target_address": 17,
+      "target_address": 16,
       "target_fqdn": "ai_governance::CC_VALIDATE_ELIGIBILITY_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 46,
+      "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
+      "target_address": 25,
+      "target_fqdn": "ai_governance::EV_LICENSE_PROVISIONED_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 46,
+      "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
+      "target_address": 27,
+      "target_fqdn": "ai_governance::EV_PROVISION_DENIED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 47,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
-      "target_address": 33,
+      "target_address": 32,
       "target_fqdn": "ai_governance::IN_PROVISION_AI_LICENSE_V0"
     },
     {
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 47,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
-      "target_address": 33,
+      "target_address": 32,
       "target_fqdn": "ai_governance::IN_PROVISION_AI_LICENSE_V0"
     },
     {
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 47,
+      "source_address": 46,
       "source_fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
-      "target_address": 36,
+      "target_address": 35,
       "target_fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0"
     }
   ],
   "event_catalog": [
     {
-      "address": 22,
+      "address": 21,
       "fqdn": "ai_governance::EV_AGENT_ACTION_AUTHORIZED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -1284,7 +1397,7 @@
       }
     },
     {
-      "address": 23,
+      "address": 22,
       "fqdn": "ai_governance::EV_AGENT_ACTION_DENIED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -1317,7 +1430,7 @@
       }
     },
     {
-      "address": 24,
+      "address": 23,
       "fqdn": "ai_governance::EV_EMPLOYEE_REGISTERED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -1334,7 +1447,7 @@
       }
     },
     {
-      "address": 25,
+      "address": 24,
       "fqdn": "ai_governance::EV_LICENSE_CAP_SET_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -1347,11 +1460,17 @@
           "format": "date-time",
           "required": true,
           "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
         }
       }
     },
     {
-      "address": 26,
+      "address": 25,
       "fqdn": "ai_governance::EV_LICENSE_PROVISIONED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -1372,7 +1491,7 @@
       }
     },
     {
-      "address": 27,
+      "address": 26,
       "fqdn": "ai_governance::EV_LICENSE_REVOKED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -1382,9 +1501,27 @@
           "type": "string"
         },
         "reason": {
-          "enum": [
-            "INACTIVITY"
-          ],
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    {
+      "address": 27,
+      "fqdn": "ai_governance::EV_PROVISION_DENIED_V0",
+      "kind": "EV",
+      "kind_address": 16645,
+      "schema": {
+        "employee_id": {
+          "required": true,
+          "type": "string"
+        },
+        "reason_code": {
           "required": true,
           "type": "string"
         },
@@ -1397,31 +1534,6 @@
     },
     {
       "address": 28,
-      "fqdn": "ai_governance::EV_PROVISION_DENIED_V0",
-      "kind": "EV",
-      "kind_address": 16645,
-      "schema": {
-        "employee_id": {
-          "required": true,
-          "type": "string"
-        },
-        "reason_code": {
-          "enum": [
-            "TRAINING_INCOMPLETE",
-            "CAP_REACHED"
-          ],
-          "required": true,
-          "type": "string"
-        },
-        "timestamp": {
-          "format": "date-time",
-          "required": true,
-          "type": "string"
-        }
-      }
-    },
-    {
-      "address": 29,
       "fqdn": "ai_governance::EV_TRAINING_COMPLETED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -1434,11 +1546,17 @@
         "employee_id": {
           "required": true,
           "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
+          "required": true,
+          "type": "string"
         }
       }
     },
     {
-      "address": 30,
+      "address": 29,
       "fqdn": "ai_governance::EV_USAGE_RECORDED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -1449,6 +1567,12 @@
           "type": "string"
         },
         "license_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "When the moment occurred",
+          "format": "date-time",
           "required": true,
           "type": "string"
         }
@@ -1506,228 +1630,222 @@
     },
     {
       "address": 10,
-      "fqdn": "ai_governance::CC_ENFORCE_LICENSE_CAP_V0",
-      "kind": "CC",
-      "kind_address": 16642
-    },
-    {
-      "address": 11,
       "fqdn": "ai_governance::CC_NORMALIZE_AGENT_REQUEST_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
-      "address": 12,
+      "address": 11,
       "fqdn": "ai_governance::CC_PROVISION_LICENSE_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
-      "address": 13,
+      "address": 12,
       "fqdn": "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
-      "address": 14,
+      "address": 13,
       "fqdn": "ai_governance::CC_RECORD_DENIED_ACTION_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
-      "address": 15,
+      "address": 14,
       "fqdn": "ai_governance::CC_RECORD_GOVERNED_ACTION_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
-      "address": 16,
+      "address": 15,
       "fqdn": "ai_governance::CC_RESOLVE_LICENSE_TIER_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
-      "address": 17,
+      "address": 16,
       "fqdn": "ai_governance::CC_VALIDATE_ELIGIBILITY_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
-      "address": 18,
+      "address": 17,
       "fqdn": "ai_governance::CC_VALIDATE_TOOL_PARAMETERS_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
-      "address": 19,
+      "address": 18,
       "fqdn": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 20,
+      "address": 19,
       "fqdn": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 21,
+      "address": 20,
       "fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 22,
+      "address": 21,
       "fqdn": "ai_governance::EV_AGENT_ACTION_AUTHORIZED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 23,
+      "address": 22,
       "fqdn": "ai_governance::EV_AGENT_ACTION_DENIED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 24,
+      "address": 23,
       "fqdn": "ai_governance::EV_EMPLOYEE_REGISTERED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 25,
+      "address": 24,
       "fqdn": "ai_governance::EV_LICENSE_CAP_SET_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 26,
+      "address": 25,
       "fqdn": "ai_governance::EV_LICENSE_PROVISIONED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 27,
+      "address": 26,
       "fqdn": "ai_governance::EV_LICENSE_REVOKED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 28,
+      "address": 27,
       "fqdn": "ai_governance::EV_PROVISION_DENIED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 29,
+      "address": 28,
       "fqdn": "ai_governance::EV_TRAINING_COMPLETED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 30,
+      "address": 29,
       "fqdn": "ai_governance::EV_USAGE_RECORDED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 31,
+      "address": 30,
       "fqdn": "ai_governance::IN_AGENT_ACTION_REQUESTED_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 32,
+      "address": 31,
       "fqdn": "ai_governance::IN_DENY_PROVISION_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 33,
+      "address": 32,
       "fqdn": "ai_governance::IN_PROVISION_AI_LICENSE_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 34,
+      "address": 33,
       "fqdn": "ai_governance::IN_RECLAIM_LICENSE_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 35,
+      "address": 34,
       "fqdn": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
       "kind": "RB",
       "kind_address": 16648
     },
     {
-      "address": 36,
+      "address": 35,
       "fqdn": "ai_governance::RB_LICENSE_BINDINGS_V0",
       "kind": "RB",
       "kind_address": 16648
     },
     {
-      "address": 37,
+      "address": 36,
       "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
       "kind": "GOVERNANCE",
       "kind_address": 16646
     },
     {
-      "address": 38,
+      "address": 37,
       "fqdn": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
       "kind": "GOVERNANCE",
       "kind_address": 16646
     },
     {
-      "address": 39,
+      "address": 38,
       "fqdn": "ai_governance::STRUCTURE_BUILD_AI_GOVERNANCE_CONFIG_V0",
       "kind": "GOVERNANCE",
       "kind_address": 16646
     },
     {
-      "address": 40,
+      "address": 39,
       "fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
       "kind": "TEST_DATA",
       "kind_address": 16650
     },
     {
-      "address": 41,
+      "address": 40,
       "fqdn": "ai_governance::TEST_DATA_CT_PURE_CHECK_TRAINING_STATUS_V0",
       "kind": "TEST_DATA",
       "kind_address": 16650
     },
     {
-      "address": 42,
+      "address": 41,
       "fqdn": "ai_governance::TEST_DATA_CT_PURE_EVALUATE_INACTIVITY_V0",
       "kind": "TEST_DATA",
       "kind_address": 16650
     },
     {
-      "address": 43,
+      "address": 42,
       "fqdn": "ai_governance::VOCAB_AI_LICENSING_STATES_V0",
       "kind": "GOVERNANCE",
       "kind_address": 16646
     },
     {
-      "address": 44,
+      "address": 43,
       "fqdn": "ai_governance::WF_AUTO_RECLAIM_V0",
       "kind": "WF",
       "kind_address": 16652
     },
     {
-      "address": 45,
+      "address": 44,
       "fqdn": "ai_governance::WF_DENY_PROVISION_V0",
       "kind": "WF",
       "kind_address": 16652
     },
     {
-      "address": 46,
+      "address": 45,
       "fqdn": "ai_governance::WF_GOVERN_AGENT_ACTION_V0",
       "kind": "WF",
       "kind_address": 16652
     },
     {
-      "address": 47,
+      "address": 46,
       "fqdn": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
       "kind": "WF",
       "kind_address": 16652

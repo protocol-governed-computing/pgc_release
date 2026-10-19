@@ -1,0 +1,42 @@
+{
+  "artifact_code": "INVARIANT_ONE_PRODUCER_PER_ARTIFACT_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_ONE_PRODUCER_PER_ARTIFACT_V0\n\n## Machine\n\n```yaml\nfqdn: lifecycle::INVARIANT_ONE_PRODUCER_PER_ARTIFACT_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: lifecycle::CONSTITUTION_CONSTRUCTION_V0\nauthority: pgc.platform\nconcern: lifecycle\ncore:\n  enforcement_stage:\n  - enforced_elsewhere\n  violation_response: FAIL_IMMEDIATELY\n  enforced_by: the construction compiler, when `tc construction check` measures a design\nassert_projection:\n  applies_to_kinds:\n  - AC\n  - CC\n  - CT\n  - EV\n  - IN\n  - RB\n  - STRUCTURE\n  - TEST_DATA\n  - VOCAB\n  - WF\n```\n\n---\n\n## 1. Claim\n\nAn artifact a generator writes is never also rendered.\n\n## 2. Why\n\nTwo producers for one artifact are two designs of record. The one written last wins, and nothing says which that was.\n\n## 3. How it is checked\n\nEnforced by the construction compiler when `tc construction check` measures a design.\n",
+  "content_hash": "f0c81c13b6bbea348815390a69f61434edb4709e85efa3514337cbd573f274b7",
+  "fqdn_id": "lifecycle::INVARIANT_ONE_PRODUCER_PER_ARTIFACT_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "AC",
+        "CC",
+        "CT",
+        "EV",
+        "IN",
+        "RB",
+        "STRUCTURE",
+        "TEST_DATA",
+        "VOCAB",
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "lifecycle",
+    "core": {
+      "enforced_by": "the construction compiler, when `tc construction check` measures a design",
+      "enforcement_stage": [
+        "enforced_elsewhere"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "lifecycle::INVARIANT_ONE_PRODUCER_PER_ARTIFACT_V0",
+    "governed_by": "lifecycle::CONSTITUTION_CONSTRUCTION_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "lifecycle",
+  "references": [
+    "lifecycle::CONSTITUTION_CONSTRUCTION_V0"
+  ],
+  "version": "0"
+}

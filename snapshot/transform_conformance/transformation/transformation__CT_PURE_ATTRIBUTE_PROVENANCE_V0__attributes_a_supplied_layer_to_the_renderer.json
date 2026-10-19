@@ -1,0 +1,86 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "rendered": "$.inputs.rendered",
+          "sources": "$.inputs.sources"
+        },
+        "atom": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "transformation.implementation.capability_transforms.atoms.ct_pure_attribute_provenance_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
+    "input_types": {
+      "rendered": "array",
+      "sources": "object"
+    },
+    "inputs": {
+      "rendered": [
+        {
+          "domain": "STRUCTURE_S_STORAGE_V0",
+          "machine": {
+            "artifact_kind": "STRUCTURE",
+            "authority": "pgc.platform",
+            "concern": "s",
+            "core": {
+              "domain": "STRUCTURE_S_STORAGE_V0",
+              "entity_stores": {},
+              "layer": "DOMAINS",
+              "subdomain": "s",
+              "summary": "The stores the subdomain owns"
+            },
+            "fqdn": "STRUCTURE_S_STORAGE_V0",
+            "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+            "version": "v0"
+          },
+          "path": "registry/s/layers/STRUCTURE_S_STORAGE_V0.md"
+        }
+      ],
+      "sources": {
+        "STRUCTURE_S_STORAGE_V0": {
+          "core.layer": [
+            "supplied_by_renderer",
+            ""
+          ]
+        }
+      }
+    },
+    "outputs": {
+      "governing_artifacts": {
+        "from": "__atom_result__"
+      },
+      "provenance": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "governing_artifacts": {},
+    "provenance": {
+      "STRUCTURE_S_STORAGE_V0.artifact_kind": "stated_by_design",
+      "STRUCTURE_S_STORAGE_V0.authority": "stated_by_design",
+      "STRUCTURE_S_STORAGE_V0.concern": "stated_by_design",
+      "STRUCTURE_S_STORAGE_V0.core.domain": "stated_by_design",
+      "STRUCTURE_S_STORAGE_V0.core.entity_stores": "stated_by_design",
+      "STRUCTURE_S_STORAGE_V0.core.layer": "supplied_by_renderer",
+      "STRUCTURE_S_STORAGE_V0.core.subdomain": "stated_by_design",
+      "STRUCTURE_S_STORAGE_V0.core.summary": "stated_by_design",
+      "STRUCTURE_S_STORAGE_V0.fqdn": "stated_by_design",
+      "STRUCTURE_S_STORAGE_V0.governed_by": "stated_by_design",
+      "STRUCTURE_S_STORAGE_V0.version": "stated_by_design"
+    }
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0::attributes_a_supplied_layer_to_the_renderer",
+  "test_data_source": "transformation::TEST_DATA_CT_PURE_ATTRIBUTE_PROVENANCE_V0"
+}

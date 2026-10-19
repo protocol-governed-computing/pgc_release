@@ -1,0 +1,36 @@
+{
+  "artifact_code": "STRUCTURE_PHASE_HEADER_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_PHASE_HEADER_V0\n\n## 1. Intent\n\nA phase document states what it is in the `document` mapping of its Machine block: its phase,\ndomain, subdomain, change request and rule set, and an approval where the phase has a gate. The\nparser carries that mapping as written. A scalar is read as text; a field holding structure, such as\na list of subdomains or an approval, is kept as it is. Which fields a phase requires, and their\nvalues, are the register schema's to judge, so this structure states only the form.\n\n## 2. How it is read\n\n`core.json_schema` is a JSON Schema. A capability transform's field names this structure\nwith `structure`, and the field's value conforms to the schema. `$id` is the structure's own\nidentity.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::STRUCTURE_PHASE_HEADER_V0\nartifact_kind: STRUCTURE\nversion: v0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: transformation\ncore:\n  summary: 'A phase document''s header: its Machine block''s `document` mapping, as parsed'\n  json_schema:\n    $schema: https://json-schema.org/draft/2020-12/schema\n    $id: transformation::STRUCTURE_PHASE_HEADER_V0\n    type: object\n    additionalProperties:\n      type:\n      - string\n      - array\n      - object\n```\n",
+  "content_hash": "f66b18955b874238d644db4a943e06f5f51b6785dfe6790b1341fb1d8c815029",
+  "fqdn_id": "transformation::STRUCTURE_PHASE_HEADER_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "transformation",
+    "core": {
+      "json_schema": {
+        "$id": "transformation::STRUCTURE_PHASE_HEADER_V0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": {
+          "type": [
+            "string",
+            "array",
+            "object"
+          ]
+        },
+        "type": "object"
+      },
+      "summary": "A phase document's header: its Machine block's `document` mapping, as parsed"
+    },
+    "fqdn": "transformation::STRUCTURE_PHASE_HEADER_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

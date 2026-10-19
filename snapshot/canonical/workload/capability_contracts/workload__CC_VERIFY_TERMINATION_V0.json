@@ -17,24 +17,31 @@
           "all_terminate",
           "non_terminating"
         ]
+      },
+      {
+        "bindings": {
+          "value": "check_termination.all_terminate"
+        },
+        "fqdn": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
+        "id": "CT_PURE_REQUIRE_TRUE_V0",
+        "inputs": [
+          "value"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "held"
+        ]
       }
     ]
   },
-  "content": "# CC_VERIFY_TERMINATION_V0\n\n## 1. Intent\n\nVerify that every computed Collatz sequence terminates at 1. A VIOLATION here is a first-class\nprotocol outcome (the conjecture was tested and failed), not an error.\n\n---\n\n## Machine\n\n```yaml\nfqdn: workload::CC_VERIFY_TERMINATION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: workload\ncore:\n  summary: Verify all Collatz sequences terminate at 1\n  inputs:\n    sequences:\n      type: object\n      required: true\n  outputs:\n    all_terminate:\n      type: boolean\n    non_terminating:\n      type: array\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: check_termination\n    transform: workload::CT_PURE_TERMINATION_CHECK_V0\n    inputs:\n      sequences: $.inputs.sequences\n    outputs:\n      all_terminate: $.capability_result.all_terminate\n      non_terminating: $.capability_result.non_terminating\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: evaluate_conjecture\n      VIOLATION: exit\n  evaluation:\n    evaluate_conjecture:\n      condition: $.capability_result.all_terminate == true\n      on_true: SUCCESS\n      on_false: VIOLATION\nextensions:\n  description: Protocol gate for Collatz Conjecture \u2014 SUCCESS means conjecture holds for this input set\n```\n",
-  "content_hash": "3dcc652b7b0aab65d38f2b3cb2c236b53ea026f39d37c7e9f01e402ab3999d0f",
+  "content": "# CC_VERIFY_TERMINATION_V0\n\n## Machine\n\n```yaml\nfqdn: workload::CC_VERIFY_TERMINATION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: collatz\ncore:\n  summary: Verify all Collatz sequences terminate at 1\n  inputs:\n    sequences:\n      type: object\n      required: true\n  outputs:\n    all_terminate:\n      type: boolean\n    non_terminating:\n      type: array\n    conjecture_holds:\n      type: boolean\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: check_termination\n    transform: workload::CT_PURE_TERMINATION_CHECK_V0\n    inputs:\n      sequences: $.inputs.sequences\n    outputs:\n      all_terminate: $.capability_result.all_terminate\n      non_terminating: $.capability_result.non_terminating\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: require_every_sequence_terminated\n    transform: capability_transforms::CT_PURE_REQUIRE_TRUE_V0\n    inputs:\n      value: $.results.check_termination.all_terminate\n    outputs:\n      conjecture_holds: $.capability_result.held\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nVerify all Collatz sequences terminate at 1\n",
+  "content_hash": "0650a5f7f8ba94dda9b222fa9ef276ddf868c20ba29773dbcda97b0b36e9ebdd",
   "fqdn_id": "workload::CC_VERIFY_TERMINATION_V0",
   "frontmatter": {
     "artifact_kind": "CAPABILITY_CONTRACT",
     "authority": "pgc.platform",
-    "concern": "workload",
+    "concern": "collatz",
     "core": {
-      "evaluation": {
-        "evaluate_conjecture": {
-          "condition": "$.capability_result.all_terminate == true",
-          "on_false": "VIOLATION",
-          "on_true": "SUCCESS"
-        }
-      },
       "inputs": {
         "sequences": {
           "required": true,
@@ -43,6 +50,9 @@
       },
       "outputs": {
         "all_terminate": {
+          "type": "boolean"
+        },
+        "conjecture_holds": {
           "type": "boolean"
         },
         "non_terminating": {
@@ -55,7 +65,7 @@
             "sequences": "$.inputs.sequences"
           },
           "on_result": {
-            "SUCCESS": "evaluate_conjecture",
+            "SUCCESS": "continue",
             "VIOLATION": "exit"
           },
           "outputs": {
@@ -68,19 +78,34 @@
           ],
           "step": "check_termination",
           "transform": "workload::CT_PURE_TERMINATION_CHECK_V0"
+        },
+        {
+          "inputs": {
+            "value": "$.results.check_termination.all_terminate"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "conjecture_holds": "$.capability_result.held"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_every_sequence_terminated",
+          "transform": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0"
         }
       ],
       "result_status_contract": {
         "allowed": [
-          "SUCCESS",
-          "VIOLATION"
+          "VIOLATION",
+          "SUCCESS"
         ],
         "on_input_failure": "VIOLATION"
       },
       "summary": "Verify all Collatz sequences terminate at 1"
-    },
-    "extensions": {
-      "description": "Protocol gate for Collatz Conjecture \u2014 SUCCESS means conjecture holds for this input set"
     },
     "fqdn": "workload::CC_VERIFY_TERMINATION_V0",
     "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
@@ -90,6 +115,7 @@
   "namespace": "workload",
   "references": [
     "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
     "workload::CT_PURE_TERMINATION_CHECK_V0"
   ],
   "version": "0"

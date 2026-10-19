@@ -1,0 +1,46 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_COLLATZ_STEP_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "numbers": "$.inputs.numbers"
+        },
+        "atom": "workload::CT_PURE_COLLATZ_STEP_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "workloads.collatz.implementation.capability_transforms.atoms.ct_pure_collatz_step_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+    "input_types": {
+      "numbers": "array"
+    },
+    "inputs": {
+      "numbers": [
+        1
+      ]
+    },
+    "outputs": {
+      "sequences": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "sequences": {
+      "1": [
+        1
+      ]
+    }
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "workload::CT_PURE_COLLATZ_STEP_V0::one_is_its_own_sequence",
+  "test_data_source": "workload::TEST_DATA_CT_PURE_COLLATZ_STEP_V0"
+}

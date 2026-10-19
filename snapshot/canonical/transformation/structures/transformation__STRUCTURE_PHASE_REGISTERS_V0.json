@@ -1,0 +1,49 @@
+{
+  "artifact_code": "STRUCTURE_PHASE_REGISTERS_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_PHASE_REGISTERS_V0\n\n## 1. Intent\n\nEach register of a document's Machine block, in the order written, addressed by its id. Its value\nis what the document states: a list of rows, a text, `[]` declared empty, or `null` stating nothing.\nA row is a mapping keyed `snake_case`. The register schema the document's rule set is drawn from\ntypes each row; this structure states only the form every register shares.\n\n## 2. How it is read\n\n`core.json_schema` is a JSON Schema. A capability transform's field names this structure\nwith `structure`, and the field's value conforms to the schema. `$id` is the structure's own\nidentity.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::STRUCTURE_PHASE_REGISTERS_V0\nartifact_kind: STRUCTURE\nversion: v0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: transformation\ncore:\n  summary: A phase document's registers, by id, each with its value as written\n  json_schema:\n    $schema: https://json-schema.org/draft/2020-12/schema\n    $id: transformation::STRUCTURE_PHASE_REGISTERS_V0\n    type: array\n    items:\n      type: object\n      additionalProperties: false\n      required:\n      - id\n      - value\n      properties:\n        id:\n          type: string\n        value:\n          type:\n          - array\n          - string\n          - 'null'\n```\n",
+  "content_hash": "b717a47998d62da74a21db68a6f54453876aeb930f634232b068aaef3adba1c3",
+  "fqdn_id": "transformation::STRUCTURE_PHASE_REGISTERS_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "transformation",
+    "core": {
+      "json_schema": {
+        "$id": "transformation::STRUCTURE_PHASE_REGISTERS_V0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "value": {
+              "type": [
+                "array",
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "value"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "summary": "A phase document's registers, by id, each with its value as written"
+    },
+    "fqdn": "transformation::STRUCTURE_PHASE_REGISTERS_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

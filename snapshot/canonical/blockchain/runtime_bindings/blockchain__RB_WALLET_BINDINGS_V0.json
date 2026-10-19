@@ -41,6 +41,7 @@
   "layer_code": "BLOCKCHAIN",
   "namespace": "blockchain",
   "references": [
+    "blockchain::STRUCTURE_WALLET_STORAGE_V0",
     "capability_side_effects::CS_APPENDONLY_JSONL_V0",
     "capability_side_effects::CS_CLOCK_V0",
     "capability_side_effects::CS_MUTABLE_JSON_V0",

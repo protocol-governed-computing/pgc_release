@@ -20,8 +20,8 @@
       }
     ]
   },
-  "content": "# CC_CLAIM_WALLET_IDENTITY_V0\n\n## 1. Intent\n\nClaims the identity, and refuses when the person already holds a wallet\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_CLAIM_WALLET_IDENTITY_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Claims the identity, and refuses when the person already holds a wallet\n  inputs:\n    wallet_id:\n      type: string\n      required: true\n  outputs:\n    result_status:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - ALREADY_EXISTS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: claim_wallet_identity\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: REGISTER\n    store: WALLET_IDENTITIES\n    inputs:\n      key: $.inputs.wallet_id\n    outputs:\n      result_status: $.capability_result.result_status\n    result_surface:\n    - SUCCESS\n    - ALREADY_EXISTS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      ALREADY_EXISTS: exit\n      VIOLATION: exit\n```\n",
-  "content_hash": "4a1a8e15707916a63704065f5f5bd8eeb548e2d937f62b7b42842660ddcf5caa",
+  "content": "# CC_CLAIM_WALLET_IDENTITY_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_CLAIM_WALLET_IDENTITY_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Claims the identity, and refuses when the person already holds a wallet\n  inputs:\n    wallet_id:\n      type: string\n      required: true\n  outputs:\n    result_status:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - ALREADY_EXISTS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: claim_wallet_identity\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: REGISTER\n    store: WALLET_IDENTITIES\n    inputs:\n      key: $.inputs.wallet_id\n    outputs:\n      result_status: $.capability_result.result_status\n    result_surface:\n    - SUCCESS\n    - ALREADY_EXISTS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      ALREADY_EXISTS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nClaims the identity, and refuses when the person already holds a wallet\n",
+  "content_hash": "46752b6df30be5a0318f5c35a2d94da8563f37faf606709e496ae8196f52c319",
   "fqdn_id": "blockchain::CC_CLAIM_WALLET_IDENTITY_V0",
   "frontmatter": {
     "artifact_kind": "CAPABILITY_CONTRACT",
@@ -47,6 +47,7 @@
           },
           "on_result": {
             "ALREADY_EXISTS": "exit",
+            "BACKEND_ERROR": "exit",
             "SUCCESS": "continue",
             "VIOLATION": "exit"
           },
@@ -57,7 +58,8 @@
           "result_surface": [
             "SUCCESS",
             "ALREADY_EXISTS",
-            "VIOLATION"
+            "VIOLATION",
+            "BACKEND_ERROR"
           ],
           "side_effect": "capability_side_effects::CS_REGISTRY_V0",
           "step": "claim_wallet_identity",
@@ -68,7 +70,8 @@
         "allowed": [
           "SUCCESS",
           "ALREADY_EXISTS",
-          "VIOLATION"
+          "VIOLATION",
+          "BACKEND_ERROR"
         ],
         "on_input_failure": "VIOLATION"
       },
@@ -81,7 +84,8 @@
   "layer_code": "BLOCKCHAIN",
   "namespace": "blockchain",
   "references": [
-    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_REGISTRY_V0"
   ],
   "version": "0"
 }

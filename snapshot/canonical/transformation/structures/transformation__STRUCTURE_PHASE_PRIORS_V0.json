@@ -1,0 +1,99 @@
+{
+  "artifact_code": "STRUCTURE_PHASE_PRIORS_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_PHASE_PRIORS_V0\n\n## 1. Intent\n\nA phase that preserves an upstream commitment is handed the upstream documents. Each is parsed by\nthe reader the judged document uses, so a cross-phase rule and a same-phase rule read a register\nalike. The key is the phase id; the value is that document's header, sections and registers, each\nin the form `STRUCTURE_PHASE_HEADER_V0`, `STRUCTURE_PHASE_SECTIONS_V0` and\n`STRUCTURE_PHASE_REGISTERS_V0` state. The forms are written out here, not referenced: a JSON Schema\n`$ref` is not a reference the platform declares.\n\n## 2. How it is read\n\n`core.json_schema` is a JSON Schema. A capability transform's field names this structure\nwith `structure`, and the field's value conforms to the schema. `$id` is the structure's own\nidentity.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::STRUCTURE_PHASE_PRIORS_V0\nartifact_kind: STRUCTURE\nversion: v0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: transformation\ncore:\n  summary: The upstream phase documents a phase is judged against, parsed, by phase id\n  json_schema:\n    $schema: https://json-schema.org/draft/2020-12/schema\n    $id: transformation::STRUCTURE_PHASE_PRIORS_V0\n    type: object\n    additionalProperties:\n      type: object\n      additionalProperties: false\n      required:\n      - header\n      - sections\n      - registers\n      properties:\n        header:\n          type: object\n          additionalProperties:\n            type:\n            - string\n            - array\n            - object\n        sections:\n          type: array\n          items:\n            type: object\n            additionalProperties: false\n            required:\n            - number\n            - title\n            - text\n            properties:\n              number:\n                type:\n                - integer\n                - 'null'\n              title:\n                type: string\n              text:\n                type: string\n        registers:\n          type: array\n          items:\n            type: object\n            additionalProperties: false\n            required:\n            - id\n            - value\n            properties:\n              id:\n                type: string\n              value:\n                type:\n                - array\n                - string\n                - 'null'\n```\n",
+  "content_hash": "d47aa616b3d4d8d4b729201aecaa78da83fa6f613fcdb34bcfe950bae443cb86",
+  "fqdn_id": "transformation::STRUCTURE_PHASE_PRIORS_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "transformation",
+    "core": {
+      "json_schema": {
+        "$id": "transformation::STRUCTURE_PHASE_PRIORS_V0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": {
+          "additionalProperties": false,
+          "properties": {
+            "header": {
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "array",
+                  "object"
+                ]
+              },
+              "type": "object"
+            },
+            "registers": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": [
+                      "array",
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "value"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "sections": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "number": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "number",
+                  "title",
+                  "text"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "header",
+            "sections",
+            "registers"
+          ],
+          "type": "object"
+        },
+        "type": "object"
+      },
+      "summary": "The upstream phase documents a phase is judged against, parsed, by phase id"
+    },
+    "fqdn": "transformation::STRUCTURE_PHASE_PRIORS_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

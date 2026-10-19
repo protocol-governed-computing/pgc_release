@@ -1,0 +1,77 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_TERMINATION_CHECK_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_TERMINATION_CHECK_V0\n\n## Machine\n\n```yaml\nfqdn: workload::TEST_DATA_CT_PURE_TERMINATION_CHECK_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: workload\ntarget: workload::CT_PURE_TERMINATION_CHECK_V0\ncases:\n- case_id: every_sequence_terminates\n  expected_outcome: SUCCESS\n  bindings:\n    sequences:\n      '6':\n      - 6\n      - 3\n      - 10\n      - 5\n      - 16\n      - 8\n      - 4\n      - 2\n      - 1\n  expected:\n    all_terminate: true\n    non_terminating: []\n- case_id: names_a_sequence_that_does_not_end_at_one\n  expected_outcome: SUCCESS\n  bindings:\n    sequences:\n      '6':\n      - 6\n      - 3\n      - 10\n      - 5\n      - 16\n      - 8\n      - 4\n      - 2\n      - 1\n      '7':\n      - 7\n      - 22\n  expected:\n    all_terminate: false\n    non_terminating:\n    - '7'\n```\n\n## Intent\n\nA sequence ending at 1 terminates; one that does not is named, and the check returns rather than refusing.\n",
+  "content_hash": "3fabf75404275d40f7a3a882d99e752376396a511e28d1d256369b66db968344",
+  "fqdn_id": "workload::TEST_DATA_CT_PURE_TERMINATION_CHECK_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "sequences": {
+            "6": [
+              6,
+              3,
+              10,
+              5,
+              16,
+              8,
+              4,
+              2,
+              1
+            ]
+          }
+        },
+        "case_id": "every_sequence_terminates",
+        "expected": {
+          "all_terminate": true,
+          "non_terminating": []
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "sequences": {
+            "6": [
+              6,
+              3,
+              10,
+              5,
+              16,
+              8,
+              4,
+              2,
+              1
+            ],
+            "7": [
+              7,
+              22
+            ]
+          }
+        },
+        "case_id": "names_a_sequence_that_does_not_end_at_one",
+        "expected": {
+          "all_terminate": false,
+          "non_terminating": [
+            "7"
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "workload",
+    "fqdn": "workload::TEST_DATA_CT_PURE_TERMINATION_CHECK_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "workload::CT_PURE_TERMINATION_CHECK_V0",
+    "version": "V0"
+  },
+  "layer_code": "WORKLOAD",
+  "namespace": "workload",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V0",
+    "workload::CT_PURE_TERMINATION_CHECK_V0"
+  ],
+  "version": "0"
+}

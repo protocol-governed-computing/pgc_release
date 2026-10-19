@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_CT_INPUT_TYPED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_CT_INPUT_TYPED_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::INVARIANT_CT_INPUT_TYPED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - CC\n```\n\n---\n\n## Purpose\n\nA transform is given only values of the types it declares. A contract binds each input of each\ntransform step to a source: a literal, an input of the contract, or an output of an earlier step.\nEvery source with a declared type must have the type the transform declares for that input.\n\n## Why it is checked at build\n\nThe runtime checks the types a workflow is entered with. It does not check what one step gives\nanother: it resolves a step's inputs and calls the transform. A step that gives a transform a value\nit does not declare runs, and a transform that compares by equality can even decide correctly. The\ndeclaration and the use then disagree, and nothing says so.\n\nEvery type this rule compares is declared before the build, so the build refuses the disagreement and\nno sealed snapshot carries one.\n\n## How it compares\n\n- A literal has the type of its value: a boolean, an integer, a number, a string, an array or an\n  object.\n- `$.inputs.<field>` has the type the contract declares for that input.\n- `$.results.<step>.<name>` has the type the earlier step's transform declares for the output that\n  step maps to `<name>`.\n- A declaration of `any`, or a source whose type is not declared, is not compared.\n- An integer satisfies `number`.\n\nA stood-down contract is not checked: it is present and not in force, and its successor is.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  description: Every input a contract binds to a transform step has the type the transform declares for it\n```\n",
+  "content_hash": "10673a2fcdf5f05fcd1e093d938ad50f8cce6bee7570138262d7334f9fadcf1d",
+  "fqdn_id": "capability_transforms::INVARIANT_CT_INPUT_TYPED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CC"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "capability_transforms::INVARIANT_CT_INPUT_TYPED_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "capability_transforms",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

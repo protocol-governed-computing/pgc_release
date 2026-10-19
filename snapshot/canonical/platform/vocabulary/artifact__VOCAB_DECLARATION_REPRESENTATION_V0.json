@@ -1,0 +1,119 @@
+{
+  "artifact_code": "VOCAB_DECLARATION_REPRESENTATION_V0",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_DECLARATION_REPRESENTATION_V0\n\n## Machine\n\n```yaml\nfqdn: artifact::VOCAB_DECLARATION_REPRESENTATION_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: artifact\nextends: ''\ndocumentation:\n  casing: lower_snake\n  entries:\n  - summary\n  - description\n  - notes\n  - purpose\n  - use_cases\n  - failure_modes\n  - intent\n  - detail\n  - admission_rules\nunordered:\n  casing: lower_snake\n  entries:\n  - allowed\n  - result_surface\n  - result_status_values\n  - canonical_surface\n  - applies_to_kinds\n  - governs\n  - requires\n  - forbids\n  - consults\n  - allowed_capability_transforms\n  - allowed_capability_side_effects\nreference:\n  casing: lower_snake\n  entries:\n  - actor_context\n  - allowed_capability_side_effects\n  - allowed_capability_transforms\n  - atom\n  - code\n  - consults\n  - disposition_vocabulary\n  - emit\n  - enforced_by\n  - extends\n  - fqdn_id\n  - governed_by\n  - molecule\n  - phase_workflows\n  - runtime_binding\n  - side_effect\n  - side_effects\n  - storage_structure\n  - structure\n  - target\n  - transform\n  - transforms\n  - vocabulary_id\n  - workflow\nreference_keyed:\n  casing: lower_snake\n  entries:\n  - bindings\nfull_name_required:\n  casing: lower_snake\n  entries:\n  - consults\n  - governed_by\n  - runtime_binding\n  - side_effects\n  - structure\n  - transform\n  - transforms\n  - vocabulary_id\nsupersession:\n  casing: lower_snake\n  entries:\n  - supersedes\ndata:\n  casing: lower_snake\n  entries:\n  - cases\nsameness_rules:\n  casing: lower_snake\n  entries:\n  - explanation_only_as_text\n  - reference_to_declared_successor\n```\n\n---\n\n## Intent\n\nHow every reader of a declaration tells a name from a value. A full name at or beneath a\n`reference` part is a reference; a full-name key of a `reference_keyed` part is one too. A\n`supersession` part names an artifact without reaching it. A `data` part holds values: nothing\nbeneath it is read for references, whatever it looks like. A full name anywhere else is refused as\nundeclared.\n\nA test vector's `cases` are data. The transform a vector tests, its `target`, sits outside its cases and stays a reference.\n",
+  "content_hash": "0b8dfb185539a15e2f0b30be480a2865d1635724bf15762f0268c694a8c4cb7c",
+  "fqdn_id": "artifact::VOCAB_DECLARATION_REPRESENTATION_V0",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "authority": "pgc.platform",
+    "concern": "artifact",
+    "data": {
+      "casing": "lower_snake",
+      "entries": [
+        "cases"
+      ]
+    },
+    "documentation": {
+      "casing": "lower_snake",
+      "entries": [
+        "summary",
+        "description",
+        "notes",
+        "purpose",
+        "use_cases",
+        "failure_modes",
+        "intent",
+        "detail",
+        "admission_rules"
+      ]
+    },
+    "extends": "",
+    "fqdn": "artifact::VOCAB_DECLARATION_REPRESENTATION_V0",
+    "full_name_required": {
+      "casing": "lower_snake",
+      "entries": [
+        "consults",
+        "governed_by",
+        "runtime_binding",
+        "side_effects",
+        "structure",
+        "transform",
+        "transforms",
+        "vocabulary_id"
+      ]
+    },
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "reference": {
+      "casing": "lower_snake",
+      "entries": [
+        "actor_context",
+        "allowed_capability_side_effects",
+        "allowed_capability_transforms",
+        "atom",
+        "code",
+        "consults",
+        "disposition_vocabulary",
+        "emit",
+        "enforced_by",
+        "extends",
+        "fqdn_id",
+        "governed_by",
+        "molecule",
+        "phase_workflows",
+        "runtime_binding",
+        "side_effect",
+        "side_effects",
+        "storage_structure",
+        "structure",
+        "target",
+        "transform",
+        "transforms",
+        "vocabulary_id",
+        "workflow"
+      ]
+    },
+    "reference_keyed": {
+      "casing": "lower_snake",
+      "entries": [
+        "bindings"
+      ]
+    },
+    "sameness_rules": {
+      "casing": "lower_snake",
+      "entries": [
+        "explanation_only_as_text",
+        "reference_to_declared_successor"
+      ]
+    },
+    "supersession": {
+      "casing": "lower_snake",
+      "entries": [
+        "supersedes"
+      ]
+    },
+    "unordered": {
+      "casing": "lower_snake",
+      "entries": [
+        "allowed",
+        "result_surface",
+        "result_status_values",
+        "canonical_surface",
+        "applies_to_kinds",
+        "governs",
+        "requires",
+        "forbids",
+        "consults",
+        "allowed_capability_transforms",
+        "allowed_capability_side_effects"
+      ]
+    },
+    "version": "v0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "artifact",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

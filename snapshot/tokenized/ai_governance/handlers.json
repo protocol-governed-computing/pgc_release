@@ -390,7 +390,7 @@
     }
   },
   "ct": {
-    "19": {
+    "18": {
       "ct_ir": {
         "artifact_code": "CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
         "atom_stream": [
@@ -432,7 +432,7 @@
         }
       }
     },
-    "20": {
+    "19": {
       "ct_ir": {
         "artifact_code": "CT_PURE_CHECK_TRAINING_STATUS_V0",
         "atom_stream": [
@@ -465,7 +465,7 @@
         }
       }
     },
-    "21": {
+    "20": {
       "ct_ir": {
         "artifact_code": "CT_PURE_EVALUATE_INACTIVITY_V0",
         "atom_stream": [
@@ -675,7 +675,7 @@
   },
   "projection_class": "machine_projection",
   "rb_policy": {
-    "35": {
+    "34": {
       "71": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
@@ -688,6 +688,10 @@
                 "description": "Maps entity types to storage implementations and paths",
                 "domain": "ai_governance",
                 "entity_stores": {
+                  "GOVERNANCE_ACTIONS": {
+                    "description": "Registry of authorized actions, keyed by action id, so a repeated authorization is recognized",
+                    "path": "ai_governance/agent_governance/governance_actions.json"
+                  },
                   "GOVERNANCE_AUDIT": {
                     "description": "Append-only audit trail for agent governance authorization and denial decisions",
                     "path": "ai_governance/agent_governance/governance_audit.jsonl"
@@ -703,6 +707,7 @@
                     "Each entity type has dedicated storage",
                     "LICENSE_FACTS is read-only \u2014 agent governance may not mutate license facts",
                     "GOVERNANCE_AUDIT is append-only \u2014 agent governance audit records are immutable",
+                    "GOVERNANCE_ACTIONS registers each authorized action once \u2014 a key is never re-registered",
                     "Storage paths resolved via STRUCTURE only"
                   ]
                 },
@@ -716,6 +721,7 @@
                   "base_path": "{{module_data_root}}",
                   "description": "Root path for all agent governance storage (resolved at runtime)"
                 },
+                "subdomain": "agent_governance",
                 "summary": "Agent governance domain storage topology"
               },
               "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
@@ -738,6 +744,10 @@
                 "description": "Maps entity types to storage implementations and paths",
                 "domain": "ai_governance",
                 "entity_stores": {
+                  "GOVERNANCE_ACTIONS": {
+                    "description": "Registry of authorized actions, keyed by action id, so a repeated authorization is recognized",
+                    "path": "ai_governance/agent_governance/governance_actions.json"
+                  },
                   "GOVERNANCE_AUDIT": {
                     "description": "Append-only audit trail for agent governance authorization and denial decisions",
                     "path": "ai_governance/agent_governance/governance_audit.jsonl"
@@ -753,6 +763,7 @@
                     "Each entity type has dedicated storage",
                     "LICENSE_FACTS is read-only \u2014 agent governance may not mutate license facts",
                     "GOVERNANCE_AUDIT is append-only \u2014 agent governance audit records are immutable",
+                    "GOVERNANCE_ACTIONS registers each authorized action once \u2014 a key is never re-registered",
                     "Storage paths resolved via STRUCTURE only"
                   ]
                 },
@@ -766,6 +777,7 @@
                   "base_path": "{{module_data_root}}",
                   "description": "Root path for all agent governance storage (resolved at runtime)"
                 },
+                "subdomain": "agent_governance",
                 "summary": "Agent governance domain storage topology"
               },
               "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
@@ -787,6 +799,10 @@
                 "description": "Maps entity types to storage implementations and paths",
                 "domain": "ai_governance",
                 "entity_stores": {
+                  "GOVERNANCE_ACTIONS": {
+                    "description": "Registry of authorized actions, keyed by action id, so a repeated authorization is recognized",
+                    "path": "ai_governance/agent_governance/governance_actions.json"
+                  },
                   "GOVERNANCE_AUDIT": {
                     "description": "Append-only audit trail for agent governance authorization and denial decisions",
                     "path": "ai_governance/agent_governance/governance_audit.jsonl"
@@ -802,6 +818,7 @@
                     "Each entity type has dedicated storage",
                     "LICENSE_FACTS is read-only \u2014 agent governance may not mutate license facts",
                     "GOVERNANCE_AUDIT is append-only \u2014 agent governance audit records are immutable",
+                    "GOVERNANCE_ACTIONS registers each authorized action once \u2014 a key is never re-registered",
                     "Storage paths resolved via STRUCTURE only"
                   ]
                 },
@@ -815,6 +832,7 @@
                   "base_path": "{{module_data_root}}",
                   "description": "Root path for all agent governance storage (resolved at runtime)"
                 },
+                "subdomain": "agent_governance",
                 "summary": "Agent governance domain storage topology"
               },
               "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
@@ -837,6 +855,10 @@
                 "description": "Maps entity types to storage implementations and paths",
                 "domain": "ai_governance",
                 "entity_stores": {
+                  "GOVERNANCE_ACTIONS": {
+                    "description": "Registry of authorized actions, keyed by action id, so a repeated authorization is recognized",
+                    "path": "ai_governance/agent_governance/governance_actions.json"
+                  },
                   "GOVERNANCE_AUDIT": {
                     "description": "Append-only audit trail for agent governance authorization and denial decisions",
                     "path": "ai_governance/agent_governance/governance_audit.jsonl"
@@ -852,6 +874,7 @@
                     "Each entity type has dedicated storage",
                     "LICENSE_FACTS is read-only \u2014 agent governance may not mutate license facts",
                     "GOVERNANCE_AUDIT is append-only \u2014 agent governance audit records are immutable",
+                    "GOVERNANCE_ACTIONS registers each authorized action once \u2014 a key is never re-registered",
                     "Storage paths resolved via STRUCTURE only"
                   ]
                 },
@@ -865,6 +888,7 @@
                   "base_path": "{{module_data_root}}",
                   "description": "Root path for all agent governance storage (resolved at runtime)"
                 },
+                "subdomain": "agent_governance",
                 "summary": "Agent governance domain storage topology"
               },
               "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
@@ -876,7 +900,7 @@
         }
       }
     },
-    "36": {
+    "35": {
       "71": {
         "policy": {
           "module_data_root": "{{module_data_root}}",

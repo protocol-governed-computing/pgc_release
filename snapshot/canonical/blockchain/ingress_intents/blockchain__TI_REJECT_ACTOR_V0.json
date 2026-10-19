@@ -1,8 +1,8 @@
 {
   "artifact_code": "TI_REJECT_ACTOR_V0",
   "artifact_type": "TI",
-  "content": "# TI_REJECT_ACTOR_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::TI_REJECT_ACTOR_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: identity\noperation: blockchain.reject_actor\ncore:\n  summary: Admits a request to reject a registered actor, declaring the contact address, authority and\n    required grounds a caller sends and holding the stream and the rejection occurrence label\ninput_contract:\n  contact_address:\n    type: string\n    required: true\n  verifying_authority:\n    type: string\n    required: true\n  grounds:\n    type: string\n    required: true\ncontext_requirements: []\nhandler:\n  kind: WF_INVOCATION\n  workflow: blockchain::WF_REJECT_ACTOR_V0\n  payload_template:\n    contact_address: ${input.contact_address}\n    verifying_authority: ${input.verifying_authority}\n    grounds: ${input.grounds}\n    stream_id: ACTOR_OCCURRENCES\n    occurrence_fields:\n      occurrence: ACTOR_REJECTED\n      contact_address: ${input.contact_address}\n      verifying_authority: ${input.verifying_authority}\n      grounds: ${input.grounds}\n```\n\n---\n\n## Intent\n\nAdmits a request to reject a registered actor, declaring the contact address, authority and required grounds a caller sends and holding the stream and the rejection occurrence label\n",
-  "content_hash": "7700c3d1233cc99eca25cafa2aab273e5ea044c5f61de108aea42fccae3edf6d",
+  "content": "# TI_REJECT_ACTOR_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::TI_REJECT_ACTOR_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: identity\noperation: blockchain.reject_actor\ncore:\n  summary: Admits a request to reject a registered actor, and sends the act only what the caller supplies\ninput_contract:\n  contact_address:\n    type: string\n    required: true\n  verifying_authority:\n    type: string\n    required: true\n  grounds:\n    type: string\n    required: true\ncontext_requirements: []\nhandler:\n  kind: WF_INVOCATION\n  workflow: blockchain::WF_REJECT_ACTOR_V0\n  payload_template:\n    contact_address: ${input.contact_address}\n    verifying_authority: ${input.verifying_authority}\n    grounds: ${input.grounds}\n```\n\n---\n\n## Intent\n\nAdmits a request to reject a registered actor, and sends the act only what the caller supplies\n",
+  "content_hash": "502c03f1f22b90f61e8a6826b1088d40a57b321ab49ae8e4c74194b82f8cb09c",
   "fqdn_id": "blockchain::TI_REJECT_ACTOR_V0",
   "frontmatter": {
     "artifact_kind": "TRANSPORT_INGRESS",
@@ -10,7 +10,7 @@
     "concern": "identity",
     "context_requirements": [],
     "core": {
-      "summary": "Admits a request to reject a registered actor, declaring the contact address, authority and required grounds a caller sends and holding the stream and the rejection occurrence label"
+      "summary": "Admits a request to reject a registered actor, and sends the act only what the caller supplies"
     },
     "fqdn": "blockchain::TI_REJECT_ACTOR_V0",
     "governed_by": "transport::CONSTITUTION_TRANSPORT_INGRESS_V0",
@@ -19,13 +19,6 @@
       "payload_template": {
         "contact_address": "${input.contact_address}",
         "grounds": "${input.grounds}",
-        "occurrence_fields": {
-          "contact_address": "${input.contact_address}",
-          "grounds": "${input.grounds}",
-          "occurrence": "ACTOR_REJECTED",
-          "verifying_authority": "${input.verifying_authority}"
-        },
-        "stream_id": "ACTOR_OCCURRENCES",
         "verifying_authority": "${input.verifying_authority}"
       },
       "workflow": "blockchain::WF_REJECT_ACTOR_V0"
@@ -50,6 +43,7 @@
   "layer_code": "BLOCKCHAIN",
   "namespace": "blockchain",
   "references": [
+    "blockchain::WF_REJECT_ACTOR_V0",
     "transport::CONSTITUTION_TRANSPORT_INGRESS_V0"
   ],
   "version": "0"

@@ -77,6 +77,13 @@
   "layer_code": "GOVERNANCE",
   "namespace": "authority",
   "references": [
+    "authority::INVARIANT_ACTOR_AUTHORITY_SEPARATION_V0",
+    "authority::INVARIANT_AUTHORITY_REQUIRED_FOR_EXECUTION_V0",
+    "authority::INVARIANT_AUTHORITY_STATE_WELL_FORMED_V0",
+    "authority::INVARIANT_NO_AMBIENT_AUTHORITY_V0",
+    "authority::INVARIANT_NO_RUNTIME_AUTHORIZATION_V0",
+    "authority::INVARIANT_NO_WORKFLOW_AUTHORIZATION_LOGIC_V0",
+    "authority::INVARIANT_TRACE_AUTHORITY_BINDING_REQUIRED_V0",
     "governance::CONSTITUTION_GOVERNANCE_V0"
   ],
   "version": "0"

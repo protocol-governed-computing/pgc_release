@@ -1,0 +1,45 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_DERIVE_WALLET_ADDRESS_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::TEST_DATA_CT_PURE_DERIVE_WALLET_ADDRESS_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: wallet\ntarget: blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0\ncases:\n- case_id: derives_the_address_of_the_generator_key\n  expected_outcome: SUCCESS\n  bindings:\n    key_material: 79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8\n  expected:\n    address: '0x7e5f4552091a69125d5dfcb7b8c2659029395bdf'\n- case_id: prefix_and_tag_derive_the_same_address\n  expected_outcome: SUCCESS\n  bindings:\n    key_material: '0x0479be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8'\n  expected:\n    address: '0x7e5f4552091a69125d5dfcb7b8c2659029395bdf'\n```\n\n## Intent\n\nThe address is the last 20 bytes of the key's Keccak-256 hash, with or without the 0x prefix and the 0x04 tag. The key is the secp256k1 generator, whose address is published.\n",
+  "content_hash": "db90af2b45cfb24200cfd12f6e1bad70d80fd2c9414838e5f2bc2fa402491d5e",
+  "fqdn_id": "blockchain::TEST_DATA_CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "key_material": "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8"
+        },
+        "case_id": "derives_the_address_of_the_generator_key",
+        "expected": {
+          "address": "0x7e5f4552091a69125d5dfcb7b8c2659029395bdf"
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "key_material": "0x0479be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8"
+        },
+        "case_id": "prefix_and_tag_derive_the_same_address",
+        "expected": {
+          "address": "0x7e5f4552091a69125d5dfcb7b8c2659029395bdf"
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "wallet",
+    "fqdn": "blockchain::TEST_DATA_CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+    "version": "V0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+    "conformance::CONSTITUTION_TEST_DATA_V0"
+  ],
+  "version": "0"
+}

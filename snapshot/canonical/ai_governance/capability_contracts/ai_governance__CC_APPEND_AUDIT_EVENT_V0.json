@@ -28,8 +28,8 @@
       }
     ]
   },
-  "content": "# CC_APPEND_AUDIT_EVENT_V0\n\n## 1. Intent\n\nAppend a decision event to the immutable audit log.\n\n---\n\n## 2. Rationale\n\nAudit logging is a protocol requirement:\n- Every denial path must invoke this contract\n- Creates immutable compliance record\n- Proves \"nothing happened\" is provable\n\n---\n\n## 3. Pipeline\n\n| Step | Capability | Type | Operation |\n|------|------------|------|-----------|\n| 1 | CS_APPENDONLY_JSONL_V0 | CS | APPEND |\n\n---\n\n## 4. Inputs\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| event_type | string | true | Event type code |\n| employee_id | string | true | Subject of the decision |\n| decision | string | true | Decision made (PROVISIONED, DENIED, RECLAIMED) |\n| reason_code | string | false | Reason for decision |\n| license_id | string | false | License ID to record in event |\n| data | object | false | Additional event data |\n\n---\n\n## 5. Outputs\n\n| Field | Type | Description |\n|-------|------|-------------|\n| result_status | string | Operation result |\n\n---\n\n## 6. Result Status Contract\n\n| Status | Condition |\n|--------|-----------|\n| SUCCESS | Event appended successfully |\n| VIOLATION | Invalid input format |\n| BACKEND_ERROR | Audit log unavailable |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_APPEND_AUDIT_EVENT_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: Append decision event to audit log\n\n  inputs:\n    event_type:\n      type: string\n      required: true\n    employee_id:\n      type: string\n      required: true\n    decision:\n      type: string\n      enum:\n        - PROVISIONED\n        - DENIED\n        - RECLAIMED\n      required: true\n    reason_code:\n      type: string\n    license_id:\n      type: string\n    data:\n      type: object\n\n  outputs:\n    result_status:\n      type: string\n\n  result_status_contract:\n    allowed: [SUCCESS, VIOLATION, BACKEND_ERROR]\n    on_input_failure: VIOLATION\n\n  pipeline:\n    - step: read_now\n      side_effect: capability_side_effects::CS_CLOCK_V0\n      op: NOW\n      inputs: {}\n      outputs:\n        timestamp: $.capability_result.timestamp\n      result_surface: [SUCCESS, BACKEND_ERROR]\n      on_result:\n        SUCCESS: continue\n        BACKEND_ERROR: exit\n\n    - step: append_audit_event\n      side_effect: capability_side_effects::CS_APPENDONLY_JSONL_V0\n      op: APPEND\n      store: LICENSE_AUDIT\n      inputs:\n        record:\n          event_type: $.inputs.event_type\n          employee_id: $.inputs.employee_id\n          decision: $.inputs.decision\n          reason_code: $.inputs.reason_code\n          license_id: $.inputs.license_id\n          payload: $.inputs.data\n          timestamp: $.results.read_now.timestamp\n      outputs:\n        result_status: $.result_status\n      result_surface: [SUCCESS, VIOLATION, BACKEND_ERROR]\n      on_result:\n        SUCCESS: exit\n        VIOLATION: exit\n        BACKEND_ERROR: exit\n\nextensions:\n  description: Appends audit event for compliance and provability\n```\n",
-  "content_hash": "eb4b985daed34bd60ba3c79d932c27e08c952389478180fa9adf8cff25532fab",
+  "content": "# CC_APPEND_AUDIT_EVENT_V0\n\n## 1. Intent\n\nAppend a decision event to the immutable audit log.\n\n---\n\n## 2. Rationale\n\nAudit logging is a protocol requirement:\n- Every denial path must invoke this contract\n- Creates immutable compliance record\n- Proves \"nothing happened\" is provable\n\n---\n\n## 3. Pipeline\n\n| Step | Capability | Type | Operation |\n|------|------------|------|-----------|\n| 1 | CS_APPENDONLY_JSONL_V0 | CS | APPEND |\n\n---\n\n## 4. Inputs\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| event_type | string | true | Event type code |\n| employee_id | string | true | Subject of the decision |\n| decision | string | true | Decision made (PROVISIONED, DENIED, RECLAIMED) |\n| reason_code | string | false | Reason for decision |\n| license_id | string | false | License ID to record in event |\n| data | object | false | Additional event data |\n\n---\n\n## 5. Outputs\n\n| Field | Type | Description |\n|-------|------|-------------|\n| result_status | string | Operation result |\n\n---\n\n## 6. Result Status Contract\n\n| Status | Condition |\n|--------|-----------|\n| SUCCESS | Event appended successfully |\n| VIOLATION | Invalid input format |\n| BACKEND_ERROR | Audit log unavailable |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_APPEND_AUDIT_EVENT_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: ai_licensing\n\ncore:\n  summary: Append decision event to audit log\n\n  inputs:\n    event_type:\n      type: string\n      required: true\n    employee_id:\n      type: string\n      required: true\n    decision:\n      type: string\n      required: true\n    reason_code:\n      type: string\n    license_id:\n      type: string\n    data:\n      type: object\n\n  outputs:\n    result_status:\n      type: string\n\n  result_status_contract:\n    allowed:\n    - BACKEND_ERROR\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n\n  pipeline:\n    - step: read_now\n      side_effect: capability_side_effects::CS_CLOCK_V0\n      op: NOW\n      inputs: {}\n      outputs:\n        timestamp: $.capability_result.timestamp\n      result_surface: [SUCCESS, BACKEND_ERROR]\n      on_result:\n        SUCCESS: continue\n        BACKEND_ERROR: exit\n\n    - step: append_audit_event\n      side_effect: capability_side_effects::CS_APPENDONLY_JSONL_V0\n      op: APPEND\n      store: LICENSE_AUDIT\n      inputs:\n        record:\n          event_type: $.inputs.event_type\n          employee_id: $.inputs.employee_id\n          decision: $.inputs.decision\n          reason_code: $.inputs.reason_code\n          license_id: $.inputs.license_id\n          payload: $.inputs.data\n          timestamp: $.results.read_now.timestamp\n      outputs:\n        result_status: $.result_status\n      result_surface: [SUCCESS, VIOLATION, BACKEND_ERROR]\n      on_result:\n        SUCCESS: exit\n        VIOLATION: exit\n        BACKEND_ERROR: exit\n\nextensions:\n  description: Appends audit event for compliance and provability\n```\n",
+  "content_hash": "22f10727541fcb4010f3f1899280a63cae9c592243f8458c75dee698711b2c15",
   "fqdn_id": "ai_governance::CC_APPEND_AUDIT_EVENT_V0",
   "frontmatter": {
     "artifact_kind": "CAPABILITY_CONTRACT",
@@ -41,11 +41,6 @@
           "type": "object"
         },
         "decision": {
-          "enum": [
-            "PROVISIONED",
-            "DENIED",
-            "RECLAIMED"
-          ],
           "required": true,
           "type": "string"
         },
@@ -120,9 +115,9 @@
       ],
       "result_status_contract": {
         "allowed": [
+          "BACKEND_ERROR",
           "SUCCESS",
-          "VIOLATION",
-          "BACKEND_ERROR"
+          "VIOLATION"
         ],
         "on_input_failure": "VIOLATION"
       },
@@ -138,7 +133,9 @@
   "layer_code": "AI_GOVERNANCE",
   "namespace": "ai_governance",
   "references": [
-    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+    "capability_side_effects::CS_CLOCK_V0"
   ],
   "version": "0"
 }

@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_REACH_DECLARED_AND_USED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_REACH_DECLARED_AND_USED_V0\n\n## Machine\n\n```yaml\nfqdn: lifecycle::INVARIANT_REACH_DECLARED_AND_USED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: lifecycle::CONSTITUTION_CHANGE_MGMT_V0\nauthority: pgc.platform\nconcern: lifecycle\ncore:\n  enforcement_stage:\n  - enforced_elsewhere\n  violation_response: FAIL_IMMEDIATELY\n  enforced_by: the design compiler, evaluating each phase's sealed rule set over a phase document\nassert_projection:\n  applies_to_kinds:\n  - WF\n```\n\n---\n\n## 1. Claim\n\nAn act reads only what it declared a reach to, and uses every reach it declared.\n\n## 2. Why\n\nA read nobody declared couples an act to data it was never reviewed as depending on. A reach declared and never used is a dependency on paper only.\n\n## 3. How it is checked\n\nThe reads a design's steps perform are compared with the reach it declares, in both directions.\n",
+  "content_hash": "c1f4dda184416717a666505b83c8da9b2430a4045b5773fad7b982af1777cf70",
+  "fqdn_id": "lifecycle::INVARIANT_REACH_DECLARED_AND_USED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "lifecycle",
+    "core": {
+      "enforced_by": "the design compiler, evaluating each phase's sealed rule set over a phase document",
+      "enforcement_stage": [
+        "enforced_elsewhere"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "lifecycle::INVARIANT_REACH_DECLARED_AND_USED_V0",
+    "governed_by": "lifecycle::CONSTITUTION_CHANGE_MGMT_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "lifecycle",
+  "references": [
+    "lifecycle::CONSTITUTION_CHANGE_MGMT_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,72 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_GROUP_RECORDS_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_GROUP_RECORDS_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::TEST_DATA_CT_PURE_GROUP_RECORDS_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: catalog\ntarget: book_library_mgmt::CT_PURE_GROUP_RECORDS_V0\ncases:\n- case_id: groups_by_attribute\n  expected_outcome: SUCCESS\n  bindings:\n    source:\n    - work: w1\n      edition: 1\n    - work: w2\n      edition: 1\n    - work: w1\n      edition: 2\n    attribute: work\n  expected:\n    grouped:\n    - key: w1\n      records:\n      - work: w1\n        edition: 1\n      - work: w1\n        edition: 2\n    - key: w2\n      records:\n      - work: w2\n        edition: 1\n```\n\n## Intent\n\nRecords are grouped by the attribute's value, one group per distinct value, in first-seen order.\n",
+  "content_hash": "94aa5f7b79e2ebbf4b075c2373607d2e9b3b0ac11573d54668708b9decb97ff0",
+  "fqdn_id": "book_library_mgmt::TEST_DATA_CT_PURE_GROUP_RECORDS_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "attribute": "work",
+          "source": [
+            {
+              "edition": 1,
+              "work": "w1"
+            },
+            {
+              "edition": 1,
+              "work": "w2"
+            },
+            {
+              "edition": 2,
+              "work": "w1"
+            }
+          ]
+        },
+        "case_id": "groups_by_attribute",
+        "expected": {
+          "grouped": [
+            {
+              "key": "w1",
+              "records": [
+                {
+                  "edition": 1,
+                  "work": "w1"
+                },
+                {
+                  "edition": 2,
+                  "work": "w1"
+                }
+              ]
+            },
+            {
+              "key": "w2",
+              "records": [
+                {
+                  "edition": 1,
+                  "work": "w2"
+                }
+              ]
+            }
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "catalog",
+    "fqdn": "book_library_mgmt::TEST_DATA_CT_PURE_GROUP_RECORDS_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+    "version": "V0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+    "conformance::CONSTITUTION_TEST_DATA_V0"
+  ],
+  "version": "0"
+}

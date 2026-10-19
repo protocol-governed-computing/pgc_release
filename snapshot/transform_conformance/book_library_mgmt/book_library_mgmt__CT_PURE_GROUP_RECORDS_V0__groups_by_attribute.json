@@ -1,0 +1,79 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_GROUP_RECORDS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "attribute": "$.inputs.attribute",
+          "source": "$.inputs.source"
+        },
+        "atom": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_group_records_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+    "input_types": {
+      "attribute": "string",
+      "source": "array"
+    },
+    "inputs": {
+      "attribute": "work",
+      "source": [
+        {
+          "edition": 1,
+          "work": "w1"
+        },
+        {
+          "edition": 1,
+          "work": "w2"
+        },
+        {
+          "edition": 2,
+          "work": "w1"
+        }
+      ]
+    },
+    "outputs": {
+      "grouped": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "grouped": [
+      {
+        "key": "w1",
+        "records": [
+          {
+            "edition": 1,
+            "work": "w1"
+          },
+          {
+            "edition": 2,
+            "work": "w1"
+          }
+        ]
+      },
+      {
+        "key": "w2",
+        "records": [
+          {
+            "edition": 1,
+            "work": "w2"
+          }
+        ]
+      }
+    ]
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0::groups_by_attribute",
+  "test_data_source": "book_library_mgmt::TEST_DATA_CT_PURE_GROUP_RECORDS_V0"
+}

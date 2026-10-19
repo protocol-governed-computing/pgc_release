@@ -1,8 +1,8 @@
 {
   "artifact_code": "RB_TRANSFORMATION_BINDINGS_V0",
   "artifact_type": "RB",
-  "content": "# RB_TRANSFORMATION_BINDINGS_V0\n\n## 1. Intent\n\nRuntime bindings for the transformation phase pipeline.\n\nPhases that judge a document alone bind nothing: they read text supplied to them and return a\nverdict, persisting nothing.\n\nFrom P2 onward a phase must *observe* the composition to ground what a register claims, and that is\na side effect \u2014 the same query answers differently against different compositions. It is bound here\nto `{{snapshot_root}}`: **the snapshot the workflow is executing from**, not one a caller names. A\nworkflow that could be pointed at a different composition would report confidently about the wrong\none, and its evidence would be worthless.\n\nNothing here is writable. The observation capability is read-only by construction, so a phase\ncannot alter the composition it is reasoning about.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::RB_TRANSFORMATION_BINDINGS_V0\nartifact_kind: RUNTIME_BINDING\nversion: v0\ngoverned_by: runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0\nauthority: pgc.platform\nconcern: design\nparameters:\n- snapshot_root\ncore:\n  summary: Runtime bindings for the transformation phase pipeline\n  description: Binds read-only observation of the executing composition. No storage, no writes.\n  bindings:\n    capability_side_effects::CS_SNAPSHOT_QUERY_V0:\n      type: CS\n      host: SnapshotQueryRuntime\n      operation: READ\n      policy:\n        snapshot_root: \"{{snapshot_root}}\"\n\n\nextensions:\n  notes:\n    - This artifact performs no discovery and no inference.\n    - The observed snapshot is the one the workflow runs inside, never one supplied by a caller.\n    - No binding here can write; observation cannot disturb what it observes.\n```\n",
-  "content_hash": "9d914621f408038cbb4a6848ba1e8991d471ae5fa2666b3216aa88f141571a19",
+  "content": "# RB_TRANSFORMATION_BINDINGS_V0\n\n## 1. Intent\n\nRuntime bindings for the transformation phase pipeline.\n\nPhases that judge a document alone bind nothing: they read text supplied to them and return a\nverdict, persisting nothing.\n\nFrom P2 onward a phase must *observe* the composition to ground what a register claims, and that is\na side effect \u2014 the same query answers differently against different compositions. It is bound here\nto `{{snapshot_root}}`: **the snapshot the workflow is executing from**, not one a caller names. A\nworkflow that could be pointed at a different composition would report confidently about the wrong\none, and its evidence would be worthless.\n\nNothing here is writable. The observation capability is read-only by construction, so a phase\ncannot alter the composition it is reasoning about.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::RB_TRANSFORMATION_BINDINGS_V0\nartifact_kind: RUNTIME_BINDING\nversion: v0\ngoverned_by: runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0\nauthority: pgc.platform\nconcern: design\nparameters:\n- snapshot_root\ncore:\n  summary: Runtime bindings for the transformation phase pipeline\n  description: Binds read-only observation of the executing composition. No storage, no writes.\n  bindings:\n    capability_side_effects::CS_SNAPSHOT_QUERY_V0:\n      policy:\n        snapshot_root: \"{{snapshot_root}}\"\n\n\nextensions:\n  notes:\n    - This artifact performs no discovery and no inference.\n    - The observed snapshot is the one the workflow runs inside, never one supplied by a caller.\n    - No binding here can write; observation cannot disturb what it observes.\n```\n",
+  "content_hash": "d2673e9ed4158f640e5950aeaab0104d22c99d362f10d375438164f6a11ca0a2",
   "fqdn_id": "transformation::RB_TRANSFORMATION_BINDINGS_V0",
   "frontmatter": {
     "artifact_kind": "RUNTIME_BINDING",
@@ -11,12 +11,9 @@
     "core": {
       "bindings": {
         "capability_side_effects::CS_SNAPSHOT_QUERY_V0": {
-          "host": "SnapshotQueryRuntime",
-          "operation": "READ",
           "policy": {
             "snapshot_root": "{{snapshot_root}}"
-          },
-          "type": "CS"
+          }
         }
       },
       "description": "Binds read-only observation of the executing composition. No storage, no writes.",

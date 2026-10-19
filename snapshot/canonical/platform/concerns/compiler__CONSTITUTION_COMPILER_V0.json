@@ -60,6 +60,11 @@
   "layer_code": "GOVERNANCE",
   "namespace": "compiler",
   "references": [
+    "artifact::INVARIANT_FQDN_ONLY_REFERENCES_V0",
+    "compiler::INVARIANT_ARTIFACT_CONTENT_HASH_DECLARED_V0",
+    "compiler::INVARIANT_COMPILER_GOVERNANCE_DECLARED_V0",
+    "compiler::INVARIANT_COMPILER_NO_EXECUTION_V0",
+    "compiler::INVARIANT_HANDLER_REGISTRY_CLOSED_V0",
     "vocabulary::CONSTITUTION_VOCABULARY_V0"
   ],
   "version": "0"

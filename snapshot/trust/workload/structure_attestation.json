@@ -1,18 +1,19 @@
 {
-  "attestation_hash": "d32cdf1f3ed6560bf7c91049ab7c6654bcd603ebeaff872dfddb1dd0a0475c0a",
+  "attestation_hash": "02340ddf7b9fc380fc411c542ad20b17cd6d9bc9d9379fe2c201dfac32b47568",
   "attestation_version": "V0",
   "imported_capabilities": [
-    "capability_side_effects::CS_MUTABLE_JSON_V0"
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_transforms::CT_PURE_REQUIRE_TRUE_V0"
   ],
   "imported_governance": {
-    "closure_member_count": 87,
-    "governance_closure_hash": "6d8eea38b83351ccaaf20a6c6637cb108c3da062161593f893c22b78de4db560",
+    "closure_member_count": 110,
+    "governance_closure_hash": "fb2ba50890a1848d9c927c100da9b283b25f0b3da01ed76a7eddd5d842b70e07",
     "import_domain": "platform"
   },
   "public_key_ref": "STUB",
   "signature": "STUB_NOT_CRYPTOGRAPHICALLY_SIGNED",
-  "signed_at": "2026-10-04T01:14:00.418340+00:00",
+  "signed_at": "2026-10-19T22:05:46.285098+00:00",
   "signing_algorithm": "STUB",
   "structure_id": "workload",
-  "tokenized_projection_hash": "46234698819fe8d0443f0648f607498767295565dccf7e6ceae83e9560f1772f"
+  "tokenized_projection_hash": "f556e679a504b0d0a1ab057c24188d5d0918f32e11592830fedc4e75a28410ae"
 }

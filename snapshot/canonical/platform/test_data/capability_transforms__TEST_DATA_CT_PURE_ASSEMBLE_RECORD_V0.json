@@ -1,8 +1,8 @@
 {
   "artifact_code": "TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0",
   "artifact_type": "TEST_DATA",
-  "content": "# TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V2\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_ASSEMBLE_RECORD_V0\ntarget: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\ncases:\n- case_id: assemble_simple_record\n  expected_outcome: SUCCESS\n  bindings:\n    fields:\n      name: Alice\n      age: 30\n      active: true\n  expected:\n    record:\n      name: Alice\n      age: 30\n      active: true\n- case_id: assemble_nested_record\n  expected_outcome: SUCCESS\n  bindings:\n    fields:\n      user_id: '123'\n      profile:\n        email: alice@example.com\n        role: admin\n  expected:\n    record:\n      user_id: '123'\n      profile:\n        email: alice@example.com\n        role: admin\n```\n\n## Intent\n\nTest record assembly from field values.\n",
-  "content_hash": "b8c2e4af1bd1d6ca89e66e847c89cf1b0c79cb3331e76d2749c248ece945a9d4",
+  "content": "# TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_ASSEMBLE_RECORD_V0\ntarget: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\ncases:\n- case_id: assemble_simple_record\n  expected_outcome: SUCCESS\n  bindings:\n    fields:\n      name: Alice\n      age: 30\n      active: true\n  expected:\n    record:\n      name: Alice\n      age: 30\n      active: true\n- case_id: assemble_nested_record\n  expected_outcome: SUCCESS\n  bindings:\n    fields:\n      user_id: '123'\n      profile:\n        email: alice@example.com\n        role: admin\n  expected:\n    record:\n      user_id: '123'\n      profile:\n        email: alice@example.com\n        role: admin\n```\n\n## Intent\n\nTest record assembly from field values.\n",
+  "content_hash": "fbe1d6e765399f8b11b80f95ab63944383e67209c2d8051c261207c1c089c474",
   "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0",
   "frontmatter": {
     "artifact_kind": "TEST_DATA",
@@ -54,14 +54,15 @@
       "summary": "Test vectors for CT_PURE_ASSEMBLE_RECORD_V0"
     },
     "fqdn": "capability_transforms::TEST_DATA_CT_PURE_ASSEMBLE_RECORD_V0",
-    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V2",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
     "target": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
     "version": "V0"
   },
   "layer_code": "REUSABLE_TRANSFORMS",
   "namespace": "capability_transforms",
   "references": [
-    "conformance::CONSTITUTION_TEST_DATA_V2"
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "conformance::CONSTITUTION_TEST_DATA_V0"
   ],
   "version": "0"
 }

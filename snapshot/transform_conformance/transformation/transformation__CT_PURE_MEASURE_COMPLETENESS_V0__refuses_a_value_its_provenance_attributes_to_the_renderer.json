@@ -1,0 +1,121 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_MEASURE_COMPLETENESS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "design_registers": "$.inputs.design_registers",
+          "mandate_registers": "$.inputs.mandate_registers",
+          "provenance": "$.inputs.provenance",
+          "threshold": "$.inputs.threshold"
+        },
+        "atom": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "transformation.implementation.capability_transforms.atoms.ct_pure_measure_completeness_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
+    "input_types": {
+      "design_registers": "array",
+      "mandate_registers": "array",
+      "provenance": "object",
+      "threshold": "number"
+    },
+    "inputs": {
+      "design_registers": [
+        {
+          "id": "new_artifacts",
+          "value": [
+            {
+              "capability": "Reader",
+              "code": "AC_READER_V0",
+              "family": "AC",
+              "owner_subdomain": "s",
+              "source_finding": {
+                "source": "human"
+              },
+              "status": "NEW",
+              "summary": "A reader of the catalog"
+            }
+          ]
+        },
+        {
+          "id": "artifact_properties",
+          "value": [
+            {
+              "artifact": "AC_READER_V0",
+              "property": "type",
+              "source_finding": {
+                "source": "human"
+              },
+              "value": "human"
+            }
+          ]
+        },
+        {
+          "id": "interface_fields",
+          "value": [
+            {
+              "artifact": "AC_READER_V0",
+              "default": null,
+              "direction": "ATTRIBUTE",
+              "field": "role",
+              "meaning": "What the reader does",
+              "required": "YES",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "mandate_registers": [
+        {
+          "id": "build_order",
+          "value": [
+            {
+              "code": "AC_READER_V0",
+              "wave": "1"
+            }
+          ]
+        },
+        {
+          "id": "field_declarations",
+          "value": [
+            {
+              "code": "AC_READER_V0",
+              "subdomain_field": "s"
+            }
+          ]
+        }
+      ],
+      "provenance": {
+        "AC_READER_V0.core.type": "supplied_by_renderer"
+      },
+      "threshold": 100.0
+    },
+    "outputs": {
+      "completeness": {
+        "from": "__atom_result__"
+      },
+      "determined": {
+        "from": "__atom_result__"
+      },
+      "required": {
+        "from": "__atom_result__"
+      },
+      "undetermined": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {},
+  "expected_outcome": "VIOLATION",
+  "fqdn": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0::refuses_a_value_its_provenance_attributes_to_the_renderer",
+  "test_data_source": "transformation::TEST_DATA_CT_PURE_MEASURE_COMPLETENESS_V0"
+}

@@ -1,0 +1,134 @@
+{
+  "artifact_code": "STRUCTURE_REGISTER_SCHEMA_DISPATCH_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_REGISTER_SCHEMA_DISPATCH_V0\n\n## 1. Intent\n\nEach design phase P0\u2013P8 is judged by one register schema, sealed into one workflow, and authored\nfrom one template. This structure states that dispatch once. The design compiler reads it to load a\nphase's schema, to emit its rule set into its workflow, and to name the workflows a design may cite.\n\n## 2. What a row states\n\n| Field | Meaning |\n|---|---|\n| `phase` | The phase identity, `p0` to `p8`. |\n| `schema` | The `$id` of the register schema the phase is judged by. |\n| `workflow` | The admissibility workflow its rule set is sealed into. |\n| `template` | The template a document of the phase is authored from. |\n| `rung` | The vocabulary class the phase adds on the purity ladder. |\n| `purpose`, `question`, `key_rule` | What the phase is for, the question it answers, and the rule an author keeps. |\n| `gate` | The human gate that closes the phase, or `null` where none does. |\n\nA phase's order in `phases` is its order in the pipeline. The phase after a phase is the next row.\n\n## 3. Why this is declared rather than coded\n\nThe dispatch was two Python tables. One named each phase's schema file and template. The other named\nthe workflow each rule set is sealed into. A third copy, the workflows a design may cite, was written\ninto the P7 register schema by hand. Three copies of one fact drift. Here it is stated once, and\nchanging it is a new version of this structure.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::STRUCTURE_REGISTER_SCHEMA_DISPATCH_V0\nartifact_kind: STRUCTURE\nversion: v0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: transformation\n\ncore:\n  summary: Which register schema, workflow and template each design phase dispatches to\n  phases:\n  - phase: p0\n    schema: transformation.schemas.REGISTER_SCHEMA_P0_V0\n    workflow: transformation::WF_P0_SEED_ADMISSIBILITY_V0\n    template: p0_change_seed_template_v0.md\n    rung: business_language\n    purpose: change seed\n    question: What does the business want, stated in its own words?\n    key_rule: Faithful rewrite only \u2014 no content added, no clarification resolved, no design assigned\n    gate: Gate 0 \u2014 the human confirms the seed says what they meant\n  - phase: p1\n    schema: transformation.schemas.REGISTER_SCHEMA_P1_V0\n    workflow: transformation::WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0\n    template: p1_change_request_template_v0.md\n    rung: business_language\n    purpose: change request\n    question: Classification \u00b7 Problem \u00b7 Outcome \u00b7 Known Facts \u00b7 Deferrals\n    key_rule: Business language only; baseline claims verified against the snapshot, never memory\n    gate: null\n  - phase: p2\n    schema: transformation.schemas.REGISTER_SCHEMA_P2_V0\n    workflow: transformation::WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0\n    template: p2_domain_model_template_v0.md\n    rung: business_language\n    purpose: domain model\n    question: Entities \u00b7 Processes \u00b7 Baseline fit \u00b7 Gaps\n    key_rule: Record what was searched, not only what was found\n    gate: null\n  - phase: p3\n    schema: transformation.schemas.REGISTER_SCHEMA_P3_V0\n    workflow: transformation::WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0\n    template: p3_analysis_loop_template_v0.md\n    rung: business_language\n    purpose: analysis loop\n    question: How is each gap resolved, iterated to Discovery Saturation?\n    key_rule: Every answer carries evidence; overturned answers are marked, never erased\n    gate: null\n  - phase: p4\n    schema: transformation.schemas.REGISTER_SCHEMA_P4_V0\n    workflow: transformation::WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0\n    template: p4_business_model_template_v0.md\n    rung: business_language\n    purpose: business model\n    question: What is the canonical consolidation every later phase projects from?\n    key_rule: Consolidation, not re-litigation\n    gate: null\n  - phase: p5\n    schema: transformation.schemas.REGISTER_SCHEMA_P5_V0\n    workflow: transformation::WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0\n    template: p5_business_intent_template_v0.md\n    rung: provisional_codes\n    purpose: business intent\n    question: WHAT \u2014 behaviour, objects, identity, invariants, actions\n    key_rule: Provisional capability names are admissible; no bindings, no paths\n    gate: null\n  - phase: p6\n    schema: transformation.schemas.REGISTER_SCHEMA_P6_V0\n    workflow: transformation::WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0\n    template: p6_governance_intent_template_v0.md\n    rung: placement\n    purpose: governance intent\n    question: WHERE \u2014 domain and subdomain, ownership, dependencies\n    key_rule: No new artifact codes; cross-subdomain writes forbidden\n    gate: null\n  - phase: p7\n    schema: transformation.schemas.REGISTER_SCHEMA_P7_V0\n    workflow: transformation::WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0\n    template: p7_design_intent_template_v0.md\n    rung: binding_fqdns\n    purpose: design intent\n    question: HOW \u2014 FQDNs, topology, schemas, stores, module paths, runtime bindings\n    key_rule: The full dossier is reviewed as a body\n    gate: Gate 1 \u2014 Design Approval\n  - phase: p8\n    schema: transformation.schemas.REGISTER_SCHEMA_P8_V0\n    workflow: transformation::WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0\n    template: p8_authoring_mandate_template_v0.md\n    rung: build_order\n    purpose: authoring mandate\n    question: IN WHAT ORDER \u2014 topologically sorted build waves\n    key_rule: Mechanical derivation; must reconcile with p7 exactly\n    gate: Gate 2 \u2014 Mandate Approval; the dossier is locked\n```\n",
+  "content_hash": "08fcecd4bc69280a2c7a5180799e224e6ad3440c2e3a58bfb81cd440aad51a26",
+  "fqdn_id": "transformation::STRUCTURE_REGISTER_SCHEMA_DISPATCH_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "transformation",
+    "core": {
+      "phases": [
+        {
+          "gate": "Gate 0 \u2014 the human confirms the seed says what they meant",
+          "key_rule": "Faithful rewrite only \u2014 no content added, no clarification resolved, no design assigned",
+          "phase": "p0",
+          "purpose": "change seed",
+          "question": "What does the business want, stated in its own words?",
+          "rung": "business_language",
+          "schema": "transformation.schemas.REGISTER_SCHEMA_P0_V0",
+          "template": "p0_change_seed_template_v0.md",
+          "workflow": "transformation::WF_P0_SEED_ADMISSIBILITY_V0"
+        },
+        {
+          "gate": null,
+          "key_rule": "Business language only; baseline claims verified against the snapshot, never memory",
+          "phase": "p1",
+          "purpose": "change request",
+          "question": "Classification \u00b7 Problem \u00b7 Outcome \u00b7 Known Facts \u00b7 Deferrals",
+          "rung": "business_language",
+          "schema": "transformation.schemas.REGISTER_SCHEMA_P1_V0",
+          "template": "p1_change_request_template_v0.md",
+          "workflow": "transformation::WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0"
+        },
+        {
+          "gate": null,
+          "key_rule": "Record what was searched, not only what was found",
+          "phase": "p2",
+          "purpose": "domain model",
+          "question": "Entities \u00b7 Processes \u00b7 Baseline fit \u00b7 Gaps",
+          "rung": "business_language",
+          "schema": "transformation.schemas.REGISTER_SCHEMA_P2_V0",
+          "template": "p2_domain_model_template_v0.md",
+          "workflow": "transformation::WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0"
+        },
+        {
+          "gate": null,
+          "key_rule": "Every answer carries evidence; overturned answers are marked, never erased",
+          "phase": "p3",
+          "purpose": "analysis loop",
+          "question": "How is each gap resolved, iterated to Discovery Saturation?",
+          "rung": "business_language",
+          "schema": "transformation.schemas.REGISTER_SCHEMA_P3_V0",
+          "template": "p3_analysis_loop_template_v0.md",
+          "workflow": "transformation::WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0"
+        },
+        {
+          "gate": null,
+          "key_rule": "Consolidation, not re-litigation",
+          "phase": "p4",
+          "purpose": "business model",
+          "question": "What is the canonical consolidation every later phase projects from?",
+          "rung": "business_language",
+          "schema": "transformation.schemas.REGISTER_SCHEMA_P4_V0",
+          "template": "p4_business_model_template_v0.md",
+          "workflow": "transformation::WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0"
+        },
+        {
+          "gate": null,
+          "key_rule": "Provisional capability names are admissible; no bindings, no paths",
+          "phase": "p5",
+          "purpose": "business intent",
+          "question": "WHAT \u2014 behaviour, objects, identity, invariants, actions",
+          "rung": "provisional_codes",
+          "schema": "transformation.schemas.REGISTER_SCHEMA_P5_V0",
+          "template": "p5_business_intent_template_v0.md",
+          "workflow": "transformation::WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0"
+        },
+        {
+          "gate": null,
+          "key_rule": "No new artifact codes; cross-subdomain writes forbidden",
+          "phase": "p6",
+          "purpose": "governance intent",
+          "question": "WHERE \u2014 domain and subdomain, ownership, dependencies",
+          "rung": "placement",
+          "schema": "transformation.schemas.REGISTER_SCHEMA_P6_V0",
+          "template": "p6_governance_intent_template_v0.md",
+          "workflow": "transformation::WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0"
+        },
+        {
+          "gate": "Gate 1 \u2014 Design Approval",
+          "key_rule": "The full dossier is reviewed as a body",
+          "phase": "p7",
+          "purpose": "design intent",
+          "question": "HOW \u2014 FQDNs, topology, schemas, stores, module paths, runtime bindings",
+          "rung": "binding_fqdns",
+          "schema": "transformation.schemas.REGISTER_SCHEMA_P7_V0",
+          "template": "p7_design_intent_template_v0.md",
+          "workflow": "transformation::WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0"
+        },
+        {
+          "gate": "Gate 2 \u2014 Mandate Approval; the dossier is locked",
+          "key_rule": "Mechanical derivation; must reconcile with p7 exactly",
+          "phase": "p8",
+          "purpose": "authoring mandate",
+          "question": "IN WHAT ORDER \u2014 topologically sorted build waves",
+          "rung": "build_order",
+          "schema": "transformation.schemas.REGISTER_SCHEMA_P8_V0",
+          "template": "p8_authoring_mandate_template_v0.md",
+          "workflow": "transformation::WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0"
+        }
+      ],
+      "summary": "Which register schema, workflow and template each design phase dispatches to"
+    },
+    "fqdn": "transformation::STRUCTURE_REGISTER_SCHEMA_DISPATCH_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0",
+    "transformation::WF_P0_SEED_ADMISSIBILITY_V0",
+    "transformation::WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0",
+    "transformation::WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0",
+    "transformation::WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0",
+    "transformation::WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0",
+    "transformation::WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0",
+    "transformation::WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0",
+    "transformation::WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0",
+    "transformation::WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0"
+  ],
+  "version": "0"
+}

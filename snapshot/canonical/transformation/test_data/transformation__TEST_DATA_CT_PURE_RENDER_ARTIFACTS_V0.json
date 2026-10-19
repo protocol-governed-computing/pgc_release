@@ -1,0 +1,193 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_RENDER_ARTIFACTS_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_RENDER_ARTIFACTS_V0\n\n## 1. Intent\n\nThe artifacts a mandate schedules are rendered from the design, with the renderer's record of anything it supplied; a mandate scheduling nothing is refused.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::TEST_DATA_CT_PURE_RENDER_ARTIFACTS_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: build\ntarget: transformation::CT_PURE_RENDER_ARTIFACTS_V0\ncases:\n- case_id: renders_the_actor_a_mandate_schedules\n  expected_outcome: SUCCESS\n  bindings:\n    design_registers:\n    - id: new_artifacts\n      value:\n      - capability: Reader\n        family: AC\n        code: AC_READER_V0\n        summary: A reader of the catalog\n        owner_subdomain: s\n        status: NEW\n        source_finding:\n          source: human\n    - id: artifact_properties\n      value:\n      - artifact: AC_READER_V0\n        property: type\n        value: human\n        source_finding:\n          source: human\n    - id: interface_fields\n      value:\n      - artifact: AC_READER_V0\n        direction: ATTRIBUTE\n        field: role\n        type: string\n        required: 'YES'\n        default: null\n        meaning: What the reader does\n    mandate_registers:\n    - id: build_order\n      value:\n      - wave: '1'\n        code: AC_READER_V0\n    - id: field_declarations\n      value:\n      - code: AC_READER_V0\n        subdomain_field: s\n  expected:\n    artifacts:\n    - path: registry/s/actors/AC_READER_V0.md\n      domain: AC_READER_V0\n      machine:\n        fqdn: AC_READER_V0\n        artifact_kind: ACTOR\n        version: v0\n        governed_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\n        authority: pgc.platform\n        concern: s\n        core:\n          summary: A reader of the catalog\n          type: human\n          attributes:\n            role:\n              type: string\n              required: true\n    documents:\n    - path: registry/s/actors/AC_READER_V0.md\n      text: \"# AC_READER_V0\\n\\n## Machine\\n\\n```yaml\\nfqdn: AC_READER_V0\\nartifact_kind: ACTOR\\nversion:\\\n        \\ v0\\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\\nauthority: pgc.platform\\nconcern: s\\n\\\n        core:\\n  summary: A reader of the catalog\\n  type: human\\n  attributes:\\n    role:\\n      type:\\\n        \\ string\\n      required: true\\n```\\n\\n---\\n\\n## Intent\\n\\nA reader of the catalog\\n\"\n    artifact_count: 1\n    sources:\n      AC_READER_V0: {}\n- case_id: refuses_a_mandate_scheduling_nothing\n  expected_outcome: VIOLATION\n  bindings:\n    design_registers:\n    - id: new_artifacts\n      value:\n      - capability: Reader\n        family: AC\n        code: AC_READER_V0\n        summary: A reader of the catalog\n        owner_subdomain: s\n        status: NEW\n        source_finding:\n          source: human\n    - id: artifact_properties\n      value:\n      - artifact: AC_READER_V0\n        property: type\n        value: human\n        source_finding:\n          source: human\n    - id: interface_fields\n      value:\n      - artifact: AC_READER_V0\n        direction: ATTRIBUTE\n        field: role\n        type: string\n        required: 'YES'\n        default: null\n        meaning: What the reader does\n    mandate_registers:\n    - id: build_order\n      value: []\n    - id: field_declarations\n      value: []\n```\n",
+  "content_hash": "0b412f6036f261653100c519e312967dff01cdd1009c1a9d2b588f9c76172313",
+  "fqdn_id": "transformation::TEST_DATA_CT_PURE_RENDER_ARTIFACTS_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "design_registers": [
+            {
+              "id": "new_artifacts",
+              "value": [
+                {
+                  "capability": "Reader",
+                  "code": "AC_READER_V0",
+                  "family": "AC",
+                  "owner_subdomain": "s",
+                  "source_finding": {
+                    "source": "human"
+                  },
+                  "status": "NEW",
+                  "summary": "A reader of the catalog"
+                }
+              ]
+            },
+            {
+              "id": "artifact_properties",
+              "value": [
+                {
+                  "artifact": "AC_READER_V0",
+                  "property": "type",
+                  "source_finding": {
+                    "source": "human"
+                  },
+                  "value": "human"
+                }
+              ]
+            },
+            {
+              "id": "interface_fields",
+              "value": [
+                {
+                  "artifact": "AC_READER_V0",
+                  "default": null,
+                  "direction": "ATTRIBUTE",
+                  "field": "role",
+                  "meaning": "What the reader does",
+                  "required": "YES",
+                  "type": "string"
+                }
+              ]
+            }
+          ],
+          "mandate_registers": [
+            {
+              "id": "build_order",
+              "value": [
+                {
+                  "code": "AC_READER_V0",
+                  "wave": "1"
+                }
+              ]
+            },
+            {
+              "id": "field_declarations",
+              "value": [
+                {
+                  "code": "AC_READER_V0",
+                  "subdomain_field": "s"
+                }
+              ]
+            }
+          ]
+        },
+        "case_id": "renders_the_actor_a_mandate_schedules",
+        "expected": {
+          "artifact_count": 1,
+          "artifacts": [
+            {
+              "domain": "AC_READER_V0",
+              "machine": {
+                "artifact_kind": "ACTOR",
+                "authority": "pgc.platform",
+                "concern": "s",
+                "core": {
+                  "attributes": {
+                    "role": {
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "summary": "A reader of the catalog",
+                  "type": "human"
+                },
+                "fqdn": "AC_READER_V0",
+                "governed_by": "actor::CONSTITUTION_ACTOR_IDENTITY_V0",
+                "version": "v0"
+              },
+              "path": "registry/s/actors/AC_READER_V0.md"
+            }
+          ],
+          "documents": [
+            {
+              "path": "registry/s/actors/AC_READER_V0.md",
+              "text": "# AC_READER_V0\n\n## Machine\n\n```yaml\nfqdn: AC_READER_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: s\ncore:\n  summary: A reader of the catalog\n  type: human\n  attributes:\n    role:\n      type: string\n      required: true\n```\n\n---\n\n## Intent\n\nA reader of the catalog\n"
+            }
+          ],
+          "sources": {
+            "AC_READER_V0": {}
+          }
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "design_registers": [
+            {
+              "id": "new_artifacts",
+              "value": [
+                {
+                  "capability": "Reader",
+                  "code": "AC_READER_V0",
+                  "family": "AC",
+                  "owner_subdomain": "s",
+                  "source_finding": {
+                    "source": "human"
+                  },
+                  "status": "NEW",
+                  "summary": "A reader of the catalog"
+                }
+              ]
+            },
+            {
+              "id": "artifact_properties",
+              "value": [
+                {
+                  "artifact": "AC_READER_V0",
+                  "property": "type",
+                  "source_finding": {
+                    "source": "human"
+                  },
+                  "value": "human"
+                }
+              ]
+            },
+            {
+              "id": "interface_fields",
+              "value": [
+                {
+                  "artifact": "AC_READER_V0",
+                  "default": null,
+                  "direction": "ATTRIBUTE",
+                  "field": "role",
+                  "meaning": "What the reader does",
+                  "required": "YES",
+                  "type": "string"
+                }
+              ]
+            }
+          ],
+          "mandate_registers": [
+            {
+              "id": "build_order",
+              "value": []
+            },
+            {
+              "id": "field_declarations",
+              "value": []
+            }
+          ]
+        },
+        "case_id": "refuses_a_mandate_scheduling_nothing",
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "build",
+    "fqdn": "transformation::TEST_DATA_CT_PURE_RENDER_ARTIFACTS_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "conformance::CONSTITUTION_TEST_DATA_V0",
+    "transformation::CT_PURE_RENDER_ARTIFACTS_V0"
+  ],
+  "version": "0"
+}

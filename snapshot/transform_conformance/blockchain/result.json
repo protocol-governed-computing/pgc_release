@@ -8,18 +8,27 @@
     "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
     "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
   ],
-  "cases": [],
+  "cases": [
+    {
+      "case": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0::derives_the_address_of_the_generator_key",
+      "passed": true
+    },
+    {
+      "case": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0::prefix_and_tag_derive_the_same_address",
+      "passed": true
+    }
+  ],
   "counts": {
-    "cases": 0,
+    "cases": 2,
     "cases_failed": 0,
-    "proven": 0,
+    "proven": 1,
     "refused": 0,
-    "unproven": 1
+    "unproven": 0
   },
   "domain": "blockchain",
-  "proven": [],
-  "refused": [],
-  "unproven": [
+  "proven": [
     "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0"
-  ]
+  ],
+  "refused": [],
+  "unproven": []
 }

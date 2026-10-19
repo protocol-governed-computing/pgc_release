@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_UPSTREAM_COMMITMENT_CARRIED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_UPSTREAM_COMMITMENT_CARRIED_V0\n\n## Machine\n\n```yaml\nfqdn: lifecycle::INVARIANT_UPSTREAM_COMMITMENT_CARRIED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: lifecycle::CONSTITUTION_CHANGE_MGMT_V0\nauthority: pgc.platform\nconcern: lifecycle\ncore:\n  enforcement_stage:\n  - enforced_elsewhere\n  violation_response: FAIL_IMMEDIATELY\n  enforced_by: the design compiler, evaluating each phase's sealed rule set over a phase document\nassert_projection:\n  applies_to_kinds:\n  - WF\n```\n\n---\n\n## 1. Claim\n\nA commitment an earlier phase made is carried forward. None is silently dropped.\n\n## 2. Why\n\nA dropped commitment leaves a well-formed document. A change request missing an acceptance criterion reads as complete, and that criterion is what the finished composition is later validated against.\n\n## 3. How it is checked\n\nRows of an upstream register reappear here, matched by citation, by key or by identity: beliefs, decisions, in-scope capabilities, designed artifacts, bindings and purpose.\n",
+  "content_hash": "ebd5bf26054654d4064b20bf68cf9e65097d0a4dc03772603495c9ea22246733",
+  "fqdn_id": "lifecycle::INVARIANT_UPSTREAM_COMMITMENT_CARRIED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "lifecycle",
+    "core": {
+      "enforced_by": "the design compiler, evaluating each phase's sealed rule set over a phase document",
+      "enforcement_stage": [
+        "enforced_elsewhere"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "lifecycle::INVARIANT_UPSTREAM_COMMITMENT_CARRIED_V0",
+    "governed_by": "lifecycle::CONSTITUTION_CHANGE_MGMT_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "lifecycle",
+  "references": [
+    "lifecycle::CONSTITUTION_CHANGE_MGMT_V0"
+  ],
+  "version": "0"
+}

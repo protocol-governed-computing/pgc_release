@@ -1,0 +1,36 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_FORM_WORK_IDENTITY_KEY_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::TEST_DATA_CT_PURE_FORM_WORK_IDENTITY_KEY_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: catalog\ntarget: book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0\ncases:\n- case_id: forms_normalized_key\n  expected_outcome: SUCCESS\n  bindings:\n    title: The Odyssey\n    author: Homer\n  expected:\n    work_key: the odyssey|homer\n```\n\n## Intent\n\nA work is keyed by title and author, normalized exactly as an edition is.\n",
+  "content_hash": "decac4e516e89c360aa105c9f0c8395ec253971c27ee7622a0896cc9dddd99f6",
+  "fqdn_id": "book_library_mgmt::TEST_DATA_CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "author": "Homer",
+          "title": "The Odyssey"
+        },
+        "case_id": "forms_normalized_key",
+        "expected": {
+          "work_key": "the odyssey|homer"
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "catalog",
+    "fqdn": "book_library_mgmt::TEST_DATA_CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+    "version": "V0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+    "conformance::CONSTITUTION_TEST_DATA_V0"
+  ],
+  "version": "0"
+}

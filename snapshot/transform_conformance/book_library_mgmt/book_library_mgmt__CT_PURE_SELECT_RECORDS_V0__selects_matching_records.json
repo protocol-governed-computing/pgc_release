@@ -1,0 +1,59 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_SELECT_RECORDS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "filter": "$.inputs.filter",
+          "source": "$.inputs.source"
+        },
+        "atom": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "book_library_mgmt.implementation.capability_transforms.atoms.ct_pure_select_records_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
+    "input_types": {
+      "filter": "object",
+      "source": "array"
+    },
+    "inputs": {
+      "filter": {
+        "author": "Homer"
+      },
+      "source": [
+        {
+          "author": "Homer",
+          "title": "Iliad"
+        },
+        {
+          "author": "Virgil",
+          "title": "Aeneid"
+        }
+      ]
+    },
+    "outputs": {
+      "extracted": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "extracted": [
+      {
+        "author": "Homer",
+        "title": "Iliad"
+      }
+    ]
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0::selects_matching_records",
+  "test_data_source": "book_library_mgmt::TEST_DATA_CT_PURE_SELECT_RECORDS_V0"
+}

@@ -1,8 +1,8 @@
 {
   "artifact_code": "AC_ENTERPRISE_RUNTIME_V0",
   "artifact_type": "AC",
-  "content": "# AC_ENTERPRISE_RUNTIME_V0\n\n## 1. Identity\n\nThe isolated side-effect executor that performs authorized actions.\n\n---\n\n## 2. Rationale\n\nThe enterprise runtime executes governed side effects:\n- Receives only authorized actions from the governance pipeline\n- Executes within isolated capability boundaries\n- Produces auditable persistence records\n\n---\n\n## 3. Type\n\n| Property | Value |\n|----------|-------|\n| Type | system |\n\n---\n\n## 4. Attributes\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| runtime_id | string | true | Runtime executor identifier |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::AC_ENTERPRISE_RUNTIME_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: governance::CONSTITUTION_GOVERNANCE_V0\nauthority: pgc.platform\nconcern: agent_governance\n\ncore:\n  summary: Isolated side-effect executor\n  description: Executes authorized actions within isolated capability boundaries\n  type: system\n\n  attributes:\n    runtime_id:\n      type: string\n      required: true\n```\n",
-  "content_hash": "da43c2b3f23af00cd0ec80c7dfb52ab126153ad50a1373021e47f85c7f76b3ff",
+  "content": "# AC_ENTERPRISE_RUNTIME_V0\n\n## 1. Identity\n\nThe isolated side-effect executor that performs authorized actions.\n\n---\n\n## 2. Rationale\n\nThe enterprise runtime executes governed side effects:\n- Receives only authorized actions from the governance pipeline\n- Executes within isolated capability boundaries\n- Produces auditable persistence records\n\n---\n\n## 3. Type\n\n| Property | Value |\n|----------|-------|\n| Type | system |\n\n---\n\n## 4. Attributes\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| runtime_id | string | true | Runtime executor identifier |\n\n---\n\n## Machine\n\n```yaml\nfqdn: ai_governance::AC_ENTERPRISE_RUNTIME_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: agent_governance\n\ncore:\n  summary: Isolated side-effect executor\n  description: Executes authorized actions within isolated capability boundaries\n  type: system\n\n  attributes:\n    runtime_id:\n      type: string\n      required: true\n```\n",
+  "content_hash": "3fe486a11b08183bd7f854a5806a1b68cb1a42140cbf57e20357715e3be3bcb3",
   "fqdn_id": "ai_governance::AC_ENTERPRISE_RUNTIME_V0",
   "frontmatter": {
     "artifact_kind": "ACTOR",
@@ -20,13 +20,13 @@
       "type": "system"
     },
     "fqdn": "ai_governance::AC_ENTERPRISE_RUNTIME_V0",
-    "governed_by": "governance::CONSTITUTION_GOVERNANCE_V0",
+    "governed_by": "actor::CONSTITUTION_ACTOR_IDENTITY_V0",
     "version": "v0"
   },
   "layer_code": "AI_GOVERNANCE",
   "namespace": "ai_governance",
   "references": [
-    "governance::CONSTITUTION_GOVERNANCE_V0"
+    "actor::CONSTITUTION_ACTOR_IDENTITY_V0"
   ],
   "version": "0"
 }

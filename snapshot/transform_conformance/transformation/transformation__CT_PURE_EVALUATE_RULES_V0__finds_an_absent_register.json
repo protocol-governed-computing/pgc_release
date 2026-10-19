@@ -1,0 +1,112 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_EVALUATE_RULES_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "document_text": "$.inputs.document_text",
+          "header": "$.inputs.header",
+          "observed": "$.inputs.observed",
+          "priors": "$.inputs.priors",
+          "registers": "$.inputs.registers",
+          "rule_set": "$.inputs.rule_set",
+          "sections": "$.inputs.sections"
+        },
+        "atom": "transformation::CT_PURE_EVALUATE_RULES_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "transformation.implementation.capability_transforms.atoms.ct_pure_evaluate_rules_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0",
+    "input_types": {
+      "document_text": "string",
+      "header": "object",
+      "observed": "object",
+      "priors": "object",
+      "registers": "array",
+      "rule_set": "array",
+      "sections": "array"
+    },
+    "inputs": {
+      "document_text": "# Change Seed \u2014 d / s\n\n## Machine\n\n```yaml\ndocument:\n  phase: p0\n  domain: d\n  subdomain: s\n  cr: c\n  rule_set: transformation.schemas.REGISTER_SCHEMA_P0_V0\nregisters:\n  out_of_scope:\n  - item: Fines\n    reason: Not in this release.\n  clarification_requests: null\n```\n\n## 12. Out of Scope\n\nNothing else.\n",
+      "header": {
+        "cr": "c",
+        "domain": "d",
+        "phase": "p0",
+        "rule_set": "transformation.schemas.REGISTER_SCHEMA_P0_V0",
+        "subdomain": "s"
+      },
+      "observed": {},
+      "priors": {},
+      "registers": [
+        {
+          "id": "out_of_scope",
+          "value": [
+            {
+              "item": "Fines",
+              "reason": "Not in this release."
+            }
+          ]
+        },
+        {
+          "id": "clarification_requests",
+          "value": null
+        }
+      ],
+      "rule_set": [
+        {
+          "check": "TABLE_PRESENT",
+          "id": "REGISTER_MISSING",
+          "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/cr_type/x-derived/TABLE_PRESENT",
+          "intent": "a declared register must be present and readable as rows",
+          "register": "cr_type"
+        }
+      ],
+      "sections": [
+        {
+          "number": 12,
+          "text": "\nNothing else.",
+          "title": "Out of Scope"
+        }
+      ]
+    },
+    "outputs": {
+      "findings": {
+        "from": "__atom_result__"
+      },
+      "rules_evaluated": {
+        "from": "__atom_result__"
+      },
+      "verdict": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "findings": [
+      {
+        "code": "REGISTER_MISSING",
+        "detail": "declared register is absent from the document",
+        "intent": "a declared register must be present and readable as rows",
+        "locator": {
+          "field": null,
+          "register": "cr_type",
+          "row": null
+        },
+        "rule": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/cr_type/x-derived/TABLE_PRESENT"
+      }
+    ],
+    "rules_evaluated": 1,
+    "verdict": "INADMISSIBLE"
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0::finds_an_absent_register",
+  "test_data_source": "transformation::TEST_DATA_CT_PURE_EVALUATE_RULES_V0"
+}

@@ -1,0 +1,69 @@
+{
+  "public": "v6",
+  "snapshot_id": "13e3c5bb502e2548389f5787caa9438247ee34f9d510ce6a8a3ed980fdf974d1",
+  "components": {
+    "pgc-governance": {
+      "repo": "software_governance",
+      "version": "6.0.0",
+      "commit": "f37f22a07bcc71abe32356c75a0ba90fe8c37aa3",
+      "doi": "10.5281/zenodo.23485266",
+      "contributes_artifacts": true
+    },
+    "pgc-workloads": {
+      "repo": "conformance_workloads",
+      "version": "6.0.0",
+      "commit": "7db60796a63e766a9bca39de0ea806432cc0fc48",
+      "doi": "10.5281/zenodo.23485267",
+      "contributes_artifacts": true
+    },
+    "pgc-domains": {
+      "repo": "business_domains",
+      "version": "6.0.0",
+      "commit": "df2d0e97ddf53c11da585de3a911b61889b4456f",
+      "doi": "10.5281/zenodo.23485268",
+      "contributes_artifacts": true
+    },
+    "pgc-compiler": {
+      "repo": "protocol_compiler",
+      "version": "6.0.0",
+      "commit": "c8d7a28079a82bbe73599f335b2deaabad2e809f",
+      "doi": "10.5281/zenodo.23485269",
+      "contributes_artifacts": false
+    },
+    "pgc-runtime": {
+      "repo": "protocol_runtime",
+      "version": "6.0.0",
+      "commit": "c3d5d962052e70390d242a38de910fd96d5e93d7",
+      "doi": "10.5281/zenodo.23485270",
+      "contributes_artifacts": false
+    },
+    "pgc-assembler": {
+      "repo": "snapshot_assembler",
+      "version": "6.0.0",
+      "commit": "e32494fc48c1943bef0289540b05d8bda6eea32e",
+      "doi": "10.5281/zenodo.23485271",
+      "contributes_artifacts": false
+    },
+    "pgc-transport": {
+      "repo": "protocol_transport",
+      "version": "6.0.0",
+      "commit": "4dc586bcc09c3bbfa910883d986ea70b10741b5f",
+      "doi": "10.5281/zenodo.23485272",
+      "contributes_artifacts": false
+    },
+    "pgc-inspector": {
+      "repo": "snapshot_inspector",
+      "version": "6.0.0",
+      "commit": "4ced82108ba087f4b4e5a4448b52d4864137c7b6",
+      "doi": "10.5281/zenodo.23485273",
+      "contributes_artifacts": true
+    },
+    "pgc-transformation": {
+      "repo": "transformation_compilers",
+      "version": "6.0.0",
+      "commit": "938d14968ee925e9ea13235f11ee224d52df0f2c",
+      "doi": "10.5281/zenodo.23485274",
+      "contributes_artifacts": true
+    }
+  }
+}

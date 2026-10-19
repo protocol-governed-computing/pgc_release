@@ -1,22 +1,67 @@
 {
   "carried": [],
-  "cases": [],
+  "cases": [
+    {
+      "case": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0::attributes_a_supplied_layer_to_the_renderer",
+      "passed": true
+    },
+    {
+      "case": "transformation::CT_PURE_EVALUATE_RULES_V0::admits_a_present_register",
+      "passed": true
+    },
+    {
+      "case": "transformation::CT_PURE_EVALUATE_RULES_V0::finds_an_absent_register",
+      "passed": true
+    },
+    {
+      "case": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0::admits_a_design_that_determines_its_artifact",
+      "passed": true
+    },
+    {
+      "case": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0::refuses_a_design_that_leaves_facts_undetermined",
+      "passed": true
+    },
+    {
+      "case": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0::refuses_a_value_its_provenance_attributes_to_the_renderer",
+      "passed": true
+    },
+    {
+      "case": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0::reads_each_prior_by_phase",
+      "passed": true
+    },
+    {
+      "case": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0::reads_no_prior_when_none_is_handed_over",
+      "passed": true
+    },
+    {
+      "case": "transformation::CT_PURE_PARSE_REGISTERS_V0::reads_header_registers_and_sections",
+      "passed": true
+    },
+    {
+      "case": "transformation::CT_PURE_RENDER_ARTIFACTS_V0::refuses_a_mandate_scheduling_nothing",
+      "passed": true
+    },
+    {
+      "case": "transformation::CT_PURE_RENDER_ARTIFACTS_V0::renders_the_actor_a_mandate_schedules",
+      "passed": true
+    }
+  ],
   "counts": {
-    "cases": 0,
+    "cases": 11,
     "cases_failed": 0,
-    "proven": 0,
+    "proven": 6,
     "refused": 0,
-    "unproven": 6
+    "unproven": 0
   },
   "domain": "transformation",
-  "proven": [],
-  "refused": [],
-  "unproven": [
+  "proven": [
     "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
     "transformation::CT_PURE_EVALUATE_RULES_V0",
     "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
     "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0",
     "transformation::CT_PURE_PARSE_REGISTERS_V0",
     "transformation::CT_PURE_RENDER_ARTIFACTS_V0"
-  ]
+  ],
+  "refused": [],
+  "unproven": []
 }

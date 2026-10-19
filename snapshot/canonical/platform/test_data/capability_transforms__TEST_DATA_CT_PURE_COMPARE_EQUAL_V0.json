@@ -1,0 +1,47 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_COMPARE_EQUAL_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_COMPARE_EQUAL_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_COMPARE_EQUAL_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: capability_transforms\ntarget: capability_transforms::CT_PURE_COMPARE_EQUAL_V0\ncases:\n- case_id: equal_values\n  expected_outcome: SUCCESS\n  bindings:\n    left: SUCCESS\n    right: SUCCESS\n  expected:\n    is_equal: true\n- case_id: different_values_return_false\n  expected_outcome: SUCCESS\n  bindings:\n    left: SUCCESS\n    right: VIOLATION\n  expected:\n    is_equal: false\n```\n\n## Intent\n\nEqual values compare equal, and different values return false rather than refusing.\n",
+  "content_hash": "1df8783ff9fb0800fc9d4008aebe4e41052db876277f3089d69e43e1844e08df",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_COMPARE_EQUAL_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "left": "SUCCESS",
+          "right": "SUCCESS"
+        },
+        "case_id": "equal_values",
+        "expected": {
+          "is_equal": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "left": "SUCCESS",
+          "right": "VIOLATION"
+        },
+        "case_id": "different_values_return_false",
+        "expected": {
+          "is_equal": false
+        },
+        "expected_outcome": "SUCCESS"
+      }
+    ],
+    "concern": "capability_transforms",
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_COMPARE_EQUAL_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+    "conformance::CONSTITUTION_TEST_DATA_V0"
+  ],
+  "version": "0"
+}

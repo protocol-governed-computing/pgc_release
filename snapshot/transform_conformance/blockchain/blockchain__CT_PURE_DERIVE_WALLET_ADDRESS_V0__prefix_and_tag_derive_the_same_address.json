@@ -1,0 +1,40 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "key_material": "$.inputs.key_material"
+        },
+        "atom": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "blockchain.implementation.capability_transforms.atoms.ct_pure_derive_wallet_address_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+    "input_types": {
+      "key_material": "string"
+    },
+    "inputs": {
+      "key_material": "0x0479be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8"
+    },
+    "outputs": {
+      "address": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "address": "0x7e5f4552091a69125d5dfcb7b8c2659029395bdf"
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0::prefix_and_tag_derive_the_same_address",
+  "test_data_source": "blockchain::TEST_DATA_CT_PURE_DERIVE_WALLET_ADDRESS_V0"
+}

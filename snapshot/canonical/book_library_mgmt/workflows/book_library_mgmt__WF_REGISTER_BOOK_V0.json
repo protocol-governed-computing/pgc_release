@@ -183,6 +183,10 @@
   "layer_code": "BOOK_LIBRARY_MGMT",
   "namespace": "book_library_mgmt",
   "references": [
+    "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+    "book_library_mgmt::EV_BOOK_REGISTERED_V0",
+    "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0",
+    "book_library_mgmt::EV_WORK_REGISTERED_V0",
     "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
     "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
     "workflow::CONSTITUTION_WORKFLOW_V0"

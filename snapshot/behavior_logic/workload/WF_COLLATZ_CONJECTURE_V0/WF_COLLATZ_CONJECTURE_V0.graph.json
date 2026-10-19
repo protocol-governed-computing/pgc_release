@@ -90,6 +90,20 @@
               "all_terminate",
               "non_terminating"
             ]
+          },
+          {
+            "bindings": {
+              "value": "check_termination.all_terminate"
+            },
+            "fqdn": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
+            "id": "CT_PURE_REQUIRE_TRUE_V0",
+            "inputs": [
+              "value"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "held"
+            ]
           }
         ]
       },

@@ -1,0 +1,52 @@
+{
+  "artifact_code": "STRUCTURE_PHASE_SECTIONS_V0",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_PHASE_SECTIONS_V0\n\n## 1. Intent\n\nThe prose of a phase document outside its Machine block, cut at its headings. A section has the\nnumber its heading carries, or `null` for an unnumbered heading, its title, and its text. Prose is\nread, never judged as structure: the registers carry what a rule checks.\n\n## 2. How it is read\n\n`core.json_schema` is a JSON Schema. A capability transform's field names this structure\nwith `structure`, and the field's value conforms to the schema. `$id` is the structure's own\nidentity.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::STRUCTURE_PHASE_SECTIONS_V0\nartifact_kind: STRUCTURE\nversion: v0\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: transformation\ncore:\n  summary: A phase document's prose sections, in order, as parsed\n  json_schema:\n    $schema: https://json-schema.org/draft/2020-12/schema\n    $id: transformation::STRUCTURE_PHASE_SECTIONS_V0\n    type: array\n    items:\n      type: object\n      additionalProperties: false\n      required:\n      - number\n      - title\n      - text\n      properties:\n        number:\n          type:\n          - integer\n          - 'null'\n        title:\n          type: string\n        text:\n          type: string\n```\n",
+  "content_hash": "fae1e13a5e861a491a40cb4cea3cdad57bbd786d0d0d65be3dfe66a8da3c81d6",
+  "fqdn_id": "transformation::STRUCTURE_PHASE_SECTIONS_V0",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "transformation",
+    "core": {
+      "json_schema": {
+        "$id": "transformation::STRUCTURE_PHASE_SECTIONS_V0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "number": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "text": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "number",
+            "title",
+            "text"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "summary": "A phase document's prose sections, in order, as parsed"
+    },
+    "fqdn": "transformation::STRUCTURE_PHASE_SECTIONS_V0",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "version": "v0"
+  },
+  "layer_code": "TRANSFORMATION",
+  "namespace": "transformation",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

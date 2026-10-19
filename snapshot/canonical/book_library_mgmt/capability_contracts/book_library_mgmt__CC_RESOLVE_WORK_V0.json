@@ -169,7 +169,9 @@
   "namespace": "book_library_mgmt",
   "references": [
     "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
-    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0"
   ],
   "version": "0"
 }

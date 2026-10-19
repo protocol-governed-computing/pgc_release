@@ -1,8 +1,8 @@
 {
   "artifact_code": "AC_GATE_REVIEWER_V0",
   "artifact_type": "AC",
-  "content": "# AC_GATE_REVIEWER_V0\n\n## 1. Intent\n\nThe person who confirms at a gate that a seed says what they meant.\n\nAn admissible verdict is a structural result: it establishes that the seed is well formed, never\nthat it is correct. Only a person can accept that, so the gate has a declared human actor and the\nacceptance is recorded against them.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::AC_GATE_REVIEWER_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: design\ncore:\n  summary: Human reviewer at a pipeline gate\n  description: The human who accepts or declines a seed at Gate 0 after a verdict is reached.\n  type: human\n  attributes:\n    role:\n      type: string\n      required: true\n      value: gate_reviewer\n```\n",
-  "content_hash": "d0cc412f79c3b7c93e052d5c1fb3987b7e5760473d27bb24ce20c102105dd16c",
+  "content": "# AC_GATE_REVIEWER_V0\n\n## 1. Intent\n\nThe person who confirms at a gate that a seed says what they meant.\n\nAn admissible verdict is a structural result: it establishes that the seed is well formed, never\nthat it is correct. Only a person can accept that, so the gate has a declared human actor and the\nacceptance is recorded against them.\n\n---\n\n## Machine\n\n```yaml\nfqdn: transformation::AC_GATE_REVIEWER_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: design\ncore:\n  summary: Human reviewer at a pipeline gate\n  description: The human who accepts or declines a seed at Gate 0 after a verdict is reached.\n  type: human\n  attributes:\n    role:\n      type: string\n      required: true\n```\n",
+  "content_hash": "8ca153094978d24eb1d678be493d239bf2b249fa181f0f110e3cb299cdb6ee0d",
   "fqdn_id": "transformation::AC_GATE_REVIEWER_V0",
   "frontmatter": {
     "artifact_kind": "ACTOR",
@@ -12,8 +12,7 @@
       "attributes": {
         "role": {
           "required": true,
-          "type": "string",
-          "value": "gate_reviewer"
+          "type": "string"
         }
       },
       "description": "The human who accepts or declines a seed at Gate 0 after a verdict is reached.",

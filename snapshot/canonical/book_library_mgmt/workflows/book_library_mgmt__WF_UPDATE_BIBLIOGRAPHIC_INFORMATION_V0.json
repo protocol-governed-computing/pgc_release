@@ -1,8 +1,8 @@
 {
   "artifact_code": "WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
   "artifact_type": "WF",
-  "content": "# WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n\n## 1. Intent\n\nThe governed sequence that corrects what the library publishes about a book\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\nsuperseded_by:\n- book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: catalog\nruntime_binding: book_library_mgmt::RB_CATALOG_BINDINGS_V0\nsubdomain: catalog\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: The governed sequence that corrects what the library publishes about a book\n  actor_context: book_library_mgmt::AC_LIBRARY_STAFF_V0\n  start_node: IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n  nodes:\n    IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0:\n      type: IN\n      code: IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n      next:\n        ACK: CC_CONFIRM_STAFF_AUTHORIZED_V0\n        NACK: EXIT_REJECTED\n    CC_CONFIRM_STAFF_AUTHORIZED_V0:\n      type: CC\n      code: CC_CONFIRM_STAFF_AUTHORIZED_V0\n      inputs:\n        staff_credentials: $.payload.staff_credentials\n        authorization_rules: $.payload.authorization_rules\n      next:\n        SUCCESS: CC_RESOLVE_BOOK_IDENTITY_V0\n        VIOLATION: EXIT_REJECTED\n    CC_RESOLVE_BOOK_IDENTITY_V0:\n      type: CC\n      code: CC_RESOLVE_BOOK_IDENTITY_V0\n      inputs:\n        identity_key: $.payload.identity_key\n      next:\n        SUCCESS: CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0:\n      type: CC\n      code: CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n      inputs:\n        identity_key: $.payload.identity_key\n        updated_fields: $.payload.updated_fields\n      next:\n        SUCCESS: CC_APPEND_CATALOG_OPERATION_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_APPEND_CATALOG_OPERATION_V0:\n      type: CC\n      code: CC_APPEND_CATALOG_OPERATION_V0\n      inputs:\n        staff_id: $.payload.staff_id\n        operation: UPDATE_BIBLIOGRAPHIC_INFORMATION\n        record:\n          operation: UPDATE_BIBLIOGRAPHIC_INFORMATION\n          staff_id: $.payload.staff_id\n          subject: $.payload.identity_key\n      next:\n        SUCCESS: EXIT_COMPLETED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n      emit: book_library_mgmt::EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n",
-  "content_hash": "225e4cec8eec1d108a3667fb8a334faea22614e884889e652156b43e65ad3257",
+  "content": "# WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: catalog\nruntime_binding: book_library_mgmt::RB_CATALOG_BINDINGS_V0\nsubdomain: catalog\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: Corrects what the library publishes about a registered book\n  actor_context: book_library_mgmt::AC_LIBRARY_STAFF_V0\n  start_node: IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n  nodes:\n    IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0:\n      type: IN\n      code: IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n      next:\n        ACK: CC_CONFIRM_STAFF_AUTHORIZED_V0\n        NACK: EXIT_REJECTED\n    CC_CONFIRM_STAFF_AUTHORIZED_V0:\n      type: CC\n      code: CC_CONFIRM_STAFF_AUTHORIZED_V0\n      inputs:\n        staff_credentials: $.payload.staff_credentials\n      next:\n        SUCCESS: CC_RESOLVE_BOOK_IDENTITY_V0\n        VIOLATION: EXIT_REJECTED\n    CC_RESOLVE_BOOK_IDENTITY_V0:\n      type: CC\n      code: CC_RESOLVE_BOOK_IDENTITY_V0\n      inputs:\n        identity_key: $.payload.identity_key\n      next:\n        SUCCESS: CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0:\n      type: CC\n      code: CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n      inputs:\n        identity_key: $.payload.identity_key\n        updated_fields: $.payload.updated_fields\n      next:\n        SUCCESS: CC_APPEND_CATALOG_OPERATION_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_APPEND_CATALOG_OPERATION_V0:\n      type: CC\n      code: CC_APPEND_CATALOG_OPERATION_V0\n      inputs:\n        operation: UPDATE_BIBLIOGRAPHIC_INFORMATION\n        record:\n          operation: UPDATE_BIBLIOGRAPHIC_INFORMATION\n          staff_id: $.payload.staff_id\n          subject: $.payload.identity_key\n        staff_id: $.payload.staff_id\n      next:\n        SUCCESS: EXIT_COMPLETED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n      emit: book_library_mgmt::EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n\n---\n\n## Intent\n\nCorrects what the library publishes about a registered book\n",
+  "content_hash": "150abd6ff073a69edbf374a828c8bc6481744c167364d41f745aafc5728171cb",
   "fqdn_id": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
   "frontmatter": {
     "artifact_kind": "WORKFLOW",
@@ -34,7 +34,6 @@
           "code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
           "fqdn_id": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
           "inputs": {
-            "authorization_rules": "$.payload.authorization_rules",
             "staff_credentials": "$.payload.staff_credentials"
           },
           "next": {
@@ -90,21 +89,20 @@
         }
       },
       "start_node": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "summary": "The governed sequence that corrects what the library publishes about a book"
+      "summary": "Corrects what the library publishes about a registered book"
     },
     "fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
     "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
     "runtime_binding": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
     "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
     "subdomain": "catalog",
-    "superseded_by": [
-      "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
-    ],
     "version": "v0"
   },
   "layer_code": "BOOK_LIBRARY_MGMT",
   "namespace": "book_library_mgmt",
   "references": [
+    "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+    "book_library_mgmt::EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0",
     "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
     "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
     "workflow::CONSTITUTION_WORKFLOW_V0"

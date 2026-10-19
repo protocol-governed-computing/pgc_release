@@ -74,8 +74,129 @@
           "prior_texts": {},
           "rule_set": [
             {
+              "check": "HEADER_FIELD_PRESENT",
+              "id": "HEADER_FIELD_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/document/required",
+              "intent": "a phase document states its phase, its domain and subdomain, its change, and the rule set it was authored under",
+              "params": {
+                "fields": [
+                  "phase",
+                  "domain",
+                  "subdomain",
+                  "cr",
+                  "rule_set"
+                ]
+              }
+            },
+            {
+              "check": "HEADER_FIELD_MATCHES",
+              "id": "HEADER_FIELD_MISMATCH",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/document/properties/phase/const",
+              "intent": "a document's phase is the phase whose rules judge it",
+              "params": {
+                "fields": [
+                  "phase"
+                ],
+                "pattern": "^p0$"
+              }
+            },
+            {
+              "check": "HEADER_FIELD_OF_TYPE",
+              "id": "HEADER_FIELD_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/document/properties/domain",
+              "intent": "a document's domain takes its declared form",
+              "params": {
+                "field": "domain",
+                "type": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "check": "HEADER_FIELD_OF_TYPE",
+              "id": "HEADER_FIELD_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/document/properties/subdomain",
+              "intent": "a document's subdomain takes its declared form",
+              "params": {
+                "field": "subdomain",
+                "type": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "minLength": 1,
+                  "type": [
+                    "string",
+                    "array"
+                  ]
+                }
+              }
+            },
+            {
+              "check": "HEADER_FIELD_OF_TYPE",
+              "id": "HEADER_FIELD_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/document/properties/cr",
+              "intent": "a document's cr takes its declared form",
+              "params": {
+                "field": "cr",
+                "type": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "check": "HEADER_FIELD_MATCHES",
+              "id": "HEADER_FIELD_MISMATCH",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/document/properties/rule_set/pattern",
+              "intent": "a document's rule_set names a rule set of its own phase",
+              "params": {
+                "fields": [
+                  "rule_set"
+                ],
+                "pattern": "^transformation\\.schemas\\.REGISTER_SCHEMA_P0_V[0-9]+$"
+              }
+            },
+            {
+              "check": "HEADER_FIELD_OF_TYPE",
+              "id": "HEADER_FIELD_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/document/properties/approval",
+              "intent": "a document's approval takes its declared form",
+              "params": {
+                "field": "approval",
+                "type": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "gate": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "rule_set": {
+                      "pattern": "^transformation\\.schemas\\.REGISTER_SCHEMA_P0_V[0-9]+$",
+                      "type": "string"
+                    },
+                    "state": {
+                      "enum": [
+                        "APPROVED",
+                        "MIGRATED",
+                        "RECONFIRMED"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "gate",
+                    "rule_set",
+                    "state"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
               "check": "SECTION_HAS_TEXT",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/subdomain_purpose/minLength",
               "intent": "a narrative register carries the context nothing downstream can rederive",
               "params": {
                 "detail": "narrative register is empty \u2014 it states nothing"
@@ -85,12 +206,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/cr_type/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "cr_type"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/cr_type/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -104,12 +227,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/cr_type/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "cr_type"
             },
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/cr_type/items/properties/classification/x-vocab",
               "intent": "Classification is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Classification",
@@ -125,6 +250,7 @@
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/cr_type/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -140,12 +266,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_vocabulary/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "business_vocabulary"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_vocabulary/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -158,12 +286,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_vocabulary/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "business_vocabulary"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_vocabulary/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -178,12 +308,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/requested_outcomes/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "requested_outcomes"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/requested_outcomes/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -195,12 +327,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/requested_outcomes/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "requested_outcomes"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/requested_outcomes/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -214,12 +348,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/known_facts/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "known_facts"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/known_facts/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -232,12 +368,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/known_facts/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "known_facts"
             },
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/known_facts/items/properties/certainty/x-vocab",
               "intent": "Certainty is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Certainty",
@@ -252,6 +390,7 @@
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/known_facts/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -266,12 +405,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/system_beliefs/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "system_beliefs"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/system_beliefs/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -285,12 +426,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/system_beliefs/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "system_beliefs"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/system_beliefs/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -306,12 +449,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/assumptions/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "assumptions"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/assumptions/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -324,6 +469,7 @@
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/assumptions/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -338,12 +484,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/constraints/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "constraints"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/constraints/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -356,6 +504,7 @@
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/constraints/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -370,12 +519,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_invariants/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "business_invariants"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_invariants/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -387,12 +538,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_invariants/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "business_invariants"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_invariants/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -406,12 +559,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/lifecycle_states/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "lifecycle_states"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/lifecycle_states/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -425,12 +580,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/lifecycle_states/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "lifecycle_states"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/lifecycle_states/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -446,12 +603,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_events/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "business_events"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_events/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -465,12 +624,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_events/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "business_events"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/business_events/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -486,12 +647,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/authority_boundaries/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "authority_boundaries"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/authority_boundaries/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -504,12 +667,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/authority_boundaries/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "authority_boundaries"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/authority_boundaries/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -524,12 +689,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/out_of_scope/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "out_of_scope"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/out_of_scope/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -542,12 +709,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/out_of_scope/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "out_of_scope"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/out_of_scope/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -562,12 +731,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/governance_scope/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "governance_scope"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/governance_scope/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -580,12 +751,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/governance_scope/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "governance_scope"
             },
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/governance_scope/items/properties/relationship/x-vocab",
               "intent": "Relationship is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Relationship",
@@ -602,6 +775,7 @@
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/governance_scope/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -616,12 +790,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/clarification_requests/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "clarification_requests"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/clarification_requests/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -636,6 +812,7 @@
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/clarification_requests/items/properties/blocking/x-vocab",
               "intent": "Blocking is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Blocking",
@@ -649,6 +826,7 @@
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/clarification_requests/items/properties/owner/x-vocab",
               "intent": "Owner is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Owner",
@@ -663,6 +841,7 @@
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/clarification_requests/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -679,12 +858,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/acceptance_criteria/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "acceptance_criteria"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/acceptance_criteria/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -696,12 +877,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/acceptance_criteria/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "acceptance_criteria"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/acceptance_criteria/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -715,12 +898,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/identity_and_sameness/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "identity_and_sameness"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/identity_and_sameness/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -734,6 +919,7 @@
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/identity_and_sameness/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -749,12 +935,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/lifecycle_transitions/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "lifecycle_transitions"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/lifecycle_transitions/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -770,6 +958,7 @@
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/lifecycle_transitions/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -787,12 +976,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/operation_refusals/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "operation_refusals"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/operation_refusals/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -806,6 +997,7 @@
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/operation_refusals/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -821,12 +1013,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/authority_deferrals/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "authority_deferrals"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/authority_deferrals/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -840,6 +1034,7 @@
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/authority_deferrals/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -855,6 +1050,7 @@
             {
               "check": "COLUMN_ABSENT",
               "id": "BELIEF_CARRIES_CERTAINTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/allOf/0",
               "intent": "the truth/belief split is what P2 verification depends on",
               "params": {
                 "column": "Certainty",
@@ -865,6 +1061,7 @@
             {
               "check": "CELL_NOT_EMPTY",
               "id": "BELIEF_WITHOUT_VERIFICATION_GOAL",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/allOf/1",
               "intent": "an unverifiable belief silently becomes an assumption",
               "params": {
                 "column": "Verification Goal",
@@ -873,26 +1070,23 @@
               "register": "system_beliefs"
             },
             {
-              "check": "CELL_NOT_PREFIXED",
+              "check": "CELL_TOKEN_ABSENT",
               "id": "BELIEF_STATED_AS_FACT",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/allOf/2",
               "intent": "P0 must not promote a System Belief to a Known Fact",
               "params": {
-                "column": "Belief",
-                "detail": "belief is asserted, not suspected ({prefix!r}) \u2014 state it as a belief or move it to Known Facts",
-                "prefixes": [
-                  "there is ",
-                  "there are ",
-                  "the system provides ",
-                  "the system has ",
-                  "it is confirmed ",
-                  "confirmed: "
-                ]
+                "columns": [
+                  "Belief"
+                ],
+                "detail": "belief is asserted, not suspected ({token!r}) \u2014 state it as a belief or move it to Known Facts",
+                "pattern": "(?i)^(?:there is|there are|the system provides|the system has|it is confirmed|confirmed:)(?=\\s)"
               },
               "register": "system_beliefs"
             },
             {
               "check": "UNRESOLVED_MARKER_ABSENT",
               "id": "REGISTER_CELL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/allOf/3",
               "intent": "an unanswered question left in a register reads as decided to every later phase",
               "params": {
                 "detail": "{column!r} declares the question unanswered ({marker}) rather than answering it \u2014 ask it as a clarification, do not hedge it in a register",
@@ -904,6 +1098,7 @@
             {
               "check": "ROW_ABSENT_WHEN",
               "id": "BLOCKING_CLARIFICATION_OUTSTANDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/allOf/4",
               "intent": "a blocking question the next phase never sees is answered by invention",
               "params": {
                 "column": "Blocking",
@@ -915,6 +1110,7 @@
             {
               "check": "ROW_ABSENT_WHEN",
               "id": "BUSINESS_CLARIFICATION_OUTSTANDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/allOf/5",
               "intent": "a business question that outlives the seed is answered downstream by inference",
               "params": {
                 "column": "Owner",
@@ -922,30 +1118,6 @@
                 "value": "HUMAN"
               },
               "register": "clarification_requests"
-            },
-            {
-              "check": "HEADER_FIELD_PRESENT",
-              "id": "HEADER_FIELD_MISSING",
-              "intent": "a dossier document states its phase, its CR, its lifecycle state, and what it feeds",
-              "params": {
-                "fields": [
-                  "Stage",
-                  "CR",
-                  "Status",
-                  "Feeds"
-                ]
-              }
-            },
-            {
-              "check": "HEADER_FIELD_MATCHES",
-              "id": "LIFECYCLE_STATE_NOT_IN_VOCABULARY",
-              "intent": "the lifecycle axis is a controlled vocabulary, not free text",
-              "params": {
-                "fields": [
-                  "Status"
-                ],
-                "pattern": "^(DRAFT|CONSTRUCTION_COMPLETE|ADMITTED_UNVALIDATED|EXECUTION_VALIDATED|PROMOTED)\\b"
-              }
             }
           ]
         }

@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_EXISTING_ARTIFACT_OBSERVED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_EXISTING_ARTIFACT_OBSERVED_V0\n\n## Machine\n\n```yaml\nfqdn: lifecycle::INVARIANT_EXISTING_ARTIFACT_OBSERVED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: lifecycle::CONSTITUTION_CHANGE_MGMT_V0\nauthority: pgc.platform\nconcern: lifecycle\ncore:\n  enforcement_stage:\n  - enforced_elsewhere\n  violation_response: FAIL_IMMEDIATELY\n  enforced_by: the design compiler, evaluating each phase's sealed rule set over a phase document\nassert_projection:\n  applies_to_kinds:\n  - WF\n```\n\n---\n\n## 1. Claim\n\nA claim about an existing artifact resolves in the pinned composition.\n\n## 2. Why\n\nAn artifact named from memory may not exist, or may exist in another domain. Citing the baseline is observation, and an observation that cannot be repeated is not one.\n\n## 3. How it is checked\n\nEvery identity a register claims exists is looked up in the composition the dossier is pinned to.\n",
+  "content_hash": "5795a1be53fdb05fc1357f6aaa99800d91edc4489ad5d6b3a1985311df39161e",
+  "fqdn_id": "lifecycle::INVARIANT_EXISTING_ARTIFACT_OBSERVED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "lifecycle",
+    "core": {
+      "enforced_by": "the design compiler, evaluating each phase's sealed rule set over a phase document",
+      "enforcement_stage": [
+        "enforced_elsewhere"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "lifecycle::INVARIANT_EXISTING_ARTIFACT_OBSERVED_V0",
+    "governed_by": "lifecycle::CONSTITUTION_CHANGE_MGMT_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "lifecycle",
+  "references": [
+    "lifecycle::CONSTITUTION_CHANGE_MGMT_V0"
+  ],
+  "version": "0"
+}

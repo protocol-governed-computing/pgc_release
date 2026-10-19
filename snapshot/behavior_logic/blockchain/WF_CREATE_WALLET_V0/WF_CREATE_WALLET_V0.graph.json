@@ -52,7 +52,10 @@
       "input_bindings": {
         "type": "wf_boundary",
         "bindings": {
-          "occurrence_fields": "IN.occurrence_fields",
+          "occurrence_fields": {
+            "holder": "$.results.CC_RESOLVE_ACTOR_V0.value.contact_address",
+            "occurrence": "WALLET_CREATED"
+          },
           "stream_id": "CC_DETERMINE_WALLET_IDENTITY_V0.id"
         }
       }
@@ -143,7 +146,13 @@
       "input_bindings": {
         "type": "wf_boundary",
         "bindings": {
-          "wallet_fields": "IN.wallet_fields",
+          "wallet_fields": {
+            "balance": 0,
+            "classification": "DEFAULT",
+            "denomination": "BACHI",
+            "holder": "$.results.CC_RESOLVE_ACTOR_V0.value.contact_address",
+            "state": "ACTIVE"
+          },
           "wallet_id": "CC_DETERMINE_WALLET_IDENTITY_V0.id"
         }
       }
@@ -178,7 +187,7 @@
         "type": "wf_boundary",
         "bindings": {
           "holder": "CC_RESOLVE_ACTOR_V0.value.contact_address",
-          "wallet_id_prefix": "IN.wallet_id_prefix"
+          "wallet_id_prefix": "wal"
         }
       }
     },
@@ -313,6 +322,11 @@
   "edges": [
     {
       "from": "CC_APPEND_WALLET_OCCURRENCE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_APPEND_WALLET_OCCURRENCE_V0",
       "to": "EXIT_SUCCESS",
       "condition": "SUCCESS"
     },
@@ -328,6 +342,11 @@
     },
     {
       "from": "CC_CLAIM_WALLET_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_CLAIM_WALLET_IDENTITY_V0",
       "to": "CC_ESTABLISH_WALLET_ADDRESS_V0",
       "condition": "SUCCESS"
     },
@@ -335,6 +354,11 @@
       "from": "CC_CLAIM_WALLET_IDENTITY_V0",
       "to": "EXIT_REJECTED",
       "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CREATE_WALLET_RECORD_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
     },
     {
       "from": "CC_CREATE_WALLET_RECORD_V0",
@@ -379,6 +403,11 @@
     {
       "from": "CC_RESOLVE_ACTOR_V0",
       "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_RESOLVE_ACTOR_V0",
+      "to": "EXIT_REJECTED",
       "condition": "NOT_FOUND"
     },
     {
@@ -411,9 +440,43 @@
     [
       "IN_WALLET_CREATION_V0",
       "CC_RESOLVE_ACTOR_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_WALLET_CREATION_V0",
+      "CC_RESOLVE_ACTOR_V0",
       "CC_REQUIRE_ACCEPTED_HOLDER_V0",
       "CC_DETERMINE_WALLET_IDENTITY_V0",
       "CC_CLAIM_WALLET_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_WALLET_CREATION_V0",
+      "CC_RESOLVE_ACTOR_V0",
+      "CC_REQUIRE_ACCEPTED_HOLDER_V0",
+      "CC_DETERMINE_WALLET_IDENTITY_V0",
+      "CC_CLAIM_WALLET_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_WALLET_CREATION_V0",
+      "CC_RESOLVE_ACTOR_V0",
+      "CC_REQUIRE_ACCEPTED_HOLDER_V0",
+      "CC_DETERMINE_WALLET_IDENTITY_V0",
+      "CC_CLAIM_WALLET_IDENTITY_V0",
+      "CC_ESTABLISH_WALLET_ADDRESS_V0",
+      "CC_CREATE_WALLET_RECORD_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_WALLET_CREATION_V0",
+      "CC_RESOLVE_ACTOR_V0",
+      "CC_REQUIRE_ACCEPTED_HOLDER_V0",
+      "CC_DETERMINE_WALLET_IDENTITY_V0",
+      "CC_CLAIM_WALLET_IDENTITY_V0",
+      "CC_ESTABLISH_WALLET_ADDRESS_V0",
+      "CC_CREATE_WALLET_RECORD_V0",
+      "CC_APPEND_WALLET_OCCURRENCE_V0",
       "EXIT_REJECTED"
     ],
     [

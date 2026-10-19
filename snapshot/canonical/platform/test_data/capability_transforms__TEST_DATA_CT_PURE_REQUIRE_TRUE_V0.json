@@ -1,0 +1,46 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_REQUIRE_TRUE_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_REQUIRE_TRUE_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_REQUIRE_TRUE_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_REQUIRE_TRUE_V0\ntarget: capability_transforms::CT_PURE_REQUIRE_TRUE_V0\ncases:\n- case_id: value_true\n  expected_outcome: SUCCESS\n  bindings:\n    value: true\n  expected:\n    held: true\n- case_id: value_false\n  expected_outcome: VIOLATION\n  bindings:\n    value: false\n  expected: {}\n```\n\n## Intent\n\nTest the boolean gate.\n",
+  "content_hash": "e66bc90ff655b506c8d72a34da7d92154832c4fdb5a8a4675faa69073e3e4e8a",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_REQUIRE_TRUE_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "value": true
+        },
+        "case_id": "value_true",
+        "expected": {
+          "held": true
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "value": false
+        },
+        "case_id": "value_false",
+        "expected": {},
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_REQUIRE_TRUE_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_REQUIRE_TRUE_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
+    "conformance::CONSTITUTION_TEST_DATA_V0"
+  ],
+  "version": "0"
+}

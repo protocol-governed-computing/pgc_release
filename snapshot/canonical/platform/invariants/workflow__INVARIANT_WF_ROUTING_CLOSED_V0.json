@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_WF_ROUTING_CLOSED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_WF_ROUTING_CLOSED_V0\n\n## Machine\n\n```yaml\nfqdn: workflow::INVARIANT_WF_ROUTING_CLOSED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: workflow\ncore:\n  enforcement_stage:\n  - compiler_assertion\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - WF\n```\n\n## Summary\n\nA workflow node that execution can reach answers every outcome the thing it runs can end with. An\noutcome with neither a route nor an ending is a place where execution refuses. Construction refuses\nit first, so a sealed workflow cannot present itself as complete while it carries the gap.\n\n## What this realizes\n\nFor every `WF` artifact in force, for every node reachable from `start_node` over `next`:\n\n1. A node of type `CC` MUST declare in `next` every code in its contract's\n   `result_status_contract.allowed`.\n2. A node of type `IN` MUST declare in `next` every outcome its intent declares.\n3. A code in `next` is answered whether it names a node or an ending. Both are routes the\n   declarations give, and the build derives routing and termination from the same map.\n\n## Where it applies\n\n- **Artifact Types**: WF\n- **Validation Phase**: compile_time\n- **Enforced By**: ASSERT_WF_ROUTING_CLOSED_V0\n- **Realizes**: `4a` GC-15\n\n## Why reach, and why a superseded workflow is not checked\n\nThe obligation binds what execution can reach. A node no path from `start_node` arrives at runs on no\nrequest. A superseded workflow is not in force and has no dispatch entry\n(`artifact::INVARIANT_SUPERSEDED_NOT_IN_FORCE_V0`), so execution cannot reach any of its nodes. It\nstays in the canonical record as evidence, and the record does not run.\n\n## Relationship to the step-level invariants\n\n`execution_topology::INVARIANT_TOPOLOGY_ROUTING_COMPLETE_V0` closes a contract's steps against the\ncapabilities they dispatch. `execution_topology::INVARIANT_TOPOLOGY_CONTRACT_CLOSED_V0` closes what a\ncontract can end with against what it declares. This closes the workflow against both. Closing an\noutcome at the step adds it to what the contract can end with, which opens a gap here unless the\nworkflow answers it too, so the three are realized together.\n\n---\n\n## What this realizes\n```yaml\ncore:\n  rule: Every node a workflow can reach MUST declare in next every outcome the contract or intent it runs\n    declares; an outcome with neither a route nor an ending is a compile-time violation\n  summary: a reachable workflow node answers every outcome of what it runs; construction refuses an\n    unanswered one rather than leaving execution to refuse it\n```\n",
+  "content_hash": "74370f5f6426b2c70a28d6995705b5ec5dd20bdae5320c48a3fe75a64c1990a6",
+  "fqdn_id": "workflow::INVARIANT_WF_ROUTING_CLOSED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "workflow",
+    "core": {
+      "enforcement_stage": [
+        "compiler_assertion"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "workflow::INVARIANT_WF_ROUTING_CLOSED_V0",
+    "governed_by": "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "workflow",
+  "references": [
+    "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0"
+  ],
+  "version": "0"
+}

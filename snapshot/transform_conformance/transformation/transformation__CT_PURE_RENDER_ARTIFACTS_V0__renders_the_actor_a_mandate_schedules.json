@@ -1,0 +1,148 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_RENDER_ARTIFACTS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "design_registers": "$.inputs.design_registers",
+          "mandate_registers": "$.inputs.mandate_registers"
+        },
+        "atom": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "transformation.implementation.capability_transforms.atoms.ct_pure_render_artifacts_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
+    "input_types": {
+      "design_registers": "array",
+      "mandate_registers": "array"
+    },
+    "inputs": {
+      "design_registers": [
+        {
+          "id": "new_artifacts",
+          "value": [
+            {
+              "capability": "Reader",
+              "code": "AC_READER_V0",
+              "family": "AC",
+              "owner_subdomain": "s",
+              "source_finding": {
+                "source": "human"
+              },
+              "status": "NEW",
+              "summary": "A reader of the catalog"
+            }
+          ]
+        },
+        {
+          "id": "artifact_properties",
+          "value": [
+            {
+              "artifact": "AC_READER_V0",
+              "property": "type",
+              "source_finding": {
+                "source": "human"
+              },
+              "value": "human"
+            }
+          ]
+        },
+        {
+          "id": "interface_fields",
+          "value": [
+            {
+              "artifact": "AC_READER_V0",
+              "default": null,
+              "direction": "ATTRIBUTE",
+              "field": "role",
+              "meaning": "What the reader does",
+              "required": "YES",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "mandate_registers": [
+        {
+          "id": "build_order",
+          "value": [
+            {
+              "code": "AC_READER_V0",
+              "wave": "1"
+            }
+          ]
+        },
+        {
+          "id": "field_declarations",
+          "value": [
+            {
+              "code": "AC_READER_V0",
+              "subdomain_field": "s"
+            }
+          ]
+        }
+      ]
+    },
+    "outputs": {
+      "artifact_count": {
+        "from": "__atom_result__"
+      },
+      "artifacts": {
+        "from": "__atom_result__"
+      },
+      "documents": {
+        "from": "__atom_result__"
+      },
+      "sources": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "artifact_count": 1,
+    "artifacts": [
+      {
+        "domain": "AC_READER_V0",
+        "machine": {
+          "artifact_kind": "ACTOR",
+          "authority": "pgc.platform",
+          "concern": "s",
+          "core": {
+            "attributes": {
+              "role": {
+                "required": true,
+                "type": "string"
+              }
+            },
+            "summary": "A reader of the catalog",
+            "type": "human"
+          },
+          "fqdn": "AC_READER_V0",
+          "governed_by": "actor::CONSTITUTION_ACTOR_IDENTITY_V0",
+          "version": "v0"
+        },
+        "path": "registry/s/actors/AC_READER_V0.md"
+      }
+    ],
+    "documents": [
+      {
+        "path": "registry/s/actors/AC_READER_V0.md",
+        "text": "# AC_READER_V0\n\n## Machine\n\n```yaml\nfqdn: AC_READER_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: s\ncore:\n  summary: A reader of the catalog\n  type: human\n  attributes:\n    role:\n      type: string\n      required: true\n```\n\n---\n\n## Intent\n\nA reader of the catalog\n"
+      }
+    ],
+    "sources": {
+      "AC_READER_V0": {}
+    }
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "transformation::CT_PURE_RENDER_ARTIFACTS_V0::renders_the_actor_a_mandate_schedules",
+  "test_data_source": "transformation::TEST_DATA_CT_PURE_RENDER_ARTIFACTS_V0"
+}

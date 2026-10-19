@@ -6,21 +6,42 @@
     "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
     "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
   ],
-  "cases": [],
+  "cases": [
+    {
+      "case": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0::forms_normalized_key",
+      "passed": true
+    },
+    {
+      "case": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0::refuses_blank_title",
+      "passed": true
+    },
+    {
+      "case": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0::forms_normalized_key",
+      "passed": true
+    },
+    {
+      "case": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0::groups_by_attribute",
+      "passed": true
+    },
+    {
+      "case": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0::selects_matching_records",
+      "passed": true
+    }
+  ],
   "counts": {
-    "cases": 0,
+    "cases": 5,
     "cases_failed": 0,
-    "proven": 0,
+    "proven": 4,
     "refused": 0,
-    "unproven": 4
+    "unproven": 0
   },
   "domain": "book_library_mgmt",
-  "proven": [],
-  "refused": [],
-  "unproven": [
+  "proven": [
     "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
     "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
     "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
     "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0"
-  ]
+  ],
+  "refused": [],
+  "unproven": []
 }

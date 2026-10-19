@@ -1,0 +1,74 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_COLLATZ_STEP_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "numbers": "$.inputs.numbers"
+        },
+        "atom": "workload::CT_PURE_COLLATZ_STEP_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "workloads.collatz.implementation.capability_transforms.atoms.ct_pure_collatz_step_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
+    "input_types": {
+      "numbers": "array"
+    },
+    "inputs": {
+      "numbers": [
+        6,
+        7
+      ]
+    },
+    "outputs": {
+      "sequences": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "sequences": {
+      "6": [
+        6,
+        3,
+        10,
+        5,
+        16,
+        8,
+        4,
+        2,
+        1
+      ],
+      "7": [
+        7,
+        22,
+        11,
+        34,
+        17,
+        52,
+        26,
+        13,
+        40,
+        20,
+        10,
+        5,
+        16,
+        8,
+        4,
+        2,
+        1
+      ]
+    }
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "workload::CT_PURE_COLLATZ_STEP_V0::sequences_for_several_numbers",
+  "test_data_source": "workload::TEST_DATA_CT_PURE_COLLATZ_STEP_V0"
+}

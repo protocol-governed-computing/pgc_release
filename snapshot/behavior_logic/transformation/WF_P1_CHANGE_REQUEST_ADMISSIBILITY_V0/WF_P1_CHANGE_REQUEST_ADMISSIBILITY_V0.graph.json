@@ -74,14 +74,101 @@
           "prior_texts": "IN.prior_texts",
           "rule_set": [
             {
+              "check": "HEADER_FIELD_PRESENT",
+              "id": "HEADER_FIELD_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/document/required",
+              "intent": "a phase document states its phase, its domain and subdomain, its change, and the rule set it was authored under",
+              "params": {
+                "fields": [
+                  "phase",
+                  "domain",
+                  "subdomain",
+                  "cr",
+                  "rule_set"
+                ]
+              }
+            },
+            {
+              "check": "HEADER_FIELD_MATCHES",
+              "id": "HEADER_FIELD_MISMATCH",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/document/properties/phase/const",
+              "intent": "a document's phase is the phase whose rules judge it",
+              "params": {
+                "fields": [
+                  "phase"
+                ],
+                "pattern": "^p1$"
+              }
+            },
+            {
+              "check": "HEADER_FIELD_OF_TYPE",
+              "id": "HEADER_FIELD_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/document/properties/domain",
+              "intent": "a document's domain takes its declared form",
+              "params": {
+                "field": "domain",
+                "type": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "check": "HEADER_FIELD_OF_TYPE",
+              "id": "HEADER_FIELD_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/document/properties/subdomain",
+              "intent": "a document's subdomain takes its declared form",
+              "params": {
+                "field": "subdomain",
+                "type": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "minLength": 1,
+                  "type": [
+                    "string",
+                    "array"
+                  ]
+                }
+              }
+            },
+            {
+              "check": "HEADER_FIELD_OF_TYPE",
+              "id": "HEADER_FIELD_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/document/properties/cr",
+              "intent": "a document's cr takes its declared form",
+              "params": {
+                "field": "cr",
+                "type": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "check": "HEADER_FIELD_MATCHES",
+              "id": "HEADER_FIELD_MISMATCH",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/document/properties/rule_set/pattern",
+              "intent": "a document's rule_set names a rule set of its own phase",
+              "params": {
+                "fields": [
+                  "rule_set"
+                ],
+                "pattern": "^transformation\\.schemas\\.REGISTER_SCHEMA_P1_V[0-9]+$"
+              }
+            },
+            {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/cr_type/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "cr_type"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/cr_type/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -96,12 +183,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/cr_type/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "cr_type"
             },
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/cr_type/items/properties/classification/x-vocab",
               "intent": "Classification is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Classification",
@@ -115,8 +204,144 @@
               "register": "cr_type"
             },
             {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/cr_type/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
+              "register": "cr_type"
+            },
+            {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/cr_type/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -130,8 +355,9 @@
               "register": "cr_type"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/cr_type/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -142,6 +368,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/cr_type/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -241,12 +468,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "cr_type"
@@ -254,6 +475,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/cr_type/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -263,12 +485,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_vocabulary/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "business_vocabulary"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_vocabulary/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -282,12 +506,149 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_vocabulary/minItems",
               "intent": "an empty required register asserts nothing",
+              "register": "business_vocabulary"
+            },
+            {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_vocabulary/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
               "register": "business_vocabulary"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_vocabulary/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -300,8 +661,9 @@
               "register": "business_vocabulary"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_vocabulary/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -312,6 +674,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_vocabulary/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -411,12 +774,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "business_vocabulary"
@@ -424,6 +781,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_vocabulary/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -433,12 +791,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/requested_outcomes/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "requested_outcomes"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/requested_outcomes/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -451,12 +811,149 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/requested_outcomes/minItems",
               "intent": "an empty required register asserts nothing",
+              "register": "requested_outcomes"
+            },
+            {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/requested_outcomes/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
               "register": "requested_outcomes"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/requested_outcomes/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -468,8 +965,9 @@
               "register": "requested_outcomes"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/requested_outcomes/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -480,6 +978,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/requested_outcomes/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -579,12 +1078,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "requested_outcomes"
@@ -592,6 +1085,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/requested_outcomes/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -601,12 +1095,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/known_facts/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "known_facts"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/known_facts/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -620,12 +1116,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/known_facts/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "known_facts"
             },
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/known_facts/items/properties/certainty/x-vocab",
               "intent": "Certainty is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Certainty",
@@ -638,8 +1136,144 @@
               "register": "known_facts"
             },
             {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/known_facts/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
+              "register": "known_facts"
+            },
+            {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/known_facts/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -652,8 +1286,9 @@
               "register": "known_facts"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/known_facts/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -664,6 +1299,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/known_facts/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -763,12 +1399,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "known_facts"
@@ -776,6 +1406,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/known_facts/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -785,12 +1416,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/system_beliefs/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "system_beliefs"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/system_beliefs/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -805,12 +1438,149 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/system_beliefs/minItems",
               "intent": "an empty required register asserts nothing",
+              "register": "system_beliefs"
+            },
+            {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/system_beliefs/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
               "register": "system_beliefs"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/system_beliefs/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -824,8 +1594,9 @@
               "register": "system_beliefs"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/system_beliefs/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -836,6 +1607,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/system_beliefs/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -935,12 +1707,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "system_beliefs"
@@ -948,6 +1714,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/system_beliefs/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -957,12 +1724,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/assumptions/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "assumptions"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/assumptions/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -974,8 +1743,144 @@
               "register": "assumptions"
             },
             {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/assumptions/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
+              "register": "assumptions"
+            },
+            {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/assumptions/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -988,8 +1893,9 @@
               "register": "assumptions"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/assumptions/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -1000,6 +1906,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/assumptions/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -1099,12 +2006,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "assumptions"
@@ -1112,6 +2013,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/assumptions/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -1121,12 +2023,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/constraints/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "constraints"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/constraints/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -1140,12 +2044,149 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/constraints/minItems",
               "intent": "an empty required register asserts nothing",
+              "register": "constraints"
+            },
+            {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/constraints/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
               "register": "constraints"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/constraints/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -1158,8 +2199,9 @@
               "register": "constraints"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/constraints/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -1170,6 +2212,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/constraints/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -1269,12 +2312,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "constraints"
@@ -1282,6 +2319,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/constraints/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -1291,12 +2329,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_invariants/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "business_invariants"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_invariants/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -1309,12 +2349,149 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_invariants/minItems",
               "intent": "an empty required register asserts nothing",
+              "register": "business_invariants"
+            },
+            {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_invariants/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
               "register": "business_invariants"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_invariants/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -1326,8 +2503,9 @@
               "register": "business_invariants"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_invariants/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -1338,6 +2516,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_invariants/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -1437,12 +2616,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "business_invariants"
@@ -1450,6 +2623,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_invariants/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -1459,12 +2633,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_states/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "lifecycle_states"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_states/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -1479,12 +2655,149 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_states/minItems",
               "intent": "an empty required register asserts nothing",
+              "register": "lifecycle_states"
+            },
+            {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_states/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
               "register": "lifecycle_states"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_states/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -1498,8 +2811,9 @@
               "register": "lifecycle_states"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_states/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -1510,6 +2824,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_states/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -1609,12 +2924,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "lifecycle_states"
@@ -1622,6 +2931,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_states/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -1631,12 +2941,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_events/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "business_events"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_events/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -1651,12 +2963,149 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_events/minItems",
               "intent": "an empty required register asserts nothing",
+              "register": "business_events"
+            },
+            {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_events/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
               "register": "business_events"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_events/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -1670,8 +3119,9 @@
               "register": "business_events"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_events/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -1682,6 +3132,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_events/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -1781,12 +3232,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "business_events"
@@ -1794,6 +3239,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/business_events/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -1803,12 +3249,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_boundaries/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "authority_boundaries"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_boundaries/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -1822,12 +3270,149 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_boundaries/minItems",
               "intent": "an empty required register asserts nothing",
+              "register": "authority_boundaries"
+            },
+            {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_boundaries/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
               "register": "authority_boundaries"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_boundaries/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -1840,8 +3425,9 @@
               "register": "authority_boundaries"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_boundaries/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -1852,6 +3438,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_boundaries/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -1951,12 +3538,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "authority_boundaries"
@@ -1964,6 +3545,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_boundaries/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -1973,12 +3555,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/out_of_scope/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "out_of_scope"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/out_of_scope/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -1990,8 +3574,144 @@
               "register": "out_of_scope"
             },
             {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/out_of_scope/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
+              "register": "out_of_scope"
+            },
+            {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/out_of_scope/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -2004,8 +3724,9 @@
               "register": "out_of_scope"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/out_of_scope/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -2016,6 +3737,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/out_of_scope/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -2115,12 +3837,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "out_of_scope"
@@ -2128,6 +3844,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/out_of_scope/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -2137,12 +3854,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/governance_scope/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "governance_scope"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/governance_scope/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -2156,12 +3875,14 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/governance_scope/minItems",
               "intent": "an empty required register asserts nothing",
               "register": "governance_scope"
             },
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/governance_scope/items/properties/relationship/x-vocab",
               "intent": "Relationship is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Relationship",
@@ -2176,8 +3897,144 @@
               "register": "governance_scope"
             },
             {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/governance_scope/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
+              "register": "governance_scope"
+            },
+            {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/governance_scope/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -2190,8 +4047,9 @@
               "register": "governance_scope"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/governance_scope/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -2202,6 +4060,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/governance_scope/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -2301,12 +4160,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "governance_scope"
@@ -2314,6 +4167,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/governance_scope/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -2323,12 +4177,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/clarification_requests/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "clarification_requests"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/clarification_requests/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -2344,6 +4200,7 @@
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/clarification_requests/items/properties/blocking/x-vocab",
               "intent": "Blocking is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Blocking",
@@ -2357,6 +4214,7 @@
             {
               "check": "CELL_IN_VOCABULARY",
               "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/clarification_requests/items/properties/owner/x-vocab",
               "intent": "Owner is a controlled vocabulary declared by the template",
               "params": {
                 "column": "Owner",
@@ -2369,8 +4227,144 @@
               "register": "clarification_requests"
             },
             {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/clarification_requests/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
+              "register": "clarification_requests"
+            },
+            {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/clarification_requests/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -2385,8 +4379,9 @@
               "register": "clarification_requests"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/clarification_requests/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -2397,6 +4392,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/clarification_requests/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -2496,12 +4492,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "clarification_requests"
@@ -2509,6 +4499,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/clarification_requests/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -2518,12 +4509,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/acceptance_criteria/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "acceptance_criteria"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/acceptance_criteria/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -2536,12 +4529,149 @@
             {
               "check": "TABLE_HAS_ROWS",
               "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/acceptance_criteria/minItems",
               "intent": "an empty required register asserts nothing",
+              "register": "acceptance_criteria"
+            },
+            {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/acceptance_criteria/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
               "register": "acceptance_criteria"
             },
             {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/acceptance_criteria/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -2553,8 +4683,9 @@
               "register": "acceptance_criteria"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/acceptance_criteria/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -2565,6 +4696,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/acceptance_criteria/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -2664,12 +4796,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "acceptance_criteria"
@@ -2677,6 +4803,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/acceptance_criteria/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -2686,12 +4813,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/identity_and_sameness/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "identity_and_sameness"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/identity_and_sameness/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -2704,8 +4833,144 @@
               "register": "identity_and_sameness"
             },
             {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/identity_and_sameness/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
+              "register": "identity_and_sameness"
+            },
+            {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/identity_and_sameness/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -2719,8 +4984,9 @@
               "register": "identity_and_sameness"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/identity_and_sameness/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -2731,6 +4997,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/identity_and_sameness/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -2830,12 +5097,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "identity_and_sameness"
@@ -2843,6 +5104,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/identity_and_sameness/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -2852,12 +5114,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_transitions/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "lifecycle_transitions"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_transitions/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -2872,8 +5136,144 @@
               "register": "lifecycle_transitions"
             },
             {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_transitions/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
+              "register": "lifecycle_transitions"
+            },
+            {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_transitions/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -2889,8 +5289,9 @@
               "register": "lifecycle_transitions"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_transitions/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -2901,6 +5302,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_transitions/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -3000,12 +5402,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "lifecycle_transitions"
@@ -3013,6 +5409,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/lifecycle_transitions/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -3022,12 +5419,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/operation_refusals/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "operation_refusals"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/operation_refusals/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -3040,8 +5439,144 @@
               "register": "operation_refusals"
             },
             {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/operation_refusals/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
+              "register": "operation_refusals"
+            },
+            {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/operation_refusals/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -3055,8 +5590,9 @@
               "register": "operation_refusals"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/operation_refusals/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -3067,6 +5603,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/operation_refusals/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -3166,12 +5703,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "operation_refusals"
@@ -3179,6 +5710,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/operation_refusals/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -3188,12 +5720,14 @@
             {
               "check": "TABLE_PRESENT",
               "id": "REGISTER_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_deferrals/x-derived/TABLE_PRESENT",
               "intent": "a declared register must be present and readable as rows",
               "register": "authority_deferrals"
             },
             {
               "check": "TABLE_HAS_COLUMNS",
               "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_deferrals/items/required",
               "intent": "downstream phases read these columns by name",
               "params": {
                 "columns": [
@@ -3206,8 +5740,144 @@
               "register": "authority_deferrals"
             },
             {
+              "check": "CELL_OF_TYPE",
+              "id": "CELL_NOT_OF_TYPE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_deferrals/items/properties/source_finding/x-derived/CELL_OF_TYPE",
+              "intent": "Source Finding carries structure, and its value must take the declared form",
+              "params": {
+                "column": "Source Finding",
+                "type": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "not": {
+                        "required": [
+                          "row",
+                          "key"
+                        ]
+                      },
+                      "properties": {
+                        "key": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "phase": {
+                          "pattern": "^p[0-8]$",
+                          "type": "string"
+                        },
+                        "register": {
+                          "pattern": "^[a-z][a-z0-9_]*$",
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "register"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "artifact": {
+                          "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifact"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "source": {
+                          "const": "human"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "oneOf": [
+                          {
+                            "additionalProperties": false,
+                            "not": {
+                              "required": [
+                                "row",
+                                "key"
+                              ]
+                            },
+                            "properties": {
+                              "key": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "phase": {
+                                "pattern": "^p[0-8]$",
+                                "type": "string"
+                              },
+                              "register": {
+                                "pattern": "^[a-z][a-z0-9_]*$",
+                                "type": "string"
+                              },
+                              "row": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "register"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artifact": {
+                                "pattern": "^[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V[0-9]+$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artifact"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "source": {
+                                "const": "human"
+                              }
+                            },
+                            "required": [
+                              "source"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "minItems": 2,
+                      "type": "array"
+                    }
+                  ]
+                }
+              },
+              "register": "authority_deferrals"
+            },
+            {
               "check": "CELL_TOKEN_ABSENT",
               "id": "DESIGN_LEAKED_INTO_BUSINESS_LANGUAGE",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_deferrals/x-business-language",
               "intent": "business registers name no compiled artifact",
               "params": {
                 "columns": [
@@ -3221,8 +5891,9 @@
               "register": "authority_deferrals"
             },
             {
-              "check": "CELL_NOT_EMPTY",
+              "check": "CITATION_PRESENT",
               "id": "ROW_WITHOUT_SOURCE_FINDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_deferrals/items/properties/source_finding/x-derived/CITATION_PRESENT",
               "intent": "an uncited row has no provenance in the dossier",
               "params": {
                 "column": "Source Finding",
@@ -3233,6 +5904,7 @@
             {
               "check": "SOURCE_FINDING_RESOLVES",
               "id": "SOURCE_FINDING_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_deferrals/items/properties/source_finding/x-derived/SOURCE_FINDING_RESOLVES",
               "intent": "a citation must name something this phase can actually cite",
               "params": {
                 "column": "Source Finding",
@@ -3332,12 +6004,6 @@
                   "verification_results",
                   "vocabulary_extensions",
                   "withdrawn_facts"
-                ],
-                "literal_sources": [
-                  "CR seed",
-                  "human decision",
-                  "projection",
-                  "S1 seed"
                 ]
               },
               "register": "authority_deferrals"
@@ -3345,6 +6011,7 @@
             {
               "check": "CITED_ORDINAL_RESOLVES",
               "id": "CITATION_ORDINAL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/properties/registers/properties/authority_deferrals/items/properties/source_finding/x-derived/CITED_ORDINAL_RESOLVES",
               "intent": "an ordinal past the end of a register cites a finding that is not there",
               "params": {
                 "column": "Source Finding"
@@ -3354,6 +6021,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/0",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Belief",
@@ -3366,6 +6034,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/1",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Outcome",
@@ -3378,6 +6047,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/2",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Invariant",
@@ -3390,6 +6060,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/3",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Criterion",
@@ -3402,6 +6073,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/4",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Fact",
@@ -3414,6 +6086,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/5",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Term",
@@ -3426,6 +6099,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/6",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Constraint",
@@ -3438,6 +6112,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/7",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Assumption",
@@ -3450,6 +6125,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/8",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Event",
@@ -3462,6 +6138,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/9",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Business Object",
@@ -3474,6 +6151,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/10",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Item",
@@ -3486,6 +6164,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/11",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Scope Item",
@@ -3498,6 +6177,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/12",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Business Object",
@@ -3510,6 +6190,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/13",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": "Business Object",
@@ -3522,6 +6203,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/14",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": [
@@ -3540,6 +6222,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/15",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": [
@@ -3560,6 +6243,7 @@
             {
               "check": "PRIOR_ROWS_PRESENT_BY_KEY",
               "id": "SEED_ROW_NOT_CARRIED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/16",
               "intent": "P0 reorganizes and P1 restates; neither may drop what the business said",
               "params": {
                 "key_column": [
@@ -3578,6 +6262,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/17",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Belief",
@@ -3590,6 +6275,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/18",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Outcome",
@@ -3602,6 +6288,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/19",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Invariant",
@@ -3614,6 +6301,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/20",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Criterion",
@@ -3626,6 +6314,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/21",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Fact",
@@ -3638,6 +6327,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/22",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Term",
@@ -3650,6 +6340,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/23",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Constraint",
@@ -3662,6 +6353,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/24",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Assumption",
@@ -3674,6 +6366,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/25",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Event",
@@ -3686,6 +6379,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/26",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Business Object",
@@ -3698,6 +6392,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/27",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Item",
@@ -3710,6 +6405,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/28",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Scope Item",
@@ -3722,6 +6418,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/29",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Business Object",
@@ -3734,6 +6431,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/30",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": "Business Object",
@@ -3746,6 +6444,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/31",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": [
@@ -3764,6 +6463,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/32",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": [
@@ -3784,6 +6484,7 @@
             {
               "check": "ROWS_CONFINED_TO_PRIOR",
               "id": "ROW_NOT_IN_SEED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/33",
               "intent": "P1 interrogates and restates; business content enters at P0 or not at all",
               "params": {
                 "key_column": [
@@ -3798,181 +6499,11 @@
                 "prior_register": "operation_refusals"
               },
               "register": "operation_refusals"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "cr_type"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "business_vocabulary"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "requested_outcomes"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "known_facts"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "system_beliefs"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "assumptions"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "constraints"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "business_invariants"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "lifecycle_states"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "business_events"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "authority_boundaries"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "out_of_scope"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "governance_scope"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "clarification_requests"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "acceptance_criteria"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "identity_and_sameness"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "lifecycle_transitions"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "operation_refusals"
-            },
-            {
-              "check": "CITATION_ROW_UNRESOLVED",
-              "id": "CITATION_ROW_UNRESOLVED",
-              "intent": "a citation that resolves to nothing is evidence of nothing",
-              "params": {
-                "column": "Source Finding"
-              },
-              "register": "authority_deferrals"
             },
             {
               "check": "UNRESOLVED_MARKER_ABSENT",
               "id": "REGISTER_CELL_UNRESOLVED",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/34",
               "intent": "an unanswered question left in a register reads as decided to every later phase",
               "params": {
                 "detail": "{column!r} declares the question unanswered ({marker}) rather than answering it \u2014 ask it as a clarification, do not hedge it in a register",
@@ -3984,6 +6515,7 @@
             {
               "check": "ROW_ABSENT_WHEN",
               "id": "BLOCKING_CLARIFICATION_OUTSTANDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/35",
               "intent": "a blocking question the next phase never sees is answered by invention",
               "params": {
                 "column": "Blocking",
@@ -3995,6 +6527,7 @@
             {
               "check": "ROW_ABSENT_WHEN",
               "id": "BUSINESS_CLARIFICATION_OUTSTANDING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P1_V0#/allOf/36",
               "intent": "a business question that outlives the seed is answered downstream by inference",
               "params": {
                 "column": "Owner",
@@ -4002,30 +6535,6 @@
                 "value": "HUMAN"
               },
               "register": "clarification_requests"
-            },
-            {
-              "check": "HEADER_FIELD_PRESENT",
-              "id": "HEADER_FIELD_MISSING",
-              "intent": "a dossier document states its phase, its CR, its lifecycle state, and what it feeds",
-              "params": {
-                "fields": [
-                  "Stage",
-                  "CR",
-                  "Status",
-                  "Feeds"
-                ]
-              }
-            },
-            {
-              "check": "HEADER_FIELD_MATCHES",
-              "id": "LIFECYCLE_STATE_NOT_IN_VOCABULARY",
-              "intent": "the lifecycle axis is a controlled vocabulary, not free text",
-              "params": {
-                "fields": [
-                  "Status"
-                ],
-                "pattern": "^(DRAFT|CONSTRUCTION_COMPLETE|ADMITTED_UNVALIDATED|EXECUTION_VALIDATED|PROMOTED)\\b"
-              }
             }
           ]
         }

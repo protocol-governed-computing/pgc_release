@@ -1,8 +1,8 @@
 {
   "conformance_version": "v0",
-  "assembler_version": "17",
+  "assembler_version": "18",
   "phase": "composition_conformance",
-  "snapshot_id": "f8356d9c8938aea16ab7850d7bda964d8d16c42c64e5db9056d5fe58040ec1d0",
+  "snapshot_id": "13e3c5bb502e2548389f5787caa9438247ee34f9d510ce6a8a3ed980fdf974d1",
   "domains": [
     "ai_governance",
     "blockchain",
@@ -13,29 +13,29 @@
     "transformation",
     "workload"
   ],
-  "artifacts_examined": 515,
+  "artifacts_examined": 556,
   "rules_evaluated": 5,
   "status": "PASSED",
   "findings": [
     {
-      "invariant": "cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V1",
+      "invariant": "cryptographic_trust::INVARIANT_CRYPTOGRAPHIC_TRUST_DECLARED_V0",
       "subject": "cryptographic trust structure carried by the composition",
       "rule": "exactly_one",
       "status": "PASSED",
       "examined": 1,
       "matched": [
-        "cryptographic_trust::STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V1"
+        "cryptographic_trust::STRUCTURE_CRYPTOGRAPHIC_TRUST_LOCAL_DEV_UNSIGNED_V0"
       ],
       "message": "exactly_one: found 1 cryptographic trust structure carried by the composition"
     },
     {
-      "invariant": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V1",
+      "invariant": "execution_placement::INVARIANT_EXECUTION_PLACEMENT_DECLARED_V0",
       "subject": "execution placement structure carried by the composition",
       "rule": "exactly_one",
       "status": "PASSED",
       "examined": 1,
       "matched": [
-        "execution_placement::STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V1"
+        "execution_placement::STRUCTURE_EXECUTION_PLACEMENT_LOCAL_SINGLE_NODE_V0"
       ],
       "message": "exactly_one: found 1 execution placement structure carried by the composition"
     },
@@ -87,5 +87,5 @@
       "message": "at_least_one: found 15 composed inspection boundary contract"
     }
   ],
-  "checked_at": "2026-10-04T01:14:13Z"
+  "checked_at": "2026-10-19T22:06:01Z"
 }
