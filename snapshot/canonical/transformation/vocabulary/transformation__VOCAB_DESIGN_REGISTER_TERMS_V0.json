@@ -1,8 +1,8 @@
 {
   "artifact_code": "VOCAB_DESIGN_REGISTER_TERMS_V0",
   "artifact_type": "VOCAB",
-  "content": "# VOCAB_DESIGN_REGISTER_TERMS_V0\n\n## Machine\n\n```yaml\nfqdn: transformation::VOCAB_DESIGN_REGISTER_TERMS_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: design\nextends: ''\nartifact_family:\n  casing: UPPER_SNAKE\n  entries:\n  - AC\n  - IN\n  - WF\n  - CC\n  - CT\n  - EV\n  - RB\n  - VOCAB\n  - STRUCTURE\n  - TI\n  - TE\napproval_state:\n  casing: UPPER_SNAKE\n  entries:\n  - APPROVED\n  - MIGRATED\n  - RECONFIRMED\nbelief_result:\n  casing: UPPER_SNAKE\n  entries:\n  - VERIFIED\n  - NOT_FOUND\n  - INSUFFICIENT_EVIDENCE\ncertainty:\n  casing: UPPER_SNAKE\n  entries:\n  - HIGH\n  - MEDIUM\n  - LOW\nclarification_owner:\n  casing: UPPER_SNAKE\n  entries:\n  - HUMAN\n  - SNAPSHOT\n  - GOVERNANCE\nclassification:\n  casing: UPPER_SNAKE\n  entries:\n  - NEW_SUBDOMAIN\n  - EXTEND_SUBDOMAIN\n  - MODIFY\n  - DEPRECATE\ncomposition_kind:\n  casing: UPPER_SNAKE\n  entries:\n  - CT\n  - CS\ndependency_disposition:\n  casing: UPPER_SNAKE\n  entries:\n  - EXISTING\n  - EXTEND\n  - REUSE\n  - AUTHOR_NEW\n  - INVESTIGATE\ndependency_status:\n  casing: UPPER_SNAKE\n  entries:\n  - SATISFIED\n  - GAP\nevidence_status:\n  casing: UPPER_SNAKE\n  entries:\n  - OBSERVED\n  - INFERRED\n  - OPEN\nexpected_outcome:\n  casing: UPPER_SNAKE\n  entries:\n  - SUCCESS\n  - VIOLATION\nfield_direction:\n  casing: UPPER_SNAKE\n  entries:\n  - INPUT\n  - OUTPUT\nfit:\n  casing: UPPER_SNAKE\n  entries:\n  - EXACT\n  - PARTIAL\n  - MISMATCH\ngap_resolution:\n  casing: UPPER_SNAKE\n  entries:\n  - REPLACE\n  - EXTEND\n  - NEW\nhandler_kind:\n  casing: UPPER_SNAKE\n  entries:\n  - WF_INVOCATION\n  - SNAPSHOT_READ\ninterface_direction:\n  casing: UPPER_SNAKE\n  entries:\n  - INPUT\n  - OUTPUT\n  - ATTRIBUTE\ninventory_action:\n  casing: UPPER_SNAKE\n  entries:\n  - REPLACE\n  - REUSE\n  - EXTEND\n  - REPOINT\n  - REVIEW\nmolecule_binding_role:\n  casing: UPPER_SNAKE\n  entries:\n  - INPUT\n  - CARRY\n  - UPDATE\nnode_type:\n  casing: UPPER_SNAKE\n  entries:\n  - IN\n  - CC\n  - EXIT\n  - EXIT_SUCCESS\nownership_disposition:\n  casing: UPPER_SNAKE\n  entries:\n  - OWNED\n  - SATISFIED\n  - DEFERRED\nplacement_decision:\n  casing: UPPER_SNAKE\n  entries:\n  - NEW_SUBDOMAIN\n  - EXTEND\npps_action:\n  casing: UPPER_SNAKE\n  entries:\n  - REPLACE\n  - REVIEW\n  - REUSE\n  - EXTEND\npurpose_disposition:\n  casing: UPPER_SNAKE\n  entries:\n  - INHERITED\n  - REFINED\nrecord_model:\n  casing: UPPER_SNAKE\n  entries:\n  - MUTABLE_STATE\n  - APPEND_ONLY_JOURNAL\n  - IDENTITY_REGISTRY\n  - HYBRID\nresolution_status:\n  casing: UPPER_SNAKE\n  entries:\n  - CLOSED\n  - OPEN\nreuse_decision:\n  casing: UPPER_SNAKE\n  entries:\n  - REUSE\n  - EXTEND\n  - AUTHOR_NEW\nsaturation_status:\n  casing: UPPER_SNAKE\n  entries:\n  - SATISFIED\n  - NOT_SATISFIED\nscope_relationship:\n  casing: UPPER_SNAKE\n  entries:\n  - CREATED\n  - EXTENDED\n  - MODIFIED\n  - DEPRECATED\n  - ADJACENT\nscope_status:\n  casing: UPPER_SNAKE\n  entries:\n  - IN_SCOPE\n  - DEFERRED\nstorage_type:\n  casing: UPPER_SNAKE\n  entries:\n  - CS_APPENDONLY_JSONL_V0\n  - CS_MUTABLE_JSON_V0\n  - CS_REGISTRY_V0\ntest_value_role:\n  casing: UPPER_SNAKE\n  entries:\n  - INPUT\n  - EXPECTED\n  - ASSERT\n  - RECORDED\ntransport_direction:\n  casing: UPPER_SNAKE\n  entries:\n  - INGRESS\n  - EGRESS\nverification_result:\n  casing: UPPER_SNAKE\n  entries:\n  - CONFIRMED\n  - OVERTURNED\nyes_no:\n  casing: UPPER_SNAKE\n  entries:\n  - 'YES'\n  - 'NO'\n```\n\n---\n\n## Intent\n\nThe closed sets a phase document's registers draw on. Each register schema names the group a\ncolumn takes its values from, and nothing restates a group's entries.\n",
-  "content_hash": "c9679b19bf7dafed96a3b71b62824e2d87b5993fe53366595d18ab68f0bde83b",
+  "content": "# VOCAB_DESIGN_REGISTER_TERMS_V0\n\n## Machine\n\n```yaml\nfqdn: transformation::VOCAB_DESIGN_REGISTER_TERMS_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: design\nextends: ''\nartifact_family:\n  casing: UPPER_SNAKE\n  entries:\n  - AC\n  - IN\n  - WF\n  - CC\n  - CT\n  - EV\n  - RB\n  - VOCAB\n  - STRUCTURE\n  - TI\n  - TE\napproval_state:\n  casing: UPPER_SNAKE\n  entries:\n  - APPROVED\n  - MIGRATED\n  - RECONFIRMED\nbelief_result:\n  casing: UPPER_SNAKE\n  entries:\n  - VERIFIED\n  - NOT_FOUND\n  - INSUFFICIENT_EVIDENCE\ncertainty:\n  casing: UPPER_SNAKE\n  entries:\n  - HIGH\n  - MEDIUM\n  - LOW\nclarification_owner:\n  casing: UPPER_SNAKE\n  entries:\n  - HUMAN\n  - SNAPSHOT\n  - GOVERNANCE\nclassification:\n  casing: UPPER_SNAKE\n  entries:\n  - NEW_SUBDOMAIN\n  - EXTEND_SUBDOMAIN\n  - MODIFY\n  - DEPRECATE\ncomposition_kind:\n  casing: UPPER_SNAKE\n  entries:\n  - CT\n  - CS\ndelivery_mode:\n  casing: UPPER_SNAKE\n  entries:\n  - AUTHORED\n  - CONSTRUCTED\ndependency_disposition:\n  casing: UPPER_SNAKE\n  entries:\n  - EXISTING\n  - EXTEND\n  - REUSE\n  - AUTHOR_NEW\n  - INVESTIGATE\ndependency_status:\n  casing: UPPER_SNAKE\n  entries:\n  - SATISFIED\n  - GAP\nevidence_status:\n  casing: UPPER_SNAKE\n  entries:\n  - OBSERVED\n  - INFERRED\n  - OPEN\nexpected_outcome:\n  casing: UPPER_SNAKE\n  entries:\n  - SUCCESS\n  - VIOLATION\nfield_direction:\n  casing: UPPER_SNAKE\n  entries:\n  - INPUT\n  - OUTPUT\nfit:\n  casing: UPPER_SNAKE\n  entries:\n  - EXACT\n  - PARTIAL\n  - MISMATCH\ngap_resolution:\n  casing: UPPER_SNAKE\n  entries:\n  - REPLACE\n  - EXTEND\n  - NEW\nhandler_kind:\n  casing: UPPER_SNAKE\n  entries:\n  - WF_INVOCATION\n  - SNAPSHOT_READ\ninterface_direction:\n  casing: UPPER_SNAKE\n  entries:\n  - INPUT\n  - OUTPUT\n  - ATTRIBUTE\ninventory_action:\n  casing: UPPER_SNAKE\n  entries:\n  - REPLACE\n  - REUSE\n  - EXTEND\n  - REPOINT\n  - REVIEW\n  - RETIRE\nmolecule_binding_role:\n  casing: UPPER_SNAKE\n  entries:\n  - INPUT\n  - CARRY\n  - UPDATE\nnode_type:\n  casing: UPPER_SNAKE\n  entries:\n  - IN\n  - CC\n  - EXIT\n  - EXIT_SUCCESS\nownership_disposition:\n  casing: UPPER_SNAKE\n  entries:\n  - OWNED\n  - SATISFIED\n  - DEFERRED\nplacement_decision:\n  casing: UPPER_SNAKE\n  entries:\n  - NEW_SUBDOMAIN\n  - EXTEND\npps_action:\n  casing: UPPER_SNAKE\n  entries:\n  - REPLACE\n  - REVIEW\n  - REUSE\n  - EXTEND\npurpose_disposition:\n  casing: UPPER_SNAKE\n  entries:\n  - INHERITED\n  - REFINED\nrecord_model:\n  casing: UPPER_SNAKE\n  entries:\n  - MUTABLE_STATE\n  - APPEND_ONLY_JOURNAL\n  - IDENTITY_REGISTRY\n  - HYBRID\nresolution_status:\n  casing: UPPER_SNAKE\n  entries:\n  - CLOSED\n  - OPEN\nreuse_decision:\n  casing: UPPER_SNAKE\n  entries:\n  - REUSE\n  - EXTEND\n  - AUTHOR_NEW\nsaturation_status:\n  casing: UPPER_SNAKE\n  entries:\n  - SATISFIED\n  - NOT_SATISFIED\nscope_relationship:\n  casing: UPPER_SNAKE\n  entries:\n  - CREATED\n  - EXTENDED\n  - MODIFIED\n  - DEPRECATED\n  - ADJACENT\nscope_status:\n  casing: UPPER_SNAKE\n  entries:\n  - IN_SCOPE\n  - DEFERRED\nstorage_type:\n  casing: UPPER_SNAKE\n  names_kind: CAPABILITY_SIDE_EFFECT\n  entries:\n  - CS_APPENDONLY_JSONL_V0\n  - CS_MUTABLE_JSON_V0\n  - CS_REGISTRY_V0\ntest_value_role:\n  casing: UPPER_SNAKE\n  entries:\n  - INPUT\n  - EXPECTED\n  - ASSERT\n  - RECORDED\ntransport_direction:\n  casing: UPPER_SNAKE\n  entries:\n  - INGRESS\n  - EGRESS\nverification_result:\n  casing: UPPER_SNAKE\n  entries:\n  - CONFIRMED\n  - OVERTURNED\nyes_no:\n  casing: UPPER_SNAKE\n  entries:\n  - 'YES'\n  - 'NO'\n```\n\n---\n\n## Intent\n\nThe closed sets a phase document's registers draw on. Each register schema names the group a\ncolumn takes its values from, and nothing restates a group's entries.\n",
+  "content_hash": "c7dbe3673be0d5d1bef411df18d3b306ede085b655c3cc0ec25556e299ead803",
   "fqdn_id": "transformation::VOCAB_DESIGN_REGISTER_TERMS_V0",
   "frontmatter": {
     "approval_state": {
@@ -72,6 +72,13 @@
       ]
     },
     "concern": "design",
+    "delivery_mode": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "AUTHORED",
+        "CONSTRUCTED"
+      ]
+    },
     "dependency_disposition": {
       "casing": "UPPER_SNAKE",
       "entries": [
@@ -152,7 +159,8 @@
         "REUSE",
         "EXTEND",
         "REPOINT",
-        "REVIEW"
+        "REVIEW",
+        "RETIRE"
       ]
     },
     "molecule_binding_role": {
@@ -257,7 +265,8 @@
         "CS_APPENDONLY_JSONL_V0",
         "CS_MUTABLE_JSON_V0",
         "CS_REGISTRY_V0"
-      ]
+      ],
+      "names_kind": "CAPABILITY_SIDE_EFFECT"
     },
     "test_value_role": {
       "casing": "UPPER_SNAKE",

@@ -1,8 +1,8 @@
 {
   "artifact_code": "IN_RETRIEVE_BOOK_DETAILS_V0",
   "artifact_type": "IN",
-  "content": "# IN_RETRIEVE_BOOK_DETAILS_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request for a book's complete details with the copies held\n  workflow: WF_RETRIEVE_BOOK_DETAILS_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    identity_key:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request for a book's complete details with the copies held\n",
-  "content_hash": "ba90bca280bcece5e674a32d75445733be214741c107aeb9e26ef63dec2ffddd",
+  "content": "# IN_RETRIEVE_BOOK_DETAILS_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to retrieve book details\n  workflow: WF_RETRIEVE_BOOK_DETAILS_V1\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    identity_key:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to retrieve book details\n",
+  "content_hash": "e4c39b7fd76cec493a87dfe5b109de57cb2698a9a33a4926bf35c372bd08c444",
   "fqdn_id": "book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0",
   "frontmatter": {
     "artifact_kind": "INTENT",
@@ -31,8 +31,8 @@
           "description": "Request rejected"
         }
       },
-      "summary": "A request for a book's complete details with the copies held",
-      "workflow": "WF_RETRIEVE_BOOK_DETAILS_V0"
+      "summary": "A request to retrieve book details",
+      "workflow": "WF_RETRIEVE_BOOK_DETAILS_V1"
     },
     "fqdn": "book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0",
     "governed_by": "intent::CONSTITUTION_INTENT_V0",

@@ -1,0 +1,131 @@
+{
+  "artifact_code": "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+        "id": "CS_APPENDONLY_JSONL_V0",
+        "kind": "CS",
+        "ops": [
+          "APPEND",
+          "GET_ALL"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: agent_governance\ncore:\n  summary: Record a moment on the agent_governance's own trail\n  inputs:\n    occurrence:\n      type: string\n      required: true\n    tool_name:\n      type: string\n    requesting_user_id:\n      type: string\n    reason:\n      type: string\n  outputs:\n    sequence_number:\n      type: integer\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: assemble_occurrence\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        decision: $.inputs.occurrence\n        tool_name: $.inputs.tool_name\n        requesting_user_id: $.inputs.requesting_user_id\n        reason: $.inputs.reason\n    outputs:\n      record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: append_occurrence\n    side_effect: capability_side_effects::CS_APPENDONLY_JSONL_V0\n    op: APPEND\n    store: GOVERNANCE_AUDIT\n    inputs:\n      record: $.results.assemble_occurrence.record\n      stream_id: GOVERNANCE_AUDIT\n    outputs:\n      sequence_number: $.capability_result.sequence_number\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nRecord a moment on the agent_governance's own trail\n",
+  "content_hash": "8d47b71d008908f357ba1d65af93fec2c100320f716f03dbb35d4f9911fdf517",
+  "fqdn_id": "ai_governance::CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "agent_governance",
+    "core": {
+      "inputs": {
+        "occurrence": {
+          "required": true,
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "requesting_user_id": {
+          "type": "string"
+        },
+        "tool_name": {
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "sequence_number": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "fields": {
+              "decision": "$.inputs.occurrence",
+              "reason": "$.inputs.reason",
+              "requesting_user_id": "$.inputs.requesting_user_id",
+              "tool_name": "$.inputs.tool_name"
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "record": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_occurrence",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "record": "$.results.assemble_occurrence.record",
+            "stream_id": "GOVERNANCE_AUDIT"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "APPEND",
+          "outputs": {
+            "sequence_number": "$.capability_result.sequence_number"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+          "step": "append_occurrence",
+          "store": "GOVERNANCE_AUDIT"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Record a moment on the agent_governance's own trail"
+    },
+    "fqdn": "ai_governance::CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+  ],
+  "version": "0"
+}

@@ -1,5 +1,5 @@
 {
-  "attestation_hash": "6c30ab77316c9b6904ad81eb4e1c3d7170db26e9199d5577550673e74a240b31",
+  "attestation_hash": "c3ed9a49256074f5a65fc65fcb1cd6090180a0e667ab5a6e61c8940d61139f54",
   "attestation_version": "V0",
   "imported_capabilities": [
     "capability_side_effects::CS_APPENDONLY_JSONL_V0",
@@ -8,21 +8,21 @@
     "capability_side_effects::CS_REGISTRY_V0",
     "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
     "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
-    "capability_transforms::CT_PURE_EXTRACT_V0",
     "capability_transforms::CT_PURE_GENERATE_ID_V0",
+    "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
     "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
     "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
     "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
   ],
   "imported_governance": {
-    "closure_member_count": 110,
-    "governance_closure_hash": "fb2ba50890a1848d9c927c100da9b283b25f0b3da01ed76a7eddd5d842b70e07",
+    "closure_member_count": 119,
+    "governance_closure_hash": "1778705f9a1527213d96dc13d1c048cdb6b10744ca8c525dfc1394c0dd4a60d0",
     "import_domain": "platform"
   },
   "public_key_ref": "STUB",
   "signature": "STUB_NOT_CRYPTOGRAPHICALLY_SIGNED",
-  "signed_at": "2026-10-19T22:05:50.155423+00:00",
+  "signed_at": "2026-11-12T01:03:28.189081+00:00",
   "signing_algorithm": "STUB",
   "structure_id": "blockchain",
-  "tokenized_projection_hash": "1d4b0c37224987994788ce78866580468010dca179f616a88d459c66933b4cfc"
+  "tokenized_projection_hash": "31a166239671639a47fadcdd95f51e36d7794fe46f6e2db58c3b635723002f6e"
 }

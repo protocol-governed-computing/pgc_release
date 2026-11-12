@@ -1,0 +1,39 @@
+{
+  "artifact_code": "IN_LIST_ACTORS_V0",
+  "artifact_type": "IN",
+  "content": "# IN_LIST_ACTORS_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::IN_LIST_ACTORS_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: A request to list actors\n  workflow: WF_LIST_ACTORS_V0\n  inputs:\n    state:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to list actors\n",
+  "content_hash": "db404d390b009247503f26c51115cc4497926367572cdd95dbb6ecd062319b31",
+  "fqdn_id": "blockchain::IN_LIST_ACTORS_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "inputs": {
+        "state": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to list actors",
+      "workflow": "WF_LIST_ACTORS_V0"
+    },
+    "fqdn": "blockchain::IN_LIST_ACTORS_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

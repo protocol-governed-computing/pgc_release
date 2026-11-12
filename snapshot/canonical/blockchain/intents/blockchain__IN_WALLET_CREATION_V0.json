@@ -1,8 +1,8 @@
 {
   "artifact_code": "IN_WALLET_CREATION_V0",
   "artifact_type": "IN",
-  "content": "# IN_WALLET_CREATION_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::IN_WALLET_CREATION_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Admits a request naming the person a wallet is for and the key it is made from, and refuses\n    one that names nobody\n  workflow: WF_CREATE_WALLET_V0\n  inputs:\n    contact_address:\n      type: string\n      required: true\n    key_material:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nAdmits a request naming the person a wallet is for and the key it is made from, and refuses one that names nobody\n",
-  "content_hash": "61e801cc0b836e7bf9d72e8b3d64a8ce73b202726c3fe58ff67e4136f397217f",
+  "content": "# IN_WALLET_CREATION_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::IN_WALLET_CREATION_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: A request to create wallet\n  workflow: WF_CREATE_WALLET_V1\n  inputs:\n    contact_address:\n      type: string\n      required: true\n    key_material:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to create wallet\n",
+  "content_hash": "8990fae1769c7d84e9bb2632965a57ea4db93af02339ad3d7c3e9a875e282265",
   "fqdn_id": "blockchain::IN_WALLET_CREATION_V0",
   "frontmatter": {
     "artifact_kind": "INTENT",
@@ -27,8 +27,8 @@
           "description": "Request rejected"
         }
       },
-      "summary": "Admits a request naming the person a wallet is for and the key it is made from, and refuses one that names nobody",
-      "workflow": "WF_CREATE_WALLET_V0"
+      "summary": "A request to create wallet",
+      "workflow": "WF_CREATE_WALLET_V1"
     },
     "fqdn": "blockchain::IN_WALLET_CREATION_V0",
     "governed_by": "intent::CONSTITUTION_INTENT_V0",

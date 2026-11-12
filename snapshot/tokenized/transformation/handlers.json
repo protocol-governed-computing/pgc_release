@@ -1,6 +1,6 @@
 {
   "cs": {
-    "26": {
+    "28": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -53,7 +53,7 @@
         "module": "capability_side_effects.implementation.CS_SNAPSHOT_QUERY_V0.runtime"
       }
     },
-    "27": {
+    "29": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -108,7 +108,7 @@
     }
   },
   "ct": {
-    "101": {
+    "109": {
       "ct_ir": {
         "artifact_code": "CT_PURE_ATTRIBUTE_PROVENANCE_V0",
         "atom_stream": [
@@ -148,7 +148,7 @@
         }
       }
     },
-    "102": {
+    "110": {
       "ct_ir": {
         "artifact_code": "CT_PURE_EVALUATE_RULES_V0",
         "atom_stream": [
@@ -227,7 +227,7 @@
         }
       }
     },
-    "103": {
+    "111": {
       "ct_ir": {
         "artifact_code": "CT_PURE_MEASURE_COMPLETENESS_V0",
         "atom_stream": [
@@ -283,7 +283,7 @@
         }
       }
     },
-    "104": {
+    "112": {
       "ct_ir": {
         "artifact_code": "CT_PURE_PARSE_PRIOR_PHASES_V0",
         "atom_stream": [
@@ -316,7 +316,7 @@
         }
       }
     },
-    "105": {
+    "113": {
       "ct_ir": {
         "artifact_code": "CT_PURE_PARSE_REGISTERS_V0",
         "atom_stream": [
@@ -355,7 +355,7 @@
         }
       }
     },
-    "106": {
+    "114": {
       "ct_ir": {
         "artifact_code": "CT_PURE_RENDER_ARTIFACTS_V0",
         "atom_stream": [
@@ -404,15 +404,15 @@
   },
   "projection_class": "machine_projection",
   "rb_policy": {
-    "117": {
-      "27": {
+    "125": {
+      "29": {
         "policy": {
           "root": "{{module_data_root}}/construction"
         }
       }
     },
-    "118": {
-      "26": {
+    "126": {
+      "28": {
         "policy": {
           "snapshot_root": "{{snapshot_root}}"
         }

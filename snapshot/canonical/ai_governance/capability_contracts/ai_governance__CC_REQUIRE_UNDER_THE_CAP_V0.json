@@ -1,0 +1,127 @@
+{
+  "artifact_code": "CC_REQUIRE_UNDER_THE_CAP_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+        "id": "CS_REGISTRY_V0",
+        "kind": "CS",
+        "ops": [
+          "REGISTER",
+          "RESOLVE",
+          "EXISTS",
+          "DEREGISTER",
+          "COUNT"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_REQUIRE_UNDER_THE_CAP_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_REQUIRE_UNDER_THE_CAP_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: ai_licensing\ncore:\n  summary: Refuse to provision license when the licenses held reach the cap\n  inputs:\n    cap:\n      type: integer\n      required: true\n  outputs:\n    valid:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - BACKEND_ERROR\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: count_licenses\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: COUNT\n    store: LICENSE_IDENTITY_REGISTRY\n    inputs: {}\n    outputs:\n      count: $.capability_result.count\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      BACKEND_ERROR: exit\n  - step: require_below_cap\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        count: $.results.count_licenses.count\n      rules:\n      - field: count\n        op: lt\n        value: $.inputs.cap\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuse to provision license when the licenses held reach the cap\n",
+  "content_hash": "b9f529967f617f471db3a71928c810048777c5164cf5b527ba01eb82cb419101",
+  "fqdn_id": "ai_governance::CC_REQUIRE_UNDER_THE_CAP_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "inputs": {
+        "cap": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "outputs": {
+        "valid": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {},
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue"
+          },
+          "op": "COUNT",
+          "outputs": {
+            "count": "$.capability_result.count",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_REGISTRY_V0",
+          "step": "count_licenses",
+          "store": "LICENSE_IDENTITY_REGISTRY"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "count": "$.results.count_licenses.count"
+            },
+            "rules": [
+              {
+                "field": "count",
+                "op": "lt",
+                "value": "$.inputs.cap"
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_below_cap",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "BACKEND_ERROR",
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse to provision license when the licenses held reach the cap"
+    },
+    "fqdn": "ai_governance::CC_REQUIRE_UNDER_THE_CAP_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_REGISTRY_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+  ],
+  "version": "0"
+}

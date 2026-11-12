@@ -1,0 +1,40 @@
+{
+  "artifact_code": "IN_RECLAIM_LICENSE_V1",
+  "artifact_type": "IN",
+  "content": "# IN_RECLAIM_LICENSE_V1\n\n## Machine\n\n```yaml\nfqdn: ai_governance::IN_RECLAIM_LICENSE_V1\nartifact_kind: INTENT\nversion: v1\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: ai_licensing\nsupersedes: ai_governance::IN_RECLAIM_LICENSE_V0\ncore:\n  summary: A request to reclaim license\n  workflow: WF_RECLAIM_LICENSE_V1\n  inputs:\n    employee_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to reclaim license\n",
+  "content_hash": "ddaf158a4e52f9a4042da85ed351de72d6c429ee4e2b554c7016a62af375f1b7",
+  "fqdn_id": "ai_governance::IN_RECLAIM_LICENSE_V1",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "inputs": {
+        "employee_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to reclaim license",
+      "workflow": "WF_RECLAIM_LICENSE_V1"
+    },
+    "fqdn": "ai_governance::IN_RECLAIM_LICENSE_V1",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "supersedes": "ai_governance::IN_RECLAIM_LICENSE_V0",
+    "version": "v1"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "1"
+}

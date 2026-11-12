@@ -1,0 +1,118 @@
+{
+  "artifact_code": "CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_CLOCK_V0",
+        "id": "CS_CLOCK_V0",
+        "kind": "CS",
+        "ops": [
+          "NOW"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {
+          "evaluation_date": "read_now.timestamp",
+          "last_active_date": "in.last_used_at"
+        },
+        "fqdn": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
+        "id": "CT_PURE_EVALUATE_INACTIVITY_V0",
+        "inputs": [
+          "last_active_date",
+          "evaluation_date",
+          "threshold_days"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "is_inactive",
+          "days_inactive"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: ai_licensing\ncore:\n  summary: Refuse to reclaim license until the condition holds\n  inputs:\n    last_used_at:\n      type: string\n      required: true\n  outputs:\n    is_inactive:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - BACKEND_ERROR\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_now\n    side_effect: capability_side_effects::CS_CLOCK_V0\n    op: NOW\n    inputs: {}\n    outputs:\n      timestamp: $.capability_result.timestamp\n    result_surface:\n    - SUCCESS\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      BACKEND_ERROR: exit\n  - step: evaluate_unused_for_days\n    transform: ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0\n    inputs:\n      last_active_date: $.inputs.last_used_at\n      evaluation_date: $.results.read_now.timestamp\n      threshold_days: 30\n    outputs:\n      is_inactive: $.capability_result.is_inactive\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuse to reclaim license until the condition holds\n",
+  "content_hash": "890f4c04056c1d7261e7e102d5c7a3bed0d630e6c007ad5dfaf161ef9901979e",
+  "fqdn_id": "ai_governance::CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "inputs": {
+        "last_used_at": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "is_inactive": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {},
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue"
+          },
+          "op": "NOW",
+          "outputs": {
+            "timestamp": "$.capability_result.timestamp"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_CLOCK_V0",
+          "step": "read_now"
+        },
+        {
+          "inputs": {
+            "evaluation_date": "$.results.read_now.timestamp",
+            "last_active_date": "$.inputs.last_used_at",
+            "threshold_days": 30
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "is_inactive": "$.capability_result.is_inactive"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "evaluate_unused_for_days",
+          "transform": "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "BACKEND_ERROR",
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse to reclaim license until the condition holds"
+    },
+    "fqdn": "ai_governance::CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "ai_governance::CT_PURE_EVALUATE_INACTIVITY_V0",
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_CLOCK_V0"
+  ],
+  "version": "0"
+}

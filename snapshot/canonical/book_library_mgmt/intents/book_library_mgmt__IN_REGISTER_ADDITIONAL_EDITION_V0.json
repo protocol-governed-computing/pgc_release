@@ -1,8 +1,8 @@
 {
   "artifact_code": "IN_REGISTER_ADDITIONAL_EDITION_V0",
   "artifact_type": "IN",
-  "content": "# IN_REGISTER_ADDITIONAL_EDITION_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: The boundary that admits a request to register a further edition of a work the catalog already\n    holds\n  workflow: WF_REGISTER_ADDITIONAL_EDITION_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n    title:\n      type: string\n      required: true\n    author:\n      type: string\n      required: true\n    publication_year:\n      type: integer\n      required: true\n    subject:\n      type: array\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nThe boundary that admits a request to register a further edition of a work the catalog already holds\n",
-  "content_hash": "b05e67130cd2055da702c9f35d7b9ea80bcc7bad9d0041b7ca0882f02e87f1c8",
+  "content": "# IN_REGISTER_ADDITIONAL_EDITION_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to register additional edition\n  workflow: WF_REGISTER_ADDITIONAL_EDITION_V1\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n    title:\n      type: string\n      required: true\n    author:\n      type: string\n      required: true\n    publication_year:\n      type: integer\n      required: true\n    subject:\n      type: array\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to register additional edition\n",
+  "content_hash": "1a79e319cac21a4eafda637c5e956adc216a236508a278a43bd6ffd6d0026ab9",
   "fqdn_id": "book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0",
   "frontmatter": {
     "artifact_kind": "INTENT",
@@ -43,8 +43,8 @@
           "description": "Request rejected"
         }
       },
-      "summary": "The boundary that admits a request to register a further edition of a work the catalog already holds",
-      "workflow": "WF_REGISTER_ADDITIONAL_EDITION_V0"
+      "summary": "A request to register additional edition",
+      "workflow": "WF_REGISTER_ADDITIONAL_EDITION_V1"
     },
     "fqdn": "book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0",
     "governed_by": "intent::CONSTITUTION_INTENT_V0",

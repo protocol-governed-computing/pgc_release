@@ -1,0 +1,38 @@
+{
+  "artifact_code": "EV_LICENSE_CAP_SET_V1",
+  "artifact_type": "EV",
+  "content": "# EV_LICENSE_CAP_SET_V1\n\n## Machine\n\n```yaml\nfqdn: ai_governance::EV_LICENSE_CAP_SET_V1\nartifact_kind: EVENT\nversion: v1\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: ai_licensing\nsupersedes: ai_governance::EV_LICENSE_CAP_SET_V0\ncore:\n  summary: A license cap set\n  description: A license cap set\n  subdomain: ai_licensing\n  schema:\n    cap:\n      type: integer\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n```\n\n---\n\n## Intent\n\nA license cap set\n",
+  "content_hash": "700531744d6671681aa2427642d36b0439e807989ce7efa96e037e19a0aaad09",
+  "fqdn_id": "ai_governance::EV_LICENSE_CAP_SET_V1",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "description": "A license cap set",
+      "schema": {
+        "cap": {
+          "required": true,
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "ai_licensing",
+      "summary": "A license cap set"
+    },
+    "fqdn": "ai_governance::EV_LICENSE_CAP_SET_V1",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "supersedes": "ai_governance::EV_LICENSE_CAP_SET_V0",
+    "version": "v1"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "1"
+}

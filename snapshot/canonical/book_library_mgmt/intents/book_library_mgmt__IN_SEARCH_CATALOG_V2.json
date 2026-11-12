@@ -1,0 +1,48 @@
+{
+  "artifact_code": "IN_SEARCH_CATALOG_V2",
+  "artifact_type": "IN",
+  "content": "# IN_SEARCH_CATALOG_V2\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_SEARCH_CATALOG_V2\nartifact_kind: INTENT\nversion: v2\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\nsupersedes: book_library_mgmt::IN_SEARCH_CATALOG_V1\ncore:\n  summary: A request to search catalog\n  workflow: WF_SEARCH_CATALOG_V3\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    search_criteria:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to search catalog\n",
+  "content_hash": "096b4ae73aad4de0f02709814e2ee6e8af735081b7c003fad9955350c1087293",
+  "fqdn_id": "book_library_mgmt::IN_SEARCH_CATALOG_V2",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "search_criteria": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_credentials": {
+          "required": true,
+          "type": "object"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to search catalog",
+      "workflow": "WF_SEARCH_CATALOG_V3"
+    },
+    "fqdn": "book_library_mgmt::IN_SEARCH_CATALOG_V2",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "supersedes": "book_library_mgmt::IN_SEARCH_CATALOG_V1",
+    "version": "v2"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "2"
+}

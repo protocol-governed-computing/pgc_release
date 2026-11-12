@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_DERIVED_ACT_ORDERED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_DERIVED_ACT_ORDERED_V0\n\n## Machine\n\n```yaml\nfqdn: lifecycle::INVARIANT_DERIVED_ACT_ORDERED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: lifecycle::CONSTITUTION_CHANGE_MGMT_V0\nauthority: pgc.platform\nconcern: lifecycle\ncore:\n  enforcement_stage:\n  - enforced_elsewhere\n  violation_response: FAIL_IMMEDIATELY\n  enforced_by: the design compiler's derive route, applying its sealed doctrine to a decision ledger\nassert_projection:\n  applies_to_kinds:\n  - WF\n```\n\n---\n\n## 1. Claim\n\nAn act derived from decisions authorizes, validates, checks what must hold, claims, writes, and records its trail last. After the first claim that can refuse, nothing else refuses: every later claim is checked first.\n\n## 2. Why\n\nA refusal after a claim leaves the claim taken and the act refused, a state no decision asked for. Recording first would record moments that did not happen.\n\n## 3. How it is checked\n\nThe derive route orders every component it composes by this rule, and cites it on each row it orders.\n",
+  "content_hash": "cae2f698fda6e5ddd6dcb17eceafa0bdcba4e6a6f8dab257549cda7924d06cc1",
+  "fqdn_id": "lifecycle::INVARIANT_DERIVED_ACT_ORDERED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "lifecycle",
+    "core": {
+      "enforced_by": "the design compiler's derive route, applying its sealed doctrine to a decision ledger",
+      "enforcement_stage": [
+        "enforced_elsewhere"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "lifecycle::INVARIANT_DERIVED_ACT_ORDERED_V0",
+    "governed_by": "lifecycle::CONSTITUTION_CHANGE_MGMT_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "lifecycle",
+  "references": [
+    "lifecycle::CONSTITUTION_CHANGE_MGMT_V0"
+  ],
+  "version": "0"
+}

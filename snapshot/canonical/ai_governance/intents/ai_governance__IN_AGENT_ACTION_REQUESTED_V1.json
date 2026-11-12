@@ -1,0 +1,55 @@
+{
+  "artifact_code": "IN_AGENT_ACTION_REQUESTED_V1",
+  "artifact_type": "IN",
+  "content": "# IN_AGENT_ACTION_REQUESTED_V1\n\n## Machine\n\n```yaml\nfqdn: ai_governance::IN_AGENT_ACTION_REQUESTED_V1\nartifact_kind: INTENT\nversion: v1\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: agent_governance\nsupersedes: ai_governance::IN_AGENT_ACTION_REQUESTED_V0\ncore:\n  summary: A request to govern agent action\n  workflow: WF_GOVERN_AGENT_ACTION_V1\n  inputs:\n    tool_name:\n      type: string\n      required: true\n    parameters:\n      type: object\n      required: true\n    requesting_user_id:\n      type: string\n      required: true\n    domain_context:\n      type: string\n      required: true\n    request_id:\n      type: string\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to govern agent action\n",
+  "content_hash": "1a2f3a46760e303d3e4e124c09eb67378d678c7ae6cc772465a68fc568a76fdf",
+  "fqdn_id": "ai_governance::IN_AGENT_ACTION_REQUESTED_V1",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "agent_governance",
+    "core": {
+      "inputs": {
+        "domain_context": {
+          "required": true,
+          "type": "string"
+        },
+        "parameters": {
+          "required": true,
+          "type": "object"
+        },
+        "request_id": {
+          "type": "string"
+        },
+        "requesting_user_id": {
+          "required": true,
+          "type": "string"
+        },
+        "tool_name": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to govern agent action",
+      "workflow": "WF_GOVERN_AGENT_ACTION_V1"
+    },
+    "fqdn": "ai_governance::IN_AGENT_ACTION_REQUESTED_V1",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "supersedes": "ai_governance::IN_AGENT_ACTION_REQUESTED_V0",
+    "version": "v1"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "1"
+}

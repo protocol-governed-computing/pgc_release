@@ -1,0 +1,42 @@
+{
+  "artifact_code": "STRUCTURE_WALLET_STORAGE_V1",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_WALLET_STORAGE_V1\n\n## Machine\n\n```yaml\nfqdn: blockchain::STRUCTURE_WALLET_STORAGE_V1\nartifact_kind: STRUCTURE\nversion: v1\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: wallet\nsupersedes: blockchain::STRUCTURE_WALLET_STORAGE_V0\ncore:\n  summary: Declares the stores the wallet owns and the paths they occupy\n  layer: DOMAINS\n  domain: blockchain\n  subdomain: wallet\n  entity_stores:\n    WALLET_ADDRESS_REGISTRY:\n      path: blockchain/wallet/wallet_address_registry.jsonl\n    WALLET_IDENTITIES:\n      path: blockchain/wallet/wallet_identity_registry.jsonl\n    WALLETS:\n      path: blockchain/wallet/wallets.json\n    WALLET_OCCURRENCES:\n      path: blockchain/wallet/wallet_occurrences.jsonl\n```\n\n---\n\n## Intent\n\nDeclares the stores the wallet owns and the paths they occupy\n",
+  "content_hash": "5b834b72182a23222fddd6cf53300ec255b8271010f234450341e2af7fb05078",
+  "fqdn_id": "blockchain::STRUCTURE_WALLET_STORAGE_V1",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "domain": "blockchain",
+      "entity_stores": {
+        "WALLETS": {
+          "path": "blockchain/wallet/wallets.json"
+        },
+        "WALLET_ADDRESS_REGISTRY": {
+          "path": "blockchain/wallet/wallet_address_registry.jsonl"
+        },
+        "WALLET_IDENTITIES": {
+          "path": "blockchain/wallet/wallet_identity_registry.jsonl"
+        },
+        "WALLET_OCCURRENCES": {
+          "path": "blockchain/wallet/wallet_occurrences.jsonl"
+        }
+      },
+      "layer": "DOMAINS",
+      "subdomain": "wallet",
+      "summary": "Declares the stores the wallet owns and the paths they occupy"
+    },
+    "fqdn": "blockchain::STRUCTURE_WALLET_STORAGE_V1",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "supersedes": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+    "version": "v1"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "1"
+}

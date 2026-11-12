@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_REQUEST_CANNOT_WIDEN_RULES_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_REQUEST_CANNOT_WIDEN_RULES_V0\n\n## Machine\n\n```yaml\nfqdn: lifecycle::INVARIANT_REQUEST_CANNOT_WIDEN_RULES_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: lifecycle::CONSTITUTION_CHANGE_MGMT_V0\nauthority: pgc.platform\nconcern: lifecycle\ncore:\n  enforcement_stage:\n  - enforced_elsewhere\n  violation_response: FAIL_IMMEDIATELY\n  enforced_by: the design compiler's derive route, applying its sealed doctrine to a decision ledger\nassert_projection:\n  applies_to_kinds:\n  - CC\n```\n\n---\n\n## 1. Claim\n\nA request that states rules of its own is judged by the business's rules. It is not refused for stating them, and it cannot widen them.\n\n## 2. Why\n\nRefusing a request for what it says would make the business's rules depend on the caller's wording. Honouring it would let the caller rewrite them.\n\n## 3. How it is checked\n\nThe derive route checks each rule from the ledger's own values, never from the request, and cites this rule on each such check.\n",
+  "content_hash": "99c2f26d92be06e6af6b047212eeac4fe9999094e215f5e83d6750cd2ad392c5",
+  "fqdn_id": "lifecycle::INVARIANT_REQUEST_CANNOT_WIDEN_RULES_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CC"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "lifecycle",
+    "core": {
+      "enforced_by": "the design compiler's derive route, applying its sealed doctrine to a decision ledger",
+      "enforcement_stage": [
+        "enforced_elsewhere"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "lifecycle::INVARIANT_REQUEST_CANNOT_WIDEN_RULES_V0",
+    "governed_by": "lifecycle::CONSTITUTION_CHANGE_MGMT_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "lifecycle",
+  "references": [
+    "lifecycle::CONSTITUTION_CHANGE_MGMT_V0"
+  ],
+  "version": "0"
+}

@@ -1,25 +1,27 @@
 {
-  "attestation_hash": "55da620660e1bdb43bf7e2fc3a9359e91a511901ae51c47d659a536095223d5b",
+  "attestation_hash": "0cda2dfaf6cdd5bbf2e7143bdb3c8989f35e88a1bfe23b44b555daa5c99c63f7",
   "attestation_version": "V0",
   "imported_capabilities": [
     "capability_side_effects::CS_APPENDONLY_JSONL_V0",
     "capability_side_effects::CS_CLOCK_V0",
     "capability_side_effects::CS_MUTABLE_JSON_V0",
     "capability_side_effects::CS_REGISTRY_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
     "capability_transforms::CT_PURE_GENERATE_ID_V0",
     "capability_transforms::CT_PURE_LOOKUP_V0",
     "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
     "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
   ],
   "imported_governance": {
-    "closure_member_count": 110,
-    "governance_closure_hash": "fb2ba50890a1848d9c927c100da9b283b25f0b3da01ed76a7eddd5d842b70e07",
+    "closure_member_count": 119,
+    "governance_closure_hash": "1778705f9a1527213d96dc13d1c048cdb6b10744ca8c525dfc1394c0dd4a60d0",
     "import_domain": "platform"
   },
   "public_key_ref": "STUB",
   "signature": "STUB_NOT_CRYPTOGRAPHICALLY_SIGNED",
-  "signed_at": "2026-10-19T22:05:48.222234+00:00",
+  "signed_at": "2026-11-12T01:03:27.110364+00:00",
   "signing_algorithm": "STUB",
   "structure_id": "ai_governance",
-  "tokenized_projection_hash": "4c6cce61295508d72e55dc7ab3e7b26f5231224ac059d0c62c1dab5d50e5a009"
+  "tokenized_projection_hash": "ed5dca78657d87f15a8ffe87fd7ac914f772b5180fbd7edbfc934fe08a59c56d"
 }

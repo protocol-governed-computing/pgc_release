@@ -1,0 +1,58 @@
+{
+  "artifact_type": "CT_CONFORMANCE",
+  "ct_fqdn": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_SELECT_RECORDS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "filter": "$.inputs.filter",
+          "source": "$.inputs.source"
+        },
+        "atom": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "capability_transforms.implementation.ct_pure_select_records_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+    "input_types": {
+      "filter": "object",
+      "source": "array"
+    },
+    "inputs": {
+      "filter": {
+        "status": "present"
+      },
+      "source": [
+        {
+          "status": "PENDING",
+          "tx_id": "TX_001"
+        },
+        {
+          "tx_id": "TX_002"
+        }
+      ]
+    },
+    "outputs": {
+      "extracted": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "expected": {
+    "extracted": [
+      {
+        "status": "PENDING",
+        "tx_id": "TX_001"
+      }
+    ]
+  },
+  "expected_outcome": "SUCCESS",
+  "fqdn": "capability_transforms::CT_PURE_SELECT_RECORDS_V0::select_by_field_presence",
+  "test_data_source": "capability_transforms::TEST_DATA_CT_PURE_SELECT_RECORDS_V0"
+}

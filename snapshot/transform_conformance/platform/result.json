@@ -190,6 +190,30 @@
       "passed": true
     },
     {
+      "case": "capability_transforms::CT_PURE_SELECT_RECORDS_V0::select_by_exact_value",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_SELECT_RECORDS_V0::select_by_field_presence",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_SELECT_RECORDS_V0::select_from_a_source_that_is_not_an_array_is_refused",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_SELECT_RECORDS_V0::select_from_nothing_answers_empty",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_SELECT_RECORDS_V0::select_multi_criteria",
+      "passed": true
+    },
+    {
+      "case": "capability_transforms::CT_PURE_SELECT_RECORDS_V0::select_nothing_matching_answers_empty",
+      "passed": true
+    },
+    {
       "case": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0::all_rules_pass",
       "passed": true
     },
@@ -215,9 +239,9 @@
     }
   ],
   "counts": {
-    "cases": 53,
+    "cases": 59,
     "cases_failed": 0,
-    "proven": 13,
+    "proven": 14,
     "refused": 0,
     "unproven": 0
   },
@@ -233,6 +257,7 @@
     "capability_transforms::CT_PURE_MAP_RESULT_TO_HTTP_V0",
     "capability_transforms::CT_PURE_PASSTHROUGH_V0",
     "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
+    "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
     "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
     "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
     "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"

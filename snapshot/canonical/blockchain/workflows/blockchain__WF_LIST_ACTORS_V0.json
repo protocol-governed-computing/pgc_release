@@ -1,0 +1,75 @@
+{
+  "artifact_code": "WF_LIST_ACTORS_V0",
+  "artifact_type": "WF",
+  "content": "# WF_LIST_ACTORS_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::WF_LIST_ACTORS_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: identity\nruntime_binding: blockchain::RB_IDENTITY_BINDINGS_V0\nsubdomain: identity\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: 'The governed sequence that performs: list actors'\n  actor_context: blockchain::AC_PARTICIPANT_V0\n  start_node: IN_LIST_ACTORS_V0\n  nodes:\n    IN_LIST_ACTORS_V0:\n      type: IN\n      code: IN_LIST_ACTORS_V0\n      next:\n        ACK: CC_RECORD_IDENTITY_MOMENT_V0\n        NACK: EXIT_REJECTED\n    CC_RECORD_IDENTITY_MOMENT_V0:\n      type: CC\n      code: CC_RECORD_IDENTITY_MOMENT_V0\n      inputs:\n        occurrence: LIST_ACTORS\n      next:\n        SUCCESS: CC_LIST_ACTORS_V0\n        BACKEND_ERROR: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n    CC_LIST_ACTORS_V0:\n      type: CC\n      code: CC_LIST_ACTORS_V0\n      inputs:\n        state: $.payload.state\n      next:\n        SUCCESS: EXIT_COMPLETED\n        BACKEND_ERROR: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n    EXIT_REJECTED:\n      type: EXIT\n```\n\n---\n\n## Intent\n\nThe governed sequence that performs: list actors\n",
+  "content_hash": "455f76fdf468b8736b36fa39b58736a599c4fa9ea592e9606d2479f2ab561a0f",
+  "fqdn_id": "blockchain::WF_LIST_ACTORS_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "actor_context": "blockchain::AC_PARTICIPANT_V0",
+      "nodes": {
+        "CC_LIST_ACTORS_V0": {
+          "code": "CC_LIST_ACTORS_V0",
+          "fqdn_id": "blockchain::CC_LIST_ACTORS_V0",
+          "inputs": {
+            "state": "$.payload.state"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RECORD_IDENTITY_MOMENT_V0": {
+          "code": "CC_RECORD_IDENTITY_MOMENT_V0",
+          "fqdn_id": "blockchain::CC_RECORD_IDENTITY_MOMENT_V0",
+          "inputs": {
+            "occurrence": "LIST_ACTORS"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_LIST_ACTORS_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "IN_LIST_ACTORS_V0": {
+          "code": "IN_LIST_ACTORS_V0",
+          "fqdn_id": "blockchain::IN_LIST_ACTORS_V0",
+          "next": {
+            "ACK": "CC_RECORD_IDENTITY_MOMENT_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_LIST_ACTORS_V0",
+      "summary": "The governed sequence that performs: list actors"
+    },
+    "fqdn": "blockchain::WF_LIST_ACTORS_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "blockchain::RB_IDENTITY_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "identity",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "blockchain::AC_PARTICIPANT_V0",
+    "blockchain::RB_IDENTITY_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

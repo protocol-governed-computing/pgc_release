@@ -1,0 +1,134 @@
+{
+  "artifact_code": "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "key": "in.key"
+        },
+        "fqdn": "capability_transforms::CT_PURE_LOOKUP_V0",
+        "id": "CT_PURE_LOOKUP_V0",
+        "inputs": [
+          "key",
+          "map"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "result"
+        ]
+      },
+      {
+        "bindings": {
+          "allowed_set": "look_up_tier_tools.tier_tools",
+          "value": "in.tool_name"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "inputs": [
+          "allowed_set",
+          "value"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "is_member"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_REQUIRE_TIER_GRANTS_TOOL_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_REQUIRE_TIER_GRANTS_TOOL_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: agent_governance\ncore:\n  summary: Refuse to govern agent action unless tier grants tool\n  inputs:\n    key:\n      type: string\n      required: true\n    tool_name:\n      type: string\n      required: true\n  outputs:\n    valid:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: look_up_tier_tools\n    transform: capability_transforms::CT_PURE_LOOKUP_V0\n    inputs:\n      map:\n        standard:\n        - READ_RECORD\n        - PROVISION_STANDARD_LICENSE\n        enterprise:\n        - READ_RECORD\n        - PROVISION_STANDARD_LICENSE\n        - PROVISION_PREMIUM_LICENSE\n      key: $.inputs.key\n    outputs:\n      tier_tools: $.capability_result.result\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: require_tool_name_in_tier_tools\n    transform: capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\n    inputs:\n      value: $.inputs.tool_name\n      allowed_set: $.results.look_up_tier_tools.tier_tools\n    outputs:\n      is_member: $.capability_result.is_member\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuse to govern agent action unless tier grants tool\n",
+  "content_hash": "a87df88c5916beda0c78583a55363eb856e3df3c64f951bb7a5187c019e81438",
+  "fqdn_id": "ai_governance::CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "agent_governance",
+    "core": {
+      "inputs": {
+        "key": {
+          "required": true,
+          "type": "string"
+        },
+        "tool_name": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "valid": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key": "$.inputs.key",
+            "map": {
+              "enterprise": [
+                "READ_RECORD",
+                "PROVISION_STANDARD_LICENSE",
+                "PROVISION_PREMIUM_LICENSE"
+              ],
+              "standard": [
+                "READ_RECORD",
+                "PROVISION_STANDARD_LICENSE"
+              ]
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "tier_tools": "$.capability_result.result"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "look_up_tier_tools",
+          "transform": "capability_transforms::CT_PURE_LOOKUP_V0"
+        },
+        {
+          "inputs": {
+            "allowed_set": "$.results.look_up_tier_tools.tier_tools",
+            "value": "$.inputs.tool_name"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "is_member": "$.capability_result.is_member"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_tool_name_in_tier_tools",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse to govern agent action unless tier grants tool"
+    },
+    "fqdn": "ai_governance::CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_LOOKUP_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
+  "version": "0"
+}

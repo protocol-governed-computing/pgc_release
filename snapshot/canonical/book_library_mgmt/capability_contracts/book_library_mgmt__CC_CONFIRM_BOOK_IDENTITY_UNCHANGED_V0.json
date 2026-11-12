@@ -1,0 +1,131 @@
+{
+  "artifact_code": "CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "left": "in.identity_key",
+          "right": "in.updated_identity_key"
+        },
+        "fqdn": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+        "id": "CT_PURE_COMPARE_EQUAL_V0",
+        "inputs": [
+          "left",
+          "right"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "is_equal"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Confirm a corrected book keeps its identity\n  inputs:\n    identity_key:\n      type: string\n      required: true\n    updated_identity_key:\n      type: string\n      required: true\n  outputs:\n    valid:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: compare_identity\n    transform: capability_transforms::CT_PURE_COMPARE_EQUAL_V0\n    inputs:\n      left: $.inputs.identity_key\n      right: $.inputs.updated_identity_key\n    outputs:\n      identity_unchanged: $.capability_result.is_equal\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: require_identity_unchanged\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        identity_unchanged: $.results.compare_identity.identity_unchanged\n      rules:\n      - field: identity_unchanged\n        op: eq\n        value: true\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nConfirm a corrected book keeps its identity\n",
+  "content_hash": "19acd9021a1600cfa3b8bc7f2df1552eadf39bf055a6858d07fce7621f3572c6",
+  "fqdn_id": "book_library_mgmt::CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "updated_identity_key": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "valid": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "left": "$.inputs.identity_key",
+            "right": "$.inputs.updated_identity_key"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "identity_unchanged": "$.capability_result.is_equal"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "compare_identity",
+          "transform": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "identity_unchanged": "$.results.compare_identity.identity_unchanged"
+            },
+            "rules": [
+              {
+                "field": "identity_unchanged",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_identity_unchanged",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Confirm a corrected book keeps its identity"
+    },
+    "fqdn": "book_library_mgmt::CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+  ],
+  "version": "0"
+}

@@ -1,8 +1,8 @@
 {
   "artifact_code": "VOCAB_DECLARATION_REPRESENTATION_V0",
   "artifact_type": "VOCAB",
-  "content": "# VOCAB_DECLARATION_REPRESENTATION_V0\n\n## Machine\n\n```yaml\nfqdn: artifact::VOCAB_DECLARATION_REPRESENTATION_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: artifact\nextends: ''\ndocumentation:\n  casing: lower_snake\n  entries:\n  - summary\n  - description\n  - notes\n  - purpose\n  - use_cases\n  - failure_modes\n  - intent\n  - detail\n  - admission_rules\nunordered:\n  casing: lower_snake\n  entries:\n  - allowed\n  - result_surface\n  - result_status_values\n  - canonical_surface\n  - applies_to_kinds\n  - governs\n  - requires\n  - forbids\n  - consults\n  - allowed_capability_transforms\n  - allowed_capability_side_effects\nreference:\n  casing: lower_snake\n  entries:\n  - actor_context\n  - allowed_capability_side_effects\n  - allowed_capability_transforms\n  - atom\n  - code\n  - consults\n  - disposition_vocabulary\n  - emit\n  - enforced_by\n  - extends\n  - fqdn_id\n  - governed_by\n  - molecule\n  - phase_workflows\n  - runtime_binding\n  - side_effect\n  - side_effects\n  - storage_structure\n  - structure\n  - target\n  - transform\n  - transforms\n  - vocabulary_id\n  - workflow\nreference_keyed:\n  casing: lower_snake\n  entries:\n  - bindings\nfull_name_required:\n  casing: lower_snake\n  entries:\n  - consults\n  - governed_by\n  - runtime_binding\n  - side_effects\n  - structure\n  - transform\n  - transforms\n  - vocabulary_id\nsupersession:\n  casing: lower_snake\n  entries:\n  - supersedes\ndata:\n  casing: lower_snake\n  entries:\n  - cases\nsameness_rules:\n  casing: lower_snake\n  entries:\n  - explanation_only_as_text\n  - reference_to_declared_successor\n```\n\n---\n\n## Intent\n\nHow every reader of a declaration tells a name from a value. A full name at or beneath a\n`reference` part is a reference; a full-name key of a `reference_keyed` part is one too. A\n`supersession` part names an artifact without reaching it. A `data` part holds values: nothing\nbeneath it is read for references, whatever it looks like. A full name anywhere else is refused as\nundeclared.\n\nA test vector's `cases` are data. The transform a vector tests, its `target`, sits outside its cases and stays a reference.\n",
-  "content_hash": "0b8dfb185539a15e2f0b30be480a2865d1635724bf15762f0268c694a8c4cb7c",
+  "content": "# VOCAB_DECLARATION_REPRESENTATION_V0\n\n## Machine\n\n```yaml\nfqdn: artifact::VOCAB_DECLARATION_REPRESENTATION_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: artifact\nextends: ''\ndocumentation:\n  casing: lower_snake\n  entries:\n  - summary\n  - description\n  - notes\n  - purpose\n  - use_cases\n  - failure_modes\n  - intent\n  - detail\n  - admission_rules\nunordered:\n  casing: lower_snake\n  entries:\n  - allowed\n  - result_surface\n  - result_status_values\n  - canonical_surface\n  - applies_to_kinds\n  - governs\n  - requires\n  - forbids\n  - consults\n  - allowed_capability_transforms\n  - allowed_capability_side_effects\nreference:\n  casing: lower_snake\n  entries:\n  - actor_context\n  - allowed_capability_side_effects\n  - allowed_capability_transforms\n  - atom\n  - bootstrap_exception\n  - code\n  - consults\n  - disposition_vocabulary\n  - emit\n  - enforced_by\n  - event_code\n  - event_type\n  - extends\n  - fqdn_id\n  - governed_by\n  - governs\n  - molecule\n  - phase_workflows\n  - runtime_binding\n  - side_effect\n  - side_effects\n  - storage_structure\n  - structure\n  - target\n  - target_cs\n  - transform\n  - transforms\n  - vocabulary_id\n  - workflow\nreference_keyed:\n  casing: lower_snake\n  entries:\n  - bindings\nfull_name_required:\n  casing: lower_snake\n  entries:\n  - consults\n  - governed_by\n  - runtime_binding\n  - side_effects\n  - structure\n  - transform\n  - transforms\n  - vocabulary_id\nnamed_in_full:\n  casing: lower_snake\n  entries:\n  - bootstrap_exception\n  - event_code\n  - event_type\n  - governs\n  - target_cs\nsupersession:\n  casing: lower_snake\n  entries:\n  - supersedes\ndata:\n  casing: lower_snake\n  entries:\n  - cases\nsameness_rules:\n  casing: lower_snake\n  entries:\n  - explanation_only_as_text\n  - reference_to_declared_successor\n```\n\n---\n\n## Intent\n\nHow every reader of a declaration tells a name from a value. A full name at or beneath a\n`reference` part is a reference; a full-name key of a `reference_keyed` part is one too. A\n`supersession` part names an artifact without reaching it. A `data` part holds values: nothing\nbeneath it is read for references, whatever it looks like. A full name anywhere else is refused as\nundeclared.\n\nA part that carries an artifact's name as a value is a reference part like any other: a claim's\n`target_cs`, an audit record's `event_code` or `event_type`, a surface contract's `governs`. Only a\nvalue written as a full name is a reference. A kind token or a path under the same part is a value,\nso these parts are `named_in_full`, not `full_name_required`: a value written as an artifact's code\nis refused, and a value of any other shape is not a name.\n\nA test vector's `cases` are data. The transform a vector tests, its `target`, sits outside its cases and stays a reference.\n",
+  "content_hash": "24b785c88283a80ee4f7ad0add4829cd3948586fdad5a9512eca496caf1a112d",
   "fqdn_id": "artifact::VOCAB_DECLARATION_REPRESENTATION_V0",
   "frontmatter": {
     "artifact_kind": "VOCABULARY",
@@ -44,6 +44,16 @@
       ]
     },
     "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "named_in_full": {
+      "casing": "lower_snake",
+      "entries": [
+        "bootstrap_exception",
+        "event_code",
+        "event_type",
+        "governs",
+        "target_cs"
+      ]
+    },
     "reference": {
       "casing": "lower_snake",
       "entries": [
@@ -51,14 +61,18 @@
         "allowed_capability_side_effects",
         "allowed_capability_transforms",
         "atom",
+        "bootstrap_exception",
         "code",
         "consults",
         "disposition_vocabulary",
         "emit",
         "enforced_by",
+        "event_code",
+        "event_type",
         "extends",
         "fqdn_id",
         "governed_by",
+        "governs",
         "molecule",
         "phase_workflows",
         "runtime_binding",
@@ -67,6 +81,7 @@
         "storage_structure",
         "structure",
         "target",
+        "target_cs",
         "transform",
         "transforms",
         "vocabulary_id",

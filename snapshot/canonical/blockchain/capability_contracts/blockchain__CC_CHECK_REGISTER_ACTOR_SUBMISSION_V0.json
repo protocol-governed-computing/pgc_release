@@ -1,0 +1,135 @@
+{
+  "artifact_code": "CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "record": "in.submission"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "inputs": [
+          "record",
+          "schema"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "violations"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Refuse a request to register actor that lacks what it requires\n  inputs:\n    submission:\n      type: object\n      required: true\n  outputs:\n    valid:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: check_actor_fields\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.submission\n      schema:\n        name:\n          type: string\n          required: true\n        contact_address:\n          type: string\n          required: true\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: refuse_incomplete_submission\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        actor_violations: $.results.check_actor_fields.violations\n      rules:\n      - field: actor_violations\n        op: eq\n        value: []\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuse a request to register actor that lacks what it requires\n",
+  "content_hash": "384eed41b7cdd0633f2905bdc413ecd14371c55603ff884e631d0c102c3922d0",
+  "fqdn_id": "blockchain::CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "inputs": {
+        "submission": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "valid": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "record": "$.inputs.submission",
+            "schema": {
+              "contact_address": {
+                "required": true,
+                "type": "string"
+              },
+              "name": {
+                "required": true,
+                "type": "string"
+              }
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "violations": "$.capability_result.violations"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "check_actor_fields",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "actor_violations": "$.results.check_actor_fields.violations"
+            },
+            "rules": [
+              {
+                "field": "actor_violations",
+                "op": "eq",
+                "value": []
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "refuse_incomplete_submission",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse a request to register actor that lacks what it requires"
+    },
+    "fqdn": "blockchain::CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

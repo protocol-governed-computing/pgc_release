@@ -1,0 +1,39 @@
+{
+  "artifact_code": "STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1\n\n## Machine\n\n```yaml\nfqdn: ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1\nartifact_kind: STRUCTURE\nversion: v1\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: agent_governance\nsupersedes: ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0\ncore:\n  summary: Declares the stores the agent_governance owns and the paths they occupy\n  layer: DOMAINS\n  domain: ai_governance\n  subdomain: agent_governance\n  entity_stores:\n    ACTION_IDENTITY_REGISTRY:\n      path: ai_governance/agent_governance/action_identity_registry.jsonl\n    ACTIONS:\n      path: ai_governance/agent_governance/actions.json\n    GOVERNANCE_AUDIT:\n      path: ai_governance/agent_governance/governance_audit.jsonl\n```\n\n---\n\n## Intent\n\nDeclares the stores the agent_governance owns and the paths they occupy\n",
+  "content_hash": "d6d7a1c01379b3ff3a6e9b2bf7486d58afbfb7e28a29edd269e6e125a3783f98",
+  "fqdn_id": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "agent_governance",
+    "core": {
+      "domain": "ai_governance",
+      "entity_stores": {
+        "ACTIONS": {
+          "path": "ai_governance/agent_governance/actions.json"
+        },
+        "ACTION_IDENTITY_REGISTRY": {
+          "path": "ai_governance/agent_governance/action_identity_registry.jsonl"
+        },
+        "GOVERNANCE_AUDIT": {
+          "path": "ai_governance/agent_governance/governance_audit.jsonl"
+        }
+      },
+      "layer": "DOMAINS",
+      "subdomain": "agent_governance",
+      "summary": "Declares the stores the agent_governance owns and the paths they occupy"
+    },
+    "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "supersedes": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
+    "version": "v1"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "1"
+}

@@ -1,0 +1,164 @@
+{
+  "artifact_code": "TEST_DATA_CT_PURE_SELECT_RECORDS_V0",
+  "artifact_type": "TEST_DATA",
+  "content": "# TEST_DATA_CT_PURE_SELECT_RECORDS_V0\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::TEST_DATA_CT_PURE_SELECT_RECORDS_V0\nartifact_kind: TEST_DATA\nversion: V0\ngoverned_by: conformance::CONSTITUTION_TEST_DATA_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Test vectors for CT_PURE_SELECT_RECORDS_V0\ntarget: capability_transforms::CT_PURE_SELECT_RECORDS_V0\ncases:\n- case_id: select_by_exact_value\n  expected_outcome: SUCCESS\n  bindings:\n    source:\n    - actor_id: AC_aaa\n      state: ACCEPTED\n    - actor_id: AC_bbb\n      state: UNVERIFIED\n    - actor_id: AC_ccc\n      state: ACCEPTED\n    filter:\n      state: ACCEPTED\n  expected:\n    extracted:\n    - actor_id: AC_aaa\n      state: ACCEPTED\n    - actor_id: AC_ccc\n      state: ACCEPTED\n- case_id: select_by_field_presence\n  expected_outcome: SUCCESS\n  bindings:\n    source:\n    - tx_id: TX_001\n      status: PENDING\n    - tx_id: TX_002\n    filter:\n      status: present\n  expected:\n    extracted:\n    - tx_id: TX_001\n      status: PENDING\n- case_id: select_multi_criteria\n  expected_outcome: SUCCESS\n  bindings:\n    source:\n    - id: R1\n      type: validator\n      active: true\n    - id: R2\n      type: validator\n      active: false\n    filter:\n      type: validator\n      active: true\n  expected:\n    extracted:\n    - id: R1\n      type: validator\n      active: true\n- case_id: select_nothing_matching_answers_empty\n  expected_outcome: SUCCESS\n  bindings:\n    source:\n    - actor_id: AC_aaa\n      state: ACCEPTED\n    filter:\n      state: REJECTED\n  expected:\n    extracted: []\n- case_id: select_from_nothing_answers_empty\n  expected_outcome: SUCCESS\n  bindings:\n    source: []\n    filter:\n      state: ACCEPTED\n  expected:\n    extracted: []\n- case_id: select_from_a_source_that_is_not_an_array_is_refused\n  expected_outcome: VIOLATION\n  bindings:\n    source:\n      actor_id: AC_aaa\n    filter:\n      state: ACCEPTED\n  expected: {}\n```\n\n## Intent\n\nTest selection by exact value, field presence and several criteria, that nothing matching answers an empty array, and that malformed input is refused.\n",
+  "content_hash": "792085c836b6c4eb350f3e6169b771c1e3de9d3126b5f041a5fc3d102d0bf029",
+  "fqdn_id": "capability_transforms::TEST_DATA_CT_PURE_SELECT_RECORDS_V0",
+  "frontmatter": {
+    "artifact_kind": "TEST_DATA",
+    "authority": "pgc.platform",
+    "cases": [
+      {
+        "bindings": {
+          "filter": {
+            "state": "ACCEPTED"
+          },
+          "source": [
+            {
+              "actor_id": "AC_aaa",
+              "state": "ACCEPTED"
+            },
+            {
+              "actor_id": "AC_bbb",
+              "state": "UNVERIFIED"
+            },
+            {
+              "actor_id": "AC_ccc",
+              "state": "ACCEPTED"
+            }
+          ]
+        },
+        "case_id": "select_by_exact_value",
+        "expected": {
+          "extracted": [
+            {
+              "actor_id": "AC_aaa",
+              "state": "ACCEPTED"
+            },
+            {
+              "actor_id": "AC_ccc",
+              "state": "ACCEPTED"
+            }
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "filter": {
+            "status": "present"
+          },
+          "source": [
+            {
+              "status": "PENDING",
+              "tx_id": "TX_001"
+            },
+            {
+              "tx_id": "TX_002"
+            }
+          ]
+        },
+        "case_id": "select_by_field_presence",
+        "expected": {
+          "extracted": [
+            {
+              "status": "PENDING",
+              "tx_id": "TX_001"
+            }
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "filter": {
+            "active": true,
+            "type": "validator"
+          },
+          "source": [
+            {
+              "active": true,
+              "id": "R1",
+              "type": "validator"
+            },
+            {
+              "active": false,
+              "id": "R2",
+              "type": "validator"
+            }
+          ]
+        },
+        "case_id": "select_multi_criteria",
+        "expected": {
+          "extracted": [
+            {
+              "active": true,
+              "id": "R1",
+              "type": "validator"
+            }
+          ]
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "filter": {
+            "state": "REJECTED"
+          },
+          "source": [
+            {
+              "actor_id": "AC_aaa",
+              "state": "ACCEPTED"
+            }
+          ]
+        },
+        "case_id": "select_nothing_matching_answers_empty",
+        "expected": {
+          "extracted": []
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "filter": {
+            "state": "ACCEPTED"
+          },
+          "source": []
+        },
+        "case_id": "select_from_nothing_answers_empty",
+        "expected": {
+          "extracted": []
+        },
+        "expected_outcome": "SUCCESS"
+      },
+      {
+        "bindings": {
+          "filter": {
+            "state": "ACCEPTED"
+          },
+          "source": {
+            "actor_id": "AC_aaa"
+          }
+        },
+        "case_id": "select_from_a_source_that_is_not_an_array_is_refused",
+        "expected": {},
+        "expected_outcome": "VIOLATION"
+      }
+    ],
+    "concern": "capability_transforms",
+    "core": {
+      "summary": "Test vectors for CT_PURE_SELECT_RECORDS_V0"
+    },
+    "fqdn": "capability_transforms::TEST_DATA_CT_PURE_SELECT_RECORDS_V0",
+    "governed_by": "conformance::CONSTITUTION_TEST_DATA_V0",
+    "target": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+    "version": "V0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+    "conformance::CONSTITUTION_TEST_DATA_V0"
+  ],
+  "version": "0"
+}

@@ -1,15 +1,15 @@
 {
   "artifact_code": "EV_WALLET_CREATED_V0",
   "artifact_type": "EV",
-  "content": "# EV_WALLET_CREATED_V0\n\n## 1. Intent\n\nAnnounces that a wallet was created, for whom, and when\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_WALLET_CREATED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Announces that a wallet was created, for whom, and when\n  description: Announces that a wallet was created, for whom, and when\n  subdomain: wallet\n  schema:\n    wallet_id:\n      type: string\n      required: true\n    holder:\n      type: string\n      required: true\n    occurred_at:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
-  "content_hash": "1e9c537cadba62095810835a12c81ffd342503c14c08b39457f59164f878de64",
+  "content": "# EV_WALLET_CREATED_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_WALLET_CREATED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: A wallet created\n  description: A wallet created\n  subdomain: wallet\n  schema:\n    wallet_id:\n      type: string\n      required: true\n    holder:\n      type: string\n      required: true\n    occurred_at:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n\n---\n\n## Intent\n\nA wallet created\n",
+  "content_hash": "8c0b8d6b8ee6e5144e5112e85cce89d5509458332d742c5c31054c189a228f6b",
   "fqdn_id": "blockchain::EV_WALLET_CREATED_V0",
   "frontmatter": {
     "artifact_kind": "EVENT",
     "authority": "pgc.platform",
     "concern": "wallet",
     "core": {
-      "description": "Announces that a wallet was created, for whom, and when",
+      "description": "A wallet created",
       "schema": {
         "holder": {
           "required": true,
@@ -31,7 +31,7 @@
         }
       },
       "subdomain": "wallet",
-      "summary": "Announces that a wallet was created, for whom, and when"
+      "summary": "A wallet created"
     },
     "fqdn": "blockchain::EV_WALLET_CREATED_V0",
     "governed_by": "event::CONSTITUTION_EVENT_V0",

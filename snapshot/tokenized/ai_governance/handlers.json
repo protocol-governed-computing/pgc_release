@@ -1,6 +1,6 @@
 {
   "cs": {
-    "71": {
+    "89": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -56,7 +56,7 @@
         "module": "capability_side_effects.implementation.CS_APPENDONLY_JSONL_V0.runtime"
       }
     },
-    "72": {
+    "90": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -88,7 +88,7 @@
         "module": "capability_side_effects.implementation.CS_CLOCK_V0.runtime"
       }
     },
-    "73": {
+    "91": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -275,7 +275,7 @@
         "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
       }
     },
-    "74": {
+    "92": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -390,82 +390,85 @@
     }
   },
   "ct": {
-    "18": {
+    "100": {
       "ct_ir": {
-        "artifact_code": "CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+        "artifact_code": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
         "atom_stream": [
           {
             "args": {
-              "assigned_count": "$.inputs.assigned_count",
-              "quota": "$.inputs.quota"
+              "record": "$.inputs.record",
+              "schema": "$.inputs.schema"
             },
-            "atom": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+            "atom": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
             "handler_ref": {
               "callable": "execute",
-              "module": "ai_governance.implementation.capability_transforms.atoms.ct_pure_check_quota_available_v0"
+              "module": "capability_transforms.implementation.ct_pure_validate_record_structure_v0"
             },
             "out": "__atom_result__",
             "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
-        "ct_fqdn": "ai_governance::CT_PURE_CHECK_QUOTA_AVAILABLE_V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
         "inputs": {
-          "assigned_count": {
-            "description": "Number of licenses currently assigned",
+          "record": {
+            "description": "The record to validate",
             "required": true,
-            "type": "integer"
+            "type": "object"
           },
-          "quota": {
-            "description": "Declared license cap",
+          "schema": {
+            "description": "Validation rules keyed by field name",
             "required": true,
-            "type": "integer"
+            "type": "object"
           }
         },
         "outputs": {
-          "quota_available": {
-            "from": "__atom_result__"
-          },
-          "remaining": {
+          "violations": {
             "from": "__atom_result__"
           }
         }
       }
     },
-    "19": {
+    "101": {
       "ct_ir": {
-        "artifact_code": "CT_PURE_CHECK_TRAINING_STATUS_V0",
+        "artifact_code": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
         "atom_stream": [
           {
             "args": {
-              "training_completed": "$.inputs.training_completed"
+              "allowed_set": "$.inputs.allowed_set",
+              "value": "$.inputs.value"
             },
-            "atom": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
+            "atom": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
             "handler_ref": {
               "callable": "execute",
-              "module": "ai_governance.implementation.capability_transforms.atoms.ct_pure_check_training_status_v0"
+              "module": "capability_transforms.implementation.ct_pure_validate_set_membership_v0"
             },
             "out": "__atom_result__",
             "purity": "ct_pure"
           }
         ],
         "ct_composition_version": "V0",
-        "ct_fqdn": "ai_governance::CT_PURE_CHECK_TRAINING_STATUS_V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
         "inputs": {
-          "training_completed": {
-            "description": "Whether the employee has completed required AI-use training",
+          "allowed_set": {
+            "description": "The list of permitted values",
             "required": true,
-            "type": "boolean"
+            "type": "array"
+          },
+          "value": {
+            "description": "The value to check",
+            "required": true,
+            "type": "string"
           }
         },
         "outputs": {
-          "training_eligible": {
+          "is_member": {
             "from": "__atom_result__"
           }
         }
       }
     },
-    "20": {
+    "34": {
       "ct_ir": {
         "artifact_code": "CT_PURE_EVALUATE_INACTIVITY_V0",
         "atom_stream": [
@@ -513,7 +516,40 @@
         }
       }
     },
-    "78": {
+    "96": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "fields": "$.inputs.fields"
+            },
+            "atom": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_assemble_record_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": {
+          "fields": {
+            "description": "Key-value map of fields to include in the record",
+            "required": true,
+            "type": "object"
+          }
+        },
+        "outputs": {
+          "record": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "97": {
       "ct_ir": {
         "artifact_code": "CT_PURE_GENERATE_ID_V0",
         "atom_stream": [
@@ -552,7 +588,7 @@
         }
       }
     },
-    "79": {
+    "98": {
       "ct_ir": {
         "artifact_code": "CT_PURE_LOOKUP_V0",
         "atom_stream": [
@@ -591,7 +627,7 @@
         }
       }
     },
-    "80": {
+    "99": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
         "atom_stream": [
@@ -632,51 +668,12 @@
           }
         }
       }
-    },
-    "81": {
-      "ct_ir": {
-        "artifact_code": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
-        "atom_stream": [
-          {
-            "args": {
-              "allowed_set": "$.inputs.allowed_set",
-              "value": "$.inputs.value"
-            },
-            "atom": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
-            "handler_ref": {
-              "callable": "execute",
-              "module": "capability_transforms.implementation.ct_pure_validate_set_membership_v0"
-            },
-            "out": "__atom_result__",
-            "purity": "ct_pure"
-          }
-        ],
-        "ct_composition_version": "V0",
-        "ct_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
-        "inputs": {
-          "allowed_set": {
-            "description": "The list of permitted values",
-            "required": true,
-            "type": "array"
-          },
-          "value": {
-            "description": "The value to check",
-            "required": true,
-            "type": "string"
-          }
-        },
-        "outputs": {
-          "is_member": {
-            "from": "__atom_result__"
-          }
-        }
-      }
     }
   },
   "projection_class": "machine_projection",
   "rb_policy": {
-    "34": {
-      "71": {
+    "51": {
+      "89": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -685,223 +682,102 @@
               "authority": "pgc.platform",
               "concern": "agent_governance",
               "core": {
-                "description": "Maps entity types to storage implementations and paths",
                 "domain": "ai_governance",
                 "entity_stores": {
-                  "GOVERNANCE_ACTIONS": {
-                    "description": "Registry of authorized actions, keyed by action id, so a repeated authorization is recognized",
-                    "path": "ai_governance/agent_governance/governance_actions.json"
+                  "ACTIONS": {
+                    "path": "ai_governance/agent_governance/actions.json"
+                  },
+                  "ACTION_IDENTITY_REGISTRY": {
+                    "path": "ai_governance/agent_governance/action_identity_registry.jsonl"
                   },
                   "GOVERNANCE_AUDIT": {
-                    "description": "Append-only audit trail for agent governance authorization and denial decisions",
                     "path": "ai_governance/agent_governance/governance_audit.jsonl"
-                  },
-                  "LICENSE_FACTS": {
-                    "description": "Read-only license tier and status fact feed (user_id \u2192 license record) \u2014 owned by ai_licensing, consumed here",
-                    "path": "ai_governance/ai_licensing/license_facts.json"
                   }
                 },
-                "isolation": {
-                  "description": "Entity storage isolation constraints",
-                  "rules": [
-                    "Each entity type has dedicated storage",
-                    "LICENSE_FACTS is read-only \u2014 agent governance may not mutate license facts",
-                    "GOVERNANCE_AUDIT is append-only \u2014 agent governance audit records are immutable",
-                    "GOVERNANCE_ACTIONS registers each authorized action once \u2014 a key is never re-registered",
-                    "Storage paths resolved via STRUCTURE only"
-                  ]
-                },
                 "layer": "DOMAINS",
-                "resolution": {
-                  "algorithm": "base_path / entity_stores[entity_type].path",
-                  "description": "Runtime path resolution strategy",
-                  "example": "{{module_data_root}}/ai_governance/ai_licensing/license_facts.json"
-                },
-                "storage_roots": {
-                  "base_path": "{{module_data_root}}",
-                  "description": "Root path for all agent governance storage (resolved at runtime)"
-                },
                 "subdomain": "agent_governance",
-                "summary": "Agent governance domain storage topology"
+                "summary": "Declares the stores the agent_governance owns and the paths they occupy"
               },
-              "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
+              "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1",
               "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
-            }
-          }
-        }
-      },
-      "72": {
-        "policy": {
-          "module_data_root": "{{module_data_root}}",
-          "precision": "seconds",
-          "storage_structure_artifact": {
-            "frontmatter": {
-              "artifact_kind": "STRUCTURE",
-              "authority": "pgc.platform",
-              "concern": "agent_governance",
-              "core": {
-                "description": "Maps entity types to storage implementations and paths",
-                "domain": "ai_governance",
-                "entity_stores": {
-                  "GOVERNANCE_ACTIONS": {
-                    "description": "Registry of authorized actions, keyed by action id, so a repeated authorization is recognized",
-                    "path": "ai_governance/agent_governance/governance_actions.json"
-                  },
-                  "GOVERNANCE_AUDIT": {
-                    "description": "Append-only audit trail for agent governance authorization and denial decisions",
-                    "path": "ai_governance/agent_governance/governance_audit.jsonl"
-                  },
-                  "LICENSE_FACTS": {
-                    "description": "Read-only license tier and status fact feed (user_id \u2192 license record) \u2014 owned by ai_licensing, consumed here",
-                    "path": "ai_governance/ai_licensing/license_facts.json"
-                  }
-                },
-                "isolation": {
-                  "description": "Entity storage isolation constraints",
-                  "rules": [
-                    "Each entity type has dedicated storage",
-                    "LICENSE_FACTS is read-only \u2014 agent governance may not mutate license facts",
-                    "GOVERNANCE_AUDIT is append-only \u2014 agent governance audit records are immutable",
-                    "GOVERNANCE_ACTIONS registers each authorized action once \u2014 a key is never re-registered",
-                    "Storage paths resolved via STRUCTURE only"
-                  ]
-                },
-                "layer": "DOMAINS",
-                "resolution": {
-                  "algorithm": "base_path / entity_stores[entity_type].path",
-                  "description": "Runtime path resolution strategy",
-                  "example": "{{module_data_root}}/ai_governance/ai_licensing/license_facts.json"
-                },
-                "storage_roots": {
-                  "base_path": "{{module_data_root}}",
-                  "description": "Root path for all agent governance storage (resolved at runtime)"
-                },
-                "subdomain": "agent_governance",
-                "summary": "Agent governance domain storage topology"
-              },
-              "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
-              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
-            }
-          }
-        }
-      },
-      "73": {
-        "policy": {
-          "module_data_root": "{{module_data_root}}",
-          "storage_structure_artifact": {
-            "frontmatter": {
-              "artifact_kind": "STRUCTURE",
-              "authority": "pgc.platform",
-              "concern": "agent_governance",
-              "core": {
-                "description": "Maps entity types to storage implementations and paths",
-                "domain": "ai_governance",
-                "entity_stores": {
-                  "GOVERNANCE_ACTIONS": {
-                    "description": "Registry of authorized actions, keyed by action id, so a repeated authorization is recognized",
-                    "path": "ai_governance/agent_governance/governance_actions.json"
-                  },
-                  "GOVERNANCE_AUDIT": {
-                    "description": "Append-only audit trail for agent governance authorization and denial decisions",
-                    "path": "ai_governance/agent_governance/governance_audit.jsonl"
-                  },
-                  "LICENSE_FACTS": {
-                    "description": "Read-only license tier and status fact feed (user_id \u2192 license record) \u2014 owned by ai_licensing, consumed here",
-                    "path": "ai_governance/ai_licensing/license_facts.json"
-                  }
-                },
-                "isolation": {
-                  "description": "Entity storage isolation constraints",
-                  "rules": [
-                    "Each entity type has dedicated storage",
-                    "LICENSE_FACTS is read-only \u2014 agent governance may not mutate license facts",
-                    "GOVERNANCE_AUDIT is append-only \u2014 agent governance audit records are immutable",
-                    "GOVERNANCE_ACTIONS registers each authorized action once \u2014 a key is never re-registered",
-                    "Storage paths resolved via STRUCTURE only"
-                  ]
-                },
-                "layer": "DOMAINS",
-                "resolution": {
-                  "algorithm": "base_path / entity_stores[entity_type].path",
-                  "description": "Runtime path resolution strategy",
-                  "example": "{{module_data_root}}/ai_governance/ai_licensing/license_facts.json"
-                },
-                "storage_roots": {
-                  "base_path": "{{module_data_root}}",
-                  "description": "Root path for all agent governance storage (resolved at runtime)"
-                },
-                "subdomain": "agent_governance",
-                "summary": "Agent governance domain storage topology"
-              },
-              "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
-              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
-            }
-          }
-        }
-      },
-      "74": {
-        "policy": {
-          "module_data_root": "{{module_data_root}}",
-          "path": "{{module_data_root}}/ai_governance/agent_governance/governance_actions.json",
-          "storage_structure_artifact": {
-            "frontmatter": {
-              "artifact_kind": "STRUCTURE",
-              "authority": "pgc.platform",
-              "concern": "agent_governance",
-              "core": {
-                "description": "Maps entity types to storage implementations and paths",
-                "domain": "ai_governance",
-                "entity_stores": {
-                  "GOVERNANCE_ACTIONS": {
-                    "description": "Registry of authorized actions, keyed by action id, so a repeated authorization is recognized",
-                    "path": "ai_governance/agent_governance/governance_actions.json"
-                  },
-                  "GOVERNANCE_AUDIT": {
-                    "description": "Append-only audit trail for agent governance authorization and denial decisions",
-                    "path": "ai_governance/agent_governance/governance_audit.jsonl"
-                  },
-                  "LICENSE_FACTS": {
-                    "description": "Read-only license tier and status fact feed (user_id \u2192 license record) \u2014 owned by ai_licensing, consumed here",
-                    "path": "ai_governance/ai_licensing/license_facts.json"
-                  }
-                },
-                "isolation": {
-                  "description": "Entity storage isolation constraints",
-                  "rules": [
-                    "Each entity type has dedicated storage",
-                    "LICENSE_FACTS is read-only \u2014 agent governance may not mutate license facts",
-                    "GOVERNANCE_AUDIT is append-only \u2014 agent governance audit records are immutable",
-                    "GOVERNANCE_ACTIONS registers each authorized action once \u2014 a key is never re-registered",
-                    "Storage paths resolved via STRUCTURE only"
-                  ]
-                },
-                "layer": "DOMAINS",
-                "resolution": {
-                  "algorithm": "base_path / entity_stores[entity_type].path",
-                  "description": "Runtime path resolution strategy",
-                  "example": "{{module_data_root}}/ai_governance/ai_licensing/license_facts.json"
-                },
-                "storage_roots": {
-                  "base_path": "{{module_data_root}}",
-                  "description": "Root path for all agent governance storage (resolved at runtime)"
-                },
-                "subdomain": "agent_governance",
-                "summary": "Agent governance domain storage topology"
-              },
-              "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
-              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
+              "supersedes": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
+              "version": "v1"
             }
           },
-          "strict": true
+          "structure": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1"
+        }
+      },
+      "91": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "agent_governance",
+              "core": {
+                "domain": "ai_governance",
+                "entity_stores": {
+                  "ACTIONS": {
+                    "path": "ai_governance/agent_governance/actions.json"
+                  },
+                  "ACTION_IDENTITY_REGISTRY": {
+                    "path": "ai_governance/agent_governance/action_identity_registry.jsonl"
+                  },
+                  "GOVERNANCE_AUDIT": {
+                    "path": "ai_governance/agent_governance/governance_audit.jsonl"
+                  }
+                },
+                "layer": "DOMAINS",
+                "subdomain": "agent_governance",
+                "summary": "Declares the stores the agent_governance owns and the paths they occupy"
+              },
+              "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "supersedes": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
+              "version": "v1"
+            }
+          },
+          "structure": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1"
+        }
+      },
+      "92": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "agent_governance",
+              "core": {
+                "domain": "ai_governance",
+                "entity_stores": {
+                  "ACTIONS": {
+                    "path": "ai_governance/agent_governance/actions.json"
+                  },
+                  "ACTION_IDENTITY_REGISTRY": {
+                    "path": "ai_governance/agent_governance/action_identity_registry.jsonl"
+                  },
+                  "GOVERNANCE_AUDIT": {
+                    "path": "ai_governance/agent_governance/governance_audit.jsonl"
+                  }
+                },
+                "layer": "DOMAINS",
+                "subdomain": "agent_governance",
+                "summary": "Declares the stores the agent_governance owns and the paths they occupy"
+              },
+              "fqdn": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "supersedes": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
+              "version": "v1"
+            }
+          },
+          "structure": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1"
         }
       }
     },
-    "35": {
-      "71": {
+    "52": {
+      "89": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -910,52 +786,41 @@
               "authority": "pgc.platform",
               "concern": "ai_licensing",
               "core": {
-                "description": "Maps licensing entity stores to paths under the instance data root.",
                 "domain": "ai_governance",
                 "entity_stores": {
+                  "EMPLOYEES": {
+                    "path": "ai_governance/ai_licensing/employees.json"
+                  },
+                  "EMPLOYEE_EMPLOYEE_ID_REGISTRY": {
+                    "path": "ai_governance/ai_licensing/employee_employee_id_registry.jsonl"
+                  },
+                  "LICENSES": {
+                    "path": "ai_governance/ai_licensing/licenses.json"
+                  },
                   "LICENSE_AUDIT": {
-                    "description": "Append-only audit trail for license provisioning, denial, and reclaim decisions",
                     "path": "ai_governance/ai_licensing/audit_log.jsonl"
                   },
-                  "LICENSE_FACTS": {
-                    "description": "License tier and status fact feed (user_id \u2192 license record) \u2014 owned by ai_licensing",
-                    "path": "ai_governance/ai_licensing/license_facts.json"
+                  "LICENSE_CAPS": {
+                    "path": "ai_governance/ai_licensing/license_caps.json"
                   },
-                  "LICENSE_REGISTRY": {
-                    "description": "Employee \u2192 license assignment registry",
-                    "path": "ai_governance/ai_licensing/license_registry.json"
+                  "LICENSE_IDENTITY_REGISTRY": {
+                    "path": "ai_governance/ai_licensing/license_identity_registry.jsonl"
                   }
                 },
-                "isolation": {
-                  "description": "Entity storage isolation constraints",
-                  "rules": [
-                    "Each entity type has dedicated storage",
-                    "LICENSE_AUDIT is append-only \u2014 license audit records are immutable",
-                    "All paths are scoped under ai_governance/ai_licensing \u2014 no cross-subdomain writes",
-                    "Storage paths resolved via STRUCTURE only"
-                  ]
-                },
                 "layer": "DOMAINS",
-                "resolution": {
-                  "algorithm": "base_path / entity_stores[entity_type].path",
-                  "description": "Runtime path resolution strategy",
-                  "example": "{{module_data_root}}/ai_governance/ai_licensing/audit_log.jsonl"
-                },
-                "storage_roots": {
-                  "base_path": "{{module_data_root}}",
-                  "description": "Root path for all ai_licensing storage (resolved at runtime)"
-                },
                 "subdomain": "ai_licensing",
-                "summary": "AI licensing subdomain storage topology"
+                "summary": "Declares the stores the ai_licensing owns and the paths they occupy"
               },
-              "fqdn": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
+              "fqdn": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
               "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
+              "supersedes": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
+              "version": "v1"
             }
-          }
+          },
+          "structure": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1"
         }
       },
-      "72": {
+      "90": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "precision": "seconds",
@@ -965,107 +830,180 @@
               "authority": "pgc.platform",
               "concern": "ai_licensing",
               "core": {
-                "description": "Maps licensing entity stores to paths under the instance data root.",
                 "domain": "ai_governance",
                 "entity_stores": {
+                  "EMPLOYEES": {
+                    "path": "ai_governance/ai_licensing/employees.json"
+                  },
+                  "EMPLOYEE_EMPLOYEE_ID_REGISTRY": {
+                    "path": "ai_governance/ai_licensing/employee_employee_id_registry.jsonl"
+                  },
+                  "LICENSES": {
+                    "path": "ai_governance/ai_licensing/licenses.json"
+                  },
                   "LICENSE_AUDIT": {
-                    "description": "Append-only audit trail for license provisioning, denial, and reclaim decisions",
                     "path": "ai_governance/ai_licensing/audit_log.jsonl"
                   },
-                  "LICENSE_FACTS": {
-                    "description": "License tier and status fact feed (user_id \u2192 license record) \u2014 owned by ai_licensing",
-                    "path": "ai_governance/ai_licensing/license_facts.json"
+                  "LICENSE_CAPS": {
+                    "path": "ai_governance/ai_licensing/license_caps.json"
                   },
-                  "LICENSE_REGISTRY": {
-                    "description": "Employee \u2192 license assignment registry",
-                    "path": "ai_governance/ai_licensing/license_registry.json"
+                  "LICENSE_IDENTITY_REGISTRY": {
+                    "path": "ai_governance/ai_licensing/license_identity_registry.jsonl"
                   }
                 },
-                "isolation": {
-                  "description": "Entity storage isolation constraints",
-                  "rules": [
-                    "Each entity type has dedicated storage",
-                    "LICENSE_AUDIT is append-only \u2014 license audit records are immutable",
-                    "All paths are scoped under ai_governance/ai_licensing \u2014 no cross-subdomain writes",
-                    "Storage paths resolved via STRUCTURE only"
-                  ]
-                },
                 "layer": "DOMAINS",
-                "resolution": {
-                  "algorithm": "base_path / entity_stores[entity_type].path",
-                  "description": "Runtime path resolution strategy",
-                  "example": "{{module_data_root}}/ai_governance/ai_licensing/audit_log.jsonl"
-                },
-                "storage_roots": {
-                  "base_path": "{{module_data_root}}",
-                  "description": "Root path for all ai_licensing storage (resolved at runtime)"
-                },
                 "subdomain": "ai_licensing",
-                "summary": "AI licensing subdomain storage topology"
+                "summary": "Declares the stores the ai_licensing owns and the paths they occupy"
               },
-              "fqdn": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
+              "fqdn": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
               "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
+              "supersedes": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
+              "version": "v1"
             }
           }
         }
       },
-      "74": {
+      "91": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
-          "path": "{{module_data_root}}/ai_governance/ai_licensing/license_registry.json",
           "storage_structure_artifact": {
             "frontmatter": {
               "artifact_kind": "STRUCTURE",
               "authority": "pgc.platform",
               "concern": "ai_licensing",
               "core": {
-                "description": "Maps licensing entity stores to paths under the instance data root.",
                 "domain": "ai_governance",
                 "entity_stores": {
+                  "EMPLOYEES": {
+                    "path": "ai_governance/ai_licensing/employees.json"
+                  },
+                  "EMPLOYEE_EMPLOYEE_ID_REGISTRY": {
+                    "path": "ai_governance/ai_licensing/employee_employee_id_registry.jsonl"
+                  },
+                  "LICENSES": {
+                    "path": "ai_governance/ai_licensing/licenses.json"
+                  },
                   "LICENSE_AUDIT": {
-                    "description": "Append-only audit trail for license provisioning, denial, and reclaim decisions",
                     "path": "ai_governance/ai_licensing/audit_log.jsonl"
                   },
-                  "LICENSE_FACTS": {
-                    "description": "License tier and status fact feed (user_id \u2192 license record) \u2014 owned by ai_licensing",
-                    "path": "ai_governance/ai_licensing/license_facts.json"
+                  "LICENSE_CAPS": {
+                    "path": "ai_governance/ai_licensing/license_caps.json"
                   },
-                  "LICENSE_REGISTRY": {
-                    "description": "Employee \u2192 license assignment registry",
-                    "path": "ai_governance/ai_licensing/license_registry.json"
+                  "LICENSE_IDENTITY_REGISTRY": {
+                    "path": "ai_governance/ai_licensing/license_identity_registry.jsonl"
                   }
                 },
-                "isolation": {
-                  "description": "Entity storage isolation constraints",
-                  "rules": [
-                    "Each entity type has dedicated storage",
-                    "LICENSE_AUDIT is append-only \u2014 license audit records are immutable",
-                    "All paths are scoped under ai_governance/ai_licensing \u2014 no cross-subdomain writes",
-                    "Storage paths resolved via STRUCTURE only"
-                  ]
+                "layer": "DOMAINS",
+                "subdomain": "ai_licensing",
+                "summary": "Declares the stores the ai_licensing owns and the paths they occupy"
+              },
+              "fqdn": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
+              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+              "supersedes": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
+              "version": "v1"
+            }
+          },
+          "structure": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1"
+        }
+      },
+      "92": {
+        "policy": {
+          "module_data_root": "{{module_data_root}}",
+          "storage_structure_artifact": {
+            "frontmatter": {
+              "artifact_kind": "STRUCTURE",
+              "authority": "pgc.platform",
+              "concern": "ai_licensing",
+              "core": {
+                "domain": "ai_governance",
+                "entity_stores": {
+                  "EMPLOYEES": {
+                    "path": "ai_governance/ai_licensing/employees.json"
+                  },
+                  "EMPLOYEE_EMPLOYEE_ID_REGISTRY": {
+                    "path": "ai_governance/ai_licensing/employee_employee_id_registry.jsonl"
+                  },
+                  "LICENSES": {
+                    "path": "ai_governance/ai_licensing/licenses.json"
+                  },
+                  "LICENSE_AUDIT": {
+                    "path": "ai_governance/ai_licensing/audit_log.jsonl"
+                  },
+                  "LICENSE_CAPS": {
+                    "path": "ai_governance/ai_licensing/license_caps.json"
+                  },
+                  "LICENSE_IDENTITY_REGISTRY": {
+                    "path": "ai_governance/ai_licensing/license_identity_registry.jsonl"
+                  }
                 },
                 "layer": "DOMAINS",
-                "resolution": {
-                  "algorithm": "base_path / entity_stores[entity_type].path",
-                  "description": "Runtime path resolution strategy",
-                  "example": "{{module_data_root}}/ai_governance/ai_licensing/audit_log.jsonl"
-                },
-                "storage_roots": {
-                  "base_path": "{{module_data_root}}",
-                  "description": "Root path for all ai_licensing storage (resolved at runtime)"
-                },
                 "subdomain": "ai_licensing",
-                "summary": "AI licensing subdomain storage topology"
+                "summary": "Declares the stores the ai_licensing owns and the paths they occupy"
               },
-              "fqdn": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
+              "fqdn": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
               "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
+              "supersedes": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
+              "version": "v1"
+            }
+          },
+          "structure": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1"
+        }
+      }
+    }
+  },
+  "wf_storage": {
+    "57": {
+      "frontmatter": {
+        "core": {
+          "entity_stores": {
+            "ACTIONS": {
+              "described_by": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
+              "path": "ai_governance/agent_governance/actions.json",
+              "reach": "owned"
+            },
+            "ACTION_IDENTITY_REGISTRY": {
+              "described_by": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
+              "path": "ai_governance/agent_governance/action_identity_registry.jsonl",
+              "reach": "owned"
+            },
+            "EMPLOYEES": {
+              "described_by": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "path": "ai_governance/ai_licensing/employees.json",
+              "reach": "consulted"
+            },
+            "EMPLOYEE_EMPLOYEE_ID_REGISTRY": {
+              "described_by": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "path": "ai_governance/ai_licensing/employee_employee_id_registry.jsonl",
+              "reach": "consulted"
+            },
+            "GOVERNANCE_AUDIT": {
+              "described_by": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
+              "path": "ai_governance/agent_governance/governance_audit.jsonl",
+              "reach": "owned"
+            },
+            "LICENSES": {
+              "described_by": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "path": "ai_governance/ai_licensing/licenses.json",
+              "reach": "consulted"
+            },
+            "LICENSE_AUDIT": {
+              "described_by": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "path": "ai_governance/ai_licensing/audit_log.jsonl",
+              "reach": "consulted"
+            },
+            "LICENSE_CAPS": {
+              "described_by": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "path": "ai_governance/ai_licensing/license_caps.json",
+              "reach": "consulted"
+            },
+            "LICENSE_IDENTITY_REGISTRY": {
+              "described_by": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "path": "ai_governance/ai_licensing/license_identity_registry.jsonl",
+              "reach": "consulted"
             }
           }
         }
       }
     }
-  },
-  "wf_storage": {}
+  }
 }

@@ -1,0 +1,192 @@
+{
+  "artifact_code": "CC_REKEY_BOOK_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+        "id": "CS_REGISTRY_V0",
+        "kind": "CS",
+        "ops": [
+          "REGISTER",
+          "RESOLVE",
+          "EXISTS",
+          "DEREGISTER",
+          "COUNT"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_REKEY_BOOK_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_REKEY_BOOK_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Move a book to its new identity, with its physical copies\n  inputs:\n    identity_key:\n      type: string\n      required: true\n    updated_identity_key:\n      type: string\n      required: true\n    updated_record:\n      type: object\n      required: true\n  outputs:\n    updated_count:\n      type: integer\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - BACKEND_ERROR\n    - NOT_FOUND\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: write_book_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: BOOKS\n    inputs:\n      key: $.inputs.updated_identity_key\n      value: $.inputs.updated_record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: move_copy_records\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: UPDATE_WHERE\n    store: PHYSICAL_COPIES\n    inputs:\n      filter:\n        identity_key: $.inputs.identity_key\n      updates:\n        identity_key: $.inputs.updated_identity_key\n    outputs:\n      matched_keys: $.capability_result.matched_keys\n      updated_count: $.capability_result.updated_count\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      VIOLATION: continue\n      BACKEND_ERROR: exit\n  - step: remove_old_book_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: DELETE\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: release_old_identity\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: DEREGISTER\n    store: BOOK_IDENTITY_REGISTRY\n    inputs:\n      key_or_address: $.inputs.identity_key\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nMove a book to its new identity, with its physical copies\n",
+  "content_hash": "01942450c2eda65e5064c27233078a698d963d906abf2d44f2710e6892b46d6a",
+  "fqdn_id": "book_library_mgmt::CC_REKEY_BOOK_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "updated_identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "updated_record": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "updated_count": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key": "$.inputs.updated_identity_key",
+            "value": "$.inputs.updated_record"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "WRITE",
+          "outputs": {
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "write_book_record",
+          "store": "BOOKS"
+        },
+        {
+          "inputs": {
+            "filter": {
+              "identity_key": "$.inputs.identity_key"
+            },
+            "updates": {
+              "identity_key": "$.inputs.updated_identity_key"
+            }
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "continue"
+          },
+          "op": "UPDATE_WHERE",
+          "outputs": {
+            "matched_keys": "$.capability_result.matched_keys",
+            "result_status": "$.result_status",
+            "updated_count": "$.capability_result.updated_count"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "move_copy_records",
+          "store": "PHYSICAL_COPIES"
+        },
+        {
+          "inputs": {
+            "key": "$.inputs.identity_key"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "DELETE",
+          "outputs": {
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "remove_old_book_record",
+          "store": "BOOKS"
+        },
+        {
+          "inputs": {
+            "key_or_address": "$.inputs.identity_key"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "DEREGISTER",
+          "outputs": {
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_REGISTRY_V0",
+          "step": "release_old_identity",
+          "store": "BOOK_IDENTITY_REGISTRY"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "BACKEND_ERROR",
+          "NOT_FOUND",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Move a book to its new identity, with its physical copies"
+    },
+    "fqdn": "book_library_mgmt::CC_REKEY_BOOK_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0"
+  ],
+  "version": "0"
+}

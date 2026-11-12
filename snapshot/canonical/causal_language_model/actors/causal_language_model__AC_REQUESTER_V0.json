@@ -1,8 +1,8 @@
 {
   "artifact_code": "AC_REQUESTER_V0",
   "artifact_type": "AC",
-  "content": "# AC_REQUESTER_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::AC_REQUESTER_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: The actor who submits a user prompt for one customer\n  type: ENDUSER\n  attributes:\n    requester_id:\n      type: string\n      required: true\n    permitted_customers:\n      type: array\n      default: '[]'\n```\n\n---\n\n## Intent\n\nThe actor who submits a user prompt for one customer\n",
-  "content_hash": "9993fe82fb3230b9f0fd3f2d59ba32a00027c81192f624ef9886ae4fa2f1fdb2",
+  "content": "# AC_REQUESTER_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::AC_REQUESTER_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: The actor who submits a user prompt for one customer\n  type: human\n  attributes:\n    requester_id:\n      type: string\n      required: true\n    permitted_customers:\n      type: array\n      default: '[]'\n```\n\n---\n\n## Intent\n\nThe actor who submits a user prompt for one customer\n",
+  "content_hash": "9497de84b4561293755415c3a646760af1dae99bd331f3eaf171e0ddfa6fa992",
   "fqdn_id": "causal_language_model::AC_REQUESTER_V0",
   "frontmatter": {
     "artifact_kind": "ACTOR",
@@ -20,7 +20,7 @@
         }
       },
       "summary": "The actor who submits a user prompt for one customer",
-      "type": "ENDUSER"
+      "type": "human"
     },
     "fqdn": "causal_language_model::AC_REQUESTER_V0",
     "governed_by": "actor::CONSTITUTION_ACTOR_IDENTITY_V0",

@@ -1,8 +1,8 @@
 {
   "artifact_code": "IN_RETIRE_BOOK_RECORD_V0",
   "artifact_type": "IN",
-  "content": "# IN_RETIRE_BOOK_RECORD_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to retire a book record judged obsolete\n  workflow: WF_RETIRE_BOOK_RECORD_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    identity_key:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to retire a book record judged obsolete\n",
-  "content_hash": "539dd4c4c9f6620ffbdf17c1b594c288d7a41a39a98c27e2bf33b1fe92fb9dbf",
+  "content": "# IN_RETIRE_BOOK_RECORD_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to retire book record\n  workflow: WF_RETIRE_BOOK_RECORD_V1\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    identity_key:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to retire book record\n",
+  "content_hash": "3d54fbd9459639dbbab17daa1d2422c1b8766c12756085ebe345694518da44ab",
   "fqdn_id": "book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0",
   "frontmatter": {
     "artifact_kind": "INTENT",
@@ -31,8 +31,8 @@
           "description": "Request rejected"
         }
       },
-      "summary": "A request to retire a book record judged obsolete",
-      "workflow": "WF_RETIRE_BOOK_RECORD_V0"
+      "summary": "A request to retire book record",
+      "workflow": "WF_RETIRE_BOOK_RECORD_V1"
     },
     "fqdn": "book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0",
     "governed_by": "intent::CONSTITUTION_INTENT_V0",

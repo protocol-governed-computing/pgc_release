@@ -1,0 +1,269 @@
+{
+  "artifact_code": "WF_PROVISION_LICENSE_V0",
+  "artifact_type": "WF",
+  "content": "# WF_PROVISION_LICENSE_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::WF_PROVISION_LICENSE_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: ai_licensing\nsupersedes: ai_governance::WF_PROVISION_AI_LICENSING_V0\nruntime_binding: ai_governance::RB_LICENSE_BINDINGS_V1\nsubdomain: ai_licensing\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: 'The governed sequence that performs: provision license'\n  actor_context: ai_governance::AC_EMPLOYEE_V1\n  start_node: IN_PROVISION_LICENSE_V0\n  nodes:\n    IN_PROVISION_LICENSE_V0:\n      type: IN\n      code: IN_PROVISION_LICENSE_V0\n      next:\n        ACK: CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0\n        NACK: EXIT_REJECTED\n    CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0:\n      type: CC\n      code: CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0\n      inputs:\n        submission:\n          employee_id: $.payload.employee_id\n          tier: $.payload.tier\n      next:\n        SUCCESS: CC_RESOLVE_EMPLOYEE_IDENTITY_V0\n        VIOLATION: EXIT_REJECTED\n    CC_RESOLVE_EMPLOYEE_IDENTITY_V0:\n      type: CC\n      code: CC_RESOLVE_EMPLOYEE_IDENTITY_V0\n      inputs:\n        employee_id: $.payload.employee_id\n      next:\n        SUCCESS: CC_REQUIRE_TRAINING_COMPLETED_V0\n        NOT_FOUND: CC_DENY_TRAINING_COMPLETED\n        VIOLATION: CC_DENY_TRAINING_COMPLETED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_REQUIRE_TRAINING_COMPLETED_V0:\n      type: CC\n      code: CC_REQUIRE_TRAINING_COMPLETED_V0\n      inputs:\n        training_completed: $.results.CC_RESOLVE_EMPLOYEE_IDENTITY_V0.employee_record.training_completed\n      next:\n        SUCCESS: CC_REQUIRE_TIER_ADMITTED_V0\n        VIOLATION: CC_DENY_TRAINING_COMPLETED\n    CC_REQUIRE_TIER_ADMITTED_V0:\n      type: CC\n      code: CC_REQUIRE_TIER_ADMITTED_V0\n      inputs:\n        tier: $.payload.tier\n      next:\n        SUCCESS: CC_REQUIRE_CAP_SET_V0\n        VIOLATION: CC_DENY_TIER_ADMITTED\n    CC_REQUIRE_CAP_SET_V0:\n      type: CC\n      code: CC_REQUIRE_CAP_SET_V0\n      inputs:\n        cap_key: current\n      next:\n        SUCCESS: CC_REQUIRE_UNDER_THE_CAP_V0\n        NOT_FOUND: CC_DENY_CAP_SET\n        VIOLATION: CC_DENY_CAP_SET\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_REQUIRE_UNDER_THE_CAP_V0:\n      type: CC\n      code: CC_REQUIRE_UNDER_THE_CAP_V0\n      inputs:\n        cap: $.results.CC_REQUIRE_CAP_SET_V0.cap_record.cap\n      next:\n        SUCCESS: CC_CLAIM_LICENSE_IDENTITY_V0\n        BACKEND_ERROR: EXIT_REJECTED\n        VIOLATION: CC_DENY_UNDER_THE_CAP\n    CC_CLAIM_LICENSE_IDENTITY_V0:\n      type: CC\n      code: CC_CLAIM_LICENSE_IDENTITY_V0\n      inputs:\n        employee_id: $.payload.employee_id\n      next:\n        SUCCESS: CC_WRITE_LICENSE_V0\n        VIOLATION: EXIT_REJECTED\n        ALREADY_EXISTS: CC_DENY_LICENSE_ALREADY_HELD\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_WRITE_LICENSE_V0:\n      type: CC\n      code: CC_WRITE_LICENSE_V0\n      inputs:\n        license_id: $.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id\n        submission:\n          employee_id: $.payload.employee_id\n          tier: $.payload.tier\n      next:\n        SUCCESS: CC_RECORD_AI_LICENSING_MOMENT_V0\n        BACKEND_ERROR: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n    CC_RECORD_AI_LICENSING_MOMENT_V0:\n      type: CC\n      code: CC_RECORD_AI_LICENSING_MOMENT_V0\n      inputs:\n        occurrence: LICENSE_PROVISIONED\n        employee_id: $.payload.employee_id\n        license_id: $.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id\n        tier: $.payload.tier\n      next:\n        SUCCESS: EXIT_COMPLETED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_DENY_TRAINING_COMPLETED:\n      type: CC\n      code: CC_RECORD_AI_LICENSING_MOMENT_V0\n      inputs:\n        occurrence: PROVISION_DENIED\n        employee_id: $.payload.employee_id\n        license_id: $.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id\n        tier: $.payload.tier\n        reason: TRAINING_COMPLETED\n      next:\n        SUCCESS: EXIT_DENIED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_DENY_TIER_ADMITTED:\n      type: CC\n      code: CC_RECORD_AI_LICENSING_MOMENT_V0\n      inputs:\n        occurrence: PROVISION_DENIED\n        employee_id: $.payload.employee_id\n        license_id: $.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id\n        tier: $.payload.tier\n        reason: TIER_ADMITTED\n      next:\n        SUCCESS: EXIT_DENIED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_DENY_CAP_SET:\n      type: CC\n      code: CC_RECORD_AI_LICENSING_MOMENT_V0\n      inputs:\n        occurrence: PROVISION_DENIED\n        employee_id: $.payload.employee_id\n        license_id: $.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id\n        tier: $.payload.tier\n        reason: CAP_SET\n      next:\n        SUCCESS: EXIT_DENIED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_DENY_UNDER_THE_CAP:\n      type: CC\n      code: CC_RECORD_AI_LICENSING_MOMENT_V0\n      inputs:\n        occurrence: PROVISION_DENIED\n        employee_id: $.payload.employee_id\n        license_id: $.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id\n        tier: $.payload.tier\n        reason: UNDER_THE_CAP\n      next:\n        SUCCESS: EXIT_DENIED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_DENY_LICENSE_ALREADY_HELD:\n      type: CC\n      code: CC_RECORD_AI_LICENSING_MOMENT_V0\n      inputs:\n        occurrence: PROVISION_DENIED\n        employee_id: $.payload.employee_id\n        license_id: $.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id\n        tier: $.payload.tier\n        reason: LICENSE_ALREADY_HELD\n      next:\n        SUCCESS: EXIT_DENIED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n      emit: ai_governance::EV_LICENSE_PROVISIONED_V1\n    EXIT_REJECTED:\n      type: EXIT\n    EXIT_DENIED:\n      type: EXIT\n      emit: ai_governance::EV_PROVISION_DENIED_V1\n```\n\n---\n\n## Intent\n\nThe governed sequence that performs: provision license\n",
+  "content_hash": "7c5bc1d79208da0a547ca44b01ff12c9aaa07043b1b8b6c6f5e08e5b4ba9ec14",
+  "fqdn_id": "ai_governance::WF_PROVISION_LICENSE_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "actor_context": "ai_governance::AC_EMPLOYEE_V1",
+      "nodes": {
+        "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0": {
+          "code": "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+          "fqdn_id": "ai_governance::CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+          "inputs": {
+            "submission": {
+              "employee_id": "$.payload.employee_id",
+              "tier": "$.payload.tier"
+            }
+          },
+          "next": {
+            "SUCCESS": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CLAIM_LICENSE_IDENTITY_V0": {
+          "code": "CC_CLAIM_LICENSE_IDENTITY_V0",
+          "fqdn_id": "ai_governance::CC_CLAIM_LICENSE_IDENTITY_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id"
+          },
+          "next": {
+            "ALREADY_EXISTS": "CC_DENY_LICENSE_ALREADY_HELD",
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_WRITE_LICENSE_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_DENY_CAP_SET": {
+          "code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "fqdn_id": "ai_governance::CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id",
+            "license_id": "$.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+            "occurrence": "PROVISION_DENIED",
+            "reason": "CAP_SET",
+            "tier": "$.payload.tier"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_DENIED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_DENY_LICENSE_ALREADY_HELD": {
+          "code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "fqdn_id": "ai_governance::CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id",
+            "license_id": "$.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+            "occurrence": "PROVISION_DENIED",
+            "reason": "LICENSE_ALREADY_HELD",
+            "tier": "$.payload.tier"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_DENIED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_DENY_TIER_ADMITTED": {
+          "code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "fqdn_id": "ai_governance::CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id",
+            "license_id": "$.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+            "occurrence": "PROVISION_DENIED",
+            "reason": "TIER_ADMITTED",
+            "tier": "$.payload.tier"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_DENIED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_DENY_TRAINING_COMPLETED": {
+          "code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "fqdn_id": "ai_governance::CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id",
+            "license_id": "$.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+            "occurrence": "PROVISION_DENIED",
+            "reason": "TRAINING_COMPLETED",
+            "tier": "$.payload.tier"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_DENIED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_DENY_UNDER_THE_CAP": {
+          "code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "fqdn_id": "ai_governance::CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id",
+            "license_id": "$.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+            "occurrence": "PROVISION_DENIED",
+            "reason": "UNDER_THE_CAP",
+            "tier": "$.payload.tier"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_DENIED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RECORD_AI_LICENSING_MOMENT_V0": {
+          "code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "fqdn_id": "ai_governance::CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id",
+            "license_id": "$.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+            "occurrence": "LICENSE_PROVISIONED",
+            "tier": "$.payload.tier"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_REQUIRE_CAP_SET_V0": {
+          "code": "CC_REQUIRE_CAP_SET_V0",
+          "fqdn_id": "ai_governance::CC_REQUIRE_CAP_SET_V0",
+          "inputs": {
+            "cap_key": "current"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "NOT_FOUND": "CC_DENY_CAP_SET",
+            "SUCCESS": "CC_REQUIRE_UNDER_THE_CAP_V0",
+            "VIOLATION": "CC_DENY_CAP_SET"
+          },
+          "type": "CC"
+        },
+        "CC_REQUIRE_TIER_ADMITTED_V0": {
+          "code": "CC_REQUIRE_TIER_ADMITTED_V0",
+          "fqdn_id": "ai_governance::CC_REQUIRE_TIER_ADMITTED_V0",
+          "inputs": {
+            "tier": "$.payload.tier"
+          },
+          "next": {
+            "SUCCESS": "CC_REQUIRE_CAP_SET_V0",
+            "VIOLATION": "CC_DENY_TIER_ADMITTED"
+          },
+          "type": "CC"
+        },
+        "CC_REQUIRE_TRAINING_COMPLETED_V0": {
+          "code": "CC_REQUIRE_TRAINING_COMPLETED_V0",
+          "fqdn_id": "ai_governance::CC_REQUIRE_TRAINING_COMPLETED_V0",
+          "inputs": {
+            "training_completed": "$.results.CC_RESOLVE_EMPLOYEE_IDENTITY_V0.employee_record.training_completed"
+          },
+          "next": {
+            "SUCCESS": "CC_REQUIRE_TIER_ADMITTED_V0",
+            "VIOLATION": "CC_DENY_TRAINING_COMPLETED"
+          },
+          "type": "CC"
+        },
+        "CC_REQUIRE_UNDER_THE_CAP_V0": {
+          "code": "CC_REQUIRE_UNDER_THE_CAP_V0",
+          "fqdn_id": "ai_governance::CC_REQUIRE_UNDER_THE_CAP_V0",
+          "inputs": {
+            "cap": "$.results.CC_REQUIRE_CAP_SET_V0.cap_record.cap"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_CLAIM_LICENSE_IDENTITY_V0",
+            "VIOLATION": "CC_DENY_UNDER_THE_CAP"
+          },
+          "type": "CC"
+        },
+        "CC_RESOLVE_EMPLOYEE_IDENTITY_V0": {
+          "code": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+          "fqdn_id": "ai_governance::CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "NOT_FOUND": "CC_DENY_TRAINING_COMPLETED",
+            "SUCCESS": "CC_REQUIRE_TRAINING_COMPLETED_V0",
+            "VIOLATION": "CC_DENY_TRAINING_COMPLETED"
+          },
+          "type": "CC"
+        },
+        "CC_WRITE_LICENSE_V0": {
+          "code": "CC_WRITE_LICENSE_V0",
+          "fqdn_id": "ai_governance::CC_WRITE_LICENSE_V0",
+          "inputs": {
+            "license_id": "$.results.CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+            "submission": {
+              "employee_id": "$.payload.employee_id",
+              "tier": "$.payload.tier"
+            }
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "emit": "ai_governance::EV_LICENSE_PROVISIONED_V1",
+          "type": "EXIT"
+        },
+        "EXIT_DENIED": {
+          "emit": "ai_governance::EV_PROVISION_DENIED_V1",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "IN_PROVISION_LICENSE_V0": {
+          "code": "IN_PROVISION_LICENSE_V0",
+          "fqdn_id": "ai_governance::IN_PROVISION_LICENSE_V0",
+          "next": {
+            "ACK": "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_PROVISION_LICENSE_V0",
+      "summary": "The governed sequence that performs: provision license"
+    },
+    "fqdn": "ai_governance::WF_PROVISION_LICENSE_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "ai_governance::RB_LICENSE_BINDINGS_V1",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "ai_licensing",
+    "supersedes": "ai_governance::WF_PROVISION_AI_LICENSING_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "ai_governance::AC_EMPLOYEE_V1",
+    "ai_governance::EV_LICENSE_PROVISIONED_V1",
+    "ai_governance::EV_PROVISION_DENIED_V1",
+    "ai_governance::RB_LICENSE_BINDINGS_V1",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

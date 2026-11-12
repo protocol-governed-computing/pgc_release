@@ -1,8 +1,8 @@
 {
   "artifact_code": "AC_MODEL_STAFF_V0",
   "artifact_type": "AC",
-  "content": "# AC_MODEL_STAFF_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::AC_MODEL_STAFF_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: The actor whose authorization every model staff operation binds\n  type: ENDUSER\n  attributes:\n    staff_id:\n      type: string\n      required: true\n    authorized:\n      type: boolean\n      default: false\n```\n\n---\n\n## Intent\n\nThe actor whose authorization every model staff operation binds\n",
-  "content_hash": "0db9773073ba43e45dc159bd71e037160383b871bba5def86d478c0e5c445aab",
+  "content": "# AC_MODEL_STAFF_V0\n\n## Machine\n\n```yaml\nfqdn: causal_language_model::AC_MODEL_STAFF_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: model_response\ncore:\n  summary: The actor whose authorization every model staff operation binds\n  type: human\n  attributes:\n    staff_id:\n      type: string\n      required: true\n    authorized:\n      type: boolean\n      default: false\n```\n\n---\n\n## Intent\n\nThe actor whose authorization every model staff operation binds\n",
+  "content_hash": "ce9711e5f22d818e5f3c134eef6c34cccc41cc9d38f467246dc51caf177e6a7b",
   "fqdn_id": "causal_language_model::AC_MODEL_STAFF_V0",
   "frontmatter": {
     "artifact_kind": "ACTOR",
@@ -20,7 +20,7 @@
         }
       },
       "summary": "The actor whose authorization every model staff operation binds",
-      "type": "ENDUSER"
+      "type": "human"
     },
     "fqdn": "causal_language_model::AC_MODEL_STAFF_V0",
     "governed_by": "actor::CONSTITUTION_ACTOR_IDENTITY_V0",

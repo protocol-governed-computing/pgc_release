@@ -1,0 +1,93 @@
+{
+  "artifact_code": "CC_REQUIRE_CAP_SET_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_REQUIRE_CAP_SET_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_REQUIRE_CAP_SET_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: ai_licensing\ncore:\n  summary: Refuse to provision license before the license cap is set\n  inputs:\n    cap_key:\n      type: string\n      required: true\n  outputs:\n    cap_record:\n      type: object\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_cap_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: LICENSE_CAPS\n    inputs:\n      key: $.inputs.cap_key\n    outputs:\n      cap_record: $.capability_result.value\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nRefuse to provision license before the license cap is set\n",
+  "content_hash": "63914bf2ab0d758f0669334f41b35e7880951ac38af8141340376e5b9f7d11fa",
+  "fqdn_id": "ai_governance::CC_REQUIRE_CAP_SET_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "inputs": {
+        "cap_key": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "cap_record": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key": "$.inputs.cap_key"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "READ",
+          "outputs": {
+            "cap_record": "$.capability_result.value",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "read_cap_record",
+          "store": "LICENSE_CAPS"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse to provision license before the license cap is set"
+    },
+    "fqdn": "ai_governance::CC_REQUIRE_CAP_SET_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_DERIVED_COMPONENT_SHARED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_DERIVED_COMPONENT_SHARED_V0\n\n## Machine\n\n```yaml\nfqdn: lifecycle::INVARIANT_DERIVED_COMPONENT_SHARED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: lifecycle::CONSTITUTION_CHANGE_MGMT_V0\nauthority: pgc.platform\nconcern: lifecycle\ncore:\n  enforcement_stage:\n  - enforced_elsewhere\n  violation_response: FAIL_IMMEDIATELY\n  enforced_by: the design compiler's derive route, applying its sealed doctrine to a decision ledger\nassert_projection:\n  applies_to_kinds:\n  - CC\n```\n\n---\n\n## 1. Claim\n\nA derived design has one component per thing and purpose, and every workflow that needs it runs that one.\n\n## 2. Why\n\nTwo components doing one job drift apart, and a change made to one leaves the other behaving as before.\n\n## 3. How it is checked\n\nThe derive route keys each component it composes by thing and purpose, and reuses the one it has.\n",
+  "content_hash": "9b50291c0bcaef7dee60943076f2a545a2f7f90d009b5c550dd8e4f891af312e",
+  "fqdn_id": "lifecycle::INVARIANT_DERIVED_COMPONENT_SHARED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "CC"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "lifecycle",
+    "core": {
+      "enforced_by": "the design compiler's derive route, applying its sealed doctrine to a decision ledger",
+      "enforcement_stage": [
+        "enforced_elsewhere"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "lifecycle::INVARIANT_DERIVED_COMPONENT_SHARED_V0",
+    "governed_by": "lifecycle::CONSTITUTION_CHANGE_MGMT_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "lifecycle",
+  "references": [
+    "lifecycle::CONSTITUTION_CHANGE_MGMT_V0"
+  ],
+  "version": "0"
+}

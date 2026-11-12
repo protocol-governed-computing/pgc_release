@@ -1,0 +1,39 @@
+{
+  "artifact_code": "IN_SET_LICENSE_CAP_V0",
+  "artifact_type": "IN",
+  "content": "# IN_SET_LICENSE_CAP_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::IN_SET_LICENSE_CAP_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: ai_licensing\ncore:\n  summary: A request to set license cap\n  workflow: WF_SET_LICENSE_CAP_V0\n  inputs:\n    cap:\n      type: integer\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to set license cap\n",
+  "content_hash": "2e83ff394fc86fe1b7f6ecfa66f339bd9f147fc8f203b28215ffd1e4946cc1c2",
+  "fqdn_id": "ai_governance::IN_SET_LICENSE_CAP_V0",
+  "frontmatter": {
+    "artifact_kind": "INTENT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "inputs": {
+        "cap": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "outcomes": {
+        "ACK": {
+          "description": "Request accepted for processing"
+        },
+        "NACK": {
+          "description": "Request rejected"
+        }
+      },
+      "summary": "A request to set license cap",
+      "workflow": "WF_SET_LICENSE_CAP_V0"
+    },
+    "fqdn": "ai_governance::IN_SET_LICENSE_CAP_V0",
+    "governed_by": "intent::CONSTITUTION_INTENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "intent::CONSTITUTION_INTENT_V0"
+  ],
+  "version": "0"
+}

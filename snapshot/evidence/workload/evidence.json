@@ -9,9 +9,9 @@
         "target_key": "CC_VERIFY_TERMINATION_V0",
         "wf_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0"
       },
-      "source_address": 113,
+      "source_address": 122,
       "source_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
-      "target_address": 115,
+      "target_address": 124,
       "target_fqdn": "workload::CC_VERIFY_TERMINATION_V0"
     },
     {
@@ -31,9 +31,9 @@
         "pipeline_index": 0,
         "step_id": "compute_sequences"
       },
-      "source_address": 113,
+      "source_address": 122,
       "source_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
-      "target_address": 116,
+      "target_address": 125,
       "target_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0"
     },
     {
@@ -61,9 +61,9 @@
         "step_id": "store_results",
         "store": "COLLATZ_RESULTS"
       },
-      "source_address": 114,
+      "source_address": 123,
       "source_fqdn": "workload::CC_STORE_RESULTS_V0",
-      "target_address": 26,
+      "target_address": 28,
       "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
     },
     {
@@ -83,9 +83,9 @@
         "pipeline_index": 1,
         "step_id": "require_every_sequence_terminated"
       },
-      "source_address": 115,
+      "source_address": 124,
       "source_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
-      "target_address": 30,
+      "target_address": 32,
       "target_fqdn": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0"
     },
     {
@@ -97,9 +97,9 @@
         "target_key": "CC_STORE_RESULTS_V0",
         "wf_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0"
       },
-      "source_address": 115,
+      "source_address": 124,
       "source_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
-      "target_address": 114,
+      "target_address": 123,
       "target_fqdn": "workload::CC_STORE_RESULTS_V0"
     },
     {
@@ -120,9 +120,9 @@
         "pipeline_index": 0,
         "step_id": "check_termination"
       },
-      "source_address": 115,
+      "source_address": 124,
       "source_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
-      "target_address": 117,
+      "target_address": 126,
       "target_fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0"
     },
     {
@@ -134,9 +134,9 @@
         "target_key": "CC_COMPUTE_SEQUENCES_V0",
         "wf_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0"
       },
-      "source_address": 119,
+      "source_address": 128,
       "source_fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
-      "target_address": 113,
+      "target_address": 122,
       "target_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0"
     },
     {
@@ -145,123 +145,123 @@
       "metadata": {
         "handler_ref": ""
       },
-      "source_address": 120,
+      "source_address": 129,
       "source_fqdn": "workload::RB_COLLATZ_V0",
-      "target_address": 26,
+      "target_address": 28,
       "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
     },
     {
       "kind": "GOVERNED_BY",
       "kind_address": 16388,
       "metadata": {},
-      "source_address": 120,
+      "source_address": 129,
       "source_fqdn": "workload::RB_COLLATZ_V0",
-      "target_address": 122,
+      "target_address": 131,
       "target_fqdn": "workload::STRUCTURE_COLLATZ_STORAGE_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 123,
+      "source_address": 132,
       "source_fqdn": "workload::TEST_DATA_CT_PURE_COLLATZ_STEP_V0",
-      "target_address": 116,
+      "target_address": 125,
       "target_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 124,
+      "source_address": 133,
       "source_fqdn": "workload::TEST_DATA_CT_PURE_TERMINATION_CHECK_V0",
-      "target_address": 117,
+      "target_address": 126,
       "target_fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0"
     },
     {
       "kind": "TI_INVOKES_WF",
       "kind_address": 16394,
       "metadata": {},
-      "source_address": 126,
+      "source_address": 135,
       "source_fqdn": "workload::TI_COLLATZ_COMPUTE_V0",
-      "target_address": 127,
+      "target_address": 136,
       "target_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 127,
+      "source_address": 136,
       "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
-      "target_address": 112,
+      "target_address": 121,
       "target_fqdn": "workload::AC_REFERENCE_ACTOR_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 127,
+      "source_address": 136,
       "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
-      "target_address": 113,
+      "target_address": 122,
       "target_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 127,
+      "source_address": 136,
       "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
-      "target_address": 114,
+      "target_address": 123,
       "target_fqdn": "workload::CC_STORE_RESULTS_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 127,
+      "source_address": 136,
       "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
-      "target_address": 115,
+      "target_address": 124,
       "target_fqdn": "workload::CC_VERIFY_TERMINATION_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 127,
+      "source_address": 136,
       "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
-      "target_address": 118,
+      "target_address": 127,
       "target_fqdn": "workload::EV_CONJECTURE_EVALUATED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 127,
+      "source_address": 136,
       "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
-      "target_address": 119,
+      "target_address": 128,
       "target_fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0"
     },
     {
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 127,
+      "source_address": 136,
       "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
-      "target_address": 119,
+      "target_address": 128,
       "target_fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0"
     },
     {
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 127,
+      "source_address": 136,
       "source_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
-      "target_address": 120,
+      "target_address": 129,
       "target_fqdn": "workload::RB_COLLATZ_V0"
     }
   ],
   "event_catalog": [
     {
-      "address": 118,
+      "address": 127,
       "fqdn": "workload::EV_CONJECTURE_EVALUATED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -285,109 +285,109 @@
   ],
   "nodes": [
     {
-      "address": 26,
+      "address": 28,
       "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
       "kind": "CS",
       "kind_address": 16643
     },
     {
-      "address": 30,
+      "address": 32,
       "fqdn": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 112,
+      "address": 121,
       "fqdn": "workload::AC_REFERENCE_ACTOR_V0",
       "kind": "AC",
       "kind_address": 16640
     },
     {
-      "address": 113,
+      "address": 122,
       "fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
-      "address": 114,
+      "address": 123,
       "fqdn": "workload::CC_STORE_RESULTS_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
-      "address": 115,
+      "address": 124,
       "fqdn": "workload::CC_VERIFY_TERMINATION_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
-      "address": 116,
+      "address": 125,
       "fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 117,
+      "address": 126,
       "fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 118,
+      "address": 127,
       "fqdn": "workload::EV_CONJECTURE_EVALUATED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 119,
+      "address": 128,
       "fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 120,
+      "address": 129,
       "fqdn": "workload::RB_COLLATZ_V0",
       "kind": "RB",
       "kind_address": 16648
     },
     {
-      "address": 121,
+      "address": 130,
       "fqdn": "workload::STRUCTURE_BUILD_WORKLOAD_CONFIG_V0",
       "kind": "GOVERNANCE",
       "kind_address": 16646
     },
     {
-      "address": 122,
+      "address": 131,
       "fqdn": "workload::STRUCTURE_COLLATZ_STORAGE_V0",
       "kind": "GOVERNANCE",
       "kind_address": 16646
     },
     {
-      "address": 123,
+      "address": 132,
       "fqdn": "workload::TEST_DATA_CT_PURE_COLLATZ_STEP_V0",
       "kind": "TEST_DATA",
       "kind_address": 16650
     },
     {
-      "address": 124,
+      "address": 133,
       "fqdn": "workload::TEST_DATA_CT_PURE_TERMINATION_CHECK_V0",
       "kind": "TEST_DATA",
       "kind_address": 16650
     },
     {
-      "address": 125,
+      "address": 134,
       "fqdn": "workload::TE_COLLATZ_COMPUTE_V0",
       "kind": "TE",
       "kind_address": 16649
     },
     {
-      "address": 126,
+      "address": 135,
       "fqdn": "workload::TI_COLLATZ_COMPUTE_V0",
       "kind": "TI",
       "kind_address": 16651
     },
     {
-      "address": 127,
+      "address": 136,
       "fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
       "kind": "WF",
       "kind_address": 16652

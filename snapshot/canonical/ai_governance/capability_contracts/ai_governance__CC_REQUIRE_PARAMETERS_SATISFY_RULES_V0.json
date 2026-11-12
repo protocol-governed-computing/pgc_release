@@ -1,0 +1,164 @@
+{
+  "artifact_code": "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "key": "in.key"
+        },
+        "fqdn": "capability_transforms::CT_PURE_LOOKUP_V0",
+        "id": "CT_PURE_LOOKUP_V0",
+        "inputs": [
+          "key",
+          "map"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "result"
+        ]
+      },
+      {
+        "bindings": {
+          "parameters": "in.parameters",
+          "rules": "look_up_tool_rules.tool_rules"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: agent_governance\ncore:\n  summary: Refuse to govern agent action unless parameters satisfy rules\n  inputs:\n    key:\n      type: string\n      required: true\n    parameters:\n      type: object\n      required: true\n  outputs:\n    valid:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: look_up_tool_rules\n    transform: capability_transforms::CT_PURE_LOOKUP_V0\n    inputs:\n      map:\n        READ_RECORD:\n        - field: record_type\n          op: in\n          allowed:\n          - license_pool\n          - user_profile\n        - field: id\n          op: not_null\n        PROVISION_STANDARD_LICENSE:\n        - field: tier\n          op: eq\n          value: standard\n        - field: quantity\n          op: lte\n          value: 100\n        PROVISION_PREMIUM_LICENSE:\n        - field: tier\n          op: eq\n          value: premium\n        - field: quantity\n          op: lte\n          value: 50\n      key: $.inputs.key\n    outputs:\n      tool_rules: $.capability_result.result\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: require_parameters_hold\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters: $.inputs.parameters\n      rules: $.results.look_up_tool_rules.tool_rules\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuse to govern agent action unless parameters satisfy rules\n",
+  "content_hash": "46a873e676c560a6c5c08611ae6f3c80a868858e8cf7d157765df89151e8bf00",
+  "fqdn_id": "ai_governance::CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "agent_governance",
+    "core": {
+      "inputs": {
+        "key": {
+          "required": true,
+          "type": "string"
+        },
+        "parameters": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "valid": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key": "$.inputs.key",
+            "map": {
+              "PROVISION_PREMIUM_LICENSE": [
+                {
+                  "field": "tier",
+                  "op": "eq",
+                  "value": "premium"
+                },
+                {
+                  "field": "quantity",
+                  "op": "lte",
+                  "value": 50
+                }
+              ],
+              "PROVISION_STANDARD_LICENSE": [
+                {
+                  "field": "tier",
+                  "op": "eq",
+                  "value": "standard"
+                },
+                {
+                  "field": "quantity",
+                  "op": "lte",
+                  "value": 100
+                }
+              ],
+              "READ_RECORD": [
+                {
+                  "allowed": [
+                    "license_pool",
+                    "user_profile"
+                  ],
+                  "field": "record_type",
+                  "op": "in"
+                },
+                {
+                  "field": "id",
+                  "op": "not_null"
+                }
+              ]
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "tool_rules": "$.capability_result.result"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "look_up_tool_rules",
+          "transform": "capability_transforms::CT_PURE_LOOKUP_V0"
+        },
+        {
+          "inputs": {
+            "parameters": "$.inputs.parameters",
+            "rules": "$.results.look_up_tool_rules.tool_rules"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_parameters_hold",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse to govern agent action unless parameters satisfy rules"
+    },
+    "fqdn": "ai_governance::CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_LOOKUP_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,92 @@
+{
+  "artifact_code": "WF_RECORD_TRAINING_COMPLETED_V0",
+  "artifact_type": "WF",
+  "content": "# WF_RECORD_TRAINING_COMPLETED_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::WF_RECORD_TRAINING_COMPLETED_V0\nartifact_kind: WORKFLOW\nversion: v0\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: ai_licensing\nruntime_binding: ai_governance::RB_LICENSE_BINDINGS_V1\nsubdomain: ai_licensing\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: 'The governed sequence that performs: record training completed'\n  actor_context: ai_governance::AC_SYSTEM_V0\n  start_node: IN_RECORD_TRAINING_COMPLETED_V0\n  nodes:\n    IN_RECORD_TRAINING_COMPLETED_V0:\n      type: IN\n      code: IN_RECORD_TRAINING_COMPLETED_V0\n      next:\n        ACK: CC_RESOLVE_EMPLOYEE_IDENTITY_V0\n        NACK: EXIT_REJECTED\n    CC_RESOLVE_EMPLOYEE_IDENTITY_V0:\n      type: CC\n      code: CC_RESOLVE_EMPLOYEE_IDENTITY_V0\n      inputs:\n        employee_id: $.payload.employee_id\n      next:\n        SUCCESS: CC_RECORD_TRAINING_COMPLETED_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_RECORD_TRAINING_COMPLETED_V0:\n      type: CC\n      code: CC_RECORD_TRAINING_COMPLETED_V0\n      inputs:\n        employee_id: $.payload.employee_id\n      next:\n        SUCCESS: CC_RECORD_AI_LICENSING_MOMENT_V0\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_RECORD_AI_LICENSING_MOMENT_V0:\n      type: CC\n      code: CC_RECORD_AI_LICENSING_MOMENT_V0\n      inputs:\n        occurrence: TRAINING_COMPLETED\n        employee_id: $.payload.employee_id\n      next:\n        SUCCESS: EXIT_COMPLETED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n      emit: ai_governance::EV_TRAINING_COMPLETED_V1\n    EXIT_REJECTED:\n      type: EXIT\n```\n\n---\n\n## Intent\n\nThe governed sequence that performs: record training completed\n",
+  "content_hash": "4541180cf6cc260cb5cd68493e89d1d3f63217d3ae29a46c1516fe2152c88b24",
+  "fqdn_id": "ai_governance::WF_RECORD_TRAINING_COMPLETED_V0",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "actor_context": "ai_governance::AC_SYSTEM_V0",
+      "nodes": {
+        "CC_RECORD_AI_LICENSING_MOMENT_V0": {
+          "code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "fqdn_id": "ai_governance::CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id",
+            "occurrence": "TRAINING_COMPLETED"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RECORD_TRAINING_COMPLETED_V0": {
+          "code": "CC_RECORD_TRAINING_COMPLETED_V0",
+          "fqdn_id": "ai_governance::CC_RECORD_TRAINING_COMPLETED_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RESOLVE_EMPLOYEE_IDENTITY_V0": {
+          "code": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+          "fqdn_id": "ai_governance::CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "NOT_FOUND": "EXIT_REJECTED",
+            "SUCCESS": "CC_RECORD_TRAINING_COMPLETED_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "emit": "ai_governance::EV_TRAINING_COMPLETED_V1",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "IN_RECORD_TRAINING_COMPLETED_V0": {
+          "code": "IN_RECORD_TRAINING_COMPLETED_V0",
+          "fqdn_id": "ai_governance::IN_RECORD_TRAINING_COMPLETED_V0",
+          "next": {
+            "ACK": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_RECORD_TRAINING_COMPLETED_V0",
+      "summary": "The governed sequence that performs: record training completed"
+    },
+    "fqdn": "ai_governance::WF_RECORD_TRAINING_COMPLETED_V0",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "ai_governance::RB_LICENSE_BINDINGS_V1",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "ai_licensing",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "ai_governance::AC_SYSTEM_V0",
+    "ai_governance::EV_TRAINING_COMPLETED_V1",
+    "ai_governance::RB_LICENSE_BINDINGS_V1",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "0"
+}

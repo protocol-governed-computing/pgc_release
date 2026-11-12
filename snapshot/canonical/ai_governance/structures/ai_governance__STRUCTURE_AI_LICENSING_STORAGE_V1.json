@@ -1,0 +1,48 @@
+{
+  "artifact_code": "STRUCTURE_AI_LICENSING_STORAGE_V1",
+  "artifact_type": "STRUCTURE",
+  "content": "# STRUCTURE_AI_LICENSING_STORAGE_V1\n\n## Machine\n\n```yaml\nfqdn: ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1\nartifact_kind: STRUCTURE\nversion: v1\ngoverned_by: structure::CONSTITUTION_STRUCTURE_V0\nauthority: pgc.platform\nconcern: ai_licensing\nsupersedes: ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0\ncore:\n  summary: Declares the stores the ai_licensing owns and the paths they occupy\n  layer: DOMAINS\n  domain: ai_governance\n  subdomain: ai_licensing\n  entity_stores:\n    EMPLOYEE_EMPLOYEE_ID_REGISTRY:\n      path: ai_governance/ai_licensing/employee_employee_id_registry.jsonl\n    EMPLOYEES:\n      path: ai_governance/ai_licensing/employees.json\n    LICENSE_AUDIT:\n      path: ai_governance/ai_licensing/audit_log.jsonl\n    LICENSE_CAPS:\n      path: ai_governance/ai_licensing/license_caps.json\n    LICENSE_IDENTITY_REGISTRY:\n      path: ai_governance/ai_licensing/license_identity_registry.jsonl\n    LICENSES:\n      path: ai_governance/ai_licensing/licenses.json\n```\n\n---\n\n## Intent\n\nDeclares the stores the ai_licensing owns and the paths they occupy\n",
+  "content_hash": "e706f6e0cb1644467376f9fcde494d937afc6f4a4aa7da1c5a18681f61b48bb7",
+  "fqdn_id": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
+  "frontmatter": {
+    "artifact_kind": "STRUCTURE",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "domain": "ai_governance",
+      "entity_stores": {
+        "EMPLOYEES": {
+          "path": "ai_governance/ai_licensing/employees.json"
+        },
+        "EMPLOYEE_EMPLOYEE_ID_REGISTRY": {
+          "path": "ai_governance/ai_licensing/employee_employee_id_registry.jsonl"
+        },
+        "LICENSES": {
+          "path": "ai_governance/ai_licensing/licenses.json"
+        },
+        "LICENSE_AUDIT": {
+          "path": "ai_governance/ai_licensing/audit_log.jsonl"
+        },
+        "LICENSE_CAPS": {
+          "path": "ai_governance/ai_licensing/license_caps.json"
+        },
+        "LICENSE_IDENTITY_REGISTRY": {
+          "path": "ai_governance/ai_licensing/license_identity_registry.jsonl"
+        }
+      },
+      "layer": "DOMAINS",
+      "subdomain": "ai_licensing",
+      "summary": "Declares the stores the ai_licensing owns and the paths they occupy"
+    },
+    "fqdn": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
+    "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
+    "supersedes": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
+    "version": "v1"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "structure::CONSTITUTION_STRUCTURE_V0"
+  ],
+  "version": "1"
+}

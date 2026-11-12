@@ -1,0 +1,218 @@
+{
+  "artifact_code": "CC_RETRIEVE_BOOK_DETAILS_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {
+          "author": "read_book_record.book_record.author",
+          "title": "read_book_record.book_record.title"
+        },
+        "fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+        "id": "CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+        "inputs": [
+          "title",
+          "author"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "work_key"
+        ]
+      },
+      {
+        "bindings": {
+          "source": "select_copy_records.records"
+        },
+        "fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
+        "id": "CT_PURE_SELECT_RECORDS_V0",
+        "inputs": [
+          "filter",
+          "source"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "extracted"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_RETRIEVE_BOOK_DETAILS_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Answer a book with work, physical copy\n  inputs:\n    identity_key:\n      type: string\n      required: true\n  outputs:\n    book_record:\n      type: object\n      required: true\n    work_record:\n      type: object\n      required: true\n    copies_held:\n      type: array\n      required: true\n  result_status_contract:\n    allowed:\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_book_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n    outputs:\n      book_record: $.capability_result.value\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: form_work_key\n    transform: book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0\n    inputs:\n      title: $.results.read_book_record.book_record.title\n      author: $.results.read_book_record.book_record.author\n    outputs:\n      work_key: $.capability_result.work_key\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: read_work_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: WORKS\n    inputs:\n      key: $.results.form_work_key.work_key\n    outputs:\n      work_record: $.capability_result.value\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: continue\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: select_copy_records\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: SELECT\n    store: PHYSICAL_COPIES\n    inputs: {}\n    outputs:\n      records: $.capability_result.records\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      BACKEND_ERROR: exit\n  - step: select_physical_copies_of_book\n    transform: book_library_mgmt::CT_PURE_SELECT_RECORDS_V0\n    inputs:\n      source: $.results.select_copy_records.records\n      filter:\n        identity_key: $.inputs.identity_key\n    outputs:\n      copies_held: $.capability_result.extracted\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nAnswer a book with work, physical copy\n",
+  "content_hash": "942950f369015c1105bce3a5141d3d07bed8c8ee47b8a4c220298cd6b476c027",
+  "fqdn_id": "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "book_record": {
+          "required": true,
+          "type": "object"
+        },
+        "copies_held": {
+          "required": true,
+          "type": "array"
+        },
+        "work_record": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key": "$.inputs.identity_key"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "READ",
+          "outputs": {
+            "book_record": "$.capability_result.value",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "read_book_record",
+          "store": "BOOKS"
+        },
+        {
+          "inputs": {
+            "author": "$.results.read_book_record.book_record.author",
+            "title": "$.results.read_book_record.book_record.title"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "work_key": "$.capability_result.work_key"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "form_work_key",
+          "transform": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
+        },
+        {
+          "inputs": {
+            "key": "$.results.form_work_key.work_key"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "continue",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "READ",
+          "outputs": {
+            "result_status": "$.result_status",
+            "work_record": "$.capability_result.value"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "read_work_record",
+          "store": "WORKS"
+        },
+        {
+          "inputs": {},
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue"
+          },
+          "op": "SELECT",
+          "outputs": {
+            "records": "$.capability_result.records",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "select_copy_records",
+          "store": "PHYSICAL_COPIES"
+        },
+        {
+          "inputs": {
+            "filter": {
+              "identity_key": "$.inputs.identity_key"
+            },
+            "source": "$.results.select_copy_records.records"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "copies_held": "$.capability_result.extracted"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "select_physical_copies_of_book",
+          "transform": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Answer a book with work, physical copy"
+    },
+    "fqdn": "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+    "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0"
+  ],
+  "version": "0"
+}

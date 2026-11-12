@@ -1,0 +1,164 @@
+{
+  "artifact_code": "WF_CREATE_WALLET_V1",
+  "artifact_type": "WF",
+  "content": "# WF_CREATE_WALLET_V1\n\n## Machine\n\n```yaml\nfqdn: blockchain::WF_CREATE_WALLET_V1\nartifact_kind: WORKFLOW\nversion: v1\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: wallet\nsupersedes: blockchain::WF_CREATE_WALLET_V0\nruntime_binding: blockchain::RB_WALLET_BINDINGS_V1\nconsults:\n- blockchain::RB_IDENTITY_BINDINGS_V0\nsubdomain: wallet\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: 'The governed sequence that performs: create wallet'\n  actor_context: blockchain::AC_PARTICIPANT_V0\n  start_node: IN_WALLET_CREATION_V0\n  nodes:\n    IN_WALLET_CREATION_V0:\n      type: IN\n      code: IN_WALLET_CREATION_V0\n      next:\n        ACK: CC_RESOLVE_ACTOR_IDENTITY_V0\n        NACK: EXIT_REJECTED\n    CC_RESOLVE_ACTOR_IDENTITY_V0:\n      type: CC\n      code: CC_RESOLVE_ACTOR_IDENTITY_V0\n      inputs:\n        contact_address: $.payload.contact_address\n      next:\n        SUCCESS: CC_REQUIRE_ACCEPTED_ACTOR_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_REQUIRE_ACCEPTED_ACTOR_V0:\n      type: CC\n      code: CC_REQUIRE_ACCEPTED_ACTOR_V0\n      inputs:\n        state: $.results.CC_RESOLVE_ACTOR_IDENTITY_V0.actor_record.state\n      next:\n        SUCCESS: CC_DERIVE_WALLET_ADDRESS_V0\n        VIOLATION: EXIT_REJECTED\n    CC_DERIVE_WALLET_ADDRESS_V0:\n      type: CC\n      code: CC_DERIVE_WALLET_ADDRESS_V0\n      inputs:\n        key_material: $.payload.key_material\n      next:\n        SUCCESS: CC_REQUIRE_WALLET_ADDRESS_FREE_V0\n        VIOLATION: EXIT_REJECTED\n    CC_REQUIRE_WALLET_ADDRESS_FREE_V0:\n      type: CC\n      code: CC_REQUIRE_WALLET_ADDRESS_FREE_V0\n      inputs:\n        address: $.results.CC_DERIVE_WALLET_ADDRESS_V0.address\n      next:\n        SUCCESS: CC_CLAIM_WALLET_IDENTITY_V1\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_CLAIM_WALLET_IDENTITY_V1:\n      type: CC\n      code: CC_CLAIM_WALLET_IDENTITY_V1\n      inputs:\n        holder: $.results.CC_RESOLVE_ACTOR_IDENTITY_V0.actor_record.contact_address\n      next:\n        SUCCESS: CC_CLAIM_WALLET_ADDRESS_V0\n        VIOLATION: EXIT_REJECTED\n        ALREADY_EXISTS: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_CLAIM_WALLET_ADDRESS_V0:\n      type: CC\n      code: CC_CLAIM_WALLET_ADDRESS_V0\n      inputs:\n        address: $.results.CC_DERIVE_WALLET_ADDRESS_V0.address\n      next:\n        SUCCESS: CC_WRITE_WALLET_V0\n        ALREADY_EXISTS: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_WRITE_WALLET_V0:\n      type: CC\n      code: CC_WRITE_WALLET_V0\n      inputs:\n        wallet_id: $.results.CC_CLAIM_WALLET_IDENTITY_V1.wallet_id\n        holder: $.results.CC_RESOLVE_ACTOR_IDENTITY_V0.actor_record.contact_address\n      next:\n        SUCCESS: CC_RECORD_WALLET_MOMENT_V0\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_RECORD_WALLET_MOMENT_V0:\n      type: CC\n      code: CC_RECORD_WALLET_MOMENT_V0\n      inputs:\n        occurrence: WALLET_CREATED\n        holder: $.results.CC_RESOLVE_ACTOR_IDENTITY_V0.actor_record.contact_address\n        wallet_id: $.results.CC_CLAIM_WALLET_IDENTITY_V1.wallet_id\n      next:\n        SUCCESS: EXIT_COMPLETED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n      emit: blockchain::EV_WALLET_CREATED_V0\n    EXIT_REJECTED:\n      type: EXIT\n```\n\n---\n\n## Intent\n\nThe governed sequence that performs: create wallet\n",
+  "content_hash": "0fa52d3744055fb5d060000b6bb5b550874205538204a0af3270454e3ba6a2a4",
+  "fqdn_id": "blockchain::WF_CREATE_WALLET_V1",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "consults": [
+      "blockchain::RB_IDENTITY_BINDINGS_V0"
+    ],
+    "core": {
+      "actor_context": "blockchain::AC_PARTICIPANT_V0",
+      "nodes": {
+        "CC_CLAIM_WALLET_ADDRESS_V0": {
+          "code": "CC_CLAIM_WALLET_ADDRESS_V0",
+          "fqdn_id": "blockchain::CC_CLAIM_WALLET_ADDRESS_V0",
+          "inputs": {
+            "address": "$.results.CC_DERIVE_WALLET_ADDRESS_V0.address"
+          },
+          "next": {
+            "ALREADY_EXISTS": "EXIT_REJECTED",
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_WRITE_WALLET_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CLAIM_WALLET_IDENTITY_V1": {
+          "code": "CC_CLAIM_WALLET_IDENTITY_V1",
+          "fqdn_id": "blockchain::CC_CLAIM_WALLET_IDENTITY_V1",
+          "inputs": {
+            "holder": "$.results.CC_RESOLVE_ACTOR_IDENTITY_V0.actor_record.contact_address"
+          },
+          "next": {
+            "ALREADY_EXISTS": "EXIT_REJECTED",
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_CLAIM_WALLET_ADDRESS_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_DERIVE_WALLET_ADDRESS_V0": {
+          "code": "CC_DERIVE_WALLET_ADDRESS_V0",
+          "fqdn_id": "blockchain::CC_DERIVE_WALLET_ADDRESS_V0",
+          "inputs": {
+            "key_material": "$.payload.key_material"
+          },
+          "next": {
+            "SUCCESS": "CC_REQUIRE_WALLET_ADDRESS_FREE_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RECORD_WALLET_MOMENT_V0": {
+          "code": "CC_RECORD_WALLET_MOMENT_V0",
+          "fqdn_id": "blockchain::CC_RECORD_WALLET_MOMENT_V0",
+          "inputs": {
+            "holder": "$.results.CC_RESOLVE_ACTOR_IDENTITY_V0.actor_record.contact_address",
+            "occurrence": "WALLET_CREATED",
+            "wallet_id": "$.results.CC_CLAIM_WALLET_IDENTITY_V1.wallet_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_REQUIRE_ACCEPTED_ACTOR_V0": {
+          "code": "CC_REQUIRE_ACCEPTED_ACTOR_V0",
+          "fqdn_id": "blockchain::CC_REQUIRE_ACCEPTED_ACTOR_V0",
+          "inputs": {
+            "state": "$.results.CC_RESOLVE_ACTOR_IDENTITY_V0.actor_record.state"
+          },
+          "next": {
+            "SUCCESS": "CC_DERIVE_WALLET_ADDRESS_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_REQUIRE_WALLET_ADDRESS_FREE_V0": {
+          "code": "CC_REQUIRE_WALLET_ADDRESS_FREE_V0",
+          "fqdn_id": "blockchain::CC_REQUIRE_WALLET_ADDRESS_FREE_V0",
+          "inputs": {
+            "address": "$.results.CC_DERIVE_WALLET_ADDRESS_V0.address"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_CLAIM_WALLET_IDENTITY_V1",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RESOLVE_ACTOR_IDENTITY_V0": {
+          "code": "CC_RESOLVE_ACTOR_IDENTITY_V0",
+          "fqdn_id": "blockchain::CC_RESOLVE_ACTOR_IDENTITY_V0",
+          "inputs": {
+            "contact_address": "$.payload.contact_address"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "NOT_FOUND": "EXIT_REJECTED",
+            "SUCCESS": "CC_REQUIRE_ACCEPTED_ACTOR_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_WRITE_WALLET_V0": {
+          "code": "CC_WRITE_WALLET_V0",
+          "fqdn_id": "blockchain::CC_WRITE_WALLET_V0",
+          "inputs": {
+            "holder": "$.results.CC_RESOLVE_ACTOR_IDENTITY_V0.actor_record.contact_address",
+            "wallet_id": "$.results.CC_CLAIM_WALLET_IDENTITY_V1.wallet_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_RECORD_WALLET_MOMENT_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "emit": "blockchain::EV_WALLET_CREATED_V0",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "IN_WALLET_CREATION_V0": {
+          "code": "IN_WALLET_CREATION_V0",
+          "fqdn_id": "blockchain::IN_WALLET_CREATION_V0",
+          "next": {
+            "ACK": "CC_RESOLVE_ACTOR_IDENTITY_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_WALLET_CREATION_V0",
+      "summary": "The governed sequence that performs: create wallet"
+    },
+    "fqdn": "blockchain::WF_CREATE_WALLET_V1",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "blockchain::RB_WALLET_BINDINGS_V1",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "wallet",
+    "supersedes": "blockchain::WF_CREATE_WALLET_V0",
+    "version": "v1"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "blockchain::AC_PARTICIPANT_V0",
+    "blockchain::EV_WALLET_CREATED_V0",
+    "blockchain::RB_IDENTITY_BINDINGS_V0",
+    "blockchain::RB_WALLET_BINDINGS_V1",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "1"
+}

@@ -1,0 +1,90 @@
+{
+  "artifact_code": "CT_PURE_SELECT_RECORDS_V0",
+  "artifact_type": "CT",
+  "content": "# CT_PURE_SELECT_RECORDS_V0\n\n## Human\n\n### 1. Intent\n\nSelect the records of an array that satisfy declared field criteria, and answer none when none do.\n\n---\n\n### 2. Rationale\n\n`CT_PURE_FILTER_RECORDS_V0` refuses an empty result. That is right where the caller expected to find something, and wrong for a read: \"no record is in that state\" is a true answer about what is held, not a failed lookup. A listing or a search that finds nothing must answer empty, and with only the filter it was refused.\n\nThis transform applies the same criteria and answers what matched, possibly nothing. Whether nothing matching is a problem is the caller's judgement. The filter stays for callers that mean \"nothing matched\" as a refusal.\n\n---\n\n### 3. Naming Convention\n\n- **Operation:** SELECT_RECORDS (execution opcode used in molecules)\n\n---\n\n### 4. Applicability & Non-Applicability\n\n#### 4.1 Valid Use Cases\n- Answering a listing or a search from a CS store SELECT result, where nothing matching is an answer\n- Selecting records by exact field value or field presence\n\n#### 4.2 Invalid Use Cases\n- Refusing when nothing matches (use `CT_PURE_FILTER_RECORDS_V0`)\n- Selecting by complex expressions, ranges, or nested conditions\n- Sorting or ordering records\n- Reshaping or transforming record fields\n- Domain-specific eligibility logic (that belongs in domain CC)\n\n---\n\n### 5. Determinism & Purity Declaration\n\n| Property | Value | Notes |\n|--------|------|------|\n| Deterministic | YES | Same source and criteria yield same output |\n| Purity Class | ct_pure | No side effects, no state |\n| Side Effects | NONE | Fully pure computation |\n| Replay Safe | YES | Identical inputs produce identical output |\n\n---\n\n### 6. Structural Checklist\n\nAuthor MUST confirm all items before writing YAML:\n\n- [x] Single responsibility\n- [x] No implicit state\n- [x] No domain semantics\n- [x] Inputs fully declared\n- [x] Outputs fully declared\n- [x] No hidden control flow\n- [x] Composition rules respected\n\n---\n\n### 7. Composition Rules (Atom-Specific)\n\nAs an **atom**, this CT:\n- MUST NOT invoke other CTs (atoms or molecules)\n- MUST perform exactly one atomic operation\n- MAY be composed by molecules\n\n---\n\n### 8. Criterion Semantics\n\nThe `filter` input is a flat dict of field criteria applied with AND logic:\n\n| Criterion Value | Semantic |\n|----------------|---------|\n| `\"present\"` | Field must exist in record and not be None |\n| any other value | Field must equal that value exactly |\n\nAll criteria must be satisfied for a record to be included.\n\n---\n\n### 9. Validation Expectations\n\n**Runtime validation MUST fail if:**\n- `source` is not an array\n- `filter` is not an object\n\nAn empty result is not a failure: it answers `extracted: []`.\n\n---\n\n### 10. Observability\n\nThis atom does NOT emit traces.\n\n**Rationale:** Pure computation with no side effects or state changes.\n\n---\n\n## Machine\n\n```yaml\nfqdn: capability_transforms::CT_PURE_SELECT_RECORDS_V0\nartifact_kind: CAPABILITY_TRANSFORM\nversion: v0\ngoverned_by: capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0\nauthority: pgc.platform\nconcern: capability_transforms\ncore:\n  summary: Select the records satisfying declared field criteria, answering none when none do\n  refusal: never\n  description: Accepts a source array and a criteria object. Returns the records satisfying all\n    criteria, possibly none. Raises CTExecutionError only on malformed inputs.\n  inputs:\n    source:\n      type: array\n      required: true\n      description: Array of record objects to select from\n    filter:\n      type: object\n      required: true\n      description: Field criteria dict. Values are exact match or \"present\" for existence check.\n  outputs:\n    extracted:\n      type: array\n      description: The records satisfying all criteria, possibly none\nmachine:\n  ct_kind: atom\n  ct_purity: ct_pure\n  operation: SELECT_RECORDS\n  implementation:\n    module: capability_transforms.implementation.ct_pure_select_records_v0\n    callable: execute\n```",
+  "content_hash": "794cd00b9cec9164b9a82c650eec7d7e7baa78aa404583a9da5fab6dd1ffb056",
+  "ct_ir": {
+    "artifact_code": "CT_PURE_SELECT_RECORDS_V0",
+    "atom_stream": [
+      {
+        "args": {
+          "filter": "$.inputs.filter",
+          "source": "$.inputs.source"
+        },
+        "atom": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+        "handler_ref": {
+          "callable": "execute",
+          "module": "capability_transforms.implementation.ct_pure_select_records_v0"
+        },
+        "out": "__atom_result__",
+        "purity": "ct_pure"
+      }
+    ],
+    "ct_composition_version": "V0",
+    "ct_fqdn": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+    "inputs": {
+      "filter": {
+        "description": "Field criteria dict. Values are exact match or \"present\" for existence check.",
+        "required": true,
+        "type": "object"
+      },
+      "source": {
+        "description": "Array of record objects to select from",
+        "required": true,
+        "type": "array"
+      }
+    },
+    "outputs": {
+      "extracted": {
+        "from": "__atom_result__"
+      }
+    }
+  },
+  "fqdn_id": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_TRANSFORM",
+    "authority": "pgc.platform",
+    "concern": "capability_transforms",
+    "core": {
+      "description": "Accepts a source array and a criteria object. Returns the records satisfying all criteria, possibly none. Raises CTExecutionError only on malformed inputs.",
+      "inputs": {
+        "filter": {
+          "description": "Field criteria dict. Values are exact match or \"present\" for existence check.",
+          "required": true,
+          "type": "object"
+        },
+        "source": {
+          "description": "Array of record objects to select from",
+          "required": true,
+          "type": "array"
+        }
+      },
+      "outputs": {
+        "extracted": {
+          "description": "The records satisfying all criteria, possibly none",
+          "type": "array"
+        }
+      },
+      "refusal": "never",
+      "summary": "Select the records satisfying declared field criteria, answering none when none do"
+    },
+    "fqdn": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+    "governed_by": "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0",
+    "machine": {
+      "ct_kind": "atom",
+      "ct_purity": "ct_pure",
+      "implementation": {
+        "callable": "execute",
+        "module": "capability_transforms.implementation.ct_pure_select_records_v0"
+      },
+      "operation": "SELECT_RECORDS"
+    },
+    "version": "v0"
+  },
+  "layer_code": "REUSABLE_TRANSFORMS",
+  "namespace": "capability_transforms",
+  "references": [
+    "capability_transforms::CONSTITUTION_DETERMINISTIC_ATOMS_V0"
+  ],
+  "version": "0"
+}

@@ -1,8 +1,8 @@
 {
   "artifact_code": "TI_REGISTER_ACTOR_V0",
   "artifact_type": "TI",
-  "content": "# TI_REGISTER_ACTOR_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::TI_REGISTER_ACTOR_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: identity\noperation: blockchain.register_actor\ncore:\n  summary: Admits a request to register an actor, and sends the act only what the caller supplies and\n    the person's preferences\ninput_contract:\n  name:\n    type: string\n    required: true\n  contact_address:\n    type: string\n    required: true\ncontext_requirements: []\nhandler:\n  kind: WF_INVOCATION\n  workflow: blockchain::WF_REGISTER_ACTOR_V0\n  payload_template:\n    actor_record:\n      name: ${input.name}\n      contact_address: ${input.contact_address}\n      currency_preference: BACHI\n      language: en\n```\n\n---\n\n## Intent\n\nAdmits a request to register an actor, and sends the act only what the caller supplies and the person's preferences\n",
-  "content_hash": "689c2962eaa6827b5281c2f36e2f7798b37691dce410560c9467e404ba39940e",
+  "content": "# TI_REGISTER_ACTOR_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::TI_REGISTER_ACTOR_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: identity\noperation: blockchain.register_actor\ncore:\n  summary: Admits a request to register an actor, and sends the act only what the caller supplies and\n    the person's preferences\ninput_contract:\n  name:\n    type: string\n    required: true\n  contact_address:\n    type: string\n    required: true\ncontext_requirements: []\nhandler:\n  kind: WF_INVOCATION\n  workflow: blockchain::WF_REGISTER_ACTOR_V3\n  payload_template:\n    actor_record:\n      name: ${input.name}\n      contact_address: ${input.contact_address}\n      currency_preference: BACHI\n      language: en\n```\n\n---\n\n## Intent\n\nAdmits a request to register an actor, and sends the act only what the caller supplies and the person's preferences\n",
+  "content_hash": "1e26990e969e2902a2b41e11f4d11dce3faad5d894dcc2fe7176b2d226d87196",
   "fqdn_id": "blockchain::TI_REGISTER_ACTOR_V0",
   "frontmatter": {
     "artifact_kind": "TRANSPORT_INGRESS",
@@ -24,7 +24,7 @@
           "name": "${input.name}"
         }
       },
-      "workflow": "blockchain::WF_REGISTER_ACTOR_V0"
+      "workflow": "blockchain::WF_REGISTER_ACTOR_V3"
     },
     "input_contract": {
       "contact_address": {
@@ -42,7 +42,7 @@
   "layer_code": "BLOCKCHAIN",
   "namespace": "blockchain",
   "references": [
-    "blockchain::WF_REGISTER_ACTOR_V0",
+    "blockchain::WF_REGISTER_ACTOR_V3",
     "transport::CONSTITUTION_TRANSPORT_INGRESS_V0"
   ],
   "version": "0"

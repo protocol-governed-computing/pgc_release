@@ -1,0 +1,239 @@
+{
+  "wf_id": "WF_REINSTATE_PHYSICAL_COPY_V2",
+  "entry": "IN_REINSTATE_PHYSICAL_COPY_V1",
+  "nodes": [
+    {
+      "id": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "type": "CC",
+      "cc_code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "parameters": "in.staff_credentials"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "staff_credentials": "IN.staff_credentials"
+        }
+      }
+    },
+    {
+      "id": "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "type": "CC",
+      "cc_code": "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "value": "in.to_state"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "inputs": [
+              "allowed_set",
+              "value"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "is_member"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "barcode": "IN.barcode",
+          "to_state": "REGISTERED"
+        }
+      }
+    },
+    {
+      "id": "CC_RECORD_CATALOG_MOMENT_V0",
+      "type": "CC",
+      "cc_code": "CC_RECORD_CATALOG_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "occurrence": "REINSTATE_PHYSICAL_COPY",
+          "staff_id": "IN.staff_id",
+          "subject": "IN.barcode"
+        }
+      }
+    },
+    {
+      "id": "EXIT_COMPLETED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_REINSTATE_PHYSICAL_COPY_V1",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "to": "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "to": "CC_RECORD_CATALOG_MOMENT_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RECORD_CATALOG_MOMENT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_RECORD_CATALOG_MOMENT_V0",
+      "to": "EXIT_COMPLETED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RECORD_CATALOG_MOMENT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_REINSTATE_PHYSICAL_COPY_V1",
+      "to": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_REINSTATE_PHYSICAL_COPY_V1",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "CC_RECORD_CATALOG_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "CC_RECORD_CATALOG_MOMENT_V0",
+      "EXIT_COMPLETED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "CC_RECORD_CATALOG_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V1",
+      "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_REINSTATE_PHYSICAL_COPY_V1",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

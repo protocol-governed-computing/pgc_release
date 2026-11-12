@@ -1,8 +1,8 @@
 {
   "artifact_code": "SURFACE_CONTRACT_REGISTRY_REGISTER_V0",
   "artifact_type": "SURFACE",
-  "content": "# SURFACE_CONTRACT_REGISTRY_REGISTER_V0\n\n## Purpose\n\nCanonical result surface for registry REGISTER operations.\n\nA registry REGISTER operation can succeed, find the key already registered, encounter an\ninvalid input, or fail due to storage unavailability. These four outcomes are exhaustive \u2014\nno other result codes may be declared in a step's result_surface when the step binds a\nregistry capability with REGISTER operation.\n\n---\n\n## Machine\n\n```yaml\nfqdn: surface_contract::SURFACE_CONTRACT_REGISTRY_REGISTER_V0\nartifact_kind: SURFACE_CONTRACT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: surface_contract\ngoverns:\n- CS_REGISTRY_V0\nop: REGISTER\ncanonical_surface:\n- SUCCESS\n- ALREADY_EXISTS\n- VIOLATION\n- BACKEND_ERROR\n```\n\n---\n\n## What this realizes\n```yaml\ncapability_family: REGISTRY\n```\n",
-  "content_hash": "33e619389193e598ce4f109ad2b059eb1276f93aa1642d47766b8841a1c8abc4",
+  "content": "# SURFACE_CONTRACT_REGISTRY_REGISTER_V0\n\n## Purpose\n\nCanonical result surface for registry REGISTER operations.\n\nA registry REGISTER operation can succeed, find the key already registered, encounter an\ninvalid input, or fail due to storage unavailability. These four outcomes are exhaustive \u2014\nno other result codes may be declared in a step's result_surface when the step binds a\nregistry capability with REGISTER operation.\n\n---\n\n## Machine\n\n```yaml\nfqdn: surface_contract::SURFACE_CONTRACT_REGISTRY_REGISTER_V0\nartifact_kind: SURFACE_CONTRACT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: surface_contract\ngoverns:\n- capability_side_effects::CS_REGISTRY_V0\nop: REGISTER\ncanonical_surface:\n- SUCCESS\n- ALREADY_EXISTS\n- VIOLATION\n- BACKEND_ERROR\n```\n\n---\n\n## What this realizes\n```yaml\ncapability_family: REGISTRY\n```\n",
+  "content_hash": "b0268e7879307dc072b8f74ecc792e2aff8fdf4fbc0db36785828c6e47d5d94a",
   "fqdn_id": "surface_contract::SURFACE_CONTRACT_REGISTRY_REGISTER_V0",
   "frontmatter": {
     "artifact_kind": "SURFACE_CONTRACT",
@@ -17,7 +17,7 @@
     "fqdn": "surface_contract::SURFACE_CONTRACT_REGISTRY_REGISTER_V0",
     "governed_by": "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0",
     "governs": [
-      "CS_REGISTRY_V0"
+      "capability_side_effects::CS_REGISTRY_V0"
     ],
     "op": "REGISTER",
     "version": "V0"
@@ -25,6 +25,7 @@
   "layer_code": "GOVERNANCE",
   "namespace": "surface_contract",
   "references": [
+    "capability_side_effects::CS_REGISTRY_V0",
     "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0"
   ],
   "version": "0"

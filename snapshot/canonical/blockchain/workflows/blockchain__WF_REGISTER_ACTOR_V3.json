@@ -1,0 +1,132 @@
+{
+  "artifact_code": "WF_REGISTER_ACTOR_V3",
+  "artifact_type": "WF",
+  "content": "# WF_REGISTER_ACTOR_V3\n\n## Machine\n\n```yaml\nfqdn: blockchain::WF_REGISTER_ACTOR_V3\nartifact_kind: WORKFLOW\nversion: v3\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: identity\nsupersedes: blockchain::WF_REGISTER_ACTOR_V2\nruntime_binding: blockchain::RB_IDENTITY_BINDINGS_V0\nsubdomain: identity\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: 'The governed sequence that performs: register actor'\n  actor_context: blockchain::AC_PARTICIPANT_V0\n  start_node: IN_ACTOR_REGISTERED_V0\n  nodes:\n    IN_ACTOR_REGISTERED_V0:\n      type: IN\n      code: IN_ACTOR_REGISTERED_V0\n      next:\n        ACK: CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0\n        NACK: EXIT_REJECTED\n    CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0:\n      type: CC\n      code: CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0\n      inputs:\n        submission: $.payload.actor_record\n      next:\n        SUCCESS: CC_CLAIM_ACTOR_CONTACT_ADDRESS_V0\n        VIOLATION: EXIT_REJECTED\n    CC_CLAIM_ACTOR_CONTACT_ADDRESS_V0:\n      type: CC\n      code: CC_CLAIM_ACTOR_CONTACT_ADDRESS_V0\n      inputs:\n        contact_address: $.payload.actor_record.contact_address\n      next:\n        SUCCESS: CC_WRITE_ACTOR_V0\n        ALREADY_EXISTS: CC_RECORD_IDENTITY_REPEATED_MOMENT_V0\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_WRITE_ACTOR_V0:\n      type: CC\n      code: CC_WRITE_ACTOR_V0\n      inputs:\n        contact_address: $.payload.actor_record.contact_address\n        submission: $.payload.actor_record\n      next:\n        SUCCESS: CC_RECORD_IDENTITY_MOMENT_V0\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_RECORD_IDENTITY_MOMENT_V0:\n      type: CC\n      code: CC_RECORD_IDENTITY_MOMENT_V0\n      inputs:\n        occurrence: ACTOR_REGISTERED_UNVERIFIED\n        contact_address: $.payload.actor_record.contact_address\n        verifying_authority: $.payload.actor_record.verifying_authority\n        grounds: $.payload.actor_record.grounds\n      next:\n        SUCCESS: EXIT_COMPLETED\n        BACKEND_ERROR: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n    CC_RECORD_IDENTITY_REPEATED_MOMENT_V0:\n      type: CC\n      code: CC_RECORD_IDENTITY_REPEATED_MOMENT_V0\n      inputs:\n        occurrence: ACTOR_REGISTERED_UNVERIFIED\n        contact_address: $.payload.actor_record.contact_address\n        verifying_authority: $.payload.actor_record.verifying_authority\n        grounds: $.payload.actor_record.grounds\n        name: $.payload.actor_record.name\n        currency_preference: $.payload.actor_record.currency_preference\n        language: $.payload.actor_record.language\n      next:\n        SUCCESS: EXIT_REPEATED\n        BACKEND_ERROR: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n      emit: blockchain::EV_ACTOR_REGISTERED_UNVERIFIED_V0\n    EXIT_REJECTED:\n      type: EXIT\n    EXIT_REPEATED:\n      type: EXIT\n      emit: blockchain::EV_ACTOR_REGISTERED_AGAIN_V0\n```\n\n---\n\n## Intent\n\nThe governed sequence that performs: register actor\n",
+  "content_hash": "cfe068cc306ae4c73751a31df1faff7112294451efa71a6271ca6711f3b69265",
+  "fqdn_id": "blockchain::WF_REGISTER_ACTOR_V3",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "actor_context": "blockchain::AC_PARTICIPANT_V0",
+      "nodes": {
+        "CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0": {
+          "code": "CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0",
+          "fqdn_id": "blockchain::CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0",
+          "inputs": {
+            "submission": "$.payload.actor_record"
+          },
+          "next": {
+            "SUCCESS": "CC_CLAIM_ACTOR_CONTACT_ADDRESS_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_CLAIM_ACTOR_CONTACT_ADDRESS_V0": {
+          "code": "CC_CLAIM_ACTOR_CONTACT_ADDRESS_V0",
+          "fqdn_id": "blockchain::CC_CLAIM_ACTOR_CONTACT_ADDRESS_V0",
+          "inputs": {
+            "contact_address": "$.payload.actor_record.contact_address"
+          },
+          "next": {
+            "ALREADY_EXISTS": "CC_RECORD_IDENTITY_REPEATED_MOMENT_V0",
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_WRITE_ACTOR_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RECORD_IDENTITY_MOMENT_V0": {
+          "code": "CC_RECORD_IDENTITY_MOMENT_V0",
+          "fqdn_id": "blockchain::CC_RECORD_IDENTITY_MOMENT_V0",
+          "inputs": {
+            "contact_address": "$.payload.actor_record.contact_address",
+            "grounds": "$.payload.actor_record.grounds",
+            "occurrence": "ACTOR_REGISTERED_UNVERIFIED",
+            "verifying_authority": "$.payload.actor_record.verifying_authority"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RECORD_IDENTITY_REPEATED_MOMENT_V0": {
+          "code": "CC_RECORD_IDENTITY_REPEATED_MOMENT_V0",
+          "fqdn_id": "blockchain::CC_RECORD_IDENTITY_REPEATED_MOMENT_V0",
+          "inputs": {
+            "contact_address": "$.payload.actor_record.contact_address",
+            "currency_preference": "$.payload.actor_record.currency_preference",
+            "grounds": "$.payload.actor_record.grounds",
+            "language": "$.payload.actor_record.language",
+            "name": "$.payload.actor_record.name",
+            "occurrence": "ACTOR_REGISTERED_UNVERIFIED",
+            "verifying_authority": "$.payload.actor_record.verifying_authority"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_REPEATED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_WRITE_ACTOR_V0": {
+          "code": "CC_WRITE_ACTOR_V0",
+          "fqdn_id": "blockchain::CC_WRITE_ACTOR_V0",
+          "inputs": {
+            "contact_address": "$.payload.actor_record.contact_address",
+            "submission": "$.payload.actor_record"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_RECORD_IDENTITY_MOMENT_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "emit": "blockchain::EV_ACTOR_REGISTERED_UNVERIFIED_V0",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "EXIT_REPEATED": {
+          "emit": "blockchain::EV_ACTOR_REGISTERED_AGAIN_V0",
+          "type": "EXIT"
+        },
+        "IN_ACTOR_REGISTERED_V0": {
+          "code": "IN_ACTOR_REGISTERED_V0",
+          "fqdn_id": "blockchain::IN_ACTOR_REGISTERED_V0",
+          "next": {
+            "ACK": "CC_CHECK_REGISTER_ACTOR_SUBMISSION_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_ACTOR_REGISTERED_V0",
+      "summary": "The governed sequence that performs: register actor"
+    },
+    "fqdn": "blockchain::WF_REGISTER_ACTOR_V3",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "blockchain::RB_IDENTITY_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "identity",
+    "supersedes": "blockchain::WF_REGISTER_ACTOR_V2",
+    "version": "v3"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "blockchain::AC_PARTICIPANT_V0",
+    "blockchain::EV_ACTOR_REGISTERED_AGAIN_V0",
+    "blockchain::EV_ACTOR_REGISTERED_UNVERIFIED_V0",
+    "blockchain::RB_IDENTITY_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "3"
+}

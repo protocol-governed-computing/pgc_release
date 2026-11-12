@@ -1,0 +1,160 @@
+{
+  "artifact_code": "CC_WRITE_LICENSE_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_CLOCK_V0",
+        "id": "CS_CLOCK_V0",
+        "kind": "CS",
+        "ops": [
+          "NOW"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_WRITE_LICENSE_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_WRITE_LICENSE_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: ai_licensing\ncore:\n  summary: Write a new license in its first state\n  inputs:\n    license_id:\n      type: string\n      required: true\n    submission:\n      type: object\n      required: true\n  outputs:\n    result_status:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - BACKEND_ERROR\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_now\n    side_effect: capability_side_effects::CS_CLOCK_V0\n    op: NOW\n    inputs: {}\n    outputs:\n      timestamp: $.capability_result.timestamp\n    result_surface:\n    - SUCCESS\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      BACKEND_ERROR: exit\n  - step: assemble_license_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        license_id: $.inputs.license_id\n        last_used_at: $.results.read_now.timestamp\n        employee_id: $.inputs.submission.employee_id\n        tier: $.inputs.submission.tier\n        state: ACTIVE\n    outputs:\n      license_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_license_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: LICENSES\n    inputs:\n      key: $.inputs.license_id\n      value: $.results.assemble_license_record.license_record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nWrite a new license in its first state\n",
+  "content_hash": "7b269fda0af2a41a71191fc4e6c7eac6e05e3857c25da5e723d792aa9ea2778d",
+  "fqdn_id": "ai_governance::CC_WRITE_LICENSE_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "inputs": {
+        "license_id": {
+          "required": true,
+          "type": "string"
+        },
+        "submission": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "result_status": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {},
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue"
+          },
+          "op": "NOW",
+          "outputs": {
+            "timestamp": "$.capability_result.timestamp"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_CLOCK_V0",
+          "step": "read_now"
+        },
+        {
+          "inputs": {
+            "fields": {
+              "employee_id": "$.inputs.submission.employee_id",
+              "last_used_at": "$.results.read_now.timestamp",
+              "license_id": "$.inputs.license_id",
+              "state": "ACTIVE",
+              "tier": "$.inputs.submission.tier"
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "license_record": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_license_record",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "key": "$.inputs.license_id",
+            "value": "$.results.assemble_license_record.license_record"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "WRITE",
+          "outputs": {
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "write_license_record",
+          "store": "LICENSES"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "BACKEND_ERROR",
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Write a new license in its first state"
+    },
+    "fqdn": "ai_governance::CC_WRITE_LICENSE_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_CLOCK_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+  ],
+  "version": "0"
+}

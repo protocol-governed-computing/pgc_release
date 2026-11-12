@@ -1,0 +1,53 @@
+{
+  "artifact_code": "EV_ACTOR_REGISTERED_AGAIN_V0",
+  "artifact_type": "EV",
+  "content": "# EV_ACTOR_REGISTERED_AGAIN_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_ACTOR_REGISTERED_AGAIN_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: A actor registered again\n  description: A actor registered again\n  subdomain: identity\n  schema:\n    contact_address:\n      type: string\n      required: true\n    name:\n      type: string\n      required: true\n    currency_preference:\n      type: string\n      required: true\n    language:\n      type: string\n      required: true\n    occurred_at:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n```\n\n---\n\n## Intent\n\nA actor registered again\n",
+  "content_hash": "ffe7c89254e6865203f1ada983099aa4e152e0f7d6e16e76cf5d2d4ae6d2b647",
+  "fqdn_id": "blockchain::EV_ACTOR_REGISTERED_AGAIN_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "description": "A actor registered again",
+      "schema": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "currency_preference": {
+          "required": true,
+          "type": "string"
+        },
+        "language": {
+          "required": true,
+          "type": "string"
+        },
+        "name": {
+          "required": true,
+          "type": "string"
+        },
+        "occurred_at": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "identity",
+      "summary": "A actor registered again"
+    },
+    "fqdn": "blockchain::EV_ACTOR_REGISTERED_AGAIN_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

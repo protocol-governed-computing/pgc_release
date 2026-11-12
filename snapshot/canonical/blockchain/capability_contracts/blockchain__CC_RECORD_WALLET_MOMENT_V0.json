@@ -1,0 +1,127 @@
+{
+  "artifact_code": "CC_RECORD_WALLET_MOMENT_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+        "id": "CS_APPENDONLY_JSONL_V0",
+        "kind": "CS",
+        "ops": [
+          "APPEND",
+          "GET_ALL"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_RECORD_WALLET_MOMENT_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_RECORD_WALLET_MOMENT_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Record a moment on the wallet's own trail\n  inputs:\n    occurrence:\n      type: string\n      required: true\n    holder:\n      type: string\n    wallet_id:\n      type: string\n      required: true\n  outputs:\n    sequence_number:\n      type: integer\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: assemble_occurrence\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        occurrence: $.inputs.occurrence\n        holder: $.inputs.holder\n    outputs:\n      record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: append_occurrence\n    side_effect: capability_side_effects::CS_APPENDONLY_JSONL_V0\n    op: APPEND\n    store: WALLET_OCCURRENCES\n    inputs:\n      record: $.results.assemble_occurrence.record\n      stream_id: $.inputs.wallet_id\n    outputs:\n      sequence_number: $.capability_result.sequence_number\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nRecord a moment on the wallet's own trail\n",
+  "content_hash": "e7fce4a12bdb7dbb0a73409e74777a796f4534280bbbcc0f6247bfb9ecb897ec",
+  "fqdn_id": "blockchain::CC_RECORD_WALLET_MOMENT_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "inputs": {
+        "holder": {
+          "type": "string"
+        },
+        "occurrence": {
+          "required": true,
+          "type": "string"
+        },
+        "wallet_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "sequence_number": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "fields": {
+              "holder": "$.inputs.holder",
+              "occurrence": "$.inputs.occurrence"
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "record": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_occurrence",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "record": "$.results.assemble_occurrence.record",
+            "stream_id": "$.inputs.wallet_id"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "APPEND",
+          "outputs": {
+            "sequence_number": "$.capability_result.sequence_number"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+          "step": "append_occurrence",
+          "store": "WALLET_OCCURRENCES"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Record a moment on the wallet's own trail"
+    },
+    "fqdn": "blockchain::CC_RECORD_WALLET_MOMENT_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+  ],
+  "version": "0"
+}

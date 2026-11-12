@@ -1,0 +1,196 @@
+{
+  "artifact_code": "CC_CHECK_REGISTER_BOOK_SUBMISSION_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "record": "in.book_fields"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "inputs": [
+          "record",
+          "schema"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "violations"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CHECK_REGISTER_BOOK_SUBMISSION_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_CHECK_REGISTER_BOOK_SUBMISSION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Refuse a request to register book that lacks what it requires\n  inputs:\n    book_fields:\n      type: object\n      required: true\n    barcode:\n      type: string\n    work_fields:\n      type: object\n      required: true\n  outputs:\n    valid:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: check_book_fields\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.book_fields\n      schema:\n        title:\n          type: string\n          required: true\n        author:\n          type: string\n          required: true\n        publication_year:\n          type: integer\n          required: true\n        subject:\n          type: array\n          required: true\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: check_work_fields\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.work_fields\n      schema:\n        title:\n          type: string\n          required: true\n        author:\n          type: string\n          required: true\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: refuse_incomplete_submission\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        book_violations: $.results.check_book_fields.violations\n        subject: $.inputs.book_fields.subject\n        barcode: $.inputs.barcode\n        work_violations: $.results.check_work_fields.violations\n      rules:\n      - field: barcode\n        op: neq\n        value: ''\n      - field: book_violations\n        op: eq\n        value: []\n      - field: subject\n        op: neq\n        value: []\n      - field: work_violations\n        op: eq\n        value: []\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuse a request to register book that lacks what it requires\n",
+  "content_hash": "a413935a87c60ba205ffb29eb4045cc4c4e68b237b5f5a7375b9880ccaef2c67",
+  "fqdn_id": "book_library_mgmt::CC_CHECK_REGISTER_BOOK_SUBMISSION_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "barcode": {
+          "type": "string"
+        },
+        "book_fields": {
+          "required": true,
+          "type": "object"
+        },
+        "work_fields": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "valid": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "record": "$.inputs.book_fields",
+            "schema": {
+              "author": {
+                "required": true,
+                "type": "string"
+              },
+              "publication_year": {
+                "required": true,
+                "type": "integer"
+              },
+              "subject": {
+                "required": true,
+                "type": "array"
+              },
+              "title": {
+                "required": true,
+                "type": "string"
+              }
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "violations": "$.capability_result.violations"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "check_book_fields",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+        },
+        {
+          "inputs": {
+            "record": "$.inputs.work_fields",
+            "schema": {
+              "author": {
+                "required": true,
+                "type": "string"
+              },
+              "title": {
+                "required": true,
+                "type": "string"
+              }
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "violations": "$.capability_result.violations"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "check_work_fields",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "barcode": "$.inputs.barcode",
+              "book_violations": "$.results.check_book_fields.violations",
+              "subject": "$.inputs.book_fields.subject",
+              "work_violations": "$.results.check_work_fields.violations"
+            },
+            "rules": [
+              {
+                "field": "barcode",
+                "op": "neq",
+                "value": ""
+              },
+              {
+                "field": "book_violations",
+                "op": "eq",
+                "value": []
+              },
+              {
+                "field": "subject",
+                "op": "neq",
+                "value": []
+              },
+              {
+                "field": "work_violations",
+                "op": "eq",
+                "value": []
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "refuse_incomplete_submission",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse a request to register book that lacks what it requires"
+    },
+    "fqdn": "book_library_mgmt::CC_CHECK_REGISTER_BOOK_SUBMISSION_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

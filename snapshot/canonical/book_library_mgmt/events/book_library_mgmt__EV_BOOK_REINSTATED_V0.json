@@ -1,0 +1,41 @@
+{
+  "artifact_code": "EV_BOOK_REINSTATED_V0",
+  "artifact_type": "EV",
+  "content": "# EV_BOOK_REINSTATED_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::EV_BOOK_REINSTATED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A book reinstated\n  description: A book reinstated\n  subdomain: catalog\n  schema:\n    identity_key:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n```\n\n---\n\n## Intent\n\nA book reinstated\n",
+  "content_hash": "19e729f4c274bcb068f3db8ea112404eaed14a47fbbf8cdf9f824d9b402f6a8b",
+  "fqdn_id": "book_library_mgmt::EV_BOOK_REINSTATED_V0",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "description": "A book reinstated",
+      "schema": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "catalog",
+      "summary": "A book reinstated"
+    },
+    "fqdn": "book_library_mgmt::EV_BOOK_REINSTATED_V0",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "0"
+}

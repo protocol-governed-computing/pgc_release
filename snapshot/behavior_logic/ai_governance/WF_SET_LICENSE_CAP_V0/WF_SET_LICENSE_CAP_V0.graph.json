@@ -1,0 +1,250 @@
+{
+  "wf_id": "WF_SET_LICENSE_CAP_V0",
+  "entry": "IN_SET_LICENSE_CAP_V0",
+  "nodes": [
+    {
+      "id": "CC_CHECK_SET_LICENSE_CAP_SUBMISSION_V0",
+      "type": "CC",
+      "cc_code": "CC_CHECK_SET_LICENSE_CAP_SUBMISSION_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "record": "in.submission"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "inputs": [
+              "record",
+              "schema"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "violations"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "submission": {
+            "cap": "$.payload.cap"
+          }
+        }
+      }
+    },
+    {
+      "id": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "occurrence": "LICENSE_CAP_SET"
+        }
+      }
+    },
+    {
+      "id": "CC_WRITE_LICENSE_CAP_V0",
+      "type": "CC",
+      "cc_code": "CC_WRITE_LICENSE_CAP_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "submission": {
+            "cap": "$.payload.cap"
+          }
+        }
+      }
+    },
+    {
+      "id": "EXIT_COMPLETED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_SET_LICENSE_CAP_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_CHECK_SET_LICENSE_CAP_SUBMISSION_V0",
+      "to": "CC_WRITE_LICENSE_CAP_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CHECK_SET_LICENSE_CAP_SUBMISSION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "to": "EXIT_COMPLETED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_WRITE_LICENSE_CAP_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_WRITE_LICENSE_CAP_V0",
+      "to": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_WRITE_LICENSE_CAP_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_SET_LICENSE_CAP_V0",
+      "to": "CC_CHECK_SET_LICENSE_CAP_SUBMISSION_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_SET_LICENSE_CAP_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_SET_LICENSE_CAP_V0",
+      "CC_CHECK_SET_LICENSE_CAP_SUBMISSION_V0",
+      "CC_WRITE_LICENSE_CAP_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_SET_LICENSE_CAP_V0",
+      "CC_CHECK_SET_LICENSE_CAP_SUBMISSION_V0",
+      "CC_WRITE_LICENSE_CAP_V0",
+      "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_SET_LICENSE_CAP_V0",
+      "CC_CHECK_SET_LICENSE_CAP_SUBMISSION_V0",
+      "CC_WRITE_LICENSE_CAP_V0",
+      "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "EXIT_COMPLETED"
+    ],
+    [
+      "IN_SET_LICENSE_CAP_V0",
+      "CC_CHECK_SET_LICENSE_CAP_SUBMISSION_V0",
+      "CC_WRITE_LICENSE_CAP_V0",
+      "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_SET_LICENSE_CAP_V0",
+      "CC_CHECK_SET_LICENSE_CAP_SUBMISSION_V0",
+      "CC_WRITE_LICENSE_CAP_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_SET_LICENSE_CAP_V0",
+      "CC_CHECK_SET_LICENSE_CAP_SUBMISSION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_SET_LICENSE_CAP_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

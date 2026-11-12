@@ -1,0 +1,316 @@
+{
+  "artifact_code": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {
+          "author": "in.updated_fields.author",
+          "publication_year": "in.updated_fields.publication_year",
+          "title": "in.updated_fields.title"
+        },
+        "fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+        "id": "CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+        "inputs": [
+          "title",
+          "author",
+          "publication_year"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "identity_key"
+        ]
+      },
+      {
+        "bindings": {
+          "author": "in.updated_fields.author",
+          "title": "in.updated_fields.title"
+        },
+        "fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+        "id": "CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+        "inputs": [
+          "title",
+          "author"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "work_key"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      },
+      {
+        "bindings": {
+          "record": "assemble_updated_record.updated_record"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "inputs": [
+          "record",
+          "schema"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "violations"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1\nartifact_kind: CAPABILITY_CONTRACT\nversion: v1\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\nsupersedes: book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\ncore:\n  summary: Prepare a corrected book under the identity its correction names\n  inputs:\n    identity_key:\n      type: string\n      required: true\n    updated_fields:\n      type: object\n      required: true\n  outputs:\n    updated_record:\n      type: object\n      required: true\n    updated_identity_key:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: read_book_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: READ\n    store: BOOKS\n    inputs:\n      key: $.inputs.identity_key\n    outputs:\n      book_record: $.capability_result.value\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - NOT_FOUND\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      NOT_FOUND: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: form_updated_identity_key\n    transform: book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0\n    inputs:\n      title: $.inputs.updated_fields.title\n      author: $.inputs.updated_fields.author\n      publication_year: $.inputs.updated_fields.publication_year\n    outputs:\n      updated_identity_key: $.capability_result.identity_key\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: form_work_key\n    transform: book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0\n    inputs:\n      title: $.inputs.updated_fields.title\n      author: $.inputs.updated_fields.author\n    outputs:\n      work_key: $.capability_result.work_key\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: assemble_updated_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        identity_key: $.results.form_updated_identity_key.updated_identity_key\n        title: $.inputs.updated_fields.title\n        author: $.inputs.updated_fields.author\n        publication_year: $.inputs.updated_fields.publication_year\n        subject: $.inputs.updated_fields.subject\n        state: $.results.read_book_record.book_record.state\n        work_key: $.results.form_work_key.work_key\n    outputs:\n      updated_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: check_corrected_record\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.results.assemble_updated_record.updated_record\n      schema:\n        title:\n          required: true\n          type: string\n        author:\n          required: true\n          type: string\n        publication_year:\n          required: true\n          type: integer\n        subject:\n          required: true\n          type: array\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: refuse_incomplete_correction\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        violations: $.results.check_corrected_record.violations\n        subject: $.results.assemble_updated_record.updated_record.subject\n      rules:\n      - field: violations\n        op: eq\n        value: []\n      - field: subject\n        op: neq\n        value: []\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nPrepare a corrected book under the identity its correction names\n",
+  "content_hash": "c44c7a8e1ed84b84f70c677b93874b3f105ba52a467b2b3c595b32592a38b7cc",
+  "fqdn_id": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "updated_fields": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "updated_identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "updated_record": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key": "$.inputs.identity_key"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "NOT_FOUND": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "READ",
+          "outputs": {
+            "book_record": "$.capability_result.value",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "NOT_FOUND",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "read_book_record",
+          "store": "BOOKS"
+        },
+        {
+          "inputs": {
+            "author": "$.inputs.updated_fields.author",
+            "publication_year": "$.inputs.updated_fields.publication_year",
+            "title": "$.inputs.updated_fields.title"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "updated_identity_key": "$.capability_result.identity_key"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "form_updated_identity_key",
+          "transform": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0"
+        },
+        {
+          "inputs": {
+            "author": "$.inputs.updated_fields.author",
+            "title": "$.inputs.updated_fields.title"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "work_key": "$.capability_result.work_key"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "form_work_key",
+          "transform": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
+        },
+        {
+          "inputs": {
+            "fields": {
+              "author": "$.inputs.updated_fields.author",
+              "identity_key": "$.results.form_updated_identity_key.updated_identity_key",
+              "publication_year": "$.inputs.updated_fields.publication_year",
+              "state": "$.results.read_book_record.book_record.state",
+              "subject": "$.inputs.updated_fields.subject",
+              "title": "$.inputs.updated_fields.title",
+              "work_key": "$.results.form_work_key.work_key"
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "updated_record": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_updated_record",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "record": "$.results.assemble_updated_record.updated_record",
+            "schema": {
+              "author": {
+                "required": true,
+                "type": "string"
+              },
+              "publication_year": {
+                "required": true,
+                "type": "integer"
+              },
+              "subject": {
+                "required": true,
+                "type": "array"
+              },
+              "title": {
+                "required": true,
+                "type": "string"
+              }
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "violations": "$.capability_result.violations"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "check_corrected_record",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "subject": "$.results.assemble_updated_record.updated_record.subject",
+              "violations": "$.results.check_corrected_record.violations"
+            },
+            "rules": [
+              {
+                "field": "violations",
+                "op": "eq",
+                "value": []
+              },
+              {
+                "field": "subject",
+                "op": "neq",
+                "value": []
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "refuse_incomplete_correction",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "NOT_FOUND",
+          "VIOLATION",
+          "BACKEND_ERROR",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Prepare a corrected book under the identity its correction names"
+    },
+    "fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "supersedes": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+    "version": "v1"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
+    "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+  ],
+  "version": "1"
+}

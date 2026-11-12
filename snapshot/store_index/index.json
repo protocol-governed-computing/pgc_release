@@ -1,48 +1,187 @@
 {
   "generated_by": "snapshot_assembler",
   "schema_version": "v0",
-  "store_count": 26,
+  "store_count": 31,
   "stores": {
-    "ai_governance::GOVERNANCE_ACTIONS": {
+    "ai_governance::ACTIONS": {
       "declarations": [
         {
           "bindings": [
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
+              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
+              "workflows": []
+            },
+            {
+              "consumer_ccs": [
+                "ai_governance::CC_CLAIM_ACTION_IDENTITY_V0",
+                "ai_governance::CC_WRITE_ACTION_V0"
+              ],
+              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
+              "workflows": [
+                "ai_governance::WF_GOVERN_AGENT_ACTION_V1"
+              ]
+            },
+            {
+              "consumer_ccs": [
+                "ai_governance::CC_CLAIM_ACTION_IDENTITY_V0"
+              ],
+              "cs": "capability_side_effects::CS_REGISTRY_V0",
+              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
+              "workflows": [
+                "ai_governance::WF_GOVERN_AGENT_ACTION_V1"
+              ]
+            }
+          ],
+          "declared_by": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1",
+          "description": "",
+          "path": "ai_governance/agent_governance/actions.json"
+        }
+      ],
+      "domain": "ai_governance",
+      "store": "ACTIONS"
+    },
+    "ai_governance::ACTION_IDENTITY_REGISTRY": {
+      "declarations": [
+        {
+          "bindings": [
+            {
+              "consumer_ccs": [],
+              "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
+              "workflows": []
+            },
+            {
+              "consumer_ccs": [
+                "ai_governance::CC_CLAIM_ACTION_IDENTITY_V0"
+              ],
+              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
+              "workflows": [
+                "ai_governance::WF_GOVERN_AGENT_ACTION_V1"
+              ]
+            },
+            {
+              "consumer_ccs": [
+                "ai_governance::CC_CLAIM_ACTION_IDENTITY_V0"
+              ],
+              "cs": "capability_side_effects::CS_REGISTRY_V0",
+              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
+              "workflows": [
+                "ai_governance::WF_GOVERN_AGENT_ACTION_V1"
+              ]
+            }
+          ],
+          "declared_by": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1",
+          "description": "",
+          "path": "ai_governance/agent_governance/action_identity_registry.jsonl"
+        }
+      ],
+      "domain": "ai_governance",
+      "store": "ACTION_IDENTITY_REGISTRY"
+    },
+    "ai_governance::EMPLOYEES": {
+      "declarations": [
+        {
+          "bindings": [
+            {
+              "consumer_ccs": [],
+              "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
               "workflows": []
             },
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_CLOCK_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-              "workflows": []
-            },
-            {
-              "consumer_ccs": [],
-              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
               "workflows": []
             },
             {
               "consumer_ccs": [
-                "ai_governance::CC_RECORD_GOVERNED_ACTION_V0"
+                "ai_governance::CC_RECORD_TRAINING_COMPLETED_V0",
+                "ai_governance::CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+                "ai_governance::CC_WRITE_EMPLOYEE_V0"
+              ],
+              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": [
+                "ai_governance::WF_PROVISION_LICENSE_V0",
+                "ai_governance::WF_RECORD_TRAINING_COMPLETED_V0",
+                "ai_governance::WF_REGISTER_EMPLOYEE_V0"
+              ]
+            },
+            {
+              "consumer_ccs": [
+                "ai_governance::CC_RESOLVE_EMPLOYEE_IDENTITY_V0"
               ],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
               "workflows": [
-                "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
+                "ai_governance::WF_PROVISION_LICENSE_V0",
+                "ai_governance::WF_RECORD_TRAINING_COMPLETED_V0"
               ]
             }
           ],
-          "declared_by": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
-          "description": "Registry of authorized actions, keyed by action id, so a repeated authorization is recognized",
-          "path": "ai_governance/agent_governance/governance_actions.json"
+          "declared_by": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
+          "description": "",
+          "path": "ai_governance/ai_licensing/employees.json"
         }
       ],
       "domain": "ai_governance",
-      "store": "GOVERNANCE_ACTIONS"
+      "store": "EMPLOYEES"
+    },
+    "ai_governance::EMPLOYEE_EMPLOYEE_ID_REGISTRY": {
+      "declarations": [
+        {
+          "bindings": [
+            {
+              "consumer_ccs": [],
+              "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": []
+            },
+            {
+              "consumer_ccs": [],
+              "cs": "capability_side_effects::CS_CLOCK_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": []
+            },
+            {
+              "consumer_ccs": [
+                "ai_governance::CC_CLAIM_EMPLOYEE_ID_V0",
+                "ai_governance::CC_RESOLVE_EMPLOYEE_IDENTITY_V0"
+              ],
+              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": [
+                "ai_governance::WF_PROVISION_LICENSE_V0",
+                "ai_governance::WF_RECORD_TRAINING_COMPLETED_V0",
+                "ai_governance::WF_REGISTER_EMPLOYEE_V0"
+              ]
+            },
+            {
+              "consumer_ccs": [
+                "ai_governance::CC_CLAIM_EMPLOYEE_ID_V0",
+                "ai_governance::CC_RESOLVE_EMPLOYEE_IDENTITY_V0"
+              ],
+              "cs": "capability_side_effects::CS_REGISTRY_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": [
+                "ai_governance::WF_PROVISION_LICENSE_V0",
+                "ai_governance::WF_RECORD_TRAINING_COMPLETED_V0",
+                "ai_governance::WF_REGISTER_EMPLOYEE_V0"
+              ]
+            }
+          ],
+          "declared_by": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
+          "description": "",
+          "path": "ai_governance/ai_licensing/employee_employee_id_registry.jsonl"
+        }
+      ],
+      "domain": "ai_governance",
+      "store": "EMPLOYEE_EMPLOYEE_ID_REGISTRY"
     },
     "ai_governance::GOVERNANCE_AUDIT": {
       "declarations": [
@@ -50,40 +189,93 @@
           "bindings": [
             {
               "consumer_ccs": [
-                "ai_governance::CC_RECORD_DENIED_ACTION_V0",
-                "ai_governance::CC_RECORD_GOVERNED_ACTION_V0"
+                "ai_governance::CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0"
               ],
               "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
+              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
               "workflows": [
-                "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
-              ]
-            },
-            {
-              "consumer_ccs": [
-                "ai_governance::CC_RECORD_DENIED_ACTION_V0",
-                "ai_governance::CC_RECORD_GOVERNED_ACTION_V0"
-              ],
-              "cs": "capability_side_effects::CS_CLOCK_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-              "workflows": [
-                "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
+                "ai_governance::WF_GOVERN_AGENT_ACTION_V1"
               ]
             },
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
+              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
+              "workflows": []
+            },
+            {
+              "consumer_ccs": [],
+              "cs": "capability_side_effects::CS_REGISTRY_V0",
+              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V1",
               "workflows": []
             }
           ],
-          "declared_by": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
-          "description": "Append-only audit trail for agent governance authorization and denial decisions",
+          "declared_by": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V1",
+          "description": "",
           "path": "ai_governance/agent_governance/governance_audit.jsonl"
         }
       ],
       "domain": "ai_governance",
       "store": "GOVERNANCE_AUDIT"
+    },
+    "ai_governance::LICENSES": {
+      "declarations": [
+        {
+          "bindings": [
+            {
+              "consumer_ccs": [],
+              "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": []
+            },
+            {
+              "consumer_ccs": [
+                "ai_governance::CC_RECORD_LICENSE_USAGE_V0",
+                "ai_governance::CC_WRITE_LICENSE_V0"
+              ],
+              "cs": "capability_side_effects::CS_CLOCK_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": [
+                "ai_governance::WF_PROVISION_LICENSE_V0",
+                "ai_governance::WF_RECORD_LICENSE_USAGE_V0"
+              ]
+            },
+            {
+              "consumer_ccs": [
+                "ai_governance::CC_MOVE_LICENSE_FROM_ACTIVE_V0",
+                "ai_governance::CC_RECORD_LICENSE_USAGE_V0",
+                "ai_governance::CC_RESOLVE_LICENSE_V0",
+                "ai_governance::CC_WRITE_LICENSE_V0"
+              ],
+              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": [
+                "ai_governance::WF_GOVERN_AGENT_ACTION_V1",
+                "ai_governance::WF_PROVISION_LICENSE_V0",
+                "ai_governance::WF_RECLAIM_LICENSE_V1",
+                "ai_governance::WF_RECORD_LICENSE_USAGE_V0"
+              ]
+            },
+            {
+              "consumer_ccs": [
+                "ai_governance::CC_RESOLVE_LICENSE_V0"
+              ],
+              "cs": "capability_side_effects::CS_REGISTRY_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": [
+                "ai_governance::WF_GOVERN_AGENT_ACTION_V1",
+                "ai_governance::WF_RECLAIM_LICENSE_V1",
+                "ai_governance::WF_RECORD_LICENSE_USAGE_V0"
+              ]
+            }
+          ],
+          "declared_by": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
+          "description": "",
+          "path": "ai_governance/ai_licensing/licenses.json"
+        }
+      ],
+      "domain": "ai_governance",
+      "store": "LICENSES"
     },
     "ai_governance::LICENSE_AUDIT": {
       "declarations": [
@@ -91,161 +283,143 @@
           "bindings": [
             {
               "consumer_ccs": [
-                "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
+                "ai_governance::CC_RECORD_AI_LICENSING_MOMENT_V0"
               ],
               "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-              "rb": "ai_governance::RB_LICENSE_BINDINGS_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
               "workflows": [
-                "ai_governance::WF_AUTO_RECLAIM_V0",
-                "ai_governance::WF_DENY_PROVISION_V0",
-                "ai_governance::WF_PROVISION_AI_LICENSING_V0"
+                "ai_governance::WF_PROVISION_LICENSE_V0",
+                "ai_governance::WF_RECLAIM_LICENSE_V1",
+                "ai_governance::WF_RECORD_LICENSE_USAGE_V0",
+                "ai_governance::WF_RECORD_TRAINING_COMPLETED_V0",
+                "ai_governance::WF_REGISTER_EMPLOYEE_V0",
+                "ai_governance::WF_SET_LICENSE_CAP_V0"
               ]
             },
             {
-              "consumer_ccs": [
-                "ai_governance::CC_APPEND_AUDIT_EVENT_V0"
-              ],
+              "consumer_ccs": [],
               "cs": "capability_side_effects::CS_CLOCK_V0",
-              "rb": "ai_governance::RB_LICENSE_BINDINGS_V0",
-              "workflows": [
-                "ai_governance::WF_AUTO_RECLAIM_V0",
-                "ai_governance::WF_DENY_PROVISION_V0",
-                "ai_governance::WF_PROVISION_AI_LICENSING_V0"
-              ]
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": []
+            },
+            {
+              "consumer_ccs": [],
+              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": []
+            },
+            {
+              "consumer_ccs": [],
+              "cs": "capability_side_effects::CS_REGISTRY_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": []
             }
           ],
-          "declared_by": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
-          "description": "Append-only audit trail for license provisioning, denial, and reclaim decisions",
+          "declared_by": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
+          "description": "",
           "path": "ai_governance/ai_licensing/audit_log.jsonl"
         }
       ],
       "domain": "ai_governance",
       "store": "LICENSE_AUDIT"
     },
-    "ai_governance::LICENSE_FACTS": {
+    "ai_governance::LICENSE_CAPS": {
       "declarations": [
         {
           "bindings": [
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
               "workflows": []
             },
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_CLOCK_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
               "workflows": []
             },
             {
               "consumer_ccs": [
-                "ai_governance::CC_RESOLVE_LICENSE_TIER_V0"
+                "ai_governance::CC_REQUIRE_CAP_SET_V0",
+                "ai_governance::CC_WRITE_LICENSE_CAP_V0"
               ],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
               "workflows": [
-                "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
+                "ai_governance::WF_PROVISION_LICENSE_V0",
+                "ai_governance::WF_SET_LICENSE_CAP_V0"
               ]
             },
             {
               "consumer_ccs": [],
-              "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-              "rb": "ai_governance::RB_LICENSE_BINDINGS_V0",
-              "workflows": []
-            },
-            {
-              "consumer_ccs": [],
-              "cs": "capability_side_effects::CS_CLOCK_V0",
-              "rb": "ai_governance::RB_LICENSE_BINDINGS_V0",
+              "cs": "capability_side_effects::CS_REGISTRY_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
               "workflows": []
             }
           ],
-          "declared_by": "ai_governance::STRUCTURE_AGENT_GOVERNANCE_STORAGE_V0",
-          "description": "Read-only license tier and status fact feed (user_id \u2192 license record) \u2014 owned by ai_licensing, consumed here",
-          "path": "ai_governance/ai_licensing/license_facts.json"
-        },
-        {
-          "bindings": [
-            {
-              "consumer_ccs": [],
-              "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-              "workflows": []
-            },
-            {
-              "consumer_ccs": [],
-              "cs": "capability_side_effects::CS_CLOCK_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-              "workflows": []
-            },
-            {
-              "consumer_ccs": [
-                "ai_governance::CC_RESOLVE_LICENSE_TIER_V0"
-              ],
-              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
-              "rb": "ai_governance::RB_AGENT_GOVERNANCE_BINDINGS_V0",
-              "workflows": [
-                "ai_governance::WF_GOVERN_AGENT_ACTION_V0"
-              ]
-            },
-            {
-              "consumer_ccs": [],
-              "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-              "rb": "ai_governance::RB_LICENSE_BINDINGS_V0",
-              "workflows": []
-            },
-            {
-              "consumer_ccs": [],
-              "cs": "capability_side_effects::CS_CLOCK_V0",
-              "rb": "ai_governance::RB_LICENSE_BINDINGS_V0",
-              "workflows": []
-            }
-          ],
-          "declared_by": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
-          "description": "License tier and status fact feed (user_id \u2192 license record) \u2014 owned by ai_licensing",
-          "path": "ai_governance/ai_licensing/license_facts.json"
+          "declared_by": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
+          "description": "",
+          "path": "ai_governance/ai_licensing/license_caps.json"
         }
       ],
       "domain": "ai_governance",
-      "store": "LICENSE_FACTS"
+      "store": "LICENSE_CAPS"
     },
-    "ai_governance::LICENSE_REGISTRY": {
+    "ai_governance::LICENSE_IDENTITY_REGISTRY": {
       "declarations": [
         {
           "bindings": [
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-              "rb": "ai_governance::RB_LICENSE_BINDINGS_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
               "workflows": []
             },
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_CLOCK_V0",
-              "rb": "ai_governance::RB_LICENSE_BINDINGS_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
               "workflows": []
             },
             {
               "consumer_ccs": [
-                "ai_governance::CC_PROVISION_LICENSE_V0",
-                "ai_governance::CC_RECLAIM_UNUSED_LICENSE_V0"
+                "ai_governance::CC_CLAIM_LICENSE_IDENTITY_V0",
+                "ai_governance::CC_RESOLVE_LICENSE_V0"
+              ],
+              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
+              "workflows": [
+                "ai_governance::WF_GOVERN_AGENT_ACTION_V1",
+                "ai_governance::WF_PROVISION_LICENSE_V0",
+                "ai_governance::WF_RECLAIM_LICENSE_V1",
+                "ai_governance::WF_RECORD_LICENSE_USAGE_V0"
+              ]
+            },
+            {
+              "consumer_ccs": [
+                "ai_governance::CC_CLAIM_LICENSE_IDENTITY_V0",
+                "ai_governance::CC_RELEASE_LICENSE_IDENTITY_V0",
+                "ai_governance::CC_REQUIRE_UNDER_THE_CAP_V0",
+                "ai_governance::CC_RESOLVE_LICENSE_V0"
               ],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
-              "rb": "ai_governance::RB_LICENSE_BINDINGS_V0",
+              "rb": "ai_governance::RB_LICENSE_BINDINGS_V1",
               "workflows": [
-                "ai_governance::WF_AUTO_RECLAIM_V0",
-                "ai_governance::WF_PROVISION_AI_LICENSING_V0"
+                "ai_governance::WF_GOVERN_AGENT_ACTION_V1",
+                "ai_governance::WF_PROVISION_LICENSE_V0",
+                "ai_governance::WF_RECLAIM_LICENSE_V1",
+                "ai_governance::WF_RECORD_LICENSE_USAGE_V0"
               ]
             }
           ],
-          "declared_by": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V0",
-          "description": "Employee \u2192 license assignment registry",
-          "path": "ai_governance/ai_licensing/license_registry.json"
+          "declared_by": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
+          "description": "",
+          "path": "ai_governance/ai_licensing/license_identity_registry.jsonl"
         }
       ],
       "domain": "ai_governance",
-      "store": "LICENSE_REGISTRY"
+      "store": "LICENSE_IDENTITY_REGISTRY"
     },
     "blockchain::ACTORS": {
       "declarations": [
@@ -265,29 +439,31 @@
             },
             {
               "consumer_ccs": [
-                "blockchain::CC_RECORD_VERIFICATION_DECISION_V0",
-                "blockchain::CC_REGISTER_ACTOR_V0",
-                "blockchain::CC_RESOLVE_ACTOR_V0"
+                "blockchain::CC_LIST_ACTORS_V0",
+                "blockchain::CC_MOVE_ACTOR_FROM_UNVERIFIED_V0",
+                "blockchain::CC_RESOLVE_ACTOR_IDENTITY_V0",
+                "blockchain::CC_WRITE_ACTOR_V0"
               ],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
               "rb": "blockchain::RB_IDENTITY_BINDINGS_V0",
               "workflows": [
-                "blockchain::WF_ACCEPT_ACTOR_V0",
-                "blockchain::WF_CREATE_WALLET_V0",
-                "blockchain::WF_REGISTER_ACTOR_V0",
-                "blockchain::WF_REJECT_ACTOR_V0"
+                "blockchain::WF_ACCEPT_ACTOR_V1",
+                "blockchain::WF_CREATE_WALLET_V1",
+                "blockchain::WF_LIST_ACTORS_V0",
+                "blockchain::WF_REGISTER_ACTOR_V3",
+                "blockchain::WF_REJECT_ACTOR_V1"
               ]
             },
             {
               "consumer_ccs": [
-                "blockchain::CC_RESOLVE_ACTOR_V0"
+                "blockchain::CC_RESOLVE_ACTOR_IDENTITY_V0"
               ],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
               "rb": "blockchain::RB_IDENTITY_BINDINGS_V0",
               "workflows": [
-                "blockchain::WF_ACCEPT_ACTOR_V0",
-                "blockchain::WF_CREATE_WALLET_V0",
-                "blockchain::WF_REJECT_ACTOR_V0"
+                "blockchain::WF_ACCEPT_ACTOR_V1",
+                "blockchain::WF_CREATE_WALLET_V1",
+                "blockchain::WF_REJECT_ACTOR_V1"
               ]
             }
           ],
@@ -305,26 +481,30 @@
           "bindings": [
             {
               "consumer_ccs": [
-                "blockchain::CC_APPEND_ACTOR_OCCURRENCE_V0"
+                "blockchain::CC_RECORD_IDENTITY_MOMENT_V0",
+                "blockchain::CC_RECORD_IDENTITY_REPEATED_MOMENT_V0"
               ],
               "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
               "rb": "blockchain::RB_IDENTITY_BINDINGS_V0",
               "workflows": [
-                "blockchain::WF_ACCEPT_ACTOR_V0",
-                "blockchain::WF_REGISTER_ACTOR_V0",
-                "blockchain::WF_REJECT_ACTOR_V0"
+                "blockchain::WF_ACCEPT_ACTOR_V1",
+                "blockchain::WF_LIST_ACTORS_V0",
+                "blockchain::WF_REGISTER_ACTOR_V3",
+                "blockchain::WF_REJECT_ACTOR_V1"
               ]
             },
             {
               "consumer_ccs": [
-                "blockchain::CC_APPEND_ACTOR_OCCURRENCE_V0"
+                "blockchain::CC_RECORD_IDENTITY_MOMENT_V0",
+                "blockchain::CC_RECORD_IDENTITY_REPEATED_MOMENT_V0"
               ],
               "cs": "capability_side_effects::CS_CLOCK_V0",
               "rb": "blockchain::RB_IDENTITY_BINDINGS_V0",
               "workflows": [
-                "blockchain::WF_ACCEPT_ACTOR_V0",
-                "blockchain::WF_REGISTER_ACTOR_V0",
-                "blockchain::WF_REJECT_ACTOR_V0"
+                "blockchain::WF_ACCEPT_ACTOR_V1",
+                "blockchain::WF_LIST_ACTORS_V0",
+                "blockchain::WF_REGISTER_ACTOR_V3",
+                "blockchain::WF_REJECT_ACTOR_V1"
               ]
             },
             {
@@ -366,28 +546,30 @@
             },
             {
               "consumer_ccs": [
-                "blockchain::CC_RESOLVE_ACTOR_V0"
+                "blockchain::CC_CLAIM_ACTOR_CONTACT_ADDRESS_V0",
+                "blockchain::CC_RESOLVE_ACTOR_IDENTITY_V0"
               ],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
               "rb": "blockchain::RB_IDENTITY_BINDINGS_V0",
               "workflows": [
-                "blockchain::WF_ACCEPT_ACTOR_V0",
-                "blockchain::WF_CREATE_WALLET_V0",
-                "blockchain::WF_REJECT_ACTOR_V0"
+                "blockchain::WF_ACCEPT_ACTOR_V1",
+                "blockchain::WF_CREATE_WALLET_V1",
+                "blockchain::WF_REGISTER_ACTOR_V3",
+                "blockchain::WF_REJECT_ACTOR_V1"
               ]
             },
             {
               "consumer_ccs": [
-                "blockchain::CC_CLAIM_CONTACT_ADDRESS_V0",
-                "blockchain::CC_RESOLVE_ACTOR_V0"
+                "blockchain::CC_CLAIM_ACTOR_CONTACT_ADDRESS_V0",
+                "blockchain::CC_RESOLVE_ACTOR_IDENTITY_V0"
               ],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
               "rb": "blockchain::RB_IDENTITY_BINDINGS_V0",
               "workflows": [
-                "blockchain::WF_ACCEPT_ACTOR_V0",
-                "blockchain::WF_CREATE_WALLET_V0",
-                "blockchain::WF_REGISTER_ACTOR_V0",
-                "blockchain::WF_REJECT_ACTOR_V0"
+                "blockchain::WF_ACCEPT_ACTOR_V1",
+                "blockchain::WF_CREATE_WALLET_V1",
+                "blockchain::WF_REGISTER_ACTOR_V3",
+                "blockchain::WF_REJECT_ACTOR_V1"
               ]
             }
           ],
@@ -406,43 +588,73 @@
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
               "workflows": []
             },
             {
               "consumer_ccs": [
-                "blockchain::CC_CREATE_WALLET_RECORD_V0"
-              ],
-              "cs": "capability_side_effects::CS_CLOCK_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
-              "workflows": [
-                "blockchain::WF_CREATE_WALLET_V0"
-              ]
-            },
-            {
-              "consumer_ccs": [
-                "blockchain::CC_CREATE_WALLET_RECORD_V0"
+                "blockchain::CC_WRITE_WALLET_V0"
               ],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
               "workflows": [
-                "blockchain::WF_CREATE_WALLET_V0"
+                "blockchain::WF_CREATE_WALLET_V1"
               ]
             },
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
               "workflows": []
             }
           ],
-          "declared_by": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+          "declared_by": "blockchain::STRUCTURE_WALLET_STORAGE_V1",
           "description": "",
           "path": "blockchain/wallet/wallets.json"
         }
       ],
       "domain": "blockchain",
       "store": "WALLETS"
+    },
+    "blockchain::WALLET_ADDRESS_REGISTRY": {
+      "declarations": [
+        {
+          "bindings": [
+            {
+              "consumer_ccs": [],
+              "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
+              "workflows": []
+            },
+            {
+              "consumer_ccs": [
+                "blockchain::CC_CLAIM_WALLET_ADDRESS_V0"
+              ],
+              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
+              "workflows": [
+                "blockchain::WF_CREATE_WALLET_V1"
+              ]
+            },
+            {
+              "consumer_ccs": [
+                "blockchain::CC_CLAIM_WALLET_ADDRESS_V0",
+                "blockchain::CC_REQUIRE_WALLET_ADDRESS_FREE_V0"
+              ],
+              "cs": "capability_side_effects::CS_REGISTRY_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
+              "workflows": [
+                "blockchain::WF_CREATE_WALLET_V1"
+              ]
+            }
+          ],
+          "declared_by": "blockchain::STRUCTURE_WALLET_STORAGE_V1",
+          "description": "",
+          "path": "blockchain/wallet/wallet_address_registry.jsonl"
+        }
+      ],
+      "domain": "blockchain",
+      "store": "WALLET_ADDRESS_REGISTRY"
     },
     "blockchain::WALLET_IDENTITIES": {
       "declarations": [
@@ -451,33 +663,31 @@
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
-              "workflows": []
-            },
-            {
-              "consumer_ccs": [],
-              "cs": "capability_side_effects::CS_CLOCK_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
-              "workflows": []
-            },
-            {
-              "consumer_ccs": [],
-              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
               "workflows": []
             },
             {
               "consumer_ccs": [
-                "blockchain::CC_CLAIM_WALLET_IDENTITY_V0"
+                "blockchain::CC_CLAIM_WALLET_IDENTITY_V1"
+              ],
+              "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
+              "workflows": [
+                "blockchain::WF_CREATE_WALLET_V1"
+              ]
+            },
+            {
+              "consumer_ccs": [
+                "blockchain::CC_CLAIM_WALLET_IDENTITY_V1"
               ],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
               "workflows": [
-                "blockchain::WF_CREATE_WALLET_V0"
+                "blockchain::WF_CREATE_WALLET_V1"
               ]
             }
           ],
-          "declared_by": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+          "declared_by": "blockchain::STRUCTURE_WALLET_STORAGE_V1",
           "description": "",
           "path": "blockchain/wallet/wallet_identity_registry.jsonl"
         }
@@ -491,38 +701,28 @@
           "bindings": [
             {
               "consumer_ccs": [
-                "blockchain::CC_APPEND_WALLET_OCCURRENCE_V0"
+                "blockchain::CC_RECORD_WALLET_MOMENT_V0"
               ],
               "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
               "workflows": [
-                "blockchain::WF_CREATE_WALLET_V0"
-              ]
-            },
-            {
-              "consumer_ccs": [
-                "blockchain::CC_APPEND_WALLET_OCCURRENCE_V0"
-              ],
-              "cs": "capability_side_effects::CS_CLOCK_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
-              "workflows": [
-                "blockchain::WF_CREATE_WALLET_V0"
+                "blockchain::WF_CREATE_WALLET_V1"
               ]
             },
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
               "workflows": []
             },
             {
               "consumer_ccs": [],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
-              "rb": "blockchain::RB_WALLET_BINDINGS_V0",
+              "rb": "blockchain::RB_WALLET_BINDINGS_V1",
               "workflows": []
             }
           ],
-          "declared_by": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+          "declared_by": "blockchain::STRUCTURE_WALLET_STORAGE_V1",
           "description": "",
           "path": "blockchain/wallet/wallet_occurrences.jsonl"
         }
@@ -542,33 +742,40 @@
             },
             {
               "consumer_ccs": [
-                "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0",
-                "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0",
-                "book_library_mgmt::CC_REGISTER_BOOK_V0",
-                "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0",
-                "book_library_mgmt::CC_REINSTATE_BOOK_RECORD_V0",
-                "book_library_mgmt::CC_RETIRE_BOOK_RECORD_V0",
-                "book_library_mgmt::CC_SEARCH_CATALOG_V0",
-                "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
+                "book_library_mgmt::CC_MOVE_BOOK_FROM_REGISTERED_V0",
+                "book_library_mgmt::CC_MOVE_BOOK_FROM_RETIRED_V0",
+                "book_library_mgmt::CC_REKEY_BOOK_V0",
+                "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1",
+                "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0",
+                "book_library_mgmt::CC_SEARCH_CATALOG_V3",
+                "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+                "book_library_mgmt::CC_WRITE_BOOK_V0",
+                "book_library_mgmt::CC_WRITE_CORRECTED_BOOK_RECORD_V0"
               ],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
               "workflows": [
-                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-                "book_library_mgmt::WF_REGISTER_BOOK_V0",
-                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
-                "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
-                "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0",
-                "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0",
-                "book_library_mgmt::WF_SEARCH_CATALOG_V0",
-                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
+                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+                "book_library_mgmt::WF_REGISTER_BOOK_V1",
+                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+                "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2",
+                "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1",
+                "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+                "book_library_mgmt::WF_SEARCH_CATALOG_V3",
+                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
               ]
             },
             {
-              "consumer_ccs": [],
+              "consumer_ccs": [
+                "book_library_mgmt::CC_REKEY_BOOK_V0",
+                "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1"
+              ],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
-              "workflows": []
+              "workflows": [
+                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+              ]
             }
           ],
           "declared_by": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0",
@@ -590,22 +797,33 @@
               "workflows": []
             },
             {
-              "consumer_ccs": [],
+              "consumer_ccs": [
+                "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1",
+                "book_library_mgmt::CC_REKEY_BOOK_V0",
+                "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1"
+              ],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
-              "workflows": []
+              "workflows": [
+                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+                "book_library_mgmt::WF_REGISTER_BOOK_V1",
+                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+              ]
             },
             {
               "consumer_ccs": [
-                "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0",
-                "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V0"
+                "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1",
+                "book_library_mgmt::CC_REKEY_BOOK_V0",
+                "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1"
               ],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
               "workflows": [
-                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-                "book_library_mgmt::WF_REGISTER_BOOK_V0",
-                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
+                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+                "book_library_mgmt::WF_REGISTER_BOOK_V1",
+                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
               ]
             }
           ],
@@ -623,21 +841,21 @@
           "bindings": [
             {
               "consumer_ccs": [
-                "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
+                "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
               ],
               "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
               "workflows": [
-                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-                "book_library_mgmt::WF_REGISTER_BOOK_V0",
-                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
-                "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
-                "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0",
-                "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0",
-                "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0",
-                "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0",
-                "book_library_mgmt::WF_SEARCH_CATALOG_V0",
-                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
+                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+                "book_library_mgmt::WF_REGISTER_BOOK_V1",
+                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+                "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2",
+                "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2",
+                "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1",
+                "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1",
+                "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+                "book_library_mgmt::WF_SEARCH_CATALOG_V3",
+                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
               ]
             },
             {
@@ -672,20 +890,26 @@
               "workflows": []
             },
             {
-              "consumer_ccs": [],
+              "consumer_ccs": [
+                "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V1"
+              ],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
-              "workflows": []
+              "workflows": [
+                "book_library_mgmt::WF_REGISTER_BOOK_V1",
+                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1"
+              ]
             },
             {
               "consumer_ccs": [
-                "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V0"
+                "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V1",
+                "book_library_mgmt::CC_REQUIRE_COPY_BARCODE_FREE_V0"
               ],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
               "workflows": [
-                "book_library_mgmt::WF_REGISTER_BOOK_V0",
-                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0"
+                "book_library_mgmt::WF_REGISTER_BOOK_V1",
+                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1"
               ]
             }
           ],
@@ -709,26 +933,32 @@
             },
             {
               "consumer_ccs": [
-                "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0",
-                "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0",
-                "book_library_mgmt::CC_REINSTATE_PHYSICAL_COPY_V0",
-                "book_library_mgmt::CC_RETIRE_PHYSICAL_COPY_V0"
+                "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_REGISTERED_V0",
+                "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+                "book_library_mgmt::CC_REKEY_BOOK_V0",
+                "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0",
+                "book_library_mgmt::CC_WRITE_PHYSICAL_COPY_V0"
               ],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
               "workflows": [
-                "book_library_mgmt::WF_REGISTER_BOOK_V0",
-                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
-                "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0",
-                "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0",
-                "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0"
+                "book_library_mgmt::WF_REGISTER_BOOK_V1",
+                "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+                "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2",
+                "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1",
+                "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
               ]
             },
             {
-              "consumer_ccs": [],
+              "consumer_ccs": [
+                "book_library_mgmt::CC_REKEY_BOOK_V0"
+              ],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
-              "workflows": []
+              "workflows": [
+                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+              ]
             }
           ],
           "declared_by": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0",
@@ -751,28 +981,30 @@
             },
             {
               "consumer_ccs": [
-                "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0",
-                "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0",
-                "book_library_mgmt::CC_RESOLVE_WORK_V0"
+                "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+                "book_library_mgmt::CC_RESOLVE_WORK_V1",
+                "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0"
               ],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
               "workflows": [
-                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-                "book_library_mgmt::WF_REGISTER_BOOK_V0",
-                "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0"
+                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+                "book_library_mgmt::WF_REGISTER_BOOK_V1",
+                "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
               ]
             },
             {
               "consumer_ccs": [
-                "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0",
-                "book_library_mgmt::CC_RESOLVE_WORK_V0"
+                "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+                "book_library_mgmt::CC_RESOLVE_WORK_V1"
               ],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
               "workflows": [
-                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-                "book_library_mgmt::WF_REGISTER_BOOK_V0"
+                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+                "book_library_mgmt::WF_REGISTER_BOOK_V1",
+                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
               ]
             }
           ],
@@ -796,26 +1028,28 @@
             },
             {
               "consumer_ccs": [
-                "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0",
-                "book_library_mgmt::CC_RESOLVE_WORK_V0"
+                "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+                "book_library_mgmt::CC_RESOLVE_WORK_V1"
               ],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
               "workflows": [
-                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-                "book_library_mgmt::WF_REGISTER_BOOK_V0"
+                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+                "book_library_mgmt::WF_REGISTER_BOOK_V1",
+                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
               ]
             },
             {
               "consumer_ccs": [
-                "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0",
-                "book_library_mgmt::CC_RESOLVE_WORK_V0"
+                "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+                "book_library_mgmt::CC_RESOLVE_WORK_V1"
               ],
               "cs": "capability_side_effects::CS_REGISTRY_V0",
               "rb": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
               "workflows": [
-                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-                "book_library_mgmt::WF_REGISTER_BOOK_V0"
+                "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+                "book_library_mgmt::WF_REGISTER_BOOK_V1",
+                "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
               ]
             }
           ],
@@ -884,10 +1118,14 @@
               "workflows": []
             },
             {
-              "consumer_ccs": [],
+              "consumer_ccs": [
+                "causal_language_model::CC_CLAIM_MODEL_IDENTITY_V0"
+              ],
               "cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
               "rb": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
-              "workflows": []
+              "workflows": [
+                "causal_language_model::WF_REGISTER_MODEL_V0"
+              ]
             },
             {
               "consumer_ccs": [
@@ -1077,10 +1315,15 @@
         {
           "bindings": [
             {
-              "consumer_ccs": [],
+              "consumer_ccs": [
+                "causal_language_model::CC_CLAIM_USER_PROMPT_IDENTITY_V0"
+              ],
               "cs": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
               "rb": "causal_language_model::RB_MODEL_RESPONSE_BINDINGS_V0",
-              "workflows": []
+              "workflows": [
+                "causal_language_model::WF_BEGIN_HOSTED_RESPONSE_V0",
+                "causal_language_model::WF_SUBMIT_USER_PROMPT_V0"
+              ]
             },
             {
               "consumer_ccs": [],

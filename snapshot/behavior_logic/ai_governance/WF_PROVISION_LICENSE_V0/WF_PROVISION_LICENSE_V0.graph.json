@@ -1,0 +1,1202 @@
+{
+  "wf_id": "WF_PROVISION_LICENSE_V0",
+  "entry": "IN_PROVISION_LICENSE_V0",
+  "nodes": [
+    {
+      "id": "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "type": "CC",
+      "cc_code": "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "record": "in.submission"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "inputs": [
+              "record",
+              "schema"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "violations"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "submission": {
+            "employee_id": "$.payload.employee_id",
+            "tier": "$.payload.tier"
+          }
+        }
+      }
+    },
+    {
+      "id": "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "type": "CC",
+      "cc_code": "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "capability": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "data": "in.employee_id"
+            },
+            "fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+            "id": "CT_PURE_GENERATE_ID_V0",
+            "inputs": [
+              "data",
+              "prefix"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "id"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "employee_id": "IN.employee_id"
+        }
+      }
+    },
+    {
+      "id": "CC_DENY_CAP_SET",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "employee_id": "IN.employee_id",
+          "license_id": "CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+          "occurrence": "PROVISION_DENIED",
+          "reason": "CAP_SET",
+          "tier": "IN.tier"
+        }
+      }
+    },
+    {
+      "id": "CC_DENY_LICENSE_ALREADY_HELD",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "employee_id": "IN.employee_id",
+          "license_id": "CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+          "occurrence": "PROVISION_DENIED",
+          "reason": "LICENSE_ALREADY_HELD",
+          "tier": "IN.tier"
+        }
+      }
+    },
+    {
+      "id": "CC_DENY_TIER_ADMITTED",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "employee_id": "IN.employee_id",
+          "license_id": "CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+          "occurrence": "PROVISION_DENIED",
+          "reason": "TIER_ADMITTED",
+          "tier": "IN.tier"
+        }
+      }
+    },
+    {
+      "id": "CC_DENY_TRAINING_COMPLETED",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "employee_id": "IN.employee_id",
+          "license_id": "CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+          "occurrence": "PROVISION_DENIED",
+          "reason": "TRAINING_COMPLETED",
+          "tier": "IN.tier"
+        }
+      }
+    },
+    {
+      "id": "CC_DENY_UNDER_THE_CAP",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "employee_id": "IN.employee_id",
+          "license_id": "CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+          "occurrence": "PROVISION_DENIED",
+          "reason": "UNDER_THE_CAP",
+          "tier": "IN.tier"
+        }
+      }
+    },
+    {
+      "id": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "employee_id": "IN.employee_id",
+          "license_id": "CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+          "occurrence": "LICENSE_PROVISIONED",
+          "tier": "IN.tier"
+        }
+      }
+    },
+    {
+      "id": "CC_REQUIRE_CAP_SET_V0",
+      "type": "CC",
+      "cc_code": "CC_REQUIRE_CAP_SET_V0",
+      "capability": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "cap_key": "current"
+        }
+      }
+    },
+    {
+      "id": "CC_REQUIRE_TIER_ADMITTED_V0",
+      "type": "CC",
+      "cc_code": "CC_REQUIRE_TIER_ADMITTED_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "value": "in.tier"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "inputs": [
+              "allowed_set",
+              "value"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "is_member"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "tier": "IN.tier"
+        }
+      }
+    },
+    {
+      "id": "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "type": "CC",
+      "cc_code": "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "training_completed": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0.employee_record.training_completed"
+        }
+      }
+    },
+    {
+      "id": "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "type": "CC",
+      "cc_code": "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "capability": "capability_side_effects::CS_REGISTRY_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "cap": "CC_REQUIRE_CAP_SET_V0.cap_record.cap"
+        }
+      }
+    },
+    {
+      "id": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "type": "CC",
+      "cc_code": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "capability": "capability_side_effects::CS_REGISTRY_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "employee_id": "IN.employee_id"
+        }
+      }
+    },
+    {
+      "id": "CC_WRITE_LICENSE_V0",
+      "type": "CC",
+      "cc_code": "CC_WRITE_LICENSE_V0",
+      "capability": "capability_side_effects::CS_CLOCK_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_CLOCK_V0",
+            "id": "CS_CLOCK_V0",
+            "kind": "CS",
+            "ops": [
+              "NOW"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "license_id": "CC_CLAIM_LICENSE_IDENTITY_V0.license_id",
+          "submission": {
+            "employee_id": "$.payload.employee_id",
+            "tier": "$.payload.tier"
+          }
+        }
+      }
+    },
+    {
+      "id": "EXIT_COMPLETED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_DENIED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_PROVISION_LICENSE_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "to": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "to": "CC_DENY_LICENSE_ALREADY_HELD",
+      "condition": "ALREADY_EXISTS"
+    },
+    {
+      "from": "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "to": "CC_WRITE_LICENSE_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_DENY_CAP_SET",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_DENY_CAP_SET",
+      "to": "EXIT_DENIED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_DENY_CAP_SET",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_DENY_LICENSE_ALREADY_HELD",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_DENY_LICENSE_ALREADY_HELD",
+      "to": "EXIT_DENIED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_DENY_LICENSE_ALREADY_HELD",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_DENY_TIER_ADMITTED",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_DENY_TIER_ADMITTED",
+      "to": "EXIT_DENIED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_DENY_TIER_ADMITTED",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_DENY_TRAINING_COMPLETED",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_DENY_TRAINING_COMPLETED",
+      "to": "EXIT_DENIED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_DENY_TRAINING_COMPLETED",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_DENY_UNDER_THE_CAP",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_DENY_UNDER_THE_CAP",
+      "to": "EXIT_DENIED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_DENY_UNDER_THE_CAP",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "to": "EXIT_COMPLETED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REQUIRE_CAP_SET_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_REQUIRE_CAP_SET_V0",
+      "to": "CC_DENY_CAP_SET",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_REQUIRE_CAP_SET_V0",
+      "to": "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_REQUIRE_CAP_SET_V0",
+      "to": "CC_DENY_CAP_SET",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REQUIRE_TIER_ADMITTED_V0",
+      "to": "CC_REQUIRE_CAP_SET_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_REQUIRE_TIER_ADMITTED_V0",
+      "to": "CC_DENY_TIER_ADMITTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "to": "CC_REQUIRE_TIER_ADMITTED_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "to": "CC_DENY_TRAINING_COMPLETED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "to": "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "to": "CC_DENY_UNDER_THE_CAP",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "to": "CC_DENY_TRAINING_COMPLETED",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "to": "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "to": "CC_DENY_TRAINING_COMPLETED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_WRITE_LICENSE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_WRITE_LICENSE_V0",
+      "to": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_WRITE_LICENSE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_PROVISION_LICENSE_V0",
+      "to": "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_PROVISION_LICENSE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_DENY_TRAINING_COMPLETED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_DENY_TRAINING_COMPLETED",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_DENY_TRAINING_COMPLETED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_DENY_CAP_SET",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_DENY_CAP_SET",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_DENY_CAP_SET",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "CC_DENY_LICENSE_ALREADY_HELD",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "CC_DENY_LICENSE_ALREADY_HELD",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "CC_DENY_LICENSE_ALREADY_HELD",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "CC_WRITE_LICENSE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "CC_WRITE_LICENSE_V0",
+      "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "CC_WRITE_LICENSE_V0",
+      "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "EXIT_COMPLETED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "CC_WRITE_LICENSE_V0",
+      "CC_RECORD_AI_LICENSING_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "CC_WRITE_LICENSE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_CLAIM_LICENSE_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_DENY_UNDER_THE_CAP",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_DENY_UNDER_THE_CAP",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_REQUIRE_UNDER_THE_CAP_V0",
+      "CC_DENY_UNDER_THE_CAP",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_DENY_CAP_SET",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_DENY_CAP_SET",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_REQUIRE_CAP_SET_V0",
+      "CC_DENY_CAP_SET",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_DENY_TIER_ADMITTED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_DENY_TIER_ADMITTED",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_REQUIRE_TIER_ADMITTED_V0",
+      "CC_DENY_TIER_ADMITTED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_DENY_TRAINING_COMPLETED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_DENY_TRAINING_COMPLETED",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_REQUIRE_TRAINING_COMPLETED_V0",
+      "CC_DENY_TRAINING_COMPLETED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_DENY_TRAINING_COMPLETED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_DENY_TRAINING_COMPLETED",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "CC_RESOLVE_EMPLOYEE_IDENTITY_V0",
+      "CC_DENY_TRAINING_COMPLETED",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "CC_CHECK_PROVISION_LICENSE_SUBMISSION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_PROVISION_LICENSE_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

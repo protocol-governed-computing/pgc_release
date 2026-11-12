@@ -1,5 +1,5 @@
 {
-  "attestation_hash": "89e09f0c14646b0a03115597401815d3ca7f0a425efc5c7024234a479d671b6b",
+  "attestation_hash": "d125cd71b3b7f80b92d1714067982ec2a82d42666915296b1c2e4252d6056441",
   "attestation_version": "V0",
   "imported_capabilities": [
     "capability_side_effects::CS_APPENDONLY_JSONL_V0",
@@ -7,19 +7,20 @@
     "capability_side_effects::CS_REGISTRY_V0",
     "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
     "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
-    "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+    "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
     "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
-    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
   ],
   "imported_governance": {
-    "closure_member_count": 110,
-    "governance_closure_hash": "fb2ba50890a1848d9c927c100da9b283b25f0b3da01ed76a7eddd5d842b70e07",
+    "closure_member_count": 119,
+    "governance_closure_hash": "1778705f9a1527213d96dc13d1c048cdb6b10744ca8c525dfc1394c0dd4a60d0",
     "import_domain": "platform"
   },
   "public_key_ref": "STUB",
   "signature": "STUB_NOT_CRYPTOGRAPHICALLY_SIGNED",
-  "signed_at": "2026-10-19T22:05:53.310086+00:00",
+  "signed_at": "2026-11-12T01:03:29.470710+00:00",
   "signing_algorithm": "STUB",
   "structure_id": "book_library_mgmt",
-  "tokenized_projection_hash": "1052249f2e6daf1f581d1340a662b5f7c03b552b9306570b763854f0621de334"
+  "tokenized_projection_hash": "30e741f6794d4aa0945bc0251b01db56f720d2f98906a0b70dbe8b6b3ea1dd0f"
 }

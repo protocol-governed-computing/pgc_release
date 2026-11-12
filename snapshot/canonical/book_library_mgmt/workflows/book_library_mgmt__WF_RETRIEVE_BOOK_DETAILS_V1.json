@@ -1,0 +1,91 @@
+{
+  "artifact_code": "WF_RETRIEVE_BOOK_DETAILS_V1",
+  "artifact_type": "WF",
+  "content": "# WF_RETRIEVE_BOOK_DETAILS_V1\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1\nartifact_kind: WORKFLOW\nversion: v1\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: catalog\nsupersedes: book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0\nruntime_binding: book_library_mgmt::RB_CATALOG_BINDINGS_V0\nsubdomain: catalog\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: 'The governed sequence that performs: retrieve book details'\n  actor_context: book_library_mgmt::AC_LIBRARY_STAFF_V0\n  start_node: IN_RETRIEVE_BOOK_DETAILS_V0\n  nodes:\n    IN_RETRIEVE_BOOK_DETAILS_V0:\n      type: IN\n      code: IN_RETRIEVE_BOOK_DETAILS_V0\n      next:\n        ACK: CC_CONFIRM_STAFF_AUTHORIZED_V0\n        NACK: EXIT_REJECTED\n    CC_CONFIRM_STAFF_AUTHORIZED_V0:\n      type: CC\n      code: CC_CONFIRM_STAFF_AUTHORIZED_V0\n      inputs:\n        staff_credentials: $.payload.staff_credentials\n      next:\n        SUCCESS: CC_RECORD_CATALOG_MOMENT_V0\n        VIOLATION: EXIT_REJECTED\n    CC_RECORD_CATALOG_MOMENT_V0:\n      type: CC\n      code: CC_RECORD_CATALOG_MOMENT_V0\n      inputs:\n        occurrence: RETRIEVE_BOOK_DETAILS\n        staff_id: $.payload.staff_id\n        subject: $.payload.identity_key\n      next:\n        SUCCESS: CC_RETRIEVE_BOOK_DETAILS_V0\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_RETRIEVE_BOOK_DETAILS_V0:\n      type: CC\n      code: CC_RETRIEVE_BOOK_DETAILS_V0\n      inputs:\n        identity_key: $.payload.identity_key\n      next:\n        SUCCESS: EXIT_COMPLETED\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n    EXIT_REJECTED:\n      type: EXIT\n```\n\n---\n\n## Intent\n\nThe governed sequence that performs: retrieve book details\n",
+  "content_hash": "c4c0c7b4f0a683ddc465b2a264e70319ed1b24d445b5426bfcc54ed1822978be",
+  "fqdn_id": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "actor_context": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+      "nodes": {
+        "CC_CONFIRM_STAFF_AUTHORIZED_V0": {
+          "code": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "fqdn_id": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+          "inputs": {
+            "staff_credentials": "$.payload.staff_credentials"
+          },
+          "next": {
+            "SUCCESS": "CC_RECORD_CATALOG_MOMENT_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RECORD_CATALOG_MOMENT_V0": {
+          "code": "CC_RECORD_CATALOG_MOMENT_V0",
+          "fqdn_id": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0",
+          "inputs": {
+            "occurrence": "RETRIEVE_BOOK_DETAILS",
+            "staff_id": "$.payload.staff_id",
+            "subject": "$.payload.identity_key"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_RETRIEVE_BOOK_DETAILS_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RETRIEVE_BOOK_DETAILS_V0": {
+          "code": "CC_RETRIEVE_BOOK_DETAILS_V0",
+          "fqdn_id": "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0",
+          "inputs": {
+            "identity_key": "$.payload.identity_key"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "NOT_FOUND": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "IN_RETRIEVE_BOOK_DETAILS_V0": {
+          "code": "IN_RETRIEVE_BOOK_DETAILS_V0",
+          "fqdn_id": "book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0",
+          "next": {
+            "ACK": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_RETRIEVE_BOOK_DETAILS_V0",
+      "summary": "The governed sequence that performs: retrieve book details"
+    },
+    "fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "catalog",
+    "supersedes": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0",
+    "version": "v1"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::AC_LIBRARY_STAFF_V0",
+    "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "1"
+}

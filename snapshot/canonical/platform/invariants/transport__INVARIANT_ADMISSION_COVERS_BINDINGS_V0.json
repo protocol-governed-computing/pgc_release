@@ -1,0 +1,32 @@
+{
+  "artifact_code": "INVARIANT_ADMISSION_COVERS_BINDINGS_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_ADMISSION_COVERS_BINDINGS_V0\n\n## Machine\n\n```yaml\nfqdn: transport::INVARIANT_ADMISSION_COVERS_BINDINGS_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: governance::CONSTITUTION_INVARIANTS_V0\nauthority: pgc.platform\nconcern: transport\ncore:\n  enforcement_stage:\n  - compiler_validation\n  violation_response: FAIL_IMMEDIATELY\nassert_projection:\n  applies_to_kinds:\n  - WF\n```\n\n---\n\n## Purpose\n\nA workflow's IN gate admits a payload against its declared input contract, and the workflow's nodes\nread payload fields through their bindings. The two state one fact twice. Where a workflow binds a\nfield its gate does not declare, the gate admits a payload the workflow cannot resolve, and a gap in\nthe declaration surfaces as a runtime failure instead of a refusal at the boundary (`3a` EX-7).\n\n---\n\n## How it is checked\n### Rule: Every bound payload field is declared by the gate\n\nFor each workflow whose start node is an IN gate, every field a node binds as `$.payload.<field>`\nMUST be a key of that gate's `core.inputs`.\n\n**Violation**:\n```yaml\n# IN_REQUEST_V0\ncore:\n  inputs:\n    name: {type: string, required: true}\n# WF_REQUEST_V0\ncore:\n  nodes:\n    CC_RECORD_V0:\n      inputs:\n        email: $.payload.email    # the gate never declared `email`\n```\n\n---\n\n## Scope\n\n**Applies to**: every WF whose start node is an IN gate.\n\n**Does NOT validate**: a field the gate declares and no node binds. A gate may require a field for\nits own determination, or for accountability, without any step reading it; whether such a field is\na defect depends on what callers send, which a compiler cannot see.\n",
+  "content_hash": "d53adca1d25deb94e434e9a42b1572d7ac09c1af2dc5c5c39522f6a30fad713b",
+  "fqdn_id": "transport::INVARIANT_ADMISSION_COVERS_BINDINGS_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "transport",
+    "core": {
+      "enforcement_stage": [
+        "compiler_validation"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "transport::INVARIANT_ADMISSION_COVERS_BINDINGS_V0",
+    "governed_by": "governance::CONSTITUTION_INVARIANTS_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "transport",
+  "references": [
+    "governance::CONSTITUTION_INVARIANTS_V0"
+  ],
+  "version": "0"
+}

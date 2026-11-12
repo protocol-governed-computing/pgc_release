@@ -1,0 +1,123 @@
+{
+  "artifact_code": "CC_LIST_ACTORS_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {
+          "source": "select_actor_records.records"
+        },
+        "fqdn": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+        "id": "CT_PURE_SELECT_RECORDS_V0",
+        "inputs": [
+          "filter",
+          "source"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "extracted"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_LIST_ACTORS_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_LIST_ACTORS_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Answer the actors matching the criteria named\n  inputs:\n    state:\n      type: string\n      required: true\n  outputs:\n    matching_actors:\n      type: array\n      required: true\n  result_status_contract:\n    allowed:\n    - BACKEND_ERROR\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: select_actor_records\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: SELECT\n    store: ACTORS\n    inputs: {}\n    outputs:\n      records: $.capability_result.records\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      BACKEND_ERROR: exit\n  - step: select_matching_actors\n    transform: capability_transforms::CT_PURE_SELECT_RECORDS_V0\n    inputs:\n      source: $.results.select_actor_records.records\n      filter:\n        state: $.inputs.state\n    outputs:\n      matching_actors: $.capability_result.extracted\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nAnswer the actors matching the criteria named\n",
+  "content_hash": "3f0c3e3c090db7e5e252da1bf7398b9da390f47ae7fadcc7dc4b5166770841db",
+  "fqdn_id": "blockchain::CC_LIST_ACTORS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "inputs": {
+        "state": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "matching_actors": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {},
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue"
+          },
+          "op": "SELECT",
+          "outputs": {
+            "records": "$.capability_result.records",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "select_actor_records",
+          "store": "ACTORS"
+        },
+        {
+          "inputs": {
+            "filter": {
+              "state": "$.inputs.state"
+            },
+            "source": "$.results.select_actor_records.records"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "matching_actors": "$.capability_result.extracted"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "select_matching_actors",
+          "transform": "capability_transforms::CT_PURE_SELECT_RECORDS_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "BACKEND_ERROR",
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Answer the actors matching the criteria named"
+    },
+    "fqdn": "blockchain::CC_LIST_ACTORS_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_transforms::CT_PURE_SELECT_RECORDS_V0"
+  ],
+  "version": "0"
+}

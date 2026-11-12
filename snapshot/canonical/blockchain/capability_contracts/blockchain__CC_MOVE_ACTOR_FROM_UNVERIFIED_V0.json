@@ -1,0 +1,226 @@
+{
+  "artifact_code": "CC_MOVE_ACTOR_FROM_UNVERIFIED_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "left": "in.verifying_authority",
+          "right": "in.contact_address"
+        },
+        "fqdn": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+        "id": "CT_PURE_COMPARE_EQUAL_V0",
+        "inputs": [
+          "left",
+          "right"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "is_equal"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      },
+      {
+        "bindings": {
+          "value": "in.to_state"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+        "inputs": [
+          "allowed_set",
+          "value"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "is_member"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_MOVE_ACTOR_FROM_UNVERIFIED_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_MOVE_ACTOR_FROM_UNVERIFIED_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Move a actor from unverified to a state the business admits\n  inputs:\n    contact_address:\n      type: string\n      required: true\n    to_state:\n      type: string\n      required: true\n    verifying_authority:\n      type: string\n      required: true\n    grounds:\n      type: string\n  outputs:\n    updated_count:\n      type: integer\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: compare_verifying_authority_to_actor\n    transform: capability_transforms::CT_PURE_COMPARE_EQUAL_V0\n    inputs:\n      left: $.inputs.verifying_authority\n      right: $.inputs.contact_address\n    outputs:\n      is_self: $.capability_result.is_equal\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: refuse_self_decision\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        is_self: $.results.compare_verifying_authority_to_actor.is_self\n      rules:\n      - field: is_self\n        op: eq\n        value: false\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: read_outcome_admitted\n    transform: capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0\n    inputs:\n      value: $.inputs.to_state\n      allowed_set:\n      - ACCEPTED\n      - REJECTED\n    outputs:\n      is_member: $.capability_result.is_member\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: set_record_state\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: UPDATE_WHERE\n    store: ACTORS\n    inputs:\n      filter:\n        contact_address: $.inputs.contact_address\n        state: UNVERIFIED\n      updates:\n        state: $.inputs.to_state\n        verifying_authority: $.inputs.verifying_authority\n        grounds: $.inputs.grounds\n    outputs:\n      matched_keys: $.capability_result.matched_keys\n      updated_count: $.capability_result.updated_count\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nMove a actor from unverified to a state the business admits\n",
+  "content_hash": "a5284bf424181c43018666622489adcbdbedace2776a850c65e4190d61ca7958",
+  "fqdn_id": "blockchain::CC_MOVE_ACTOR_FROM_UNVERIFIED_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "inputs": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "grounds": {
+          "type": "string"
+        },
+        "to_state": {
+          "required": true,
+          "type": "string"
+        },
+        "verifying_authority": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "updated_count": {
+          "required": true,
+          "type": "integer"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "left": "$.inputs.verifying_authority",
+            "right": "$.inputs.contact_address"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "is_self": "$.capability_result.is_equal"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "compare_verifying_authority_to_actor",
+          "transform": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "is_self": "$.results.compare_verifying_authority_to_actor.is_self"
+            },
+            "rules": [
+              {
+                "field": "is_self",
+                "op": "eq",
+                "value": false
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "refuse_self_decision",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        },
+        {
+          "inputs": {
+            "allowed_set": [
+              "ACCEPTED",
+              "REJECTED"
+            ],
+            "value": "$.inputs.to_state"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "is_member": "$.capability_result.is_member"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "read_outcome_admitted",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+        },
+        {
+          "inputs": {
+            "filter": {
+              "contact_address": "$.inputs.contact_address",
+              "state": "UNVERIFIED"
+            },
+            "updates": {
+              "grounds": "$.inputs.grounds",
+              "state": "$.inputs.to_state",
+              "verifying_authority": "$.inputs.verifying_authority"
+            }
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "UPDATE_WHERE",
+          "outputs": {
+            "matched_keys": "$.capability_result.matched_keys",
+            "result_status": "$.result_status",
+            "updated_count": "$.capability_result.updated_count"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "set_record_state",
+          "store": "ACTORS"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Move a actor from unverified to a state the business admits"
+    },
+    "fqdn": "blockchain::CC_MOVE_ACTOR_FROM_UNVERIFIED_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+  ],
+  "version": "0"
+}

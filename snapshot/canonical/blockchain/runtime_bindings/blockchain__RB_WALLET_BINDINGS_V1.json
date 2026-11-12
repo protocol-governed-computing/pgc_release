@@ -1,0 +1,47 @@
+{
+  "artifact_code": "RB_WALLET_BINDINGS_V1",
+  "artifact_type": "RB",
+  "content": "# RB_WALLET_BINDINGS_V1\n\n## Machine\n\n```yaml\nfqdn: blockchain::RB_WALLET_BINDINGS_V1\nartifact_kind: RUNTIME_BINDING\nversion: v1\ngoverned_by: runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0\nauthority: pgc.platform\nconcern: wallet\nsupersedes: blockchain::RB_WALLET_BINDINGS_V0\ncore:\n  summary: Binds the wallet's workflows to the stores and mechanisms they use\n  storage_structure: blockchain::STRUCTURE_WALLET_STORAGE_V1\n  bindings:\n    capability_side_effects::CS_MUTABLE_JSON_V0:\n      policy:\n        structure: blockchain::STRUCTURE_WALLET_STORAGE_V1\n    capability_side_effects::CS_REGISTRY_V0:\n      policy:\n        structure: blockchain::STRUCTURE_WALLET_STORAGE_V1\n    capability_side_effects::CS_APPENDONLY_JSONL_V0:\n      policy:\n        structure: blockchain::STRUCTURE_WALLET_STORAGE_V1\n```\n\n---\n\n## Intent\n\nBinds the wallet's workflows to the stores and mechanisms they use\n",
+  "content_hash": "32d4af8e5713042b5588dfb76f0bb48e148236a338f95d83c7666700829d21d4",
+  "fqdn_id": "blockchain::RB_WALLET_BINDINGS_V1",
+  "frontmatter": {
+    "artifact_kind": "RUNTIME_BINDING",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "bindings": {
+        "capability_side_effects::CS_APPENDONLY_JSONL_V0": {
+          "policy": {
+            "structure": "blockchain::STRUCTURE_WALLET_STORAGE_V1"
+          }
+        },
+        "capability_side_effects::CS_MUTABLE_JSON_V0": {
+          "policy": {
+            "structure": "blockchain::STRUCTURE_WALLET_STORAGE_V1"
+          }
+        },
+        "capability_side_effects::CS_REGISTRY_V0": {
+          "policy": {
+            "structure": "blockchain::STRUCTURE_WALLET_STORAGE_V1"
+          }
+        }
+      },
+      "storage_structure": "blockchain::STRUCTURE_WALLET_STORAGE_V1",
+      "summary": "Binds the wallet's workflows to the stores and mechanisms they use"
+    },
+    "fqdn": "blockchain::RB_WALLET_BINDINGS_V1",
+    "governed_by": "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0",
+    "supersedes": "blockchain::RB_WALLET_BINDINGS_V0",
+    "version": "v1"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "blockchain::STRUCTURE_WALLET_STORAGE_V1",
+    "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0",
+    "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0"
+  ],
+  "version": "1"
+}

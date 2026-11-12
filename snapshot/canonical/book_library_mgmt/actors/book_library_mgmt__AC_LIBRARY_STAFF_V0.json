@@ -1,8 +1,8 @@
 {
   "artifact_code": "AC_LIBRARY_STAFF_V0",
   "artifact_type": "AC",
-  "content": "# AC_LIBRARY_STAFF_V0\n\n## 1. Intent\n\nThe actor whose authorization every catalog operation binds\n\n---\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::AC_LIBRARY_STAFF_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: The actor whose authorization every catalog operation binds\n  type: ENDUSER\n  attributes:\n    staff_id:\n      type: string\n      required: true\n    authorized:\n      type: boolean\n      default: false\n```\n",
-  "content_hash": "4f5086d0fb4fc029b5fb18a4d5c2bf6d4106b64e03bc33fec2b3417638312a65",
+  "content": "# AC_LIBRARY_STAFF_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::AC_LIBRARY_STAFF_V0\nartifact_kind: ACTOR\nversion: v0\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: The actor whose authorization every catalog operation binds\n  type: human\n  attributes:\n    staff_id:\n      type: string\n      required: true\n    authorized:\n      type: boolean\n      default: false\n```\n\n---\n\n## Intent\n\nThe actor whose authorization every catalog operation binds\n",
+  "content_hash": "8dc6b78816c9e04ff0e69c43b256d0f30a8dd1b915326d8b77ee64dea2ce0ccc",
   "fqdn_id": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
   "frontmatter": {
     "artifact_kind": "ACTOR",
@@ -20,7 +20,7 @@
         }
       },
       "summary": "The actor whose authorization every catalog operation binds",
-      "type": "ENDUSER"
+      "type": "human"
     },
     "fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
     "governed_by": "actor::CONSTITUTION_ACTOR_IDENTITY_V0",

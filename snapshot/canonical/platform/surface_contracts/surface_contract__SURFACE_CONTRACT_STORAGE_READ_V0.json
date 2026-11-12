@@ -1,8 +1,8 @@
 {
   "artifact_code": "SURFACE_CONTRACT_STORAGE_READ_V0",
   "artifact_type": "SURFACE",
-  "content": "# SURFACE_CONTRACT_STORAGE_READ_V0\n\n## Purpose\n\nCanonical result surface for mutable storage READ operations.\n\nA storage READ can succeed with the document, report that the document does not exist,\nencounter invalid input, or fail due to storage unavailability. These four outcomes are\nexhaustive across all mutable storage capabilities.\n\n---\n\n## Machine\n\n```yaml\nfqdn: surface_contract::SURFACE_CONTRACT_STORAGE_READ_V0\nartifact_kind: SURFACE_CONTRACT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: surface_contract\ngoverns:\n- CS_MUTABLE_JSON_V0\n- CS_NAME_REGISTRY_V0\nop: READ\ncanonical_surface:\n- SUCCESS\n- NOT_FOUND\n- VIOLATION\n- BACKEND_ERROR\n```\n\n---\n\n## What this realizes\n```yaml\ncapability_family: STORAGE\n```\n",
-  "content_hash": "335ba04679e75551d1635457b23bb41eda0e9981cef7343e0f3e2e5d13a7bdf7",
+  "content": "# SURFACE_CONTRACT_STORAGE_READ_V0\n\n## Purpose\n\nCanonical result surface for mutable storage READ operations.\n\nA storage READ can succeed with the document, report that the document does not exist,\nencounter invalid input, or fail due to storage unavailability. These four outcomes are\nexhaustive across all mutable storage capabilities.\n\n---\n\n## Machine\n\n```yaml\nfqdn: surface_contract::SURFACE_CONTRACT_STORAGE_READ_V0\nartifact_kind: SURFACE_CONTRACT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: surface_contract\ngoverns:\n- capability_side_effects::CS_MUTABLE_JSON_V0\nop: READ\ncanonical_surface:\n- SUCCESS\n- NOT_FOUND\n- VIOLATION\n- BACKEND_ERROR\n```\n\n---\n\n## What this realizes\n```yaml\ncapability_family: STORAGE\n```\n",
+  "content_hash": "c63e2a3af6ac4809eced342978a9e854ecb906592cb2e48d83e241ca13be1f28",
   "fqdn_id": "surface_contract::SURFACE_CONTRACT_STORAGE_READ_V0",
   "frontmatter": {
     "artifact_kind": "SURFACE_CONTRACT",
@@ -17,8 +17,7 @@
     "fqdn": "surface_contract::SURFACE_CONTRACT_STORAGE_READ_V0",
     "governed_by": "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0",
     "governs": [
-      "CS_MUTABLE_JSON_V0",
-      "CS_NAME_REGISTRY_V0"
+      "capability_side_effects::CS_MUTABLE_JSON_V0"
     ],
     "op": "READ",
     "version": "V0"
@@ -26,6 +25,7 @@
   "layer_code": "GOVERNANCE",
   "namespace": "surface_contract",
   "references": [
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
     "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0"
   ],
   "version": "0"

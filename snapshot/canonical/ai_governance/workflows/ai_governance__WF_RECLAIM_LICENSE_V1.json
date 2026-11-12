@@ -1,0 +1,125 @@
+{
+  "artifact_code": "WF_RECLAIM_LICENSE_V1",
+  "artifact_type": "WF",
+  "content": "# WF_RECLAIM_LICENSE_V1\n\n## Machine\n\n```yaml\nfqdn: ai_governance::WF_RECLAIM_LICENSE_V1\nartifact_kind: WORKFLOW\nversion: v1\ngoverned_by: workflow::CONSTITUTION_WORKFLOW_V0\nauthority: pgc.platform\nconcern: ai_licensing\nsupersedes: ai_governance::WF_RECLAIM_LICENSE_V0\nruntime_binding: ai_governance::RB_LICENSE_BINDINGS_V1\nsubdomain: ai_licensing\nstructure: execution::STRUCTURE_RUNTIME_EXECUTION_V0\ncore:\n  summary: 'The governed sequence that performs: reclaim license'\n  actor_context: ai_governance::AC_SYSTEM_V0\n  start_node: IN_RECLAIM_LICENSE_V1\n  nodes:\n    IN_RECLAIM_LICENSE_V1:\n      type: IN\n      code: IN_RECLAIM_LICENSE_V1\n      next:\n        ACK: CC_RESOLVE_LICENSE_V0\n        NACK: EXIT_REJECTED\n    CC_RESOLVE_LICENSE_V0:\n      type: CC\n      code: CC_RESOLVE_LICENSE_V0\n      inputs:\n        employee_id: $.payload.employee_id\n      next:\n        SUCCESS: CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0\n        VIOLATION: EXIT_REJECTED\n        NOT_FOUND: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0:\n      type: CC\n      code: CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0\n      inputs:\n        last_used_at: $.results.CC_RESOLVE_LICENSE_V0.license_record.last_used_at\n      next:\n        SUCCESS: CC_RELEASE_LICENSE_IDENTITY_V0\n        BACKEND_ERROR: EXIT_REJECTED\n        VIOLATION: EXIT_STILL_ACTIVE\n    CC_RELEASE_LICENSE_IDENTITY_V0:\n      type: CC\n      code: CC_RELEASE_LICENSE_IDENTITY_V0\n      inputs:\n        license_id: $.results.CC_RESOLVE_LICENSE_V0.license_record.license_id\n      next:\n        SUCCESS: CC_MOVE_LICENSE_FROM_ACTIVE_V0\n        NOT_FOUND: EXIT_REJECTED\n        VIOLATION: EXIT_STILL_ACTIVE\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_MOVE_LICENSE_FROM_ACTIVE_V0:\n      type: CC\n      code: CC_MOVE_LICENSE_FROM_ACTIVE_V0\n      inputs:\n        to_state: RECLAIMED\n        license_id: $.results.CC_RESOLVE_LICENSE_V0.license_record.license_id\n      next:\n        SUCCESS: CC_RECORD_AI_LICENSING_MOMENT_V0\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    CC_RECORD_AI_LICENSING_MOMENT_V0:\n      type: CC\n      code: CC_RECORD_AI_LICENSING_MOMENT_V0\n      inputs:\n        occurrence: LICENSE_REVOKED\n        employee_id: $.payload.employee_id\n        license_id: $.results.CC_RESOLVE_LICENSE_V0.license_record.license_id\n      next:\n        SUCCESS: EXIT_COMPLETED\n        VIOLATION: EXIT_REJECTED\n        BACKEND_ERROR: EXIT_REJECTED\n    EXIT_COMPLETED:\n      type: EXIT\n      emit: ai_governance::EV_LICENSE_REVOKED_V1\n    EXIT_REJECTED:\n      type: EXIT\n    EXIT_STILL_ACTIVE:\n      type: EXIT\n```\n\n---\n\n## Intent\n\nThe governed sequence that performs: reclaim license\n",
+  "content_hash": "444b0d1cede599ebaea9c84265d0d5e0e1ee6ee3364dbbee8615a25a2911c719",
+  "fqdn_id": "ai_governance::WF_RECLAIM_LICENSE_V1",
+  "frontmatter": {
+    "artifact_kind": "WORKFLOW",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "actor_context": "ai_governance::AC_SYSTEM_V0",
+      "nodes": {
+        "CC_MOVE_LICENSE_FROM_ACTIVE_V0": {
+          "code": "CC_MOVE_LICENSE_FROM_ACTIVE_V0",
+          "fqdn_id": "ai_governance::CC_MOVE_LICENSE_FROM_ACTIVE_V0",
+          "inputs": {
+            "license_id": "$.results.CC_RESOLVE_LICENSE_V0.license_record.license_id",
+            "to_state": "RECLAIMED"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RECORD_AI_LICENSING_MOMENT_V0": {
+          "code": "CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "fqdn_id": "ai_governance::CC_RECORD_AI_LICENSING_MOMENT_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id",
+            "license_id": "$.results.CC_RESOLVE_LICENSE_V0.license_record.license_id",
+            "occurrence": "LICENSE_REVOKED"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "EXIT_COMPLETED",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "CC_RELEASE_LICENSE_IDENTITY_V0": {
+          "code": "CC_RELEASE_LICENSE_IDENTITY_V0",
+          "fqdn_id": "ai_governance::CC_RELEASE_LICENSE_IDENTITY_V0",
+          "inputs": {
+            "license_id": "$.results.CC_RESOLVE_LICENSE_V0.license_record.license_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "NOT_FOUND": "EXIT_REJECTED",
+            "SUCCESS": "CC_MOVE_LICENSE_FROM_ACTIVE_V0",
+            "VIOLATION": "EXIT_STILL_ACTIVE"
+          },
+          "type": "CC"
+        },
+        "CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0": {
+          "code": "CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0",
+          "fqdn_id": "ai_governance::CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0",
+          "inputs": {
+            "last_used_at": "$.results.CC_RESOLVE_LICENSE_V0.license_record.last_used_at"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "SUCCESS": "CC_RELEASE_LICENSE_IDENTITY_V0",
+            "VIOLATION": "EXIT_STILL_ACTIVE"
+          },
+          "type": "CC"
+        },
+        "CC_RESOLVE_LICENSE_V0": {
+          "code": "CC_RESOLVE_LICENSE_V0",
+          "fqdn_id": "ai_governance::CC_RESOLVE_LICENSE_V0",
+          "inputs": {
+            "employee_id": "$.payload.employee_id"
+          },
+          "next": {
+            "BACKEND_ERROR": "EXIT_REJECTED",
+            "NOT_FOUND": "EXIT_REJECTED",
+            "SUCCESS": "CC_REQUIRE_LICENSE_UNUSED_FOR_DAYS_V0",
+            "VIOLATION": "EXIT_REJECTED"
+          },
+          "type": "CC"
+        },
+        "EXIT_COMPLETED": {
+          "emit": "ai_governance::EV_LICENSE_REVOKED_V1",
+          "type": "EXIT"
+        },
+        "EXIT_REJECTED": {
+          "type": "EXIT"
+        },
+        "EXIT_STILL_ACTIVE": {
+          "type": "EXIT"
+        },
+        "IN_RECLAIM_LICENSE_V1": {
+          "code": "IN_RECLAIM_LICENSE_V1",
+          "fqdn_id": "ai_governance::IN_RECLAIM_LICENSE_V1",
+          "next": {
+            "ACK": "CC_RESOLVE_LICENSE_V0",
+            "NACK": "EXIT_REJECTED"
+          },
+          "type": "IN"
+        }
+      },
+      "start_node": "IN_RECLAIM_LICENSE_V1",
+      "summary": "The governed sequence that performs: reclaim license"
+    },
+    "fqdn": "ai_governance::WF_RECLAIM_LICENSE_V1",
+    "governed_by": "workflow::CONSTITUTION_WORKFLOW_V0",
+    "runtime_binding": "ai_governance::RB_LICENSE_BINDINGS_V1",
+    "structure": "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "subdomain": "ai_licensing",
+    "supersedes": "ai_governance::WF_RECLAIM_LICENSE_V0",
+    "version": "v1"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "ai_governance::AC_SYSTEM_V0",
+    "ai_governance::EV_LICENSE_REVOKED_V1",
+    "ai_governance::RB_LICENSE_BINDINGS_V1",
+    "execution::STRUCTURE_RUNTIME_EXECUTION_V0",
+    "workflow::CONSTITUTION_WORKFLOW_V0"
+  ],
+  "version": "1"
+}

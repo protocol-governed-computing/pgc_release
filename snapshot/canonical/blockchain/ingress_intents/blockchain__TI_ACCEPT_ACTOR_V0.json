@@ -1,8 +1,8 @@
 {
   "artifact_code": "TI_ACCEPT_ACTOR_V0",
   "artifact_type": "TI",
-  "content": "# TI_ACCEPT_ACTOR_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::TI_ACCEPT_ACTOR_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: identity\noperation: blockchain.accept_actor\ncore:\n  summary: Admits a request to accept a registered actor, and sends the act only what the caller supplies\ninput_contract:\n  contact_address:\n    type: string\n    required: true\n  verifying_authority:\n    type: string\n    required: true\n  grounds:\n    type: string\ncontext_requirements: []\nhandler:\n  kind: WF_INVOCATION\n  workflow: blockchain::WF_ACCEPT_ACTOR_V0\n  payload_template:\n    contact_address: ${input.contact_address}\n    verifying_authority: ${input.verifying_authority}\n    grounds: ${input.grounds}\n```\n\n---\n\n## Intent\n\nAdmits a request to accept a registered actor, and sends the act only what the caller supplies\n",
-  "content_hash": "c6be2383cbe601db5dc61eb2e3aece3aed8af29ee46523914ba63bc230016845",
+  "content": "# TI_ACCEPT_ACTOR_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::TI_ACCEPT_ACTOR_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: identity\noperation: blockchain.accept_actor\ncore:\n  summary: Admits a request to accept a registered actor, and sends the act only what the caller supplies\ninput_contract:\n  contact_address:\n    type: string\n    required: true\n  verifying_authority:\n    type: string\n    required: true\n  grounds:\n    type: string\ncontext_requirements: []\nhandler:\n  kind: WF_INVOCATION\n  workflow: blockchain::WF_ACCEPT_ACTOR_V1\n  payload_template:\n    contact_address: ${input.contact_address}\n    verifying_authority: ${input.verifying_authority}\n    grounds: ${input.grounds}\n```\n\n---\n\n## Intent\n\nAdmits a request to accept a registered actor, and sends the act only what the caller supplies\n",
+  "content_hash": "34621d69f62771ea102ce4c2b5f575ad2a40427c63ac76154d6c51051a1a45b3",
   "fqdn_id": "blockchain::TI_ACCEPT_ACTOR_V0",
   "frontmatter": {
     "artifact_kind": "TRANSPORT_INGRESS",
@@ -21,7 +21,7 @@
         "grounds": "${input.grounds}",
         "verifying_authority": "${input.verifying_authority}"
       },
-      "workflow": "blockchain::WF_ACCEPT_ACTOR_V0"
+      "workflow": "blockchain::WF_ACCEPT_ACTOR_V1"
     },
     "input_contract": {
       "contact_address": {
@@ -42,7 +42,7 @@
   "layer_code": "BLOCKCHAIN",
   "namespace": "blockchain",
   "references": [
-    "blockchain::WF_ACCEPT_ACTOR_V0",
+    "blockchain::WF_ACCEPT_ACTOR_V1",
     "transport::CONSTITUTION_TRANSPORT_INGRESS_V0"
   ],
   "version": "0"

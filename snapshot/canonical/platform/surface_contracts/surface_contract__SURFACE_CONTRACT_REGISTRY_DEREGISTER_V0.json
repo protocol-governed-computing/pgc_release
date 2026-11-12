@@ -1,8 +1,8 @@
 {
   "artifact_code": "SURFACE_CONTRACT_REGISTRY_DEREGISTER_V0",
   "artifact_type": "SURFACE",
-  "content": "# SURFACE_CONTRACT_REGISTRY_DEREGISTER_V0\n\n## Purpose\n\nCanonical result surface for registry DEREGISTER operations.\n\nA registry DEREGISTER operation can succeed, report that the key was not found, or fail\ndue to storage unavailability. Invalid input is caught upstream before reaching the DEREGISTER\noperation. These three outcomes are exhaustive.\n\n---\n\n## Machine\n\n```yaml\nfqdn: surface_contract::SURFACE_CONTRACT_REGISTRY_DEREGISTER_V0\nartifact_kind: SURFACE_CONTRACT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: surface_contract\ngoverns:\n- CS_REGISTRY_V0\nop: DEREGISTER\ncanonical_surface:\n- SUCCESS\n- NOT_FOUND\n- BACKEND_ERROR\n```\n\n---\n\n## What this realizes\n```yaml\ncapability_family: REGISTRY\n```\n",
-  "content_hash": "705c941467553140124ad604cd399fb2b9ffc296ea430a462532a36e6fe3e1a9",
+  "content": "# SURFACE_CONTRACT_REGISTRY_DEREGISTER_V0\n\n## Purpose\n\nCanonical result surface for registry DEREGISTER operations.\n\nA registry DEREGISTER operation can succeed, report that the key was not found, or fail\ndue to storage unavailability. Invalid input is caught upstream before reaching the DEREGISTER\noperation. These three outcomes are exhaustive.\n\n---\n\n## Machine\n\n```yaml\nfqdn: surface_contract::SURFACE_CONTRACT_REGISTRY_DEREGISTER_V0\nartifact_kind: SURFACE_CONTRACT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: surface_contract\ngoverns:\n- capability_side_effects::CS_REGISTRY_V0\nop: DEREGISTER\ncanonical_surface:\n- SUCCESS\n- NOT_FOUND\n- BACKEND_ERROR\n```\n\n---\n\n## What this realizes\n```yaml\ncapability_family: REGISTRY\n```\n",
+  "content_hash": "a74ff58d6ba58015e955133fa5c584f7fc36e505770fe7cb6cc84afa2419c024",
   "fqdn_id": "surface_contract::SURFACE_CONTRACT_REGISTRY_DEREGISTER_V0",
   "frontmatter": {
     "artifact_kind": "SURFACE_CONTRACT",
@@ -16,7 +16,7 @@
     "fqdn": "surface_contract::SURFACE_CONTRACT_REGISTRY_DEREGISTER_V0",
     "governed_by": "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0",
     "governs": [
-      "CS_REGISTRY_V0"
+      "capability_side_effects::CS_REGISTRY_V0"
     ],
     "op": "DEREGISTER",
     "version": "V0"
@@ -24,6 +24,7 @@
   "layer_code": "GOVERNANCE",
   "namespace": "surface_contract",
   "references": [
+    "capability_side_effects::CS_REGISTRY_V0",
     "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0"
   ],
   "version": "0"

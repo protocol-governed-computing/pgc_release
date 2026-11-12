@@ -1,8 +1,8 @@
 {
   "artifact_code": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
   "artifact_type": "IN",
-  "content": "# IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to change a registered book's description\n  workflow: WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n    identity_key:\n      type: string\n      required: true\n    updated_fields:\n      type: object\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to change a registered book's description\n",
-  "content_hash": "79f2fc6a2bd5999dee4d4649dc82955e703e015fbebbd767618aa0e94e9ac012",
+  "content": "# IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to update bibliographic information\n  workflow: WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n    identity_key:\n      type: string\n      required: true\n    updated_fields:\n      type: object\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to update bibliographic information\n",
+  "content_hash": "b3aaa2ef91325ff0e51498c039e76aa3f7410ae2affe968c96d1607243762827",
   "fqdn_id": "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
   "frontmatter": {
     "artifact_kind": "INTENT",
@@ -35,8 +35,8 @@
           "description": "Request rejected"
         }
       },
-      "summary": "A request to change a registered book's description",
-      "workflow": "WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
+      "summary": "A request to update bibliographic information",
+      "workflow": "WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
     },
     "fqdn": "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
     "governed_by": "intent::CONSTITUTION_INTENT_V0",

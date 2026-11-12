@@ -1,6 +1,6 @@
 {
   "cs": {
-    "66": {
+    "74": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -56,7 +56,7 @@
         "module": "capability_side_effects.implementation.CS_APPENDONLY_JSONL_V0.runtime"
       }
     },
-    "67": {
+    "75": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -88,7 +88,7 @@
         "module": "capability_side_effects.implementation.CS_CLOCK_V0.runtime"
       }
     },
-    "68": {
+    "76": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -275,7 +275,7 @@
         "module": "capability_side_effects.implementation.CS_MUTABLE_JSON_V0.runtime"
       }
     },
-    "69": {
+    "77": {
       "cs_metadata": {
         "capability": {
           "supported_operation_specs": [
@@ -390,7 +390,7 @@
     }
   },
   "ct": {
-    "32": {
+    "37": {
       "ct_ir": {
         "artifact_code": "CT_PURE_DERIVE_WALLET_ADDRESS_V0",
         "atom_stream": [
@@ -422,7 +422,7 @@
         }
       }
     },
-    "73": {
+    "81": {
       "ct_ir": {
         "artifact_code": "CT_PURE_ASSEMBLE_RECORD_V0",
         "atom_stream": [
@@ -455,7 +455,7 @@
         }
       }
     },
-    "74": {
+    "82": {
       "ct_ir": {
         "artifact_code": "CT_PURE_COMPARE_EQUAL_V0",
         "atom_stream": [
@@ -492,52 +492,7 @@
         }
       }
     },
-    "75": {
-      "ct_ir": {
-        "artifact_code": "CT_PURE_EXTRACT_V0",
-        "atom_stream": [
-          {
-            "args": {
-              "from": "$.inputs.from",
-              "path": "$.inputs.path",
-              "type": "$.inputs.type"
-            },
-            "atom": "capability_transforms::CT_PURE_EXTRACT_V0",
-            "handler_ref": {
-              "callable": "execute",
-              "module": "capability_transforms.implementation.ct_pure_extract_v0"
-            },
-            "out": "__atom_result__",
-            "purity": "ct_pure"
-          }
-        ],
-        "ct_composition_version": "V0",
-        "ct_fqdn": "capability_transforms::CT_PURE_EXTRACT_V0",
-        "inputs": {
-          "from": {
-            "description": "Context symbol or object to extract from",
-            "required": true,
-            "type": "any"
-          },
-          "path": {
-            "description": "JSONPath expression selector",
-            "required": true,
-            "type": "string"
-          },
-          "type": {
-            "description": "Expected output type for validation",
-            "required": true,
-            "type": "string"
-          }
-        },
-        "outputs": {
-          "result": {
-            "from": "__atom_result__"
-          }
-        }
-      }
-    },
-    "76": {
+    "83": {
       "ct_ir": {
         "artifact_code": "CT_PURE_GENERATE_ID_V0",
         "atom_stream": [
@@ -576,7 +531,46 @@
         }
       }
     },
-    "77": {
+    "84": {
+      "ct_ir": {
+        "artifact_code": "CT_PURE_SELECT_RECORDS_V0",
+        "atom_stream": [
+          {
+            "args": {
+              "filter": "$.inputs.filter",
+              "source": "$.inputs.source"
+            },
+            "atom": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+            "handler_ref": {
+              "callable": "execute",
+              "module": "capability_transforms.implementation.ct_pure_select_records_v0"
+            },
+            "out": "__atom_result__",
+            "purity": "ct_pure"
+          }
+        ],
+        "ct_composition_version": "V0",
+        "ct_fqdn": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+        "inputs": {
+          "filter": {
+            "description": "Field criteria dict. Values are exact match or \"present\" for existence check.",
+            "required": true,
+            "type": "object"
+          },
+          "source": {
+            "description": "Array of record objects to select from",
+            "required": true,
+            "type": "array"
+          }
+        },
+        "outputs": {
+          "extracted": {
+            "from": "__atom_result__"
+          }
+        }
+      }
+    },
+    "85": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
         "atom_stream": [
@@ -618,7 +612,7 @@
         }
       }
     },
-    "78": {
+    "86": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
         "atom_stream": [
@@ -657,7 +651,7 @@
         }
       }
     },
-    "79": {
+    "87": {
       "ct_ir": {
         "artifact_code": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
         "atom_stream": [
@@ -699,8 +693,8 @@
   },
   "projection_class": "machine_projection",
   "rb_policy": {
-    "41": {
-      "66": {
+    "48": {
+      "74": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -723,7 +717,7 @@
                 },
                 "layer": "DOMAINS",
                 "subdomain": "identity",
-                "summary": "Declares the three stores identity owns and the paths they occupy"
+                "summary": "Declares the stores the identity owns and the paths they occupy"
               },
               "fqdn": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0",
               "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
@@ -733,7 +727,7 @@
           "structure": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0"
         }
       },
-      "67": {
+      "75": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "precision": "seconds",
@@ -757,7 +751,7 @@
                 },
                 "layer": "DOMAINS",
                 "subdomain": "identity",
-                "summary": "Declares the three stores identity owns and the paths they occupy"
+                "summary": "Declares the stores the identity owns and the paths they occupy"
               },
               "fqdn": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0",
               "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
@@ -766,7 +760,7 @@
           }
         }
       },
-      "68": {
+      "76": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -789,7 +783,7 @@
                 },
                 "layer": "DOMAINS",
                 "subdomain": "identity",
-                "summary": "Declares the three stores identity owns and the paths they occupy"
+                "summary": "Declares the stores the identity owns and the paths they occupy"
               },
               "fqdn": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0",
               "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
@@ -799,7 +793,7 @@
           "structure": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0"
         }
       },
-      "69": {
+      "77": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -822,7 +816,7 @@
                 },
                 "layer": "DOMAINS",
                 "subdomain": "identity",
-                "summary": "Declares the three stores identity owns and the paths they occupy"
+                "summary": "Declares the stores the identity owns and the paths they occupy"
               },
               "fqdn": "blockchain::STRUCTURE_IDENTITY_STORAGE_V0",
               "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
@@ -833,8 +827,8 @@
         }
       }
     },
-    "42": {
-      "66": {
+    "49": {
+      "74": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -848,6 +842,9 @@
                   "WALLETS": {
                     "path": "blockchain/wallet/wallets.json"
                   },
+                  "WALLET_ADDRESS_REGISTRY": {
+                    "path": "blockchain/wallet/wallet_address_registry.jsonl"
+                  },
                   "WALLET_IDENTITIES": {
                     "path": "blockchain/wallet/wallet_identity_registry.jsonl"
                   },
@@ -857,50 +854,18 @@
                 },
                 "layer": "DOMAINS",
                 "subdomain": "wallet",
-                "summary": "Declares the three stores wallet owns"
+                "summary": "Declares the stores the wallet owns and the paths they occupy"
               },
-              "fqdn": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+              "fqdn": "blockchain::STRUCTURE_WALLET_STORAGE_V1",
               "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
+              "supersedes": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+              "version": "v1"
             }
           },
-          "store": "WALLET_OCCURRENCES"
+          "structure": "blockchain::STRUCTURE_WALLET_STORAGE_V1"
         }
       },
-      "67": {
-        "policy": {
-          "module_data_root": "{{module_data_root}}",
-          "policy": "utc",
-          "storage_structure_artifact": {
-            "frontmatter": {
-              "artifact_kind": "STRUCTURE",
-              "authority": "pgc.platform",
-              "concern": "wallet",
-              "core": {
-                "domain": "blockchain",
-                "entity_stores": {
-                  "WALLETS": {
-                    "path": "blockchain/wallet/wallets.json"
-                  },
-                  "WALLET_IDENTITIES": {
-                    "path": "blockchain/wallet/wallet_identity_registry.jsonl"
-                  },
-                  "WALLET_OCCURRENCES": {
-                    "path": "blockchain/wallet/wallet_occurrences.jsonl"
-                  }
-                },
-                "layer": "DOMAINS",
-                "subdomain": "wallet",
-                "summary": "Declares the three stores wallet owns"
-              },
-              "fqdn": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
-              "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
-            }
-          }
-        }
-      },
-      "68": {
+      "76": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -914,6 +879,9 @@
                   "WALLETS": {
                     "path": "blockchain/wallet/wallets.json"
                   },
+                  "WALLET_ADDRESS_REGISTRY": {
+                    "path": "blockchain/wallet/wallet_address_registry.jsonl"
+                  },
                   "WALLET_IDENTITIES": {
                     "path": "blockchain/wallet/wallet_identity_registry.jsonl"
                   },
@@ -923,17 +891,18 @@
                 },
                 "layer": "DOMAINS",
                 "subdomain": "wallet",
-                "summary": "Declares the three stores wallet owns"
+                "summary": "Declares the stores the wallet owns and the paths they occupy"
               },
-              "fqdn": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+              "fqdn": "blockchain::STRUCTURE_WALLET_STORAGE_V1",
               "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
+              "supersedes": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+              "version": "v1"
             }
           },
-          "store": "WALLETS"
+          "structure": "blockchain::STRUCTURE_WALLET_STORAGE_V1"
         }
       },
-      "69": {
+      "77": {
         "policy": {
           "module_data_root": "{{module_data_root}}",
           "storage_structure_artifact": {
@@ -947,6 +916,9 @@
                   "WALLETS": {
                     "path": "blockchain/wallet/wallets.json"
                   },
+                  "WALLET_ADDRESS_REGISTRY": {
+                    "path": "blockchain/wallet/wallet_address_registry.jsonl"
+                  },
                   "WALLET_IDENTITIES": {
                     "path": "blockchain/wallet/wallet_identity_registry.jsonl"
                   },
@@ -956,20 +928,21 @@
                 },
                 "layer": "DOMAINS",
                 "subdomain": "wallet",
-                "summary": "Declares the three stores wallet owns"
+                "summary": "Declares the stores the wallet owns and the paths they occupy"
               },
-              "fqdn": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+              "fqdn": "blockchain::STRUCTURE_WALLET_STORAGE_V1",
               "governed_by": "structure::CONSTITUTION_STRUCTURE_V0",
-              "version": "v0"
+              "supersedes": "blockchain::STRUCTURE_WALLET_STORAGE_V0",
+              "version": "v1"
             }
           },
-          "store": "WALLET_IDENTITIES"
+          "structure": "blockchain::STRUCTURE_WALLET_STORAGE_V1"
         }
       }
     }
   },
   "wf_storage": {
-    "55": {
+    "62": {
       "frontmatter": {
         "core": {
           "entity_stores": {
@@ -989,17 +962,22 @@
               "reach": "consulted"
             },
             "WALLETS": {
-              "described_by": "blockchain::RB_WALLET_BINDINGS_V0",
+              "described_by": "blockchain::RB_WALLET_BINDINGS_V1",
               "path": "blockchain/wallet/wallets.json",
               "reach": "owned"
             },
+            "WALLET_ADDRESS_REGISTRY": {
+              "described_by": "blockchain::RB_WALLET_BINDINGS_V1",
+              "path": "blockchain/wallet/wallet_address_registry.jsonl",
+              "reach": "owned"
+            },
             "WALLET_IDENTITIES": {
-              "described_by": "blockchain::RB_WALLET_BINDINGS_V0",
+              "described_by": "blockchain::RB_WALLET_BINDINGS_V1",
               "path": "blockchain/wallet/wallet_identity_registry.jsonl",
               "reach": "owned"
             },
             "WALLET_OCCURRENCES": {
-              "described_by": "blockchain::RB_WALLET_BINDINGS_V0",
+              "described_by": "blockchain::RB_WALLET_BINDINGS_V1",
               "path": "blockchain/wallet/wallet_occurrences.jsonl",
               "reach": "owned"
             }

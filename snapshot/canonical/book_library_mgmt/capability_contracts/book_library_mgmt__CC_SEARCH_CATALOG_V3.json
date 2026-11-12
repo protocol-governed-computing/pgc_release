@@ -1,0 +1,199 @@
+{
+  "artifact_code": "CC_SEARCH_CATALOG_V3",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {
+          "source": "select_book_records.records"
+        },
+        "fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
+        "id": "CT_PURE_SELECT_RECORDS_V0",
+        "inputs": [
+          "filter",
+          "source"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "extracted"
+        ]
+      },
+      {
+        "bindings": {
+          "filter": "in.search_criteria",
+          "source": "select_registered_books.registered_books"
+        },
+        "fqdn": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+        "id": "CT_PURE_SELECT_RECORDS_V0",
+        "inputs": [
+          "filter",
+          "source"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "extracted"
+        ]
+      },
+      {
+        "bindings": {
+          "source": "select_matching_books.matching_books"
+        },
+        "fqdn": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+        "id": "CT_PURE_GROUP_RECORDS_V0",
+        "inputs": [
+          "source",
+          "attribute"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "grouped"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_SEARCH_CATALOG_V3\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_SEARCH_CATALOG_V3\nartifact_kind: CAPABILITY_CONTRACT\nversion: v3\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\nsupersedes: book_library_mgmt::CC_SEARCH_CATALOG_V2\ncore:\n  summary: Answer the books matching the criteria named\n  inputs:\n    search_criteria:\n      type: object\n      required: true\n  outputs:\n    matching_works:\n      type: array\n      required: true\n    matching_books:\n      type: array\n      required: true\n  result_status_contract:\n    allowed:\n    - BACKEND_ERROR\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: select_book_records\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: SELECT\n    store: BOOKS\n    inputs: {}\n    outputs:\n      records: $.capability_result.records\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      BACKEND_ERROR: exit\n  - step: select_registered_books\n    transform: book_library_mgmt::CT_PURE_SELECT_RECORDS_V0\n    inputs:\n      source: $.results.select_book_records.records\n      filter:\n        state: REGISTERED\n    outputs:\n      registered_books: $.capability_result.extracted\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: select_matching_books\n    transform: capability_transforms::CT_PURE_SELECT_RECORDS_V0\n    inputs:\n      source: $.results.select_registered_books.registered_books\n      filter: $.inputs.search_criteria\n    outputs:\n      matching_books: $.capability_result.extracted\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: group_books_by_work\n    transform: book_library_mgmt::CT_PURE_GROUP_RECORDS_V0\n    inputs:\n      source: $.results.select_matching_books.matching_books\n      attribute: work_key\n    outputs:\n      matching_works: $.capability_result.grouped\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nAnswer the books matching the criteria named\n",
+  "content_hash": "124761a84f2e41ab3a01410a6eaa7aeca04e143968f2a52f7b90b6f8836d6bca",
+  "fqdn_id": "book_library_mgmt::CC_SEARCH_CATALOG_V3",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "inputs": {
+        "search_criteria": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "matching_books": {
+          "required": true,
+          "type": "array"
+        },
+        "matching_works": {
+          "required": true,
+          "type": "array"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {},
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue"
+          },
+          "op": "SELECT",
+          "outputs": {
+            "records": "$.capability_result.records",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "select_book_records",
+          "store": "BOOKS"
+        },
+        {
+          "inputs": {
+            "filter": {
+              "state": "REGISTERED"
+            },
+            "source": "$.results.select_book_records.records"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "registered_books": "$.capability_result.extracted"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "select_registered_books",
+          "transform": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0"
+        },
+        {
+          "inputs": {
+            "filter": "$.inputs.search_criteria",
+            "source": "$.results.select_registered_books.registered_books"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "matching_books": "$.capability_result.extracted"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "select_matching_books",
+          "transform": "capability_transforms::CT_PURE_SELECT_RECORDS_V0"
+        },
+        {
+          "inputs": {
+            "attribute": "work_key",
+            "source": "$.results.select_matching_books.matching_books"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "matching_works": "$.capability_result.grouped"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "group_books_by_work",
+          "transform": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "BACKEND_ERROR",
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Answer the books matching the criteria named"
+    },
+    "fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V3",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "supersedes": "book_library_mgmt::CC_SEARCH_CATALOG_V2",
+    "version": "v3"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
+    "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_transforms::CT_PURE_SELECT_RECORDS_V0"
+  ],
+  "version": "3"
+}

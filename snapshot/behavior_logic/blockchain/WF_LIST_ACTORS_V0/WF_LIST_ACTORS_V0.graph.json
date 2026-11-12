@@ -1,0 +1,194 @@
+{
+  "wf_id": "WF_LIST_ACTORS_V0",
+  "entry": "IN_LIST_ACTORS_V0",
+  "nodes": [
+    {
+      "id": "CC_LIST_ACTORS_V0",
+      "type": "CC",
+      "cc_code": "CC_LIST_ACTORS_V0",
+      "capability": "capability_side_effects::CS_MUTABLE_JSON_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {
+              "source": "select_actor_records.records"
+            },
+            "fqdn": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
+            "id": "CT_PURE_SELECT_RECORDS_V0",
+            "inputs": [
+              "filter",
+              "source"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "extracted"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "state": "IN.state"
+        }
+      }
+    },
+    {
+      "id": "CC_RECORD_IDENTITY_MOMENT_V0",
+      "type": "CC",
+      "cc_code": "CC_RECORD_IDENTITY_MOMENT_V0",
+      "capability": "capability_side_effects::CS_CLOCK_V0",
+      "capability_type": "CS",
+      "projection": {
+        "steps": [
+          {
+            "fqdn": "capability_side_effects::CS_CLOCK_V0",
+            "id": "CS_CLOCK_V0",
+            "kind": "CS",
+            "ops": [
+              "NOW"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "occurrence": "LIST_ACTORS"
+        }
+      }
+    },
+    {
+      "id": "EXIT_COMPLETED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_LIST_ACTORS_V0",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_LIST_ACTORS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_LIST_ACTORS_V0",
+      "to": "EXIT_COMPLETED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_LIST_ACTORS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RECORD_IDENTITY_MOMENT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_RECORD_IDENTITY_MOMENT_V0",
+      "to": "CC_LIST_ACTORS_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RECORD_IDENTITY_MOMENT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_LIST_ACTORS_V0",
+      "to": "CC_RECORD_IDENTITY_MOMENT_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_LIST_ACTORS_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_LIST_ACTORS_V0",
+      "CC_RECORD_IDENTITY_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_LIST_ACTORS_V0",
+      "CC_RECORD_IDENTITY_MOMENT_V0",
+      "CC_LIST_ACTORS_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_LIST_ACTORS_V0",
+      "CC_RECORD_IDENTITY_MOMENT_V0",
+      "CC_LIST_ACTORS_V0",
+      "EXIT_COMPLETED"
+    ],
+    [
+      "IN_LIST_ACTORS_V0",
+      "CC_RECORD_IDENTITY_MOMENT_V0",
+      "CC_LIST_ACTORS_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_LIST_ACTORS_V0",
+      "CC_RECORD_IDENTITY_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_LIST_ACTORS_V0",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

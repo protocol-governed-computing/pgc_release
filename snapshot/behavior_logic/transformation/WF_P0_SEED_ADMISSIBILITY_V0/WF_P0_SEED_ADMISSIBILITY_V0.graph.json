@@ -1048,6 +1048,40 @@
               "register": "authority_deferrals"
             },
             {
+              "check": "TABLE_HAS_COLUMNS",
+              "id": "REGISTER_COLUMN_MISSING",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/delivery/items/required",
+              "intent": "downstream phases read these columns by name",
+              "params": {
+                "columns": [
+                  "Mode",
+                  "Rationale"
+                ]
+              },
+              "register": "delivery"
+            },
+            {
+              "check": "TABLE_HAS_ROWS",
+              "id": "REGISTER_EMPTY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/delivery/minItems",
+              "intent": "an empty required register asserts nothing",
+              "register": "delivery"
+            },
+            {
+              "check": "CELL_IN_VOCABULARY",
+              "id": "CELL_NOT_IN_VOCABULARY",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/properties/registers/properties/delivery/items/properties/mode/x-vocab",
+              "intent": "Mode is a controlled vocabulary declared by the template",
+              "params": {
+                "column": "Mode",
+                "vocabulary": [
+                  "AUTHORED",
+                  "CONSTRUCTED"
+                ]
+              },
+              "register": "delivery"
+            },
+            {
               "check": "COLUMN_ABSENT",
               "id": "BELIEF_CARRIES_CERTAINTY",
               "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/allOf/0",
@@ -1118,6 +1152,17 @@
                 "value": "HUMAN"
               },
               "register": "clarification_requests"
+            },
+            {
+              "check": "TABLE_ROW_COUNT",
+              "id": "DELIVERY_NOT_SINGULAR",
+              "identity": "transformation.schemas.REGISTER_SCHEMA_P0_V0#/allOf/6",
+              "intent": "a change is delivered one way",
+              "params": {
+                "detail": "the register answers one question \u2014 whether construction renders what the change delivers \u2014 and two rows are two answers to it",
+                "maximum": 1
+              },
+              "register": "delivery"
             }
           ]
         }

@@ -1,0 +1,216 @@
+{
+  "artifact_code": "CC_CLAIM_ACTION_IDENTITY_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+        "id": "CT_PURE_GENERATE_ID_V0",
+        "inputs": [
+          "data",
+          "prefix"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "id"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+        "id": "CS_REGISTRY_V0",
+        "kind": "CS",
+        "ops": [
+          "REGISTER",
+          "RESOLVE",
+          "EXISTS",
+          "DEREGISTER",
+          "COUNT"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      },
+      {
+        "bindings": {
+          "fields": "in.action_fields"
+        },
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CLAIM_ACTION_IDENTITY_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_CLAIM_ACTION_IDENTITY_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: agent_governance\ncore:\n  summary: Claim a action's action id\n  inputs:\n    tool_name:\n      type: string\n      required: true\n    requesting_user_id:\n      type: string\n      required: true\n    domain_context:\n      type: string\n      required: true\n    action_fields:\n      type: object\n      required: true\n  outputs:\n    action_id:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - ALREADY_EXISTS\n    - BACKEND_ERROR\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: form_action_id\n    transform: capability_transforms::CT_PURE_GENERATE_ID_V0\n    inputs:\n      data:\n        tool_name: $.inputs.tool_name\n        requesting_user_id: $.inputs.requesting_user_id\n        domain_context: $.inputs.domain_context\n      prefix: AGOV\n    outputs:\n      action_id: $.capability_result.id\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: claim_id\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: REGISTER\n    store: ACTION_IDENTITY_REGISTRY\n    inputs:\n      key: $.results.form_action_id.action_id\n      target_cs: capability_side_effects::CS_MUTABLE_JSON_V0\n      target_ref: ACTIONS\n    outputs:\n      address: $.capability_result.address\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - ALREADY_EXISTS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: continue\n      ALREADY_EXISTS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n  - step: assemble_action_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields: $.inputs.action_fields\n    outputs:\n      action_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_action_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: ACTIONS\n    inputs:\n      key: $.results.form_action_id.action_id\n      value: $.results.assemble_action_record.action_record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nClaim a action's action id\n",
+  "content_hash": "88efd25b984c3c644e54fe8221a2c0e3832c758cc9bbeba625d3d057860f7f60",
+  "fqdn_id": "ai_governance::CC_CLAIM_ACTION_IDENTITY_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "agent_governance",
+    "core": {
+      "inputs": {
+        "action_fields": {
+          "required": true,
+          "type": "object"
+        },
+        "domain_context": {
+          "required": true,
+          "type": "string"
+        },
+        "requesting_user_id": {
+          "required": true,
+          "type": "string"
+        },
+        "tool_name": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "action_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "data": {
+              "domain_context": "$.inputs.domain_context",
+              "requesting_user_id": "$.inputs.requesting_user_id",
+              "tool_name": "$.inputs.tool_name"
+            },
+            "prefix": "AGOV"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "action_id": "$.capability_result.id"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "form_action_id",
+          "transform": "capability_transforms::CT_PURE_GENERATE_ID_V0"
+        },
+        {
+          "inputs": {
+            "key": "$.results.form_action_id.action_id",
+            "target_cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "target_ref": "ACTIONS"
+          },
+          "on_result": {
+            "ALREADY_EXISTS": "exit",
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "op": "REGISTER",
+          "outputs": {
+            "address": "$.capability_result.address",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "ALREADY_EXISTS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_REGISTRY_V0",
+          "step": "claim_id",
+          "store": "ACTION_IDENTITY_REGISTRY"
+        },
+        {
+          "inputs": {
+            "fields": "$.inputs.action_fields"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "action_record": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_action_record",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "key": "$.results.form_action_id.action_id",
+            "value": "$.results.assemble_action_record.action_record"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "WRITE",
+          "outputs": {
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "write_action_record",
+          "store": "ACTIONS"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "ALREADY_EXISTS",
+          "BACKEND_ERROR",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Claim a action's action id"
+    },
+    "fqdn": "ai_governance::CC_CLAIM_ACTION_IDENTITY_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+    "capability_transforms::CT_PURE_GENERATE_ID_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,42 @@
+{
+  "artifact_code": "EV_PHYSICAL_COPY_REGISTERED_V1",
+  "artifact_type": "EV",
+  "content": "# EV_PHYSICAL_COPY_REGISTERED_V1\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V1\nartifact_kind: EVENT\nversion: v1\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: catalog\nsupersedes: book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0\ncore:\n  summary: A physical copy registered\n  description: A physical copy registered\n  subdomain: catalog\n  schema:\n    barcode:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n```\n\n---\n\n## Intent\n\nA physical copy registered\n",
+  "content_hash": "0d77327f9eff9a7359310b41c56f86c3817b1b379caf06f5c76a9e72290d8c8e",
+  "fqdn_id": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V1",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "catalog",
+    "core": {
+      "description": "A physical copy registered",
+      "schema": {
+        "barcode": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "catalog",
+      "summary": "A physical copy registered"
+    },
+    "fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V1",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "supersedes": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0",
+    "version": "v1"
+  },
+  "layer_code": "BOOK_LIBRARY_MGMT",
+  "namespace": "book_library_mgmt",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "1"
+}

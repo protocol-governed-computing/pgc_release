@@ -21,8 +21,8 @@
       }
     ]
   },
-  "content": "# CC_CONFIRM_STAFF_AUTHORIZED_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Confirm the staff member may perform catalog operations\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n  outputs:\n    is_authorized:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: confirm_authorization\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters: $.inputs.staff_credentials\n      rules:\n      - field: staff_id\n        op: not_null\n      - field: authorized\n        op: eq\n        value: true\n    outputs:\n      is_authorized: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nConfirm the staff member may perform catalog operations\n",
-  "content_hash": "702a9257b13352559260e98058ce0c03d2bb9f2995c2f43462b5432a7777ef5f",
+  "content": "# CC_CONFIRM_STAFF_AUTHORIZED_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: Confirm the staff member may perform the operation\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n  outputs:\n    is_authorized:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: confirm_authorization\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters: $.inputs.staff_credentials\n      rules:\n      - field: staff_id\n        op: not_null\n      - field: authorized\n        op: eq\n        value: true\n    outputs:\n      is_authorized: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nConfirm the staff member may perform the operation\n",
+  "content_hash": "fd6a1a6851e86af6f41c038656c3d1c87d90a539b9b1dcf6e434e4a40ed10cbf",
   "fqdn_id": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
   "frontmatter": {
     "artifact_kind": "CAPABILITY_CONTRACT",
@@ -79,7 +79,7 @@
         ],
         "on_input_failure": "VIOLATION"
       },
-      "summary": "Confirm the staff member may perform catalog operations"
+      "summary": "Confirm the staff member may perform the operation"
     },
     "fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
     "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",

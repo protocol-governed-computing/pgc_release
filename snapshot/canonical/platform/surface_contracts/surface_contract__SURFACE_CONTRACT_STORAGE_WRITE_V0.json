@@ -1,8 +1,8 @@
 {
   "artifact_code": "SURFACE_CONTRACT_STORAGE_WRITE_V0",
   "artifact_type": "SURFACE",
-  "content": "# SURFACE_CONTRACT_STORAGE_WRITE_V0\n\n## Purpose\n\nCanonical result surface for mutable storage WRITE operations.\n\nA storage WRITE can succeed, encounter invalid input, or fail due to storage unavailability.\nWRITE does not produce NOT_FOUND \u2014 a write operation creates or overwrites the document.\nThese three outcomes are exhaustive across all mutable storage capabilities.\n\n---\n\n## Machine\n\n```yaml\nfqdn: surface_contract::SURFACE_CONTRACT_STORAGE_WRITE_V0\nartifact_kind: SURFACE_CONTRACT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: surface_contract\ngoverns:\n- CS_MUTABLE_JSON_V0\n- CS_NAME_REGISTRY_V0\nop: WRITE\ncanonical_surface:\n- SUCCESS\n- VIOLATION\n- BACKEND_ERROR\n```\n\n---\n\n## What this realizes\n```yaml\ncapability_family: STORAGE\n```\n",
-  "content_hash": "39e181abc4a32165dc3ff712b9fb1edaeb1c97da40366a35be25b2e8aa0a4127",
+  "content": "# SURFACE_CONTRACT_STORAGE_WRITE_V0\n\n## Purpose\n\nCanonical result surface for mutable storage WRITE operations.\n\nA storage WRITE can succeed, encounter invalid input, or fail due to storage unavailability.\nWRITE does not produce NOT_FOUND \u2014 a write operation creates or overwrites the document.\nThese three outcomes are exhaustive across all mutable storage capabilities.\n\n---\n\n## Machine\n\n```yaml\nfqdn: surface_contract::SURFACE_CONTRACT_STORAGE_WRITE_V0\nartifact_kind: SURFACE_CONTRACT\nversion: V0\ngoverned_by: execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0\nauthority: pgc.platform\nconcern: surface_contract\ngoverns:\n- capability_side_effects::CS_MUTABLE_JSON_V0\nop: WRITE\ncanonical_surface:\n- SUCCESS\n- VIOLATION\n- BACKEND_ERROR\n```\n\n---\n\n## What this realizes\n```yaml\ncapability_family: STORAGE\n```\n",
+  "content_hash": "27d2e71f3a1fd9c288a3137e28bab0efb9fdec246ce88dfa521d58ffbd268baf",
   "fqdn_id": "surface_contract::SURFACE_CONTRACT_STORAGE_WRITE_V0",
   "frontmatter": {
     "artifact_kind": "SURFACE_CONTRACT",
@@ -16,8 +16,7 @@
     "fqdn": "surface_contract::SURFACE_CONTRACT_STORAGE_WRITE_V0",
     "governed_by": "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0",
     "governs": [
-      "CS_MUTABLE_JSON_V0",
-      "CS_NAME_REGISTRY_V0"
+      "capability_side_effects::CS_MUTABLE_JSON_V0"
     ],
     "op": "WRITE",
     "version": "V0"
@@ -25,6 +24,7 @@
   "layer_code": "GOVERNANCE",
   "namespace": "surface_contract",
   "references": [
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
     "execution_topology::CONSTITUTION_EXECUTION_TOPOLOGY_V0"
   ],
   "version": "0"

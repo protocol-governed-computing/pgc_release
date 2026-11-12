@@ -1,8 +1,8 @@
 {
   "artifact_code": "IN_RETIRE_PHYSICAL_COPY_V0",
   "artifact_type": "IN",
-  "content": "# IN_RETIRE_PHYSICAL_COPY_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to retire a lost or damaged copy\n  workflow: WF_RETIRE_PHYSICAL_COPY_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    barcode:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to retire a lost or damaged copy\n",
-  "content_hash": "1f9419245ed02bcf95a818cb726189c98033314df1e1aedd8ebd90b3202662a3",
+  "content": "# IN_RETIRE_PHYSICAL_COPY_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to retire physical copy\n  workflow: WF_RETIRE_PHYSICAL_COPY_V1\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    barcode:\n      type: string\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to retire physical copy\n",
+  "content_hash": "e4db350fc5c81434d4c07d8bb233861fe5e6b04cd74aacbe02c442bce146a5df",
   "fqdn_id": "book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0",
   "frontmatter": {
     "artifact_kind": "INTENT",
@@ -31,8 +31,8 @@
           "description": "Request rejected"
         }
       },
-      "summary": "A request to retire a lost or damaged copy",
-      "workflow": "WF_RETIRE_PHYSICAL_COPY_V0"
+      "summary": "A request to retire physical copy",
+      "workflow": "WF_RETIRE_PHYSICAL_COPY_V1"
     },
     "fqdn": "book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0",
     "governed_by": "intent::CONSTITUTION_INTENT_V0",

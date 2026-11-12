@@ -5,680 +5,14 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
-        "source_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "target_key": "CC_ASSEMBLE_BOOK_DETAILS_V0",
-        "wf_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0"
-      },
-      "source_address": 19,
-      "source_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0",
-      "target_address": 20,
-      "target_fqdn": "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "target_key": "CC_SEARCH_CATALOG_V0",
-        "wf_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0"
-      },
-      "source_address": 19,
-      "source_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0",
-      "target_address": 34,
-      "target_fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "actor_id": "$.inputs.staff_id",
-          "record": "$.inputs.record",
-          "stream_id": "CATALOG_OPERATIONS"
-        },
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "op": "APPEND",
-        "outputs": {
-          "record_id": "$.capability_result.record_id",
-          "sequence_number": "$.capability_result.sequence_number"
-        },
-        "pipeline_index": 0,
-        "step_id": "append_operation",
-        "store": "CATALOG_OPERATIONS"
-      },
-      "source_address": 19,
-      "source_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0",
-      "target_address": 82,
-      "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "author": "$.results.read_book_record.value.author",
-          "title": "$.results.read_book_record.value.title"
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "work_key": "$.capability_result.work_key"
-        },
-        "pipeline_index": 1,
-        "step_id": "form_work_key"
-      },
-      "source_address": 20,
-      "source_fqdn": "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0",
-      "target_address": 38,
-      "target_fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "filter": "$.inputs.copy_criteria",
-          "source": "$.results.select_copy_records.records"
-        },
-        "on_result": {
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "copies_held": "$.capability_result.extracted"
-        },
-        "pipeline_index": 4,
-        "step_id": "select_copies_of_book"
-      },
-      "source_address": 20,
-      "source_fqdn": "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0",
-      "target_address": 40,
-      "target_fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "key": "$.inputs.identity_key"
-        },
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "NOT_FOUND": "exit",
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "op": "READ",
-        "outputs": {
-          "book_record": "$.capability_result.value",
-          "result_status": "$.result_status",
-          "value": "$.capability_result.value"
-        },
-        "pipeline_index": 0,
-        "step_id": "read_book_record",
-        "store": "BOOKS"
-      },
-      "source_address": 20,
-      "source_fqdn": "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "key": "$.results.form_work_key.work_key"
-        },
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "NOT_FOUND": "continue",
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "op": "READ",
-        "outputs": {
-          "work_record": "$.capability_result.value"
-        },
-        "pipeline_index": 2,
-        "step_id": "read_work_record",
-        "store": "WORKS"
-      },
-      "source_address": 20,
-      "source_fqdn": "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {},
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "continue"
-        },
-        "op": "SELECT",
-        "outputs": {
-          "records": "$.capability_result.records",
-          "result_status": "$.result_status"
-        },
-        "pipeline_index": 3,
-        "step_id": "select_copy_records",
-        "store": "PHYSICAL_COPIES"
-      },
-      "source_address": 20,
-      "source_fqdn": "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CLAIM_BOOK_IDENTITY_V0",
-        "target_key": "CC_CLAIM_COPY_BARCODE_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0"
+        "source_key": "CC_CHECK_REGISTER_ADDITIONAL_EDITION_SUBMISSION_V0",
+        "target_key": "CC_RESOLVE_WORK_V1",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1"
       },
       "source_address": 21,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0",
-      "target_address": 22,
-      "target_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CLAIM_BOOK_IDENTITY_V0",
-        "target_key": "CC_REGISTER_ADDITIONAL_EDITION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0"
-      },
-      "source_address": 21,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0",
-      "target_address": 25,
-      "target_fqdn": "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "author": "$.inputs.author",
-          "publication_year": "$.inputs.publication_year",
-          "title": "$.inputs.title"
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "identity_key": "$.capability_result.identity_key"
-        },
-        "pipeline_index": 0,
-        "step_id": "form_identity_key"
-      },
-      "source_address": 21,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0",
-      "target_address": 37,
-      "target_fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "key": "$.results.form_identity_key.identity_key",
-          "target_cs": "CS_MUTABLE_JSON_V0",
-          "target_ref": "BOOKS"
-        },
-        "on_result": {
-          "ALREADY_EXISTS": "exit",
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "op": "REGISTER",
-        "outputs": {
-          "address": "$.capability_result.address",
-          "result_status": "$.result_status"
-        },
-        "pipeline_index": 1,
-        "step_id": "claim_identity",
-        "store": "BOOK_IDENTITY_REGISTRY"
-      },
-      "source_address": 21,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0",
-      "target_address": 84,
-      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CLAIM_COPY_BARCODE_V0",
-        "target_key": "CC_REGISTER_BOOK_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0"
-      },
-      "source_address": 22,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V0",
-      "target_address": 26,
-      "target_fqdn": "book_library_mgmt::CC_REGISTER_BOOK_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CLAIM_COPY_BARCODE_V0",
-        "target_key": "CC_REGISTER_PHYSICAL_COPY_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0"
-      },
-      "source_address": 22,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V0",
-      "target_address": 27,
-      "target_fqdn": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "key": "$.inputs.barcode",
-          "target_cs": "CS_MUTABLE_JSON_V0",
-          "target_ref": "PHYSICAL_COPIES"
-        },
-        "on_result": {
-          "ALREADY_EXISTS": "exit",
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "op": "REGISTER",
-        "outputs": {
-          "address": "$.capability_result.address",
-          "result_status": "$.result_status"
-        },
-        "pipeline_index": 0,
-        "step_id": "claim_barcode",
-        "store": "COPY_BARCODE_REGISTRY"
-      },
-      "source_address": 22,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V0",
-      "target_address": 84,
-      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CLAIM_WORK_IDENTITY_V0",
-        "target_key": "CC_CLAIM_BOOK_IDENTITY_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0"
-      },
-      "source_address": 23,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0",
-      "target_address": 21,
-      "target_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "ALREADY_EXISTS",
-        "source_key": "CC_CLAIM_WORK_IDENTITY_V0",
-        "target_key": "CC_CLAIM_BOOK_IDENTITY_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0"
-      },
-      "source_address": 23,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0",
-      "target_address": 21,
-      "target_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "author": "$.inputs.author",
-          "title": "$.inputs.title"
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "work_key": "$.capability_result.work_key"
-        },
-        "pipeline_index": 0,
-        "step_id": "form_work_key"
-      },
-      "source_address": 23,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0",
-      "target_address": 38,
-      "target_fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "key": "$.results.form_work_key.work_key",
-          "value": "$.results.assemble_work_record.work_record"
-        },
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "op": "WRITE",
-        "outputs": {
-          "result_status": "$.result_status"
-        },
-        "pipeline_index": 3,
-        "step_id": "write_work_record",
-        "store": "WORKS"
-      },
-      "source_address": 23,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "key": "$.results.form_work_key.work_key",
-          "target_cs": "CS_MUTABLE_JSON_V0",
-          "target_ref": "WORKS"
-        },
-        "on_result": {
-          "ALREADY_EXISTS": "exit",
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "op": "REGISTER",
-        "outputs": {
-          "address": "$.capability_result.address",
-          "result_status": "$.result_status"
-        },
-        "pipeline_index": 1,
-        "step_id": "claim_work",
-        "store": "WORK_IDENTITY_REGISTRY"
-      },
-      "source_address": 23,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0",
-      "target_address": 84,
-      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "fields": "$.inputs.work_fields"
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "work_record": "$.capability_result.record"
-        },
-        "pipeline_index": 2,
-        "step_id": "assemble_work_record"
-      },
-      "source_address": 23,
-      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0",
-      "target_address": 88,
-      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "target_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0"
-      },
-      "source_address": 24,
-      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "target_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0"
-      },
-      "source_address": 24,
-      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "target_key": "CC_CLAIM_COPY_BARCODE_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0"
-      },
-      "source_address": 24,
-      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
-      "target_address": 22,
-      "target_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "target_key": "CC_REINSTATE_BOOK_RECORD_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0"
-      },
-      "source_address": 24,
-      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
-      "target_address": 28,
-      "target_fqdn": "book_library_mgmt::CC_REINSTATE_BOOK_RECORD_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "target_key": "CC_REINSTATE_PHYSICAL_COPY_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0"
-      },
-      "source_address": 24,
-      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
-      "target_address": 29,
-      "target_fqdn": "book_library_mgmt::CC_REINSTATE_PHYSICAL_COPY_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "target_key": "CC_RESOLVE_BOOK_IDENTITY_V0",
-        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
-      },
-      "source_address": 24,
-      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
-      "target_address": 30,
-      "target_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "target_key": "CC_RETIRE_BOOK_RECORD_V0",
-        "wf_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0"
-      },
-      "source_address": 24,
-      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
-      "target_address": 32,
-      "target_fqdn": "book_library_mgmt::CC_RETIRE_BOOK_RECORD_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "target_key": "CC_RETIRE_PHYSICAL_COPY_V0",
-        "wf_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0"
-      },
-      "source_address": 24,
-      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
-      "target_address": 33,
-      "target_fqdn": "book_library_mgmt::CC_RETIRE_PHYSICAL_COPY_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "target_key": "CC_VALIDATE_BOOK_SUBMISSION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0"
-      },
-      "source_address": 24,
-      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "source_fqdn": "book_library_mgmt::CC_CHECK_REGISTER_ADDITIONAL_EDITION_SUBMISSION_V0",
       "target_address": 36,
-      "target_fqdn": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "target_key": "CC_VALIDATE_BOOK_SUBMISSION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0"
-      },
-      "source_address": 24,
-      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
-      "target_address": 36,
-      "target_fqdn": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "parameters": "$.inputs.staff_credentials",
-          "rules": [
-            {
-              "field": "staff_id",
-              "op": "not_null"
-            },
-            {
-              "field": "authorized",
-              "op": "eq",
-              "value": true
-            }
-          ]
-        },
-        "on_result": {
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "is_authorized": "$.capability_result.valid"
-        },
-        "pipeline_index": 0,
-        "step_id": "confirm_authorization"
-      },
-      "source_address": 24,
-      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
-      "target_address": 91,
-      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_REGISTER_ADDITIONAL_EDITION_V0",
-        "target_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0"
-      },
-      "source_address": 25,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "key": "$.inputs.identity_key",
-          "value": "$.results.assemble_edition_record.edition_record"
-        },
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "op": "WRITE",
-        "outputs": {
-          "result_status": "$.result_status"
-        },
-        "pipeline_index": 3,
-        "step_id": "write_edition_record",
-        "store": "BOOKS"
-      },
-      "source_address": 25,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "fields": "$.inputs.edition_fields"
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "edition_record": "$.capability_result.record"
-        },
-        "pipeline_index": 2,
-        "step_id": "assemble_edition_record"
-      },
-      "source_address": 25,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 88,
-      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+      "target_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V1"
     },
     {
       "kind": "CC_BINDS_CT",
@@ -686,29 +20,35 @@
       "metadata": {
         "inputs": {
           "parameters": {
-            "violations": "$.results.validate_edition_fields.violations"
+            "book_violations": "$.results.check_book_fields.violations",
+            "subject": "$.inputs.submission.subject"
           },
           "rules": [
             {
-              "field": "violations",
+              "field": "book_violations",
               "op": "eq",
+              "value": []
+            },
+            {
+              "field": "subject",
+              "op": "neq",
               "value": []
             }
           ]
         },
         "on_result": {
-          "SUCCESS": "continue",
+          "SUCCESS": "exit",
           "VIOLATION": "exit"
         },
         "outputs": {
           "valid": "$.capability_result.valid"
         },
         "pipeline_index": 1,
-        "step_id": "refuse_incomplete_record"
+        "step_id": "refuse_incomplete_submission"
       },
-      "source_address": 25,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 91,
+      "source_address": 21,
+      "source_fqdn": "book_library_mgmt::CC_CHECK_REGISTER_ADDITIONAL_EDITION_SUBMISSION_V0",
+      "target_address": 99,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
     },
     {
@@ -716,7 +56,7 @@
       "kind_address": 16386,
       "metadata": {
         "inputs": {
-          "record": "$.inputs.edition_fields",
+          "record": "$.inputs.submission",
           "schema": {
             "author": {
               "required": true,
@@ -744,11 +84,11 @@
           "violations": "$.capability_result.violations"
         },
         "pipeline_index": 0,
-        "step_id": "validate_edition_fields"
+        "step_id": "check_book_fields"
       },
-      "source_address": 25,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 92,
+      "source_address": 21,
+      "source_fqdn": "book_library_mgmt::CC_CHECK_REGISTER_ADDITIONAL_EDITION_SUBMISSION_V0",
+      "target_address": 100,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
     },
     {
@@ -756,93 +96,14 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
-        "source_key": "CC_REGISTER_BOOK_V0",
-        "target_key": "CC_REGISTER_PHYSICAL_COPY_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0"
+        "source_key": "CC_CHECK_REGISTER_BOOK_SUBMISSION_V0",
+        "target_key": "CC_REQUIRE_COPY_BARCODE_FREE_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1"
       },
-      "source_address": 26,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_BOOK_V0",
-      "target_address": 27,
-      "target_fqdn": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "author": "$.inputs.book_fields.author",
-          "title": "$.inputs.book_fields.title"
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "work_key": "$.capability_result.work_key"
-        },
-        "pipeline_index": 0,
-        "step_id": "form_work_key"
-      },
-      "source_address": 26,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_BOOK_V0",
-      "target_address": 38,
-      "target_fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "key": "$.inputs.identity_key",
-          "value": "$.results.assemble_book_record.book_record"
-        },
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "op": "WRITE",
-        "outputs": {
-          "result_status": "$.result_status"
-        },
-        "pipeline_index": 4,
-        "step_id": "write_book_record",
-        "store": "BOOKS"
-      },
-      "source_address": 26,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_BOOK_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "fields": {
-            "author": "$.inputs.book_fields.author",
-            "identity_key": "$.inputs.identity_key",
-            "publication_year": "$.inputs.book_fields.publication_year",
-            "state": "$.inputs.book_fields.state",
-            "subject": "$.inputs.book_fields.subject",
-            "title": "$.inputs.book_fields.title",
-            "work_key": "$.results.form_work_key.work_key"
-          }
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "book_record": "$.capability_result.record"
-        },
-        "pipeline_index": 3,
-        "step_id": "assemble_book_record"
-      },
-      "source_address": 26,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_BOOK_V0",
-      "target_address": 88,
-      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+      "source_address": 22,
+      "source_fqdn": "book_library_mgmt::CC_CHECK_REGISTER_BOOK_SUBMISSION_V0",
+      "target_address": 34,
+      "target_fqdn": "book_library_mgmt::CC_REQUIRE_COPY_BARCODE_FREE_V0"
     },
     {
       "kind": "CC_BINDS_CT",
@@ -850,29 +111,47 @@
       "metadata": {
         "inputs": {
           "parameters": {
-            "violations": "$.results.validate_book_fields.violations"
+            "barcode": "$.inputs.barcode",
+            "book_violations": "$.results.check_book_fields.violations",
+            "subject": "$.inputs.book_fields.subject",
+            "work_violations": "$.results.check_work_fields.violations"
           },
           "rules": [
             {
-              "field": "violations",
+              "field": "barcode",
+              "op": "neq",
+              "value": ""
+            },
+            {
+              "field": "book_violations",
+              "op": "eq",
+              "value": []
+            },
+            {
+              "field": "subject",
+              "op": "neq",
+              "value": []
+            },
+            {
+              "field": "work_violations",
               "op": "eq",
               "value": []
             }
           ]
         },
         "on_result": {
-          "SUCCESS": "continue",
+          "SUCCESS": "exit",
           "VIOLATION": "exit"
         },
         "outputs": {
           "valid": "$.capability_result.valid"
         },
         "pipeline_index": 2,
-        "step_id": "refuse_incomplete_record"
+        "step_id": "refuse_incomplete_submission"
       },
-      "source_address": 26,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_BOOK_V0",
-      "target_address": 91,
+      "source_address": 22,
+      "source_fqdn": "book_library_mgmt::CC_CHECK_REGISTER_BOOK_SUBMISSION_V0",
+      "target_address": 99,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
     },
     {
@@ -907,12 +186,44 @@
         "outputs": {
           "violations": "$.capability_result.violations"
         },
-        "pipeline_index": 1,
-        "step_id": "validate_book_fields"
+        "pipeline_index": 0,
+        "step_id": "check_book_fields"
       },
-      "source_address": 26,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_BOOK_V0",
-      "target_address": 92,
+      "source_address": 22,
+      "source_fqdn": "book_library_mgmt::CC_CHECK_REGISTER_BOOK_SUBMISSION_V0",
+      "target_address": 100,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "record": "$.inputs.work_fields",
+          "schema": {
+            "author": {
+              "required": true,
+              "type": "string"
+            },
+            "title": {
+              "required": true,
+              "type": "string"
+            }
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "violations": "$.capability_result.violations"
+        },
+        "pipeline_index": 1,
+        "step_id": "check_work_fields"
+      },
+      "source_address": 22,
+      "source_fqdn": "book_library_mgmt::CC_CHECK_REGISTER_BOOK_SUBMISSION_V0",
+      "target_address": 100,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
     },
     {
@@ -920,54 +231,140 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
-        "source_key": "CC_REGISTER_PHYSICAL_COPY_V0",
-        "target_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0"
+        "source_key": "CC_CLAIM_BOOK_IDENTITY_V1",
+        "target_key": "CC_CLAIM_COPY_BARCODE_V1",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1"
       },
-      "source_address": 27,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
+      "source_address": 23,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1",
+      "target_address": 24,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V1"
     },
     {
       "kind": "NODE_NEXT",
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
-        "source_key": "CC_REGISTER_PHYSICAL_COPY_V0",
-        "target_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0"
+        "source_key": "CC_CLAIM_BOOK_IDENTITY_V1",
+        "target_key": "CC_CLAIM_WORK_IDENTITY_V1",
+        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
       },
-      "source_address": 27,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
+      "source_address": 23,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1",
+      "target_address": 25,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CLAIM_BOOK_IDENTITY_V1",
+        "target_key": "CC_WRITE_BOOK_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1"
+      },
+      "source_address": 23,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1",
+      "target_address": 40,
+      "target_fqdn": "book_library_mgmt::CC_WRITE_BOOK_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "author": "$.inputs.author",
+          "publication_year": "$.inputs.publication_year",
+          "title": "$.inputs.title"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "identity_key": "$.capability_result.identity_key"
+        },
+        "pipeline_index": 0,
+        "step_id": "form_identity_key"
+      },
+      "source_address": 23,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1",
+      "target_address": 43,
+      "target_fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {},
+      "source_address": 23,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
     },
     {
       "kind": "CC_BINDS_CS",
       "kind_address": 16385,
       "metadata": {
         "inputs": {
-          "key": "$.inputs.identity_key"
+          "key": "$.results.form_identity_key.identity_key",
+          "target_cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "target_ref": "BOOKS"
         },
         "on_result": {
+          "ALREADY_EXISTS": "exit",
           "BACKEND_ERROR": "exit",
-          "NOT_FOUND": "exit",
-          "SUCCESS": "continue",
+          "SUCCESS": "exit",
           "VIOLATION": "exit"
         },
-        "op": "READ",
+        "op": "REGISTER",
         "outputs": {
-          "book_record": "$.capability_result.value",
+          "address": "$.capability_result.address",
           "result_status": "$.result_status"
         },
-        "pipeline_index": 0,
-        "step_id": "read_book_record",
-        "store": "BOOKS"
+        "pipeline_index": 1,
+        "step_id": "claim_identity_key",
+        "store": "BOOK_IDENTITY_REGISTRY"
       },
-      "source_address": 27,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 83,
+      "source_address": 23,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1",
+      "target_address": 92,
+      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CLAIM_COPY_BARCODE_V1",
+        "target_key": "CC_CLAIM_WORK_IDENTITY_V1",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1"
+      },
+      "source_address": 24,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V1",
+      "target_address": 25,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CLAIM_COPY_BARCODE_V1",
+        "target_key": "CC_WRITE_PHYSICAL_COPY_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1"
+      },
+      "source_address": 24,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V1",
+      "target_address": 42,
+      "target_fqdn": "book_library_mgmt::CC_WRITE_PHYSICAL_COPY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {},
+      "source_address": 24,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V1",
+      "target_address": 91,
       "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
     },
     {
@@ -976,183 +373,27 @@
       "metadata": {
         "inputs": {
           "key": "$.inputs.barcode",
-          "value": "$.results.assemble_copy_record.copy_record"
+          "target_cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "target_ref": "PHYSICAL_COPIES"
         },
         "on_result": {
+          "ALREADY_EXISTS": "exit",
           "BACKEND_ERROR": "exit",
           "SUCCESS": "exit",
           "VIOLATION": "exit"
         },
-        "op": "WRITE",
+        "op": "REGISTER",
         "outputs": {
+          "address": "$.capability_result.address",
           "result_status": "$.result_status"
         },
-        "pipeline_index": 2,
-        "step_id": "write_copy_record",
-        "store": "PHYSICAL_COPIES"
-      },
-      "source_address": 27,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "fields": {
-            "barcode": "$.inputs.barcode",
-            "identity_key": "$.inputs.identity_key",
-            "state": "REGISTERED"
-          }
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "copy_record": "$.capability_result.record"
-        },
-        "pipeline_index": 1,
-        "step_id": "assemble_copy_record"
-      },
-      "source_address": 27,
-      "source_fqdn": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 88,
-      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_REINSTATE_BOOK_RECORD_V0",
-        "target_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0"
-      },
-      "source_address": 28,
-      "source_fqdn": "book_library_mgmt::CC_REINSTATE_BOOK_RECORD_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "filter": {
-            "identity_key": "$.inputs.identity_key"
-          },
-          "updates": {
-            "state": "REGISTERED"
-          }
-        },
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "op": "UPDATE_WHERE",
-        "outputs": {
-          "matched_keys": "$.capability_result.matched_keys",
-          "result_status": "$.result_status",
-          "updated_count": "$.capability_result.updated_count"
-        },
         "pipeline_index": 0,
-        "step_id": "set_record_state",
-        "store": "BOOKS"
+        "step_id": "claim_barcode",
+        "store": "COPY_BARCODE_REGISTRY"
       },
-      "source_address": 28,
-      "source_fqdn": "book_library_mgmt::CC_REINSTATE_BOOK_RECORD_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_REINSTATE_PHYSICAL_COPY_V0",
-        "target_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0"
-      },
-      "source_address": 29,
-      "source_fqdn": "book_library_mgmt::CC_REINSTATE_PHYSICAL_COPY_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "filter": {
-            "barcode": "$.inputs.barcode"
-          },
-          "updates": {
-            "state": "REGISTERED"
-          }
-        },
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "op": "UPDATE_WHERE",
-        "outputs": {
-          "matched_keys": "$.capability_result.matched_keys",
-          "result_status": "$.result_status",
-          "updated_count": "$.capability_result.updated_count"
-        },
-        "pipeline_index": 0,
-        "step_id": "set_record_state",
-        "store": "PHYSICAL_COPIES"
-      },
-      "source_address": 29,
-      "source_fqdn": "book_library_mgmt::CC_REINSTATE_PHYSICAL_COPY_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_RESOLVE_BOOK_IDENTITY_V0",
-        "target_key": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
-      },
-      "source_address": 30,
-      "source_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V0",
-      "target_address": 35,
-      "target_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "key_or_address": "$.inputs.identity_key"
-        },
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "NOT_FOUND": "exit",
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "op": "RESOLVE",
-        "outputs": {
-          "result_status": "$.result_status",
-          "target_ref": "$.capability_result.target_ref"
-        },
-        "pipeline_index": 0,
-        "step_id": "resolve_identity",
-        "store": "BOOK_IDENTITY_REGISTRY"
-      },
-      "source_address": 30,
-      "source_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V0",
-      "target_address": 84,
+      "source_address": 24,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V1",
+      "target_address": 92,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
     },
     {
@@ -1160,14 +401,56 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
-        "source_key": "CC_RESOLVE_WORK_V0",
-        "target_key": "CC_CLAIM_BOOK_IDENTITY_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0"
+        "source_key": "CC_CLAIM_WORK_IDENTITY_V1",
+        "target_key": "CC_REKEY_BOOK_V0",
+        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
       },
-      "source_address": 31,
-      "source_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V0",
-      "target_address": 21,
-      "target_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0"
+      "source_address": 25,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+      "target_address": 33,
+      "target_fqdn": "book_library_mgmt::CC_REKEY_BOOK_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ALREADY_EXISTS",
+        "source_key": "CC_CLAIM_WORK_IDENTITY_V1",
+        "target_key": "CC_REKEY_BOOK_V0",
+        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+      },
+      "source_address": 25,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+      "target_address": 33,
+      "target_fqdn": "book_library_mgmt::CC_REKEY_BOOK_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CLAIM_WORK_IDENTITY_V1",
+        "target_key": "CC_WRITE_BOOK_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1"
+      },
+      "source_address": 25,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+      "target_address": 40,
+      "target_fqdn": "book_library_mgmt::CC_WRITE_BOOK_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "ALREADY_EXISTS",
+        "source_key": "CC_CLAIM_WORK_IDENTITY_V1",
+        "target_key": "CC_WRITE_BOOK_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1"
+      },
+      "source_address": 25,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+      "target_address": 40,
+      "target_fqdn": "book_library_mgmt::CC_WRITE_BOOK_V0"
     },
     {
       "kind": "CC_BINDS_CT",
@@ -1187,9 +470,1025 @@
         "pipeline_index": 0,
         "step_id": "form_work_key"
       },
+      "source_address": 25,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+      "target_address": 44,
+      "target_fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.results.form_work_key.work_key",
+          "value": "$.results.assemble_work_record.work_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 3,
+        "step_id": "write_work_record",
+        "store": "WORKS"
+      },
+      "source_address": 25,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.results.form_work_key.work_key",
+          "target_cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "target_ref": "WORKS"
+        },
+        "on_result": {
+          "ALREADY_EXISTS": "exit",
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "REGISTER",
+        "outputs": {
+          "address": "$.capability_result.address",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 1,
+        "step_id": "claim_key",
+        "store": "WORK_IDENTITY_REGISTRY"
+      },
+      "source_address": 25,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+      "target_address": 92,
+      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "fields": "$.inputs.work_fields"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "work_record": "$.capability_result.record"
+        },
+        "pipeline_index": 2,
+        "step_id": "assemble_work_record"
+      },
+      "source_address": 25,
+      "source_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
+      "target_address": 96,
+      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "VIOLATION",
+        "source_key": "CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0",
+        "target_key": "CC_CLAIM_BOOK_IDENTITY_V1",
+        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+      },
+      "source_address": 26,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0",
+      "target_address": 23,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0",
+        "target_key": "CC_WRITE_CORRECTED_BOOK_RECORD_V0",
+        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+      },
+      "source_address": 26,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0",
+      "target_address": 41,
+      "target_fqdn": "book_library_mgmt::CC_WRITE_CORRECTED_BOOK_RECORD_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "left": "$.inputs.identity_key",
+          "right": "$.inputs.updated_identity_key"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "identity_unchanged": "$.capability_result.is_equal"
+        },
+        "pipeline_index": 0,
+        "step_id": "compare_identity"
+      },
+      "source_address": 26,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0",
+      "target_address": 97,
+      "target_fqdn": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": {
+            "identity_unchanged": "$.results.compare_identity.identity_unchanged"
+          },
+          "rules": [
+            {
+              "field": "identity_unchanged",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "pipeline_index": 1,
+        "step_id": "require_identity_unchanged"
+      },
+      "source_address": 26,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0",
+      "target_address": 99,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_CHECK_REGISTER_ADDITIONAL_EDITION_SUBMISSION_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1"
+      },
+      "source_address": 27,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "target_address": 21,
+      "target_fqdn": "book_library_mgmt::CC_CHECK_REGISTER_ADDITIONAL_EDITION_SUBMISSION_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_CHECK_REGISTER_BOOK_SUBMISSION_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1"
+      },
+      "source_address": 27,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "target_address": 22,
+      "target_fqdn": "book_library_mgmt::CC_CHECK_REGISTER_BOOK_SUBMISSION_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_MOVE_BOOK_FROM_REGISTERED_V0",
+        "wf_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1"
+      },
+      "source_address": 27,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "target_address": 28,
+      "target_fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_REGISTERED_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_MOVE_BOOK_FROM_RETIRED_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2"
+      },
+      "source_address": 27,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "target_address": 29,
+      "target_fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_RETIRED_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_MOVE_PHYSICAL_COPY_FROM_REGISTERED_V0",
+        "wf_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1"
+      },
+      "source_address": 27,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "target_address": 30,
+      "target_fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_REGISTERED_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2"
+      },
+      "source_address": 27,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "target_address": 31,
+      "target_fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "wf_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1"
+      },
+      "source_address": 27,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "wf_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V3"
+      },
+      "source_address": 27,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_RESOLVE_BOOK_IDENTITY_V1",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1"
+      },
+      "source_address": 27,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "target_address": 35,
+      "target_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
+        "target_key": "CC_RESOLVE_BOOK_IDENTITY_V1",
+        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+      },
+      "source_address": 27,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "target_address": 35,
+      "target_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": "$.inputs.staff_credentials",
+          "rules": [
+            {
+              "field": "staff_id",
+              "op": "not_null"
+            },
+            {
+              "field": "authorized",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "is_authorized": "$.capability_result.valid"
+        },
+        "pipeline_index": 0,
+        "step_id": "confirm_authorization"
+      },
+      "source_address": 27,
+      "source_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "target_address": 99,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_MOVE_BOOK_FROM_REGISTERED_V0",
+        "target_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "wf_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1"
+      },
+      "source_address": 28,
+      "source_fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_REGISTERED_V0",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "filter": {
+            "identity_key": "$.inputs.identity_key",
+            "state": "REGISTERED"
+          },
+          "updates": {
+            "state": "$.inputs.to_state"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "pipeline_index": 1,
+        "step_id": "set_record_state",
+        "store": "BOOKS"
+      },
+      "source_address": 28,
+      "source_fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_REGISTERED_V0",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "allowed_set": [
+            "RETIRED"
+          ],
+          "value": "$.inputs.to_state"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "is_member": "$.capability_result.is_member"
+        },
+        "pipeline_index": 0,
+        "step_id": "read_outcome_admitted"
+      },
+      "source_address": 28,
+      "source_fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_REGISTERED_V0",
+      "target_address": 101,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_MOVE_BOOK_FROM_RETIRED_V0",
+        "target_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2"
+      },
+      "source_address": 29,
+      "source_fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_RETIRED_V0",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "filter": {
+            "identity_key": "$.inputs.identity_key",
+            "state": "RETIRED"
+          },
+          "updates": {
+            "state": "$.inputs.to_state"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "pipeline_index": 1,
+        "step_id": "set_record_state",
+        "store": "BOOKS"
+      },
+      "source_address": 29,
+      "source_fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_RETIRED_V0",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "allowed_set": [
+            "REGISTERED"
+          ],
+          "value": "$.inputs.to_state"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "is_member": "$.capability_result.is_member"
+        },
+        "pipeline_index": 0,
+        "step_id": "read_outcome_admitted"
+      },
+      "source_address": 29,
+      "source_fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_RETIRED_V0",
+      "target_address": 101,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_MOVE_PHYSICAL_COPY_FROM_REGISTERED_V0",
+        "target_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "wf_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1"
+      },
+      "source_address": 30,
+      "source_fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_REGISTERED_V0",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "filter": {
+            "barcode": "$.inputs.barcode",
+            "state": "REGISTERED"
+          },
+          "updates": {
+            "state": "$.inputs.to_state"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "pipeline_index": 1,
+        "step_id": "set_record_state",
+        "store": "PHYSICAL_COPIES"
+      },
+      "source_address": 30,
+      "source_fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_REGISTERED_V0",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "allowed_set": [
+            "RETIRED"
+          ],
+          "value": "$.inputs.to_state"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "is_member": "$.capability_result.is_member"
+        },
+        "pipeline_index": 0,
+        "step_id": "read_outcome_admitted"
+      },
+      "source_address": 30,
+      "source_fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_REGISTERED_V0",
+      "target_address": 101,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+        "target_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2"
+      },
       "source_address": 31,
-      "source_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V0",
+      "source_fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "filter": {
+            "barcode": "$.inputs.barcode",
+            "state": "RETIRED"
+          },
+          "updates": {
+            "state": "$.inputs.to_state"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "pipeline_index": 1,
+        "step_id": "set_record_state",
+        "store": "PHYSICAL_COPIES"
+      },
+      "source_address": 31,
+      "source_fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "allowed_set": [
+            "REGISTERED"
+          ],
+          "value": "$.inputs.to_state"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "is_member": "$.capability_result.is_member"
+        },
+        "pipeline_index": 0,
+        "step_id": "read_outcome_admitted"
+      },
+      "source_address": 31,
+      "source_fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
+      "target_address": 101,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "target_key": "CC_RETRIEVE_BOOK_DETAILS_V0",
+        "wf_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1"
+      },
+      "source_address": 32,
+      "source_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0",
+      "target_address": 37,
+      "target_fqdn": "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "target_key": "CC_SEARCH_CATALOG_V3",
+        "wf_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V3"
+      },
+      "source_address": 32,
+      "source_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0",
       "target_address": 38,
+      "target_fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V3"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "actor_id": "$.inputs.staff_id",
+          "record": "$.results.assemble_occurrence.record",
+          "stream_id": "CATALOG_OPERATIONS"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "APPEND",
+        "outputs": {
+          "sequence_number": "$.capability_result.sequence_number"
+        },
+        "pipeline_index": 1,
+        "step_id": "append_occurrence",
+        "store": "CATALOG_OPERATIONS"
+      },
+      "source_address": 32,
+      "source_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0",
+      "target_address": 90,
+      "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "fields": {
+            "operation": "$.inputs.occurrence",
+            "staff_id": "$.inputs.staff_id",
+            "subject": "$.inputs.subject"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "record": "$.capability_result.record"
+        },
+        "pipeline_index": 0,
+        "step_id": "assemble_occurrence"
+      },
+      "source_address": 32,
+      "source_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0",
+      "target_address": 96,
+      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_REKEY_BOOK_V0",
+        "target_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+      },
+      "source_address": 33,
+      "source_fqdn": "book_library_mgmt::CC_REKEY_BOOK_V0",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.updated_identity_key",
+          "value": "$.inputs.updated_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 0,
+        "step_id": "write_book_record",
+        "store": "BOOKS"
+      },
+      "source_address": 33,
+      "source_fqdn": "book_library_mgmt::CC_REKEY_BOOK_V0",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "filter": {
+            "identity_key": "$.inputs.identity_key"
+          },
+          "updates": {
+            "identity_key": "$.inputs.updated_identity_key"
+          }
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "continue"
+        },
+        "op": "UPDATE_WHERE",
+        "outputs": {
+          "matched_keys": "$.capability_result.matched_keys",
+          "result_status": "$.result_status",
+          "updated_count": "$.capability_result.updated_count"
+        },
+        "pipeline_index": 1,
+        "step_id": "move_copy_records",
+        "store": "PHYSICAL_COPIES"
+      },
+      "source_address": 33,
+      "source_fqdn": "book_library_mgmt::CC_REKEY_BOOK_V0",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "DELETE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 2,
+        "step_id": "remove_old_book_record",
+        "store": "BOOKS"
+      },
+      "source_address": 33,
+      "source_fqdn": "book_library_mgmt::CC_REKEY_BOOK_V0",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key_or_address": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "DEREGISTER",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 3,
+        "step_id": "release_old_identity",
+        "store": "BOOK_IDENTITY_REGISTRY"
+      },
+      "source_address": 33,
+      "source_fqdn": "book_library_mgmt::CC_REKEY_BOOK_V0",
+      "target_address": 92,
+      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_REQUIRE_COPY_BARCODE_FREE_V0",
+        "target_key": "CC_CLAIM_BOOK_IDENTITY_V1",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1"
+      },
+      "source_address": 34,
+      "source_fqdn": "book_library_mgmt::CC_REQUIRE_COPY_BARCODE_FREE_V0",
+      "target_address": 23,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key_or_address": "$.inputs.barcode"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "continue",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "RESOLVE",
+        "outputs": {
+          "result_status": "$.result_status",
+          "target_ref": "$.capability_result.target_ref"
+        },
+        "pipeline_index": 0,
+        "step_id": "resolve_identity",
+        "store": "COPY_BARCODE_REGISTRY"
+      },
+      "source_address": 34,
+      "source_fqdn": "book_library_mgmt::CC_REQUIRE_COPY_BARCODE_FREE_V0",
+      "target_address": 92,
+      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "parameters": {
+            "held": "$.results.resolve_identity.result_status"
+          },
+          "rules": [
+            {
+              "field": "held",
+              "op": "eq",
+              "value": "NOT_FOUND"
+            }
+          ]
+        },
+        "on_result": {
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "valid": "$.capability_result.valid"
+        },
+        "pipeline_index": 1,
+        "step_id": "require_unheld"
+      },
+      "source_address": 34,
+      "source_fqdn": "book_library_mgmt::CC_REQUIRE_COPY_BARCODE_FREE_V0",
+      "target_address": 99,
+      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_RESOLVE_BOOK_IDENTITY_V1",
+        "target_key": "CC_CLAIM_COPY_BARCODE_V1",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1"
+      },
+      "source_address": 35,
+      "source_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1",
+      "target_address": 24,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V1"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_RESOLVE_BOOK_IDENTITY_V1",
+        "target_key": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+      },
+      "source_address": 35,
+      "source_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1",
+      "target_address": 39,
+      "target_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "book_record": "$.capability_result.value",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 1,
+        "step_id": "read_book_record",
+        "store": "BOOKS"
+      },
+      "source_address": 35,
+      "source_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key_or_address": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "RESOLVE",
+        "outputs": {
+          "result_status": "$.result_status",
+          "target_ref": "$.capability_result.target_ref"
+        },
+        "pipeline_index": 0,
+        "step_id": "resolve_identity",
+        "store": "BOOK_IDENTITY_REGISTRY"
+      },
+      "source_address": 35,
+      "source_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1",
+      "target_address": 92,
+      "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_RESOLVE_WORK_V1",
+        "target_key": "CC_CLAIM_BOOK_IDENTITY_V1",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1"
+      },
+      "source_address": 36,
+      "source_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V1",
+      "target_address": 23,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "author": "$.inputs.author",
+          "title": "$.inputs.title"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "work_key": "$.capability_result.work_key"
+        },
+        "pipeline_index": 0,
+        "step_id": "form_work_key"
+      },
+      "source_address": 36,
+      "source_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V1",
+      "target_address": 44,
       "target_fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
     },
     {
@@ -1214,9 +1513,9 @@
         "step_id": "read_work_record",
         "store": "WORKS"
       },
-      "source_address": 31,
-      "source_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V0",
-      "target_address": 83,
+      "source_address": 36,
+      "source_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V1",
+      "target_address": 91,
       "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
     },
     {
@@ -1238,212 +1537,61 @@
           "target_ref": "$.capability_result.target_ref"
         },
         "pipeline_index": 1,
-        "step_id": "resolve_work_claim",
+        "step_id": "resolve_identity",
         "store": "WORK_IDENTITY_REGISTRY"
       },
-      "source_address": 31,
-      "source_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V0",
-      "target_address": 84,
+      "source_address": 36,
+      "source_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V1",
+      "target_address": 92,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
     },
     {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
       "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_RETIRE_BOOK_RECORD_V0",
-        "target_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0"
+        "inputs": {
+          "author": "$.results.read_book_record.book_record.author",
+          "title": "$.results.read_book_record.book_record.title"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "work_key": "$.capability_result.work_key"
+        },
+        "pipeline_index": 1,
+        "step_id": "form_work_key"
       },
-      "source_address": 32,
-      "source_fqdn": "book_library_mgmt::CC_RETIRE_BOOK_RECORD_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
+      "source_address": 37,
+      "source_fqdn": "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0",
+      "target_address": 44,
+      "target_fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
     },
     {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
       "metadata": {
         "inputs": {
           "filter": {
             "identity_key": "$.inputs.identity_key"
           },
-          "updates": {
-            "state": "RETIRED"
-          }
-        },
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "op": "UPDATE_WHERE",
-        "outputs": {
-          "matched_keys": "$.capability_result.matched_keys",
-          "result_status": "$.result_status",
-          "updated_count": "$.capability_result.updated_count"
-        },
-        "pipeline_index": 0,
-        "step_id": "set_record_state",
-        "store": "BOOKS"
-      },
-      "source_address": 32,
-      "source_fqdn": "book_library_mgmt::CC_RETIRE_BOOK_RECORD_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_RETIRE_PHYSICAL_COPY_V0",
-        "target_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0"
-      },
-      "source_address": 33,
-      "source_fqdn": "book_library_mgmt::CC_RETIRE_PHYSICAL_COPY_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {
-          "filter": {
-            "barcode": "$.inputs.barcode"
-          },
-          "updates": {
-            "state": "RETIRED"
-          }
-        },
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "exit",
-          "VIOLATION": "exit"
-        },
-        "op": "UPDATE_WHERE",
-        "outputs": {
-          "matched_keys": "$.capability_result.matched_keys",
-          "result_status": "$.result_status",
-          "updated_count": "$.capability_result.updated_count"
-        },
-        "pipeline_index": 0,
-        "step_id": "set_record_state",
-        "store": "PHYSICAL_COPIES"
-      },
-      "source_address": 33,
-      "source_fqdn": "book_library_mgmt::CC_RETIRE_PHYSICAL_COPY_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "attribute": "work_key",
-          "source": "$.results.select_matching_books.matching_books"
+          "source": "$.results.select_copy_records.records"
         },
         "on_result": {
           "SUCCESS": "exit",
           "VIOLATION": "exit"
         },
         "outputs": {
-          "matching_works": "$.capability_result.grouped"
+          "copies_held": "$.capability_result.extracted"
         },
-        "pipeline_index": 2,
-        "step_id": "group_editions_by_work"
+        "pipeline_index": 4,
+        "step_id": "select_physical_copies_of_book"
       },
-      "source_address": 34,
-      "source_fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V0",
-      "target_address": 39,
-      "target_fqdn": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0"
-    },
-    {
-      "kind": "CC_BINDS_CS",
-      "kind_address": 16385,
-      "metadata": {
-        "inputs": {},
-        "on_result": {
-          "BACKEND_ERROR": "exit",
-          "SUCCESS": "continue"
-        },
-        "op": "SELECT",
-        "outputs": {
-          "records": "$.capability_result.records",
-          "result_status": "$.result_status"
-        },
-        "pipeline_index": 0,
-        "step_id": "select_book_records",
-        "store": "BOOKS"
-      },
-      "source_address": 34,
-      "source_fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V0",
-      "target_address": 83,
-      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "filter": "$.inputs.search_criteria",
-          "source": "$.results.select_book_records.records"
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "matching_books": "$.capability_result.extracted"
-        },
-        "pipeline_index": 1,
-        "step_id": "select_matching_books"
-      },
-      "source_address": 34,
-      "source_fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V0",
-      "target_address": 90,
-      "target_fqdn": "capability_transforms::CT_PURE_FILTER_RECORDS_V0"
-    },
-    {
-      "kind": "NODE_NEXT",
-      "kind_address": 16391,
-      "metadata": {
-        "condition": "SUCCESS",
-        "source_key": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-        "target_key": "CC_APPEND_CATALOG_OPERATION_V0",
-        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
-      },
-      "source_address": 35,
-      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "author": "$.inputs.updated_fields.author",
-          "publication_year": "$.inputs.updated_fields.publication_year",
-          "title": "$.inputs.updated_fields.title"
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "updated_identity_key": "$.capability_result.identity_key"
-        },
-        "pipeline_index": 1,
-        "step_id": "form_updated_identity_key"
-      },
-      "source_address": 35,
-      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 37,
-      "target_fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0"
+      "source_address": 37,
+      "source_fqdn": "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0",
+      "target_address": 46,
+      "target_fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0"
     },
     {
       "kind": "CC_BINDS_CS",
@@ -1467,9 +1615,9 @@
         "step_id": "read_book_record",
         "store": "BOOKS"
       },
-      "source_address": 35,
-      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 83,
+      "source_address": 37,
+      "source_fqdn": "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0",
+      "target_address": 91,
       "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
     },
     {
@@ -1477,25 +1625,231 @@
       "kind_address": 16385,
       "metadata": {
         "inputs": {
-          "key": "$.inputs.identity_key",
-          "value": "$.results.assemble_updated_record.updated_record"
+          "key": "$.results.form_work_key.work_key"
         },
         "on_result": {
           "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "continue",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "result_status": "$.result_status",
+          "work_record": "$.capability_result.value"
+        },
+        "pipeline_index": 2,
+        "step_id": "read_work_record",
+        "store": "WORKS"
+      },
+      "source_address": 37,
+      "source_fqdn": "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {},
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue"
+        },
+        "op": "SELECT",
+        "outputs": {
+          "records": "$.capability_result.records",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 3,
+        "step_id": "select_copy_records",
+        "store": "PHYSICAL_COPIES"
+      },
+      "source_address": 37,
+      "source_fqdn": "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "attribute": "work_key",
+          "source": "$.results.select_matching_books.matching_books"
+        },
+        "on_result": {
           "SUCCESS": "exit",
           "VIOLATION": "exit"
         },
-        "op": "WRITE",
         "outputs": {
+          "matching_works": "$.capability_result.grouped"
+        },
+        "pipeline_index": 3,
+        "step_id": "group_books_by_work"
+      },
+      "source_address": 38,
+      "source_fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V3",
+      "target_address": 45,
+      "target_fqdn": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "filter": {
+            "state": "REGISTERED"
+          },
+          "source": "$.results.select_book_records.records"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "registered_books": "$.capability_result.extracted"
+        },
+        "pipeline_index": 1,
+        "step_id": "select_registered_books"
+      },
+      "source_address": 38,
+      "source_fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V3",
+      "target_address": 46,
+      "target_fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {},
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "continue"
+        },
+        "op": "SELECT",
+        "outputs": {
+          "records": "$.capability_result.records",
           "result_status": "$.result_status"
         },
-        "pipeline_index": 7,
-        "step_id": "write_updated_record",
+        "pipeline_index": 0,
+        "step_id": "select_book_records",
         "store": "BOOKS"
       },
-      "source_address": 35,
-      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 83,
+      "source_address": 38,
+      "source_fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V3",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "filter": "$.inputs.search_criteria",
+          "source": "$.results.select_registered_books.registered_books"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "matching_books": "$.capability_result.extracted"
+        },
+        "pipeline_index": 2,
+        "step_id": "select_matching_books"
+      },
+      "source_address": 38,
+      "source_fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V3",
+      "target_address": 98,
+      "target_fqdn": "capability_transforms::CT_PURE_SELECT_RECORDS_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+        "target_key": "CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0",
+        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+      },
+      "source_address": 39,
+      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 26,
+      "target_fqdn": "book_library_mgmt::CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "author": "$.inputs.updated_fields.author",
+          "publication_year": "$.inputs.updated_fields.publication_year",
+          "title": "$.inputs.updated_fields.title"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "updated_identity_key": "$.capability_result.identity_key"
+        },
+        "pipeline_index": 1,
+        "step_id": "form_updated_identity_key"
+      },
+      "source_address": 39,
+      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 43,
+      "target_fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "author": "$.inputs.updated_fields.author",
+          "title": "$.inputs.updated_fields.title"
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "work_key": "$.capability_result.work_key"
+        },
+        "pipeline_index": 2,
+        "step_id": "form_work_key"
+      },
+      "source_address": 39,
+      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 44,
+      "target_fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.identity_key"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "NOT_FOUND": "exit",
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "op": "READ",
+        "outputs": {
+          "book_record": "$.capability_result.value",
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 0,
+        "step_id": "read_book_record",
+        "store": "BOOKS"
+      },
+      "source_address": 39,
+      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 91,
       "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
     },
     {
@@ -1505,12 +1859,12 @@
         "inputs": {
           "fields": {
             "author": "$.inputs.updated_fields.author",
-            "identity_key": "$.inputs.identity_key",
+            "identity_key": "$.results.form_updated_identity_key.updated_identity_key",
             "publication_year": "$.inputs.updated_fields.publication_year",
             "state": "$.results.read_book_record.book_record.state",
             "subject": "$.inputs.updated_fields.subject",
             "title": "$.inputs.updated_fields.title",
-            "work_key": "$.results.read_book_record.book_record.work_key"
+            "work_key": "$.results.form_work_key.work_key"
           }
         },
         "on_result": {
@@ -1520,67 +1874,13 @@
         "outputs": {
           "updated_record": "$.capability_result.record"
         },
-        "pipeline_index": 4,
+        "pipeline_index": 3,
         "step_id": "assemble_updated_record"
       },
-      "source_address": 35,
-      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 88,
+      "source_address": 39,
+      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 96,
       "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "left": "$.inputs.identity_key",
-          "right": "$.results.form_updated_identity_key.updated_identity_key"
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "identity_unchanged": "$.capability_result.is_equal"
-        },
-        "pipeline_index": 2,
-        "step_id": "compare_identity"
-      },
-      "source_address": 35,
-      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 89,
-      "target_fqdn": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "parameters": {
-            "identity_unchanged": "$.results.compare_identity.identity_unchanged"
-          },
-          "rules": [
-            {
-              "field": "identity_unchanged",
-              "op": "eq",
-              "value": true
-            }
-          ]
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "valid": "$.capability_result.valid"
-        },
-        "pipeline_index": 3,
-        "step_id": "require_identity_unchanged"
-      },
-      "source_address": 35,
-      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 91,
-      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
     },
     {
       "kind": "CC_BINDS_CT",
@@ -1605,18 +1905,18 @@
           ]
         },
         "on_result": {
-          "SUCCESS": "continue",
+          "SUCCESS": "exit",
           "VIOLATION": "exit"
         },
         "outputs": {
           "valid": "$.capability_result.valid"
         },
-        "pipeline_index": 6,
+        "pipeline_index": 5,
         "step_id": "refuse_incomplete_correction"
       },
-      "source_address": 35,
-      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 91,
+      "source_address": 39,
+      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 99,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
     },
     {
@@ -1651,12 +1951,12 @@
         "outputs": {
           "violations": "$.capability_result.violations"
         },
-        "pipeline_index": 5,
+        "pipeline_index": 4,
         "step_id": "check_corrected_record"
       },
-      "source_address": 35,
-      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 92,
+      "source_address": 39,
+      "source_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 100,
       "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
     },
     {
@@ -1664,101 +1964,91 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
-        "source_key": "CC_VALIDATE_BOOK_SUBMISSION_V0",
-        "target_key": "CC_CLAIM_WORK_IDENTITY_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0"
+        "source_key": "CC_WRITE_BOOK_V0",
+        "target_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1"
       },
-      "source_address": 36,
-      "source_fqdn": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0",
-      "target_address": 23,
-      "target_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0"
+      "source_address": 40,
+      "source_fqdn": "book_library_mgmt::CC_WRITE_BOOK_V0",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
     },
     {
       "kind": "NODE_NEXT",
       "kind_address": 16391,
       "metadata": {
         "condition": "SUCCESS",
-        "source_key": "CC_VALIDATE_BOOK_SUBMISSION_V0",
-        "target_key": "CC_RESOLVE_WORK_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0"
+        "source_key": "CC_WRITE_BOOK_V0",
+        "target_key": "CC_WRITE_PHYSICAL_COPY_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1"
       },
-      "source_address": 36,
-      "source_fqdn": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0",
-      "target_address": 31,
-      "target_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V0"
+      "source_address": 40,
+      "source_fqdn": "book_library_mgmt::CC_WRITE_BOOK_V0",
+      "target_address": 42,
+      "target_fqdn": "book_library_mgmt::CC_WRITE_PHYSICAL_COPY_V0"
     },
     {
       "kind": "CC_BINDS_CT",
       "kind_address": 16386,
       "metadata": {
         "inputs": {
-          "parameters": {
-            "barcode": "$.inputs.barcode",
-            "book_violations": "$.results.validate_book_fields.violations",
-            "subject": "$.inputs.book_fields.subject",
-            "work_violations": "$.results.validate_work_fields.violations"
-          },
-          "rules": [
-            {
-              "field": "barcode",
-              "op": "neq",
-              "value": ""
-            },
-            {
-              "field": "subject",
-              "op": "neq",
-              "value": []
-            },
-            {
-              "field": "book_violations",
-              "op": "eq",
-              "value": []
-            },
-            {
-              "field": "work_violations",
-              "op": "eq",
-              "value": []
-            }
-          ]
+          "author": "$.inputs.submission.author",
+          "title": "$.inputs.submission.title"
         },
         "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "work_key": "$.capability_result.work_key"
+        },
+        "pipeline_index": 0,
+        "step_id": "form_work_key"
+      },
+      "source_address": 40,
+      "source_fqdn": "book_library_mgmt::CC_WRITE_BOOK_V0",
+      "target_address": 44,
+      "target_fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.identity_key",
+          "value": "$.results.assemble_book_record.book_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
           "SUCCESS": "exit",
           "VIOLATION": "exit"
         },
+        "op": "WRITE",
         "outputs": {
-          "valid": "$.capability_result.valid"
+          "result_status": "$.result_status"
         },
         "pipeline_index": 2,
-        "step_id": "require_submission_complete"
+        "step_id": "write_book_record",
+        "store": "BOOKS"
       },
-      "source_address": 36,
-      "source_fqdn": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "source_address": 40,
+      "source_fqdn": "book_library_mgmt::CC_WRITE_BOOK_V0",
       "target_address": 91,
-      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
     },
     {
       "kind": "CC_BINDS_CT",
       "kind_address": 16386,
       "metadata": {
         "inputs": {
-          "record": "$.inputs.book_fields",
-          "schema": {
-            "author": {
-              "required": true,
-              "type": "string"
-            },
-            "publication_year": {
-              "required": true,
-              "type": "integer"
-            },
-            "subject": {
-              "required": true,
-              "type": "array"
-            },
-            "title": {
-              "required": true,
-              "type": "string"
-            }
+          "fields": {
+            "author": "$.inputs.submission.author",
+            "identity_key": "$.inputs.identity_key",
+            "publication_year": "$.inputs.submission.publication_year",
+            "state": "REGISTERED",
+            "subject": "$.inputs.submission.subject",
+            "title": "$.inputs.submission.title",
+            "work_key": "$.results.form_work_key.work_key"
           }
         },
         "on_result": {
@@ -1766,47 +2056,135 @@
           "VIOLATION": "exit"
         },
         "outputs": {
-          "violations": "$.capability_result.violations"
-        },
-        "pipeline_index": 0,
-        "step_id": "validate_book_fields"
-      },
-      "source_address": 36,
-      "source_fqdn": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0",
-      "target_address": 92,
-      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
-    },
-    {
-      "kind": "CC_BINDS_CT",
-      "kind_address": 16386,
-      "metadata": {
-        "inputs": {
-          "record": "$.inputs.work_fields",
-          "schema": {
-            "author": {
-              "required": true,
-              "type": "string"
-            },
-            "title": {
-              "required": true,
-              "type": "string"
-            }
-          }
-        },
-        "on_result": {
-          "SUCCESS": "continue",
-          "VIOLATION": "exit"
-        },
-        "outputs": {
-          "violations": "$.capability_result.violations"
+          "book_record": "$.capability_result.record"
         },
         "pipeline_index": 1,
-        "step_id": "validate_work_fields"
+        "step_id": "assemble_book_record"
       },
-      "source_address": 36,
-      "source_fqdn": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0",
-      "target_address": 92,
-      "target_fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+      "source_address": 40,
+      "source_fqdn": "book_library_mgmt::CC_WRITE_BOOK_V0",
+      "target_address": 96,
+      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_WRITE_CORRECTED_BOOK_RECORD_V0",
+        "target_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+      },
+      "source_address": 41,
+      "source_fqdn": "book_library_mgmt::CC_WRITE_CORRECTED_BOOK_RECORD_V0",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.identity_key",
+          "value": "$.inputs.updated_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 0,
+        "step_id": "write_updated_record",
+        "store": "BOOKS"
+      },
+      "source_address": 41,
+      "source_fqdn": "book_library_mgmt::CC_WRITE_CORRECTED_BOOK_RECORD_V0",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_WRITE_PHYSICAL_COPY_V0",
+        "target_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1"
+      },
+      "source_address": 42,
+      "source_fqdn": "book_library_mgmt::CC_WRITE_PHYSICAL_COPY_V0",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "NODE_NEXT",
+      "kind_address": 16391,
+      "metadata": {
+        "condition": "SUCCESS",
+        "source_key": "CC_WRITE_PHYSICAL_COPY_V0",
+        "target_key": "CC_RECORD_CATALOG_MOMENT_V0",
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1"
+      },
+      "source_address": 42,
+      "source_fqdn": "book_library_mgmt::CC_WRITE_PHYSICAL_COPY_V0",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "CC_BINDS_CS",
+      "kind_address": 16385,
+      "metadata": {
+        "inputs": {
+          "key": "$.inputs.barcode",
+          "value": "$.results.assemble_copy_record.copy_record"
+        },
+        "on_result": {
+          "BACKEND_ERROR": "exit",
+          "SUCCESS": "exit",
+          "VIOLATION": "exit"
+        },
+        "op": "WRITE",
+        "outputs": {
+          "result_status": "$.result_status"
+        },
+        "pipeline_index": 1,
+        "step_id": "write_copy_record",
+        "store": "PHYSICAL_COPIES"
+      },
+      "source_address": 42,
+      "source_fqdn": "book_library_mgmt::CC_WRITE_PHYSICAL_COPY_V0",
+      "target_address": 91,
+      "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
+    },
+    {
+      "kind": "CC_BINDS_CT",
+      "kind_address": 16386,
+      "metadata": {
+        "inputs": {
+          "fields": {
+            "barcode": "$.inputs.barcode",
+            "identity_key": "$.inputs.identity_key",
+            "state": "REGISTERED"
+          }
+        },
+        "on_result": {
+          "SUCCESS": "continue",
+          "VIOLATION": "exit"
+        },
+        "outputs": {
+          "copy_record": "$.capability_result.record"
+        },
+        "pipeline_index": 0,
+        "step_id": "assemble_copy_record"
+      },
+      "source_address": 42,
+      "source_fqdn": "book_library_mgmt::CC_WRITE_PHYSICAL_COPY_V0",
+      "target_address": 96,
+      "target_fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
     },
     {
       "kind": "NODE_NEXT",
@@ -1815,11 +2193,11 @@
         "condition": "ACK",
         "source_key": "IN_REGISTER_ADDITIONAL_EDITION_V0",
         "target_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0"
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1"
       },
-      "source_address": 47,
+      "source_address": 55,
       "source_fqdn": "book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 24,
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
@@ -1829,11 +2207,11 @@
         "condition": "ACK",
         "source_key": "IN_REGISTER_BOOK_V0",
         "target_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0"
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1"
       },
-      "source_address": 48,
+      "source_address": 56,
       "source_fqdn": "book_library_mgmt::IN_REGISTER_BOOK_V0",
-      "target_address": 24,
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
@@ -1843,11 +2221,11 @@
         "condition": "ACK",
         "source_key": "IN_REGISTER_PHYSICAL_COPY_V0",
         "target_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0"
+        "wf_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1"
       },
-      "source_address": 49,
+      "source_address": 57,
       "source_fqdn": "book_library_mgmt::IN_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 24,
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
@@ -1855,13 +2233,13 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "ACK",
-        "source_key": "IN_REINSTATE_BOOK_RECORD_V0",
+        "source_key": "IN_REINSTATE_BOOK_RECORD_V1",
         "target_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0"
+        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2"
       },
-      "source_address": 50,
-      "source_fqdn": "book_library_mgmt::IN_REINSTATE_BOOK_RECORD_V0",
-      "target_address": 24,
+      "source_address": 58,
+      "source_fqdn": "book_library_mgmt::IN_REINSTATE_BOOK_RECORD_V1",
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
@@ -1869,13 +2247,13 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "ACK",
-        "source_key": "IN_REINSTATE_PHYSICAL_COPY_V0",
+        "source_key": "IN_REINSTATE_PHYSICAL_COPY_V1",
         "target_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0"
+        "wf_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2"
       },
-      "source_address": 51,
-      "source_fqdn": "book_library_mgmt::IN_REINSTATE_PHYSICAL_COPY_V0",
-      "target_address": 24,
+      "source_address": 59,
+      "source_fqdn": "book_library_mgmt::IN_REINSTATE_PHYSICAL_COPY_V1",
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
@@ -1885,11 +2263,11 @@
         "condition": "ACK",
         "source_key": "IN_RETIRE_BOOK_RECORD_V0",
         "target_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "wf_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0"
+        "wf_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1"
       },
-      "source_address": 52,
+      "source_address": 60,
       "source_fqdn": "book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0",
-      "target_address": 24,
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
@@ -1899,11 +2277,11 @@
         "condition": "ACK",
         "source_key": "IN_RETIRE_PHYSICAL_COPY_V0",
         "target_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "wf_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0"
+        "wf_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1"
       },
-      "source_address": 53,
+      "source_address": 61,
       "source_fqdn": "book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0",
-      "target_address": 24,
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
@@ -1913,11 +2291,11 @@
         "condition": "ACK",
         "source_key": "IN_RETRIEVE_BOOK_DETAILS_V0",
         "target_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "wf_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0"
+        "wf_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1"
       },
-      "source_address": 54,
+      "source_address": 62,
       "source_fqdn": "book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0",
-      "target_address": 24,
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
@@ -1925,13 +2303,13 @@
       "kind_address": 16391,
       "metadata": {
         "condition": "ACK",
-        "source_key": "IN_SEARCH_CATALOG_V0",
+        "source_key": "IN_SEARCH_CATALOG_V2",
         "target_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "wf_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0"
+        "wf_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V3"
       },
-      "source_address": 55,
-      "source_fqdn": "book_library_mgmt::IN_SEARCH_CATALOG_V0",
-      "target_address": 24,
+      "source_address": 63,
+      "source_fqdn": "book_library_mgmt::IN_SEARCH_CATALOG_V2",
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
@@ -1941,20 +2319,20 @@
         "condition": "ACK",
         "source_key": "IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
         "target_key": "CC_CONFIRM_STAFF_AUTHORIZED_V0",
-        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
+        "wf_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
       },
-      "source_address": 56,
+      "source_address": 64,
       "source_fqdn": "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 24,
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
       "kind": "GOVERNED_BY",
       "kind_address": 16388,
       "metadata": {},
-      "source_address": 57,
+      "source_address": 65,
       "source_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
-      "target_address": 59,
+      "target_address": 67,
       "target_fqdn": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0"
     },
     {
@@ -1963,9 +2341,9 @@
       "metadata": {
         "handler_ref": ""
       },
-      "source_address": 57,
+      "source_address": 65,
       "source_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
-      "target_address": 82,
+      "target_address": 90,
       "target_fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0"
     },
     {
@@ -1974,9 +2352,9 @@
       "metadata": {
         "handler_ref": ""
       },
-      "source_address": 57,
+      "source_address": 65,
       "source_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
-      "target_address": 83,
+      "target_address": 91,
       "target_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0"
     },
     {
@@ -1985,843 +2363,924 @@
       "metadata": {
         "handler_ref": ""
       },
-      "source_address": 57,
+      "source_address": 65,
       "source_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
-      "target_address": 84,
+      "target_address": 92,
       "target_fqdn": "capability_side_effects::CS_REGISTRY_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 60,
+      "source_address": 68,
       "source_fqdn": "book_library_mgmt::TEST_DATA_CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
-      "target_address": 37,
+      "target_address": 43,
       "target_fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 61,
+      "source_address": 69,
       "source_fqdn": "book_library_mgmt::TEST_DATA_CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
-      "target_address": 38,
+      "target_address": 44,
       "target_fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 62,
+      "source_address": 70,
       "source_fqdn": "book_library_mgmt::TEST_DATA_CT_PURE_GROUP_RECORDS_V0",
-      "target_address": 39,
+      "target_address": 45,
       "target_fqdn": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 63,
+      "source_address": 71,
       "source_fqdn": "book_library_mgmt::TEST_DATA_CT_PURE_SELECT_RECORDS_V0",
-      "target_address": 40,
+      "target_address": 46,
       "target_fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 64,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 18,
+      "source_address": 72,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+      "target_address": 20,
       "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 64,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 64,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
+      "source_address": 72,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
       "target_address": 21,
-      "target_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0"
+      "target_fqdn": "book_library_mgmt::CC_CHECK_REGISTER_ADDITIONAL_EDITION_SUBMISSION_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 64,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 24,
+      "source_address": 72,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+      "target_address": 23,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 72,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 64,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 25,
-      "target_fqdn": "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0"
+      "source_address": 72,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 64,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 31,
-      "target_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 64,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
+      "source_address": 72,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
       "target_address": 36,
-      "target_fqdn": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0"
+      "target_fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V1"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 72,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+      "target_address": 40,
+      "target_fqdn": "book_library_mgmt::CC_WRITE_BOOK_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 64,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 42,
+      "source_address": 72,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+      "target_address": 48,
       "target_fqdn": "book_library_mgmt::EV_BOOK_REGISTERED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 64,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 47,
+      "source_address": 72,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+      "target_address": 55,
       "target_fqdn": "book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0"
     },
     {
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 64,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 47,
+      "source_address": 72,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+      "target_address": 55,
       "target_fqdn": "book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0"
     },
     {
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 64,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-      "target_address": 57,
+      "source_address": 72,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
+      "target_address": 65,
       "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 18,
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 20,
       "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 21,
-      "target_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
       "target_address": 22,
-      "target_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V0"
+      "target_fqdn": "book_library_mgmt::CC_CHECK_REGISTER_BOOK_SUBMISSION_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
       "target_address": 23,
-      "target_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0"
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
       "target_address": 24,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V1"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 25,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 26,
-      "target_fqdn": "book_library_mgmt::CC_REGISTER_BOOK_V0"
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 27,
-      "target_fqdn": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0"
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 34,
+      "target_fqdn": "book_library_mgmt::CC_REQUIRE_COPY_BARCODE_FREE_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 36,
-      "target_fqdn": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0"
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 40,
+      "target_fqdn": "book_library_mgmt::CC_WRITE_BOOK_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 42,
+      "target_fqdn": "book_library_mgmt::CC_WRITE_PHYSICAL_COPY_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 42,
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 48,
       "target_fqdn": "book_library_mgmt::EV_BOOK_REGISTERED_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 44,
-      "target_fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0"
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 51,
+      "target_fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V1"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 46,
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 54,
       "target_fqdn": "book_library_mgmt::EV_WORK_REGISTERED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 48,
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 56,
       "target_fqdn": "book_library_mgmt::IN_REGISTER_BOOK_V0"
     },
     {
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 48,
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 56,
       "target_fqdn": "book_library_mgmt::IN_REGISTER_BOOK_V0"
     },
     {
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 65,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "target_address": 57,
+      "source_address": 73,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
+      "target_address": 65,
       "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 66,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 18,
+      "source_address": 74,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+      "target_address": 20,
       "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 66,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 66,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 22,
-      "target_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 66,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
+      "source_address": 74,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
       "target_address": 24,
-      "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V1"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 66,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
+      "source_address": 74,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
       "target_address": 27,
-      "target_fqdn": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0"
-    },
-    {
-      "kind": "REFERENCES",
-      "kind_address": 16393,
-      "metadata": {},
-      "source_address": 66,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 44,
-      "target_fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 66,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 49,
-      "target_fqdn": "book_library_mgmt::IN_REGISTER_PHYSICAL_COPY_V0"
-    },
-    {
-      "kind": "WF_START",
-      "kind_address": 16398,
-      "metadata": {},
-      "source_address": 66,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 49,
-      "target_fqdn": "book_library_mgmt::IN_REGISTER_PHYSICAL_COPY_V0"
-    },
-    {
-      "kind": "WF_BINDS_RB",
-      "kind_address": 16396,
-      "metadata": {},
-      "source_address": 66,
-      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
-      "target_address": 57,
-      "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
-    },
-    {
-      "kind": "REFERENCES",
-      "kind_address": 16393,
-      "metadata": {},
-      "source_address": 67,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
-      "target_address": 18,
-      "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 67,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 67,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
-      "target_address": 24,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 67,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
-      "target_address": 28,
-      "target_fqdn": "book_library_mgmt::CC_REINSTATE_BOOK_RECORD_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 67,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
-      "target_address": 50,
-      "target_fqdn": "book_library_mgmt::IN_REINSTATE_BOOK_RECORD_V0"
-    },
-    {
-      "kind": "WF_START",
-      "kind_address": 16398,
-      "metadata": {},
-      "source_address": 67,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
-      "target_address": 50,
-      "target_fqdn": "book_library_mgmt::IN_REINSTATE_BOOK_RECORD_V0"
-    },
-    {
-      "kind": "WF_BINDS_RB",
-      "kind_address": 16396,
-      "metadata": {},
-      "source_address": 67,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
-      "target_address": 57,
-      "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
-    },
-    {
-      "kind": "REFERENCES",
-      "kind_address": 16393,
-      "metadata": {},
-      "source_address": 68,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0",
-      "target_address": 18,
-      "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 68,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 68,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0",
-      "target_address": 24,
-      "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 68,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0",
-      "target_address": 29,
-      "target_fqdn": "book_library_mgmt::CC_REINSTATE_PHYSICAL_COPY_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 68,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0",
-      "target_address": 51,
-      "target_fqdn": "book_library_mgmt::IN_REINSTATE_PHYSICAL_COPY_V0"
-    },
-    {
-      "kind": "WF_START",
-      "kind_address": 16398,
-      "metadata": {},
-      "source_address": 68,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0",
-      "target_address": 51,
-      "target_fqdn": "book_library_mgmt::IN_REINSTATE_PHYSICAL_COPY_V0"
-    },
-    {
-      "kind": "WF_BINDS_RB",
-      "kind_address": 16396,
-      "metadata": {},
-      "source_address": 68,
-      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0",
-      "target_address": 57,
-      "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
-    },
-    {
-      "kind": "REFERENCES",
-      "kind_address": 16393,
-      "metadata": {},
-      "source_address": 69,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0",
-      "target_address": 18,
-      "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 69,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 69,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0",
-      "target_address": 24,
-      "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 69,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0",
+      "source_address": 74,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
       "target_address": 32,
-      "target_fqdn": "book_library_mgmt::CC_RETIRE_BOOK_RECORD_V0"
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 74,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+      "target_address": 35,
+      "target_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 74,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+      "target_address": 42,
+      "target_fqdn": "book_library_mgmt::CC_WRITE_PHYSICAL_COPY_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 69,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0",
-      "target_address": 43,
+      "source_address": 74,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+      "target_address": 51,
+      "target_fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V1"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 74,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+      "target_address": 57,
+      "target_fqdn": "book_library_mgmt::IN_REGISTER_PHYSICAL_COPY_V0"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 74,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+      "target_address": 57,
+      "target_fqdn": "book_library_mgmt::IN_REGISTER_PHYSICAL_COPY_V0"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 74,
+      "source_fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+      "target_address": 65,
+      "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 75,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2",
+      "target_address": 20,
+      "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 75,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2",
+      "target_address": 27,
+      "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 75,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2",
+      "target_address": 29,
+      "target_fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_RETIRED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 75,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 75,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2",
+      "target_address": 49,
+      "target_fqdn": "book_library_mgmt::EV_BOOK_REINSTATED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 75,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2",
+      "target_address": 58,
+      "target_fqdn": "book_library_mgmt::IN_REINSTATE_BOOK_RECORD_V1"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 75,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2",
+      "target_address": 58,
+      "target_fqdn": "book_library_mgmt::IN_REINSTATE_BOOK_RECORD_V1"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 75,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2",
+      "target_address": 65,
+      "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 76,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2",
+      "target_address": 20,
+      "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 76,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2",
+      "target_address": 27,
+      "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 76,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2",
+      "target_address": 31,
+      "target_fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 76,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 76,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2",
+      "target_address": 52,
+      "target_fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REINSTATED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 76,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2",
+      "target_address": 59,
+      "target_fqdn": "book_library_mgmt::IN_REINSTATE_PHYSICAL_COPY_V1"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 76,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2",
+      "target_address": 59,
+      "target_fqdn": "book_library_mgmt::IN_REINSTATE_PHYSICAL_COPY_V1"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 76,
+      "source_fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2",
+      "target_address": 65,
+      "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 77,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1",
+      "target_address": 20,
+      "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 77,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1",
+      "target_address": 27,
+      "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 77,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1",
+      "target_address": 28,
+      "target_fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_REGISTERED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 77,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 77,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1",
+      "target_address": 50,
       "target_fqdn": "book_library_mgmt::EV_BOOK_RETIRED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 69,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0",
-      "target_address": 52,
+      "source_address": 77,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1",
+      "target_address": 60,
       "target_fqdn": "book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0"
     },
     {
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 69,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0",
-      "target_address": 52,
+      "source_address": 77,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1",
+      "target_address": 60,
       "target_fqdn": "book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0"
     },
     {
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 69,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0",
-      "target_address": 57,
+      "source_address": 77,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1",
+      "target_address": 65,
       "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 70,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0",
-      "target_address": 18,
+      "source_address": 78,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1",
+      "target_address": 20,
       "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 70,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 70,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0",
-      "target_address": 24,
+      "source_address": 78,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1",
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 70,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0",
-      "target_address": 33,
-      "target_fqdn": "book_library_mgmt::CC_RETIRE_PHYSICAL_COPY_V0"
+      "source_address": 78,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1",
+      "target_address": 30,
+      "target_fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_REGISTERED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 78,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 70,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0",
-      "target_address": 45,
+      "source_address": 78,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1",
+      "target_address": 53,
       "target_fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_RETIRED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 70,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0",
-      "target_address": 53,
+      "source_address": 78,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1",
+      "target_address": 61,
       "target_fqdn": "book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0"
     },
     {
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 70,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0",
-      "target_address": 53,
+      "source_address": 78,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1",
+      "target_address": 61,
       "target_fqdn": "book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0"
     },
     {
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 70,
-      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0",
-      "target_address": 57,
+      "source_address": 78,
+      "source_fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1",
+      "target_address": 65,
       "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 71,
-      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0",
-      "target_address": 18,
-      "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 71,
-      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 71,
-      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0",
+      "source_address": 79,
+      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
       "target_address": 20,
-      "target_fqdn": "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 71,
-      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0",
-      "target_address": 24,
-      "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 71,
-      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0",
-      "target_address": 54,
-      "target_fqdn": "book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0"
-    },
-    {
-      "kind": "WF_START",
-      "kind_address": 16398,
-      "metadata": {},
-      "source_address": 71,
-      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0",
-      "target_address": 54,
-      "target_fqdn": "book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0"
-    },
-    {
-      "kind": "WF_BINDS_RB",
-      "kind_address": 16396,
-      "metadata": {},
-      "source_address": 71,
-      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0",
-      "target_address": 57,
-      "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
-    },
-    {
-      "kind": "REFERENCES",
-      "kind_address": 16393,
-      "metadata": {},
-      "source_address": 72,
-      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0",
-      "target_address": 18,
       "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 72,
-      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 72,
-      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0",
-      "target_address": 24,
+      "source_address": 79,
+      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 72,
-      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0",
-      "target_address": 34,
-      "target_fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V0"
+      "source_address": 79,
+      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 72,
-      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0",
-      "target_address": 55,
-      "target_fqdn": "book_library_mgmt::IN_SEARCH_CATALOG_V0"
+      "source_address": 79,
+      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+      "target_address": 37,
+      "target_fqdn": "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 79,
+      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+      "target_address": 62,
+      "target_fqdn": "book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0"
     },
     {
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 72,
-      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0",
-      "target_address": 55,
-      "target_fqdn": "book_library_mgmt::IN_SEARCH_CATALOG_V0"
+      "source_address": 79,
+      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+      "target_address": 62,
+      "target_fqdn": "book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0"
     },
     {
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 72,
-      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0",
-      "target_address": 57,
+      "source_address": 79,
+      "source_fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+      "target_address": 65,
       "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 73,
-      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 18,
+      "source_address": 80,
+      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V3",
+      "target_address": 20,
       "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 73,
-      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 19,
-      "target_fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0"
-    },
-    {
-      "kind": "WF_CONTAINS_NODE",
-      "kind_address": 16397,
-      "metadata": {},
-      "source_address": 73,
-      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 24,
+      "source_address": 80,
+      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V3",
+      "target_address": 27,
       "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 73,
-      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 30,
-      "target_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V0"
+      "source_address": 80,
+      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V3",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 73,
-      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "source_address": 80,
+      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V3",
+      "target_address": 38,
+      "target_fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V3"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 80,
+      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V3",
+      "target_address": 63,
+      "target_fqdn": "book_library_mgmt::IN_SEARCH_CATALOG_V2"
+    },
+    {
+      "kind": "WF_START",
+      "kind_address": 16398,
+      "metadata": {},
+      "source_address": 80,
+      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V3",
+      "target_address": 63,
+      "target_fqdn": "book_library_mgmt::IN_SEARCH_CATALOG_V2"
+    },
+    {
+      "kind": "WF_BINDS_RB",
+      "kind_address": 16396,
+      "metadata": {},
+      "source_address": 80,
+      "source_fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V3",
+      "target_address": 65,
+      "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
+    },
+    {
+      "kind": "REFERENCES",
+      "kind_address": 16393,
+      "metadata": {},
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 20,
+      "target_fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 23,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 25,
+      "target_fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 26,
+      "target_fqdn": "book_library_mgmt::CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 27,
+      "target_fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 32,
+      "target_fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 33,
+      "target_fqdn": "book_library_mgmt::CC_REKEY_BOOK_V0"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
       "target_address": 35,
-      "target_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
+      "target_fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 39,
+      "target_fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1"
+    },
+    {
+      "kind": "WF_CONTAINS_NODE",
+      "kind_address": 16397,
+      "metadata": {},
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 41,
+      "target_fqdn": "book_library_mgmt::CC_WRITE_CORRECTED_BOOK_RECORD_V0"
     },
     {
       "kind": "REFERENCES",
       "kind_address": 16393,
       "metadata": {},
-      "source_address": 73,
-      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 41,
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 47,
       "target_fqdn": "book_library_mgmt::EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0"
     },
     {
       "kind": "WF_CONTAINS_NODE",
       "kind_address": 16397,
       "metadata": {},
-      "source_address": 73,
-      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 56,
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 64,
       "target_fqdn": "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
     },
     {
       "kind": "WF_START",
       "kind_address": 16398,
       "metadata": {},
-      "source_address": 73,
-      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 56,
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 64,
       "target_fqdn": "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0"
     },
     {
       "kind": "WF_BINDS_RB",
       "kind_address": 16396,
       "metadata": {},
-      "source_address": 73,
-      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
-      "target_address": 57,
+      "source_address": 81,
+      "source_fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "target_address": 65,
       "target_fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0"
     }
   ],
   "event_catalog": [
     {
-      "address": 41,
+      "address": 47,
       "fqdn": "book_library_mgmt::EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -2843,7 +3302,7 @@
       }
     },
     {
-      "address": 42,
+      "address": 48,
       "fqdn": "book_library_mgmt::EV_BOOK_REGISTERED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -2881,7 +3340,28 @@
       }
     },
     {
-      "address": 43,
+      "address": 49,
+      "fqdn": "book_library_mgmt::EV_BOOK_REINSTATED_V0",
+      "kind": "EV",
+      "kind_address": 16645,
+      "schema": {
+        "identity_key": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    {
+      "address": 50,
       "fqdn": "book_library_mgmt::EV_BOOK_RETIRED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -2903,16 +3383,12 @@
       }
     },
     {
-      "address": 44,
-      "fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0",
+      "address": 51,
+      "fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V1",
       "kind": "EV",
       "kind_address": 16645,
       "schema": {
         "barcode": {
-          "required": true,
-          "type": "string"
-        },
-        "identity_key": {
           "required": true,
           "type": "string"
         },
@@ -2921,7 +3397,6 @@
           "type": "string"
         },
         "timestamp": {
-          "description": "When the moment occurred",
           "format": "date-time",
           "required": true,
           "type": "string"
@@ -2929,7 +3404,28 @@
       }
     },
     {
-      "address": 45,
+      "address": 52,
+      "fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REINSTATED_V0",
+      "kind": "EV",
+      "kind_address": 16645,
+      "schema": {
+        "barcode": {
+          "required": true,
+          "type": "string"
+        },
+        "staff_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    {
+      "address": 53,
       "fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_RETIRED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -2951,7 +3447,7 @@
       }
     },
     {
-      "address": 46,
+      "address": 54,
       "fqdn": "book_library_mgmt::EV_WORK_REGISTERED_V0",
       "kind": "EV",
       "kind_address": 16645,
@@ -2979,386 +3475,428 @@
   ],
   "nodes": [
     {
-      "address": 18,
+      "address": 20,
       "fqdn": "book_library_mgmt::AC_LIBRARY_STAFF_V0",
       "kind": "AC",
       "kind_address": 16640
     },
     {
-      "address": 19,
-      "fqdn": "book_library_mgmt::CC_APPEND_CATALOG_OPERATION_V0",
-      "kind": "CC",
-      "kind_address": 16642
-    },
-    {
-      "address": 20,
-      "fqdn": "book_library_mgmt::CC_ASSEMBLE_BOOK_DETAILS_V0",
-      "kind": "CC",
-      "kind_address": 16642
-    },
-    {
       "address": 21,
-      "fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V0",
+      "fqdn": "book_library_mgmt::CC_CHECK_REGISTER_ADDITIONAL_EDITION_SUBMISSION_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 22,
-      "fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V0",
+      "fqdn": "book_library_mgmt::CC_CHECK_REGISTER_BOOK_SUBMISSION_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 23,
-      "fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V0",
+      "fqdn": "book_library_mgmt::CC_CLAIM_BOOK_IDENTITY_V1",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 24,
-      "fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
+      "fqdn": "book_library_mgmt::CC_CLAIM_COPY_BARCODE_V1",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 25,
-      "fqdn": "book_library_mgmt::CC_REGISTER_ADDITIONAL_EDITION_V0",
+      "fqdn": "book_library_mgmt::CC_CLAIM_WORK_IDENTITY_V1",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 26,
-      "fqdn": "book_library_mgmt::CC_REGISTER_BOOK_V0",
+      "fqdn": "book_library_mgmt::CC_CONFIRM_BOOK_IDENTITY_UNCHANGED_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 27,
-      "fqdn": "book_library_mgmt::CC_REGISTER_PHYSICAL_COPY_V0",
+      "fqdn": "book_library_mgmt::CC_CONFIRM_STAFF_AUTHORIZED_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 28,
-      "fqdn": "book_library_mgmt::CC_REINSTATE_BOOK_RECORD_V0",
+      "fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_REGISTERED_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 29,
-      "fqdn": "book_library_mgmt::CC_REINSTATE_PHYSICAL_COPY_V0",
+      "fqdn": "book_library_mgmt::CC_MOVE_BOOK_FROM_RETIRED_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 30,
-      "fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V0",
+      "fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_REGISTERED_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 31,
-      "fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V0",
+      "fqdn": "book_library_mgmt::CC_MOVE_PHYSICAL_COPY_FROM_RETIRED_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 32,
-      "fqdn": "book_library_mgmt::CC_RETIRE_BOOK_RECORD_V0",
+      "fqdn": "book_library_mgmt::CC_RECORD_CATALOG_MOMENT_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 33,
-      "fqdn": "book_library_mgmt::CC_RETIRE_PHYSICAL_COPY_V0",
+      "fqdn": "book_library_mgmt::CC_REKEY_BOOK_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 34,
-      "fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V0",
+      "fqdn": "book_library_mgmt::CC_REQUIRE_COPY_BARCODE_FREE_V0",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 35,
-      "fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "fqdn": "book_library_mgmt::CC_RESOLVE_BOOK_IDENTITY_V1",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 36,
-      "fqdn": "book_library_mgmt::CC_VALIDATE_BOOK_SUBMISSION_V0",
+      "fqdn": "book_library_mgmt::CC_RESOLVE_WORK_V1",
       "kind": "CC",
       "kind_address": 16642
     },
     {
       "address": 37,
+      "fqdn": "book_library_mgmt::CC_RETRIEVE_BOOK_DETAILS_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 38,
+      "fqdn": "book_library_mgmt::CC_SEARCH_CATALOG_V3",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 39,
+      "fqdn": "book_library_mgmt::CC_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 40,
+      "fqdn": "book_library_mgmt::CC_WRITE_BOOK_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 41,
+      "fqdn": "book_library_mgmt::CC_WRITE_CORRECTED_BOOK_RECORD_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 42,
+      "fqdn": "book_library_mgmt::CC_WRITE_PHYSICAL_COPY_V0",
+      "kind": "CC",
+      "kind_address": 16642
+    },
+    {
+      "address": 43,
       "fqdn": "book_library_mgmt::CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 38,
+      "address": 44,
       "fqdn": "book_library_mgmt::CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 39,
+      "address": 45,
       "fqdn": "book_library_mgmt::CT_PURE_GROUP_RECORDS_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 40,
+      "address": 46,
       "fqdn": "book_library_mgmt::CT_PURE_SELECT_RECORDS_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 41,
+      "address": 47,
       "fqdn": "book_library_mgmt::EV_BIBLIOGRAPHIC_INFORMATION_UPDATED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 42,
+      "address": 48,
       "fqdn": "book_library_mgmt::EV_BOOK_REGISTERED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 43,
+      "address": 49,
+      "fqdn": "book_library_mgmt::EV_BOOK_REINSTATED_V0",
+      "kind": "EV",
+      "kind_address": 16645
+    },
+    {
+      "address": 50,
       "fqdn": "book_library_mgmt::EV_BOOK_RETIRED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 44,
-      "fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V0",
+      "address": 51,
+      "fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REGISTERED_V1",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 45,
+      "address": 52,
+      "fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_REINSTATED_V0",
+      "kind": "EV",
+      "kind_address": 16645
+    },
+    {
+      "address": 53,
       "fqdn": "book_library_mgmt::EV_PHYSICAL_COPY_RETIRED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 46,
+      "address": 54,
       "fqdn": "book_library_mgmt::EV_WORK_REGISTERED_V0",
       "kind": "EV",
       "kind_address": 16645
     },
     {
-      "address": 47,
+      "address": 55,
       "fqdn": "book_library_mgmt::IN_REGISTER_ADDITIONAL_EDITION_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 48,
+      "address": 56,
       "fqdn": "book_library_mgmt::IN_REGISTER_BOOK_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 49,
+      "address": 57,
       "fqdn": "book_library_mgmt::IN_REGISTER_PHYSICAL_COPY_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 50,
-      "fqdn": "book_library_mgmt::IN_REINSTATE_BOOK_RECORD_V0",
+      "address": 58,
+      "fqdn": "book_library_mgmt::IN_REINSTATE_BOOK_RECORD_V1",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 51,
-      "fqdn": "book_library_mgmt::IN_REINSTATE_PHYSICAL_COPY_V0",
+      "address": 59,
+      "fqdn": "book_library_mgmt::IN_REINSTATE_PHYSICAL_COPY_V1",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 52,
+      "address": 60,
       "fqdn": "book_library_mgmt::IN_RETIRE_BOOK_RECORD_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 53,
+      "address": 61,
       "fqdn": "book_library_mgmt::IN_RETIRE_PHYSICAL_COPY_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 54,
+      "address": 62,
       "fqdn": "book_library_mgmt::IN_RETRIEVE_BOOK_DETAILS_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 55,
-      "fqdn": "book_library_mgmt::IN_SEARCH_CATALOG_V0",
+      "address": 63,
+      "fqdn": "book_library_mgmt::IN_SEARCH_CATALOG_V2",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 56,
+      "address": 64,
       "fqdn": "book_library_mgmt::IN_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
       "kind": "IN",
       "kind_address": 16647
     },
     {
-      "address": 57,
+      "address": 65,
       "fqdn": "book_library_mgmt::RB_CATALOG_BINDINGS_V0",
       "kind": "RB",
       "kind_address": 16648
     },
     {
-      "address": 58,
+      "address": 66,
       "fqdn": "book_library_mgmt::STRUCTURE_BUILD_BOOK_LIBRARY_MGMT_CONFIG_V0",
       "kind": "GOVERNANCE",
       "kind_address": 16646
     },
     {
-      "address": 59,
+      "address": 67,
       "fqdn": "book_library_mgmt::STRUCTURE_CATALOG_STORAGE_V0",
       "kind": "GOVERNANCE",
       "kind_address": 16646
     },
     {
-      "address": 60,
+      "address": 68,
       "fqdn": "book_library_mgmt::TEST_DATA_CT_PURE_FORM_BOOK_IDENTITY_KEY_V0",
       "kind": "TEST_DATA",
       "kind_address": 16650
     },
     {
-      "address": 61,
+      "address": 69,
       "fqdn": "book_library_mgmt::TEST_DATA_CT_PURE_FORM_WORK_IDENTITY_KEY_V0",
       "kind": "TEST_DATA",
       "kind_address": 16650
     },
     {
-      "address": 62,
+      "address": 70,
       "fqdn": "book_library_mgmt::TEST_DATA_CT_PURE_GROUP_RECORDS_V0",
       "kind": "TEST_DATA",
       "kind_address": 16650
     },
     {
-      "address": 63,
+      "address": 71,
       "fqdn": "book_library_mgmt::TEST_DATA_CT_PURE_SELECT_RECORDS_V0",
       "kind": "TEST_DATA",
       "kind_address": 16650
     },
     {
-      "address": 64,
-      "fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V0",
-      "kind": "WF",
-      "kind_address": 16652
-    },
-    {
-      "address": 65,
-      "fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V0",
-      "kind": "WF",
-      "kind_address": 16652
-    },
-    {
-      "address": 66,
-      "fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V0",
-      "kind": "WF",
-      "kind_address": 16652
-    },
-    {
-      "address": 67,
-      "fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V0",
-      "kind": "WF",
-      "kind_address": 16652
-    },
-    {
-      "address": 68,
-      "fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V0",
-      "kind": "WF",
-      "kind_address": 16652
-    },
-    {
-      "address": 69,
-      "fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V0",
-      "kind": "WF",
-      "kind_address": 16652
-    },
-    {
-      "address": 70,
-      "fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V0",
-      "kind": "WF",
-      "kind_address": 16652
-    },
-    {
-      "address": 71,
-      "fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V0",
-      "kind": "WF",
-      "kind_address": 16652
-    },
-    {
       "address": 72,
-      "fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V0",
+      "fqdn": "book_library_mgmt::WF_REGISTER_ADDITIONAL_EDITION_V1",
       "kind": "WF",
       "kind_address": 16652
     },
     {
       "address": 73,
-      "fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V0",
+      "fqdn": "book_library_mgmt::WF_REGISTER_BOOK_V1",
       "kind": "WF",
       "kind_address": 16652
     },
     {
-      "address": 82,
+      "address": 74,
+      "fqdn": "book_library_mgmt::WF_REGISTER_PHYSICAL_COPY_V1",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 75,
+      "fqdn": "book_library_mgmt::WF_REINSTATE_BOOK_RECORD_V2",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 76,
+      "fqdn": "book_library_mgmt::WF_REINSTATE_PHYSICAL_COPY_V2",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 77,
+      "fqdn": "book_library_mgmt::WF_RETIRE_BOOK_RECORD_V1",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 78,
+      "fqdn": "book_library_mgmt::WF_RETIRE_PHYSICAL_COPY_V1",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 79,
+      "fqdn": "book_library_mgmt::WF_RETRIEVE_BOOK_DETAILS_V1",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 80,
+      "fqdn": "book_library_mgmt::WF_SEARCH_CATALOG_V3",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 81,
+      "fqdn": "book_library_mgmt::WF_UPDATE_BIBLIOGRAPHIC_INFORMATION_V1",
+      "kind": "WF",
+      "kind_address": 16652
+    },
+    {
+      "address": 90,
       "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
       "kind": "CS",
       "kind_address": 16643
     },
     {
-      "address": 83,
+      "address": 91,
       "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
       "kind": "CS",
       "kind_address": 16643
     },
     {
-      "address": 84,
+      "address": 92,
       "fqdn": "capability_side_effects::CS_REGISTRY_V0",
       "kind": "CS",
       "kind_address": 16643
     },
     {
-      "address": 88,
+      "address": 96,
       "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 89,
+      "address": 97,
       "fqdn": "capability_transforms::CT_PURE_COMPARE_EQUAL_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 90,
-      "fqdn": "capability_transforms::CT_PURE_FILTER_RECORDS_V0",
+      "address": 98,
+      "fqdn": "capability_transforms::CT_PURE_SELECT_RECORDS_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 91,
+      "address": 99,
       "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
       "kind": "CT",
       "kind_address": 16644
     },
     {
-      "address": 92,
+      "address": 100,
       "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+      "kind": "CT",
+      "kind_address": 16644
+    },
+    {
+      "address": 101,
+      "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
       "kind": "CT",
       "kind_address": 16644
     }

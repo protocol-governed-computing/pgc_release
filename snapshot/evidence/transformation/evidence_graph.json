@@ -1,5 +1,5 @@
 {
-  "compiler_version": "18",
+  "compiler_version": "19",
   "edge_count": 71,
   "edges": [
     {
@@ -1543,8 +1543,8 @@
     },
     {
       "detail": {
-        "address_hash": "f6b5d15e8da60a12f00bc8736936b7817432b93844956d332fbf5e28592f1570",
-        "address_table_size": 202
+        "address_hash": "be8b1cb5bb2baa23850d353aaaa37348668aad17ff248a0a31d307fa8022c99d",
+        "address_table_size": 211
       },
       "event_id": 91,
       "family": "ADDRESSING",
@@ -1556,9 +1556,9 @@
     },
     {
       "detail": {
-        "assertions_executed": 78,
-        "assertions_imported": 78,
-        "assertions_passed": 78,
+        "assertions_executed": 79,
+        "assertions_imported": 79,
+        "assertions_passed": 79,
         "errors": 0,
         "warnings": 0
       },
@@ -1744,7 +1744,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "capability_side_effects::CS_SNAPSHOT_QUERY_V0",
-      "subject_token": 26
+      "subject_token": 28
     },
     {
       "detail": {
@@ -1756,7 +1756,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "capability_side_effects::CS_TEXT_ARTIFACT_V0",
-      "subject_token": 27
+      "subject_token": 29
     },
     {
       "detail": {
@@ -1768,7 +1768,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::AC_GATE_REVIEWER_V0",
-      "subject_token": 93
+      "subject_token": 101
     },
     {
       "detail": {
@@ -1780,7 +1780,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::AC_REGISTER_AUTHOR_V0",
-      "subject_token": 94
+      "subject_token": 102
     },
     {
       "detail": {
@@ -1792,7 +1792,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::AC_SEED_AUTHOR_V0",
-      "subject_token": 95
+      "subject_token": 103
     },
     {
       "detail": {
@@ -1804,7 +1804,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::CC_CONSTRUCT_ARTIFACTS_V0",
-      "subject_token": 96
+      "subject_token": 104
     },
     {
       "detail": {
@@ -1816,7 +1816,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::CC_JUDGE_AGAINST_COMPOSITION_V0",
-      "subject_token": 97
+      "subject_token": 105
     },
     {
       "detail": {
@@ -1828,7 +1828,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::CC_JUDGE_AGAINST_SNAPSHOT_V0",
-      "subject_token": 98
+      "subject_token": 106
     },
     {
       "detail": {
@@ -1840,7 +1840,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::CC_JUDGE_DOCUMENT_V0",
-      "subject_token": 99
+      "subject_token": 107
     },
     {
       "detail": {
@@ -1852,7 +1852,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::CC_PERSIST_ARTIFACTS_V0",
-      "subject_token": 100
+      "subject_token": 108
     },
     {
       "detail": {
@@ -1864,7 +1864,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::CT_PURE_ATTRIBUTE_PROVENANCE_V0",
-      "subject_token": 101
+      "subject_token": 109
     },
     {
       "detail": {
@@ -1876,7 +1876,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::CT_PURE_EVALUATE_RULES_V0",
-      "subject_token": 102
+      "subject_token": 110
     },
     {
       "detail": {
@@ -1888,7 +1888,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::CT_PURE_MEASURE_COMPLETENESS_V0",
-      "subject_token": 103
+      "subject_token": 111
     },
     {
       "detail": {
@@ -1900,7 +1900,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::CT_PURE_PARSE_PRIOR_PHASES_V0",
-      "subject_token": 104
+      "subject_token": 112
     },
     {
       "detail": {
@@ -1912,7 +1912,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::CT_PURE_PARSE_REGISTERS_V0",
-      "subject_token": 105
+      "subject_token": 113
     },
     {
       "detail": {
@@ -1924,7 +1924,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::CT_PURE_RENDER_ARTIFACTS_V0",
-      "subject_token": 106
+      "subject_token": 114
     },
     {
       "detail": {
@@ -1936,7 +1936,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::IN_ANALYSIS_LOOP_SUBMITTED_V0",
-      "subject_token": 107
+      "subject_token": 115
     },
     {
       "detail": {
@@ -1948,7 +1948,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::IN_AUTHORING_MANDATE_SUBMITTED_V0",
-      "subject_token": 108
+      "subject_token": 116
     },
     {
       "detail": {
@@ -1960,7 +1960,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::IN_BUSINESS_INTENT_SUBMITTED_V0",
-      "subject_token": 109
+      "subject_token": 117
     },
     {
       "detail": {
@@ -1972,7 +1972,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::IN_BUSINESS_MODEL_SUBMITTED_V0",
-      "subject_token": 110
+      "subject_token": 118
     },
     {
       "detail": {
@@ -1984,7 +1984,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::IN_CHANGE_REQUEST_SUBMITTED_V0",
-      "subject_token": 111
+      "subject_token": 119
     },
     {
       "detail": {
@@ -1996,7 +1996,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::IN_CONSTRUCTION_REQUESTED_V0",
-      "subject_token": 112
+      "subject_token": 120
     },
     {
       "detail": {
@@ -2008,7 +2008,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::IN_DESIGN_INTENT_SUBMITTED_V0",
-      "subject_token": 113
+      "subject_token": 121
     },
     {
       "detail": {
@@ -2020,7 +2020,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::IN_DOMAIN_MODEL_SUBMITTED_V0",
-      "subject_token": 114
+      "subject_token": 122
     },
     {
       "detail": {
@@ -2032,7 +2032,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::IN_GOVERNANCE_INTENT_SUBMITTED_V0",
-      "subject_token": 115
+      "subject_token": 123
     },
     {
       "detail": {
@@ -2044,7 +2044,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::IN_SEED_SUBMITTED_V0",
-      "subject_token": 116
+      "subject_token": 124
     },
     {
       "detail": {
@@ -2056,7 +2056,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::RB_CONSTRUCTION_BINDINGS_V0",
-      "subject_token": 117
+      "subject_token": 125
     },
     {
       "detail": {
@@ -2068,7 +2068,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::RB_TRANSFORMATION_BINDINGS_V0",
-      "subject_token": 118
+      "subject_token": 126
     },
     {
       "detail": {
@@ -2080,7 +2080,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::STRUCTURE_BUILD_TRANSFORMATION_CONFIG_V0",
-      "subject_token": 119
+      "subject_token": 127
     },
     {
       "detail": {
@@ -2092,7 +2092,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::STRUCTURE_FIGURE_OF_MERIT_POLICY_V0",
-      "subject_token": 120
+      "subject_token": 128
     },
     {
       "detail": {
@@ -2104,7 +2104,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::STRUCTURE_PHASE_FINDINGS_V0",
-      "subject_token": 121
+      "subject_token": 129
     },
     {
       "detail": {
@@ -2116,7 +2116,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::STRUCTURE_PHASE_HEADER_V0",
-      "subject_token": 122
+      "subject_token": 130
     },
     {
       "detail": {
@@ -2128,7 +2128,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::STRUCTURE_PHASE_PRIORS_V0",
-      "subject_token": 123
+      "subject_token": 131
     },
     {
       "detail": {
@@ -2140,7 +2140,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::STRUCTURE_PHASE_REGISTERS_V0",
-      "subject_token": 124
+      "subject_token": 132
     },
     {
       "detail": {
@@ -2152,7 +2152,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::STRUCTURE_PHASE_SECTIONS_V0",
-      "subject_token": 125
+      "subject_token": 133
     },
     {
       "detail": {
@@ -2164,7 +2164,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::STRUCTURE_REGISTER_SCHEMA_DISPATCH_V0",
-      "subject_token": 126
+      "subject_token": 134
     },
     {
       "detail": {
@@ -2176,7 +2176,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::TEST_DATA_CT_PURE_ATTRIBUTE_PROVENANCE_V0",
-      "subject_token": 127
+      "subject_token": 135
     },
     {
       "detail": {
@@ -2188,7 +2188,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::TEST_DATA_CT_PURE_EVALUATE_RULES_V0",
-      "subject_token": 128
+      "subject_token": 136
     },
     {
       "detail": {
@@ -2200,7 +2200,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::TEST_DATA_CT_PURE_MEASURE_COMPLETENESS_V0",
-      "subject_token": 129
+      "subject_token": 137
     },
     {
       "detail": {
@@ -2212,7 +2212,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::TEST_DATA_CT_PURE_PARSE_PRIOR_PHASES_V0",
-      "subject_token": 130
+      "subject_token": 138
     },
     {
       "detail": {
@@ -2224,7 +2224,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::TEST_DATA_CT_PURE_PARSE_REGISTERS_V0",
-      "subject_token": 131
+      "subject_token": 139
     },
     {
       "detail": {
@@ -2236,7 +2236,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::TEST_DATA_CT_PURE_RENDER_ARTIFACTS_V0",
-      "subject_token": 132
+      "subject_token": 140
     },
     {
       "detail": {
@@ -2248,7 +2248,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::VOCAB_DESIGN_REGISTER_TERMS_V0",
-      "subject_token": 133
+      "subject_token": 141
     },
     {
       "detail": {
@@ -2260,7 +2260,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::VOCAB_FACT_PROVENANCE_V0",
-      "subject_token": 134
+      "subject_token": 142
     },
     {
       "detail": {
@@ -2272,7 +2272,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::WF_CONSTRUCT_ARTIFACTS_V0",
-      "subject_token": 135
+      "subject_token": 143
     },
     {
       "detail": {
@@ -2284,7 +2284,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::WF_P0_SEED_ADMISSIBILITY_V0",
-      "subject_token": 136
+      "subject_token": 144
     },
     {
       "detail": {
@@ -2296,7 +2296,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::WF_P1_CHANGE_REQUEST_ADMISSIBILITY_V0",
-      "subject_token": 137
+      "subject_token": 145
     },
     {
       "detail": {
@@ -2308,7 +2308,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::WF_P2_DOMAIN_MODEL_ADMISSIBILITY_V0",
-      "subject_token": 138
+      "subject_token": 146
     },
     {
       "detail": {
@@ -2320,7 +2320,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::WF_P3_ANALYSIS_LOOP_ADMISSIBILITY_V0",
-      "subject_token": 139
+      "subject_token": 147
     },
     {
       "detail": {
@@ -2332,7 +2332,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::WF_P4_BUSINESS_MODEL_ADMISSIBILITY_V0",
-      "subject_token": 140
+      "subject_token": 148
     },
     {
       "detail": {
@@ -2344,7 +2344,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::WF_P5_BUSINESS_INTENT_ADMISSIBILITY_V0",
-      "subject_token": 141
+      "subject_token": 149
     },
     {
       "detail": {
@@ -2356,7 +2356,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::WF_P6_GOVERNANCE_INTENT_ADMISSIBILITY_V0",
-      "subject_token": 142
+      "subject_token": 150
     },
     {
       "detail": {
@@ -2368,7 +2368,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::WF_P7_DESIGN_INTENT_ADMISSIBILITY_V0",
-      "subject_token": 143
+      "subject_token": 151
     },
     {
       "detail": {
@@ -2380,12 +2380,12 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "transformation::WF_P8_AUTHORING_MANDATE_ADMISSIBILITY_V0",
-      "subject_token": 144
+      "subject_token": 152
     },
     {
       "detail": {
         "address_count": 92,
-        "projection_hash": "1cb19b8b27fd379d5047209229c34b77f98f99853421d63140507e8f4063770c"
+        "projection_hash": "0260be261d150dcda8aa3788028e270aa32258ef6ff5b4d33d721c2d72d26281"
       },
       "event_id": 161,
       "family": "PROJECTION",
@@ -2400,7 +2400,7 @@
         "adjacency_count": 37,
         "edge_count": 111,
         "node_count": 54,
-        "projection_hash": "7af87e3337ac9f43f9b694003de4b09ebc85626133e5652df5c1a8e0059a69c4"
+        "projection_hash": "457710dac3befe7635cdfeb802d44e93eda7d2c05ac12d8fdf5bb209c6d2d720"
       },
       "event_id": 162,
       "family": "PROJECTION",
@@ -2415,7 +2415,7 @@
         "edge_count": 111,
         "ev_schema_count": 0,
         "node_count": 54,
-        "projection_hash": "806b04f257a5cf7022d0fe82151970970e2fec2218b70c1a4cd9fe68aec8f4e4"
+        "projection_hash": "9208ffa4e8e9de39ecf9ed7ef119aefc60a7f9d4719b412025a16ba6a88c2be4"
       },
       "event_id": 163,
       "family": "PROJECTION",
@@ -2430,7 +2430,7 @@
         "bindings_count": 10,
         "entry_count": 10,
         "pipeline_count": 5,
-        "projection_hash": "e2f8deb0b893d39bf7a7add13e59798437e8d5b9ca900740ce74eaeafdc062f7",
+        "projection_hash": "08a9f53e93cd1263f885dfe4e1df312a1c80560955a95f19bae664dffb532963",
         "routing_count": 10,
         "terminal_count": 47
       },
@@ -2446,7 +2446,7 @@
       "detail": {
         "cs_count": 2,
         "ct_count": 6,
-        "projection_hash": "be3c30a10e2d7eed6bb7b44f96cce170244ec80f1883524aedc6edbec0bcde18",
+        "projection_hash": "a12ba1284226af533113f2cd2aee1dfe248eebb382951bea93709caff7ee75c7",
         "rb_policy_count": 2
       },
       "event_id": 165,
@@ -3367,7 +3367,7 @@
       "subject_token": -1
     }
   ],
-  "evidence_graph_hash": "716d96b3ca3decb077f06c0ee59a58a10868ffeeb07ff636cddc1ca44846fadc",
+  "evidence_graph_hash": "8d173dc297c2d80327473c7e25fc012f7682c4a4e23a82ce7e84c38f86b3ed01",
   "families": {
     "ADDRESSING": [
       91

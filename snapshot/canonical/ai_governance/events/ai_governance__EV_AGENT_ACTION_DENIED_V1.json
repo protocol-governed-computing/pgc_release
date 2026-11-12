@@ -1,0 +1,46 @@
+{
+  "artifact_code": "EV_AGENT_ACTION_DENIED_V1",
+  "artifact_type": "EV",
+  "content": "# EV_AGENT_ACTION_DENIED_V1\n\n## Machine\n\n```yaml\nfqdn: ai_governance::EV_AGENT_ACTION_DENIED_V1\nartifact_kind: EVENT\nversion: v1\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: agent_governance\nsupersedes: ai_governance::EV_AGENT_ACTION_DENIED_V0\ncore:\n  summary: A agent action denied\n  description: A agent action denied\n  subdomain: agent_governance\n  schema:\n    tool_name:\n      type: string\n      required: true\n    requesting_user_id:\n      type: string\n      required: true\n    reason:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n```\n\n---\n\n## Intent\n\nA agent action denied\n",
+  "content_hash": "17bb903d5c35c5d9359c8359422ee28bad89d0a87fc159319494408a1b2c0087",
+  "fqdn_id": "ai_governance::EV_AGENT_ACTION_DENIED_V1",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "agent_governance",
+    "core": {
+      "description": "A agent action denied",
+      "schema": {
+        "reason": {
+          "required": true,
+          "type": "string"
+        },
+        "requesting_user_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        },
+        "tool_name": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "agent_governance",
+      "summary": "A agent action denied"
+    },
+    "fqdn": "ai_governance::EV_AGENT_ACTION_DENIED_V1",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "supersedes": "ai_governance::EV_AGENT_ACTION_DENIED_V0",
+    "version": "v1"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "1"
+}

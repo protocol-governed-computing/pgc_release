@@ -1,0 +1,1229 @@
+{
+  "wf_id": "WF_GOVERN_AGENT_ACTION_V1",
+  "entry": "IN_AGENT_ACTION_REQUESTED_V1",
+  "nodes": [
+    {
+      "id": "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "type": "CC",
+      "cc_code": "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "record": "in.submission"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+            "inputs": [
+              "record",
+              "schema"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "violations"
+            ]
+          },
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "submission": {
+            "requesting_user_id": "$.payload.requesting_user_id",
+            "tool_name": "$.payload.tool_name"
+          }
+        }
+      }
+    },
+    {
+      "id": "CC_CLAIM_ACTION_IDENTITY_V0",
+      "type": "CC",
+      "cc_code": "CC_CLAIM_ACTION_IDENTITY_V0",
+      "capability": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+            "id": "CT_PURE_GENERATE_ID_V0",
+            "inputs": [
+              "data",
+              "prefix"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "id"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "bindings": {
+              "fields": "in.action_fields"
+            },
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "action_fields": {
+            "requesting_user_id": "$.payload.requesting_user_id",
+            "tool_name": "$.payload.tool_name"
+          },
+          "domain_context": "IN.domain_context",
+          "requesting_user_id": "IN.requesting_user_id",
+          "tool_name": "IN.tool_name"
+        }
+      }
+    },
+    {
+      "id": "CC_DENY_PARAMETER_VIOLATION",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "occurrence": "AGENT_ACTION_DENIED",
+          "reason": "PARAMETER_VIOLATION",
+          "requesting_user_id": "IN.requesting_user_id",
+          "tool_name": "IN.tool_name"
+        }
+      }
+    },
+    {
+      "id": "CC_DENY_UNAUTHORIZED_ACTOR",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "occurrence": "AGENT_ACTION_DENIED",
+          "reason": "UNAUTHORIZED_ACTOR",
+          "requesting_user_id": "IN.requesting_user_id",
+          "tool_name": "IN.tool_name"
+        }
+      }
+    },
+    {
+      "id": "CC_DENY_UNAUTHORIZED_TOOL",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "occurrence": "AGENT_ACTION_DENIED",
+          "reason": "UNAUTHORIZED_TOOL",
+          "requesting_user_id": "IN.requesting_user_id",
+          "tool_name": "IN.tool_name"
+        }
+      }
+    },
+    {
+      "id": "CC_DENY_UNDECLARED_TOOL",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "occurrence": "AGENT_ACTION_DENIED",
+          "reason": "UNDECLARED_TOOL",
+          "requesting_user_id": "IN.requesting_user_id",
+          "tool_name": "IN.tool_name"
+        }
+      }
+    },
+    {
+      "id": "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "type": "CC",
+      "cc_code": "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "capability": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+            "id": "CT_PURE_GENERATE_ID_V0",
+            "inputs": [
+              "data",
+              "prefix"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "id"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "domain_context": "IN.domain_context",
+          "requesting_user_id": "IN.requesting_user_id",
+          "tool_name": "IN.tool_name"
+        }
+      }
+    },
+    {
+      "id": "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "type": "CC",
+      "cc_code": "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+            "id": "CS_APPENDONLY_JSONL_V0",
+            "kind": "CS",
+            "ops": [
+              "APPEND",
+              "GET_ALL"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "occurrence": "AGENT_ACTION_AUTHORIZED",
+          "reason": "IN.parameters.reason",
+          "requesting_user_id": "IN.requesting_user_id",
+          "tool_name": "IN.tool_name"
+        }
+      }
+    },
+    {
+      "id": "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "type": "CC",
+      "cc_code": "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "state": "CC_RESOLVE_LICENSE_V0.license_record.state"
+        }
+      }
+    },
+    {
+      "id": "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "type": "CC",
+      "cc_code": "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "capability": "capability_transforms::CT_PURE_LOOKUP_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "key": "in.key"
+            },
+            "fqdn": "capability_transforms::CT_PURE_LOOKUP_V0",
+            "id": "CT_PURE_LOOKUP_V0",
+            "inputs": [
+              "key",
+              "map"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "result"
+            ]
+          },
+          {
+            "bindings": {
+              "parameters": "in.parameters",
+              "rules": "look_up_tool_rules.tool_rules"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+            "inputs": [
+              "parameters",
+              "rules"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "failed_rule",
+              "valid"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "key": "IN.tool_name",
+          "parameters": "IN.parameters"
+        }
+      }
+    },
+    {
+      "id": "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "type": "CC",
+      "cc_code": "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "capability": "capability_transforms::CT_PURE_LOOKUP_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "key": "in.key"
+            },
+            "fqdn": "capability_transforms::CT_PURE_LOOKUP_V0",
+            "id": "CT_PURE_LOOKUP_V0",
+            "inputs": [
+              "key",
+              "map"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "result"
+            ]
+          },
+          {
+            "bindings": {
+              "allowed_set": "look_up_tier_tools.tier_tools",
+              "value": "in.tool_name"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "inputs": [
+              "allowed_set",
+              "value"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "is_member"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "key": "CC_RESOLVE_LICENSE_V0.license_record.tier",
+          "tool_name": "IN.tool_name"
+        }
+      }
+    },
+    {
+      "id": "CC_REQUIRE_TOOL_DECLARED_V0",
+      "type": "CC",
+      "cc_code": "CC_REQUIRE_TOOL_DECLARED_V0",
+      "capability": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "value": "in.tool_name"
+            },
+            "fqdn": "capability_transforms::CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "id": "CT_PURE_VALIDATE_SET_MEMBERSHIP_V0",
+            "inputs": [
+              "allowed_set",
+              "value"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "is_member"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "tool_name": "IN.tool_name"
+        }
+      }
+    },
+    {
+      "id": "CC_RESOLVE_LICENSE_V0",
+      "type": "CC",
+      "cc_code": "CC_RESOLVE_LICENSE_V0",
+      "capability": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {
+              "data": "in.employee_id"
+            },
+            "fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+            "id": "CT_PURE_GENERATE_ID_V0",
+            "inputs": [
+              "data",
+              "prefix"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "id"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+            "id": "CS_REGISTRY_V0",
+            "kind": "CS",
+            "ops": [
+              "REGISTER",
+              "RESOLVE",
+              "EXISTS",
+              "DEREGISTER",
+              "COUNT"
+            ],
+            "outputs": [
+              "result_status"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "employee_id": "IN.requesting_user_id"
+        }
+      }
+    },
+    {
+      "id": "CC_WRITE_ACTION_V0",
+      "type": "CC",
+      "cc_code": "CC_WRITE_ACTION_V0",
+      "capability": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+      "capability_type": "CT",
+      "projection": {
+        "steps": [
+          {
+            "bindings": {},
+            "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+            "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+            "inputs": [
+              "fields"
+            ],
+            "kind": "CT",
+            "outputs": [
+              "record"
+            ]
+          },
+          {
+            "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "id": "CS_MUTABLE_JSON_V0",
+            "kind": "CS",
+            "ops": [
+              "READ",
+              "WRITE",
+              "UPDATE",
+              "DELETE",
+              "DELETE_MANY"
+            ],
+            "ops_truncated": true,
+            "outputs": [
+              "result_status"
+            ]
+          }
+        ]
+      },
+      "input_bindings": {
+        "type": "wf_boundary",
+        "bindings": {
+          "action_id": "CC_CLAIM_ACTION_IDENTITY_V0.action_id",
+          "request_identity": "CC_FORM_ACTION_REQUEST_IDENTITY_V0.request_identity",
+          "submission": {
+            "requesting_user_id": "$.payload.requesting_user_id",
+            "tool_name": "$.payload.tool_name"
+          }
+        }
+      }
+    },
+    {
+      "id": "EXIT_COMPLETED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_DENIED",
+      "type": "EXIT"
+    },
+    {
+      "id": "EXIT_REJECTED",
+      "type": "EXIT"
+    },
+    {
+      "id": "IN_AGENT_ACTION_REQUESTED_V1",
+      "type": "IN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "to": "CC_REQUIRE_TOOL_DECLARED_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_CLAIM_ACTION_IDENTITY_V0",
+      "to": "CC_WRITE_ACTION_V0",
+      "condition": "ALREADY_EXISTS"
+    },
+    {
+      "from": "CC_CLAIM_ACTION_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_CLAIM_ACTION_IDENTITY_V0",
+      "to": "CC_WRITE_ACTION_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_CLAIM_ACTION_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_DENY_PARAMETER_VIOLATION",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_DENY_PARAMETER_VIOLATION",
+      "to": "EXIT_DENIED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_DENY_PARAMETER_VIOLATION",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_DENY_UNAUTHORIZED_ACTOR",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_DENY_UNAUTHORIZED_ACTOR",
+      "to": "EXIT_DENIED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_DENY_UNAUTHORIZED_ACTOR",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_DENY_UNAUTHORIZED_TOOL",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_DENY_UNAUTHORIZED_TOOL",
+      "to": "EXIT_DENIED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_DENY_UNAUTHORIZED_TOOL",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_DENY_UNDECLARED_TOOL",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_DENY_UNDECLARED_TOOL",
+      "to": "EXIT_DENIED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_DENY_UNDECLARED_TOOL",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "to": "CC_CLAIM_ACTION_IDENTITY_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "to": "EXIT_COMPLETED",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "to": "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "to": "CC_DENY_UNAUTHORIZED_ACTOR",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "to": "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "to": "CC_DENY_PARAMETER_VIOLATION",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "to": "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "to": "CC_DENY_UNAUTHORIZED_TOOL",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_REQUIRE_TOOL_DECLARED_V0",
+      "to": "CC_RESOLVE_LICENSE_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_REQUIRE_TOOL_DECLARED_V0",
+      "to": "CC_DENY_UNDECLARED_TOOL",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_RESOLVE_LICENSE_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_RESOLVE_LICENSE_V0",
+      "to": "CC_DENY_UNAUTHORIZED_ACTOR",
+      "condition": "NOT_FOUND"
+    },
+    {
+      "from": "CC_RESOLVE_LICENSE_V0",
+      "to": "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_RESOLVE_LICENSE_V0",
+      "to": "CC_DENY_UNAUTHORIZED_ACTOR",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "CC_WRITE_ACTION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "BACKEND_ERROR"
+    },
+    {
+      "from": "CC_WRITE_ACTION_V0",
+      "to": "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "condition": "SUCCESS"
+    },
+    {
+      "from": "CC_WRITE_ACTION_V0",
+      "to": "EXIT_REJECTED",
+      "condition": "VIOLATION"
+    },
+    {
+      "from": "IN_AGENT_ACTION_REQUESTED_V1",
+      "to": "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "condition": "ACK"
+    },
+    {
+      "from": "IN_AGENT_ACTION_REQUESTED_V1",
+      "to": "EXIT_REJECTED",
+      "condition": "NACK"
+    }
+  ],
+  "execution_paths": [
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_DENY_UNAUTHORIZED_ACTOR",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_DENY_UNAUTHORIZED_ACTOR",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_DENY_UNAUTHORIZED_ACTOR",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "CC_WRITE_ACTION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "CC_WRITE_ACTION_V0",
+      "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "CC_WRITE_ACTION_V0",
+      "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "EXIT_COMPLETED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "CC_WRITE_ACTION_V0",
+      "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "CC_WRITE_ACTION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "CC_WRITE_ACTION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "CC_WRITE_ACTION_V0",
+      "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "CC_WRITE_ACTION_V0",
+      "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "EXIT_COMPLETED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "CC_WRITE_ACTION_V0",
+      "CC_RECORD_AGENT_GOVERNANCE_MOMENT_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "CC_WRITE_ACTION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "CC_CLAIM_ACTION_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_FORM_ACTION_REQUEST_IDENTITY_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_DENY_PARAMETER_VIOLATION",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_DENY_PARAMETER_VIOLATION",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_REQUIRE_PARAMETERS_SATISFY_RULES_V0",
+      "CC_DENY_PARAMETER_VIOLATION",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_DENY_UNAUTHORIZED_TOOL",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_DENY_UNAUTHORIZED_TOOL",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_REQUIRE_TIER_GRANTS_TOOL_V0",
+      "CC_DENY_UNAUTHORIZED_TOOL",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_DENY_UNAUTHORIZED_ACTOR",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_DENY_UNAUTHORIZED_ACTOR",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_REQUIRE_LICENSE_ACTIVE_V0",
+      "CC_DENY_UNAUTHORIZED_ACTOR",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_DENY_UNAUTHORIZED_ACTOR",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_DENY_UNAUTHORIZED_ACTOR",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_RESOLVE_LICENSE_V0",
+      "CC_DENY_UNAUTHORIZED_ACTOR",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_DENY_UNDECLARED_TOOL",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_DENY_UNDECLARED_TOOL",
+      "EXIT_DENIED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "CC_REQUIRE_TOOL_DECLARED_V0",
+      "CC_DENY_UNDECLARED_TOOL",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+      "EXIT_REJECTED"
+    ],
+    [
+      "IN_AGENT_ACTION_REQUESTED_V1",
+      "EXIT_REJECTED"
+    ]
+  ]
+}

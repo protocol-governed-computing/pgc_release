@@ -1,0 +1,50 @@
+{
+  "artifact_code": "EV_ACTOR_ACCEPTED_V1",
+  "artifact_type": "EV",
+  "content": "# EV_ACTOR_ACCEPTED_V1\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_ACTOR_ACCEPTED_V1\nartifact_kind: EVENT\nversion: v1\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: identity\nsupersedes: blockchain::EV_ACTOR_ACCEPTED_V0\ncore:\n  summary: A actor accepted\n  description: A actor accepted\n  subdomain: identity\n  schema:\n    contact_address:\n      type: string\n      required: true\n    verifying_authority:\n      type: string\n      required: true\n    grounds:\n      type: string\n      required: true\n    occurred_at:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n```\n\n---\n\n## Intent\n\nA actor accepted\n",
+  "content_hash": "1a74d43c5be0775141b9d83b23bd7e780544c220825dfaa809ca24a30544d5ef",
+  "fqdn_id": "blockchain::EV_ACTOR_ACCEPTED_V1",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "description": "A actor accepted",
+      "schema": {
+        "contact_address": {
+          "required": true,
+          "type": "string"
+        },
+        "grounds": {
+          "required": true,
+          "type": "string"
+        },
+        "occurred_at": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        },
+        "verifying_authority": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "identity",
+      "summary": "A actor accepted"
+    },
+    "fqdn": "blockchain::EV_ACTOR_ACCEPTED_V1",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "supersedes": "blockchain::EV_ACTOR_ACCEPTED_V0",
+    "version": "v1"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "1"
+}

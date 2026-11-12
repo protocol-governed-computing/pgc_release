@@ -1,8 +1,8 @@
 {
   "artifact_code": "TI_REJECT_ACTOR_V0",
   "artifact_type": "TI",
-  "content": "# TI_REJECT_ACTOR_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::TI_REJECT_ACTOR_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: identity\noperation: blockchain.reject_actor\ncore:\n  summary: Admits a request to reject a registered actor, and sends the act only what the caller supplies\ninput_contract:\n  contact_address:\n    type: string\n    required: true\n  verifying_authority:\n    type: string\n    required: true\n  grounds:\n    type: string\n    required: true\ncontext_requirements: []\nhandler:\n  kind: WF_INVOCATION\n  workflow: blockchain::WF_REJECT_ACTOR_V0\n  payload_template:\n    contact_address: ${input.contact_address}\n    verifying_authority: ${input.verifying_authority}\n    grounds: ${input.grounds}\n```\n\n---\n\n## Intent\n\nAdmits a request to reject a registered actor, and sends the act only what the caller supplies\n",
-  "content_hash": "502c03f1f22b90f61e8a6826b1088d40a57b321ab49ae8e4c74194b82f8cb09c",
+  "content": "# TI_REJECT_ACTOR_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::TI_REJECT_ACTOR_V0\nartifact_kind: TRANSPORT_INGRESS\nversion: v0\ngoverned_by: transport::CONSTITUTION_TRANSPORT_INGRESS_V0\nauthority: pgc.platform\nconcern: identity\noperation: blockchain.reject_actor\ncore:\n  summary: Admits a request to reject a registered actor, and sends the act only what the caller supplies\ninput_contract:\n  contact_address:\n    type: string\n    required: true\n  verifying_authority:\n    type: string\n    required: true\n  grounds:\n    type: string\n    required: true\ncontext_requirements: []\nhandler:\n  kind: WF_INVOCATION\n  workflow: blockchain::WF_REJECT_ACTOR_V1\n  payload_template:\n    contact_address: ${input.contact_address}\n    verifying_authority: ${input.verifying_authority}\n    grounds: ${input.grounds}\n```\n\n---\n\n## Intent\n\nAdmits a request to reject a registered actor, and sends the act only what the caller supplies\n",
+  "content_hash": "bc1aa04c0c0fbb3fb85db30807503d95bd4100a4d682228c1721df33488fd8cc",
   "fqdn_id": "blockchain::TI_REJECT_ACTOR_V0",
   "frontmatter": {
     "artifact_kind": "TRANSPORT_INGRESS",
@@ -21,7 +21,7 @@
         "grounds": "${input.grounds}",
         "verifying_authority": "${input.verifying_authority}"
       },
-      "workflow": "blockchain::WF_REJECT_ACTOR_V0"
+      "workflow": "blockchain::WF_REJECT_ACTOR_V1"
     },
     "input_contract": {
       "contact_address": {
@@ -43,7 +43,7 @@
   "layer_code": "BLOCKCHAIN",
   "namespace": "blockchain",
   "references": [
-    "blockchain::WF_REJECT_ACTOR_V0",
+    "blockchain::WF_REJECT_ACTOR_V1",
     "transport::CONSTITUTION_TRANSPORT_INGRESS_V0"
   ],
   "version": "0"

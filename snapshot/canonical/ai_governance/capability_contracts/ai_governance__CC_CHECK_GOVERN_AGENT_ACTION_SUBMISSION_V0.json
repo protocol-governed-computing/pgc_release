@@ -1,0 +1,135 @@
+{
+  "artifact_code": "CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "record": "in.submission"
+        },
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "id": "CT_PURE_VALIDATE_RECORD_STRUCTURE_V0",
+        "inputs": [
+          "record",
+          "schema"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "violations"
+        ]
+      },
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: agent_governance\ncore:\n  summary: Refuse a request to govern agent action that lacks what it requires\n  inputs:\n    submission:\n      type: object\n      required: true\n  outputs:\n    valid:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: check_action_fields\n    transform: capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0\n    inputs:\n      record: $.inputs.submission\n      schema:\n        tool_name:\n          type: string\n          required: true\n        requesting_user_id:\n          type: string\n          required: true\n    outputs:\n      violations: $.capability_result.violations\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: refuse_incomplete_submission\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        action_violations: $.results.check_action_fields.violations\n      rules:\n      - field: action_violations\n        op: eq\n        value: []\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuse a request to govern agent action that lacks what it requires\n",
+  "content_hash": "b0a72b9cdac2bc502bda6cd358bcc8d03853c881d5f86ccab31dbee5227c15e7",
+  "fqdn_id": "ai_governance::CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "agent_governance",
+    "core": {
+      "inputs": {
+        "submission": {
+          "required": true,
+          "type": "object"
+        }
+      },
+      "outputs": {
+        "valid": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "record": "$.inputs.submission",
+            "schema": {
+              "requesting_user_id": {
+                "required": true,
+                "type": "string"
+              },
+              "tool_name": {
+                "required": true,
+                "type": "string"
+              }
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "violations": "$.capability_result.violations"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "check_action_fields",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+        },
+        {
+          "inputs": {
+            "parameters": {
+              "action_violations": "$.results.check_action_fields.violations"
+            },
+            "rules": [
+              {
+                "field": "action_violations",
+                "op": "eq",
+                "value": []
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "refuse_incomplete_submission",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse a request to govern agent action that lacks what it requires"
+    },
+    "fqdn": "ai_governance::CC_CHECK_GOVERN_AGENT_ACTION_SUBMISSION_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+    "capability_transforms::CT_PURE_VALIDATE_RECORD_STRUCTURE_V0"
+  ],
+  "version": "0"
+}

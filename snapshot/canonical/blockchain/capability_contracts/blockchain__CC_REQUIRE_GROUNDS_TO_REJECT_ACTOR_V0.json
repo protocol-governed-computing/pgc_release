@@ -1,0 +1,94 @@
+{
+  "artifact_code": "CC_REQUIRE_GROUNDS_TO_REJECT_ACTOR_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "id": "CT_PURE_VALIDATE_PARAMETER_RULES_V0",
+        "inputs": [
+          "parameters",
+          "rules"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "failed_rule",
+          "valid"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_REQUIRE_GROUNDS_TO_REJECT_ACTOR_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_REQUIRE_GROUNDS_TO_REJECT_ACTOR_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: Refuse to reject actor without grounds\n  inputs:\n    grounds:\n      type: string\n  outputs:\n    valid:\n      type: boolean\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: require_grounds_stated\n    transform: capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0\n    inputs:\n      parameters:\n        grounds: $.inputs.grounds\n      rules:\n      - field: grounds\n        op: not_null\n      - field: grounds\n        op: neq\n        value: ''\n    outputs:\n      valid: $.capability_result.valid\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nRefuse to reject actor without grounds\n",
+  "content_hash": "6c8ae175362928630c7e1fd2d0c689c9cab58ea5e79154468bff1502b23be456",
+  "fqdn_id": "blockchain::CC_REQUIRE_GROUNDS_TO_REJECT_ACTOR_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "identity",
+    "core": {
+      "inputs": {
+        "grounds": {
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "valid": {
+          "required": true,
+          "type": "boolean"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "parameters": {
+              "grounds": "$.inputs.grounds"
+            },
+            "rules": [
+              {
+                "field": "grounds",
+                "op": "not_null"
+              },
+              {
+                "field": "grounds",
+                "op": "neq",
+                "value": ""
+              }
+            ]
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "valid": "$.capability_result.valid"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "require_grounds_stated",
+          "transform": "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Refuse to reject actor without grounds"
+    },
+    "fqdn": "blockchain::CC_REQUIRE_GROUNDS_TO_REJECT_ACTOR_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_transforms::CT_PURE_VALIDATE_PARAMETER_RULES_V0"
+  ],
+  "version": "0"
+}

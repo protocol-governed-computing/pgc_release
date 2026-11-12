@@ -744,6 +744,7 @@
                   "cross_subdomain_notes",
                   "cross_subdomain_refs",
                   "declared_reach",
+                  "delivery",
                   "dependency_discoveries",
                   "dependency_graph",
                   "design_decisions",
@@ -1064,6 +1065,7 @@
                   "cross_subdomain_notes",
                   "cross_subdomain_refs",
                   "declared_reach",
+                  "delivery",
                   "dependency_discoveries",
                   "dependency_graph",
                   "design_decisions",
@@ -1210,6 +1212,7 @@
                   "business"
                 ],
                 "observation": "si.snapshot.summary",
+                "own_domain": true,
                 "pattern": "[a-z][a-z0-9_.]*::[A-Z][A-Z0-9_]*_V\\d+"
               },
               "register": "authoring_decisions"

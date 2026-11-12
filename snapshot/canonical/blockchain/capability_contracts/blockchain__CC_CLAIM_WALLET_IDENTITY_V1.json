@@ -1,0 +1,131 @@
+{
+  "artifact_code": "CC_CLAIM_WALLET_IDENTITY_V1",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "data": "in.holder"
+        },
+        "fqdn": "capability_transforms::CT_PURE_GENERATE_ID_V0",
+        "id": "CT_PURE_GENERATE_ID_V0",
+        "inputs": [
+          "data",
+          "prefix"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "id"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_REGISTRY_V0",
+        "id": "CS_REGISTRY_V0",
+        "kind": "CS",
+        "ops": [
+          "REGISTER",
+          "RESOLVE",
+          "EXISTS",
+          "DEREGISTER",
+          "COUNT"
+        ],
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_CLAIM_WALLET_IDENTITY_V1\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_CLAIM_WALLET_IDENTITY_V1\nartifact_kind: CAPABILITY_CONTRACT\nversion: v1\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: wallet\nsupersedes: blockchain::CC_CLAIM_WALLET_IDENTITY_V0\ncore:\n  summary: Claim a wallet's wallet id\n  inputs:\n    holder:\n      type: string\n      required: true\n  outputs:\n    wallet_id:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    - ALREADY_EXISTS\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: form_wallet_id\n    transform: capability_transforms::CT_PURE_GENERATE_ID_V0\n    inputs:\n      data: $.inputs.holder\n      prefix: wal\n    outputs:\n      wallet_id: $.capability_result.id\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: claim_id\n    side_effect: capability_side_effects::CS_REGISTRY_V0\n    op: REGISTER\n    store: WALLET_IDENTITIES\n    inputs:\n      key: $.results.form_wallet_id.wallet_id\n      target_cs: capability_side_effects::CS_MUTABLE_JSON_V0\n      target_ref: WALLETS\n    outputs:\n      address: $.capability_result.address\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - ALREADY_EXISTS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      ALREADY_EXISTS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nClaim a wallet's wallet id\n",
+  "content_hash": "3a1534a4e0f5d3a55b6927c940ee084a10d4f923af4f15599f8a84a323deb27c",
+  "fqdn_id": "blockchain::CC_CLAIM_WALLET_IDENTITY_V1",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "inputs": {
+        "holder": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "wallet_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "data": "$.inputs.holder",
+            "prefix": "wal"
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "wallet_id": "$.capability_result.id"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "form_wallet_id",
+          "transform": "capability_transforms::CT_PURE_GENERATE_ID_V0"
+        },
+        {
+          "inputs": {
+            "key": "$.results.form_wallet_id.wallet_id",
+            "target_cs": "capability_side_effects::CS_MUTABLE_JSON_V0",
+            "target_ref": "WALLETS"
+          },
+          "on_result": {
+            "ALREADY_EXISTS": "exit",
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "REGISTER",
+          "outputs": {
+            "address": "$.capability_result.address",
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "ALREADY_EXISTS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_REGISTRY_V0",
+          "step": "claim_id",
+          "store": "WALLET_IDENTITIES"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS",
+          "ALREADY_EXISTS",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Claim a wallet's wallet id"
+    },
+    "fqdn": "blockchain::CC_CLAIM_WALLET_IDENTITY_V1",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "supersedes": "blockchain::CC_CLAIM_WALLET_IDENTITY_V0",
+    "version": "v1"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0",
+    "capability_transforms::CT_PURE_GENERATE_ID_V0"
+  ],
+  "version": "1"
+}

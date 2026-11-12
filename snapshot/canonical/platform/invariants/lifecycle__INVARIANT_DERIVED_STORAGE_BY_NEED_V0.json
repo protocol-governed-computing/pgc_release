@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_DERIVED_STORAGE_BY_NEED_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_DERIVED_STORAGE_BY_NEED_V0\n\n## Machine\n\n```yaml\nfqdn: lifecycle::INVARIANT_DERIVED_STORAGE_BY_NEED_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: lifecycle::CONSTITUTION_CHANGE_MGMT_V0\nauthority: pgc.platform\nconcern: lifecycle\ncore:\n  enforcement_stage:\n  - enforced_elsewhere\n  violation_response: FAIL_IMMEDIATELY\n  enforced_by: the design compiler's derive route, applying its sealed doctrine to a decision ledger\nassert_projection:\n  applies_to_kinds:\n  - STRUCTURE\n```\n\n---\n\n## 1. Claim\n\nA derived design holds a thing's identity in a registry, a thing's records and states in a mutable store, and a part's trail in an append-only store, and no store for anything else.\n\n## 2. Why\n\nA store chosen by habit rather than by what is held lets an identity be overwritten, or a trail edited.\n\n## 3. How it is checked\n\nThe derive route chooses each store from what the ledger says a thing holds, and cites this rule on each store row.\n",
+  "content_hash": "2e46462d461b1ae961cee45add450ecd80cad3d5e0c2732b7dd1e582a18ecaf2",
+  "fqdn_id": "lifecycle::INVARIANT_DERIVED_STORAGE_BY_NEED_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "STRUCTURE"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "lifecycle",
+    "core": {
+      "enforced_by": "the design compiler's derive route, applying its sealed doctrine to a decision ledger",
+      "enforcement_stage": [
+        "enforced_elsewhere"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "lifecycle::INVARIANT_DERIVED_STORAGE_BY_NEED_V0",
+    "governed_by": "lifecycle::CONSTITUTION_CHANGE_MGMT_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "lifecycle",
+  "references": [
+    "lifecycle::CONSTITUTION_CHANGE_MGMT_V0"
+  ],
+  "version": "0"
+}

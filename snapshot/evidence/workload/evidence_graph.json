@@ -1,5 +1,5 @@
 {
-  "compiler_version": "18",
+  "compiler_version": "19",
   "edge_count": 29,
   "edges": [
     {
@@ -488,8 +488,8 @@
     },
     {
       "detail": {
-        "address_hash": "2fed05e3e9077e2550b6a934ea52a0ad4c49f2e3651c34558de6fad400be7ed1",
-        "address_table_size": 164
+        "address_hash": "e9c71cd86bfc5d7bc5e7bbcfa94739e5dd0a50603545b3ba185f85d8f94b05a3",
+        "address_table_size": 173
       },
       "event_id": 26,
       "family": "ADDRESSING",
@@ -501,9 +501,9 @@
     },
     {
       "detail": {
-        "assertions_executed": 78,
-        "assertions_imported": 78,
-        "assertions_passed": 78,
+        "assertions_executed": 79,
+        "assertions_imported": 79,
+        "assertions_passed": 79,
         "errors": 0,
         "warnings": 0
       },
@@ -619,7 +619,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
-      "subject_token": 26
+      "subject_token": 28
     },
     {
       "detail": {
@@ -631,7 +631,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "capability_transforms::CT_PURE_REQUIRE_TRUE_V0",
-      "subject_token": 30
+      "subject_token": 32
     },
     {
       "detail": {
@@ -643,7 +643,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::AC_REFERENCE_ACTOR_V0",
-      "subject_token": 112
+      "subject_token": 121
     },
     {
       "detail": {
@@ -655,7 +655,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::CC_COMPUTE_SEQUENCES_V0",
-      "subject_token": 113
+      "subject_token": 122
     },
     {
       "detail": {
@@ -667,7 +667,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::CC_STORE_RESULTS_V0",
-      "subject_token": 114
+      "subject_token": 123
     },
     {
       "detail": {
@@ -679,7 +679,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::CC_VERIFY_TERMINATION_V0",
-      "subject_token": 115
+      "subject_token": 124
     },
     {
       "detail": {
@@ -691,7 +691,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::CT_PURE_COLLATZ_STEP_V0",
-      "subject_token": 116
+      "subject_token": 125
     },
     {
       "detail": {
@@ -703,7 +703,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::CT_PURE_TERMINATION_CHECK_V0",
-      "subject_token": 117
+      "subject_token": 126
     },
     {
       "detail": {
@@ -715,7 +715,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::EV_CONJECTURE_EVALUATED_V0",
-      "subject_token": 118
+      "subject_token": 127
     },
     {
       "detail": {
@@ -727,7 +727,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::IN_COLLATZ_INPUT_VALIDATED_V0",
-      "subject_token": 119
+      "subject_token": 128
     },
     {
       "detail": {
@@ -739,7 +739,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::RB_COLLATZ_V0",
-      "subject_token": 120
+      "subject_token": 129
     },
     {
       "detail": {
@@ -751,7 +751,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::STRUCTURE_BUILD_WORKLOAD_CONFIG_V0",
-      "subject_token": 121
+      "subject_token": 130
     },
     {
       "detail": {
@@ -763,7 +763,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::STRUCTURE_COLLATZ_STORAGE_V0",
-      "subject_token": 122
+      "subject_token": 131
     },
     {
       "detail": {
@@ -775,7 +775,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::TEST_DATA_CT_PURE_COLLATZ_STEP_V0",
-      "subject_token": 123
+      "subject_token": 132
     },
     {
       "detail": {
@@ -787,7 +787,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::TEST_DATA_CT_PURE_TERMINATION_CHECK_V0",
-      "subject_token": 124
+      "subject_token": 133
     },
     {
       "detail": {
@@ -799,7 +799,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::TE_COLLATZ_COMPUTE_V0",
-      "subject_token": 125
+      "subject_token": 134
     },
     {
       "detail": {
@@ -811,7 +811,7 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::TI_COLLATZ_COMPUTE_V0",
-      "subject_token": 126
+      "subject_token": 135
     },
     {
       "detail": {
@@ -823,12 +823,12 @@
       "parent_event_id": -1,
       "stage": "S6_PROJECT",
       "subject_fqdn": "workload::WF_COLLATZ_CONJECTURE_V0",
-      "subject_token": 127
+      "subject_token": 136
     },
     {
       "detail": {
         "address_count": 54,
-        "projection_hash": "313957e2128b5c083d613eb055d20ecdef85f40d08a969a14a1dc4b3493a7dff"
+        "projection_hash": "79226b2001e6ead964844e76fae879b26d8a21c642213fe26a0bc2069c69d141"
       },
       "event_id": 54,
       "family": "PROJECTION",
@@ -843,7 +843,7 @@
         "adjacency_count": 9,
         "edge_count": 20,
         "node_count": 18,
-        "projection_hash": "f556e679a504b0d0a1ab057c24188d5d0918f32e11592830fedc4e75a28410ae"
+        "projection_hash": "a653ae77658fd377575445873e6cf2287833980ec430c2f7ec09a4d35e085334"
       },
       "event_id": 55,
       "family": "PROJECTION",
@@ -858,7 +858,7 @@
         "edge_count": 20,
         "ev_schema_count": 1,
         "node_count": 18,
-        "projection_hash": "e424851507b074c1d502b566f68545a3a24da89b6f90cad6bcca2a9b8440c8cb"
+        "projection_hash": "c0e432210576a27d052955b196be9136985e440593f235f4ee2a241b66896600"
       },
       "event_id": 56,
       "family": "PROJECTION",
@@ -873,7 +873,7 @@
         "bindings_count": 1,
         "entry_count": 1,
         "pipeline_count": 3,
-        "projection_hash": "a53cb4a6df073f75b9028cec84307ad245fc69a4b901a49d5fd7f33d3564bc95",
+        "projection_hash": "54e6e0656ad74e09d8f0347ae10f1340bf2ad53b54a97d25117fe61c801ef6da",
         "routing_count": 1,
         "terminal_count": 6
       },
@@ -889,7 +889,7 @@
       "detail": {
         "cs_count": 1,
         "ct_count": 3,
-        "projection_hash": "1c8e1e4fd2ae30c703f1241718d0d14184d627e9d64f39b15ac4832fba0d0260",
+        "projection_hash": "d709c95f794c4c9fbdf37cc0d9a9d8ae2b6a37755a2c9f8cda2066e2e6e72abb",
         "rb_policy_count": 1
       },
       "event_id": 58,
@@ -1251,7 +1251,7 @@
       "subject_token": -1
     }
   ],
-  "evidence_graph_hash": "2855a3d16bdbc6280fde78de193628ccb8c53b564ac25286076d94d0371a772a",
+  "evidence_graph_hash": "9892b1dc7472e81bba28ff603e7959dd174baf1932a4921a945e65f58d810d22",
   "families": {
     "ADDRESSING": [
       26

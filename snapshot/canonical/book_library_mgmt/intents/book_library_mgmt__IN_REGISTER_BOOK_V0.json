@@ -1,8 +1,8 @@
 {
   "artifact_code": "IN_REGISTER_BOOK_V0",
   "artifact_type": "IN",
-  "content": "# IN_REGISTER_BOOK_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_REGISTER_BOOK_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to register a book together with its first physical copy\n  workflow: WF_REGISTER_BOOK_V0\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    title:\n      type: string\n      required: true\n    author:\n      type: string\n      required: true\n    publication_year:\n      type: integer\n      required: true\n    book_fields:\n      type: object\n      required: true\n    barcode:\n      type: string\n      required: true\n    copy_fields:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to register a book together with its first physical copy\n",
-  "content_hash": "7259732c57a72d6c343b14c3e1d8f3bd7953a9b1915221a53c0b1c418dab4138",
+  "content": "# IN_REGISTER_BOOK_V0\n\n## Machine\n\n```yaml\nfqdn: book_library_mgmt::IN_REGISTER_BOOK_V0\nartifact_kind: INTENT\nversion: v0\ngoverned_by: intent::CONSTITUTION_INTENT_V0\nauthority: pgc.platform\nconcern: catalog\ncore:\n  summary: A request to register book\n  workflow: WF_REGISTER_BOOK_V1\n  inputs:\n    staff_credentials:\n      type: object\n      required: true\n    title:\n      type: string\n      required: true\n    author:\n      type: string\n      required: true\n    publication_year:\n      type: integer\n      required: true\n    book_fields:\n      type: object\n      required: true\n    barcode:\n      type: string\n      required: true\n    copy_fields:\n      type: object\n      required: true\n    staff_id:\n      type: string\n      required: true\n  outcomes:\n    ACK:\n      description: Request accepted for processing\n    NACK:\n      description: Request rejected\n```\n\n---\n\n## Intent\n\nA request to register book\n",
+  "content_hash": "1d0dcf7091810842865409ce690495671e45581b697a9484bb1bb872882f0352",
   "fqdn_id": "book_library_mgmt::IN_REGISTER_BOOK_V0",
   "frontmatter": {
     "artifact_kind": "INTENT",
@@ -51,8 +51,8 @@
           "description": "Request rejected"
         }
       },
-      "summary": "A request to register a book together with its first physical copy",
-      "workflow": "WF_REGISTER_BOOK_V0"
+      "summary": "A request to register book",
+      "workflow": "WF_REGISTER_BOOK_V1"
     },
     "fqdn": "book_library_mgmt::IN_REGISTER_BOOK_V0",
     "governed_by": "intent::CONSTITUTION_INTENT_V0",

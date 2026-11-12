@@ -1,0 +1,33 @@
+{
+  "artifact_code": "INVARIANT_AUTHORED_CHANGE_HAS_NO_DESIGN_V0",
+  "artifact_type": "INVARIANT",
+  "content": "# INVARIANT_AUTHORED_CHANGE_HAS_NO_DESIGN_V0\n\n## Machine\n\n```yaml\nfqdn: lifecycle::INVARIANT_AUTHORED_CHANGE_HAS_NO_DESIGN_V0\nartifact_kind: INVARIANT\nversion: V0\ngoverned_by: lifecycle::CONSTITUTION_CHANGE_MGMT_V0\nauthority: pgc.platform\nconcern: lifecycle\ncore:\n  enforcement_stage:\n  - enforced_elsewhere\n  violation_response: FAIL_IMMEDIATELY\n  enforced_by: the design compiler, refusing a design intent whose seed declares the change authored\nassert_projection:\n  applies_to_kinds:\n  - WF\n```\n\n---\n\n## 1. Claim\n\nA change whose seed declares it authored has no design intent.\n\n## 2. Why\n\nConstruction renders nothing an authored change delivers. A design intent for it would schedule a constitution, an invariant or the derive route's code to be rendered from registers that never held their content. Its dossier is complete at governance intent.\n\n## 3. How it is checked\n\nThe seed declares how the change is delivered. A design intent whose seed declares the change authored is refused.\n",
+  "content_hash": "561b0d5b3bf904c32c8a5f553cd7652d05dbb5ef59b5df0fcbd0315ff8146fc1",
+  "fqdn_id": "lifecycle::INVARIANT_AUTHORED_CHANGE_HAS_NO_DESIGN_V0",
+  "frontmatter": {
+    "artifact_kind": "INVARIANT",
+    "assert_projection": {
+      "applies_to_kinds": [
+        "WF"
+      ]
+    },
+    "authority": "pgc.platform",
+    "concern": "lifecycle",
+    "core": {
+      "enforced_by": "the design compiler, refusing a design intent whose seed declares the change authored",
+      "enforcement_stage": [
+        "enforced_elsewhere"
+      ],
+      "violation_response": "FAIL_IMMEDIATELY"
+    },
+    "fqdn": "lifecycle::INVARIANT_AUTHORED_CHANGE_HAS_NO_DESIGN_V0",
+    "governed_by": "lifecycle::CONSTITUTION_CHANGE_MGMT_V0",
+    "version": "V0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "lifecycle",
+  "references": [
+    "lifecycle::CONSTITUTION_CHANGE_MGMT_V0"
+  ],
+  "version": "0"
+}

@@ -1,0 +1,124 @@
+{
+  "artifact_code": "CC_WRITE_EMPLOYEE_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {},
+        "fqdn": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0",
+        "id": "CT_PURE_ASSEMBLE_RECORD_V0",
+        "inputs": [
+          "fields"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "record"
+        ]
+      },
+      {
+        "fqdn": "capability_side_effects::CS_MUTABLE_JSON_V0",
+        "id": "CS_MUTABLE_JSON_V0",
+        "kind": "CS",
+        "ops": [
+          "READ",
+          "WRITE",
+          "UPDATE",
+          "DELETE",
+          "DELETE_MANY"
+        ],
+        "ops_truncated": true,
+        "outputs": [
+          "result_status"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_WRITE_EMPLOYEE_V0\n\n## Machine\n\n```yaml\nfqdn: ai_governance::CC_WRITE_EMPLOYEE_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: ai_licensing\ncore:\n  summary: Write a new employee in its first state\n  inputs:\n    employee_id:\n      type: string\n      required: true\n  outputs:\n    result_status:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - VIOLATION\n    - SUCCESS\n    - BACKEND_ERROR\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: assemble_employee_record\n    transform: capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0\n    inputs:\n      fields:\n        employee_id: $.inputs.employee_id\n        training_completed: false\n    outputs:\n      employee_record: $.capability_result.record\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: continue\n      VIOLATION: exit\n  - step: write_employee_record\n    side_effect: capability_side_effects::CS_MUTABLE_JSON_V0\n    op: WRITE\n    store: EMPLOYEES\n    inputs:\n      key: $.inputs.employee_id\n      value: $.results.assemble_employee_record.employee_record\n    outputs:\n      result_status: $.result_status\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    - BACKEND_ERROR\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n      BACKEND_ERROR: exit\n```\n\n---\n\n## Intent\n\nWrite a new employee in its first state\n",
+  "content_hash": "691b2ce233c8d1adb7b4ddd729c73829bd2077efea97f8604845de39de908a0f",
+  "fqdn_id": "ai_governance::CC_WRITE_EMPLOYEE_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "inputs": {
+        "employee_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "result_status": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "fields": {
+              "employee_id": "$.inputs.employee_id",
+              "training_completed": false
+            }
+          },
+          "on_result": {
+            "SUCCESS": "continue",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "employee_record": "$.capability_result.record"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "assemble_employee_record",
+          "transform": "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+        },
+        {
+          "inputs": {
+            "key": "$.inputs.employee_id",
+            "value": "$.results.assemble_employee_record.employee_record"
+          },
+          "on_result": {
+            "BACKEND_ERROR": "exit",
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "op": "WRITE",
+          "outputs": {
+            "result_status": "$.result_status"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION",
+            "BACKEND_ERROR"
+          ],
+          "side_effect": "capability_side_effects::CS_MUTABLE_JSON_V0",
+          "step": "write_employee_record",
+          "store": "EMPLOYEES"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "VIOLATION",
+          "SUCCESS",
+          "BACKEND_ERROR"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Write a new employee in its first state"
+    },
+    "fqdn": "ai_governance::CC_WRITE_EMPLOYEE_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_transforms::CT_PURE_ASSEMBLE_RECORD_V0"
+  ],
+  "version": "0"
+}

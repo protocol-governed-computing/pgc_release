@@ -1,0 +1,53 @@
+{
+  "artifact_code": "RB_LICENSE_BINDINGS_V1",
+  "artifact_type": "RB",
+  "content": "# RB_LICENSE_BINDINGS_V1\n\n## Machine\n\n```yaml\nfqdn: ai_governance::RB_LICENSE_BINDINGS_V1\nartifact_kind: RUNTIME_BINDING\nversion: v1\ngoverned_by: runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0\nauthority: pgc.platform\nconcern: ai_licensing\nsupersedes: ai_governance::RB_LICENSE_BINDINGS_V0\ncore:\n  summary: Binds the ai_licensing's workflows to the stores and mechanisms they use\n  storage_structure: ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1\n  bindings:\n    capability_side_effects::CS_MUTABLE_JSON_V0:\n      policy:\n        structure: ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1\n    capability_side_effects::CS_REGISTRY_V0:\n      policy:\n        structure: ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1\n    capability_side_effects::CS_APPENDONLY_JSONL_V0:\n      policy:\n        structure: ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1\n    capability_side_effects::CS_CLOCK_V0:\n      policy:\n        precision: seconds\n```\n\n---\n\n## Intent\n\nBinds the ai_licensing's workflows to the stores and mechanisms they use\n",
+  "content_hash": "03fddc95921e12629f4808f7f02f6d958ac34343e0046c8e5be689ba2708cf66",
+  "fqdn_id": "ai_governance::RB_LICENSE_BINDINGS_V1",
+  "frontmatter": {
+    "artifact_kind": "RUNTIME_BINDING",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "bindings": {
+        "capability_side_effects::CS_APPENDONLY_JSONL_V0": {
+          "policy": {
+            "structure": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1"
+          }
+        },
+        "capability_side_effects::CS_CLOCK_V0": {
+          "policy": {
+            "precision": "seconds"
+          }
+        },
+        "capability_side_effects::CS_MUTABLE_JSON_V0": {
+          "policy": {
+            "structure": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1"
+          }
+        },
+        "capability_side_effects::CS_REGISTRY_V0": {
+          "policy": {
+            "structure": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1"
+          }
+        }
+      },
+      "storage_structure": "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
+      "summary": "Binds the ai_licensing's workflows to the stores and mechanisms they use"
+    },
+    "fqdn": "ai_governance::RB_LICENSE_BINDINGS_V1",
+    "governed_by": "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0",
+    "supersedes": "ai_governance::RB_LICENSE_BINDINGS_V0",
+    "version": "v1"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "ai_governance::STRUCTURE_AI_LICENSING_STORAGE_V1",
+    "capability_side_effects::CS_APPENDONLY_JSONL_V0",
+    "capability_side_effects::CS_CLOCK_V0",
+    "capability_side_effects::CS_MUTABLE_JSON_V0",
+    "capability_side_effects::CS_REGISTRY_V0",
+    "runtime_binding::CONSTITUTION_RUNTIME_BINDING_V0"
+  ],
+  "version": "1"
+}

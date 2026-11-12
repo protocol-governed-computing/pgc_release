@@ -1,0 +1,38 @@
+{
+  "artifact_code": "EV_TRAINING_COMPLETED_V1",
+  "artifact_type": "EV",
+  "content": "# EV_TRAINING_COMPLETED_V1\n\n## Machine\n\n```yaml\nfqdn: ai_governance::EV_TRAINING_COMPLETED_V1\nartifact_kind: EVENT\nversion: v1\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: ai_licensing\nsupersedes: ai_governance::EV_TRAINING_COMPLETED_V0\ncore:\n  summary: A training completed\n  description: A training completed\n  subdomain: ai_licensing\n  schema:\n    employee_id:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n```\n\n---\n\n## Intent\n\nA training completed\n",
+  "content_hash": "b19686a041bf70baa8ce5eec3243af7c358fe34bd3ed76744678f97c30fbf220",
+  "fqdn_id": "ai_governance::EV_TRAINING_COMPLETED_V1",
+  "frontmatter": {
+    "artifact_kind": "EVENT",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "description": "A training completed",
+      "schema": {
+        "employee_id": {
+          "required": true,
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "required": true,
+          "type": "string"
+        }
+      },
+      "subdomain": "ai_licensing",
+      "summary": "A training completed"
+    },
+    "fqdn": "ai_governance::EV_TRAINING_COMPLETED_V1",
+    "governed_by": "event::CONSTITUTION_EVENT_V0",
+    "supersedes": "ai_governance::EV_TRAINING_COMPLETED_V0",
+    "version": "v1"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "event::CONSTITUTION_EVENT_V0"
+  ],
+  "version": "1"
+}

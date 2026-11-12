@@ -1,0 +1,146 @@
+{
+  "artifact_code": "VOCAB_GOVERNANCE_ONTOLOGY_V0",
+  "artifact_type": "VOCAB",
+  "content": "# VOCAB_GOVERNANCE_ONTOLOGY_V0\n\n## Machine\n\n```yaml\nfqdn: artifact::VOCAB_GOVERNANCE_ONTOLOGY_V0\nartifact_kind: VOCABULARY\nversion: v0\ngoverned_by: vocabulary::CONSTITUTION_VOCABULARY_V0\nauthority: pgc.platform\nconcern: artifact\nextends: ''\nsemantic_categories:\n  casing: lower_snake\n  entries:\n  - definitional\n  - normative\n  - contractual\n  - operational\n  - participatory\n  - evidential\nprovenances:\n  casing: lower_snake\n  entries:\n  - authored\n  - derived\n  - produced\ncategory_definitional:\n  casing: UPPER_SNAKE\n  entries:\n  - STRUCTURE\n  - VOCABULARY\ncategory_normative:\n  casing: UPPER_SNAKE\n  entries:\n  - ASSERT\n  - CONSTITUTION\n  - INVARIANT\n  - TEST_DATA\ncategory_contractual:\n  casing: UPPER_SNAKE\n  entries:\n  - CAPABILITY_CONTRACT\n  - SURFACE_CONTRACT\n  - TRANSPORT_EGRESS\n  - TRANSPORT_INGRESS\ncategory_operational:\n  casing: UPPER_SNAKE\n  entries:\n  - CAPABILITY_SIDE_EFFECT\n  - CAPABILITY_TRANSFORM\n  - INTENT\n  - RUNTIME_BINDING\n  - WORKFLOW\ncategory_participatory:\n  casing: UPPER_SNAKE\n  entries:\n  - ACTOR\ncategory_evidential:\n  casing: UPPER_SNAKE\n  entries:\n  - EVENT\nprovenance_authored:\n  casing: UPPER_SNAKE\n  entries:\n  - ACTOR\n  - CAPABILITY_CONTRACT\n  - CAPABILITY_SIDE_EFFECT\n  - CAPABILITY_TRANSFORM\n  - CONSTITUTION\n  - EVENT\n  - INTENT\n  - INVARIANT\n  - RUNTIME_BINDING\n  - STRUCTURE\n  - SURFACE_CONTRACT\n  - TEST_DATA\n  - TRANSPORT_EGRESS\n  - TRANSPORT_INGRESS\n  - VOCABULARY\n  - WORKFLOW\nprovenance_derived:\n  casing: UPPER_SNAKE\n  entries:\n  - ASSERT\nruntime_disposition_not_executable:\n  casing: lower_snake\n  entries:\n  - definitional\n  - normative\nruntime_disposition_not_independently_executable:\n  casing: lower_snake\n  entries:\n  - contractual\nruntime_disposition_executable:\n  casing: lower_snake\n  entries:\n  - operational\nruntime_disposition_participates_in_execution:\n  casing: lower_snake\n  entries:\n  - participatory\nruntime_disposition_produced_by_execution:\n  casing: lower_snake\n  entries:\n  - evidential\n```\n\n---\n\n## Intent\n\nThe Governance Ontology, sealed. Each artifact kind declares its semantic category and the\nprovenance it carries, and nobody infers either from a kind's name or location (GO-3). Runtime\ndisposition belongs to the category contract, so a kind's disposition is read from its category and\nnever stated per kind.\n\nA `category_` group lists the kinds in one semantic category. A `provenance_` group lists the kinds\nthat carry one provenance. A `runtime_disposition_` group lists the categories whose contract has\nthat disposition. No kind is produced, so `produced` has no group: an occurrence of an event is\nproduced by execution, and an occurrence is evidence, not an artifact kind.\n\nThe compiler classifies kinds from a built-in table, because it needs the classification to compile\nthis vocabulary. `artifact::INVARIANT_GOVERNANCE_ONTOLOGY_AGREES_V0` refuses a build in which the\ntable and this vocabulary differ. A reader of the snapshot learns the ontology here and needs no\ncompiler.\n",
+  "content_hash": "18c376763cca4c15a28b0df887dd052796a10b9e69a2099b6b2d33776a0cfba1",
+  "fqdn_id": "artifact::VOCAB_GOVERNANCE_ONTOLOGY_V0",
+  "frontmatter": {
+    "artifact_kind": "VOCABULARY",
+    "authority": "pgc.platform",
+    "category_contractual": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "CAPABILITY_CONTRACT",
+        "SURFACE_CONTRACT",
+        "TRANSPORT_EGRESS",
+        "TRANSPORT_INGRESS"
+      ]
+    },
+    "category_definitional": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "STRUCTURE",
+        "VOCABULARY"
+      ]
+    },
+    "category_evidential": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "EVENT"
+      ]
+    },
+    "category_normative": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "ASSERT",
+        "CONSTITUTION",
+        "INVARIANT",
+        "TEST_DATA"
+      ]
+    },
+    "category_operational": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "CAPABILITY_SIDE_EFFECT",
+        "CAPABILITY_TRANSFORM",
+        "INTENT",
+        "RUNTIME_BINDING",
+        "WORKFLOW"
+      ]
+    },
+    "category_participatory": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "ACTOR"
+      ]
+    },
+    "concern": "artifact",
+    "extends": "",
+    "fqdn": "artifact::VOCAB_GOVERNANCE_ONTOLOGY_V0",
+    "governed_by": "vocabulary::CONSTITUTION_VOCABULARY_V0",
+    "provenance_authored": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "ACTOR",
+        "CAPABILITY_CONTRACT",
+        "CAPABILITY_SIDE_EFFECT",
+        "CAPABILITY_TRANSFORM",
+        "CONSTITUTION",
+        "EVENT",
+        "INTENT",
+        "INVARIANT",
+        "RUNTIME_BINDING",
+        "STRUCTURE",
+        "SURFACE_CONTRACT",
+        "TEST_DATA",
+        "TRANSPORT_EGRESS",
+        "TRANSPORT_INGRESS",
+        "VOCABULARY",
+        "WORKFLOW"
+      ]
+    },
+    "provenance_derived": {
+      "casing": "UPPER_SNAKE",
+      "entries": [
+        "ASSERT"
+      ]
+    },
+    "provenances": {
+      "casing": "lower_snake",
+      "entries": [
+        "authored",
+        "derived",
+        "produced"
+      ]
+    },
+    "runtime_disposition_executable": {
+      "casing": "lower_snake",
+      "entries": [
+        "operational"
+      ]
+    },
+    "runtime_disposition_not_executable": {
+      "casing": "lower_snake",
+      "entries": [
+        "definitional",
+        "normative"
+      ]
+    },
+    "runtime_disposition_not_independently_executable": {
+      "casing": "lower_snake",
+      "entries": [
+        "contractual"
+      ]
+    },
+    "runtime_disposition_participates_in_execution": {
+      "casing": "lower_snake",
+      "entries": [
+        "participatory"
+      ]
+    },
+    "runtime_disposition_produced_by_execution": {
+      "casing": "lower_snake",
+      "entries": [
+        "evidential"
+      ]
+    },
+    "semantic_categories": {
+      "casing": "lower_snake",
+      "entries": [
+        "definitional",
+        "normative",
+        "contractual",
+        "operational",
+        "participatory",
+        "evidential"
+      ]
+    },
+    "version": "v0"
+  },
+  "layer_code": "GOVERNANCE",
+  "namespace": "artifact",
+  "references": [
+    "vocabulary::CONSTITUTION_VOCABULARY_V0"
+  ],
+  "version": "0"
+}

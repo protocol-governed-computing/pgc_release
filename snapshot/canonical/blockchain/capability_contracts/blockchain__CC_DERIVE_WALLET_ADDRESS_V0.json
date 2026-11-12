@@ -1,0 +1,82 @@
+{
+  "artifact_code": "CC_DERIVE_WALLET_ADDRESS_V0",
+  "artifact_type": "CC",
+  "cc_projection": {
+    "steps": [
+      {
+        "bindings": {
+          "key_material": "in.key_material"
+        },
+        "fqdn": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+        "id": "CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+        "inputs": [
+          "key_material"
+        ],
+        "kind": "CT",
+        "outputs": [
+          "address"
+        ]
+      }
+    ]
+  },
+  "content": "# CC_DERIVE_WALLET_ADDRESS_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::CC_DERIVE_WALLET_ADDRESS_V0\nartifact_kind: CAPABILITY_CONTRACT\nversion: v0\ngoverned_by: capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0\nauthority: pgc.platform\nconcern: wallet\ncore:\n  summary: Derive a wallet's address from the key material supplied\n  inputs:\n    key_material:\n      type: string\n      required: true\n  outputs:\n    address:\n      type: string\n      required: true\n  result_status_contract:\n    allowed:\n    - SUCCESS\n    - VIOLATION\n    on_input_failure: VIOLATION\n  pipeline:\n  - step: derive_address\n    transform: blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0\n    inputs:\n      key_material: $.inputs.key_material\n    outputs:\n      address: $.capability_result.address\n    result_surface:\n    - SUCCESS\n    - VIOLATION\n    on_result:\n      SUCCESS: exit\n      VIOLATION: exit\n```\n\n---\n\n## Intent\n\nDerive a wallet's address from the key material supplied\n",
+  "content_hash": "7da5deeabd4d77031fb2d2e83f9041a401b00040a48b05bf25e77939e1ddd2f9",
+  "fqdn_id": "blockchain::CC_DERIVE_WALLET_ADDRESS_V0",
+  "frontmatter": {
+    "artifact_kind": "CAPABILITY_CONTRACT",
+    "authority": "pgc.platform",
+    "concern": "wallet",
+    "core": {
+      "inputs": {
+        "key_material": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "outputs": {
+        "address": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "pipeline": [
+        {
+          "inputs": {
+            "key_material": "$.inputs.key_material"
+          },
+          "on_result": {
+            "SUCCESS": "exit",
+            "VIOLATION": "exit"
+          },
+          "outputs": {
+            "address": "$.capability_result.address"
+          },
+          "result_surface": [
+            "SUCCESS",
+            "VIOLATION"
+          ],
+          "step": "derive_address",
+          "transform": "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0"
+        }
+      ],
+      "result_status_contract": {
+        "allowed": [
+          "SUCCESS",
+          "VIOLATION"
+        ],
+        "on_input_failure": "VIOLATION"
+      },
+      "summary": "Derive a wallet's address from the key material supplied"
+    },
+    "fqdn": "blockchain::CC_DERIVE_WALLET_ADDRESS_V0",
+    "governed_by": "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0",
+    "version": "v0"
+  },
+  "layer_code": "BLOCKCHAIN",
+  "namespace": "blockchain",
+  "references": [
+    "blockchain::CT_PURE_DERIVE_WALLET_ADDRESS_V0",
+    "capability_contracts::CONSTITUTION_CAPABILITY_CONTRACT_V0"
+  ],
+  "version": "0"
+}

@@ -1,15 +1,15 @@
 {
   "artifact_code": "EV_ACTOR_REJECTED_V0",
   "artifact_type": "EV",
-  "content": "# EV_ACTOR_REJECTED_V0\n\n## 1. Intent\n\nThe moment an authority records a decision not to trust an actor\n\n---\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_ACTOR_REJECTED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: The moment an authority records a decision not to trust an actor\n  description: The moment an authority records a decision not to trust an actor\n  subdomain: identity\n  schema:\n    contact_address:\n      type: string\n      required: true\n    verifying_authority:\n      type: string\n      required: true\n    grounds:\n      type: string\n      required: true\n    occurred_at:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n",
-  "content_hash": "e35a64bd91683ea4157756ef9d0cea9e3eb3f3e2b57b19a262675077c5864000",
+  "content": "# EV_ACTOR_REJECTED_V0\n\n## Machine\n\n```yaml\nfqdn: blockchain::EV_ACTOR_REJECTED_V0\nartifact_kind: EVENT\nversion: v0\ngoverned_by: event::CONSTITUTION_EVENT_V0\nauthority: pgc.platform\nconcern: identity\ncore:\n  summary: A actor rejected\n  description: A actor rejected\n  subdomain: identity\n  schema:\n    contact_address:\n      type: string\n      required: true\n    verifying_authority:\n      type: string\n      required: true\n    grounds:\n      type: string\n      required: true\n    occurred_at:\n      type: string\n      required: true\n    timestamp:\n      type: string\n      format: date-time\n      required: true\n      description: When the moment occurred\n```\n\n---\n\n## Intent\n\nA actor rejected\n",
+  "content_hash": "38d3a00fceeaca82447fc706dfde88d19233e2279644d2857d341ed4ce024efe",
   "fqdn_id": "blockchain::EV_ACTOR_REJECTED_V0",
   "frontmatter": {
     "artifact_kind": "EVENT",
     "authority": "pgc.platform",
     "concern": "identity",
     "core": {
-      "description": "The moment an authority records a decision not to trust an actor",
+      "description": "A actor rejected",
       "schema": {
         "contact_address": {
           "required": true,
@@ -35,7 +35,7 @@
         }
       },
       "subdomain": "identity",
-      "summary": "The moment an authority records a decision not to trust an actor"
+      "summary": "A actor rejected"
     },
     "fqdn": "blockchain::EV_ACTOR_REJECTED_V0",
     "governed_by": "event::CONSTITUTION_EVENT_V0",

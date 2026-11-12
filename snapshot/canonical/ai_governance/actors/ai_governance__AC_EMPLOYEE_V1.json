@@ -1,0 +1,32 @@
+{
+  "artifact_code": "AC_EMPLOYEE_V1",
+  "artifact_type": "AC",
+  "content": "# AC_EMPLOYEE_V1\n\n## Machine\n\n```yaml\nfqdn: ai_governance::AC_EMPLOYEE_V1\nartifact_kind: ACTOR\nversion: v1\ngoverned_by: actor::CONSTITUTION_ACTOR_IDENTITY_V0\nauthority: pgc.platform\nconcern: ai_licensing\nsupersedes: ai_governance::AC_EMPLOYEE_V0\ncore:\n  summary: A person the business may license for AI tools\n  type: human\n  attributes:\n    employee_id:\n      type: string\n      required: true\n```\n\n---\n\n## Intent\n\nA person the business may license for AI tools\n",
+  "content_hash": "e2397e7e806149aedfbad222ea28818c7df37f841b32bdd512261020c6a489ce",
+  "fqdn_id": "ai_governance::AC_EMPLOYEE_V1",
+  "frontmatter": {
+    "artifact_kind": "ACTOR",
+    "authority": "pgc.platform",
+    "concern": "ai_licensing",
+    "core": {
+      "attributes": {
+        "employee_id": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "summary": "A person the business may license for AI tools",
+      "type": "human"
+    },
+    "fqdn": "ai_governance::AC_EMPLOYEE_V1",
+    "governed_by": "actor::CONSTITUTION_ACTOR_IDENTITY_V0",
+    "supersedes": "ai_governance::AC_EMPLOYEE_V0",
+    "version": "v1"
+  },
+  "layer_code": "AI_GOVERNANCE",
+  "namespace": "ai_governance",
+  "references": [
+    "actor::CONSTITUTION_ACTOR_IDENTITY_V0"
+  ],
+  "version": "1"
+}
